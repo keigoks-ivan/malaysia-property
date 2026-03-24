@@ -49,7 +49,7 @@ def fetch_opr(macro):
         r = requests.get("https://api.bnm.gov.my/public/opr", headers=BNM_HEADERS, timeout=30)
         r.raise_for_status()
         data = r.json()
-        opr_value = float(data["data"]["opr_rate"])
+        opr_value = float(data["data"]["new_opr_level"])
         macro["opr"][-1] = opr_value
         macro["updated"] = QUARTER
         sources_updated.append("BNM OPR")
