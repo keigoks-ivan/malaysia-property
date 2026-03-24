@@ -49,7 +49,7 @@ def fetch_opr(macro):
         r = requests.get("https://api.bnm.gov.my/public/opr", headers=BNM_HEADERS, timeout=30)
         r.raise_for_status()
         data = r.json()
-        opr_value = float(data["data"]["rate"]["value"])
+        opr_value = float(data["data"]["opr_rate"])
         macro["opr"][-1] = opr_value
         macro["updated"] = QUARTER
         sources_updated.append("BNM OPR")
@@ -63,7 +63,7 @@ def fetch_loan_data(demand):
     try:
         print("[2/5] Fetching loan data from BNM API...")
         r = requests.get(
-            "https://api.bnm.gov.my/public/consumer-credit/hire-purchase",
+            "https://api.bnm.gov.my/public/base-rate",
             headers=BNM_HEADERS,
             timeout=30,
         )
@@ -100,78 +100,12 @@ def fetch_dosm_income(macro):
 
 # ── Source 4: PropertyGuru KL Median Price ─────────────────────────
 def fetch_propertyguru(prices):
-    try:
-        print("[4/5] Scraping PropertyGuru KL listings...")
-        url = "https://www.propertyguru.com.my/property-for-sale?market=residential&region_code=MY01"
-        r = requests.get(url, headers=HEADERS, timeout=30)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        price_list = []
-        # Look for price elements in listing cards
-        for el in soup.select('[class*="price"], [data-automation-id*="price"]'):
-            text = el.get_text(strip=True)
-            # Parse RM prices like "RM 530,000" or "RM 1.2 mil"
-            match = re.search(r"RM\s*([\d,.]+)\s*(mil|million)?", text, re.IGNORECASE)
-            if match:
-                val = float(match.group(1).replace(",", ""))
-                if match.group(2):
-                    val *= 1_000_000
-                if 50_000 < val < 50_000_000:
-                    price_list.append(val)
-
-        if price_list:
-            median = sorted(price_list)[len(price_list) // 2]
-            prices["regions"]["kl"]["median_price"] = int(median)
-            prices["regions"]["kl"]["kl_median"] = int(median)
-            prices["updated"] = QUARTER
-            sources_updated.append(f"PropertyGuru KL (n={len(price_list)})")
-            print(f"  KL median: RM {median:,.0f} (from {len(price_list)} listings)")
-        else:
-            print("  [SKIP] No prices parsed from PropertyGuru")
-
-    except Exception as e:
-        print(f"  [SKIP] PropertyGuru scrape failed: {e}")
+    print("[4/5] PropertyGuru KL listings — [SKIP - 反爬蟲]")
 
 
 # ── Source 5: iProperty City Prices ────────────────────────────────
 def fetch_iproperty(prices):
-    cities = {
-        "penang": "https://www.iproperty.com.my/sale/penang/all-residential/",
-        "johor": "https://www.iproperty.com.my/sale/johor-bahru/all-residential/",
-        "kl": "https://www.iproperty.com.my/sale/kuala-lumpur/all-residential/",
-    }
-    print("[5/5] Scraping iProperty listings...")
-    for city, url in cities.items():
-        try:
-            r = requests.get(url, headers=HEADERS, timeout=30)
-            r.raise_for_status()
-            soup = BeautifulSoup(r.text, "html.parser")
-
-            price_list = []
-            for el in soup.select('[class*="price"], [data-automation-id*="price"]'):
-                text = el.get_text(strip=True)
-                match = re.search(r"RM\s*([\d,.]+)\s*(mil|million)?", text, re.IGNORECASE)
-                if match:
-                    val = float(match.group(1).replace(",", ""))
-                    if match.group(2):
-                        val *= 1_000_000
-                    if 50_000 < val < 50_000_000:
-                        price_list.append(val)
-
-            if price_list:
-                median = sorted(price_list)[len(price_list) // 2]
-                prices["regions"][city]["median_price"] = int(median)
-                sources_updated.append(f"iProperty {city}")
-                print(f"  {city}: RM {median:,.0f} (n={len(price_list)})")
-            else:
-                print(f"  [SKIP] No prices for {city}")
-
-        except Exception as e:
-            print(f"  [SKIP] iProperty {city} failed: {e}")
-
-    if any(f"iProperty" in s for s in sources_updated):
-        prices["updated"] = QUARTER
+    print("[5/5] iProperty listings — [SKIP - 反爬蟲]")
 
 
 # ── Main ───────────────────────────────────────────────────────────
