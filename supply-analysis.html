@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Malaysia Property Supply Analysis</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -384,22 +384,33 @@
     document.getElementById('tab-' + tab).classList.add('active');
     const idx = tab === 'national' ? 0 : 1;
     document.querySelectorAll('.tab-bar button')[idx].classList.add('active');
-    if (tab === 'kl' && !window._klChartsInit) { initKLCharts(); window._klChartsInit = true; }
+    if (tab === 'kl' && !window._klChartsInit) {
+      /* Wait one frame so browser computes layout for the now-visible panel */
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          initKLCharts();
+          window._klChartsInit = true;
+        });
+      });
+    }
   }
 
-  /* ── Chart defaults ── */
-  setChartDefaults();
+  /* ── Constants ── */
   const RED_ALERT = '#e05454';
   const BLUE_SERIES = ['#3b82f6','#60a5fa','#93c5fd','#2563eb','#818cf8','#a5b4fc'];
   const GOLD = '#c9a84c';
   const GOLD_BG = 'rgba(201,168,76,0.15)';
 
-  /* ============================================================ */
-  /* TAB 1 CHARTS                                                  */
-  /* ============================================================ */
+  /* ── Init all Tab 1 charts after DOM is ready ── */
+  document.addEventListener('DOMContentLoaded', function() {
+    setChartDefaults();
 
-  /* Chart 1: State Overhang (horizontal bar) */
-  (() => {
+    /* ============================================================ */
+    /* TAB 1 CHARTS                                                  */
+    /* ============================================================ */
+
+    /* Chart 1: State Overhang (horizontal bar) */
+    (() => {
     const labels = ['Perak','Johor','Sabah','Selangor','Penang','Kelantan','KL','N. Sembilan','Others'];
     const data = [3300,3293,2771,2757,2730,2599,2287,2205,6730];
     const colors = data.map(v => v > 3000 ? RED_ALERT : BLUE_SERIES[0]);
@@ -612,6 +623,8 @@
       }
     });
   })();
+
+  }); /* end DOMContentLoaded */
 
   /* ============================================================ */
   /* TAB 2 CHARTS (lazy-init on tab switch)                        */
