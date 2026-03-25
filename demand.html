@@ -5,66 +5,195 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Demand Analysis | Malaysia Property Monitor</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
 </head>
 <body>
   <header class="navbar">
-    <a href="index.html" class="logo">Malaysia Property Monitor</a>
+    <a href="index.html" class="logo">MALAYSIA PROPERTY MONITOR</a>
     <nav>
       <a href="index.html">Dashboard</a>
       <a href="supply.html">Supply</a>
       <a href="demand.html" class="active">Demand</a>
-      <a href="regions.html">Regions</a>
-      <a href="supply-analysis.html">Supply Analysis</a>
+      <a href="valuation.html">Valuation</a>
+      <a href="risk.html">Risk</a>
+      <a href="kl.html">KL</a>
     </nav>
+    <span class="opr-badge">OPR: 2.75% ▼</span>
   </header>
 
   <main class="container">
     <div class="page-header">
-      <span class="updated-badge" id="updated-date">Loading...</span>
+      <span class="updated">LAST UPDATED: Q3 2025</span>
       <h1>Demand Analysis</h1>
-      <p class="subtitle">Transaction volumes, mortgage trends, and affordability</p>
+      <p class="subtitle">Transaction Volume, Buyer Composition & Structural Demand Drivers</p>
     </div>
 
     <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="label">Q4 Transactions</div>
-        <div class="value" id="kpi-transactions">--</div>
+      <div class="kpi-card green">
+        <div class="kpi-label">2024 Transactions</div>
+        <div class="kpi-value">420,525</div>
+        <span class="kpi-badge badge-green">10-Year High</span>
+        <div class="kpi-source">NAPIC 2024</div>
       </div>
-      <div class="kpi-card">
-        <div class="label">Loan Approval Rate</div>
-        <div class="value" id="kpi-loan-rate">--</div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Q3 2025 Transactions</div>
+        <div class="kpi-value">66,766</div>
+        <span class="kpi-badge badge-orange">−5.2% YoY</span>
+        <div class="kpi-source">JPPH Q3 2025</div>
       </div>
-      <div class="kpi-card">
-        <div class="label">Price-to-Income Ratio</div>
-        <div class="value" id="kpi-pti">--</div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Foreign Buyer Share</div>
+        <div class="kpi-value">~8–12%</div>
+        <span class="kpi-badge badge-orange">declining</span>
+        <div class="kpi-source">Juwai IQI 2025</div>
       </div>
-    </div>
-
-    <div class="chart-grid">
-      <div class="chart-card">
-        <h3>Quarterly Transaction Volume</h3>
-        <canvas id="chart-transactions"></canvas>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Loan Approval Rate</div>
+        <div class="kpi-value">42.6%</div>
+        <span class="kpi-badge badge-orange">below pre-COVID</span>
+        <div class="kpi-source">Q3 2024 BNM</div>
       </div>
     </div>
 
     <div class="chart-grid two-col">
       <div class="chart-card">
-        <h3>Loan Approval Rate vs OPR</h3>
-        <canvas id="chart-loan-opr"></canvas>
+        <h3>Transaction Volume Trend</h3>
+        <canvas id="chart-tx"></canvas>
       </div>
       <div class="chart-card">
-        <h3>Price-to-Income Ratio Trend</h3>
-        <canvas id="chart-pti"></canvas>
+        <h3>State Transaction YoY Growth (Q3 2025)</h3>
+        <canvas id="chart-state-yoy"></canvas>
       </div>
+    </div>
+
+    <div class="chart-grid two-col">
+      <div class="chart-card">
+        <h3>Buyer Type Composition</h3>
+        <p class="chart-subtitle">Individual owner-occupier vs investor vs foreign (est.)</p>
+        <canvas id="chart-buyer-type"></canvas>
+        <div class="insight-box">Foreign buyer share has declined since 2022 as MM2H tightened and China capital controls persist.</div>
+      </div>
+      <div class="chart-card">
+        <h3>Loan Application vs Approval Rate</h3>
+        <canvas id="chart-loan"></canvas>
+        <div class="insight-box">Approval rate has never exceeded 44% — a structural barrier locking out potential buyers.</div>
+      </div>
+    </div>
+
+    <div class="chart-grid two-col">
+      <div class="chart-card">
+        <h3>Household Formation vs New Completions</h3>
+        <canvas id="chart-hh-formation"></canvas>
+        <div class="insight-box">Supply consistently exceeds household formation rate, contributing to structural overhang.</div>
+      </div>
+      <div class="chart-card">
+        <h3>New Launch Take-up Rate (Q3 2025)</h3>
+        <canvas id="chart-takeup"></canvas>
+        <div class="insight-box">Extremely low first-day sales indicate weak primary market demand, especially for high-rise.</div>
+      </div>
+    </div>
+
+    <div class="source-footer">
+      NAPIC 2024 &middot; JPPH Q3 2025 &middot; BNM Q3 2024 &middot; Juwai IQI 2025 &middot; DOSM Population Projections<br>
+      <em>Estimates marked * are directional approximations. Not investment advice.</em>
     </div>
   </main>
 
-  <footer class="footer">
-    A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a>
-  </footer>
+  <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
 
   <script src="js/main.js"></script>
-  <script>initDemand();</script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    setChartDefaults();
+
+    // Transaction Volume
+    new Chart(document.getElementById('chart-tx'), {
+      type: 'line',
+      data: {
+        labels: ['2019','2020','2021','2022','2023','2024','2025 Q1-Q3'],
+        datasets: [{ label: 'Transactions', data: [328647,295116,334044,389107,399008,420525,310000], borderColor: C.navy, backgroundColor: C.navy_bg, fill: true,
+          pointRadius: [2,2,2,2,2,5,2], pointBackgroundColor: [C.navy,C.navy,C.navy,C.navy,C.navy,C.green,C.navy] }]
+      },
+      options: {
+        responsive: true,
+        plugins: { annotation: { annotations: { peak: { type: 'label', xValue: '2024', yValue: 420525, content: ['Decade High'], color: C.green, font: { size: 10, weight: 'bold' }, backgroundColor: '#fff', yAdjust: -16 } } } },
+        scales: { y: { ticks: { callback: v => fmtNum(v) } } }
+      }
+    });
+
+    // State YoY Growth
+    (() => {
+      const labels = ['Kelantan','Melaka','Pahang','Selangor','KL','Perlis','N. Sembilan'];
+      const data = [98.05,29.83,10.74,2.06,0.21,-16.95,-16.44];
+      new Chart(document.getElementById('chart-state-yoy'), {
+        type: 'bar',
+        data: { labels, datasets: [{ label: 'YoY %', data, backgroundColor: data.map(v => v >= 0 ? C.green : C.red) }] },
+        options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => v + '%' } } } }
+      });
+    })();
+
+    // Buyer Type Composition (stacked area)
+    new Chart(document.getElementById('chart-buyer-type'), {
+      type: 'line',
+      data: {
+        labels: ['2018','2019','2020','2021','2022','2023','2024','2025E'],
+        datasets: [
+          { label: 'Owner-Occupier', data: [62,63,65,64,66,67,68,69], borderColor: C.navy, backgroundColor: C.navy_bg, fill: true },
+          { label: 'Investor', data: [26,25,24,25,24,24,23,22], borderColor: C.orange, backgroundColor: C.orange_bg, fill: true },
+          { label: 'Foreign', data: [12,12,11,11,10,9,9,9], borderColor: C.blue, backgroundColor: C.blue_bg, fill: true },
+        ]
+      },
+      options: { responsive: true, scales: { y: { stacked: true, max: 100, ticks: { callback: v => v + '%' } } } }
+    });
+
+    // Loan Application vs Approval
+    new Chart(document.getElementById('chart-loan'), {
+      type: 'line',
+      data: {
+        labels: ['2020','2021','2022','2023','2024 Q3'],
+        datasets: [
+          { label: 'Applications (RM bil)', data: [85,95,105,115,122.45], borderColor: C.navy, backgroundColor: C.navy_bg, fill: true, yAxisID: 'y' },
+          { label: 'Approval Rate %', data: [38,40,42,43,42.6], borderColor: C.orange, borderDash: [4,3], pointRadius: 4, pointBackgroundColor: C.orange, yAxisID: 'y1' },
+        ]
+      },
+      options: {
+        responsive: true,
+        interaction: { mode: 'index', intersect: false },
+        scales: {
+          y: { position: 'left', title: { display: true, text: 'Applications (RM bil)' } },
+          y1: { position: 'right', title: { display: true, text: 'Approval Rate %' }, grid: { drawOnChartArea: false }, min: 30, max: 50 }
+        }
+      }
+    });
+
+    // Household Formation vs Completions
+    new Chart(document.getElementById('chart-hh-formation'), {
+      type: 'bar',
+      data: {
+        labels: ['2020','2021','2022','2023','2024'],
+        datasets: [
+          { label: 'New Households (est.)', data: [180000,185000,190000,192000,195000], backgroundColor: C.navy },
+          { label: 'New Completions', data: [72000,76393,71981,74893,82135], backgroundColor: C.orange },
+        ]
+      },
+      options: { responsive: true, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
+    });
+
+    // Take-up Rate
+    new Chart(document.getElementById('chart-takeup'), {
+      type: 'bar',
+      data: {
+        labels: ['Landed','High-Rise'],
+        datasets: [{ label: 'Take-up Rate %', data: [14, 5.1], backgroundColor: [C.green, C.red] }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { max: 25, ticks: { callback: v => v + '%' } } }
+      }
+    });
+  });
+  </script>
 </body>
 </html>

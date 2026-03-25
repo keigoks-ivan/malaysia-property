@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KL Deep Dive | Malaysia Property Monitor</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="logo">MALAYSIA PROPERTY MONITOR</a>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="supply.html">Supply</a>
+      <a href="demand.html">Demand</a>
+      <a href="valuation.html">Valuation</a>
+      <a href="risk.html">Risk</a>
+      <a href="kl.html" class="active">KL</a>
+    </nav>
+    <span class="opr-badge">OPR: 2.75% ▼</span>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <span class="updated">LAST UPDATED: Q3 2025</span>
+      <h1>Kuala Lumpur — Deep Dive</h1>
+      <p class="subtitle">Micro-Market Analysis Across KL's Three Distinct Zones</p>
+    </div>
+
+    <div class="framework-box">
+      KL's property market cannot be analyzed as a monolith.
+      Three distinct micro-markets operate under different supply-demand dynamics,
+      buyer profiles, and valuation frameworks.
+    </div>
+
+    <!-- KL KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi-card blue">
+        <div class="kpi-label">Avg Price</div>
+        <div class="kpi-value">RM 804,642</div>
+        <span class="kpi-badge badge-blue">Highest nationally</span>
+        <div class="kpi-source">Q3 2025 JPPH</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">Price YoY</div>
+        <div class="kpi-value">−4.3%</div>
+        <span class="kpi-badge badge-red">Only major city ↓</span>
+        <div class="kpi-source">Q3 2025</div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Overhang</div>
+        <div class="kpi-value">2,287</div>
+        <span class="kpi-badge badge-orange">units</span>
+        <div class="kpi-source">Q3 2025 NAPIC</div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">Rental Yield</div>
+        <div class="kpi-value">4.60%</div>
+        <span class="kpi-badge badge-orange">vs national 5.19%</span>
+        <div class="kpi-source">Global Property Guide</div>
+      </div>
+    </div>
+
+    <!-- Zone Tabs -->
+    <h2 class="section-heading">Three Micro-Markets</h2>
+    <div id="zone-tabs">
+      <div class="tab-bar">
+        <button class="active" data-tab="z1" onclick="switchTab('zone-tabs','z1')">Zone 1: KLCC / Bukit Bintang</button>
+        <button data-tab="z2" onclick="switchTab('zone-tabs','z2'); initZ2();">Zone 2: Mid Valley / OKR</button>
+        <button data-tab="z3" onclick="switchTab('zone-tabs','z3'); initZ3();">Zone 3: Kepong / Cheras / Setapak</button>
+      </div>
+
+      <!-- Zone 1 -->
+      <div id="tab-z1" class="tab-panel active">
+        <div class="framework-box" style="margin:12px 0;">
+          Prime luxury zone. MM2H, expatriates and HNW locals.
+          Supply constrained. Pricing anchored to regional comparison, not local income.
+        </div>
+        <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
+          <div class="kpi-card blue"><div class="kpi-label">Avg PSF</div><div class="kpi-value">RM 1,500–2,500</div></div>
+          <div class="kpi-card orange"><div class="kpi-label">Yield</div><div class="kpi-value">3.5–4.5%</div></div>
+          <div class="kpi-card blue"><div class="kpi-label">Foreign Buyer</div><div class="kpi-value">~30–40%</div></div>
+        </div>
+        <div class="chart-grid two-col">
+          <div class="chart-card">
+            <h3>Zone 1 Price Trend</h3>
+            <canvas id="chart-z1-price"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Yield vs Borrowing Cost</h3>
+            <canvas id="chart-z1-yield"></canvas>
+            <div class="insight-box">Zone 1 yield barely covers borrowing costs — pure capital appreciation play.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zone 2 -->
+      <div id="tab-z2" class="tab-panel">
+        <div class="framework-box" style="margin:12px 0;">
+          The sweet spot. RM400k–RM800k.
+          2024's most active launch band. Best supply-demand balance in KL.
+        </div>
+        <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
+          <div class="kpi-card green"><div class="kpi-label">Avg PSF</div><div class="kpi-value">RM 600–900</div></div>
+          <div class="kpi-card green"><div class="kpi-label">Yield</div><div class="kpi-value">4.5–5.5%</div></div>
+          <div class="kpi-card green"><div class="kpi-label">Absorption</div><div class="kpi-value">6–12 months</div></div>
+        </div>
+        <div class="chart-grid two-col">
+          <div class="chart-card">
+            <h3>Zone 2 New Launch Volume</h3>
+            <canvas id="chart-z2-launch"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Supply vs Demand Balance</h3>
+            <canvas id="chart-z2-balance"></canvas>
+            <div class="insight-box">Mid Valley/OKR corridor — best risk-reward in KL currently.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zone 3 -->
+      <div id="tab-z3" class="tab-panel">
+        <div class="framework-box" style="margin:12px 0;">
+          Overhang epicenter. PSF trap widespread.
+          Serviced apartments dominate — commercial utilities, harder to finance.
+        </div>
+        <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
+          <div class="kpi-card orange"><div class="kpi-label">Nominal Price</div><div class="kpi-value">RM 280k–500k</div></div>
+          <div class="kpi-card red"><div class="kpi-label">Actual PSF</div><div class="kpi-value">RM 800–1,200</div></div>
+          <div class="kpi-card red"><div class="kpi-label">Overhang Share</div><div class="kpi-value">~40% of KL</div></div>
+        </div>
+        <div class="chart-grid two-col">
+          <div class="chart-card">
+            <h3>PSF Trap — Size vs PSF</h3>
+            <canvas id="chart-z3-psf"></canvas>
+            <p class="chart-footnote">*Illustrative estimates; actual psf varies by location.</p>
+          </div>
+          <div class="chart-card">
+            <h3>SA vs Residential Overhang</h3>
+            <canvas id="chart-z3-sa"></canvas>
+            <div class="insight-box">Zone 3 — proceed with caution. PSF trap + SA loan complications.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KL Supply Pipeline -->
+    <h2 class="section-heading">KL Supply Pipeline</h2>
+    <div class="chart-grid two-col">
+      <div class="chart-card">
+        <h3>KL Starts, Completions & Planned</h3>
+        <canvas id="chart-kl-pipeline"></canvas>
+        <div class="insight-box">
+          Completions surging while starts declining —
+          supply peak 2025–2026, relief expected 2027+.
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>KL Rental Trend</h3>
+        <canvas id="chart-kl-rental"></canvas>
+        <div class="insight-box">
+          Rising rents despite price decline — yield improving.
+          Best entry window for yield investors in 5 years.
+        </div>
+      </div>
+    </div>
+
+    <!-- KL Summary -->
+    <h2 class="section-heading">KL Summary</h2>
+    <div class="summary-grid">
+      <div class="summary-card red-left">
+        <h4>Price Correction Underway</h4>
+        <p>KL −4.3% YoY — supply-driven correction, not demand collapse.
+        Structural oversupply in high-rise segment driving price adjustment.</p>
+      </div>
+      <div class="summary-card green-left">
+        <h4>Rental Market Bright Spot</h4>
+        <p>Rents +6.1% YoY. Yield expanding as prices fall.
+        Compression between rent growth and price decline creates opportunity.</p>
+      </div>
+      <div class="summary-card green-left">
+        <h4>Zone 2 Best Risk-Reward</h4>
+        <p>Mid Valley/OKR, RM500k–700k sweet spot.
+        Best absorption, balanced supply, yield covers borrowing cost.</p>
+      </div>
+      <div class="summary-card orange-left">
+        <h4>Zone 3 Proceed with Caution</h4>
+        <p>PSF trap, SA complications, overhang concentrated.
+        Small-format units at RM800–1,200 psf with limited livability.</p>
+      </div>
+    </div>
+
+    <div class="source-footer">
+      NAPIC Q3 2025 / 1Q2025 &middot; Global Property Guide 2025 &middot; Savills Klang Valley Monitor 3Q2024 &middot;
+      EdgeProp 2024 &middot; DOSM 2022 &middot; BNM<br>
+      <em>Some figures are estimates — see individual chart annotations. Not investment advice.</em>
+    </div>
+  </main>
+
+  <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
+
+  <script src="js/main.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    setChartDefaults();
+
+    // Zone 1: Price trend
+    new Chart(document.getElementById('chart-z1-price'), {
+      type: 'line',
+      data: {
+        labels: ['2019','2020','2021','2022','2023','2024','2025Q3'],
+        datasets: [{ label: 'Avg PSF (RM)', data: [1800,1650,1700,1900,2000,2100,2050], borderColor: C.navy, backgroundColor: C.navy_bg, fill: true }]
+      },
+      options: { responsive: true, scales: { y: { ticks: { callback: v => 'RM ' + v } } } }
+    });
+
+    // Zone 1: Yield vs borrowing cost
+    new Chart(document.getElementById('chart-z1-yield'), {
+      type: 'bar',
+      data: {
+        labels: ['Gross Yield','OPR','Effective Mortgage Rate'],
+        datasets: [{ label: '%', data: [4.0, 2.75, 4.35], backgroundColor: [C.navy, C.green, C.red] }]
+      },
+      options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { max: 5, ticks: { callback: v => v + '%' } } } }
+    });
+
+    // KL Pipeline
+    new Chart(document.getElementById('chart-kl-pipeline'), {
+      type: 'line',
+      data: {
+        labels: ['2021','2022','2023','2024','2025 Q1-Q3'],
+        datasets: [
+          { label: 'Starts', data: [8500,9200,10500,13000,11013], borderColor: C.navy },
+          { label: 'Completions', data: [4200,4800,5500,7517,7418], borderColor: C.green },
+          { label: 'Planned', data: [10000,11000,12000,14000,8000], borderColor: C.muted, borderDash: [2,2] },
+        ]
+      },
+      options: { responsive: true, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
+    });
+
+    // KL Rental Trend
+    new Chart(document.getElementById('chart-kl-rental'), {
+      type: 'line',
+      data: {
+        labels: ['2020','2021','2022','2023','2024'],
+        datasets: [{ label: 'Avg Rent (RM/month)', data: [2200,2350,2500,2730,2901], borderColor: C.green, backgroundColor: C.green_bg, fill: true }]
+      },
+      options: {
+        responsive: true,
+        plugins: { annotation: { annotations: {
+          growth: { type: 'label', xValue: '2024', yValue: 2901, content: ['+6.1% YoY'], color: C.green, font: { size: 11, weight: 'bold' }, backgroundColor: '#fff', yAdjust: -16 }
+        }}},
+        scales: { y: { ticks: { callback: v => 'RM ' + v } } }
+      }
+    });
+  });
+
+  // Zone 2 lazy init
+  let _z2 = false;
+  function initZ2() {
+    if (_z2) return; _z2 = true;
+    requestAnimationFrame(() => { requestAnimationFrame(() => {
+      new Chart(document.getElementById('chart-z2-launch'), {
+        type: 'bar',
+        data: {
+          labels: ['2022','2023','2024','2025E'],
+          datasets: [{ label: 'New Launches (units)', data: [2800,3500,4200,3000], backgroundColor: C.navy }]
+        },
+        options: { responsive: true, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
+      });
+      new Chart(document.getElementById('chart-z2-balance'), {
+        type: 'bar',
+        data: {
+          labels: ['2022','2023','2024'],
+          datasets: [
+            { label: 'New Completions', data: [2200,2800,3500], backgroundColor: C.orange },
+            { label: 'Transactions', data: [2500,3000,3800], backgroundColor: C.green },
+          ]
+        },
+        options: { responsive: true, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
+      });
+    }); });
+  }
+
+  // Zone 3 lazy init
+  let _z3 = false;
+  function initZ3() {
+    if (_z3) return; _z3 = true;
+    requestAnimationFrame(() => { requestAnimationFrame(() => {
+      new Chart(document.getElementById('chart-z3-psf'), {
+        type: 'bar',
+        data: {
+          labels: ['Studio 280sqft','1-Bed 500sqft','2-Bed 850sqft','3-Bed 1,200sqft'],
+          datasets: [{ label: 'RM per sqft', data: [1000,900,800,750], backgroundColor: [C.red,C.orange,C.navy,C.green] }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: v => 'RM ' + v } } } }
+      });
+      new Chart(document.getElementById('chart-z3-sa'), {
+        type: 'bar',
+        data: {
+          labels: ['Serviced Apartments','Standard Residential'],
+          datasets: [{ label: 'Overhang Units (est.)', data: [920,450], backgroundColor: [C.red, C.navy] }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+      });
+    }); });
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Risk Monitor | Malaysia Property Monitor</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="logo">MALAYSIA PROPERTY MONITOR</a>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="supply.html">Supply</a>
+      <a href="demand.html">Demand</a>
+      <a href="valuation.html">Valuation</a>
+      <a href="risk.html" class="active">Risk</a>
+      <a href="kl.html">KL</a>
+    </nav>
+    <span class="opr-badge">OPR: 2.75% ▼</span>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <span class="updated">LAST UPDATED: Q3 2025</span>
+      <h1>Risk Monitor</h1>
+      <p class="subtitle">Supply, Policy, Macro & Developer Risk Dashboard</p>
+    </div>
+
+    <!-- Risk Radar -->
+    <div class="chart-grid main-split">
+      <div class="chart-card">
+        <h3>Risk Radar — 6 Dimensions</h3>
+        <p class="chart-subtitle">1 = Low Risk, 5 = Extreme Risk</p>
+        <div class="radar-wrap">
+          <canvas id="chart-radar"></canvas>
+        </div>
+      </div>
+      <div>
+        <!-- Risk scores summary -->
+        <div class="chart-card" style="margin-bottom:10px;">
+          <h3>Risk Score Summary</h3>
+          <table class="data-table">
+            <thead><tr><th>Dimension</th><th>Score</th><th>Signal</th></tr></thead>
+            <tbody>
+              <tr><td>Oversupply Risk</td><td class="cell-red">4.0 / 5</td><td>High-rise 22-month absorption</td></tr>
+              <tr><td>Affordability Risk</td><td class="cell-red">4.0 / 5</td><td>Median Multiple 4.3x</td></tr>
+              <tr><td>Interest Rate Risk</td><td class="cell-green">2.0 / 5</td><td>OPR cut to 2.75%</td></tr>
+              <tr><td>Policy Uncertainty</td><td class="cell-orange">3.0 / 5</td><td>URA Bill, BTS/STB debate</td></tr>
+              <tr><td>Foreign Demand Risk</td><td class="cell-orange">3.0 / 5</td><td>MM2H tightened</td></tr>
+              <tr><td>Developer Financial</td><td class="cell-orange">3.0 / 5</td><td>Mixed health</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Policy Timeline -->
+    <h2 class="section-heading">Policy Timeline</h2>
+    <div class="chart-card">
+      <div class="timeline">
+        <div class="timeline-item red">
+          <span class="tl-date">2021</span>
+          <span class="tl-text">MM2H requirements tightened — minimum deposit raised, income threshold increased</span>
+        </div>
+        <div class="timeline-item red">
+          <span class="tl-date">2023 May</span>
+          <span class="tl-text">OPR raised to 3.00% — highest since 2019, mortgage costs up</span>
+        </div>
+        <div class="timeline-item green">
+          <span class="tl-date">2024</span>
+          <span class="tl-text">Budget 2025: RM2.47B housing allocation, PR1MA/PPR expansion</span>
+        </div>
+        <div class="timeline-item green">
+          <span class="tl-date">2025 Jul</span>
+          <span class="tl-text">OPR cut to 2.75% — first cut since COVID, monthly savings ~RM70 per RM500k loan</span>
+        </div>
+        <div class="timeline-item gray">
+          <span class="tl-date">2025</span>
+          <span class="tl-text">URA Bill under discussion — potential urban renewal framework</span>
+        </div>
+        <div class="timeline-item gray">
+          <span class="tl-date">2025</span>
+          <span class="tl-text">BTS vs STB debate — Build-Then-Sell vs Sell-Then-Build policy direction</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Developer Health -->
+    <h2 class="section-heading">Developer Health Tracker</h2>
+    <div class="chart-card">
+      <table class="data-table">
+        <thead>
+          <tr><th>Developer</th><th>Net Gearing*</th><th>Gross Margin*</th><th>Overhang Exposure</th><th>Rating</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>IOI Properties</td><td>~40%</td><td>~28%</td><td>Medium</td><td class="cell-orange">⚠ MODERATE</td></tr>
+          <tr><td>SP Setia</td><td>~85%</td><td>~20%</td><td>High</td><td class="cell-red">⚠ HIGH</td></tr>
+          <tr><td>Sunway Property</td><td>~30%</td><td>~32%</td><td>Low</td><td class="cell-green">✅ LOW</td></tr>
+          <tr><td>Eco World</td><td>~55%</td><td>~25%</td><td>High</td><td class="cell-red">⚠ HIGH</td></tr>
+          <tr><td>Mah Sing</td><td>~25%</td><td>~30%</td><td>Low</td><td class="cell-green">✅ LOW</td></tr>
+        </tbody>
+      </table>
+      <p class="chart-footnote">*Directional estimates based on public annual reports. Not investment advice.</p>
+    </div>
+
+    <!-- Risk Cards -->
+    <h2 class="section-heading">Key Risk Factors</h2>
+    <div class="summary-grid">
+      <div class="summary-card orange-left">
+        <h4>Interest Rate Sensitivity</h4>
+        <p>Monthly payment on RM500k, 30-year loan:</p>
+        <table class="data-table" style="margin:8px 0 0;">
+          <tbody>
+            <tr><td>2.50%</td><td style="font-family:'JetBrains Mono',monospace">RM 2,130</td></tr>
+            <tr style="background:var(--positive-bg)"><td><strong>2.75% ← NOW</strong></td><td style="font-family:'JetBrains Mono',monospace"><strong>RM 2,200</strong></td></tr>
+            <tr><td>3.00%</td><td style="font-family:'JetBrains Mono',monospace">RM 2,270</td></tr>
+            <tr><td>3.50%</td><td style="font-family:'JetBrains Mono',monospace">RM 2,380</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:8px;">OPR +0.25% ≈ +RM70/month on RM500k loan</p>
+      </div>
+
+      <div class="summary-card blue-left">
+        <h4>FX Risk</h4>
+        <p>
+          MYR/USD: 4.20–4.70 (2025–2026 range)<br>
+          MYR/SGD: ~3.40<br><br>
+          SGD 1M ≈ RM3.4M — KL prime condos relatively cheap for Singaporeans.
+          Weak MYR is both a foreign buyer catalyst and an import cost inflator.
+        </p>
+      </div>
+
+      <div class="summary-card green-left">
+        <h4>Infrastructure Catalysts</h4>
+        <p>
+          <strong>JB-SG RTS</strong> — 2027 opening → JB's biggest demand catalyst<br>
+          <strong>JS-SEZ</strong> — 2024 push → Johor industrial/residential demand<br>
+          <strong>MRT3 Circle Line</strong> — KL circle line → specific corridor demand uplift<br>
+          <strong>Penang LRT</strong> — Slower progress, timeline uncertain
+        </p>
+      </div>
+    </div>
+
+    <div class="source-footer">
+      BNM Monetary Policy 2023–2025 &middot; REHDA 2H2025 &middot; Developer Annual Reports &middot; NAPIC Q3 2025<br>
+      <em>Estimates marked * are directional approximations. Not investment advice.</em>
+    </div>
+  </main>
+
+  <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
+
+  <script src="js/main.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    setChartDefaults();
+
+    // Risk Radar
+    new Chart(document.getElementById('chart-radar'), {
+      type: 'radar',
+      data: {
+        labels: ['Oversupply','Affordability','Interest Rate','Policy Uncertainty','Foreign Demand','Developer Financial'],
+        datasets: [{
+          label: 'Risk Score',
+          data: [4.0,4.0,2.0,3.0,3.0,3.0],
+          backgroundColor: 'rgba(30,58,95,0.15)',
+          borderColor: C.navy,
+          borderWidth: 2,
+          pointBackgroundColor: [C.red,C.red,C.green,C.orange,C.orange,C.orange],
+          pointRadius: 5,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          r: {
+            min: 0, max: 5,
+            ticks: { stepSize: 1, backdropColor: 'transparent', font: { size: 10 } },
+            grid: { color: '#e8f0f9' },
+            angleLines: { color: '#e8f0f9' },
+            pointLabels: { font: { size: 11 }, color: C.navy }
+          }
+        }
+      }
+    });
+  });
+  </script>
+</body>
+</html>
