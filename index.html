@@ -296,6 +296,27 @@
         charts['yield-city'].update('none');
       }
     };
+
+    // Diagnostic - log chart canvas dimensions
+    setTimeout(() => {
+      const el = document.getElementById('chart-yield-city');
+      if (el) {
+        console.log('yield-city canvas width:', el.offsetWidth);
+        console.log('yield-city canvas height:', el.offsetHeight);
+        console.log('yield-city parent height:', el.parentElement.offsetHeight);
+        const chart = charts['yield-city'];
+        if (chart) {
+          console.log('chart data:', JSON.stringify(chart.data.datasets[0].data));
+          console.log('chart type:', chart.config.type);
+          console.log('chart width:', chart.width);
+          console.log('chart height:', chart.height);
+        } else {
+          console.log('chart object not found in charts[]');
+        }
+      } else {
+        console.log('canvas element not found');
+      }
+    }, 1000);
   });
   </script>
 </body>
