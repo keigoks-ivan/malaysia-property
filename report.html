@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Charts fixed: 2026-03-25 - explicit height, barThickness, tab lazy init -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -22,7 +21,7 @@
     .mini-chart h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:2px}
     .mini-chart .mini-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:6px}
     .mini-note.green{color:#16a34a}.mini-note.orange{color:#d97706}
-    .mini-chart .chart-wrap{height:130px}
+    .mini-chart .chart-wrap-mini{position:relative;height:130px}
     .report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:32px;margin-bottom:14px}
     .report-body>h2:first-child{margin-top:0}
     .report-sections p{font-family:Georgia,serif;font-size:15px;line-height:1.85;color:#2c3e50;margin-bottom:16px}
@@ -87,9 +86,9 @@
           <p>吉隆坡房價年跌<strong>4.3%</strong>，租金年增<strong>6.1%</strong>至<strong>RM 2,901/月</strong>。展望：有地住宅升值<strong>2至4%</strong>；租金增長<strong>4至6%</strong>。風險：OPR上調、GDP低於<strong>5.2%</strong>、外國買家<strong>8%印花稅</strong>。</p>
         </div>
         <div class="exec-charts">
-          <div class="mini-chart"><h4 data-en="Yield Spread Monitor" data-zh="利差監測">Yield Spread Monitor</h4><div class="mini-note green" data-en="Current Spread: +2.44%" data-zh="當前利差: +2.44%">Current Spread: +2.44%</div><div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-r-yield"></canvas></div></div>
-          <div class="mini-chart"><h4 data-en="Demand vs Supply Mismatch" data-zh="需求 vs 供給錯配">Demand vs Supply Mismatch</h4><div class="mini-note orange" data-en="53% of buyers vs 18% of supply below RM300k" data-zh="53%買家需求 vs 僅18%供給低於RM300k">53% of buyers vs 18% of supply below RM300k</div><div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-r-mismatch"></canvas></div></div>
-          <div class="mini-chart"><h4 data-en="Completion Wave vs Absorption" data-zh="完工交屋潮 vs 吸收量">Completion Wave vs Absorption</h4><div class="mini-note orange" data-en="Supply peak 2026–2027" data-zh="供給高峰2026至2027年">Supply peak 2026–2027</div><div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-r-wave"></canvas></div></div>
+          <div class="mini-chart"><h4 data-en="Yield Spread Monitor" data-zh="利差監測">Yield Spread Monitor</h4><div class="mini-note green" data-en="Current Spread: +2.44%" data-zh="當前利差: +2.44%">Current Spread: +2.44%</div><div class="chart-wrap-mini"><canvas id="chart-r-yield"></canvas></div></div>
+          <div class="mini-chart"><h4 data-en="Demand vs Supply Mismatch" data-zh="需求 vs 供給錯配">Demand vs Supply Mismatch</h4><div class="mini-note orange" data-en="53% of buyers vs 18% of supply below RM300k" data-zh="53%買家需求 vs 僅18%供給低於RM300k">53% of buyers vs 18% of supply below RM300k</div><div class="chart-wrap-mini"><canvas id="chart-r-mismatch"></canvas></div></div>
+          <div class="mini-chart"><h4 data-en="Completion Wave vs Absorption" data-zh="完工交屋潮 vs 吸收量">Completion Wave vs Absorption</h4><div class="mini-note orange" data-en="Supply peak 2026–2027" data-zh="供給高峰2026至2027年">Supply peak 2026–2027</div><div class="chart-wrap-mini"><canvas id="chart-r-wave"></canvas></div></div>
         </div>
       </div>
       <div class="report-sections" id="sections-en">
@@ -132,20 +131,70 @@
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     setChartDefaults();
-    createChart('chart-r-yield', { type:'line', data:{ labels:['2019','2020','2021','2022','23Q1','23Q3','24Q1','24Q3','25Q1','25Q3'], datasets:[ {label:'Rental Yield %',data:[4.80,4.60,4.70,4.90,5.16,5.20,5.16,5.24,5.10,5.19],borderColor:C.green,borderWidth:1.5,pointRadius:1}, {label:'OPR %',data:[3.00,1.75,1.75,2.75,3.00,3.00,3.00,3.00,3.00,2.75],borderColor:C.red,borderDash:[4,3],borderWidth:1,pointRadius:1} ]}, options:{plugins:{legend:{display:false}},scales:{y:{min:1,max:6,ticks:{callback:v=>v+'%',font:{size:9}}},x:{ticks:{font:{size:8}}}}} });
-    createChart('chart-r-mismatch', { type:'bar', data:{ labels:['<RM300k','300k\u2013500k','500k\u20131M','>RM1M'], datasets:[ {label:'Demand %',data:[53.1,27.3,13.8,5.8],backgroundColor:C.navy}, {label:'New Supply %',data:[18,25,38,19],backgroundColor:C.orange} ]}, options:{plugins:{legend:{labels:{font:{size:9}}}},scales:{y:{ticks:{callback:v=>v+'%',font:{size:9}}},x:{ticks:{font:{size:8}}}}} });
-    createChart('chart-r-wave', { type:'line', data:{ labels:['2021','2022','2023','2024','2025E','2026E','2027E'], datasets:[ {label:'Completions',data:[76393,71981,74893,82135,92000,95000,85000],borderColor:C.orange,borderWidth:1.5,pointRadius:1}, {label:'Absorption',data:[82000,82000,83000,85000,85000,85000,85000],borderColor:C.green,borderDash:[4,3],borderWidth:1,pointRadius:0} ]}, options:{plugins:{legend:{labels:{font:{size:9}}}},scales:{y:{ticks:{callback:v=>(v/1000).toFixed(0)+'K',font:{size:9}}},x:{ticks:{font:{size:8}}}}} });
-    registerChartI18n('chart-r-yield',null,null,['Rental Yield %','OPR %'],['租金收益率 %','OPR %']);
-    registerChartI18n('chart-r-mismatch',null,null,['Demand %','New Supply %'],['需求 %','新建供給 %']);
-    registerChartI18n('chart-r-wave',null,null,['Completions','Absorption'],['完工交屋量','吸收量']);
-    initLanguage();
+    const charts = {};
+
+    charts['r-yield'] = new Chart(document.getElementById('chart-r-yield'), {
+      type: 'line',
+      data: {
+        labels: ['2019','2020','2021','2022','23Q1','23Q3','24Q1','24Q3','25Q1','25Q3'],
+        datasets: [
+          { label: 'Rental Yield %', data: [4.80,4.60,4.70,4.90,5.16,5.20,5.16,5.24,5.10,5.19], borderColor: C.green, borderWidth: 1.5, pointRadius: 1 },
+          { label: 'OPR %', data: [3.00,1.75,1.75,2.75,3.00,3.00,3.00,3.00,3.00,2.75], borderColor: C.red, borderDash: [4,3], borderWidth: 1, pointRadius: 1 },
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 1, max: 6, ticks: { callback: v => v+'%', font: { size: 9 } } }, x: { ticks: { font: { size: 8 } } } } }
+    });
+
+    charts['r-mismatch'] = new Chart(document.getElementById('chart-r-mismatch'), {
+      type: 'bar',
+      data: {
+        labels: ['<RM300k','300k\u2013500k','500k\u20131M','>RM1M'],
+        datasets: [
+          { label: 'Demand %', data: [53.1,27.3,13.8,5.8], backgroundColor: C.navy, barThickness: 20 },
+          { label: 'New Supply %', data: [18,25,38,19], backgroundColor: C.orange, barThickness: 20 },
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 9 } } } }, scales: { y: { ticks: { callback: v => v+'%', font: { size: 9 } } }, x: { ticks: { font: { size: 8 } } } } }
+    });
+
+    charts['r-wave'] = new Chart(document.getElementById('chart-r-wave'), {
+      type: 'line',
+      data: {
+        labels: ['2021','2022','2023','2024','2025E','2026E','2027E'],
+        datasets: [
+          { label: 'Completions', data: [76393,71981,74893,82135,92000,95000,85000], borderColor: C.orange, borderWidth: 1.5, pointRadius: 1 },
+          { label: 'Absorption', data: [82000,82000,83000,85000,85000,85000,85000], borderColor: C.green, borderDash: [4,3], borderWidth: 1, pointRadius: 0 },
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 9 } } } }, scales: { y: { ticks: { callback: v => (v/1000).toFixed(0)+'K', font: { size: 9 } } }, x: { ticks: { font: { size: 8 } } } } }
+    });
+
+    // Language switching
+    window.updateChartLanguage = function(lang) {
+      if (charts['r-yield']) {
+        charts['r-yield'].data.datasets[0].label = lang === 'zh' ? '租金收益率 %' : 'Rental Yield %';
+        charts['r-yield'].data.datasets[1].label = lang === 'zh' ? 'OPR %' : 'OPR %';
+        charts['r-yield'].update('none');
+      }
+      if (charts['r-mismatch']) {
+        charts['r-mismatch'].data.datasets[0].label = lang === 'zh' ? '需求 %' : 'Demand %';
+        charts['r-mismatch'].data.datasets[1].label = lang === 'zh' ? '新建供給 %' : 'New Supply %';
+        charts['r-mismatch'].update('none');
+      }
+      if (charts['r-wave']) {
+        charts['r-wave'].data.datasets[0].label = lang === 'zh' ? '完工交屋量' : 'Completions';
+        charts['r-wave'].data.datasets[1].label = lang === 'zh' ? '吸收量' : 'Absorption';
+        charts['r-wave'].update('none');
+      }
+    };
+
+    window.onLanguageChange = function(lang) {
+      document.getElementById('exec-en').style.display = lang==='zh'?'none':'block';
+      document.getElementById('exec-zh').style.display = lang==='zh'?'block':'none';
+      document.getElementById('sections-en').style.display = lang==='zh'?'none':'block';
+      document.getElementById('sections-zh').style.display = lang==='zh'?'block':'none';
+    };
   });
-  function onLanguageChange(lang) {
-    document.getElementById('exec-en').style.display = lang==='zh'?'none':'block';
-    document.getElementById('exec-zh').style.display = lang==='zh'?'block':'none';
-    document.getElementById('sections-en').style.display = lang==='zh'?'none':'block';
-    document.getElementById('sections-zh').style.display = lang==='zh'?'block':'none';
-  }
   </script>
 </body>
 </html>

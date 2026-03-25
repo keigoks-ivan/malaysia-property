@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Charts fixed: 2026-03-25 - explicit height, barThickness, tab lazy init -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -55,9 +54,7 @@
       Each stage carries a lead time of 12–48 months, enabling forward projection of future supply pressure.
     </div>
 
-    <!-- Section A: Pipeline Framework -->
     <h2 class="section-heading" data-en="A. Supply Pipeline Framework" data-zh="A. 供給管線架構">A. Supply Pipeline Framework</h2>
-
     <div class="pipeline-flow">
       <div class="pipeline-node"><div class="node-title" data-en="Land" data-zh="土地">Land</div><div class="node-sub" data-en="Acquisition" data-zh="取得">Acquisition</div></div>
       <div class="pipeline-arrow"><span class="arrow-label">12–18m</span>→</div>
@@ -86,42 +83,38 @@
       </div>
     </div>
 
-    <!-- Section B: Forward Projection -->
     <h2 class="section-heading" data-en="B. Forward Projection" data-zh="B. 前瞻性預測">B. Forward Projection</h2>
-
     <div class="chart-grid two-col">
       <div class="chart-card">
         <h3 data-en="Projected Completions 2026–2028" data-zh="2026至2028年完工交屋量預測">Projected Completions 2026–2028</h3>
         <p class="chart-subtitle" data-en="Based on 2022–2024 starts with 36–48 month lag" data-zh="基於2022至2024年開工數據，完工滯後36至48個月">Based on 2022–2024 starts with 36–48 month lag</p>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-projected"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-projected"></canvas></div>
         <div class="insight-box" data-en-html="Supply peak expected 2026–2027, then relief as 2025 starts slow." data-zh-html="供給高峰預計在2026至2027年，隨後因2025年開工放緩而逐漸緩解。">Supply peak expected 2026–2027, then relief as 2025 starts slow.</div>
       </div>
       <div class="chart-card">
         <h3 data-en="WIP vs Annual Absorption" data-zh="在建案量 vs 年均吸收量">WIP vs Annual Absorption</h3>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-wip-absorb"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-wip-absorb"></canvas></div>
         <div class="insight-box" data-en-html="~3.2 years of supply in pipeline at current absorption rates." data-zh-html="以目前吸收速度計算，在建管線約需3.2年去化。">~3.2 years of supply in pipeline at current absorption rates.</div>
       </div>
     </div>
 
-    <!-- Section C: Overhang Deep Dive -->
     <h2 class="section-heading" data-en="C. Overhang Deep Dive" data-zh="C. 待售餘屋深度分析">C. Overhang Deep Dive</h2>
-
     <div id="overhang-tabs">
       <div class="tab-bar">
         <button class="active" data-tab="oh-national" onclick="switchTab('overhang-tabs','oh-national')" data-en="National Overview" data-zh="全國概覽">National Overview</button>
         <button data-tab="oh-price" onclick="switchTab('overhang-tabs','oh-price'); initOhPrice();" data-en="By Price Band" data-zh="按價格帶分析">By Price Band</button>
-        <button data-tab="oh-sa" onclick="switchTab('overhang-tabs','oh-sa'); initOhSA();" data-en="Serviced Apartments" data-zh="服務式公寓分析">Serviced Apartments</button>
+        <button data-tab="oh-sa" onclick="switchTab('overhang-tabs','oh-sa');" data-en="Serviced Apartments" data-zh="服務式公寓分析">Serviced Apartments</button>
       </div>
 
       <div id="tab-oh-national" class="tab-panel active">
         <div class="chart-grid two-col">
           <div class="chart-card">
             <h3 data-en="Overhang by State (Q3 2025)" data-zh="各州積壓（2025年Q3）">Overhang by State (Q3 2025)</h3>
-            <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-oh-state"></canvas></div>
+            <div style="position:relative;height:220px;"><canvas id="chart-oh-state"></canvas></div>
           </div>
           <div class="chart-card">
             <h3 data-en="Overhang Trend 2018–2025" data-zh="積壓趨勢 2018–2025">Overhang Trend 2018–2025</h3>
-            <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-oh-trend"></canvas></div>
+            <div style="position:relative;height:220px;"><canvas id="chart-oh-trend"></canvas></div>
             <p class="chart-footnote" data-en-html="* 2025 Q3 includes serviced apartments — scope change." data-zh-html="* 2025年Q3含服務式公寓——統計口徑有變。">* 2025 Q3 includes serviced apartments — scope change.</p>
           </div>
         </div>
@@ -131,12 +124,12 @@
         <div class="chart-grid two-col">
           <div class="chart-card">
             <h3 data-en="Overhang by Price Band (1H2024)" data-zh="按價格帶積壓（2024年上半）">Overhang by Price Band (1H2024)</h3>
-            <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-oh-price-pie"></canvas></div>
+            <div style="position:relative;height:220px;"><canvas id="chart-oh-price-pie"></canvas></div>
             <p class="chart-footnote" data-en-html="Affordable (&lt;RM300k) rivals mid-high end — overhang is no longer just a luxury problem." data-zh-html="可負擔段（&lt;RM300k）與中高端並列——積壓已不再只是豪宅問題。">Affordable (&lt;RM300k) rivals mid-high end — overhang is no longer just a luxury problem.</p>
           </div>
           <div class="chart-card">
             <h3 data-en="Demand vs Supply Mismatch" data-zh="需求 vs 供給錯配">Demand vs Supply Mismatch</h3>
-            <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-oh-mismatch"></canvas></div>
+            <div style="position:relative;height:220px;"><canvas id="chart-oh-mismatch"></canvas></div>
             <p class="chart-footnote" data-en-html="Below RM300k: demand 53% vs supply 18% — 35pp gap. *Supply est." data-zh-html="RM300k以下：需求53% vs 供給18%——差距35個百分點。*供給為估算。">Below RM300k: demand 53% vs supply 18% — 35pp gap. *Supply est.</p>
           </div>
         </div>
@@ -164,27 +157,23 @@
       </div>
     </div>
 
-    <!-- Section D: Developer Behaviour -->
     <h2 class="section-heading" data-en="D. Developer Behaviour" data-zh="D. 開發商行為分析">D. Developer Behaviour</h2>
     <p style="color:var(--text-secondary);font-size:13px;margin-bottom:12px;" data-en="Developers know overhang is severe. The answer lies in land cost structure and profit margin mathematics." data-zh="開發商明知積壓嚴重。答案在土地成本結構和利潤邊際的數學邏輯。">
       Developers know overhang is severe. The answer lies in land cost structure and profit margin mathematics.
     </p>
-
     <div class="chart-grid two-col">
       <div class="chart-card">
         <h3 data-en="Developer Launch Price Mix (Est.)*" data-zh="開發商推盤價格組合（估算）*">Developer Launch Price Mix (Est.)*</h3>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-dev-mix"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-dev-mix"></canvas></div>
         <p class="chart-footnote" data-en-html="*Directional estimates based on annual reports." data-zh-html="*基於年報的方向性估算。">*Directional estimates based on annual reports.</p>
       </div>
     </div>
 
-    <!-- Section E: State Policy -->
     <h2 class="section-heading" data-en="E. State Policy Impact" data-zh="E. 州政府政策影響">E. State Policy Impact</h2>
-
     <div class="chart-grid">
       <div class="chart-card">
         <h3 data-en="Foreign Buyer Minimum Threshold by State" data-zh="各州外國買家最低門檻">Foreign Buyer Minimum Threshold by State</h3>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-foreign-min"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-foreign-min"></canvas></div>
         <p class="chart-footnote" data-en-html="*Policies subject to change; refer to latest state announcements." data-zh-html="*政策持續更新，以最新州政府公告為準。">*Policies subject to change; refer to latest state announcements.</p>
       </div>
     </div>
@@ -206,9 +195,10 @@
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     setChartDefaults();
+    const charts = {};
 
     // Annual Pipeline
-    createChart('chart-annual-pipeline', {
+    charts['annual-pipeline'] = new Chart(document.getElementById('chart-annual-pipeline'), {
       type: 'line',
       data: {
         labels: ['2019','2020','2021','2022','2023','2024','2025 Q1-Q3'],
@@ -218,131 +208,139 @@
           { label: 'Completions', data: [78000,72000,76393,71981,74893,82135,69303], borderColor: C.green },
         ]
       },
-      options: { responsive: true, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
     });
 
-    // Projected Completions
-    createChart('chart-projected', {
+    // Projected Completions (vertical bar)
+    charts['projected'] = new Chart(document.getElementById('chart-projected'), {
       type: 'bar',
       data: {
         labels: ['2022','2023','2024','2026E','2027E','2028E'],
         datasets: [
-          { label: 'Historical', data: [71981,74893,82135,null,null,null], backgroundColor: C.navy },
-          { label: 'Projected Low', data: [null,null,null,90000,85000,75000], backgroundColor: 'rgba(30,58,95,0.3)', borderColor: C.navy, borderWidth: 1, borderDash: [3,3] },
-          { label: 'Projected High', data: [null,null,null,100000,95000,85000], backgroundColor: 'rgba(217,119,6,0.2)', borderColor: C.orange, borderWidth: 1, borderDash: [3,3] },
+          { label: 'Historical', data: [71981,74893,82135,null,null,null], backgroundColor: C.navy, barThickness: 30 },
+          { label: 'Projected Low', data: [null,null,null,90000,85000,75000], backgroundColor: 'rgba(30,58,95,0.3)', borderColor: C.navy, borderWidth: 1, borderDash: [3,3], barThickness: 30 },
+          { label: 'Projected High', data: [null,null,null,100000,95000,85000], backgroundColor: 'rgba(217,119,6,0.2)', borderColor: C.orange, borderWidth: 1, borderDash: [3,3], barThickness: 30 },
         ]
       },
-      options: { responsive: true, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
     });
 
-    // WIP vs Absorption
-    createChart('chart-wip-absorb', {
+    // WIP vs Absorption (vertical bar)
+    charts['wip-absorb'] = new Chart(document.getElementById('chart-wip-absorb'), {
       type: 'bar',
       data: {
         labels: ['WIP in Pipeline*','Annual Absorption'],
-        datasets: [{ label: 'Units', data: [275000,85000], backgroundColor: [C.orange, C.green] }]
+        datasets: [{ label: 'Units', data: [275000,85000], backgroundColor: [C.orange, C.green], barThickness: 30 }]
       },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { y: { ticks: { callback: v => fmtNum(v) } } }
-      }
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
     });
 
-    // Overhang by State
+    // Overhang by State (horizontal bar)
     (() => {
       const labels = ['Perak','Johor','Sabah','Selangor','Penang','Kelantan','KL','N. Sembilan','Others'];
       const data = [3300,3293,2771,2757,2730,2599,2287,2205,6730];
-      createChart('chart-oh-state', {
+      charts['oh-state'] = new Chart(document.getElementById('chart-oh-state'), {
         type: 'bar',
-        data: { labels, datasets: [{ label: 'Units', data, backgroundColor: data.map(v => v > 3000 ? C.red : C.navy), barThickness: 20, minBarLength: 3 }] },
-        options: { indexAxis: 'y', barPercentage: 0.8, categoryPercentage: 0.9, responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => v.toLocaleString() } } } }
+        data: { labels, datasets: [{ label: 'Units', data, backgroundColor: data.map(v => v > 3000 ? C.red : C.navy), barThickness: 20, minBarLength: 2 }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => v.toLocaleString() } } } }
       });
     })();
 
     // Overhang Trend
     (() => {
       const data = [32313,36863,31092,26424,27746,25816,22642,44794];
-      createChart('chart-oh-trend', {
+      charts['oh-trend'] = new Chart(document.getElementById('chart-oh-trend'), {
         type: 'line',
         data: {
           labels: ['2018','2019','2020','2021','2022','2023','2024H1','2025Q3*'],
           datasets: [{ label: 'Overhang', data, borderColor: C.navy, backgroundColor: C.navy_bg, fill: true,
             pointRadius: data.map((_,i) => i===7?5:2), pointBackgroundColor: data.map((_,i) => i===7?C.red:C.navy) }]
         },
-        options: { responsive: true, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
       });
     })();
 
-    // Developer Mix
-    createChart('chart-dev-mix', {
+    // Developer Mix (vertical stacked bar)
+    charts['dev-mix'] = new Chart(document.getElementById('chart-dev-mix'), {
       type: 'bar',
       data: {
         labels: ['IOI Prop','SP Setia','Sunway','Eco World','Mah Sing'],
         datasets: [
-          { label: 'Below RM500k', data: [25,35,40,20,55], backgroundColor: C.navy },
-          { label: 'Above RM500k', data: [75,65,60,80,45], backgroundColor: C.orange },
+          { label: 'Below RM500k', data: [25,35,40,20,55], backgroundColor: C.navy, barThickness: 30 },
+          { label: 'Above RM500k', data: [75,65,60,80,45], backgroundColor: C.orange, barThickness: 30 },
         ]
       },
-      options: { responsive: true, scales: { x: { stacked: true }, y: { stacked: true, max: 100, ticks: { callback: v => v + '%' } } } }
+      options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true, max: 100, ticks: { callback: v => v + '%' } } } }
     });
 
-    // Foreign Threshold
+    // Foreign Threshold (horizontal bar)
     (() => {
       const labels = ['Penang (island)','Selangor (HD)','KL','Johor','Kedah','Melaka','Sabah','Sarawak'];
       const data = [3000000,2000000,1000000,600000,600000,500000,500000,500000];
-      createChart('chart-foreign-min', {
+      charts['foreign-min'] = new Chart(document.getElementById('chart-foreign-min'), {
         type: 'bar',
-        data: { labels, datasets: [{ label: 'Min. Purchase (RM)', data, backgroundColor: data.map(v => v >= 2e6 ? C.red : v >= 1e6 ? C.orange : C.navy), barThickness: 20, minBarLength: 3 }] },
-        options: { indexAxis: 'y', barPercentage: 0.8, categoryPercentage: 0.9, responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => 'RM ' + (v/1e6).toFixed(1) + 'M' } } } }
+        data: { labels, datasets: [{ label: 'Min. Purchase (RM)', data, backgroundColor: data.map(v => v >= 2e6 ? C.red : v >= 1e6 ? C.orange : C.navy), barThickness: 20, minBarLength: 2 }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => 'RM ' + (v/1e6).toFixed(1) + 'M' } } } }
       });
     })();
 
-    registerChartI18n('chart-annual-pipeline', null, null,
-      ['Planned Supply', 'Starts', 'Completions'],
-      ['規劃供給量', '開工量', '完工量']);
-    registerChartI18n('chart-projected', null, null,
-      ['Historical', 'Projected Low', 'Projected High'],
-      ['歷史數據', '預測低估值', '預測高估值']);
-    registerChartI18n('chart-wip-absorb',
-      ['WIP in Pipeline*', 'Annual Absorption'],
-      ['在建管線量*', '年均吸收量'],
-      ['Units'], ['單位']);
-    registerChartI18n('chart-oh-state', null, null, ['Units'], ['單位']);
-    registerChartI18n('chart-oh-trend', null, null, ['Overhang'], ['積壓']);
-    registerChartI18n('chart-dev-mix', null, null,
-      ['Below RM500k', 'Above RM500k'],
-      ['RM500k以下', 'RM500k以上']);
-    registerChartI18n('chart-foreign-min', null, null,
-      ['Min. Purchase (RM)'], ['最低購入門檻（RM）']);
-    initLanguage();
-  });
+    // Lazy tab init for price band
+    let _ohPriceInit = false;
+    window.initOhPrice = function() {
+      if (_ohPriceInit) return; _ohPriceInit = true;
+      setTimeout(() => {
+        charts['oh-price-pie'] = new Chart(document.getElementById('chart-oh-price-pie'), {
+          type: 'doughnut',
+          data: { labels: ['Below RM300k','RM300k–500k','RM500k–1M','Above RM1M'], datasets: [{ data: [30.2,22.1,29.6,18.1], backgroundColor: [C.navy,C.blue,C.orange,C.red], borderWidth: 0 }] },
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + '%' } } } }
+        });
+        charts['oh-mismatch'] = new Chart(document.getElementById('chart-oh-mismatch'), {
+          type: 'bar',
+          data: { labels: ['Below RM300k','RM300k–500k','RM500k–1M','Above RM1M'], datasets: [
+            { label: 'Demand %', data: [53.1,27.3,13.8,5.8], backgroundColor: C.navy, barThickness: 30 },
+            { label: 'Supply %', data: [18,25,38,19], backgroundColor: C.orange, barThickness: 30 },
+          ] },
+          options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => v + '%' } } } }
+        });
+      }, 50);
+    };
 
-  // Lazy tab inits
-  let _ohPriceInit = false, _ohSAInit = false;
-  function initOhPrice() {
-    if (_ohPriceInit) return; _ohPriceInit = true;
-    requestAnimationFrame(() => { requestAnimationFrame(() => {
-      createChart('chart-oh-price-pie', {
-        type: 'doughnut',
-        data: { labels: ['Below RM300k','RM300k–500k','RM500k–1M','Above RM1M'], datasets: [{ data: [30.2,22.1,29.6,18.1], backgroundColor: [C.navy,C.blue,C.orange,C.red], borderWidth: 0 }] },
-        options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + '%' } } } }
-      });
-      createChart('chart-oh-mismatch', {
-        type: 'bar',
-        data: { labels: ['Below RM300k','RM300k–500k','RM500k–1M','Above RM1M'], datasets: [
-          { label: 'Demand %', data: [53.1,27.3,13.8,5.8], backgroundColor: C.navy },
-          { label: 'Supply %', data: [18,25,38,19], backgroundColor: C.orange },
-        ] },
-        options: { responsive: true, scales: { y: { ticks: { callback: v => v + '%' } } } }
-      });
-      registerChartI18n('chart-oh-price-pie', null, null, null, null);
-      registerChartI18n('chart-oh-mismatch', null, null,
-        ['Demand %', 'Supply %'], ['需求 %', '供給 %']);
-      if (localStorage.getItem('lang') === 'zh') updateChartLanguage('zh');
-    }); });
-  }
-  function initOhSA() { _ohSAInit = true; }
+    // Language switching
+    window.updateChartLanguage = function(lang) {
+      if (charts['annual-pipeline']) {
+        const ds = charts['annual-pipeline'].data.datasets;
+        ds[0].label = lang === 'zh' ? '規劃供給量' : 'Planned Supply';
+        ds[1].label = lang === 'zh' ? '開工量' : 'Starts';
+        ds[2].label = lang === 'zh' ? '完工量' : 'Completions';
+        charts['annual-pipeline'].update('none');
+      }
+      if (charts['projected']) {
+        const ds = charts['projected'].data.datasets;
+        ds[0].label = lang === 'zh' ? '歷史數據' : 'Historical';
+        ds[1].label = lang === 'zh' ? '預測低估值' : 'Projected Low';
+        ds[2].label = lang === 'zh' ? '預測高估值' : 'Projected High';
+        charts['projected'].update('none');
+      }
+      if (charts['wip-absorb']) {
+        charts['wip-absorb'].data.labels = lang === 'zh' ? ['在建管線量*','年均吸收量'] : ['WIP in Pipeline*','Annual Absorption'];
+        charts['wip-absorb'].data.datasets[0].label = lang === 'zh' ? '單位' : 'Units';
+        charts['wip-absorb'].update('none');
+      }
+      if (charts['oh-state']) { charts['oh-state'].data.datasets[0].label = lang === 'zh' ? '單位' : 'Units'; charts['oh-state'].update('none'); }
+      if (charts['oh-trend']) { charts['oh-trend'].data.datasets[0].label = lang === 'zh' ? '積壓' : 'Overhang'; charts['oh-trend'].update('none'); }
+      if (charts['dev-mix']) {
+        charts['dev-mix'].data.datasets[0].label = lang === 'zh' ? 'RM500k以下' : 'Below RM500k';
+        charts['dev-mix'].data.datasets[1].label = lang === 'zh' ? 'RM500k以上' : 'Above RM500k';
+        charts['dev-mix'].update('none');
+      }
+      if (charts['foreign-min']) { charts['foreign-min'].data.datasets[0].label = lang === 'zh' ? '最低購入門檻（RM）' : 'Min. Purchase (RM)'; charts['foreign-min'].update('none'); }
+      if (charts['oh-mismatch']) {
+        charts['oh-mismatch'].data.datasets[0].label = lang === 'zh' ? '需求 %' : 'Demand %';
+        charts['oh-mismatch'].data.datasets[1].label = lang === 'zh' ? '供給 %' : 'Supply %';
+        charts['oh-mismatch'].update('none');
+      }
+    };
+  });
   </script>
 </body>
 </html>

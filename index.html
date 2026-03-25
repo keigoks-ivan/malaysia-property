@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Charts fixed: 2026-03-25 - explicit height, barThickness, tab lazy init -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -141,7 +140,7 @@
       <div class="chart-card">
         <h3 data-en="Yield Spread Monitor" data-zh="利差監測儀">Yield Spread Monitor</h3>
         <p class="chart-subtitle" data-en="Gross Rental Yield vs OPR — Key institutional entry signal" data-zh="租金收益率 vs 隔夜政策利率｜機構投資進場訊號">Gross Rental Yield vs OPR — Key institutional entry signal</p>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-yield-spread"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-yield-spread"></canvas></div>
         <div class="insight-box" data-en-html="Current spread +2.44% — Positive but compressed vs 2020–2021 peak (+2.95%). Spread &gt; 2% historically indicates relative value. OPR cut to 2.75% (Jul 2025) has widened spread from recent trough." data-zh-html="當前利差+2.44%——正向但相較2020至2021年高峰（+2.95%）有所收窄。歷史上利差超過2%通常顯示相對價值。2025年7月OPR降至2.75%已使利差從近期低點擴大。">
           Current spread +2.44% — Positive but compressed vs 2020–2021 peak (+2.95%).
           Spread &gt; 2% historically indicates relative value.
@@ -151,7 +150,7 @@
       <div class="chart-card">
         <h3 data-en="Supply Pipeline Pressure" data-zh="新建供給壓力">Supply Pipeline Pressure</h3>
         <p class="chart-subtitle" data-en="Months of supply by property type" data-zh="各類型房產去化月數（月）">Months of supply by property type</p>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-pipeline-pressure"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-pipeline-pressure"></canvas></div>
         <div class="insight-box" data-en-html="High-rise takes 22 months to clear vs 6-month benchmark. 2024–2025 completion surge will pressure absorption further." data-zh-html="高層住宅需22個月去化，遠超6個月的健康基準。2024至2025年完工交屋量激增將進一步加大吸收壓力。">
           High-rise takes 22 months to clear vs 6-month benchmark.
           2024–2025 completion surge will pressure absorption further.
@@ -163,15 +162,15 @@
     <div class="chart-grid two-col">
       <div class="chart-card">
         <h3 data-en="Transaction Volume Trend" data-zh="交易量趨勢">Transaction Volume Trend</h3>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-tx-trend"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-tx-trend"></canvas></div>
       </div>
       <div class="chart-card">
         <h3 data-en="Overhang Pipeline" data-zh="待售餘屋趨勢">Overhang Pipeline</h3>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-overhang-pipeline"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-overhang-pipeline"></canvas></div>
       </div>
       <div class="chart-card">
         <h3 data-en="Rental Yield by City (Q1 2026)" data-zh="各城市租金收益率（2026年Q1）">Rental Yield by City (Q1 2026)</h3>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-yield-city"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-yield-city"></canvas></div>
         <p class="chart-footnote" data-en="Cities above OPR = positive carry potential" data-zh="收益率高於OPR = 正向利差空間">Cities above OPR = positive carry potential</p>
       </div>
     </div>
@@ -194,9 +193,10 @@
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     setChartDefaults();
+    const charts = {};
 
     // Yield Spread Monitor
-    createChart('chart-yield-spread', {
+    charts['yield-spread'] = new Chart(document.getElementById('chart-yield-spread'), {
       type: 'line',
       data: {
         labels: ['2019','2020','2021','2022','2023Q1','2023Q3','2024Q1','2024Q3','2025Q1','2025Q3'],
@@ -205,11 +205,11 @@
           { label: 'OPR %', data: [3.00,1.75,1.75,2.75,3.00,3.00,3.00,3.00,3.00,2.75], borderColor: C.red, borderDash: [4,3], borderWidth: 1.5, pointRadius: 3 },
         ]
       },
-      options: { responsive: true, scales: { y: { min: 1, max: 6, ticks: { callback: v => v + '%' } } } }
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 1, max: 6, ticks: { callback: v => v + '%' } } } }
     });
 
     // Supply Pipeline Pressure
-    createChart('chart-pipeline-pressure', {
+    charts['pipeline-pressure'] = new Chart(document.getElementById('chart-pipeline-pressure'), {
       type: 'line',
       data: {
         labels: ['2019','2020','2021','2022','2023','2024','2025E'],
@@ -219,11 +219,11 @@
           { label: '6-month benchmark', data: [6,6,6,6,6,6,6], borderColor: C.red, borderDash: [4,3], borderWidth: 1, pointRadius: 0 },
         ]
       },
-      options: { responsive: true, scales: { y: { title: { display: true, text: 'Months' } } } }
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { title: { display: true, text: 'Months' } } } }
     });
 
     // Transaction Volume
-    createChart('chart-tx-trend', {
+    charts['tx-trend'] = new Chart(document.getElementById('chart-tx-trend'), {
       type: 'line',
       data: {
         labels: ['2019','2020','2021','2022','2023','2024','2025 Q1-Q3'],
@@ -231,17 +231,14 @@
           label: 'Transactions', data: [328647,295116,334044,389107,399008,420525,310000],
           borderColor: C.navy, backgroundColor: C.navy_bg, fill: true,
           pointRadius: [2,2,2,2,2,5,2],
-          pointBackgroundColor: ['#1e3a5f','#1e3a5f','#1e3a5f','#1e3a5f','#1e3a5f','#16a34a','#1e3a5f'],
+          pointBackgroundColor: [C.navy,C.navy,C.navy,C.navy,C.navy,C.green,C.navy],
         }]
       },
-      options: {
-        responsive: true,
-        scales: { y: { ticks: { callback: v => fmtNum(v) } } }
-      }
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
     });
 
     // Overhang Pipeline
-    createChart('chart-overhang-pipeline', {
+    charts['overhang-pipeline'] = new Chart(document.getElementById('chart-overhang-pipeline'), {
       type: 'line',
       data: {
         labels: ['2018','2019','2020','2021','2022','2023','2024H1','2025Q3'],
@@ -250,43 +247,55 @@
           { label: 'Total incl. SA', data: [null,null,null,null,null,47463,42126,44794], borderColor: C.orange, borderDash: [4,3] },
         ]
       },
-      options: { responsive: true, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
     });
 
-    // Rental Yield by City
+    // Rental Yield by City (horizontal bar)
     (() => {
       const labels = ['Iskandar Puteri','JB City','Subang Jaya','National Avg','KL City','Penang GT'];
       const data = [5.60,5.47,5.40,5.19,4.60,3.77];
       const colors = data.map((v,i) => i === 3 ? C.navy : v > 5.19 ? C.green : C.orange);
-      createChart('chart-yield-city', {
+      charts['yield-city'] = new Chart(document.getElementById('chart-yield-city'), {
         type: 'bar',
-        data: { labels, datasets: [{ label: 'Gross Yield %', data, backgroundColor: colors, barThickness: 20, minBarLength: 3 }] },
+        data: { labels, datasets: [{ label: 'Gross Yield %', data, backgroundColor: colors, barThickness: 20, minBarLength: 2 }] },
         options: {
-          indexAxis: 'y', barPercentage: 0.8, categoryPercentage: 0.9, responsive: true,
+          indexAxis: 'y', responsive: true, maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: { x: { min: 0, max: 7, ticks: { callback: v => v + '%' } } }
         }
       });
     })();
 
-    // Chart i18n registrations
-    registerChartI18n('chart-yield-spread', null, null,
-      ['Rental Yield %', 'OPR %'],
-      ['租金收益率 %', 'OPR %']);
-    registerChartI18n('chart-pipeline-pressure', null, null,
-      ['Landed (months)', 'High-rise (months)', '6-month benchmark'],
-      ['有地住宅（月）', '高層住宅（月）', '6個月基準']);
-    registerChartI18n('chart-tx-trend', null, null,
-      ['Transactions'], ['交易量']);
-    registerChartI18n('chart-overhang-pipeline', null, null,
-      ['Residential Only', 'Total incl. SA'],
-      ['純住宅', '總計含服務式公寓']);
-    registerChartI18n('chart-yield-city',
-      ['Iskandar Puteri','JB City','Subang Jaya','National Avg','KL City','Penang GT'],
-      ['依斯干達公主城','新山市','梳邦再也','全國平均','吉隆坡市','檳城喬治市'],
-      ['Gross Yield %'], ['毛收益率 %']);
-
-    initLanguage();
+    // Language switching for charts
+    window.updateChartLanguage = function(lang) {
+      if (charts['yield-spread']) {
+        charts['yield-spread'].data.datasets[0].label = lang === 'zh' ? '租金收益率 %' : 'Rental Yield %';
+        charts['yield-spread'].data.datasets[1].label = lang === 'zh' ? 'OPR %' : 'OPR %';
+        charts['yield-spread'].update('none');
+      }
+      if (charts['pipeline-pressure']) {
+        charts['pipeline-pressure'].data.datasets[0].label = lang === 'zh' ? '有地住宅（月）' : 'Landed (months)';
+        charts['pipeline-pressure'].data.datasets[1].label = lang === 'zh' ? '高層住宅（月）' : 'High-rise (months)';
+        charts['pipeline-pressure'].data.datasets[2].label = lang === 'zh' ? '6個月基準' : '6-month benchmark';
+        charts['pipeline-pressure'].update('none');
+      }
+      if (charts['tx-trend']) {
+        charts['tx-trend'].data.datasets[0].label = lang === 'zh' ? '交易量' : 'Transactions';
+        charts['tx-trend'].update('none');
+      }
+      if (charts['overhang-pipeline']) {
+        charts['overhang-pipeline'].data.datasets[0].label = lang === 'zh' ? '純住宅' : 'Residential Only';
+        charts['overhang-pipeline'].data.datasets[1].label = lang === 'zh' ? '總計含服務式公寓' : 'Total incl. SA';
+        charts['overhang-pipeline'].update('none');
+      }
+      if (charts['yield-city']) {
+        charts['yield-city'].data.labels = lang === 'zh'
+          ? ['依斯干達公主城','新山市','梳邦再也','全國平均','吉隆坡市','檳城喬治市']
+          : ['Iskandar Puteri','JB City','Subang Jaya','National Avg','KL City','Penang GT'];
+        charts['yield-city'].data.datasets[0].label = lang === 'zh' ? '毛收益率 %' : 'Gross Yield %';
+        charts['yield-city'].update('none');
+      }
+    };
   });
   </script>
 </body>

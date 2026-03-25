@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Charts fixed: 2026-03-25 - explicit height, barThickness, tab lazy init -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -46,7 +45,7 @@
     <div class="page-header">
       <span class="updated" data-en="LAST UPDATED: Q3 2025" data-zh="最後更新：2025年Q3">LAST UPDATED: Q3 2025</span>
       <h1 data-en="Demand Analysis" data-zh="需求分析">Demand Analysis</h1>
-      <p class="subtitle" data-en="Transaction Volume, Buyer Composition &amp; Structural Demand Drivers" data-zh="交易量、買家結構及結構性需求驅動因素">Transaction Volume, Buyer Composition & Structural Demand Drivers</p>
+      <p class="subtitle" data-en="Transaction Volume, Buyer Composition &amp; Structural Demand Drivers" data-zh="交易量、買家結構及結構性需求驅動因素">Transaction Volume, Buyer Composition &amp; Structural Demand Drivers</p>
     </div>
 
     <div class="kpi-grid">
@@ -79,11 +78,11 @@
     <div class="chart-grid two-col">
       <div class="chart-card">
         <h3 data-en="Transaction Volume Trend" data-zh="交易量趨勢">Transaction Volume Trend</h3>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-tx"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-tx"></canvas></div>
       </div>
       <div class="chart-card">
         <h3 data-en="State Transaction YoY Growth (Q3 2025)" data-zh="各州交易量年增率（2025年Q3）">State Transaction YoY Growth (Q3 2025)</h3>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-state-yoy"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-state-yoy"></canvas></div>
       </div>
     </div>
 
@@ -91,12 +90,12 @@
       <div class="chart-card">
         <h3 data-en="Buyer Type Composition" data-zh="買家類型結構">Buyer Type Composition</h3>
         <p class="chart-subtitle" data-en="Individual owner-occupier vs investor vs foreign (est.)" data-zh="自住買家 vs 投資買家 vs 外國買家（估算）">Individual owner-occupier vs investor vs foreign (est.)</p>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-buyer-type"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-buyer-type"></canvas></div>
         <div class="insight-box" data-en-html="Foreign buyer share has declined since 2022 as MM2H tightened and China capital controls persist." data-zh-html="2022年起外國買家比例下滑，主因MM2H收緊及中國資本管制持續。">Foreign buyer share has declined since 2022 as MM2H tightened and China capital controls persist.</div>
       </div>
       <div class="chart-card">
         <h3 data-en="Loan Application vs Approval Rate" data-zh="貸款申請量 vs 批准率">Loan Application vs Approval Rate</h3>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-loan"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-loan"></canvas></div>
         <div class="insight-box" data-en-html="Approval rate has never exceeded 44% — a structural barrier locking out potential buyers." data-zh-html="批准率從未超過44%——結構性障礙將潛在買家擋在門外。">Approval rate has never exceeded 44% — a structural barrier locking out potential buyers.</div>
       </div>
     </div>
@@ -104,12 +103,12 @@
     <div class="chart-grid two-col">
       <div class="chart-card">
         <h3 data-en="Primary vs Secondary Market Split" data-zh="一手 vs 中古屋成交比例">Primary vs Secondary Market Split</h3>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-pri-sec"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-pri-sec"></canvas></div>
         <div class="insight-box" data-en-html="Secondary market dominates at 79.4%, reflecting buyer preference for proven locations." data-zh-html="中古屋市場主導（79.4%），反映買家偏好已有市場驗證的成熟地段。">Secondary market dominates at 79.4%, reflecting buyer preference for proven locations.</div>
       </div>
       <div class="chart-card">
         <h3 data-en="New Launch Take-up Rate (Q3 2025)" data-zh="新推盤即時銷售率（2025年Q3）">New Launch Take-up Rate (Q3 2025)</h3>
-        <div class="chart-wrap" style="position:relative;height:220px;"><canvas id="chart-takeup"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="chart-takeup"></canvas></div>
         <div class="insight-box" data-en-html="Extremely low first-day sales indicate weak primary market demand, especially for high-rise." data-zh-html="極低的首日銷售率顯示一級市場需求疲弱，尤其高層住宅。">Extremely low first-day sales indicate weak primary market demand, especially for high-rise.</div>
       </div>
     </div>
@@ -127,35 +126,32 @@
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     setChartDefaults();
+    const charts = {};
 
     // Transaction Volume
-    createChart('chart-tx', {
+    charts['tx'] = new Chart(document.getElementById('chart-tx'), {
       type: 'line',
       data: {
         labels: ['2019','2020','2021','2022','2023','2024','2025 Q1-Q3'],
         datasets: [{ label: 'Transactions', data: [328647,295116,334044,389107,399008,420525,310000], borderColor: C.navy, backgroundColor: C.navy_bg, fill: true,
           pointRadius: [2,2,2,2,2,5,2], pointBackgroundColor: [C.navy,C.navy,C.navy,C.navy,C.navy,C.green,C.navy] }]
       },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: true } },
-        scales: { y: { ticks: { callback: v => fmtNum(v) } } }
-      }
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true } }, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
     });
 
-    // State YoY Growth
+    // State YoY Growth (horizontal bar)
     (() => {
       const labels = ['Kelantan','Melaka','Pahang','Selangor','KL','Perlis','N. Sembilan'];
       const data = [98.05,29.83,10.74,2.06,0.21,-16.95,-16.44];
-      createChart('chart-state-yoy', {
+      charts['state-yoy'] = new Chart(document.getElementById('chart-state-yoy'), {
         type: 'bar',
-        data: { labels, datasets: [{ label: 'YoY %', data, backgroundColor: data.map(v => v >= 0 ? C.green : C.red), barThickness: 20, minBarLength: 3 }] },
-        options: { indexAxis: 'y', barPercentage: 0.8, categoryPercentage: 0.9, responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => v + '%' } } } }
+        data: { labels, datasets: [{ label: 'YoY %', data, backgroundColor: data.map(v => v >= 0 ? C.green : C.red), barThickness: 20, minBarLength: 2 }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => v + '%' } } } }
       });
     })();
 
     // Buyer Type Composition (stacked area)
-    createChart('chart-buyer-type', {
+    charts['buyer-type'] = new Chart(document.getElementById('chart-buyer-type'), {
       type: 'line',
       data: {
         labels: ['2018','2019','2020','2021','2022','2023','2024','2025E'],
@@ -165,11 +161,11 @@
           { label: 'Foreign', data: [12,12,11,11,10,9,9,9], borderColor: C.blue, backgroundColor: C.blue_bg, fill: true },
         ]
       },
-      options: { responsive: true, scales: { y: { stacked: true, max: 100, ticks: { callback: v => v + '%' } } } }
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { stacked: true, max: 100, ticks: { callback: v => v + '%' } } } }
     });
 
     // Loan Application vs Approval
-    createChart('chart-loan', {
+    charts['loan'] = new Chart(document.getElementById('chart-loan'), {
       type: 'line',
       data: {
         labels: ['2020','2021','2022','2023','2024 Q3'],
@@ -179,7 +175,7 @@
         ]
       },
       options: {
-        responsive: true,
+        responsive: true, maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
         scales: {
           y: { position: 'left', title: { display: true, text: 'Applications (RM bil)' } },
@@ -189,7 +185,7 @@
     });
 
     // Primary vs Secondary Split
-    createChart('chart-pri-sec', {
+    charts['pri-sec'] = new Chart(document.getElementById('chart-pri-sec'), {
       type: 'line',
       data: {
         labels: ['2020','2021','2022','2023','2024','2025H1'],
@@ -198,39 +194,46 @@
           { label: 'Secondary %', data: [70,72,68,74,78,79.4], borderColor: C.navy, backgroundColor: C.navy_bg, fill: true },
         ]
       },
-      options: { responsive: true, scales: { y: { max: 100, ticks: { callback: v => v + '%' } } } }
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { max: 100, ticks: { callback: v => v + '%' } } } }
     });
 
-    // Take-up Rate
-    createChart('chart-takeup', {
+    // Take-up Rate (vertical bar)
+    charts['takeup'] = new Chart(document.getElementById('chart-takeup'), {
       type: 'bar',
       data: {
         labels: ['Landed','High-Rise'],
-        datasets: [{ label: 'Take-up Rate %', data: [14, 5.1], backgroundColor: [C.green, C.red] }]
+        datasets: [{ label: 'Take-up Rate %', data: [14, 5.1], backgroundColor: [C.green, C.red], barThickness: 30 }]
       },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { y: { max: 25, ticks: { callback: v => v + '%' } } }
-      }
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { max: 25, ticks: { callback: v => v + '%' } } } }
     });
 
-    registerChartI18n('chart-tx', null, null, ['Transactions'], ['交易量']);
-    registerChartI18n('chart-state-yoy', null, null, ['YoY %'], ['年增率 %']);
-    registerChartI18n('chart-buyer-type', null, null,
-      ['Owner-Occupier', 'Investor', 'Foreign'],
-      ['自住買家', '投資買家', '外國買家']);
-    registerChartI18n('chart-loan', null, null,
-      ['Applications (RM bil)', 'Approval Rate %'],
-      ['申請量（十億令吉）', '批准率 %']);
-    registerChartI18n('chart-pri-sec', null, null,
-      ['Primary %', 'Secondary %'],
-      ['一手新案 %', '中古屋 %']);
-    registerChartI18n('chart-takeup',
-      ['Landed', 'High-Rise'],
-      ['有地住宅', '高層住宅'],
-      ['Take-up Rate %'], ['即時銷售率 %']);
-    initLanguage();
+    // Language switching
+    window.updateChartLanguage = function(lang) {
+      if (charts['tx']) { charts['tx'].data.datasets[0].label = lang === 'zh' ? '交易量' : 'Transactions'; charts['tx'].update('none'); }
+      if (charts['state-yoy']) { charts['state-yoy'].data.datasets[0].label = lang === 'zh' ? '年增率 %' : 'YoY %'; charts['state-yoy'].update('none'); }
+      if (charts['buyer-type']) {
+        const ds = charts['buyer-type'].data.datasets;
+        ds[0].label = lang === 'zh' ? '自住買家' : 'Owner-Occupier';
+        ds[1].label = lang === 'zh' ? '投資買家' : 'Investor';
+        ds[2].label = lang === 'zh' ? '外國買家' : 'Foreign';
+        charts['buyer-type'].update('none');
+      }
+      if (charts['loan']) {
+        charts['loan'].data.datasets[0].label = lang === 'zh' ? '申請量（十億令吉）' : 'Applications (RM bil)';
+        charts['loan'].data.datasets[1].label = lang === 'zh' ? '批准率 %' : 'Approval Rate %';
+        charts['loan'].update('none');
+      }
+      if (charts['pri-sec']) {
+        charts['pri-sec'].data.datasets[0].label = lang === 'zh' ? '一手新案 %' : 'Primary %';
+        charts['pri-sec'].data.datasets[1].label = lang === 'zh' ? '中古屋 %' : 'Secondary %';
+        charts['pri-sec'].update('none');
+      }
+      if (charts['takeup']) {
+        charts['takeup'].data.labels = lang === 'zh' ? ['有地住宅','高層住宅'] : ['Landed','High-Rise'];
+        charts['takeup'].data.datasets[0].label = lang === 'zh' ? '即時銷售率 %' : 'Take-up Rate %';
+        charts['takeup'].update('none');
+      }
+    };
   });
   </script>
 </body>

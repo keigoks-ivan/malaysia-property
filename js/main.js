@@ -1,4 +1,6 @@
-/* ── Colors ── */
+'use strict';
+
+/* Colors */
 const C = {
   navy: '#1e3a5f', green: '#16a34a', orange: '#d97706',
   blue: '#2563eb', red: '#dc2626', muted: '#8ba3c0',
@@ -6,6 +8,7 @@ const C = {
   orange_bg: 'rgba(217,119,6,0.08)', blue_bg: 'rgba(37,99,235,0.08)',
 };
 
+/* Formatters */
 function fmtNum(n) {
   if (n >= 1e6) return (n/1e6).toFixed(1)+'M';
   if (n >= 1e3) return (n/1e3).toFixed(1)+'K';
@@ -17,9 +20,7 @@ function fmtRM(n) {
   return 'RM '+n.toLocaleString();
 }
 
-const chartRegistry = {};
-const chartI18n = {};
-
+/* Chart defaults */
 function setChartDefaults() {
   if (typeof Chart === 'undefined') return;
   Chart.defaults.color = '#8ba3c0';
@@ -35,24 +36,11 @@ function setChartDefaults() {
   Chart.defaults.elements.point.hoverRadius = 5;
   Chart.defaults.elements.bar.borderRadius = 2;
   Chart.defaults.scale.grid = { color: '#e8f0f9' };
+  Chart.defaults.responsive = true;
+  Chart.defaults.maintainAspectRatio = false;
 }
 
-function createChart(id, config) {
-  const el = document.getElementById(id);
-  if (!el) return null;
-  const parent = el.parentElement;
-  if (parent) {
-    if (!parent.style.height) parent.style.height = '220px';
-    parent.style.position = 'relative';
-  }
-  config.options = config.options || {};
-  config.options.responsive = true;
-  config.options.maintainAspectRatio = false;
-  const chart = new Chart(el, config);
-  chartRegistry[id] = chart;
-  return chart;
-}
-
+/* Tab switching */
 function switchTab(container, tabName) {
   const wrap = document.getElementById(container);
   if (!wrap) return;
@@ -63,41 +51,9 @@ function switchTab(container, tabName) {
   wrap.querySelectorAll('.tab-bar button').forEach(b => {
     if (b.dataset.tab === tabName) b.classList.add('active');
   });
-  setTimeout(() => {
-    Object.keys(chartRegistry).forEach(id => {
-      const c = chartRegistry[id];
-      if (c && c.canvas && c.canvas.closest('.tab-panel.active')) c.resize();
-    });
-  }, 50);
 }
 
-function resizeVisibleCharts() {
-  Object.keys(chartRegistry).forEach(id => {
-    const c = chartRegistry[id];
-    if (c && c.canvas && c.canvas.offsetParent !== null) c.resize();
-  });
-}
-
-function registerChartI18n(canvasId, enLabels, zhLabels, enDatasets, zhDatasets) {
-  chartI18n[canvasId] = { enL: enLabels, zhL: zhLabels, enD: enDatasets, zhD: zhDatasets };
-}
-
-function updateChartLanguage(lang) {
-  Object.keys(chartI18n).forEach(id => {
-    const chart = chartRegistry[id];
-    const i18n = chartI18n[id];
-    if (!chart || !i18n) return;
-    if (lang === 'zh') {
-      if (i18n.zhL) chart.data.labels = i18n.zhL;
-      if (i18n.zhD) chart.data.datasets.forEach((ds, i) => { if (i18n.zhD[i]) ds.label = i18n.zhD[i]; });
-    } else {
-      if (i18n.enL) chart.data.labels = i18n.enL;
-      if (i18n.enD) chart.data.datasets.forEach((ds, i) => { if (i18n.enD[i]) ds.label = i18n.enD[i]; });
-    }
-    chart.update('none');
-  });
-}
-
+/* Language */
 function setLanguage(lang) {
   document.querySelectorAll('[data-en]').forEach(el => {
     el.textContent = lang === 'zh' ? (el.dataset.zh || el.dataset.en) : el.dataset.en;
@@ -108,11 +64,11 @@ function setLanguage(lang) {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
-  updateChartLanguage(lang);
   localStorage.setItem('lang', lang);
-  if (typeof onLanguageChange === 'function') onLanguageChange(lang);
+  if (typeof updateChartLanguage === 'function') updateChartLanguage(lang);
 }
 
-function initLanguage() {
-  setLanguage(localStorage.getItem('lang') || 'en');
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const lang = localStorage.getItem('lang') || 'en';
+  setLanguage(lang);
+});
