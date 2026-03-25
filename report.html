@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Report | Malaysia Property Monitor</title>
+  <meta name="color-scheme" content="light">
+  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}</style>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .report-container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+    .report-header {
+      background: #ffffff;
+      border: 0.5px solid #ccd9e8;
+      border-bottom: 2px solid #1e3a5f;
+      border-radius: 4px 4px 0 0;
+      padding: 32px 48px;
+      margin-bottom: 0;
+    }
+    .report-header h1 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 22px;
+      color: #1e3a5f;
+      letter-spacing: 0.05em;
+      margin: 0 0 6px;
+    }
+    .report-header .report-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #8ba3c0;
+      margin-bottom: 12px;
+    }
+    .report-header .report-note {
+      font-size: 13px;
+      color: #6b8ab0;
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .report-body {
+      background: #ffffff;
+      border: 0.5px solid #ccd9e8;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      padding: 40px 48px;
+    }
+    .report-body h2 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #1e3a5f;
+      border-bottom: 1px solid #ccd9e8;
+      padding-bottom: 8px;
+      margin-top: 36px;
+      margin-bottom: 16px;
+    }
+    .report-body h2:first-child {
+      margin-top: 0;
+    }
+    .report-body p {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 16px;
+      line-height: 1.9;
+      color: #2c3e50;
+      margin-bottom: 18px;
+    }
+    .report-body strong {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #1e3a5f;
+      background: #eef3f9;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .report-footer {
+      border-top: 1px solid #ccd9e8;
+      padding-top: 20px;
+      margin-top: 36px;
+    }
+    .report-footer p {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 11px !important;
+      color: #8ba3c0 !important;
+      line-height: 1.6 !important;
+      margin-bottom: 4px !important;
+    }
+    /* Spinner */
+    .loading-state {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .spinner {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      border: 3px solid #dde8f2;
+      border-top-color: #1e3a5f;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-state p {
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 13px !important;
+      color: #8ba3c0 !important;
+      margin-top: 16px !important;
+    }
+    /* Error state */
+    .api-note {
+      background: #fffbeb;
+      border: 1px solid #fbbf24;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: #92400e;
+      line-height: 1.5;
+    }
+    @media (max-width: 600px) {
+      .report-header, .report-body { padding: 24px 20px; }
+      .report-body p { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="logo">MALAYSIA PROPERTY MONITOR</a>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="supply.html">Supply</a>
+      <a href="demand.html">Demand</a>
+      <a href="valuation.html">Valuation</a>
+      <a href="risk.html">Risk</a>
+      <a href="kl.html">KL</a>
+      <a href="report.html" class="active">Report</a>
+    </nav>
+    <span class="opr-badge">OPR: 2.75% &#9660;</span>
+  </header>
+
+  <div class="report-container">
+    <div class="report-header">
+      <h1>MALAYSIA PROPERTY MARKET REPORT</h1>
+      <div class="report-meta" id="report-meta">Loading...</div>
+      <div class="report-note">
+        This report is automatically generated each time the page loads,
+        based on the latest available market data.
+      </div>
+    </div>
+
+    <div class="report-body" id="report-content">
+      <div class="loading-state" id="loading">
+        <div class="spinner"></div>
+        <p>Generating market analysis...</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
+
+  <script>
+  const FALLBACK_REPORT = `<h2>Executive Summary</h2>
+<p>Malaysia's residential property market presents a study in contradictions entering 2026. Transaction volumes reached a decade high of <strong>420,525 units</strong> in 2024, yet the overhang has rebounded sharply to <strong>44,794 units</strong> including serviced apartments \u2014 a <strong>+30.5% YoY</strong> increase that signals structural oversupply in specific segments. The investment case rests on a positive yield spread of <strong>+2.44%</strong> above OPR, making Malaysian property attractive relative to regional peers, while the primary constraint remains a loan approval rate stuck at <strong>42.6%</strong> that prevents genuine demand from translating into transactions.</p>
+
+<h2>Supply: The Pressure Wave</h2>
+<p>The supply picture is defined by a pressure wave still building. Housing starts surged to <strong>106,236 units</strong> in 2024 \u2014 a 20.6% increase \u2014 and these units will complete between 2026 and 2028, arriving into a market already struggling to absorb existing inventory. New completions in Q1\u2013Q3 2025 reached <strong>69,303 units</strong>, up 25.3% year-on-year, yet the high-rise absorption period stretches to <strong>18\u201324 months</strong>, three to four times the six-month benchmark for a healthy market. Developer confidence has collapsed to just <strong>19% optimistic</strong> per REHDA\u2019s 2H2025 survey, and planned new supply for Q1\u2013Q3 2025 fell 31.7% \u2014 a meaningful signal that the pipeline will eventually thin, with supply relief most likely materializing post-2027.</p>
+
+<h2>Demand: Strong Fundamentals, Structural Barriers</h2>
+<p>The demand picture is more nuanced than the overhang numbers suggest. The 2024 transaction count of <strong>420,525 units</strong> represents the highest volume in a decade, driven by genuine owner-occupier demand concentrated in the sub-RM500,000 segment. The cooling in Q3 2025 to <strong>66,766 units</strong> (\u22125.2% YoY) reflects a market pausing for breath rather than a fundamental demand collapse. The more telling indicator is the new launch take-up rate: high-rise projects achieved just <strong>5.1% immediate sales</strong> at launch in Q3 2025, versus 14% for landed properties \u2014 a gap that reveals where genuine demand actually sits. The structural barrier is financing: with a loan approval rate of <strong>42.6%</strong> and developers reporting that 64% of buyers face loan rejection, the market\u2019s demand potential significantly exceeds its transactable demand.</p>
+
+<h2>Valuation: Cheap vs Region, Expensive vs Income</h2>
+<p>Malaysian property presents a bifurcated valuation picture depending on the framework applied. From a yield perspective, the gross rental yield of <strong>5.19%</strong> against an OPR of <strong>2.75%</strong> produces a positive carry spread of <strong>+2.44%</strong> \u2014 historically a signal of relative value. Compared to regional peers, Kuala Lumpur\u2019s price-to-rent ratio of <strong>21.7x</strong> looks modest against Singapore\u2019s approximately 40x and Hong Kong\u2019s 50x, suggesting KL property is significantly undervalued on a regional comparison basis. The counterargument is the affordability multiple: at <strong>4.3x</strong> median annual household income, Malaysian housing is classified as seriously unaffordable by international standards, and this ceiling constrains the buyer pool regardless of how cheap the market looks to foreign capital.</p>
+
+<h2>KL: A Market in Transition</h2>
+<p>Kuala Lumpur\u2019s <strong>\u22124.3% YoY</strong> price decline in Q3 2025 \u2014 the only major Malaysian city recording a fall \u2014 is supply-driven rather than a demand signal. Completions in KL surged 32.7% in Q1\u2013Q3 2025 while new starts declined 14.9%, indicating the market is working through a completion backlog that will clear by 2027. The counterintuitive bright spot is the rental market: average KL rents reached <strong>RM 2,901/month</strong>, up 6.1% year-on-year, as the return of expatriates and urban professionals absorbs rental stock even as purchase demand stalls. This yield expansion \u2014 prices falling while rents rise \u2014 creates the most attractive entry conditions for yield-focused investors in five years. Within KL, the Mid Valley and Old Klang Road corridor offers the best risk-reward at RM400k\u2013800k, while the outer ring dominated by serviced apartments remains structurally challenged by the PSF trap and commercial utility rates.</p>
+
+<h2>Outlook &amp; Key Risks (12-Month View)</h2>
+<p>The base case for the next twelve months is continued price stagnation in high-rise urban segments, with landed properties in established corridors showing modest appreciation of 2\u20134%. The completion wave from 2024 starts will keep supply pressure elevated through 2026, limiting capital appreciation upside. The rental market is the more compelling near-term opportunity, with yields continuing to expand as prices correct and rents grow. Three risks could materially alter this thesis: first, an unexpected OPR increase would compress the yield spread and reduce the buyer pool further; second, a significant deterioration in Malaysia\u2019s economic growth \u2014 currently tracking 5% \u2014 would damage household income formation and transaction volumes; third, a policy reversal tightening the MM2H program further would remove a meaningful source of premium residential demand in KL. The actionable insight for investors: the current environment favors yield over capital gains, transit-oriented developments over peripheral launches, and patience over urgency \u2014 the completion wave must clear before the supply-demand balance improves sufficiently to support sustained price recovery.</p>`;
+
+  const REPORT_FOOTER = `<div class="report-footer">
+    <p>Data sources: NAPIC Q3 2025, Global Property Guide Q1 2026, BNM, DOSM, REHDA</p>
+    <p>\u26A0 This report is for informational purposes only and does not constitute investment advice.</p>
+  </div>`;
+
+  const dateStr = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  document.getElementById('report-meta').textContent = dateStr + ' \u00B7 AI-Generated Analysis';
+
+  async function generateReport() {
+    const contentEl = document.getElementById('report-content');
+
+    // Try API key from URL hash (e.g. report.html#sk-ant-...)
+    const apiKey = window.location.hash.slice(1);
+
+    if (!apiKey || !apiKey.startsWith('sk-ant-')) {
+      // No API key — show fallback with note
+      contentEl.innerHTML =
+        '<div class="api-note">No API key provided. Showing pre-written analysis based on the same dataset.<br>To enable live AI generation, append your key to the URL: <code>report.html#sk-ant-...</code></div>' +
+        FALLBACK_REPORT + REPORT_FOOTER;
+      return;
+    }
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 2000,
+          system: 'You are a senior real estate analyst writing an institutional-grade market report. Write in clear, direct analytical prose. Lead with the most important insight. Use specific data points to support every argument. Express clear views \u2014 avoid excessive hedging. Structure your output as clean HTML using only these tags: <h2> for section headers, <p> for paragraphs, <strong> for key data points and numbers. Do not use bullet points, <ul>, <li>, or markdown. Write in flowing analytical prose only.',
+          messages: [{
+            role: 'user',
+            content: `Write a Malaysia residential property market analysis report based on the following data.
+Date: ${dateStr}
+
+MACRO DATA:
+- OPR: 2.75% (cut July 2025)
+- Gross Rental Yield: 5.19% (Q1 2026)
+- Yield Spread vs OPR: +2.44%
+- Loan Approval Rate: 42.6% (Q3 2024)
+- Price-to-Income Ratio: 4.3x national
+
+SUPPLY DATA:
+- Residential Overhang: 28,672 units (Q3 2025, +30.5% YoY)
+- Total Overhang incl. Serviced Apartments: 44,794 units
+- New Completions Q1-Q3 2025: 69,303 units (+25.3% YoY)
+- 2024 Housing Starts: 106,236 units (+20.6% YoY)
+- Developer Confidence: 19% optimistic (REHDA 2H2025)
+- High-rise Absorption Period: 18-24 months
+- Landed Absorption Period: 7-8 months
+
+DEMAND DATA:
+- 2024 Transactions: 420,525 units (decade high, +5.4% YoY)
+- Q3 2025 Transactions: 66,766 units (-5.2% YoY)
+- New Launch Take-up Rate: High-rise 5.1%, Landed 14%
+- Foreign Buyer Share: ~8-12% (declining)
+
+PRICE DATA:
+- National Average Price: RM 494,384 (Q3 2025)
+- KL Average Price: RM 804,642 (Q3 2025, -4.3% YoY)
+- KL Average Rent: RM 2,901/month (+6.1% YoY)
+- Penang George Town Yield: 3.77%
+- JB Yield: 5.47%
+
+Write the report with exactly these 6 sections:
+
+1. Executive Summary
+A 3-4 sentence paragraph capturing the single most important market insight and overall thesis.
+
+2. Supply: The Pressure Wave
+Analyze the pipeline \u2014 2024 starts of 106,236 units will complete in 2026-2028. Discuss overhang concentration, serviced apartment structural issue, developer pullback signal.
+
+3. Demand: Strong Fundamentals, Structural Barriers
+Analyze the 2024 transaction decade high vs Q3 2025 cooling. Discuss loan rejection as the primary demand constraint, not lack of interest. Discuss the 5.1% high-rise take-up rate as a warning signal.
+
+4. Valuation: Cheap vs Region, Expensive vs Income
+Discuss the +2.44% yield spread as a relative value signal. Contrast with Median Multiple 4.3x as an affordability constraint. Reference regional comparison \u2014 KL P/R 21.7x vs Singapore ~40x.
+
+5. KL: A Market in Transition
+Discuss the -4.3% YoY price decline as supply-driven, not demand collapse. Highlight rents +6.1% as a yield expansion signal. Differentiate three zones: KLCC (capital appreciation play), Mid Valley (sweet spot), Outer Ring (avoid).
+
+6. Outlook & Key Risks (12-Month View)
+Give a clear directional view on where the market is heading. Identify 3 key risks that could change the thesis. End with one actionable insight for investors.`
+          }]
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('API returned ' + response.status);
+      }
+
+      const data = await response.json();
+      const reportHTML = data.content[0].text;
+      contentEl.innerHTML = reportHTML + REPORT_FOOTER;
+
+    } catch (err) {
+      console.warn('API call failed:', err.message);
+      contentEl.innerHTML =
+        '<div class="api-note">Live AI generation unavailable (' + err.message + '). Showing pre-written analysis.</div>' +
+        FALLBACK_REPORT + REPORT_FOOTER;
+    }
+  }
+
+  generateReport();
+  </script>
+</body>
+</html>
