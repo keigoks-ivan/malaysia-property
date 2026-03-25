@@ -45,14 +45,14 @@
       </div>
       <div class="kpi-card orange">
         <div class="kpi-label" data-en="Q3 2025 Transactions" data-zh="2025年Q3交易量">Q3 2025 Transactions</div>
-        <div class="kpi-value">66,766</div>
-        <span class="kpi-badge badge-orange" data-en="−5.2% YoY" data-zh="年減5.2%">−5.2% YoY</span>
+        <div class="kpi-value">108,250</div>
+        <span class="kpi-badge badge-orange" data-en="+12.5% value" data-zh="成交值+12.5%">+12.5% value</span>
         <div class="kpi-source">JPPH Q3 2025</div>
       </div>
       <div class="kpi-card orange">
-        <div class="kpi-label" data-en="Foreign Buyer Share" data-zh="外國買家比例">Foreign Buyer Share</div>
-        <div class="kpi-value">~8–12%</div>
-        <span class="kpi-badge badge-orange" data-en="declining" data-zh="持續下降">declining</span>
+        <div class="kpi-label" data-en="Primary vs Secondary" data-zh="一手 vs 中古屋">Primary vs Secondary</div>
+        <div class="kpi-value">20.6% : 79.4%</div>
+        <span class="kpi-badge badge-orange" data-en="H1 2025 split" data-zh="2025年H1比例">H1 2025 split</span>
         <div class="kpi-source">Juwai IQI 2025</div>
       </div>
       <div class="kpi-card orange">
@@ -90,9 +90,9 @@
 
     <div class="chart-grid two-col">
       <div class="chart-card">
-        <h3 data-en="Household Formation vs New Completions" data-zh="家庭形成率 vs 新完工量">Household Formation vs New Completions</h3>
-        <div class="chart-wrap"><canvas id="chart-hh-formation"></canvas></div>
-        <div class="insight-box" data-en-html="Supply consistently exceeds household formation rate, contributing to structural overhang." data-zh-html="供給量持續超過家庭形成率，造成結構性積壓。">Supply consistently exceeds household formation rate, contributing to structural overhang.</div>
+        <h3 data-en="Primary vs Secondary Market Split" data-zh="一手 vs 中古屋成交比例">Primary vs Secondary Market Split</h3>
+        <div class="chart-wrap"><canvas id="chart-pri-sec"></canvas></div>
+        <div class="insight-box" data-en-html="Secondary market dominates at 79.4%, reflecting buyer preference for proven locations." data-zh-html="中古屋市場主導（79.4%），反映買家偏好已有市場驗證的成熟地段。">Secondary market dominates at 79.4%, reflecting buyer preference for proven locations.</div>
       </div>
       <div class="chart-card">
         <h3 data-en="New Launch Take-up Rate (Q3 2025)" data-zh="新推盤即時銷售率（2025年Q3）">New Launch Take-up Rate (Q3 2025)</h3>
@@ -174,17 +174,17 @@
       }
     });
 
-    // Household Formation vs Completions
-    createChart('chart-hh-formation', {
-      type: 'bar',
+    // Primary vs Secondary Split
+    createChart('chart-pri-sec', {
+      type: 'line',
       data: {
-        labels: ['2020','2021','2022','2023','2024'],
+        labels: ['2020','2021','2022','2023','2024','2025H1'],
         datasets: [
-          { label: 'New Households (est.)', data: [180000,185000,190000,192000,195000], backgroundColor: C.navy },
-          { label: 'New Completions', data: [72000,76393,71981,74893,82135], backgroundColor: C.orange },
+          { label: 'Primary %', data: [30,28,32,26,22,20.6], borderColor: C.orange },
+          { label: 'Secondary %', data: [70,72,68,74,78,79.4], borderColor: C.navy, backgroundColor: C.navy_bg, fill: true },
         ]
       },
-      options: { responsive: true, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
+      options: { responsive: true, scales: { y: { max: 100, ticks: { callback: v => v + '%' } } } }
     });
 
     // Take-up Rate
@@ -209,9 +209,9 @@
     registerChartI18n('chart-loan', null, null,
       ['Applications (RM bil)', 'Approval Rate %'],
       ['申請量（十億令吉）', '批准率 %']);
-    registerChartI18n('chart-hh-formation', null, null,
-      ['New Households (est.)', 'New Completions'],
-      ['新增家庭數（估算）', '新完工量']);
+    registerChartI18n('chart-pri-sec', null, null,
+      ['Primary %', 'Secondary %'],
+      ['一手新案 %', '中古屋 %']);
     registerChartI18n('chart-takeup',
       ['Landed', 'High-Rise'],
       ['有地住宅', '高層住宅'],

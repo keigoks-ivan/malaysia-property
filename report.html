@@ -7,25 +7,30 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}</style>
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.1.0/chartjs-plugin-annotation.min.js"></script>
   <style>
-    .report-container { max-width: 780px; margin: 0 auto; padding: 40px 24px; }
-    .report-header { background: #fff; border: 0.5px solid #ccd9e8; border-bottom: 2px solid #1e3a5f; border-radius: 4px 4px 0 0; padding: 32px 48px; margin-bottom: 0; }
-    .report-header h1 { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 22px; color: #1e3a5f; letter-spacing: 0.05em; margin: 0 0 6px; }
-    .report-header .report-meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8ba3c0; margin-bottom: 12px; }
-    .report-header .report-note { font-size: 13px; color: #6b8ab0; font-style: italic; line-height: 1.6; }
-    .report-body { background: #fff; border: 0.5px solid #ccd9e8; border-top: none; border-radius: 0 0 4px 4px; padding: 40px 48px; }
-    .report-body h2 { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: #1e3a5f; border-bottom: 1px solid #ccd9e8; padding-bottom: 8px; margin-top: 36px; margin-bottom: 16px; }
-    .report-body h2:first-child { margin-top: 0; }
-    .report-body p { font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.9; color: #2c3e50; margin-bottom: 18px; }
-    .report-body strong { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #1e3a5f; background: #eef3f9; padding: 1px 5px; border-radius: 3px; }
-    .report-footer { border-top: 1px solid #ccd9e8; padding-top: 20px; margin-top: 36px; }
-    .report-footer p { font-family: 'Inter', sans-serif !important; font-size: 11px !important; color: #8ba3c0 !important; line-height: 1.6 !important; margin-bottom: 4px !important; }
-    .loading-state { text-align: center; padding: 80px 20px; }
-    .spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid #dde8f2; border-top-color: #1e3a5f; border-radius: 50%; animation: spin 0.8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-state p { font-family: 'JetBrains Mono', monospace !important; font-size: 13px !important; color: #8ba3c0 !important; margin-top: 16px !important; }
-    .api-note { background: #fffbeb; border: 1px solid #fbbf24; border-radius: 4px; padding: 12px 16px; margin-bottom: 24px; font-family: 'Inter', sans-serif; font-size: 12px; color: #92400e; line-height: 1.5; }
-    @media (max-width: 600px) { .report-header, .report-body { padding: 24px 20px; } .report-body p { font-size: 15px; } }
+    .report-container{max-width:860px;margin:0 auto;padding:32px 20px}
+    .report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}
+    .report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}
+    .report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#8ba3c0;margin-bottom:8px}
+    .report-header .report-note{font-size:12px;color:#6b8ab0;font-style:italic}
+    .report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}
+    .exec-split{display:grid;grid-template-columns:55% 45%;gap:24px;margin-bottom:32px}
+    .exec-text p{font-family:Georgia,serif;font-size:15px;line-height:1.85;color:#2c3e50;margin-bottom:16px}
+    .exec-charts{display:flex;flex-direction:column;gap:12px}
+    .mini-chart{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:4px;padding:10px 12px}
+    .mini-chart h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:2px}
+    .mini-chart .mini-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:6px}
+    .mini-note.green{color:#16a34a}.mini-note.orange{color:#d97706}
+    .mini-chart .chart-wrap{height:130px}
+    .report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:32px;margin-bottom:14px}
+    .report-body>h2:first-child{margin-top:0}
+    .report-sections p{font-family:Georgia,serif;font-size:15px;line-height:1.85;color:#2c3e50;margin-bottom:16px}
+    .report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+    .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
+    .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#8ba3c0!important;line-height:1.6!important;margin-bottom:3px!important}
+    @media(max-width:700px){.exec-split{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
 </head>
 <body>
@@ -40,199 +45,93 @@
       <a href="kl.html" data-en="KL" data-zh="吉隆坡深析">KL</a>
       <a href="report.html" class="active" data-en="Report" data-zh="市場報告">Report</a>
     </nav>
-    <div class="lang-switcher">
-      <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
-      <button class="lang-btn" data-lang="zh" onclick="setLanguage('zh')">中文</button>
-    </div>
+    <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLanguage('zh')">中文</button></div>
     <span class="opr-badge" data-en="OPR: 2.75% &#9660;" data-zh="隔夜政策利率: 2.75% &#9660;">OPR: 2.75% &#9660;</span>
   </header>
-
   <div class="report-container">
     <div class="report-header">
       <h1 data-en="MALAYSIA PROPERTY MARKET REPORT" data-zh="馬來西亞房地產市場報告">MALAYSIA PROPERTY MARKET REPORT</h1>
-      <div class="report-meta" id="report-meta"></div>
-      <div class="report-note" data-en="This report is automatically generated each time the page loads, based on the latest available market data." data-zh="本報告每次載入頁面時根據最新市場數據自動生成。">
-        This report is automatically generated each time the page loads, based on the latest available market data.
-      </div>
+      <div class="report-meta" data-en="March 2026 · Institutional Research" data-zh="2026年3月 · 機構研究報告">March 2026 · Institutional Research</div>
+      <div class="report-note" data-en="Based on NAPIC Q3 2025, H1 2025, and Global Property Guide Q1 2026 data." data-zh="基於NAPIC 2025年Q3及H1、Global Property Guide 2026年Q1數據。">Based on NAPIC Q3 2025, H1 2025, and Global Property Guide Q1 2026 data.</div>
     </div>
-    <div class="report-body" id="report-content">
-      <div class="loading-state" id="loading">
-        <div class="spinner"></div>
-        <p data-en="Generating market analysis..." data-zh="正在生成市場分析中...">Generating market analysis...</p>
+    <div class="report-body">
+      <h2 data-en="EXECUTIVE SUMMARY" data-zh="執行摘要">EXECUTIVE SUMMARY</h2>
+      <div class="exec-split">
+        <div class="exec-text" id="exec-en">
+          <p>Malaysia's residential property market enters 2026 in a state that rewards careful reading. The headline indicators — a decade-high transaction volume of <strong>420,525 units</strong> in 2024, a positive rental yield spread of <strong>+2.44%</strong> above OPR, and valuations modest against regional peers — support a broadly constructive long-term view. But beneath these numbers, structural tensions have been building that will define market performance through at least 2027. The central thesis for 2026 is not bullish or bearish: it is <strong>selective</strong>.</p>
+          <p>The demand picture is bifurcating. Transaction volume dipped <strong>3.5%</strong> in Q3 2025 to 108,250 units, yet total transaction value surged <strong>12.5%</strong> to RM64.39 billion — fewer transactions at higher average values is the signature of a market in flight-to-quality mode. The secondary market accounts for <strong>79.4%</strong> of H1 2025 residential transactions. New launches fell nearly <strong>50% year-on-year</strong> in H1 2025. Meanwhile, the affordable segment below RM300,000 accounts for <strong>53.1%</strong> of all residential sales.</p>
+          <p>The financing constraint is the market's most binding structural barrier. With the loan approval rate at <strong>42.6%</strong> and household debt at <strong>81.9% of GDP</strong>, more than half of mortgage applicants are rejected. The July 2025 OPR cut to <strong>2.75%</strong> reduces effective mortgage rates to 4.35–4.50%. But for the M40 household facing a median multiple of <strong>4.3x nationally</strong> and <strong>5.6x in Kuala Lumpur</strong>, rate adjustments alone cannot close the affordability gap.</p>
+          <p>The supply cycle is at a critical inflection point. Housing starts contracted <strong>12.1% year-on-year</strong> in Q1–Q3 2025. But the 2022–2024 vintage starts are still completing: <strong>69,303 units</strong> delivered in Q1–Q3 2025, up <strong>25.3%</strong>. Unsold completed stock has risen <strong>30.5%</strong> to <strong>44,794 units</strong> including serviced apartments. Supply relief will not register until 2027.</p>
+          <p>The K-shaped structure defines the opportunity set. Below RM300,000, genuine undersupply persists. In the RM500,000–RM1,000,000 high-rise band, oversupply is systemic: <strong>17,892 unsold serviced apartment units</strong>. The RM400,000–RM700,000 landed and mid-corridor segment remains the market's most liquid zone.</p>
+          <p>KL prices declined <strong>4.3%</strong> in Q3 2025 yet rents rose <strong>6.1%</strong> to <strong>RM2,901/month</strong>. 12-month outlook: <strong>2–4%</strong> landed appreciation, <strong>4–6%</strong> rental growth. Key risks: OPR reversal, GDP deceleration from <strong>5.2%</strong>, and the new <strong>8% foreign buyer stamp duty</strong>.</p>
+        </div>
+        <div class="exec-text" id="exec-zh" style="display:none;">
+          <p>馬來西亞住宅房市在2026年是一個需要仔細解讀才能看清機會的市場。表面數字看似健康：2024年全年成交<strong>420,525套</strong>，創十年新高；租金收益率高於OPR <strong>2.44個百分點</strong>；相較新加坡、香港，估值仍偏低。但幾個正在深層累積的結構性問題，決定了2026年的投資邏輯不是全面看多或看空，而是<strong>選擇性進場</strong>。</p>
+          <p>需求面出現明顯的K型分化。2025年Q3成交量小幅下滑3.5%至108,250筆，但成交總值卻上升12.5%至RM 643.9億。2025年上半年住宅交易中<strong>79.4%</strong>來自中古屋市場；一手新案推案量腰斬。<strong>53.1%</strong>的買家需求集中在30萬令吉以下。</p>
+          <p><strong>42.6%</strong>的房貸核准率，是限制市場成交量最關鍵的瓶頸。全國家庭負債佔GDP高達<strong>81.9%</strong>。2025年7月OPR降至<strong>2.75%</strong>。但面對全國<strong>房價所得比4.3倍</strong>、吉隆坡<strong>5.6倍</strong>，單靠利率調整無法彌合負擔能力缺口。</p>
+          <p>新建供給量的轉折點已出現。2025年前三季新開工戶數年減<strong>12.1%</strong>。但完工交屋<strong>69,303戶</strong>，年增25.3%。待售餘屋年增<strong>30.5%</strong>至<strong>44,794套</strong>。供給面的鬆動要等到2027年後才會反映。</p>
+          <p>K型市場結構：30萬令吉以下供不應求；50至100萬令吉服務式公寓系統性過剩：<strong>17,892套</strong>待售。<strong>40至70萬令吉</strong>有地住宅為流動性最佳區段。</p>
+          <p>吉隆坡房價年跌<strong>4.3%</strong>，租金年增<strong>6.1%</strong>至<strong>RM 2,901/月</strong>。展望：有地住宅升值<strong>2至4%</strong>；租金增長<strong>4至6%</strong>。風險：OPR上調、GDP低於<strong>5.2%</strong>、外國買家<strong>8%印花稅</strong>。</p>
+        </div>
+        <div class="exec-charts">
+          <div class="mini-chart"><h4 data-en="Yield Spread Monitor" data-zh="利差監測">Yield Spread Monitor</h4><div class="mini-note green" data-en="Current Spread: +2.44%" data-zh="當前利差: +2.44%">Current Spread: +2.44%</div><div class="chart-wrap"><canvas id="chart-r-yield"></canvas></div></div>
+          <div class="mini-chart"><h4 data-en="Demand vs Supply Mismatch" data-zh="需求 vs 供給錯配">Demand vs Supply Mismatch</h4><div class="mini-note orange" data-en="53% of buyers vs 18% of supply below RM300k" data-zh="53%買家需求 vs 僅18%供給低於RM300k">53% of buyers vs 18% of supply below RM300k</div><div class="chart-wrap"><canvas id="chart-r-mismatch"></canvas></div></div>
+          <div class="mini-chart"><h4 data-en="Completion Wave vs Absorption" data-zh="完工交屋潮 vs 吸收量">Completion Wave vs Absorption</h4><div class="mini-note orange" data-en="Supply peak 2026–2027" data-zh="供給高峰2026至2027年">Supply peak 2026–2027</div><div class="chart-wrap"><canvas id="chart-r-wave"></canvas></div></div>
+        </div>
+      </div>
+      <div class="report-sections" id="sections-en">
+        <h2>SUPPLY: THE DELIVERY WAVE</h2>
+        <p>Understanding Malaysia's supply problem requires tracking a time-lagged system. The 2024 housing starts of <strong>106,236 units</strong> — up 20.6% — will complete between 2026 and 2028. In Q1–Q3 2025, <strong>69,303 units</strong> were delivered, up 25.3%, yet high-rise absorption takes <strong>18–24 months</strong>. New launches collapsed <strong>31.8%</strong>, planned supply fell <strong>31.7%</strong>, and only <strong>19%</strong> of developers expressed optimism. Serviced apartments: <strong>17,892 units</strong> unsold, carrying commercial utility rates and complex financing.</p>
+        <h2>DEMAND: INTENT WITHOUT ACCESS</h2>
+        <p>The <strong>420,525</strong> transactions in 2024 reflect genuine demand. Q3 2025 cooling to <strong>108,250</strong> reflects exhaustion of the most capable buyer segment. H1 2025 new launches fell to <strong>23,380 units</strong>, only <strong>24%</strong> sold; take-up was <strong>10.8%</strong> in Q1, <strong>5.1%</strong> for high-rise in Q3. The sub-RM300k segment (<strong>53.1%</strong> of demand) remains undersupplied. Secondary market at <strong>79.4%</strong> shows preference for proven locations.</p>
+        <h2>VALUATION: TWO FRAMEWORKS, TWO CONCLUSIONS</h2>
+        <p><strong>5.19%</strong> yield vs <strong>2.75%</strong> OPR = <strong>+2.44%</strong> spread. KL P/R <strong>21.7x</strong> vs Singapore 40x, Hong Kong 50x — undervalued regionally. But median multiple <strong>4.3x</strong> nationally, KL terrace <strong>5.6x</strong> — unaffordable by Demographia standards. Both conclusions are correct for different buyer populations.</p>
+        <h2>KUALA LUMPUR: CORRECTION AND OPPORTUNITY</h2>
+        <p>KL's <strong>4.3%</strong> decline is supply-driven: completions surged <strong>32.7%</strong>, starts fell <strong>14.9%</strong>. Rents rose <strong>6.1%</strong> to <strong>RM2,901/month</strong>. KLCC corridor: capital appreciation play. Mid Valley/OKR (RM400k–800k): best risk-reward. Outer ring: serviced apartment overhang, PSF trap, highest loan rejection.</p>
+        <h2>INFRASTRUCTURE CATALYSTS</h2>
+        <p>JB–Singapore RTS (end-2026): JB yields at <strong>5.47–5.60%</strong>. MRT3 Circle Line (approved 2025, complete 2030–31): Sentul, Wangsa Maju, Seputeh pricing in. Data centers: industrial property value +<strong>21.3%</strong> in 2025.</p>
+        <h2>OUTLOOK: 12-MONTH VIEW</h2>
+        <p>High-rise consolidation, landed <strong>2–4%</strong>, rentals <strong>4–6%</strong>. Supply pressure through 2026, relief from 2027. Risks: OPR reversal, GDP below <strong>5.2%</strong>, <strong>8% foreign stamp duty</strong>. The current window — falling prices, rising rents, positive spread — is the best entry for income investors in five years.</p>
+      </div>
+      <div class="report-sections" id="sections-zh" style="display:none;">
+        <h2>供給面：完工交屋潮尚未退去</h2>
+        <p>2024年新開工<strong>106,236戶</strong>，年增20.6%，將在2026至2028年間完工交屋。2025年前三季完工<strong>69,303戶</strong>，年增25.3%，高層去化月數<strong>18至24個月</strong>。新推案量年減<strong>31.8%</strong>，規劃量年減<strong>31.7%</strong>，僅<strong>19%</strong>業者樂觀。服務式公寓待售<strong>17,892套</strong>，商業水電費率和複雜融資條件。</p>
+        <h2>需求面：想買的人很多，能成交的不夠</h2>
+        <p>2024年<strong>420,525套</strong>成交反映真實需求。Q3降至<strong>108,250筆</strong>。上半年新推案<strong>23,380戶</strong>，銷售率僅<strong>24%</strong>；即時去化率<strong>10.8%</strong>，高層<strong>5.1%</strong>。30萬以下佔需求<strong>53.1%</strong>但長期供不應求。中古屋佔<strong>79.4%</strong>。</p>
+        <h2>估值：兩個框架，兩個結論</h2>
+        <p>租金收益率<strong>5.19%</strong> vs OPR <strong>2.75%</strong> = 利差<strong>+2.44%</strong>。吉隆坡房價租金比<strong>21.7倍</strong> vs 新加坡40倍、香港50倍——區域低估。但房價所得比全國<strong>4.3倍</strong>、吉隆坡有地<strong>5.6倍</strong>——嚴重不可負擔。兩個結論同時成立。</p>
+        <h2>吉隆坡：房價修正與收益機會並存</h2>
+        <p>年跌<strong>4.3%</strong>由供給驅動：完工量增<strong>32.7%</strong>，開工減<strong>14.9%</strong>。月租漲<strong>6.1%</strong>至<strong>RM 2,901</strong>。KLCC走廊：資本增值型。中谷/舊巴生路（RM40至80萬）：最佳風險回報。外圍：服務式公寓餘屋集中、呎價陷阱。</p>
+        <h2>基礎建設催化劑</h2>
+        <p>新山-新加坡RTS（目標2026年底通車）：新山收益率<strong>5.47至5.60%</strong>。MRT3環線（2025年核准，2030至31年完工）。數據中心投資帶動工業地產成交值年增<strong>21.3%</strong>。</p>
+        <h2>展望：未來12個月</h2>
+        <p>高層整理，有地升值<strong>2至4%</strong>，租金增長<strong>4至6%</strong>。供給壓力持續至2026年，2027年起鬆動。風險：OPR上調、GDP低於<strong>5.2%</strong>、外國買家<strong>8%印花稅</strong>。當前視窗——房價修正、租金上升、正向利差——是五年來最佳收益型進場環境。</p>
+      </div>
+      <div class="report-footer">
+        <p data-en="Data sources: NAPIC Q3 2025 · NAPIC H1 2025 · Global Property Guide Q1 2026 · BNM · DOSM · REHDA 2H2025" data-zh="數據來源：NAPIC 2025年Q3 · NAPIC 2025年H1 · Global Property Guide 2026年Q1 · BNM · DOSM · REHDA 2H2025">Data sources: NAPIC Q3 2025 · NAPIC H1 2025 · Global Property Guide Q1 2026 · BNM · DOSM · REHDA 2H2025</p>
+        <p data-en="⚠ For informational purposes only. Not investment advice." data-zh="⚠ 本報告僅供參考，不構成投資建議。">⚠ For informational purposes only. Not investment advice.</p>
       </div>
     </div>
   </div>
-
   <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
-
   <script src="js/main.js"></script>
   <script>
-  /* ── Fallback Reports ── */
-  const FALLBACK_EN = `<h2>Executive Summary</h2>
-<p>Malaysia\u2019s residential property market presents a study in contradictions entering 2026. Transaction volumes reached a decade high of <strong>420,525 units</strong> in 2024, yet the overhang has rebounded sharply to <strong>44,794 units</strong> including serviced apartments \u2014 a <strong>+30.5% YoY</strong> increase that signals structural oversupply in specific segments. The investment case rests on a positive yield spread of <strong>+2.44%</strong> above OPR, making Malaysian property attractive relative to regional peers, while the primary constraint remains a loan approval rate stuck at <strong>42.6%</strong> that prevents genuine demand from translating into transactions.</p>
-
-<h2>Supply: The Pressure Wave</h2>
-<p>The supply picture is defined by a pressure wave still building. Housing starts surged to <strong>106,236 units</strong> in 2024 \u2014 a 20.6% increase \u2014 and these units will complete between 2026 and 2028, arriving into a market already struggling to absorb existing inventory. New completions in Q1\u2013Q3 2025 reached <strong>69,303 units</strong>, up 25.3% year-on-year, yet the high-rise absorption period stretches to <strong>18\u201324 months</strong>, three to four times the six-month benchmark for a healthy market. Developer confidence has collapsed to just <strong>19% optimistic</strong> per REHDA\u2019s 2H2025 survey, and planned new supply for Q1\u2013Q3 2025 fell 31.7% \u2014 a meaningful signal that the pipeline will eventually thin, with supply relief most likely materializing post-2027.</p>
-
-<h2>Demand: Strong Fundamentals, Structural Barriers</h2>
-<p>The demand picture is more nuanced than the overhang numbers suggest. The 2024 transaction count of <strong>420,525 units</strong> represents the highest volume in a decade, driven by genuine owner-occupier demand concentrated in the sub-RM500,000 segment. The cooling in Q3 2025 to <strong>66,766 units</strong> (\u22125.2% YoY) reflects a market pausing for breath rather than a fundamental demand collapse. The more telling indicator is the new launch take-up rate: high-rise projects achieved just <strong>5.1% immediate sales</strong> at launch in Q3 2025, versus 14% for landed properties \u2014 a gap that reveals where genuine demand actually sits. The structural barrier is financing: with a loan approval rate of <strong>42.6%</strong> and developers reporting that 64% of buyers face loan rejection, the market\u2019s demand potential significantly exceeds its transactable demand.</p>
-
-<h2>Valuation: Cheap vs Region, Expensive vs Income</h2>
-<p>Malaysian property presents a bifurcated valuation picture depending on the framework applied. From a yield perspective, the gross rental yield of <strong>5.19%</strong> against an OPR of <strong>2.75%</strong> produces a positive carry spread of <strong>+2.44%</strong> \u2014 historically a signal of relative value. Compared to regional peers, Kuala Lumpur\u2019s price-to-rent ratio of <strong>21.7x</strong> looks modest against Singapore\u2019s approximately 40x and Hong Kong\u2019s 50x, suggesting KL property is significantly undervalued on a regional comparison basis. The counterargument is the affordability multiple: at <strong>4.3x</strong> median annual household income, Malaysian housing is classified as seriously unaffordable by international standards, and this ceiling constrains the buyer pool regardless of how cheap the market looks to foreign capital.</p>
-
-<h2>KL: A Market in Transition</h2>
-<p>Kuala Lumpur\u2019s <strong>\u22124.3% YoY</strong> price decline in Q3 2025 \u2014 the only major Malaysian city recording a fall \u2014 is supply-driven rather than a demand signal. Completions in KL surged 32.7% in Q1\u2013Q3 2025 while new starts declined 14.9%, indicating the market is working through a completion backlog that will clear by 2027. The counterintuitive bright spot is the rental market: average KL rents reached <strong>RM 2,901/month</strong>, up 6.1% year-on-year, as the return of expatriates and urban professionals absorbs rental stock even as purchase demand stalls. This yield expansion \u2014 prices falling while rents rise \u2014 creates the most attractive entry conditions for yield-focused investors in five years. Within KL, the Mid Valley and Old Klang Road corridor offers the best risk-reward at RM400k\u2013800k, while the outer ring dominated by serviced apartments remains structurally challenged by the PSF trap and commercial utility rates.</p>
-
-<h2>Outlook &amp; Key Risks (12-Month View)</h2>
-<p>The base case for the next twelve months is continued price stagnation in high-rise urban segments, with landed properties in established corridors showing modest appreciation of 2\u20134%. The completion wave from 2024 starts will keep supply pressure elevated through 2026, limiting capital appreciation upside. The rental market is the more compelling near-term opportunity, with yields continuing to expand as prices correct and rents grow. Three risks could materially alter this thesis: first, an unexpected OPR increase would compress the yield spread and reduce the buyer pool further; second, a significant deterioration in Malaysia\u2019s economic growth \u2014 currently tracking 5% \u2014 would damage household income formation and transaction volumes; third, a policy reversal tightening the MM2H program further would remove a meaningful source of premium residential demand in KL. The actionable insight for investors: the current environment favors yield over capital gains, transit-oriented developments over peripheral launches, and patience over urgency \u2014 the completion wave must clear before the supply-demand balance improves sufficiently to support sustained price recovery.</p>`;
-
-  const FALLBACK_ZH = `<h2>\u57F7\u884C\u6458\u8981</h2>
-<p>\u99AC\u4F86\u897F\u4E9E\u4F4F\u5B85\u623F\u5730\u7522\u5E02\u5834\u5728\u9032\u51652026\u5E74\u4E4B\u969B\u5448\u73FE\u51FA\u4E00\u5E45\u5145\u6EFF\u77DB\u76FE\u7684\u5716\u666F\u30022024\u5E74\u4EA4\u6613\u91CF\u9054\u5230\u5341\u5E74\u65B0\u9AD8\u7684<strong>420,525\u5957</strong>\uFF0C\u7136\u800C\u5305\u542B\u670D\u52D9\u5F0F\u516C\u5BD3\u5728\u5167\u7684\u7A4D\u58D3\u5EAB\u5B58\u537B\u6025\u901F\u53CD\u5F48\u81F3<strong>44,794\u5957</strong>\uFF0C\u5E74\u589E\u7387\u9AD8\u9054<strong>+30.5%</strong>\uFF0C\u986F\u793A\u7279\u5B9A\u5E02\u5834\u5340\u6BB5\u5B58\u5728\u7D50\u69CB\u6027\u904E\u5269\u3002\u6295\u8CC7\u8AD6\u9EDE\u5EFA\u7ACB\u5728\u9AD8\u65BC\u9694\u591C\u653F\u7B56\u5229\u7387<strong>+2.44%</strong>\u7684\u6B63\u5411\u5229\u5DEE\u4E0A\uFF0C\u4F7F\u99AC\u4F86\u897F\u4E9E\u623F\u7522\u76F8\u5C0D\u5340\u57DF\u5E02\u5834\u5177\u6709\u5438\u5F15\u529B\uFF1B\u7136\u800C\u4E3B\u8981\u5236\u7D04\u56E0\u7D20\u4ECD\u662F\u50C5\u6709<strong>42.6%</strong>\u7684\u8CB8\u6B3E\u6279\u51C6\u7387\uFF0C\u963B\u7919\u4E86\u771F\u5BE6\u9700\u6C42\u8F49\u5316\u70BA\u5BE6\u969B\u4EA4\u6613\u3002</p>
-
-<h2>\u4F9B\u7D66\uFF1A\u58D3\u529B\u6CE2</h2>
-<p>\u4F9B\u7D66\u9762\u7684\u5716\u666F\u7531\u4E00\u500B\u4ECD\u5728\u7A4D\u805A\u7684\u58D3\u529B\u6CE2\u6240\u5B9A\u7FA9\u30022024\u5E74\u958B\u5DE5\u91CF\u6FC0\u589E\u81F3<strong>106,236\u5957</strong>\uFF0C\u5E74\u589E20.6%\uFF0C\u9019\u4E9B\u55AE\u4F4D\u5C07\u57282026\u81F32028\u5E74\u9593\u9678\u7E8C\u5B8C\u5DE5\uFF0C\u5728\u5E02\u5834\u5DF2\u96E3\u4EE5\u6D88\u5316\u73FE\u6709\u5EAB\u5B58\u4E4B\u969B\u5E36\u4F86\u65B0\u4E00\u8F2A\u885D\u64CA\u30022025\u5E74\u524D\u4E09\u5B63\u65B0\u5B8C\u5DE5\u91CF\u9054<strong>69,303\u5957</strong>\uFF0C\u5E74\u589E25.3%\uFF0C\u7136\u800C\u9AD8\u5C64\u4F4F\u5B85\u7684\u53BB\u5316\u9031\u671F\u9577\u9054<strong>18\u81F324\u500B\u6708</strong>\uFF0C\u662F\u5065\u5EB7\u5E02\u58346\u500B\u6708\u57FA\u6E96\u76843\u81F34\u500D\u3002\u6839\u64DA\u623F\u5730\u7522\u767C\u5C55\u5546\u5354\u67002025\u5E74\u4E0B\u534A\u5E74\u8ABF\u67E5\uFF0C\u958B\u767C\u5546\u4FE1\u5FC3\u5DF2\u8DCC\u81F3\u50C5<strong>19%\u6A02\u89C0</strong>\uFF0C\u800C2025\u5E74\u524D\u4E09\u5B63\u898F\u5283\u65B0\u4F9B\u7D66\u91CF\u4E0B\u964D31.7%\uFF0C\u9019\u662F\u4E00\u500B\u6709\u610F\u7FA9\u7684\u8A0A\u865F\uFF0C\u986F\u793A\u4F9B\u7D66\u7BA1\u7DDA\u7D42\u5C07\u6536\u7E2E\uFF0C\u6700\u5FEB\u53EF\u80FD\u57282027\u5E74\u5F8C\u5E36\u4F86\u4F9B\u7D66\u7DE9\u89E3\u3002</p>
-
-<h2>\u9700\u6C42\uFF1A\u57FA\u672C\u9762\u5F37\u52C1\uFF0C\u7D50\u69CB\u6027\u969C\u7919</h2>
-<p>\u9700\u6C42\u9762\u7684\u5716\u666F\u6BD4\u7A4D\u58D3\u6578\u64DA\u6240\u5448\u73FE\u7684\u66F4\u70BA\u8907\u96DC\u30022024\u5E74<strong>420,525\u5957</strong>\u7684\u4EA4\u6613\u91CF\u4EE3\u8868\u5341\u5E74\u6700\u9AD8\u6C34\u5E73\uFF0C\u4E3B\u8981\u7531\u96C6\u4E2D\u572850\u842C\u4EE4\u5409\u4EE5\u4E0B\u7684\u771F\u5BE6\u81EA\u4F4F\u9700\u6C42\u6240\u9A45\u52D5\u30022025\u5E74Q3\u4EA4\u6613\u91CF\u964D\u81F3<strong>66,766\u5957</strong>\uFF08\u5E74\u6E1B5.2%\uFF09\uFF0C\u53CD\u6620\u7684\u662F\u5E02\u5834\u5598\u606F\u8ABF\u6574\uFF0C\u800C\u975E\u57FA\u672C\u9700\u6C42\u5D29\u6F70\u3002\u66F4\u5177\u8AAA\u660E\u610F\u7FA9\u7684\u6307\u6A19\u662F\u65B0\u63A8\u76E4\u5373\u6642\u92B7\u552E\u7387\uFF1A2025\u5E74Q3\u9AD8\u5C64\u4F4F\u5B85\u9805\u76EE\u5728\u63A8\u76E4\u6642\u50C5\u5BE6\u73FE<strong>5.1%\u7684\u5373\u6642\u92B7\u552E</strong>\uFF0C\u800C\u6709\u5730\u4F4F\u5B85\u70BA14%\u2014\u2014\u9019\u4E00\u5DEE\u8DDD\u63ED\u793A\u4E86\u771F\u5BE6\u9700\u6C42\u7684\u78BA\u5207\u6240\u5728\u3002\u7D50\u69CB\u6027\u969C\u7919\u5728\u65BC\u878D\u8CC7\uFF1A\u8CB8\u6B3E\u6279\u51C6\u7387\u50C5\u6709<strong>42.6%</strong>\uFF0C\u4E14\u958B\u767C\u5546\u53CD\u664264%\u7684\u8CB7\u5BB6\u9762\u81E8\u8CB8\u6B3E\u88AB\u62D2\uFF0C\u5E02\u5834\u7684\u6F5B\u5728\u9700\u6C42\u9060\u8D85\u5176\u53EF\u6210\u4EA4\u9700\u6C42\u3002</p>
-
-<h2>\u4F30\u503C\uFF1A\u76F8\u5C0D\u5340\u57DF\u4FBF\u5B9C\uFF0C\u76F8\u5C0D\u6536\u5165\u6602\u8CB4</h2>
-<p>\u99AC\u4F86\u897F\u4E9E\u623F\u7522\u5448\u73FE\u51FA\u622A\u7136\u4E0D\u540C\u7684\u96D9\u91CD\u4F30\u503C\u5716\u666F\uFF0C\u53D6\u6C7A\u65BC\u6240\u63A1\u7528\u7684\u5206\u6790\u6846\u67B6\u3002\u5F9E\u6536\u76CA\u89D2\u5EA6\u770B\uFF0C<strong>5.19%</strong>\u7684\u79DF\u91D1\u6BDB\u6536\u76CA\u7387\u5C0D\u6BD4<strong>2.75%</strong>\u7684\u9694\u591C\u653F\u7B56\u5229\u7387\uFF0C\u7522\u751F\u4E86<strong>+2.44%</strong>\u7684\u6B63\u5411\u6301\u6709\u5229\u5DEE\uFF0C\u5728\u6B77\u53F2\u4E0A\u662F\u76F8\u5C0D\u50F9\u503C\u7684\u8A0A\u865F\u3002\u8207\u5340\u57DF\u5E02\u5834\u76F8\u6BD4\uFF0C\u5409\u9686\u5761<strong>21.7\u500D</strong>\u7684\u623F\u50F9\u79DF\u91D1\u6BD4\u76F8\u5C0D\u65BC\u65B0\u52A0\u5761\u7D0440\u500D\u3001\u9999\u6E2F\u7D0450\u500D\u986F\u5F97\u76F8\u7576\u4F4E\u5EC9\uFF0C\u986F\u793A\u5409\u9686\u5761\u623F\u7522\u4EE5\u5340\u57DF\u8996\u89D2\u8861\u91CF\u4ECD\u5177\u986F\u8457\u4F4E\u4F30\u7A7A\u9593\u3002\u53CD\u9762\u8AD6\u9EDE\u662F\u53EF\u8CA0\u64D4\u6027\u500D\u6578\uFF1A\u4EE5\u5BB6\u5EAD\u6536\u5165\u4E2D\u4F4D\u6578\u7684<strong>4.3\u500D</strong>\u8A08\u7B97\uFF0C\u99AC\u4F86\u897F\u4E9E\u4F4F\u623F\u6309\u570B\u969B\u6A19\u6E96\u88AB\u5217\u70BA\u56B4\u91CD\u4E0D\u53EF\u8CA0\u64D4\uFF0C\u9019\u4E00\u5929\u82B1\u677F\u9650\u5236\u4E86\u8CB7\u5BB6\u7FA4\u9AD4\uFF0C\u7121\u8AD6\u5E02\u5834\u5C0D\u5916\u8CC7\u800C\u8A00\u770B\u8D77\u4F86\u591A\u9EBC\u4FBF\u5B9C\u3002</p>
-
-<h2>\u5409\u9686\u5761\uFF1A\u8F49\u578B\u4E2D\u7684\u5E02\u5834</h2>
-<p>\u5409\u9686\u57612025\u5E74Q3\u623F\u50F9\u5E74\u8DCC<strong>\u22124.3%</strong>\u2014\u2014\u99AC\u4F86\u897F\u4E9E\u4E3B\u8981\u57CE\u5E02\u4E2D\u552F\u4E00\u9304\u5F97\u8DCC\u5E45\u2014\u2014\u662F\u7531\u4F9B\u7D66\u4E3B\u5C0E\uFF0C\u800C\u975E\u9700\u6C42\u8A0A\u865F\u30022025\u5E74\u524D\u4E09\u5B63\u5409\u9686\u5761\u5B8C\u5DE5\u91CF\u6FC0\u589E32.7%\uFF0C\u800C\u65B0\u958B\u5DE5\u91CF\u4E0B\u964D14.9%\uFF0C\u986F\u793A\u5E02\u5834\u6B63\u5728\u6D88\u5316\u4E00\u6279\u9810\u8A08\u57282027\u5E74\u524D\u6E05\u5B8C\u7684\u5B8C\u5DE5\u7A4D\u58D3\u3002\u53CD\u76F4\u89BA\u7684\u4EAE\u9EDE\u5728\u65BC\u79DF\u91D1\u5E02\u5834\uFF1A\u5409\u9686\u5761\u5E73\u5747\u6708\u79DF\u9054<strong>RM 2,901</strong>\uFF0C\u5E74\u589E6.1%\uFF0C\u5916\u7C4D\u4EBA\u58EB\u548C\u57CE\u5E02\u5C08\u696D\u4EBA\u58EB\u7684\u56DE\u6B78\u5438\u6536\u4E86\u79DF\u8CC3\u5B58\u91CF\uFF0C\u5373\u4FBF\u8CFC\u7F6E\u9700\u6C42\u505C\u6EEF\u3002\u9019\u7A2E\u6536\u76CA\u64F4\u5F35\u614B\u52E2\u2014\u2014\u623F\u50F9\u4E0B\u8DCC\u800C\u79DF\u91D1\u4E0A\u6F32\u2014\u2014\u70BA\u6536\u76CA\u578B\u6295\u8CC7\u8005\u5275\u9020\u4E86\u4E94\u5E74\u4F86\u6700\u5177\u5438\u5F15\u529B\u7684\u9032\u5834\u689D\u4EF6\u3002\u5728\u5409\u9686\u5761\u5167\u90E8\uFF0C\u4E2D\u8C37\u548C\u820A\u5DF4\u751F\u8DEF\u8D70\u5ECA\u4EE540\u81F380\u842C\u4EE4\u5409\u7684\u5B9A\u50F9\u63D0\u4F9B\u6700\u4F73\u98A8\u96AA\u56DE\u5831\uFF0C\u800C\u7531\u670D\u52D9\u5F0F\u516C\u5BD3\u4E3B\u5C0E\u7684\u5916\u74B0\u5730\u5340\u4ECD\u56E0\u5468\u50F9\u9677\u9631\u548C\u5546\u696D\u6C34\u96FB\u8CBB\u7387\u554F\u984C\u800C\u9762\u81E8\u7D50\u69CB\u6027\u6311\u6230\u3002</p>
-
-<h2>\u5C55\u671B\u8207\u4E3B\u8981\u98A8\u96AA\uFF08\u672A\u4F8612\u500B\u6708\uFF09</h2>
-<p>\u672A\u4F86\u5341\u4E8C\u500B\u6708\u7684\u57FA\u672C\u60C5\u666F\u662F\u9AD8\u5C64\u57CE\u5E02\u4F4F\u5B85\u5340\u6BB5\u7684\u623F\u50F9\u6301\u7E8C\u505C\u6EEF\uFF0C\u800C\u5DF2\u5EFA\u7ACB\u8D70\u5ECA\u7684\u6709\u5730\u4F4F\u5B85\u5C07\u5448\u73FE2\u81F34%\u7684\u6EAB\u548C\u5347\u503C\u30022024\u5E74\u958B\u5DE5\u7684\u5B8C\u5DE5\u6D6A\u6F6E\u5C07\u4F7F\u4F9B\u7D66\u58D3\u529B\u57282026\u5E74\u524D\u7DAD\u6301\u9AD8\u4F4D\uFF0C\u9650\u5236\u8CC7\u672C\u589E\u503C\u7684\u4E0A\u884C\u7A7A\u9593\u3002\u79DF\u91D1\u5E02\u5834\u662F\u8FD1\u671F\u66F4\u5177\u8AAA\u670D\u529B\u7684\u6A5F\u6703\uFF0C\u96A8\u8457\u623F\u50F9\u4FEE\u6B63\u548C\u79DF\u91D1\u589E\u9577\uFF0C\u6536\u76CA\u7387\u5C07\u7E7C\u7E8C\u64F4\u5927\u3002\u4E09\u5927\u98A8\u96AA\u53EF\u80FD\u5BE6\u8CEA\u6027\u6539\u8B8A\u9019\u4E00\u8AD6\u9EDE\uFF1A\u7B2C\u4E00\uFF0C\u9694\u591C\u653F\u7B56\u5229\u7387\u610F\u5916\u4E0A\u5347\u5C07\u58D3\u7E2E\u5229\u5DEE\u4E26\u9032\u4E00\u6B65\u7E2E\u6E1B\u8CB7\u5BB6\u7FA4\u9AD4\uFF1B\u7B2C\u4E8C\uFF0C\u99AC\u4F86\u897F\u4E9E\u7D93\u6FDF\u589E\u9577\u5927\u5E45\u60E1\u5316\u5C07\u640D\u5BB3\u5BB6\u5EAD\u6536\u5165\u5F62\u6210\u548C\u4EA4\u6613\u91CF\uFF1B\u7B2C\u4E09\uFF0CMM2H\u8A08\u756B\u653F\u7B56\u9032\u4E00\u6B65\u6536\u7DCA\u5C07\u524A\u5F31\u5409\u9686\u5761\u9AD8\u7AEF\u4F4F\u5B85\u7684\u91CD\u8981\u9700\u6C42\u4F86\u6E90\u3002\u5C0D\u6295\u8CC7\u8005\u800C\u8A00\uFF0C\u7576\u524D\u74B0\u5883\u6709\u5229\u65BC\u6536\u76CA\u800C\u975E\u8CC7\u672C\u589E\u503C\u3001\u8ECC\u9053\u4EA4\u901A\u5C0E\u5411\u7684\u767C\u5C55\u800C\u975E\u5468\u908A\u63A8\u76E4\uFF0C\u4EE5\u53CA\u8010\u5FC3\u7B49\u5F85\u800C\u975E\u6025\u8FEB\u9032\u5834\u2014\u2014\u5B8C\u5DE5\u6D6A\u6F6E\u5FC5\u9808\u6D88\u5316\u5B8C\u7562\uFF0C\u4F9B\u9700\u5E73\u8861\u624D\u80FD\u5145\u5206\u6539\u5584\u4EE5\u652F\u6490\u6301\u7E8C\u7684\u623F\u50F9\u5FA9\u7526\u3002</p>`;
-
-  const FOOTER_EN = `<div class="report-footer">
-    <p>Data sources: NAPIC Q3 2025, Global Property Guide Q1 2026, BNM, DOSM, REHDA</p>
-    <p>\u26A0 This report is for informational purposes only and does not constitute investment advice.</p>
-  </div>`;
-  const FOOTER_ZH = `<div class="report-footer">
-    <p>\u6578\u64DA\u4F86\u6E90\uFF1ANAPIC 2025\u5E74Q3\u3001Global Property Guide 2026\u5E74Q1\u3001\u99AC\u4F86\u897F\u4E9E\u570B\u5BB6\u9280\u884C\u3001\u7D71\u8A08\u5C40\u3001\u623F\u5730\u7522\u767C\u5C55\u5546\u5354\u6703</p>
-    <p>\u26A0 \u672C\u5831\u544A\u50C5\u4F9B\u53C3\u8003\uFF0C\u4E0D\u69CB\u6210\u6295\u8CC7\u5EFA\u8B70\u3002</p>
-  </div>`;
-
-  /* ── State ── */
-  let currentReportLang = 'en';
-  const reportCache = { en: null, zh: null };
-  const dateStrEN = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  const dateStrZH = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: 'long' });
-
-  function updateReportMeta(lang) {
-    const el = document.getElementById('report-meta');
-    if (lang === 'zh') {
-      el.textContent = dateStrZH + ' \u00B7 AI\u751F\u6210\u5206\u6790';
-    } else {
-      el.textContent = dateStrEN + ' \u00B7 AI-Generated Analysis';
-    }
-  }
-
-  /* ── API Prompts ── */
-  const MARKET_DATA = `MACRO DATA:
-- OPR: 2.75% (cut July 2025)
-- Gross Rental Yield: 5.19% (Q1 2026)
-- Yield Spread vs OPR: +2.44%
-- Loan Approval Rate: 42.6% (Q3 2024)
-- Price-to-Income Ratio: 4.3x national
-
-SUPPLY DATA:
-- Residential Overhang: 28,672 units (Q3 2025, +30.5% YoY)
-- Total Overhang incl. Serviced Apartments: 44,794 units
-- New Completions Q1-Q3 2025: 69,303 units (+25.3% YoY)
-- 2024 Housing Starts: 106,236 units (+20.6% YoY)
-- Developer Confidence: 19% optimistic (REHDA 2H2025)
-- High-rise Absorption Period: 18-24 months
-- Landed Absorption Period: 7-8 months
-
-DEMAND DATA:
-- 2024 Transactions: 420,525 units (decade high, +5.4% YoY)
-- Q3 2025 Transactions: 66,766 units (-5.2% YoY)
-- New Launch Take-up Rate: High-rise 5.1%, Landed 14%
-- Foreign Buyer Share: ~8-12% (declining)
-
-PRICE DATA:
-- National Average Price: RM 494,384 (Q3 2025)
-- KL Average Price: RM 804,642 (Q3 2025, -4.3% YoY)
-- KL Average Rent: RM 2,901/month (+6.1% YoY)
-- Penang George Town Yield: 3.77%
-- JB Yield: 5.47%`;
-
-  const SYSTEM_EN = 'You are a senior real estate analyst writing an institutional-grade market report. Write in clear, direct analytical prose. Lead with the most important insight. Use specific data points to support every argument. Express clear views. Structure your output as clean HTML using only these tags: <h2> for section headers, <p> for paragraphs, <strong> for key data points and numbers. Do not use bullet points, <ul>, <li>, or markdown. Write in flowing analytical prose only.';
-  const SYSTEM_ZH = '\u4F60\u662F\u4E00\u4F4D\u8CC7\u6DF1\u623F\u5730\u7522\u5206\u6790\u5E2B\uFF0C\u5C08\u9580\u64B0\u5BEB\u6A5F\u69CB\u7D1A\u5225\u7684\u5E02\u5834\u7814\u7A76\u5831\u544A\u3002\u8ACB\u7528\u6D41\u66A2\u3001\u5C08\u696D\u7684\u7E41\u9AD4\u4E2D\u6587\u76F4\u63A5\u64B0\u5BEB\uFF0C\u4E0D\u8981\u7FFB\u8B6F\u82F1\u6587\u3002\u4F7F\u7528\u5206\u6790\u5E2B\u7684\u8A9E\u6C23\uFF1A\u6709\u8AD6\u9EDE\u3001\u6709\u6578\u64DA\u652F\u6490\u3001\u6709\u660E\u78BA\u89C0\u9EDE\u3002\u7528 <h2> \u4F5C\u70BA\u6BB5\u843D\u6A19\u984C\uFF0C<p> \u4F5C\u70BA\u6BB5\u843D\uFF0C<strong> \u6A19\u6CE8\u95DC\u9375\u6578\u64DA\u3002\u4E0D\u8981\u4F7F\u7528\u689D\u5217\u5F0F\uFF0C\u7528\u9023\u8CAB\u7684\u6563\u6587\u6BB5\u843D\u3002';
-
-  const PROMPT_EN = `Write a Malaysia residential property market analysis report based on the following data.\nDate: ${dateStrEN}\n\n${MARKET_DATA}\n\nWrite the report with exactly these 6 sections:\n1. Executive Summary\n2. Supply: The Pressure Wave\n3. Demand: Strong Fundamentals, Structural Barriers\n4. Valuation: Cheap vs Region, Expensive vs Income\n5. KL: A Market in Transition\n6. Outlook & Key Risks (12-Month View)`;
-  const PROMPT_ZH = `\u8ACB\u6839\u64DA\u4EE5\u4E0B\u99AC\u4F86\u897F\u4E9E\u4F4F\u5B85\u623F\u5730\u7522\u5E02\u5834\u6578\u64DA\uFF0C\u64B0\u5BEB\u4E00\u4EFD\u5B8C\u6574\u7684\u5E02\u5834\u5206\u6790\u5831\u544A\uFF0C\u5831\u544A\u65E5\u671F\uFF1A${dateStrZH}\n\n${MARKET_DATA}\n\n\u5831\u544A\u7D50\u69CB\uFF1A\n1. \u57F7\u884C\u6458\u8981\uFF083\u81F34\u53E5\u8A71\uFF0C\u9EDE\u51FA\u6700\u91CD\u8981\u7684\u6838\u5FC3\u8AD6\u9EDE\uFF09\n2. \u4F9B\u7D66\uFF1A\u58D3\u529B\u6CE2\uFF08\u5206\u6790\u7BA1\u7DDA\u3001\u5B8C\u5DE5\u91CF\u6FC0\u589E\u3001\u7A4D\u58D3\u554F\u984C\uFF09\n3. \u9700\u6C42\uFF1A\u57FA\u672C\u9762\u5F37\u52C1\uFF0C\u7D50\u69CB\u6027\u969C\u7919\uFF08\u4EA4\u6613\u91CF\u3001\u8CB8\u6B3E\u62D2\u6279\u3001\u53EF\u8CA0\u64D4\u6027\uFF09\n4. \u4F30\u503C\uFF1A\u5340\u57DF\u4FBF\u5B9C\uFF0C\u76F8\u5C0D\u6536\u5165\u6602\u8CB4\uFF08\u5229\u5DEE\u3001\u623F\u50F9\u79DF\u91D1\u6BD4\u3001\u4E9E\u592A\u6BD4\u8F03\uFF09\n5. \u5409\u9686\u5761\uFF1A\u8F49\u578B\u4E2D\u7684\u5E02\u5834\uFF08\u623F\u50F9\u4FEE\u6B63\u3001\u79DF\u91D1\u589E\u9577\u3001\u4E09\u500B\u5340\u57DF\u5206\u6790\uFF09\n6. \u5C55\u671B\u8207\u4E3B\u8981\u98A8\u96AA\uFF0812\u500B\u6708\u524D\u77BB\u3001\u4E09\u5927\u98A8\u96AA\u3001\u4E00\u500B\u53EF\u57F7\u884C\u6D1E\u898B\uFF09`;
-
-  /* ── Generate Report ── */
-  async function generateReport(lang) {
-    const contentEl = document.getElementById('report-content');
-    currentReportLang = lang;
-    updateReportMeta(lang);
-
-    // Check cache
-    if (reportCache[lang]) {
-      contentEl.innerHTML = reportCache[lang];
-      return;
-    }
-
-    // Show loading
-    contentEl.innerHTML = `<div class="loading-state"><div class="spinner"></div><p>${lang === 'zh' ? '\u6B63\u5728\u751F\u6210\u5E02\u5834\u5206\u6790\u4E2D...' : 'Generating market analysis...'}</p></div>`;
-
-    const apiKey = window.location.hash.slice(1);
-    if (!apiKey || !apiKey.startsWith('sk-ant-')) {
-      const fallback = lang === 'zh' ? FALLBACK_ZH : FALLBACK_EN;
-      const footer = lang === 'zh' ? FOOTER_ZH : FOOTER_EN;
-      const noteEN = 'No API key provided. Showing pre-written analysis.<br>To enable live AI generation, append your key: <code>report.html#sk-ant-...</code>';
-      const noteZH = '\u672A\u63D0\u4F9BAPI\u91D1\u9470\u3002\u986F\u793A\u9810\u5BEB\u5206\u6790\u3002<br>\u555F\u7528AI\u5373\u6642\u751F\u6210\uFF1A<code>report.html#sk-ant-...</code>';
-      const html = `<div class="api-note">${lang === 'zh' ? noteZH : noteEN}</div>` + fallback + footer;
-      reportCache[lang] = html;
-      contentEl.innerHTML = html;
-      return;
-    }
-
-    try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 2000,
-          system: lang === 'zh' ? SYSTEM_ZH : SYSTEM_EN,
-          messages: [{ role: 'user', content: lang === 'zh' ? PROMPT_ZH : PROMPT_EN }]
-        })
-      });
-      if (!response.ok) throw new Error('API returned ' + response.status);
-      const data = await response.json();
-      const footer = lang === 'zh' ? FOOTER_ZH : FOOTER_EN;
-      const html = data.content[0].text + footer;
-      reportCache[lang] = html;
-      if (currentReportLang === lang) contentEl.innerHTML = html;
-    } catch (err) {
-      console.warn('API call failed:', err.message);
-      const fallback = lang === 'zh' ? FALLBACK_ZH : FALLBACK_EN;
-      const footer = lang === 'zh' ? FOOTER_ZH : FOOTER_EN;
-      const errMsg = lang === 'zh' ? 'AI\u751F\u6210\u4E0D\u53EF\u7528 (' + err.message + ')\u3002\u986F\u793A\u9810\u5BEB\u5206\u6790\u3002' : 'Live AI generation unavailable (' + err.message + '). Showing pre-written analysis.';
-      const html = `<div class="api-note">${errMsg}</div>` + fallback + footer;
-      reportCache[lang] = html;
-      if (currentReportLang === lang) contentEl.innerHTML = html;
-    }
-  }
-
-  /* ── Language change callback ── */
+  document.addEventListener('DOMContentLoaded', function() {
+    setChartDefaults();
+    createChart('chart-r-yield', { type:'line', data:{ labels:['2019','2020','2021','2022','23Q1','23Q3','24Q1','24Q3','25Q1','25Q3'], datasets:[ {label:'Rental Yield %',data:[4.80,4.60,4.70,4.90,5.16,5.20,5.16,5.24,5.10,5.19],borderColor:C.green,borderWidth:1.5,pointRadius:1}, {label:'OPR %',data:[3.00,1.75,1.75,2.75,3.00,3.00,3.00,3.00,3.00,2.75],borderColor:C.red,borderDash:[4,3],borderWidth:1,pointRadius:1} ]}, options:{plugins:{legend:{display:false}},scales:{y:{min:1,max:6,ticks:{callback:v=>v+'%',font:{size:9}}},x:{ticks:{font:{size:8}}}}} });
+    createChart('chart-r-mismatch', { type:'bar', data:{ labels:['<RM300k','300k\u2013500k','500k\u20131M','>RM1M'], datasets:[ {label:'Demand %',data:[53.1,27.3,13.8,5.8],backgroundColor:C.navy}, {label:'New Supply %',data:[18,25,38,19],backgroundColor:C.orange} ]}, options:{plugins:{legend:{labels:{font:{size:9}}}},scales:{y:{ticks:{callback:v=>v+'%',font:{size:9}}},x:{ticks:{font:{size:8}}}}} });
+    createChart('chart-r-wave', { type:'line', data:{ labels:['2021','2022','2023','2024','2025E','2026E','2027E'], datasets:[ {label:'Completions',data:[76393,71981,74893,82135,92000,95000,85000],borderColor:C.orange,borderWidth:1.5,pointRadius:1}, {label:'Absorption',data:[82000,82000,83000,85000,85000,85000,85000],borderColor:C.green,borderDash:[4,3],borderWidth:1,pointRadius:0} ]}, options:{plugins:{legend:{labels:{font:{size:9}}}},scales:{y:{ticks:{callback:v=>(v/1000).toFixed(0)+'K',font:{size:9}}},x:{ticks:{font:{size:8}}}}} });
+    registerChartI18n('chart-r-yield',null,null,['Rental Yield %','OPR %'],['租金收益率 %','OPR %']);
+    registerChartI18n('chart-r-mismatch',null,null,['Demand %','New Supply %'],['需求 %','新建供給 %']);
+    registerChartI18n('chart-r-wave',null,null,['Completions','Absorption'],['完工交屋量','吸收量']);
+    initLanguage();
+  });
   function onLanguageChange(lang) {
-    generateReport(lang);
+    document.getElementById('exec-en').style.display = lang==='zh'?'none':'block';
+    document.getElementById('exec-zh').style.display = lang==='zh'?'block':'none';
+    document.getElementById('sections-en').style.display = lang==='zh'?'none':'block';
+    document.getElementById('sections-zh').style.display = lang==='zh'?'block':'none';
   }
-
-  /* ── Init ── */
-  updateReportMeta('en');
-  generateReport('en');
-  initLanguage();
   </script>
 </body>
 </html>

@@ -46,7 +46,7 @@
         <div class="kpi-source">Global Property Guide Q1 2026</div>
       </div>
       <div class="kpi-card orange">
-        <div class="kpi-label" data-en="HIGH-RISE ABSORPTION" data-zh="高層去化週期">High-Rise Absorption</div>
+        <div class="kpi-label" data-en="HIGH-RISE ABSORPTION" data-zh="高層去化月數">High-Rise Absorption</div>
         <div class="kpi-value">18–24m</div>
         <span class="kpi-badge badge-orange" data-en="⚠ 12.9% take-up" data-zh="⚠ 去化率12.9%">⚠ 12.9% take-up</span>
         <div class="kpi-source">NAPIC 2025</div>
@@ -69,7 +69,7 @@
     <div class="section-label" data-en="SUPPLY PRESSURE" data-zh="供給壓力指標">SUPPLY PRESSURE</div>
     <div class="kpi-grid">
       <div class="kpi-card orange">
-        <div class="kpi-label" data-en="RESIDENTIAL OVERHANG" data-zh="住宅積壓庫存">Residential Overhang</div>
+        <div class="kpi-label" data-en="RESIDENTIAL OVERHANG" data-zh="住宅待售餘屋">Residential Overhang</div>
         <div class="kpi-value">28,672</div>
         <span class="kpi-badge badge-orange" data-en="↑ +30.5% YoY" data-zh="↑ 年增+30.5%">↑ +30.5% YoY</span>
         <div class="kpi-source">Q3 2025 NAPIC</div>
@@ -81,7 +81,7 @@
         <div class="kpi-source">Q3 2025 NAPIC</div>
       </div>
       <div class="kpi-card orange">
-        <div class="kpi-label" data-en="NEW COMPLETIONS" data-zh="新完工量">New Completions</div>
+        <div class="kpi-label" data-en="NEW COMPLETIONS" data-zh="新完工交屋量">New Completions</div>
         <div class="kpi-value">69,303</div>
         <span class="kpi-badge badge-orange" data-en="↑ +25.3% YoY" data-zh="↑ 年增+25.3%">↑ +25.3% YoY</span>
         <div class="kpi-source">Q1–Q3 2025</div>
@@ -136,10 +136,10 @@
         </div>
       </div>
       <div class="chart-card">
-        <h3 data-en="Supply Pipeline Pressure" data-zh="供給管線壓力">Supply Pipeline Pressure</h3>
-        <p class="chart-subtitle" data-en="Months of supply by property type" data-zh="各類型房產去化週期（月）">Months of supply by property type</p>
+        <h3 data-en="Supply Pipeline Pressure" data-zh="新建供給壓力">Supply Pipeline Pressure</h3>
+        <p class="chart-subtitle" data-en="Months of supply by property type" data-zh="各類型房產去化月數（月）">Months of supply by property type</p>
         <div class="chart-wrap"><canvas id="chart-pipeline-pressure"></canvas></div>
-        <div class="insight-box" data-en-html="High-rise takes 22 months to clear vs 6-month benchmark. 2024–2025 completion surge will pressure absorption further." data-zh-html="高層住宅需22個月去化，遠超6個月的健康基準。2024至2025年完工量激增將進一步加大吸收壓力。">
+        <div class="insight-box" data-en-html="High-rise takes 22 months to clear vs 6-month benchmark. 2024–2025 completion surge will pressure absorption further." data-zh-html="高層住宅需22個月去化，遠超6個月的健康基準。2024至2025年完工交屋量激增將進一步加大吸收壓力。">
           High-rise takes 22 months to clear vs 6-month benchmark.
           2024–2025 completion surge will pressure absorption further.
         </div>
@@ -153,19 +153,13 @@
         <div class="chart-wrap"><canvas id="chart-tx-trend"></canvas></div>
       </div>
       <div class="chart-card">
-        <h3 data-en="Overhang Pipeline" data-zh="積壓庫存管線">Overhang Pipeline</h3>
+        <h3 data-en="Overhang Pipeline" data-zh="待售餘屋趨勢">Overhang Pipeline</h3>
         <div class="chart-wrap"><canvas id="chart-overhang-pipeline"></canvas></div>
       </div>
       <div class="chart-card">
         <h3 data-en="Rental Yield by City (Q1 2026)" data-zh="各城市租金收益率（2026年Q1）">Rental Yield by City (Q1 2026)</h3>
         <div class="chart-wrap"><canvas id="chart-yield-city"></canvas></div>
         <p class="chart-footnote" data-en="Cities above OPR = positive carry potential" data-zh="收益率高於OPR = 正向利差空間">Cities above OPR = positive carry potential</p>
-      </div>
-      <div class="chart-card">
-        <h3 data-en="MHPI vs CPI" data-zh="房價指數 vs 通脹指數">MHPI vs CPI</h3>
-        <p class="chart-subtitle" data-en="Nominal vs inflation-adjusted house price index" data-zh="名義 vs 通脹調整後房價指數">Nominal vs inflation-adjusted house price index</p>
-        <div class="chart-wrap"><canvas id="chart-mhpi-cpi"></canvas></div>
-        <div class="insight-box" data-en-html="Real house prices flat/declining since 2022 — no bubble signal." data-zh-html="2022年後實質房價停滯或下跌，無泡沫訊號。">Real house prices flat/declining since 2022 — no bubble signal.</div>
       </div>
     </div>
 
@@ -273,24 +267,6 @@
       });
     })();
 
-    // MHPI vs CPI
-    (() => {
-      const mhpi = [194,195,197,200,207,224,225];
-      const cpi = [121,122,123,128,132,136,138];
-      const realMhpi = mhpi.map((v,i) => +(v / cpi[i] * 100).toFixed(1));
-      createChart('chart-mhpi-cpi', {
-        type: 'line',
-        data: {
-          labels: ['2019','2020','2021','2022','2023','2024','2025Q3'],
-          datasets: [
-            { label: 'MHPI (Nominal)', data: mhpi, borderColor: C.navy },
-            { label: 'Real MHPI', data: realMhpi, borderColor: C.orange, borderDash: [4,3] },
-          ]
-        },
-        options: { responsive: true, scales: { y: { beginAtZero: false } } }
-      });
-    })();
-
     // Chart i18n registrations
     registerChartI18n('chart-yield-spread', null, null,
       ['Rental Yield %', 'OPR %'],
@@ -307,9 +283,6 @@
       ['Iskandar Puteri','JB City','Subang Jaya','National Avg','KL City','Penang GT'],
       ['依斯干達公主城','新山市','梳邦再也','全國平均','吉隆坡市','檳城喬治市'],
       ['Gross Yield %'], ['毛收益率 %']);
-    registerChartI18n('chart-mhpi-cpi', null, null,
-      ['MHPI (Nominal)', 'Real MHPI'],
-      ['名義房價指數', '實質房價指數']);
 
     initLanguage();
   });
