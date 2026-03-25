@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Demand Analysis | Malaysia Property Monitor</title>
   <meta name="color-scheme" content="light">
-  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}canvas{background:transparent!important}</style>
+  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}canvas{background:transparent!important}.chart-wrap{position:relative!important;min-height:200px;width:100%}.chart-wrap canvas{position:absolute;top:0;left:0;width:100%!important;height:100%!important}</style>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -231,6 +231,11 @@
       ['有地住宅', '高層住宅'],
       ['Take-up Rate %'], ['即時銷售率 %']);
     initLanguage();
+  });
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      Object.values(chartRegistry).forEach(c => { if(c) { c.resize(); c.update('none'); } });
+    }, 200);
   });
   </script>
 </body>
