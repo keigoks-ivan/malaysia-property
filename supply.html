@@ -255,7 +255,7 @@
       const data = [3300,3293,2771,2757,2730,2599,2287,2205,6730];
       createChart('chart-oh-state', {
         type: 'bar',
-        data: { labels, datasets: [{ label: 'Units', data, backgroundColor: data.map(v => v > 3000 ? C.red : C.navy) }] },
+        data: { labels, datasets: [{ label: 'Units', data, backgroundColor: data.map(v => v > 3000 ? C.red : C.navy), barThickness: 20, minBarLength: 3 }] },
         options: { indexAxis: 'y', barPercentage: 0.8, categoryPercentage: 0.9, responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => v.toLocaleString() } } } }
       });
     })();
@@ -293,7 +293,7 @@
       const data = [3000000,2000000,1000000,600000,600000,500000,500000,500000];
       createChart('chart-foreign-min', {
         type: 'bar',
-        data: { labels, datasets: [{ label: 'Min. Purchase (RM)', data, backgroundColor: data.map(v => v >= 2e6 ? C.red : v >= 1e6 ? C.orange : C.navy) }] },
+        data: { labels, datasets: [{ label: 'Min. Purchase (RM)', data, backgroundColor: data.map(v => v >= 2e6 ? C.red : v >= 1e6 ? C.orange : C.navy), barThickness: 20, minBarLength: 3 }] },
         options: { indexAxis: 'y', barPercentage: 0.8, categoryPercentage: 0.9, responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => 'RM ' + (v/1e6).toFixed(1) + 'M' } } } }
       });
     })();
@@ -343,11 +343,6 @@
     }); });
   }
   function initOhSA() { _ohSAInit = true; }
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      Object.values(chartRegistry).forEach(c => { if(c) { c.resize(); c.update('none'); } });
-    }, 200);
-  });
   </script>
 </body>
 </html>

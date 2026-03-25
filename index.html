@@ -260,7 +260,7 @@
       const colors = data.map((v,i) => i === 3 ? C.navy : v > 5.19 ? C.green : C.orange);
       createChart('chart-yield-city', {
         type: 'bar',
-        data: { labels, datasets: [{ label: 'Gross Yield %', data, backgroundColor: colors }] },
+        data: { labels, datasets: [{ label: 'Gross Yield %', data, backgroundColor: colors, barThickness: 20, minBarLength: 3 }] },
         options: {
           indexAxis: 'y', barPercentage: 0.8, categoryPercentage: 0.9, responsive: true,
           plugins: { legend: { display: false } },
@@ -287,11 +287,6 @@
       ['Gross Yield %'], ['毛收益率 %']);
 
     initLanguage();
-  });
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      Object.values(chartRegistry).forEach(c => { if(c) { c.resize(); c.update('none'); } });
-    }, 200);
   });
   </script>
 </body>

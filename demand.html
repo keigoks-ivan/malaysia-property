@@ -149,7 +149,7 @@
       const data = [98.05,29.83,10.74,2.06,0.21,-16.95,-16.44];
       createChart('chart-state-yoy', {
         type: 'bar',
-        data: { labels, datasets: [{ label: 'YoY %', data, backgroundColor: data.map(v => v >= 0 ? C.green : C.red) }] },
+        data: { labels, datasets: [{ label: 'YoY %', data, backgroundColor: data.map(v => v >= 0 ? C.green : C.red), barThickness: 20, minBarLength: 3 }] },
         options: { indexAxis: 'y', barPercentage: 0.8, categoryPercentage: 0.9, responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => v + '%' } } } }
       });
     })();
@@ -231,11 +231,6 @@
       ['有地住宅', '高層住宅'],
       ['Take-up Rate %'], ['即時銷售率 %']);
     initLanguage();
-  });
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      Object.values(chartRegistry).forEach(c => { if(c) { c.resize(); c.update('none'); } });
-    }, 200);
   });
   </script>
 </body>

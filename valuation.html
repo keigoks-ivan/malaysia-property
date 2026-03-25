@@ -175,7 +175,7 @@
       const data = [7.0,6.5,4.7,4.6,4.6,4.3,4.0,3.8,2.3];
       createChart('chart-median-mult', {
         type: 'bar',
-        data: { labels, datasets: [{ label: 'Median Multiple', data, backgroundColor: data.map(v => v > 4 ? C.red : v > 3 ? C.orange : C.green) }] },
+        data: { labels, datasets: [{ label: 'Median Multiple', data, backgroundColor: data.map(v => v > 4 ? C.red : v > 3 ? C.orange : C.green), barThickness: 20, minBarLength: 3 }] },
         options: {
           indexAxis: 'y', barPercentage: 0.8, categoryPercentage: 0.9, responsive: true,
           plugins: { legend: { display: false } },
@@ -190,7 +190,7 @@
       data: {
         labels: ['KL','JB','Penang','National'],
         datasets: [
-          { label: 'P/R Ratio', data: [21.7,18.3,26.5,19.3], backgroundColor: [C.navy,C.green,C.red,C.navy] },
+          { label: 'P/R Ratio', data: [21.7,18.3,26.5,19.3], backgroundColor: [C.navy,C.green,C.red,C.navy], barThickness: 40 },
           { label: 'Rent preferred (25)', data: [25,25,25,25], type: 'line', borderColor: C.orange, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false },
           { label: 'Buy preferred (15)', data: [15,15,15,15], type: 'line', borderColor: C.green, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false },
         ]
@@ -225,7 +225,7 @@
       type: 'bar',
       data: {
         labels: ['KL','Bangkok','Ho Chi Minh','Singapore','Hong Kong'],
-        datasets: [{ label: 'P/R Ratio', data: [21.7,25,30,40,50], backgroundColor: [C.green,C.navy,C.orange,C.red,C.red] }]
+        datasets: [{ label: 'P/R Ratio', data: [21.7,25,30,40,50], backgroundColor: [C.green,C.navy,C.orange,C.red,C.red], barThickness: 20, minBarLength: 3 }]
       },
       options: {
         indexAxis: 'y', barPercentage: 0.8, categoryPercentage: 0.9, responsive: true,
@@ -243,11 +243,6 @@
       ['吉隆坡','曼谷','胡志明市','新加坡','香港'],
       ['P/R Ratio'], ['房價租金比']);
     initLanguage();
-  });
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      Object.values(chartRegistry).forEach(c => { if(c) { c.resize(); c.update('none'); } });
-    }, 200);
   });
   </script>
 </body>

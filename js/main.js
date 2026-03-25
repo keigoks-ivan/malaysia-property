@@ -1,65 +1,4 @@
-/* ── Chart.js Defaults (S&P Capital IQ light-blue style) ── */
-function setChartDefaults() {
-  if (typeof Chart === 'undefined') { console.error('Chart.js not loaded'); return; }
-  Chart.defaults.color = '#8ba3c0';
-  Chart.defaults.borderColor = '#e8f0f9';
-  Chart.defaults.font.family = "'Inter', sans-serif";
-  Chart.defaults.font.size = 11;
-  Chart.defaults.plugins.legend.labels.usePointStyle = true;
-  Chart.defaults.plugins.legend.labels.pointStyleWidth = 8;
-  Chart.defaults.plugins.legend.labels.padding = 14;
-  Chart.defaults.plugins.legend.labels.font = { size: 11 };
-  Chart.defaults.elements.line.tension = 0.3;
-  Chart.defaults.elements.line.borderWidth = 2;
-  Chart.defaults.elements.point.radius = 2;
-  Chart.defaults.elements.point.hoverRadius = 5;
-  Chart.defaults.elements.bar.borderRadius = 2;
-  Chart.defaults.scale.grid = { color: '#e8f0f9' };
-  Chart.defaults.maintainAspectRatio = false;
-  Chart.defaults.responsive = true;
-}
-
-/* ── Chart Registry ── */
-const chartRegistry = {};
-
-function createChart(canvasId, config) {
-  const el = document.getElementById(canvasId);
-  if (!el) { console.warn('Canvas not found: ' + canvasId); return null; }
-  // Ensure parent has dimensions
-  const parent = el.parentElement;
-  if (parent && parent.offsetHeight === 0) {
-    parent.style.height = '220px';
-    parent.style.position = 'relative';
-  }
-  // Add barThickness + minBarLength to all bar datasets for reliable rendering
-  if (config.data && config.data.datasets) {
-    config.data.datasets.forEach(ds => {
-      if (config.type === 'bar' || ds.type === 'bar') {
-        if (!ds.barThickness) ds.barThickness = 18;
-        if (!ds.minBarLength) ds.minBarLength = 4;
-      }
-    });
-  }
-  // Reset any problematic CSS on canvas
-  el.style.position = '';
-  el.style.width = '';
-  el.style.height = '';
-  const chart = new Chart(el, config);
-  chartRegistry[canvasId] = chart;
-  return chart;
-}
-
-/* Resize all visible charts (call after tab switch) */
-function resizeVisibleCharts() {
-  Object.keys(chartRegistry).forEach(id => {
-    const chart = chartRegistry[id];
-    if (chart && chart.canvas && chart.canvas.offsetParent !== null) {
-      chart.resize();
-    }
-  });
-}
-
-/* ── Chart Colors ── */
+/* ── Colors ── */
 const C = {
   navy: '#1e3a5f', green: '#16a34a', orange: '#d97706',
   blue: '#2563eb', red: '#dc2626', muted: '#8ba3c0',
@@ -67,19 +6,53 @@ const C = {
   orange_bg: 'rgba(217,119,6,0.08)', blue_bg: 'rgba(37,99,235,0.08)',
 };
 
-/* ── Formatters ── */
 function fmtNum(n) {
-  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
-  if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+  if (n >= 1e6) return (n/1e6).toFixed(1)+'M';
+  if (n >= 1e3) return (n/1e3).toFixed(1)+'K';
   return n.toLocaleString();
 }
 function fmtRM(n) {
-  if (n >= 1e6) return 'RM ' + (n / 1e6).toFixed(1) + 'M';
-  if (n >= 1e3) return 'RM ' + (n / 1e3).toFixed(0) + 'K';
-  return 'RM ' + n.toLocaleString();
+  if (n >= 1e6) return 'RM '+(n/1e6).toFixed(1)+'M';
+  if (n >= 1e3) return 'RM '+(n/1e3).toFixed(0)+'K';
+  return 'RM '+n.toLocaleString();
 }
 
-/* ── Tab switching ── */
+const chartRegistry = {};
+const chartI18n = {};
+
+function setChartDefaults() {
+  if (typeof Chart === 'undefined') return;
+  Chart.defaults.color = '#8ba3c0';
+  Chart.defaults.borderColor = '#e8f0f9';
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.plugins.legend.labels.usePointStyle = true;
+  Chart.defaults.plugins.legend.labels.pointStyleWidth = 8;
+  Chart.defaults.plugins.legend.labels.padding = 14;
+  Chart.defaults.elements.line.tension = 0.3;
+  Chart.defaults.elements.line.borderWidth = 2;
+  Chart.defaults.elements.point.radius = 2;
+  Chart.defaults.elements.point.hoverRadius = 5;
+  Chart.defaults.elements.bar.borderRadius = 2;
+  Chart.defaults.scale.grid = { color: '#e8f0f9' };
+}
+
+function createChart(id, config) {
+  const el = document.getElementById(id);
+  if (!el) return null;
+  const parent = el.parentElement;
+  if (parent) {
+    if (!parent.style.height) parent.style.height = '220px';
+    parent.style.position = 'relative';
+  }
+  config.options = config.options || {};
+  config.options.responsive = true;
+  config.options.maintainAspectRatio = false;
+  const chart = new Chart(el, config);
+  chartRegistry[id] = chart;
+  return chart;
+}
+
 function switchTab(container, tabName) {
   const wrap = document.getElementById(container);
   if (!wrap) return;
@@ -90,61 +63,54 @@ function switchTab(container, tabName) {
   wrap.querySelectorAll('.tab-bar button').forEach(b => {
     if (b.dataset.tab === tabName) b.classList.add('active');
   });
-  // Resize charts in newly visible tab after layout reflow
-  requestAnimationFrame(() => { requestAnimationFrame(() => { resizeVisibleCharts(); }); });
+  setTimeout(() => {
+    Object.keys(chartRegistry).forEach(id => {
+      const c = chartRegistry[id];
+      if (c && c.canvas && c.canvas.closest('.tab-panel.active')) c.resize();
+    });
+  }, 50);
 }
 
-/* ══════════════════════════════════════════════════════════════
-   LANGUAGE SYSTEM
-   ══════════════════════════════════════════════════════════════ */
-
-/* Chart translation dictionary: { canvasId: { en: [...labels], zh: [...labels] } } */
-const chartI18n = {};
+function resizeVisibleCharts() {
+  Object.keys(chartRegistry).forEach(id => {
+    const c = chartRegistry[id];
+    if (c && c.canvas && c.canvas.offsetParent !== null) c.resize();
+  });
+}
 
 function registerChartI18n(canvasId, enLabels, zhLabels, enDatasets, zhDatasets) {
   chartI18n[canvasId] = { enL: enLabels, zhL: zhLabels, enD: enDatasets, zhD: zhDatasets };
 }
 
-function setLanguage(lang) {
-  localStorage.setItem('lang', lang);
-  document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : 'en';
-
-  // Toggle text via data-en / data-zh
-  document.querySelectorAll('[data-en][data-zh]').forEach(el => {
-    el.textContent = lang === 'zh' ? el.dataset.zh : el.dataset.en;
-  });
-
-  // Toggle innerHTML via data-en-html / data-zh-html
-  document.querySelectorAll('[data-en-html][data-zh-html]').forEach(el => {
-    el.innerHTML = lang === 'zh' ? el.dataset.zhHtml : el.dataset.enHtml;
-  });
-
-  // Update lang buttons
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
-  });
-
-  // Update charts
-  updateChartLanguage(lang);
-
-  // Page-specific callback
-  if (typeof onLanguageChange === 'function') onLanguageChange(lang);
-}
-
 function updateChartLanguage(lang) {
   Object.keys(chartI18n).forEach(id => {
     const chart = chartRegistry[id];
-    const t = chartI18n[id];
-    if (!chart || !t) return;
-    if (t.enD && t.zhD) {
-      const ds = lang === 'zh' ? t.zhD : t.enD;
-      chart.data.datasets.forEach((d, i) => { if (ds[i] !== undefined) d.label = ds[i]; });
+    const i18n = chartI18n[id];
+    if (!chart || !i18n) return;
+    if (lang === 'zh') {
+      if (i18n.zhL) chart.data.labels = i18n.zhL;
+      if (i18n.zhD) chart.data.datasets.forEach((ds, i) => { if (i18n.zhD[i]) ds.label = i18n.zhD[i]; });
+    } else {
+      if (i18n.enL) chart.data.labels = i18n.enL;
+      if (i18n.enD) chart.data.datasets.forEach((ds, i) => { if (i18n.enD[i]) ds.label = i18n.enD[i]; });
     }
-    if (t.enL && t.zhL) {
-      chart.data.labels = lang === 'zh' ? [...t.zhL] : [...t.enL];
-    }
-    chart.update();
+    chart.update('none');
   });
+}
+
+function setLanguage(lang) {
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = lang === 'zh' ? (el.dataset.zh || el.dataset.en) : el.dataset.en;
+  });
+  document.querySelectorAll('[data-en-html]').forEach(el => {
+    el.innerHTML = lang === 'zh' ? (el.dataset.zhHtml || el.dataset.enHtml) : el.dataset.enHtml;
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  updateChartLanguage(lang);
+  localStorage.setItem('lang', lang);
+  if (typeof onLanguageChange === 'function') onLanguageChange(lang);
 }
 
 function initLanguage() {
