@@ -15,6 +15,8 @@ function setChartDefaults() {
   Chart.defaults.elements.point.hoverRadius = 5;
   Chart.defaults.elements.bar.borderRadius = 2;
   Chart.defaults.scale.grid = { color: '#e8f0f9' };
+  Chart.defaults.maintainAspectRatio = false;
+  Chart.defaults.responsive = true;
 }
 
 /* ── Safe chart creator: checks canvas exists before init ── */

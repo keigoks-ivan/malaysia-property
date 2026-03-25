@@ -239,12 +239,39 @@ body {
   margin-bottom: 12px;
 }
 
-.chart-card canvas {
-  width: 100% !important;
-  max-height: 200px;
+/* Canvas wrapper: Chart.js needs a position:relative parent with explicit height */
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 220px;
 }
 
-.chart-card canvas.tall { max-height: 280px; }
+.chart-wrap.tall {
+  height: 300px;
+}
+
+.chart-wrap.short {
+  height: 180px;
+}
+
+.chart-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Radar chart needs square aspect */
+.radar-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  height: 320px;
+  margin: 0 auto;
+}
+
+.radar-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
 
 /* ── Insight Box ── */
 .insight-box {
