@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Demand Analysis | Malaysia Property Monitor</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.1.0/chartjs-plugin-annotation.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -108,7 +108,7 @@
     setChartDefaults();
 
     // Transaction Volume
-    new Chart(document.getElementById('chart-tx'), {
+    createChart('chart-tx', {
       type: 'line',
       data: {
         labels: ['2019','2020','2021','2022','2023','2024','2025 Q1-Q3'],
@@ -126,7 +126,7 @@
     (() => {
       const labels = ['Kelantan','Melaka','Pahang','Selangor','KL','Perlis','N. Sembilan'];
       const data = [98.05,29.83,10.74,2.06,0.21,-16.95,-16.44];
-      new Chart(document.getElementById('chart-state-yoy'), {
+      createChart('chart-state-yoy', {
         type: 'bar',
         data: { labels, datasets: [{ label: 'YoY %', data, backgroundColor: data.map(v => v >= 0 ? C.green : C.red) }] },
         options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => v + '%' } } } }
@@ -134,7 +134,7 @@
     })();
 
     // Buyer Type Composition (stacked area)
-    new Chart(document.getElementById('chart-buyer-type'), {
+    createChart('chart-buyer-type', {
       type: 'line',
       data: {
         labels: ['2018','2019','2020','2021','2022','2023','2024','2025E'],
@@ -148,7 +148,7 @@
     });
 
     // Loan Application vs Approval
-    new Chart(document.getElementById('chart-loan'), {
+    createChart('chart-loan', {
       type: 'line',
       data: {
         labels: ['2020','2021','2022','2023','2024 Q3'],
@@ -168,7 +168,7 @@
     });
 
     // Household Formation vs Completions
-    new Chart(document.getElementById('chart-hh-formation'), {
+    createChart('chart-hh-formation', {
       type: 'bar',
       data: {
         labels: ['2020','2021','2022','2023','2024'],
@@ -181,7 +181,7 @@
     });
 
     // Take-up Rate
-    new Chart(document.getElementById('chart-takeup'), {
+    createChart('chart-takeup', {
       type: 'bar',
       data: {
         labels: ['Landed','High-Rise'],

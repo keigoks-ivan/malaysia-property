@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Market Dashboard | Malaysia Property Monitor</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.1.0/chartjs-plugin-annotation.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -181,7 +181,7 @@
     setChartDefaults();
 
     // Yield Spread Monitor
-    new Chart(document.getElementById('chart-yield-spread'), {
+    createChart('chart-yield-spread', {
       type: 'line',
       data: {
         labels: ['2019','2020','2021','2022','2023Q1','2023Q3','2024Q1','2024Q3','2025Q1','2025Q3'],
@@ -194,7 +194,7 @@
     });
 
     // Supply Pipeline Pressure
-    new Chart(document.getElementById('chart-pipeline-pressure'), {
+    createChart('chart-pipeline-pressure', {
       type: 'line',
       data: {
         labels: ['2019','2020','2021','2022','2023','2024','2025E'],
@@ -208,7 +208,7 @@
     });
 
     // Transaction Volume
-    new Chart(document.getElementById('chart-tx-trend'), {
+    createChart('chart-tx-trend', {
       type: 'line',
       data: {
         labels: ['2019','2020','2021','2022','2023','2024','2025 Q1-Q3'],
@@ -231,7 +231,7 @@
     });
 
     // Overhang Pipeline
-    new Chart(document.getElementById('chart-overhang-pipeline'), {
+    createChart('chart-overhang-pipeline', {
       type: 'line',
       data: {
         labels: ['2018','2019','2020','2021','2022','2023','2024H1','2025Q3'],
@@ -248,7 +248,7 @@
       const labels = ['Iskandar Puteri','JB City','Subang Jaya','National Avg','KL City','Penang GT'];
       const data = [5.60,5.47,5.40,5.19,4.60,3.77];
       const colors = data.map((v,i) => i === 3 ? C.navy : v > 5.19 ? C.green : C.orange);
-      new Chart(document.getElementById('chart-yield-city'), {
+      createChart('chart-yield-city', {
         type: 'bar',
         data: { labels, datasets: [{ label: 'Gross Yield %', data, backgroundColor: colors }] },
         options: {
@@ -271,7 +271,7 @@
       const mhpi = [194,195,197,200,207,224,225];
       const cpi = [121,122,123,128,132,136,138];
       const realMhpi = mhpi.map((v,i) => +(v / cpi[i] * 100).toFixed(1));
-      new Chart(document.getElementById('chart-mhpi-cpi'), {
+      createChart('chart-mhpi-cpi', {
         type: 'line',
         data: {
           labels: ['2019','2020','2021','2022','2023','2024','2025Q3'],

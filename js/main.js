@@ -1,5 +1,6 @@
 /* ── Chart.js Defaults (S&P Capital IQ light-blue style) ── */
 function setChartDefaults() {
+  if (typeof Chart === 'undefined') { console.error('Chart.js not loaded'); return; }
   Chart.defaults.color = '#8ba3c0';
   Chart.defaults.borderColor = '#e8f0f9';
   Chart.defaults.font.family = "'Inter', sans-serif";
@@ -14,6 +15,13 @@ function setChartDefaults() {
   Chart.defaults.elements.point.hoverRadius = 5;
   Chart.defaults.elements.bar.borderRadius = 2;
   Chart.defaults.scale.grid = { color: '#e8f0f9' };
+}
+
+/* ── Safe chart creator: checks canvas exists before init ── */
+function createChart(canvasId, config) {
+  const el = document.getElementById(canvasId);
+  if (!el) { console.warn('Canvas not found: ' + canvasId); return null; }
+  return new Chart(el, config);
 }
 
 /* ── Chart Colors ── */

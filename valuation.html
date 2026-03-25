@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Valuation Monitor | Malaysia Property Monitor</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.1.0/chartjs-plugin-annotation.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -129,7 +129,7 @@
       const ry = [4.80,4.60,4.70,4.90,5.16,5.20,5.16,5.24,5.10,5.19];
       const opr = [3.00,1.75,1.75,2.75,3.00,3.00,3.00,3.00,3.00,2.75];
       const spread = ry.map((v,i) => +(v - opr[i]).toFixed(2));
-      new Chart(document.getElementById('chart-spread'), {
+      createChart('chart-spread', {
         type: 'line',
         data: {
           labels: ['2019','2020','2021','2022','2023Q1','2023Q3','2024Q1','2024Q3','2025Q1','2025Q3'],
@@ -150,7 +150,7 @@
     (() => {
       const labels = ['Sabah','Sarawak','KL','Kelantan','Penang','National','Kedah','Johor','Melaka'];
       const data = [7.0,6.5,4.7,4.6,4.6,4.3,4.0,3.8,2.3];
-      new Chart(document.getElementById('chart-median-mult'), {
+      createChart('chart-median-mult', {
         type: 'bar',
         data: { labels, datasets: [{ label: 'Median Multiple', data, backgroundColor: data.map(v => v > 4 ? C.red : v > 3 ? C.orange : C.green) }] },
         options: {
@@ -165,7 +165,7 @@
     })();
 
     // Price-to-Rent
-    new Chart(document.getElementById('chart-p2r'), {
+    createChart('chart-p2r', {
       type: 'bar',
       data: {
         labels: ['KL','JB','Penang','National'],
@@ -186,7 +186,7 @@
       const mhpi = [194,195,197,200,207,224,225];
       const cpi = [121,122,123,128,132,136,138];
       const real = mhpi.map((v,i) => +(v / cpi[i] * 100).toFixed(1));
-      new Chart(document.getElementById('chart-mhpi-real'), {
+      createChart('chart-mhpi-real', {
         type: 'line',
         data: {
           labels: ['2019','2020','2021','2022','2023','2024','2025Q3'],
@@ -200,7 +200,7 @@
     })();
 
     // APAC Comparison
-    new Chart(document.getElementById('chart-apac'), {
+    createChart('chart-apac', {
       type: 'bar',
       data: {
         labels: ['KL','Bangkok','Ho Chi Minh','Singapore','Hong Kong'],

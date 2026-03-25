@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KL Deep Dive | Malaysia Property Monitor</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.1.0/chartjs-plugin-annotation.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -207,7 +207,7 @@
     setChartDefaults();
 
     // Zone 1: Price trend
-    new Chart(document.getElementById('chart-z1-price'), {
+    createChart('chart-z1-price', {
       type: 'line',
       data: {
         labels: ['2019','2020','2021','2022','2023','2024','2025Q3'],
@@ -217,7 +217,7 @@
     });
 
     // Zone 1: Yield vs borrowing cost
-    new Chart(document.getElementById('chart-z1-yield'), {
+    createChart('chart-z1-yield', {
       type: 'bar',
       data: {
         labels: ['Gross Yield','OPR','Effective Mortgage Rate'],
@@ -227,7 +227,7 @@
     });
 
     // KL Pipeline
-    new Chart(document.getElementById('chart-kl-pipeline'), {
+    createChart('chart-kl-pipeline', {
       type: 'line',
       data: {
         labels: ['2021','2022','2023','2024','2025 Q1-Q3'],
@@ -241,7 +241,7 @@
     });
 
     // KL Rental Trend
-    new Chart(document.getElementById('chart-kl-rental'), {
+    createChart('chart-kl-rental', {
       type: 'line',
       data: {
         labels: ['2020','2021','2022','2023','2024'],
@@ -262,7 +262,7 @@
   function initZ2() {
     if (_z2) return; _z2 = true;
     requestAnimationFrame(() => { requestAnimationFrame(() => {
-      new Chart(document.getElementById('chart-z2-launch'), {
+      createChart('chart-z2-launch', {
         type: 'bar',
         data: {
           labels: ['2022','2023','2024','2025E'],
@@ -270,7 +270,7 @@
         },
         options: { responsive: true, scales: { y: { ticks: { callback: v => fmtNum(v) } } } }
       });
-      new Chart(document.getElementById('chart-z2-balance'), {
+      createChart('chart-z2-balance', {
         type: 'bar',
         data: {
           labels: ['2022','2023','2024'],
@@ -289,7 +289,7 @@
   function initZ3() {
     if (_z3) return; _z3 = true;
     requestAnimationFrame(() => { requestAnimationFrame(() => {
-      new Chart(document.getElementById('chart-z3-psf'), {
+      createChart('chart-z3-psf', {
         type: 'bar',
         data: {
           labels: ['Studio 280sqft','1-Bed 500sqft','2-Bed 850sqft','3-Bed 1,200sqft'],
@@ -297,7 +297,7 @@
         },
         options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: v => 'RM ' + v } } } }
       });
-      new Chart(document.getElementById('chart-z3-sa'), {
+      createChart('chart-z3-sa', {
         type: 'bar',
         data: {
           labels: ['Serviced Apartments','Standard Residential'],

@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Supply Analysis | Malaysia Property Monitor</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.1.0/chartjs-plugin-annotation.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -191,7 +191,7 @@
     setChartDefaults();
 
     // Annual Pipeline
-    new Chart(document.getElementById('chart-annual-pipeline'), {
+    createChart('chart-annual-pipeline', {
       type: 'line',
       data: {
         labels: ['2019','2020','2021','2022','2023','2024','2025 Q1-Q3'],
@@ -205,7 +205,7 @@
     });
 
     // Projected Completions
-    new Chart(document.getElementById('chart-projected'), {
+    createChart('chart-projected', {
       type: 'bar',
       data: {
         labels: ['2022','2023','2024','2026E','2027E','2028E'],
@@ -219,7 +219,7 @@
     });
 
     // WIP vs Absorption
-    new Chart(document.getElementById('chart-wip-absorb'), {
+    createChart('chart-wip-absorb', {
       type: 'bar',
       data: {
         labels: ['WIP in Pipeline*','Annual Absorption'],
@@ -241,7 +241,7 @@
     (() => {
       const labels = ['Perak','Johor','Sabah','Selangor','Penang','Kelantan','KL','N. Sembilan','Others'];
       const data = [3300,3293,2771,2757,2730,2599,2287,2205,6730];
-      new Chart(document.getElementById('chart-oh-state'), {
+      createChart('chart-oh-state', {
         type: 'bar',
         data: { labels, datasets: [{ label: 'Units', data, backgroundColor: data.map(v => v > 3000 ? C.red : C.navy) }] },
         options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => v.toLocaleString() } } } }
@@ -251,7 +251,7 @@
     // Overhang Trend
     (() => {
       const data = [32313,36863,31092,26424,27746,25816,22642,44794];
-      new Chart(document.getElementById('chart-oh-trend'), {
+      createChart('chart-oh-trend', {
         type: 'line',
         data: {
           labels: ['2018','2019','2020','2021','2022','2023','2024H1','2025Q3*'],
@@ -263,7 +263,7 @@
     })();
 
     // Developer Mix
-    new Chart(document.getElementById('chart-dev-mix'), {
+    createChart('chart-dev-mix', {
       type: 'bar',
       data: {
         labels: ['IOI Prop','SP Setia','Sunway','Eco World','Mah Sing'],
@@ -276,7 +276,7 @@
     });
 
     // Cost Structure
-    new Chart(document.getElementById('chart-cost-struct'), {
+    createChart('chart-cost-struct', {
       type: 'bar',
       data: {
         labels: ['RM280k Affordable','RM800k Mid-High'],
@@ -294,7 +294,7 @@
     (() => {
       const labels = ['Penang (island)','Selangor (HD)','KL','Johor','Kedah','Melaka','Sabah','Sarawak'];
       const data = [3000000,2000000,1000000,600000,600000,500000,500000,500000];
-      new Chart(document.getElementById('chart-foreign-min'), {
+      createChart('chart-foreign-min', {
         type: 'bar',
         data: { labels, datasets: [{ label: 'Min. Purchase (RM)', data, backgroundColor: data.map(v => v >= 2e6 ? C.red : v >= 1e6 ? C.orange : C.navy) }] },
         options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => 'RM ' + (v/1e6).toFixed(1) + 'M' } } } }
@@ -307,12 +307,12 @@
   function initOhPrice() {
     if (_ohPriceInit) return; _ohPriceInit = true;
     requestAnimationFrame(() => { requestAnimationFrame(() => {
-      new Chart(document.getElementById('chart-oh-price-pie'), {
+      createChart('chart-oh-price-pie', {
         type: 'doughnut',
         data: { labels: ['Below RM300k','RM300k–500k','RM500k–1M','Above RM1M'], datasets: [{ data: [30.2,22.1,29.6,18.1], backgroundColor: [C.navy,C.blue,C.orange,C.red], borderWidth: 0 }] },
         options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed + '%' } } } }
       });
-      new Chart(document.getElementById('chart-oh-mismatch'), {
+      createChart('chart-oh-mismatch', {
         type: 'bar',
         data: { labels: ['Below RM300k','RM300k–500k','RM500k–1M','Above RM1M'], datasets: [
           { label: 'Demand %', data: [53.1,27.3,13.8,5.8], backgroundColor: C.navy },
