@@ -14,90 +14,94 @@
   <header class="navbar">
     <a href="index.html" class="logo">MALAYSIA PROPERTY MONITOR</a>
     <nav>
-      <a href="index.html">Dashboard</a>
-      <a href="supply.html">Supply</a>
-      <a href="demand.html" class="active">Demand</a>
-      <a href="valuation.html">Valuation</a>
-      <a href="risk.html">Risk</a>
-      <a href="kl.html">KL</a>
-      <a href="report.html">Report</a>
+      <a href="index.html" data-en="Dashboard" data-zh="市場總覽">Dashboard</a>
+      <a href="supply.html" data-en="Supply" data-zh="供給分析">Supply</a>
+      <a href="demand.html" class="active" data-en="Demand" data-zh="需求分析">Demand</a>
+      <a href="valuation.html" data-en="Valuation" data-zh="估值監測">Valuation</a>
+      <a href="risk.html" data-en="Risk" data-zh="風險監測">Risk</a>
+      <a href="kl.html" data-en="KL" data-zh="吉隆坡深析">KL</a>
+      <a href="report.html" data-en="Report" data-zh="市場報告">Report</a>
     </nav>
-    <span class="opr-badge">OPR: 2.75% ▼</span>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+      <button class="lang-btn" data-lang="zh" onclick="setLanguage('zh')">中文</button>
+    </div>
+    <span class="opr-badge" data-en="OPR: 2.75% ▼" data-zh="隔夜政策利率: 2.75% ▼">OPR: 2.75% ▼</span>
   </header>
 
   <main class="container">
     <div class="page-header">
-      <span class="updated">LAST UPDATED: Q3 2025</span>
-      <h1>Demand Analysis</h1>
-      <p class="subtitle">Transaction Volume, Buyer Composition & Structural Demand Drivers</p>
+      <span class="updated" data-en="LAST UPDATED: Q3 2025" data-zh="最後更新：2025年Q3">LAST UPDATED: Q3 2025</span>
+      <h1 data-en="Demand Analysis" data-zh="需求分析">Demand Analysis</h1>
+      <p class="subtitle" data-en="Transaction Volume, Buyer Composition &amp; Structural Demand Drivers" data-zh="交易量、買家結構及結構性需求驅動因素">Transaction Volume, Buyer Composition & Structural Demand Drivers</p>
     </div>
 
     <div class="kpi-grid">
       <div class="kpi-card green">
-        <div class="kpi-label">2024 Transactions</div>
+        <div class="kpi-label" data-en="2024 Transactions" data-zh="2024年交易量">2024 Transactions</div>
         <div class="kpi-value">420,525</div>
-        <span class="kpi-badge badge-green">10-Year High</span>
+        <span class="kpi-badge badge-green" data-en="10-Year High" data-zh="十年新高">10-Year High</span>
         <div class="kpi-source">NAPIC 2024</div>
       </div>
       <div class="kpi-card orange">
-        <div class="kpi-label">Q3 2025 Transactions</div>
+        <div class="kpi-label" data-en="Q3 2025 Transactions" data-zh="2025年Q3交易量">Q3 2025 Transactions</div>
         <div class="kpi-value">66,766</div>
-        <span class="kpi-badge badge-orange">−5.2% YoY</span>
+        <span class="kpi-badge badge-orange" data-en="−5.2% YoY" data-zh="年減5.2%">−5.2% YoY</span>
         <div class="kpi-source">JPPH Q3 2025</div>
       </div>
       <div class="kpi-card orange">
-        <div class="kpi-label">Foreign Buyer Share</div>
+        <div class="kpi-label" data-en="Foreign Buyer Share" data-zh="外國買家比例">Foreign Buyer Share</div>
         <div class="kpi-value">~8–12%</div>
-        <span class="kpi-badge badge-orange">declining</span>
+        <span class="kpi-badge badge-orange" data-en="declining" data-zh="持續下降">declining</span>
         <div class="kpi-source">Juwai IQI 2025</div>
       </div>
       <div class="kpi-card orange">
-        <div class="kpi-label">Loan Approval Rate</div>
+        <div class="kpi-label" data-en="Loan Approval Rate" data-zh="貸款批准率">Loan Approval Rate</div>
         <div class="kpi-value">42.6%</div>
-        <span class="kpi-badge badge-orange">below pre-COVID</span>
+        <span class="kpi-badge badge-orange" data-en="below pre-COVID" data-zh="低於疫情前水平">below pre-COVID</span>
         <div class="kpi-source">Q3 2024 BNM</div>
       </div>
     </div>
 
     <div class="chart-grid two-col">
       <div class="chart-card">
-        <h3>Transaction Volume Trend</h3>
+        <h3 data-en="Transaction Volume Trend" data-zh="交易量趨勢">Transaction Volume Trend</h3>
         <div class="chart-wrap"><canvas id="chart-tx"></canvas></div>
       </div>
       <div class="chart-card">
-        <h3>State Transaction YoY Growth (Q3 2025)</h3>
+        <h3 data-en="State Transaction YoY Growth (Q3 2025)" data-zh="各州交易量年增率（2025年Q3）">State Transaction YoY Growth (Q3 2025)</h3>
         <div class="chart-wrap"><canvas id="chart-state-yoy"></canvas></div>
       </div>
     </div>
 
     <div class="chart-grid two-col">
       <div class="chart-card">
-        <h3>Buyer Type Composition</h3>
-        <p class="chart-subtitle">Individual owner-occupier vs investor vs foreign (est.)</p>
+        <h3 data-en="Buyer Type Composition" data-zh="買家類型結構">Buyer Type Composition</h3>
+        <p class="chart-subtitle" data-en="Individual owner-occupier vs investor vs foreign (est.)" data-zh="自住買家 vs 投資買家 vs 外國買家（估算）">Individual owner-occupier vs investor vs foreign (est.)</p>
         <div class="chart-wrap"><canvas id="chart-buyer-type"></canvas></div>
-        <div class="insight-box">Foreign buyer share has declined since 2022 as MM2H tightened and China capital controls persist.</div>
+        <div class="insight-box" data-en-html="Foreign buyer share has declined since 2022 as MM2H tightened and China capital controls persist." data-zh-html="2022年起外國買家比例下滑，主因MM2H收緊及中國資本管制持續。">Foreign buyer share has declined since 2022 as MM2H tightened and China capital controls persist.</div>
       </div>
       <div class="chart-card">
-        <h3>Loan Application vs Approval Rate</h3>
+        <h3 data-en="Loan Application vs Approval Rate" data-zh="貸款申請量 vs 批准率">Loan Application vs Approval Rate</h3>
         <div class="chart-wrap"><canvas id="chart-loan"></canvas></div>
-        <div class="insight-box">Approval rate has never exceeded 44% — a structural barrier locking out potential buyers.</div>
+        <div class="insight-box" data-en-html="Approval rate has never exceeded 44% — a structural barrier locking out potential buyers." data-zh-html="批准率從未超過44%——結構性障礙將潛在買家擋在門外。">Approval rate has never exceeded 44% — a structural barrier locking out potential buyers.</div>
       </div>
     </div>
 
     <div class="chart-grid two-col">
       <div class="chart-card">
-        <h3>Household Formation vs New Completions</h3>
+        <h3 data-en="Household Formation vs New Completions" data-zh="家庭形成率 vs 新完工量">Household Formation vs New Completions</h3>
         <div class="chart-wrap"><canvas id="chart-hh-formation"></canvas></div>
-        <div class="insight-box">Supply consistently exceeds household formation rate, contributing to structural overhang.</div>
+        <div class="insight-box" data-en-html="Supply consistently exceeds household formation rate, contributing to structural overhang." data-zh-html="供給量持續超過家庭形成率，造成結構性積壓。">Supply consistently exceeds household formation rate, contributing to structural overhang.</div>
       </div>
       <div class="chart-card">
-        <h3>New Launch Take-up Rate (Q3 2025)</h3>
+        <h3 data-en="New Launch Take-up Rate (Q3 2025)" data-zh="新推盤即時銷售率（2025年Q3）">New Launch Take-up Rate (Q3 2025)</h3>
         <div class="chart-wrap"><canvas id="chart-takeup"></canvas></div>
-        <div class="insight-box">Extremely low first-day sales indicate weak primary market demand, especially for high-rise.</div>
+        <div class="insight-box" data-en-html="Extremely low first-day sales indicate weak primary market demand, especially for high-rise." data-zh-html="極低的首日銷售率顯示一級市場需求疲弱，尤其高層住宅。">Extremely low first-day sales indicate weak primary market demand, especially for high-rise.</div>
       </div>
     </div>
 
-    <div class="source-footer">
+    <div class="source-footer" data-en-html="NAPIC 2024 &middot; JPPH Q3 2025 &middot; BNM Q3 2024 &middot; Juwai IQI 2025 &middot; DOSM Population Projections<br><em>Estimates marked * are directional approximations. Not investment advice.</em>" data-zh-html="NAPIC 2024 &middot; JPPH Q3 2025 &middot; BNM Q3 2024 &middot; Juwai IQI 2025 &middot; DOSM 人口預測<br><em>標示 * 的數據為方向性估算，非投資建議。</em>">
       NAPIC 2024 &middot; JPPH Q3 2025 &middot; BNM Q3 2024 &middot; Juwai IQI 2025 &middot; DOSM Population Projections<br>
       <em>Estimates marked * are directional approximations. Not investment advice.</em>
     </div>
@@ -196,6 +200,23 @@
         scales: { y: { max: 25, ticks: { callback: v => v + '%' } } }
       }
     });
+
+    registerChartI18n('chart-tx', null, null, ['Transactions'], ['交易量']);
+    registerChartI18n('chart-state-yoy', null, null, ['YoY %'], ['年增率 %']);
+    registerChartI18n('chart-buyer-type', null, null,
+      ['Owner-Occupier', 'Investor', 'Foreign'],
+      ['自住買家', '投資買家', '外國買家']);
+    registerChartI18n('chart-loan', null, null,
+      ['Applications (RM bil)', 'Approval Rate %'],
+      ['申請量（十億令吉）', '批准率 %']);
+    registerChartI18n('chart-hh-formation', null, null,
+      ['New Households (est.)', 'New Completions'],
+      ['新增家庭數（估算）', '新完工量']);
+    registerChartI18n('chart-takeup',
+      ['Landed', 'High-Rise'],
+      ['有地住宅', '高層住宅'],
+      ['Take-up Rate %'], ['即時銷售率 %']);
+    initLanguage();
   });
   </script>
 </body>

@@ -14,107 +14,111 @@
   <header class="navbar">
     <a href="index.html" class="logo">MALAYSIA PROPERTY MONITOR</a>
     <nav>
-      <a href="index.html">Dashboard</a>
-      <a href="supply.html">Supply</a>
-      <a href="demand.html">Demand</a>
-      <a href="valuation.html" class="active">Valuation</a>
-      <a href="risk.html">Risk</a>
-      <a href="kl.html">KL</a>
-      <a href="report.html">Report</a>
+      <a href="index.html" data-en="Dashboard" data-zh="市場總覽">Dashboard</a>
+      <a href="supply.html" data-en="Supply" data-zh="供給分析">Supply</a>
+      <a href="demand.html" data-en="Demand" data-zh="需求分析">Demand</a>
+      <a href="valuation.html" class="active" data-en="Valuation" data-zh="估值監測">Valuation</a>
+      <a href="risk.html" data-en="Risk" data-zh="風險監測">Risk</a>
+      <a href="kl.html" data-en="KL" data-zh="吉隆坡深析">KL</a>
+      <a href="report.html" data-en="Report" data-zh="市場報告">Report</a>
     </nav>
-    <span class="opr-badge">OPR: 2.75% ▼</span>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+      <button class="lang-btn" data-lang="zh" onclick="setLanguage('zh')">中文</button>
+    </div>
+    <span class="opr-badge" data-en="OPR: 2.75% ▼" data-zh="隔夜政策利率: 2.75% ▼">OPR: 2.75% ▼</span>
   </header>
 
   <main class="container">
     <div class="page-header">
-      <span class="updated">LAST UPDATED: Q3 2025 / Q1 2026</span>
-      <h1>Valuation Monitor</h1>
-      <p class="subtitle">Is Malaysian Property Cheap or Expensive? A Multi-Framework Analysis</p>
+      <span class="updated" data-en="LAST UPDATED: Q3 2025 / Q1 2026" data-zh="最後更新：2025年Q3 / 2026年Q1">LAST UPDATED: Q3 2025 / Q1 2026</span>
+      <h1 data-en="Valuation Monitor" data-zh="估值監測">Valuation Monitor</h1>
+      <p class="subtitle" data-en="Is Malaysian Property Cheap or Expensive? A Multi-Framework Analysis" data-zh="馬來西亞房產是便宜還是昂貴？多框架估值分析">Is Malaysian Property Cheap or Expensive? A Multi-Framework Analysis</p>
     </div>
 
     <div class="kpi-grid">
       <div class="kpi-card red">
-        <div class="kpi-label">Median Multiple</div>
+        <div class="kpi-label" data-en="Median Multiple" data-zh="房價收入比">Median Multiple</div>
         <div class="kpi-value">4.3x</div>
-        <span class="kpi-badge badge-red">Seriously Unaffordable</span>
+        <span class="kpi-badge badge-red" data-en="Seriously Unaffordable" data-zh="嚴重不可負擔">Seriously Unaffordable</span>
         <div class="kpi-source">DOSM 2022</div>
       </div>
       <div class="kpi-card green">
-        <div class="kpi-label">Gross Rental Yield</div>
+        <div class="kpi-label" data-en="Gross Rental Yield" data-zh="租金收益率">Gross Rental Yield</div>
         <div class="kpi-value">5.19%</div>
-        <span class="kpi-badge badge-green">↑ vs Q1 2025</span>
+        <span class="kpi-badge badge-green" data-en="↑ vs Q1 2025" data-zh="↑ 較2025年Q1上升">↑ vs Q1 2025</span>
         <div class="kpi-source">Global Property Guide Q1 2026</div>
       </div>
       <div class="kpi-card green">
-        <div class="kpi-label">Yield Spread vs OPR</div>
+        <div class="kpi-label" data-en="Yield Spread vs OPR" data-zh="利差（收益率-OPR）">Yield Spread vs OPR</div>
         <div class="kpi-value">+2.44%</div>
-        <span class="kpi-badge badge-green">relative value</span>
+        <span class="kpi-badge badge-green" data-en="relative value" data-zh="相對價值">relative value</span>
         <div class="kpi-source">Calculated</div>
       </div>
       <div class="kpi-card blue">
-        <div class="kpi-label">Real Price Growth</div>
+        <div class="kpi-label" data-en="Real Price Growth" data-zh="實質房價增長率">Real Price Growth</div>
         <div class="kpi-value">−1.39%</div>
-        <span class="kpi-badge badge-blue">Q3 2025</span>
+        <span class="kpi-badge badge-blue" data-en="Q3 2025" data-zh="2025年Q3">Q3 2025</span>
         <div class="kpi-source">JPPH / DOSM</div>
       </div>
     </div>
 
     <div class="chart-grid two-col">
       <div class="chart-card">
-        <h3>Yield Spread History</h3>
-        <p class="chart-subtitle">Rental Yield minus OPR — Positive = relative value</p>
+        <h3 data-en="Yield Spread History" data-zh="利差歷史走勢">Yield Spread History</h3>
+        <p class="chart-subtitle" data-en="Rental Yield minus OPR — Positive = relative value" data-zh="租金收益率減OPR——正值=相對價值">Rental Yield minus OPR — Positive = relative value</p>
         <div class="chart-wrap"><canvas id="chart-spread"></canvas></div>
-        <div class="insight-box">Spread &gt; 2% historically indicates relative value for yield investors. Current +2.44% is positive but compressed vs 2020–2021 peak.</div>
+        <div class="insight-box" data-en-html="Spread &gt; 2% historically indicates relative value for yield investors. Current +2.44% is positive but compressed vs 2020–2021 peak." data-zh-html="歷史上利差超過2%通常顯示收益型投資的相對價值。當前+2.44%為正向但較2020至2021年高峰有所收窄。">Spread &gt; 2% historically indicates relative value for yield investors. Current +2.44% is positive but compressed vs 2020–2021 peak.</div>
       </div>
       <div class="chart-card">
-        <h3>Median Multiple by State (2022)</h3>
+        <h3 data-en="Median Multiple by State (2022)" data-zh="各州房價收入比（2022年）">Median Multiple by State (2022)</h3>
         <div class="chart-wrap"><canvas id="chart-median-mult"></canvas></div>
       </div>
     </div>
 
     <div class="chart-grid two-col">
       <div class="chart-card">
-        <h3>Price-to-Rent Ratio by City</h3>
+        <h3 data-en="Price-to-Rent Ratio by City" data-zh="各城市房價租金比">Price-to-Rent Ratio by City</h3>
         <div class="chart-wrap"><canvas id="chart-p2r"></canvas></div>
-        <div class="insight-box">P/R &gt; 25 = renting preferred; P/R &lt; 15 = buying preferred. KL at 21.7 is in the neutral zone.</div>
+        <div class="insight-box" data-en-html="P/R &gt; 25 = renting preferred; P/R &lt; 15 = buying preferred. KL at 21.7 is in the neutral zone." data-zh-html="房價租金比&gt;25=租賃優先；&lt;15=購買優先。吉隆坡21.7處於中性區間。">P/R &gt; 25 = renting preferred; P/R &lt; 15 = buying preferred. KL at 21.7 is in the neutral zone.</div>
       </div>
       <div class="chart-card">
-        <h3>MHPI Nominal vs Real</h3>
+        <h3 data-en="MHPI Nominal vs Real" data-zh="房價指數：名義 vs 實質">MHPI Nominal vs Real</h3>
         <div class="chart-wrap"><canvas id="chart-mhpi-real"></canvas></div>
-        <div class="insight-box">Real house prices flat/declining since 2022 — no bubble signal.</div>
+        <div class="insight-box" data-en-html="Real house prices flat/declining since 2022 — no bubble signal." data-zh-html="2022年後實質房價停滯或下跌，無泡沫訊號。">Real house prices flat/declining since 2022 — no bubble signal.</div>
       </div>
     </div>
 
     <div class="chart-grid">
       <div class="chart-card">
-        <h3>KL vs Asia Pacific Price-to-Rent</h3>
-        <p class="chart-subtitle">Lower = more attractive for buyers</p>
+        <h3 data-en="KL vs Asia Pacific Price-to-Rent" data-zh="吉隆坡 vs 亞太城市房價租金比">KL vs Asia Pacific Price-to-Rent</h3>
+        <p class="chart-subtitle" data-en="Lower = more attractive for buyers" data-zh="越低=對買家越有吸引力">Lower = more attractive for buyers</p>
         <div class="chart-wrap"><canvas id="chart-apac"></canvas></div>
-        <div class="insight-box">KL remains significantly undervalued vs regional peers on a price-to-rent basis.</div>
+        <div class="insight-box" data-en-html="KL remains significantly undervalued vs regional peers on a price-to-rent basis." data-zh-html="以房價租金比衡量，吉隆坡相對區域同儕仍顯著低估。">KL remains significantly undervalued vs regional peers on a price-to-rent basis.</div>
       </div>
     </div>
 
     <!-- Valuation Framework Summary -->
-    <h2 class="section-heading">Valuation Framework Summary</h2>
+    <h2 class="section-heading" data-en="Valuation Framework Summary" data-zh="估值框架總結">Valuation Framework Summary</h2>
     <div class="summary-grid">
       <div class="summary-card green-left">
-        <h4>Framework 1: Yield Spread</h4>
-        <p>Spread +2.44% → <strong>Relative Value</strong><br>
+        <h4 data-en="Framework 1: Yield Spread" data-zh="框架一：利差分析">Framework 1: Yield Spread</h4>
+        <p data-en-html="Spread +2.44% → <strong>Relative Value</strong><br>Rental yield exceeds borrowing cost proxy. Positive carry for leveraged investors." data-zh-html="利差+2.44% → <strong>相對價值</strong><br>租金收益率超過借貸成本代理指標。槓桿投資者可獲正向持有收益。">Spread +2.44% → <strong>Relative Value</strong><br>
         Rental yield exceeds borrowing cost proxy. Positive carry for leveraged investors.</p>
       </div>
       <div class="summary-card red-left">
-        <h4>Framework 2: Median Multiple</h4>
-        <p>National 4.3x → <strong>Structural Pressure</strong><br>
+        <h4 data-en="Framework 2: Median Multiple" data-zh="框架二：房價收入比">Framework 2: Median Multiple</h4>
+        <p data-en-html="National 4.3x → <strong>Structural Pressure</strong><br>Above Demographia &quot;seriously unaffordable&quot; threshold. Income growth needed to close gap." data-zh-html="全國4.3倍 → <strong>結構性壓力</strong><br>超過Demographia「嚴重不可負擔」標準。需要收入增長來縮小差距。">National 4.3x → <strong>Structural Pressure</strong><br>
         Above Demographia "seriously unaffordable" threshold. Income growth needed to close gap.</p>
       </div>
       <div class="summary-card green-left">
-        <h4>Framework 3: Regional P/R</h4>
-        <p>KL 21.7 vs HK 50, SG 40 → <strong>Undervalued Regionally</strong><br>
+        <h4 data-en="Framework 3: Regional P/R" data-zh="框架三：區域房價租金比">Framework 3: Regional P/R</h4>
+        <p data-en-html="KL 21.7 vs HK 50, SG 40 → <strong>Undervalued Regionally</strong><br>Malaysia offers significantly better value per rent-dollar vs APAC peers." data-zh-html="吉隆坡21.7 vs 香港50、新加坡40 → <strong>區域估值偏低</strong><br>馬來西亞每單位租金的房價在亞太同儕中顯著更具價值。">KL 21.7 vs HK 50, SG 40 → <strong>Undervalued Regionally</strong><br>
         Malaysia offers significantly better value per rent-dollar vs APAC peers.</p>
       </div>
     </div>
 
-    <div class="source-footer">
+    <div class="source-footer" data-en-html="Global Property Guide Q1 2026 &middot; DOSM 2022 &middot; JPPH Q3 2025 &middot; BNM &middot; Numbeo 2025<br><em>Not investment advice.</em>" data-zh-html="Global Property Guide 2026年Q1 &middot; DOSM 2022 &middot; JPPH 2025年Q3 &middot; BNM &middot; Numbeo 2025<br><em>非投資建議。</em>">
       Global Property Guide Q1 2026 &middot; DOSM 2022 &middot; JPPH Q3 2025 &middot; BNM &middot; Numbeo 2025<br>
       <em>Not investment advice.</em>
     </div>
@@ -215,6 +219,16 @@
         scales: { x: { min: 0, max: 55 } }
       }
     });
+
+    registerChartI18n('chart-spread', null, null, ['Yield Spread %'], ['利差 %']);
+    registerChartI18n('chart-median-mult', null, null, ['Median Multiple'], ['房價收入比']);
+    registerChartI18n('chart-p2r', null, null, ['P/R Ratio'], ['房價租金比']);
+    registerChartI18n('chart-mhpi-real', null, null, ['MHPI Nominal','Real MHPI'], ['名義房價指數','實質房價指數']);
+    registerChartI18n('chart-apac',
+      ['KL','Bangkok','Ho Chi Minh','Singapore','Hong Kong'],
+      ['吉隆坡','曼谷','胡志明市','新加坡','香港'],
+      ['P/R Ratio'], ['房價租金比']);
+    initLanguage();
   });
   </script>
 </body>

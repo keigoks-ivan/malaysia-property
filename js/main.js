@@ -19,25 +19,23 @@ function setChartDefaults() {
   Chart.defaults.responsive = true;
 }
 
-/* ── Safe chart creator: checks canvas exists before init ── */
+/* ── Chart Registry ── */
+const chartRegistry = {};
+
 function createChart(canvasId, config) {
   const el = document.getElementById(canvasId);
   if (!el) { console.warn('Canvas not found: ' + canvasId); return null; }
-  return new Chart(el, config);
+  const chart = new Chart(el, config);
+  chartRegistry[canvasId] = chart;
+  return chart;
 }
 
 /* ── Chart Colors ── */
 const C = {
-  navy: '#1e3a5f',
-  green: '#16a34a',
-  orange: '#d97706',
-  blue: '#2563eb',
-  red: '#dc2626',
-  muted: '#8ba3c0',
-  navy_bg: 'rgba(30,58,95,0.08)',
-  green_bg: 'rgba(22,163,74,0.08)',
-  orange_bg: 'rgba(217,119,6,0.08)',
-  blue_bg: 'rgba(37,99,235,0.08)',
+  navy: '#1e3a5f', green: '#16a34a', orange: '#d97706',
+  blue: '#2563eb', red: '#dc2626', muted: '#8ba3c0',
+  navy_bg: 'rgba(30,58,95,0.08)', green_bg: 'rgba(22,163,74,0.08)',
+  orange_bg: 'rgba(217,119,6,0.08)', blue_bg: 'rgba(37,99,235,0.08)',
 };
 
 /* ── Formatters ── */
@@ -46,14 +44,13 @@ function fmtNum(n) {
   if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
   return n.toLocaleString();
 }
-
 function fmtRM(n) {
   if (n >= 1e6) return 'RM ' + (n / 1e6).toFixed(1) + 'M';
   if (n >= 1e3) return 'RM ' + (n / 1e3).toFixed(0) + 'K';
   return 'RM ' + n.toLocaleString();
 }
 
-/* ── Tab switching utility ── */
+/* ── Tab switching ── */
 function switchTab(container, tabName) {
   const wrap = document.getElementById(container);
   if (!wrap) return;
@@ -61,39 +58,64 @@ function switchTab(container, tabName) {
   wrap.querySelectorAll('.tab-bar button').forEach(b => b.classList.remove('active'));
   const panel = wrap.querySelector('#tab-' + tabName);
   if (panel) panel.classList.add('active');
-  const btns = wrap.querySelectorAll('.tab-bar button');
-  btns.forEach(b => { if (b.dataset.tab === tabName) b.classList.add('active'); });
+  wrap.querySelectorAll('.tab-bar button').forEach(b => {
+    if (b.dataset.tab === tabName) b.classList.add('active');
+  });
 }
 
-/* ── Navbar HTML (shared) ── */
-function getNav(activePage) {
-  const pages = [
-    ['index.html', 'Dashboard'],
-    ['supply.html', 'Supply'],
-    ['demand.html', 'Demand'],
-    ['valuation.html', 'Valuation'],
-    ['risk.html', 'Risk'],
-    ['kl.html', 'KL'],
-  ];
-  const links = pages.map(([href, label]) => {
-    const cls = href === activePage ? ' class="active"' : '';
-    return `<a href="${href}"${cls}>${label}</a>`;
-  }).join('');
-  return `<header class="navbar">
-    <a href="index.html" class="logo">MALAYSIA PROPERTY MONITOR</a>
-    <nav>${links}</nav>
-    <span class="opr-badge">OPR: 2.75% ▼</span>
-  </header>`;
+/* ══════════════════════════════════════════════════════════════
+   LANGUAGE SYSTEM
+   ══════════════════════════════════════════════════════════════ */
+
+/* Chart translation dictionary: { canvasId: { en: [...labels], zh: [...labels] } } */
+const chartI18n = {};
+
+function registerChartI18n(canvasId, enLabels, zhLabels, enDatasets, zhDatasets) {
+  chartI18n[canvasId] = { enL: enLabels, zhL: zhLabels, enD: enDatasets, zhD: zhDatasets };
 }
 
-/* ── Source Footer HTML ── */
-function getSourceFooter() {
-  return `<div class="source-footer">
-    NAPIC Property Market Report 2024 &middot; NAPIC Q3 2025 Snapshot &middot; JPPH Q3 2025 &middot;
-    Global Property Guide Malaysia Q1 2026 &middot; BNM Monetary Policy 2023–2025 &middot;
-    DOSM Household Income Survey 2022 &middot; Juwai IQI Global Market Insights 2025 &middot;
-    REHDA Property Industry Survey 2H2025 &middot; Bamboo Routes Malaysia 2025 &middot; PropCashflow Malaysia 2026<br>
-    <em>Estimates marked * are directional approximations based on public data.
-    This site is for informational purposes only and does not constitute investment advice.</em>
-  </div>`;
+function setLanguage(lang) {
+  localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : 'en';
+
+  // Toggle text via data-en / data-zh
+  document.querySelectorAll('[data-en][data-zh]').forEach(el => {
+    el.textContent = lang === 'zh' ? el.dataset.zh : el.dataset.en;
+  });
+
+  // Toggle innerHTML via data-en-html / data-zh-html
+  document.querySelectorAll('[data-en-html][data-zh-html]').forEach(el => {
+    el.innerHTML = lang === 'zh' ? el.dataset.zhHtml : el.dataset.enHtml;
+  });
+
+  // Update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  // Update charts
+  updateChartLanguage(lang);
+
+  // Page-specific callback
+  if (typeof onLanguageChange === 'function') onLanguageChange(lang);
+}
+
+function updateChartLanguage(lang) {
+  Object.keys(chartI18n).forEach(id => {
+    const chart = chartRegistry[id];
+    const t = chartI18n[id];
+    if (!chart || !t) return;
+    if (t.enD && t.zhD) {
+      const ds = lang === 'zh' ? t.zhD : t.enD;
+      chart.data.datasets.forEach((d, i) => { if (ds[i] !== undefined) d.label = ds[i]; });
+    }
+    if (t.enL && t.zhL) {
+      chart.data.labels = lang === 'zh' ? [...t.zhL] : [...t.enL];
+    }
+    chart.update();
+  });
+}
+
+function initLanguage() {
+  setLanguage(localStorage.getItem('lang') || 'en');
 }
