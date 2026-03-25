@@ -141,7 +141,6 @@
   <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.1.0/chartjs-plugin-annotation.min.js"></script>
   <script src="js/main.js"></script>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -156,14 +155,15 @@
         type: 'line',
         data: {
           labels: ['2019','2020','2021','2022','2023Q1','2023Q3','2024Q1','2024Q3','2025Q1','2025Q3'],
-          datasets: [{ label: 'Yield Spread %', data: spread, borderColor: C.green, backgroundColor: C.green_bg, fill: true, pointRadius: 3 }]
+          datasets: [
+            { label: 'Yield Spread %', data: spread, borderColor: C.green, backgroundColor: C.green_bg, fill: true, pointRadius: 3 },
+            { label: 'Zero', data: new Array(spread.length).fill(0), borderColor: C.red, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false },
+            { label: '2% threshold', data: new Array(spread.length).fill(2), borderColor: C.muted, borderDash: [2,2], borderWidth: 1, pointRadius: 0, fill: false },
+          ]
         },
         options: {
           responsive: true,
-          plugins: { annotation: { annotations: {
-            zero: { type: 'line', yMin: 0, yMax: 0, borderColor: C.red, borderDash: [4,3], borderWidth: 1 },
-            two: { type: 'line', yMin: 2, yMax: 2, borderColor: C.muted, borderDash: [2,2], borderWidth: 1, label: { display: true, content: 'Value threshold (2%)', position: 'start', font: { size: 9 }, color: C.muted, backgroundColor: '#fff' } }
-          }}},
+          plugins: { legend: { labels: { filter: item => item.text === 'Yield Spread %' } } },
           scales: { y: { ticks: { callback: v => v + '%' } } }
         }
       });
@@ -177,12 +177,9 @@
         type: 'bar',
         data: { labels, datasets: [{ label: 'Median Multiple', data, backgroundColor: data.map(v => v > 4 ? C.red : v > 3 ? C.orange : C.green) }] },
         options: {
-          indexAxis: 'y', responsive: true, plugins: { legend: { display: false },
-            annotation: { annotations: {
-              aff: { type: 'line', xMin: 3, xMax: 3, borderColor: C.green, borderDash: [4,3], borderWidth: 1, label: { display: true, content: 'Affordable (3.0)', position: 'end', font: { size: 9 }, color: C.green, backgroundColor: '#fff' } },
-              unaff: { type: 'line', xMin: 4, xMax: 4, borderColor: C.red, borderDash: [4,3], borderWidth: 1, label: { display: true, content: 'Seriously Unaffordable', position: 'end', font: { size: 9 }, color: C.red, backgroundColor: '#fff' } },
-            }}
-          }, scales: { x: { min: 0, max: 8 } }
+          indexAxis: 'y', responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { x: { min: 0, max: 8 } }
         }
       });
     })();
@@ -192,15 +189,16 @@
       type: 'bar',
       data: {
         labels: ['KL','JB','Penang','National'],
-        datasets: [{ label: 'P/R Ratio', data: [21.7,18.3,26.5,19.3], backgroundColor: [C.navy,C.green,C.red,C.navy] }]
+        datasets: [
+          { label: 'P/R Ratio', data: [21.7,18.3,26.5,19.3], backgroundColor: [C.navy,C.green,C.red,C.navy] },
+          { label: 'Rent preferred (25)', data: [25,25,25,25], type: 'line', borderColor: C.orange, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false },
+          { label: 'Buy preferred (15)', data: [15,15,15,15], type: 'line', borderColor: C.green, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false },
+        ]
       },
       options: {
-        responsive: true, plugins: { legend: { display: false },
-          annotation: { annotations: {
-            rent: { type: 'line', yMin: 25, yMax: 25, borderColor: C.orange, borderDash: [4,3], borderWidth: 1, label: { display: true, content: 'Rent preferred (25)', position: 'end', font: { size: 9 }, color: C.orange, backgroundColor: '#fff' } },
-            buy: { type: 'line', yMin: 15, yMax: 15, borderColor: C.green, borderDash: [4,3], borderWidth: 1, label: { display: true, content: 'Buy preferred (15)', position: 'end', font: { size: 9 }, color: C.green, backgroundColor: '#fff' } },
-          }}
-        }, scales: { y: { min: 0, max: 35 } }
+        responsive: true,
+        plugins: { legend: { labels: { filter: item => item.text === 'P/R Ratio' || item.text.includes('preferred') } } },
+        scales: { y: { min: 0, max: 35 } }
       }
     });
 

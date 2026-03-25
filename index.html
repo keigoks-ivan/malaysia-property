@@ -190,7 +190,6 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.1.0/chartjs-plugin-annotation.min.js"></script>
   <script src="js/main.js"></script>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -237,11 +236,6 @@
       },
       options: {
         responsive: true,
-        plugins: {
-          annotation: { annotations: {
-            peak: { type: 'label', xValue: '2024', yValue: 420525, content: ['Decade High'], color: C.green, font: { size: 10, weight: 'bold' }, backgroundColor: 'rgba(255,255,255,0.9)', yAdjust: -16 }
-          }}
-        },
         scales: { y: { ticks: { callback: v => fmtNum(v) } } }
       }
     });
@@ -269,14 +263,7 @@
         data: { labels, datasets: [{ label: 'Gross Yield %', data, backgroundColor: colors }] },
         options: {
           indexAxis: 'y', responsive: true,
-          plugins: {
-            legend: { display: false },
-            annotation: { annotations: {
-              opr: { type: 'line', xMin: 2.75, xMax: 2.75, borderColor: C.red, borderDash: [4,3], borderWidth: 1,
-                label: { display: true, content: 'OPR 2.75%', position: 'start', color: C.red, font: { size: 9 }, backgroundColor: 'rgba(255,255,255,0.9)' }
-              }
-            }}
-          },
+          plugins: { legend: { display: false } },
           scales: { x: { min: 0, max: 7, ticks: { callback: v => v + '%' } } }
         }
       });
