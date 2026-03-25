@@ -25,9 +25,26 @@ const chartRegistry = {};
 function createChart(canvasId, config) {
   const el = document.getElementById(canvasId);
   if (!el) { console.warn('Canvas not found: ' + canvasId); return null; }
+  // Ensure parent has dimensions before creating chart
+  const parent = el.parentElement;
+  if (parent && parent.offsetHeight === 0) {
+    console.warn('Chart parent has 0 height: ' + canvasId + ', forcing 220px');
+    parent.style.height = '220px';
+    parent.style.position = 'relative';
+  }
   const chart = new Chart(el, config);
   chartRegistry[canvasId] = chart;
   return chart;
+}
+
+/* Resize all visible charts (call after tab switch) */
+function resizeVisibleCharts() {
+  Object.keys(chartRegistry).forEach(id => {
+    const chart = chartRegistry[id];
+    if (chart && chart.canvas && chart.canvas.offsetParent !== null) {
+      chart.resize();
+    }
+  });
 }
 
 /* ── Chart Colors ── */
@@ -61,6 +78,8 @@ function switchTab(container, tabName) {
   wrap.querySelectorAll('.tab-bar button').forEach(b => {
     if (b.dataset.tab === tabName) b.classList.add('active');
   });
+  // Resize charts in newly visible tab after layout reflow
+  requestAnimationFrame(() => { requestAnimationFrame(() => { resizeVisibleCharts(); }); });
 }
 
 /* ══════════════════════════════════════════════════════════════
