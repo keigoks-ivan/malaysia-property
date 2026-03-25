@@ -46,13 +46,6 @@ function createChart(canvasId, config) {
   el.style.height = '';
   const chart = new Chart(el, config);
   chartRegistry[canvasId] = chart;
-  // Force resize + redraw to handle any layout timing issues
-  requestAnimationFrame(() => {
-    chart.resize();
-    chart.update('none');
-    setTimeout(() => { chart.resize(); chart.update('none'); }, 100);
-    setTimeout(() => { chart.resize(); chart.update('none'); }, 500);
-  });
   return chart;
 }
 
