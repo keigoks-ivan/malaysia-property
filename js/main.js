@@ -40,6 +40,10 @@ function createChart(canvasId, config) {
       }
     });
   }
+  // Reset any problematic CSS on canvas
+  el.style.position = '';
+  el.style.width = '';
+  el.style.height = '';
   const chart = new Chart(el, config);
   chartRegistry[canvasId] = chart;
   // Force resize + redraw to handle any layout timing issues
