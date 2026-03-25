@@ -25,15 +25,25 @@ const chartRegistry = {};
 function createChart(canvasId, config) {
   const el = document.getElementById(canvasId);
   if (!el) { console.warn('Canvas not found: ' + canvasId); return null; }
-  // Ensure parent has dimensions before creating chart
+  // Ensure parent has dimensions
   const parent = el.parentElement;
   if (parent && parent.offsetHeight === 0) {
-    console.warn('Chart parent has 0 height: ' + canvasId + ', forcing 220px');
     parent.style.height = '220px';
     parent.style.position = 'relative';
   }
+  // Add barThickness + minBarLength to all bar datasets for reliable rendering
+  if (config.data && config.data.datasets) {
+    config.data.datasets.forEach(ds => {
+      if (config.type === 'bar' || ds.type === 'bar') {
+        if (!ds.barThickness) ds.barThickness = 18;
+        if (!ds.minBarLength) ds.minBarLength = 4;
+      }
+    });
+  }
   const chart = new Chart(el, config);
   chartRegistry[canvasId] = chart;
+  // Force resize + redraw to handle any layout timing issues
+  requestAnimationFrame(() => { chart.resize(); });
   return chart;
 }
 
