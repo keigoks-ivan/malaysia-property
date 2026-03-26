@@ -172,7 +172,7 @@
       <div class="chart-card">
         <h3><span class="lang-en">Rental Yield by City (Q1 2026)</span><span class="lang-zh" style="display:none">各城市租金收益率（2026年Q1）</span></h3>
         <div style="position:relative;height:240px;"><canvas id="chart-yield-city"></canvas></div>
-        <p class="chart-footnote"><span class="lang-en">Cities above OPR = positive carry potential</span><span class="lang-zh" style="display:none">收益率高於OPR = 正向利差空間</span></p>
+        <p class="chart-footnote"><span class="lang-en">Green = above OPR (2.75%) = positive carry | Orange = below OPR</span><span class="lang-zh" style="display:none">綠色 = 高於OPR（2.75%）= 正向利差 | 橙色 = 低於OPR</span></p>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">MHPI Nominal vs Real</span><span class="lang-zh" style="display:none">房價指數：名義 vs 實質</span></h3>
@@ -275,25 +275,24 @@
     }).update();
 
     // Chart 5: Rental Yield by City (vertical bar)
-    (function(){
-      var labels = ['Iskandar\nPuteri','JB City','Subang\nJaya','National\nAvg','KL City','Penang\nGT'];
-      var data = [5.60,5.47,5.40,5.19,4.60,3.77];
-      var colors = data.map(function(v,i){ return i === 3 ? C.navy : v > 5.19 ? C.green : C.orange; });
-      new Chart(document.getElementById('chart-yield-city'), {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [
-            { label: 'Gross Yield %', data: data, backgroundColor: colors, maxBarThickness: 60 },
-            { type: 'line', label: 'OPR 2.75%', data: [2.75,2.75,2.75,2.75,2.75,2.75], borderColor: C.red, borderDash: [4,3], pointRadius: 0, borderWidth: 1.5, fill: false }
-          ]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          scales: { y: { min: 0, max: 7, ticks: { callback: function(v){ return v+'%'; } } }, x: { ticks: { maxRotation: 45, minRotation: 0, font: { size: 10 } } } }
-        }
-      }).update();
-    })();
+    new Chart(document.getElementById('chart-yield-city'), {
+      type: 'bar',
+      data: {
+        labels: ['Iskandar Puteri', 'JB City', 'Subang Jaya', 'National Avg', 'KL City', 'Penang GT'],
+        datasets: [{
+          label: 'Gross Yield %',
+          data: [5.60, 5.47, 5.40, 5.19, 4.60, 3.77],
+          backgroundColor: ['#16a34a','#16a34a','#16a34a','#1e3a5f','#d97706','#d97706'],
+          maxBarThickness: 60,
+          borderRadius: 3
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(ctx){ return ctx.raw + '%'; } } } },
+        scales: { y: { min: 0, max: 7, ticks: { callback: function(v){ return v + '%'; } } } }
+      }
+    }).update();
 
     // Chart 6: MHPI Nominal vs Real
     new Chart(document.getElementById('chart-mhpi'), {
