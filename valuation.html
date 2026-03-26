@@ -86,7 +86,7 @@
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">Median Multiple by State (2022)</span><span class="lang-zh" style="display:none">各州房價所得比（2022年）</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-median-mult"></canvas></div>
+        <div style="position:relative;height:260px;"><canvas id="chart-median-mult"></canvas></div>
       </div>
     </div>
 
@@ -182,7 +182,7 @@
       }
     }).update();
 
-    // Chart 2: Median Multiple by State (horizontal bar)
+    // Chart 2: Median Multiple by State (vertical bar)
     (function(){
       var labels = ['Sabah','Sarawak','KL','Kelantan','Penang','National','Kedah','Johor','Melaka'];
       var data = [7.0,6.5,5.6,4.6,4.7,4.3,4.0,4.7,2.3];
@@ -192,15 +192,15 @@
         data: {
           labels: labels,
           datasets: [
-            { label: 'Median Multiple', data: data, backgroundColor: colors, barThickness: 20, minBarLength: 2 },
+            { label: 'Median Multiple', data: data, backgroundColor: colors, maxBarThickness: 50 },
             { label: 'Affordable (3.0)', data: Array(9).fill(3.0), type: 'line', borderColor: C.green, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false },
             { label: 'Seriously Unaffordable (4.0)', data: Array(9).fill(4.0), type: 'line', borderColor: C.red, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false }
           ]
         },
         options: {
-          indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+          responsive: true, maintainAspectRatio: false,
           plugins: { legend: { labels: { filter: function(item){ return item.text !== 'Median Multiple'; } } } },
-          scales: { x: { min: 0, max: 8 } }
+          scales: { y: { min: 0, max: 8 }, x: { ticks: { maxRotation: 45, minRotation: 0, font: { size: 10 } } } }
         }
       }).update();
     })();
@@ -236,18 +236,18 @@
       options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: false } } }
     }).update();
 
-    // Chart 5: APAC P/R Comparison (horizontal bar)
+    // Chart 5: APAC P/R Comparison (vertical bar)
     (function(){
-      var labels = ['KL','Bangkok','Ho Chi Minh','Singapore','Hong Kong'];
+      var labels = ['KL','Bangkok','Ho Chi\nMinh','Singapore','Hong Kong'];
       var data = [21.7,25,18,40,50];
       var colors = [C.green,C.navy,C.navy,C.navy,C.navy];
       new Chart(document.getElementById('chart-apac'), {
         type: 'bar',
         data: {
           labels: labels,
-          datasets: [{ label: 'P/R Ratio', data: data, backgroundColor: colors, barThickness: 20, minBarLength: 2 }]
+          datasets: [{ label: 'P/R Ratio', data: data, backgroundColor: colors, maxBarThickness: 50 }]
         },
-        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { min: 0, max: 55 } } }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 0, max: 55 }, x: { ticks: { maxRotation: 45, minRotation: 0, font: { size: 10 } } } } }
       }).update();
     })();
   });

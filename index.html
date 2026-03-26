@@ -171,7 +171,7 @@
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">Rental Yield by City (Q1 2026)</span><span class="lang-zh" style="display:none">各城市租金收益率（2026年Q1）</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-yield-city"></canvas></div>
+        <div style="position:relative;height:240px;"><canvas id="chart-yield-city"></canvas></div>
         <p class="chart-footnote"><span class="lang-en">Cities above OPR = positive carry potential</span><span class="lang-zh" style="display:none">收益率高於OPR = 正向利差空間</span></p>
       </div>
       <div class="chart-card">
@@ -274,9 +274,9 @@
       options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: function(v){ return fmtNum(v); } } } } }
     }).update();
 
-    // Chart 5: Rental Yield by City (horizontal bar)
+    // Chart 5: Rental Yield by City (vertical bar)
     (function(){
-      var labels = ['Iskandar Puteri','JB City','Subang Jaya','National Avg','KL City','Penang GT'];
+      var labels = ['Iskandar\nPuteri','JB City','Subang\nJaya','National\nAvg','KL City','Penang\nGT'];
       var data = [5.60,5.47,5.40,5.19,4.60,3.77];
       var colors = data.map(function(v,i){ return i === 3 ? C.navy : v > 5.19 ? C.green : C.orange; });
       new Chart(document.getElementById('chart-yield-city'), {
@@ -284,13 +284,13 @@
         data: {
           labels: labels,
           datasets: [
-            { label: 'Gross Yield %', data: data, backgroundColor: colors, barThickness: 20, minBarLength: 2 },
+            { label: 'Gross Yield %', data: data, backgroundColor: colors, maxBarThickness: 50 },
             { type: 'line', label: 'OPR 2.75%', data: [2.75,2.75,2.75,2.75,2.75,2.75], borderColor: C.red, borderDash: [4,3], pointRadius: 0, borderWidth: 1.5, fill: false }
           ]
         },
         options: {
-          indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-          scales: { x: { min: 0, max: 7, ticks: { callback: function(v){ return v+'%'; } } } }
+          responsive: true, maintainAspectRatio: false,
+          scales: { y: { min: 0, max: 7, ticks: { callback: function(v){ return v+'%'; } } }, x: { ticks: { maxRotation: 45, minRotation: 0, font: { size: 10 } } } }
         }
       }).update();
     })();

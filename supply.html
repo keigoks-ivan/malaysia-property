@@ -128,7 +128,7 @@
         <div class="chart-grid two-col">
           <div>
             <h3 style="font-size:13px;margin-bottom:8px;"><span class="lang-en">Overhang by State</span><span class="lang-zh" style="display:none">各州待售餘屋</span></h3>
-            <div style="position:relative;height:220px;"><canvas id="chartOhState"></canvas></div>
+            <div style="position:relative;height:240px;"><canvas id="chartOhState"></canvas></div>
           </div>
           <div>
             <h3 style="font-size:13px;margin-bottom:8px;"><span class="lang-en">Overhang Trend</span><span class="lang-zh" style="display:none">待售餘屋趨勢</span></h3>
@@ -257,10 +257,10 @@
         new Chart(document.getElementById('chartOhState'),{
           type:'bar',
           data:{
-            labels:['Perak','Johor','Sabah','Selangor','Penang','Kelantan','KL','N. Sembilan','Others'],
-            datasets:[{label:'Overhang Units',data:ohStateData,backgroundColor:ohStateColors,barThickness:16,minBarLength:2}]
+            labels:['Perak','Johor','Sabah','Selangor','Penang','Kelantan','KL','N.S.','Others'],
+            datasets:[{label:'Overhang Units',data:ohStateData,backgroundColor:ohStateColors,maxBarThickness:50}]
           },
-          options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true}}}
+          options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return fmtNum(v);}}},x:{ticks:{maxRotation:45,minRotation:0,font:{size:10}}}}}
         }).update();
         new Chart(document.getElementById('chartOhTrend'),{
           type:'line',
@@ -274,15 +274,15 @@
       tabChartInits['tab-price']=function(){
         new Chart(document.getElementById('chartOhPrice'),{
           type:'bar',
-          data:{labels:['<RM200k','RM200k-300k','RM300k-500k','RM500k-1M','>RM1M'],datasets:[{label:'Overhang Units',data:[880,2150,7800,6990,3300],backgroundColor:C.navy,barThickness:20,minBarLength:2}]},
-          options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true}}}
+          data:{labels:['<200k','200-300k','300-500k','500k-1M','>1M'],datasets:[{label:'Overhang Units',data:[880,2150,7800,6990,3300],backgroundColor:C.navy,maxBarThickness:50}]},
+          options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return fmtNum(v);}}},x:{ticks:{maxRotation:45,minRotation:0,font:{size:10}}}}}
         }).update();
       };
       tabChartInits['tab-sa']=function(){
         new Chart(document.getElementById('chartOhSA'),{
           type:'bar',
-          data:{labels:['Johor','KL','Selangor','Penang','Others'],datasets:[{label:'SA Overhang',data:[9018,3500,2800,1200,1374],backgroundColor:[C.red,C.red,C.navy,C.navy,C.navy],barThickness:20,minBarLength:2}]},
-          options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true}}}
+          data:{labels:['Johor','KL','Selangor','Penang','Others'],datasets:[{label:'SA Overhang',data:[9018,3500,2800,1200,1374],backgroundColor:[C.red,C.red,C.navy,C.navy,C.navy],maxBarThickness:50}]},
+          options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return fmtNum(v);}}},x:{ticks:{maxRotation:45,minRotation:0,font:{size:10}}}}}
         }).update();
       };
 

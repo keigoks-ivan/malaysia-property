@@ -192,16 +192,16 @@
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 11 } } } }, scales: { y: { ticks: { callback: v => 'RM '+v+'B', font: { size: 10 } } }, x: { ticks: { font: { size: 10 } } } } }
     }).update();
 
-    // Chart 3: Gurney Drive PSF (horizontal bar)
+    // Chart 3: Gurney Drive PSF (vertical bar)
     new Chart(document.getElementById('chart-pg-gurney'), {
       type: 'bar',
       data: {
-        labels: ['Marriott Residences','Sunrise Gurney','Shorefront','Straits Residences','Seri Tanjung Pinang'],
+        labels: ['Marriott\nResidences','Sunrise\nGurney','Shorefront','Straits\nResidences','Seri TJ\nPinang'],
         datasets: [
-          { label: 'PSF (RM)', data: [2069,1872,1318,1287,1193], backgroundColor: C.navy, barThickness: 20, minBarLength: 2 }
+          { label: 'PSF (RM)', data: [2069,1872,1318,1287,1193], backgroundColor: C.navy, maxBarThickness: 50 }
         ]
       },
-      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => 'RM '+v, font: { size: 10 } } }, y: { ticks: { font: { size: 10 } } } } }
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: v => 'RM '+v, font: { size: 10 } } }, x: { ticks: { maxRotation: 45, minRotation: 0, font: { size: 10 } } } } }
     }).update();
 
     // Chart 4: Overhang Trend
