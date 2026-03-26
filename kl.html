@@ -286,9 +286,6 @@
 
   window.addEventListener('load', function() {
     // Restore language
-    var savedLang = localStorage.getItem('lang');
-    if (savedLang) setLang(savedLang);
-
     // ── Zone 1 Charts (lazy) ──
     tabChartInits['tab-z1']=function(){
       new Chart(document.getElementById('chart-z1-price'), {
@@ -392,6 +389,8 @@
 
     // Init first tab
     setTimeout(function(){ initTabCharts('tab-z1'); }, 300);
+
+    setLang(localStorage.getItem('lang')||'en');
   });
   </script>
 </body>
