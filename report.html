@@ -30,6 +30,7 @@
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#8ba3c0!important;line-height:1.6!important;margin-bottom:3px!important}
     @media(max-width:700px){.exec-split{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -97,17 +98,17 @@
           <div class="mini-chart">
             <h4><span class="lang-en">Yield Spread Monitor</span><span class="lang-zh" style="display:none">利差監測</span></h4>
             <div class="mini-note green"><span class="lang-en">Current Spread: +2.44%</span><span class="lang-zh" style="display:none">當前利差: +2.44%</span></div>
-            <div class="chart-wrap-mini"><canvas id="chart-r-yield"></canvas></div>
+            <div class="chart-wrap-mini"><div id="chart-r-yield" style="width:100%;height:100%"></div></div>
           </div>
           <div class="mini-chart">
             <h4><span class="lang-en">Demand vs Supply Mismatch</span><span class="lang-zh" style="display:none">需求 vs 供給錯配</span></h4>
             <div class="mini-note orange"><span class="lang-en">53% of buyers vs 18% of supply below RM300k</span><span class="lang-zh" style="display:none">53%買家需求 vs 僅18%供給低於RM300k</span></div>
-            <div class="chart-wrap-mini"><canvas id="chart-r-mismatch"></canvas></div>
+            <div class="chart-wrap-mini"><div id="chart-r-mismatch" style="width:100%;height:100%"></div></div>
           </div>
           <div class="mini-chart">
             <h4><span class="lang-en">Completion Wave vs Absorption</span><span class="lang-zh" style="display:none">完工交屋潮 vs 吸收量</span></h4>
             <div class="mini-note orange"><span class="lang-en">Supply peak 2026–2027</span><span class="lang-zh" style="display:none">供給高峰2026至2027年</span></div>
-            <div class="chart-wrap-mini"><canvas id="chart-r-wave"></canvas></div>
+            <div class="chart-wrap-mini"><div id="chart-r-wave" style="width:100%;height:100%"></div></div>
           </div>
         </div>
       </div>
@@ -152,55 +153,122 @@
 
   <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script>
-  const C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',navy_bg:'rgba(30,58,95,0.08)',green_bg:'rgba(22,163,74,0.08)',orange_bg:'rgba(217,119,6,0.08)'};
-  function fmtNum(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString();}
-  function setLang(lang){document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));localStorage.setItem('lang',lang);}
+  var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
+  var BG='transparent',GC='#e8f0f9';
 
-  window.addEventListener('load', function() {
-    var savedLang = localStorage.getItem('lang');
-    if (savedLang) setLang(savedLang);
+  function setLang(lang){
+    document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+    document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    localStorage.setItem('lang',lang);
+    // Toggle report sections
+    var execEn=document.getElementById('exec-en'),execZh=document.getElementById('exec-zh');
+    var secEn=document.getElementById('sections-en'),secZh=document.getElementById('sections-zh');
+    if(execEn)execEn.style.display=lang==='zh'?'none':'block';
+    if(execZh)execZh.style.display=lang==='zh'?'block':'none';
+    if(secEn)secEn.style.display=lang==='zh'?'none':'block';
+    if(secZh)secZh.style.display=lang==='zh'?'block':'none';
+  }
 
-    // Mini Chart 1: Yield Spread
-    new Chart(document.getElementById('chart-r-yield'), {
-      type: 'line',
-      data: {
-        labels: ['19','20','21','22','23Q1','23Q3','24Q1','24Q3','25Q1','25Q3'],
-        datasets: [
-          { label: 'Rental Yield %', data: [4.80,4.60,4.70,4.90,5.16,5.20,5.16,5.24,5.10,5.19], borderColor: C.green, backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 1, tension: 0.3 },
-          { label: 'OPR %', data: [3.00,1.75,1.75,2.75,3.00,3.00,3.00,3.00,3.00,2.75], borderColor: C.red, borderDash: [4,3], backgroundColor: 'transparent', borderWidth: 1, pointRadius: 1, tension: 0.3 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 1, max: 6, ticks: { callback: v => v+'%', font: { size: 9 } } }, x: { ticks: { font: { size: 8 } } } } }
-    }).update();
-
-    // Mini Chart 2: Demand vs Supply Mismatch
-    new Chart(document.getElementById('chart-r-mismatch'), {
-      type: 'bar',
-      data: {
-        labels: ['<300k','300-500k','500k-1M','>1M'],
-        datasets: [
-          { label: 'Demand %', data: [53.1,27.3,13.8,5.8], backgroundColor: C.navy, barThickness: 15 },
-          { label: 'Supply %', data: [18,25,38,19], backgroundColor: C.orange, barThickness: 15 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 9 } } } }, scales: { y: { ticks: { callback: v => v+'%', font: { size: 9 } } }, x: { ticks: { font: { size: 8 } } } } }
-    }).update();
-
-    // Mini Chart 3: Completion Wave
-    new Chart(document.getElementById('chart-r-wave'), {
-      type: 'line',
-      data: {
-        labels: ['21','22','23','24','25E','26E','27E'],
-        datasets: [
-          { label: 'Completions', data: [76393,71981,74893,82135,92000,95000,85000], borderColor: C.orange, backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 1, tension: 0.3 },
-          { label: 'Absorption', data: [82000,82000,83000,85000,85000,85000,85000], borderColor: C.green, borderDash: [4,3], backgroundColor: 'transparent', borderWidth: 1, pointRadius: 0, tension: 0.3 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 9 } } } }, scales: { y: { ticks: { callback: v => (v/1000).toFixed(0)+'K', font: { size: 9 } } }, x: { ticks: { font: { size: 8 } } } } }
-    }).update();
+  google.charts.load('current',{packages:['corechart']});
+  google.charts.setOnLoadCallback(function(){
+    drawAllCharts();
+    setLang(localStorage.getItem('lang')||'en');
   });
+
+  function drawAllCharts(){
+    drawRYield();
+    drawRMismatch();
+    drawRWave();
+  }
+
+  // Mini chart options use smaller chartArea and fonts
+  var miniCA={left:'12%',top:'5%',width:'82%',height:'70%'};
+
+  function drawRYield(){
+    var el=document.getElementById('chart-r-yield');
+    if(!el||!el.offsetWidth)return;
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','Year');
+    data.addColumn('number','Yield');
+    data.addColumn('number','OPR');
+    data.addRows([
+      ['19',4.80,3.00],['20',4.60,1.75],['21',4.70,1.75],['22',4.90,2.75],
+      ['23Q1',5.16,3.00],['23Q3',5.20,3.00],['24Q1',5.16,3.00],['24Q3',5.24,3.00],
+      ['25Q1',5.10,3.00],['25Q3',5.19,2.75]
+    ]);
+    var options={
+      legend:'none',
+      backgroundColor:BG,
+      chartArea:miniCA,
+      vAxis:{minValue:1,maxValue:6,textStyle:{fontSize:9},format:'#.#\'%\'',gridlines:{color:GC}},
+      hAxis:{textStyle:{fontSize:8},slantedText:false},
+      series:{
+        0:{color:GREEN,lineWidth:1.5,pointSize:2,curveType:'function'},
+        1:{color:RED,lineWidth:1,pointSize:1,lineDashStyle:[4,3],curveType:'function'}
+      },
+      fontName:'Inter',
+      tooltip:{textStyle:{fontSize:10}}
+    };
+    var chart=new google.visualization.LineChart(el);
+    chart.draw(data,options);
+  }
+
+  function drawRMismatch(){
+    var el=document.getElementById('chart-r-mismatch');
+    if(!el||!el.offsetWidth)return;
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','Range');
+    data.addColumn('number','Demand %');
+    data.addColumn('number','Supply %');
+    data.addRows([
+      ['<300k',53.1,18],['300-500k',27.3,25],['500k-1M',13.8,38],['>1M',5.8,19]
+    ]);
+    var options={
+      backgroundColor:BG,
+      chartArea:miniCA,
+      vAxis:{textStyle:{fontSize:9},format:'#\'%\'',gridlines:{color:GC}},
+      hAxis:{textStyle:{fontSize:8}},
+      series:{0:{color:NAVY},1:{color:ORANGE}},
+      bar:{groupWidth:'60%'},
+      legend:{position:'top',textStyle:{fontSize:9}},
+      fontName:'Inter',
+      tooltip:{textStyle:{fontSize:10}}
+    };
+    var chart=new google.visualization.ColumnChart(el);
+    chart.draw(data,options);
+  }
+
+  function drawRWave(){
+    var el=document.getElementById('chart-r-wave');
+    if(!el||!el.offsetWidth)return;
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','Year');
+    data.addColumn('number','Completions');
+    data.addColumn('number','Absorption');
+    data.addRows([
+      ['21',76393,82000],['22',71981,82000],['23',74893,83000],['24',82135,85000],
+      ['25E',92000,85000],['26E',95000,85000],['27E',85000,85000]
+    ]);
+    var options={
+      backgroundColor:BG,
+      chartArea:miniCA,
+      vAxis:{textStyle:{fontSize:9},format:'short',gridlines:{color:GC}},
+      hAxis:{textStyle:{fontSize:8}},
+      series:{
+        0:{color:ORANGE,lineWidth:1.5,pointSize:2,curveType:'function'},
+        1:{color:GREEN,lineWidth:1,pointSize:0,lineDashStyle:[4,3],curveType:'function'}
+      },
+      legend:{position:'top',textStyle:{fontSize:9}},
+      fontName:'Inter',
+      tooltip:{textStyle:{fontSize:10}}
+    };
+    var chart=new google.visualization.LineChart(el);
+    chart.draw(data,options);
+  }
+
+  window.addEventListener('resize',function(){drawAllCharts();});
   </script>
 </body>
 </html>

@@ -7,6 +7,7 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
   <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -81,24 +82,24 @@
       <div class="chart-card">
         <h3><span class="lang-en">Yield Spread History</span><span class="lang-zh" style="display:none">利差歷史走勢</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Rental Yield minus OPR — Positive = relative value</span><span class="lang-zh" style="display:none">租金收益率減OPR——正值=相對價值</span></p>
-        <div style="position:relative;height:220px;"><canvas id="chart-spread"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-spread" style="width:100%;height:100%"></div></div>
         <div class="insight-box"><span class="lang-en">Spread &gt; 2% historically indicates relative value for yield investors. Current +2.44% is positive but compressed vs 2020–2021 peak.</span><span class="lang-zh" style="display:none">歷史上利差超過2%通常顯示收益型投資的相對價值。當前+2.44%為正向但較2020至2021年高峰有所收窄。</span></div>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">Median Multiple by State (2022)</span><span class="lang-zh" style="display:none">各州房價所得比（2022年）</span></h3>
-        <div style="position:relative;height:280px;"><canvas id="chart-median-mult"></canvas></div>
+        <div style="position:relative;height:280px;"><div id="chart-median-mult" style="width:100%;height:100%"></div></div>
       </div>
     </div>
 
     <div class="chart-grid two-col">
       <div class="chart-card">
         <h3><span class="lang-en">Price-to-Rent Ratio by City</span><span class="lang-zh" style="display:none">各城市房價租金比</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-p2r"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-p2r" style="width:100%;height:100%"></div></div>
         <div class="insight-box"><span class="lang-en">P/R &gt; 25 = renting preferred; P/R &lt; 15 = buying preferred. KL at 21.7 is in the neutral zone.</span><span class="lang-zh" style="display:none">房價租金比&gt;25=租賃優先；&lt;15=購買優先。吉隆坡21.7處於中性區間。</span></div>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">MHPI Nominal vs Real</span><span class="lang-zh" style="display:none">房價指數：名義 vs 實質</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-mhpi-real"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-mhpi-real" style="width:100%;height:100%"></div></div>
         <div class="insight-box"><span class="lang-en">MHPI at 229.1 (Q3 2025, +0.1% YoY). Real house prices flat/declining since 2022 — no bubble signal.</span><span class="lang-zh" style="display:none">房價指數229.1點（2025年Q3，年增+0.1%）。2022年後實質房價停滯或下跌，無泡沫訊號。</span></div>
       </div>
     </div>
@@ -107,7 +108,7 @@
       <div class="chart-card">
         <h3><span class="lang-en">KL vs Asia Pacific Price-to-Rent</span><span class="lang-zh" style="display:none">吉隆坡 vs 亞太城市房價租金比</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Lower = more attractive for buyers</span><span class="lang-zh" style="display:none">越低=對買家越有吸引力</span></p>
-        <div style="position:relative;height:220px;"><canvas id="chart-apac"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-apac" style="width:100%;height:100%"></div></div>
         <div class="insight-box"><span class="lang-en">KL remains significantly undervalued vs regional peers on a price-to-rent basis.</span><span class="lang-zh" style="display:none">以房價租金比衡量，吉隆坡相對區域同儕仍顯著低估。</span></div>
       </div>
     </div>
@@ -136,121 +137,143 @@
 
   <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script>
-  const C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',navy_bg:'rgba(30,58,95,0.08)',green_bg:'rgba(22,163,74,0.08)',orange_bg:'rgba(217,119,6,0.08)'};
-  function fmtNum(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString();}
-  function setLang(lang){
-    document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');
-    document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');
-    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
-    localStorage.setItem('lang',lang);
+  var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
+  var CA={width:'80%',height:'75%'},BG='transparent',GC='#e8f0f9';
+  function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none'});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang)});localStorage.setItem('lang',lang);}
+  google.charts.load('current',{packages:['corechart']});
+  google.charts.setOnLoadCallback(function(){drawAllCharts();setLang(localStorage.getItem('lang')||'en');});
+  window.addEventListener('resize',function(){drawAllCharts();});
+
+  function drawAllCharts(){
+    drawYieldSpread();
+    drawMedianMult();
+    drawP2R();
+    drawMHPI();
+    drawAPAC();
   }
 
-  window.addEventListener('load', function() {
-    Chart.defaults.color='#8ba3c0';
-    Chart.defaults.borderColor='#e8f0f9';
-    Chart.defaults.font.family="'Inter',sans-serif";
-    Chart.defaults.font.size=11;
-    Chart.defaults.plugins.legend.labels.usePointStyle=true;
-    Chart.defaults.plugins.legend.labels.pointStyleWidth=8;
-    Chart.defaults.plugins.legend.labels.padding=14;
-    Chart.defaults.elements.line.tension=0.3;
-    Chart.defaults.elements.line.borderWidth=2;
-    Chart.defaults.elements.point.radius=2;
-    Chart.defaults.elements.point.hoverRadius=5;
-    Chart.defaults.elements.bar.borderRadius=2;
-    Chart.defaults.scale.grid={color:'#e8f0f9'};
-
-    // Chart 1: Yield Spread History
-    new Chart(document.getElementById('chart-spread'), {
-      type: 'line',
-      data: {
-        labels: ['2019','2020','2021','2022','2023Q1','2023Q3','2024Q1','2024Q3','2025Q1','2025Q3'],
-        datasets: [
-          { label: 'Yield Spread %', data: [1.80,2.85,2.95,2.15,2.16,2.20,2.16,2.24,2.10,2.44], borderColor: C.green, backgroundColor: C.green_bg, fill: true, pointRadius: 3 },
-          { label: 'Zero', data: Array(10).fill(0), borderColor: C.red, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false },
-          { label: '2% threshold', data: Array(10).fill(2), borderColor: C.muted, borderDash: [2,2], borderWidth: 1, pointRadius: 0, fill: false }
-        ]
+  function drawYieldSpread(){
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','Period');
+    data.addColumn('number','Spread');
+    data.addColumn('number','Zero');
+    data.addColumn('number','2% Threshold');
+    data.addRows([
+      ['2019',1.80,0,2],['2020',2.85,0,2],['2021',2.95,0,2],['2022',2.15,0,2],
+      ['2023Q1',2.16,0,2],['2023Q3',2.20,0,2],['2024Q1',2.16,0,2],['2024Q3',2.24,0,2],
+      ['2025Q1',2.10,0,2],['2025Q3',2.44,0,2]
+    ]);
+    var chart=new google.visualization.LineChart(document.getElementById('chart-spread'));
+    chart.draw(data,{
+      chartArea:CA,backgroundColor:BG,
+      colors:[GREEN,RED,MUTED],
+      legend:{position:'top',textStyle:{color:NAVY,fontSize:11}},
+      series:{
+        0:{lineWidth:2,pointSize:4},
+        1:{lineWidth:1,lineDashStyle:[4,3],pointSize:0,visibleInLegend:false},
+        2:{lineWidth:1,lineDashStyle:[2,2],pointSize:0,visibleInLegend:false}
       },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { labels: { filter: function(item){ return item.text === 'Yield Spread %'; } } } },
-        scales: { y: { ticks: { callback: function(v){ return v + '%'; } } } }
-      }
-    }).update();
+      hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      vAxis:{format:'#.##\'%\'',textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      curveType:'function'
+    });
+  }
 
-    // Chart 2: Median Multiple by State (vertical bar)
-    (function(){
-      var labels = ['Sabah','Sarawak','KL','Kelantan','Penang','National','Kedah','Johor','Melaka'];
-      var data = [7.0,6.5,5.6,4.6,4.7,4.3,4.0,4.7,2.3];
-      var colors = data.map(function(v){ return v > 4.0 ? C.red : v > 3.0 ? C.orange : C.green; });
-      new Chart(document.getElementById('chart-median-mult'), {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [
-            { label: 'Median Multiple', data: data, backgroundColor: colors, maxBarThickness: 40 },
-            { label: 'Affordable (3.0)', data: Array(9).fill(3.0), type: 'line', borderColor: C.green, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false },
-            { label: 'Seriously Unaffordable (4.0)', data: Array(9).fill(4.0), type: 'line', borderColor: C.red, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false }
-          ]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { labels: { filter: function(item){ return item.text !== 'Median Multiple'; } } } },
-          scales: { y: { min: 0, max: 8 }, x: { ticks: { maxRotation: 45, minRotation: 0, font: { size: 10 } } } }
-        }
-      }).update();
-    })();
+  function drawMedianMult(){
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','State');
+    data.addColumn('number','Median Multiple');
+    data.addColumn({type:'string',role:'style'});
+    var items=[['Sabah',7.0],['Sarawak',6.5],['KL',5.6],['Kelantan',4.6],['Penang',4.7],['National',4.3],['Kedah',4.0],['Johor',4.7],['Melaka',2.3]];
+    items.forEach(function(r){
+      var c=r[1]>4.0?RED:r[1]>3.0?ORANGE:GREEN;
+      data.addRow([r[0],r[1],'color:'+c]);
+    });
+    var chart=new google.visualization.BarChart(document.getElementById('chart-median-mult'));
+    chart.draw(data,{
+      chartArea:CA,backgroundColor:BG,
+      legend:{position:'none'},
+      hAxis:{minValue:0,maxValue:8,textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      vAxis:{textStyle:{color:MUTED,fontSize:10}},
+      bar:{groupWidth:'70%'}
+    });
+  }
 
-    // Chart 3: P/R Ratio by City (vertical bar + reference lines)
-    new Chart(document.getElementById('chart-p2r'), {
-      type: 'bar',
-      data: {
-        labels: ['KL','JB','Penang','National'],
-        datasets: [
-          { label: 'P/R Ratio', data: [21.7,18.3,26.5,19.3], backgroundColor: [C.navy,C.green,C.red,C.navy], maxBarThickness: 80 },
-          { label: 'Rent preferred (25)', data: [25,25,25,25], type: 'line', borderColor: C.orange, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false },
-          { label: 'Buy preferred (15)', data: [15,15,15,15], type: 'line', borderColor: C.green, borderDash: [4,3], borderWidth: 1, pointRadius: 0, fill: false }
-        ]
+  function drawP2R(){
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','City');
+    data.addColumn('number','P/R Ratio');
+    data.addColumn({type:'string',role:'style'});
+    data.addColumn('number','Rent Preferred (25)');
+    data.addColumn('number','Buy Preferred (15)');
+    var colors=[NAVY,GREEN,RED,NAVY];
+    var labels=['KL','JB','Penang','National'];
+    var vals=[21.7,18.3,26.5,19.3];
+    for(var i=0;i<labels.length;i++){
+      data.addRow([labels[i],vals[i],'color:'+colors[i],25,15]);
+    }
+    var chart=new google.visualization.ComboChart(document.getElementById('chart-p2r'));
+    chart.draw(data,{
+      chartArea:CA,backgroundColor:BG,
+      seriesType:'bars',
+      series:{
+        0:{type:'bars'},
+        1:{type:'line',lineWidth:1,lineDashStyle:[4,3],pointSize:0,color:ORANGE},
+        2:{type:'line',lineWidth:1,lineDashStyle:[4,3],pointSize:0,color:GREEN}
       },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { labels: { filter: function(item){ return item.text === 'P/R Ratio' || item.text.includes('preferred'); } } } },
-        scales: { y: { min: 0, max: 35 } }
-      }
-    }).update();
+      legend:{position:'top',textStyle:{color:NAVY,fontSize:11}},
+      vAxis:{minValue:0,maxValue:35,textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      hAxis:{textStyle:{color:MUTED,fontSize:10}},
+      bar:{groupWidth:'60%'}
+    });
+  }
 
-    // Chart 4: MHPI Nominal vs Real
-    new Chart(document.getElementById('chart-mhpi-real'), {
-      type: 'line',
-      data: {
-        labels: ['2019','2020','2021','2022','2023','2024','2025Q3'],
-        datasets: [
-          { label: 'Nominal MHPI', data: [194,195,197,200,207,224,229.1], borderColor: C.navy },
-          { label: 'Real MHPI', data: [160,160,159,156,157,165,167], borderColor: C.orange, borderDash: [4,3] }
-        ]
+  function drawMHPI(){
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','Year');
+    data.addColumn('number','Nominal MHPI');
+    data.addColumn('number','Real MHPI');
+    data.addRows([
+      ['2019',194,160],['2020',195,160],['2021',197,159],['2022',200,156],
+      ['2023',207,157],['2024',224,165],['2025Q3',229.1,167]
+    ]);
+    var chart=new google.visualization.LineChart(document.getElementById('chart-mhpi-real'));
+    chart.draw(data,{
+      chartArea:CA,backgroundColor:BG,
+      colors:[NAVY,ORANGE],
+      legend:{position:'top',textStyle:{color:NAVY,fontSize:11}},
+      series:{
+        0:{lineWidth:2,pointSize:3},
+        1:{lineWidth:2,lineDashStyle:[4,3],pointSize:3}
       },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: false } } }
-    }).update();
+      hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      curveType:'function'
+    });
+  }
 
-    // Chart 5: APAC P/R Comparison (vertical bar)
-    (function(){
-      var labels = ['KL','Bangkok','Ho Chi\nMinh','Singapore','Hong Kong'];
-      var data = [21.7,25,18,40,50];
-      var colors = [C.green,C.navy,C.navy,C.navy,C.navy];
-      new Chart(document.getElementById('chart-apac'), {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{ label: 'P/R Ratio', data: data, backgroundColor: colors, maxBarThickness: 60 }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 0, max: 55 }, x: { ticks: { maxRotation: 45, minRotation: 0, font: { size: 10 } } } } }
-      }).update();
-    })();
-
-    setLang(localStorage.getItem('lang')||'en');
-  });
+  function drawAPAC(){
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','City');
+    data.addColumn('number','P/R Ratio');
+    data.addColumn({type:'string',role:'style'});
+    data.addRows([
+      ['KL',21.7,'color:'+GREEN],
+      ['Bangkok',25,'color:'+NAVY],
+      ['Ho Chi Minh',18,'color:'+NAVY],
+      ['Singapore',40,'color:'+NAVY],
+      ['Hong Kong',50,'color:'+NAVY]
+    ]);
+    var chart=new google.visualization.BarChart(document.getElementById('chart-apac'));
+    chart.draw(data,{
+      chartArea:CA,backgroundColor:BG,
+      legend:{position:'none'},
+      hAxis:{minValue:0,maxValue:55,textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      vAxis:{textStyle:{color:MUTED,fontSize:10}},
+      bar:{groupWidth:'60%'}
+    });
+  }
   </script>
 </body>
 </html>

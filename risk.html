@@ -7,6 +7,7 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
   <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -54,7 +55,7 @@
       <div class="chart-card">
         <h3><span class="lang-en">Risk Radar — 6 Dimensions</span><span class="lang-zh" style="display:none">風險雷達——6維度</span></h3>
         <p class="chart-subtitle"><span class="lang-en">1 = Low Risk, 10 = Extreme Risk</span><span class="lang-zh" style="display:none">1 = 低風險，10 = 極高風險</span></p>
-        <div class="radar-wrap"><canvas id="chart-radar"></canvas></div>
+        <div class="radar-wrap"><div id="chart-radar" style="width:100%;height:100%"></div></div>
       </div>
     </div>
 
@@ -160,7 +161,7 @@
     <div class="chart-grid">
       <div class="chart-card">
         <h3><span class="lang-en">Monthly Payment vs OPR (RM500k, 30yr loan)</span><span class="lang-zh" style="display:none">月供 vs OPR（50萬令吉、30年期貸款）</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-rate-sensitivity"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-rate-sensitivity" style="width:100%;height:100%"></div></div>
         <div class="insight-box"><span class="lang-en">OPR +0.25% ≈ +RM70–75/month on a RM500k loan. Current OPR at 2.75% after Jul 2025 cut.</span><span class="lang-zh" style="display:none">OPR每升0.25% ≈ 50萬令吉貸款月供增加RM70–75。目前OPR於2025年7月降息後為2.75%。</span></div>
       </div>
     </div>
@@ -193,106 +194,67 @@
 
   <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script>
-  const C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',navy_bg:'rgba(30,58,95,0.08)',green_bg:'rgba(22,163,74,0.08)',orange_bg:'rgba(217,119,6,0.08)'};
-  function fmtNum(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString();}
-  function setLang(lang){
-    document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');
-    document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');
-    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
-    localStorage.setItem('lang',lang);
-    // Update radar chart labels
-    if(window._radarChart){
-      window._radarChart.data.labels = lang==='zh'
-        ? ['供給過量','可負擔性','利率','政策','外資需求','開發商財務']
-        : ['Oversupply','Affordability','Interest Rate','Policy','Foreign Demand','Developer Financial'];
-      window._radarChart.data.datasets[0].label = lang==='zh' ? '風險分數' : 'Risk Score';
-      window._radarChart.update('none');
-    }
+  var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
+  var CA={width:'80%',height:'75%'},BG='transparent',GC='#e8f0f9';
+  var _currentLang='en';
+  function setLang(lang){_currentLang=lang;document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none'});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang)});localStorage.setItem('lang',lang);drawAllCharts();}
+  google.charts.load('current',{packages:['corechart']});
+  google.charts.setOnLoadCallback(function(){drawAllCharts();setLang(localStorage.getItem('lang')||'en');});
+  window.addEventListener('resize',function(){drawAllCharts();});
+
+  function drawAllCharts(){
+    drawRadar();
+    drawRateSensitivity();
   }
 
-  window.addEventListener('load', function() {
-    Chart.defaults.color='#8ba3c0';
-    Chart.defaults.borderColor='#e8f0f9';
-    Chart.defaults.font.family="'Inter',sans-serif";
-    Chart.defaults.font.size=11;
-    Chart.defaults.plugins.legend.labels.usePointStyle=true;
-    Chart.defaults.plugins.legend.labels.pointStyleWidth=8;
-    Chart.defaults.plugins.legend.labels.padding=14;
-    Chart.defaults.elements.line.tension=0.3;
-    Chart.defaults.elements.line.borderWidth=2;
-    Chart.defaults.elements.point.radius=2;
-    Chart.defaults.elements.point.hoverRadius=5;
-    Chart.defaults.elements.bar.borderRadius=2;
-    Chart.defaults.scale.grid={color:'#e8f0f9'};
-
-    // Chart 1: Risk Radar
-    window._radarChart = new Chart(document.getElementById('chart-radar'), {
-      type: 'radar',
-      data: {
-        labels: ['Oversupply','Affordability','Interest Rate','Policy','Foreign Demand','Developer Financial'],
-        datasets: [{
-          label: 'Risk Score',
-          data: [7,8,4,6,5,5],
-          backgroundColor: 'rgba(30,58,95,0.15)',
-          borderColor: C.navy,
-          borderWidth: 2,
-          pointBackgroundColor: [C.red,C.red,C.green,C.orange,C.orange,C.orange],
-          pointRadius: 5
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: true,
-        plugins: { legend: { display: false } },
-        scales: {
-          r: {
-            min: 0, max: 10, ticks: { stepSize: 2, backdropColor: 'transparent', font: { size: 10 } },
-            grid: { color: '#e8f0f9' }, angleLines: { color: '#e8f0f9' },
-            pointLabels: { font: { size: 11 }, color: C.navy }
-          }
-        }
-      }
+  function drawRadar(){
+    var lang=_currentLang;
+    var labels=lang==='zh'
+      ?['供給過量','可負擔性','利率','政策','外資需求','開發商財務']
+      :['Oversupply','Affordability','Interest Rate','Policy','Foreign Demand','Developer Financial'];
+    var scores=[7,8,4,6,5,5];
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','Dimension');
+    data.addColumn('number',lang==='zh'?'風險分數 (1-10)':'Risk Score (1-10)');
+    data.addColumn({type:'string',role:'style'});
+    for(var i=0;i<labels.length;i++){
+      var c=scores[i]>=7?RED:scores[i]>=5?ORANGE:GREEN;
+      data.addRow([labels[i],scores[i],'color:'+c]);
+    }
+    var chart=new google.visualization.BarChart(document.getElementById('chart-radar'));
+    chart.draw(data,{
+      chartArea:CA,backgroundColor:BG,
+      legend:{position:'none'},
+      hAxis:{minValue:0,maxValue:10,textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},title:lang==='zh'?'風險分數 (1-10)':'Risk Score (1-10)',titleTextStyle:{color:NAVY,fontSize:11}},
+      vAxis:{textStyle:{color:NAVY,fontSize:11}},
+      bar:{groupWidth:'65%'}
     });
-    window._radarChart.update();
+  }
 
-    // Chart 2: Interest Rate Sensitivity
-    (function(){
-      var oprValues = [2.25,2.50,2.75,3.00,3.25,3.50];
-      var payments = [2156,2228,2302,2378,2455,2535];
-      var pointColors = oprValues.map(function(v){ return v === 2.75 ? C.red : C.navy; });
-      var pointSizes = oprValues.map(function(v){ return v === 2.75 ? 6 : 3; });
-      new Chart(document.getElementById('chart-rate-sensitivity'), {
-        type: 'line',
-        data: {
-          labels: oprValues.map(function(v){ return v.toFixed(2) + '%'; }),
-          datasets: [{
-            label: 'Monthly Payment (RM)',
-            data: payments,
-            borderColor: C.navy,
-            backgroundColor: C.navy_bg,
-            fill: true,
-            pointBackgroundColor: pointColors,
-            pointRadius: pointSizes,
-            pointHoverRadius: 7
-          }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          plugins: {
-            legend: { display: true },
-            tooltip: { callbacks: { label: function(ctx){ return 'RM ' + ctx.parsed.y.toLocaleString(); } } }
-          },
-          scales: {
-            y: { ticks: { callback: function(v){ return 'RM ' + v.toLocaleString(); } } },
-            x: { title: { display: true, text: 'OPR %' } }
-          }
-        }
-      }).update();
-    })();
-
-    setLang(localStorage.getItem('lang')||'en');
-  });
+  function drawRateSensitivity(){
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','OPR');
+    data.addColumn('number','Monthly Payment (RM)');
+    data.addColumn({type:'string',role:'annotation'});
+    var oprLabels=['2.25%','2.50%','2.75%','3.00%','3.25%','3.50%'];
+    var payments=[2156,2228,2302,2378,2455,2535];
+    for(var i=0;i<oprLabels.length;i++){
+      var ann=oprLabels[i]==='2.75%'?'Current':'';
+      data.addRow([oprLabels[i],payments[i],ann]);
+    }
+    var chart=new google.visualization.LineChart(document.getElementById('chart-rate-sensitivity'));
+    chart.draw(data,{
+      chartArea:CA,backgroundColor:BG,
+      colors:[NAVY],
+      legend:{position:'top',textStyle:{color:NAVY,fontSize:11}},
+      series:{0:{lineWidth:2,pointSize:4}},
+      hAxis:{title:'OPR %',titleTextStyle:{color:NAVY,fontSize:11},textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      vAxis:{format:'RM #,###',textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      annotations:{textStyle:{fontSize:10,color:RED,bold:true}},
+      curveType:'function'
+    });
+  }
   </script>
 </body>
 </html>

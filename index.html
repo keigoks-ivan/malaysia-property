@@ -7,6 +7,7 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
   <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -142,7 +143,7 @@
       <div class="chart-card">
         <h3><span class="lang-en">Yield Spread Monitor</span><span class="lang-zh" style="display:none">利差監測儀</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Gross Rental Yield vs OPR</span><span class="lang-zh" style="display:none">租金收益率 vs OPR</span></p>
-        <div style="position:relative;height:220px;"><canvas id="chart-yield-spread"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-yield-spread" style="width:100%;height:100%"></div></div>
         <div class="insight-box">
           <span class="lang-en">Current spread +2.44% — Positive but compressed vs 2020–2021 peak (+2.95%).</span>
           <span class="lang-zh" style="display:none">當前利差+2.44%——正向但相較2020至2021年高峰（+2.95%）有所收窄。</span>
@@ -151,7 +152,7 @@
       <div class="chart-card">
         <h3><span class="lang-en">Supply Pipeline Pressure</span><span class="lang-zh" style="display:none">新建供給壓力</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Months of supply by property type</span><span class="lang-zh" style="display:none">各類型房產去化月數</span></p>
-        <div style="position:relative;height:220px;"><canvas id="chart-pipeline-pressure"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-pipeline-pressure" style="width:100%;height:100%"></div></div>
         <div class="insight-box">
           <span class="lang-en">High-rise takes 22 months to clear vs 6-month benchmark.</span>
           <span class="lang-zh" style="display:none">高層住宅需22個月去化，遠超6個月的健康基準。</span>
@@ -163,20 +164,20 @@
     <div class="chart-grid two-col">
       <div class="chart-card">
         <h3><span class="lang-en">Transaction Volume Trend</span><span class="lang-zh" style="display:none">交易量趨勢</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-tx-trend"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-tx-trend" style="width:100%;height:100%"></div></div>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">Overhang Pipeline</span><span class="lang-zh" style="display:none">待售餘屋趨勢</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-overhang-pipeline"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-overhang-pipeline" style="width:100%;height:100%"></div></div>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">Rental Yield by City (Q1 2026)</span><span class="lang-zh" style="display:none">各城市租金收益率（2026年Q1）</span></h3>
-        <div style="position:relative;height:240px;"><canvas id="chart-yield-city"></canvas></div>
+        <div style="position:relative;height:240px;"><div id="chart-yield-city" style="width:100%;height:100%"></div></div>
         <p class="chart-footnote"><span class="lang-en">Green = above OPR (2.75%) = positive carry | Orange = below OPR</span><span class="lang-zh" style="display:none">綠色 = 高於OPR（2.75%）= 正向利差 | 橙色 = 低於OPR</span></p>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">MHPI Nominal vs Real</span><span class="lang-zh" style="display:none">房價指數：名義 vs 實質</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-mhpi"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-mhpi" style="width:100%;height:100%"></div></div>
       </div>
     </div>
 
@@ -188,125 +189,147 @@
 
   <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script>
-  const C = {navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',
-    navy_bg:'rgba(30,58,95,0.08)',green_bg:'rgba(22,163,74,0.08)',orange_bg:'rgba(217,119,6,0.08)'};
+  // Colors
+  var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
 
-  function fmtNum(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString();}
-
-  function setLang(lang) {
+  function setLang(lang){
     document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');
     document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');
     document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
     localStorage.setItem('lang',lang);
   }
 
-  window.addEventListener('load', function() {
-    Chart.defaults.color='#8ba3c0';
-    Chart.defaults.borderColor='#e8f0f9';
-    Chart.defaults.font.family="'Inter',sans-serif";
-    Chart.defaults.font.size=11;
-    Chart.defaults.plugins.legend.labels.usePointStyle=true;
-    Chart.defaults.plugins.legend.labels.pointStyleWidth=8;
-    Chart.defaults.plugins.legend.labels.padding=14;
-    Chart.defaults.elements.line.tension=0.3;
-    Chart.defaults.elements.line.borderWidth=2;
-    Chart.defaults.elements.point.radius=2;
-    Chart.defaults.elements.point.hoverRadius=5;
-    Chart.defaults.elements.bar.borderRadius=2;
-    Chart.defaults.scale.grid={color:'#e8f0f9'};
-    Chart.defaults.responsive=true;
-    Chart.defaults.maintainAspectRatio=false;
-
-    // Chart 1: Yield Spread Monitor
-    new Chart(document.getElementById('chart-yield-spread'), {
-      type: 'line',
-      data: {
-        labels: ['2019','2020','2021','2022','2023Q1','2023Q3','2024Q1','2024Q3','2025Q1','2025Q3'],
-        datasets: [
-          { label: 'Rental Yield %', data: [4.80,4.60,4.70,4.90,5.16,5.20,5.16,5.24,5.10,5.19], borderColor: C.green, backgroundColor: C.green_bg, fill: true },
-          { label: 'OPR %', data: [3.00,1.75,1.75,2.75,3.00,3.00,3.00,3.00,3.00,2.75], borderColor: C.red, borderDash: [4,3], borderWidth: 1.5, pointRadius: 3 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 1, max: 6, ticks: { callback: function(v){ return v+'%'; } } } } }
-    }).update();
-
-    // Chart 2: Supply Pipeline Pressure
-    new Chart(document.getElementById('chart-pipeline-pressure'), {
-      type: 'line',
-      data: {
-        labels: ['2019','2020','2021','2022','2023','2024','2025E'],
-        datasets: [
-          { label: 'Landed (months)', data: [7,8,7,6,6,7,8], borderColor: C.green },
-          { label: 'High-rise (months)', data: [24,20,22,18,16,20,22], borderColor: C.orange },
-          { label: '6-month benchmark', data: [6,6,6,6,6,6,6], borderColor: C.red, borderDash: [4,3], borderWidth: 1, pointRadius: 0 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y: { title: { display: true, text: 'Months' } } } }
-    }).update();
-
-    // Chart 3: Transaction Volume Trend
-    new Chart(document.getElementById('chart-tx-trend'), {
-      type: 'line',
-      data: {
-        labels: ['2019','2020','2021','2022','2023','2024','2025 Q1-Q3'],
-        datasets: [{
-          label: 'Transactions', data: [328000,295000,295000,390000,398000,420525,308000],
-          borderColor: C.navy, backgroundColor: C.navy_bg, fill: true
-        }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: function(v){ return fmtNum(v); } } } } }
-    }).update();
-
-    // Chart 4: Overhang Pipeline
-    new Chart(document.getElementById('chart-overhang-pipeline'), {
-      type: 'line',
-      data: {
-        labels: ['2018','2019','2020','2021','2022','2023','2024H1','2025Q3*'],
-        datasets: [
-          { label: 'Residential Only', data: [32313,36863,31092,26424,27746,25816,22642,28672], borderColor: C.navy, backgroundColor: C.navy_bg, fill: true },
-          { label: 'Total incl. SA', data: [null,null,null,null,null,47463,42126,44794], borderColor: C.orange, borderDash: [4,3] }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: function(v){ return fmtNum(v); } } } } }
-    }).update();
-
-    // Chart 5: Rental Yield by City (vertical bar)
-    new Chart(document.getElementById('chart-yield-city'), {
-      type: 'bar',
-      data: {
-        labels: ['Iskandar Puteri', 'JB City', 'Subang Jaya', 'National Avg', 'KL City', 'Penang GT'],
-        datasets: [{
-          label: 'Gross Yield %',
-          data: [5.60, 5.47, 5.40, 5.19, 4.60, 3.77],
-          backgroundColor: ['#16a34a','#16a34a','#16a34a','#1e3a5f','#d97706','#d97706'],
-          maxBarThickness: 60,
-          borderRadius: 3
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(ctx){ return ctx.raw + '%'; } } } },
-        scales: { y: { min: 0, max: 7, ticks: { callback: function(v){ return v + '%'; } } } }
-      }
-    }).update();
-
-    // Chart 6: MHPI Nominal vs Real
-    new Chart(document.getElementById('chart-mhpi'), {
-      type: 'line',
-      data: {
-        labels: ['2019','2020','2021','2022','2023','2024','2025Q3'],
-        datasets: [
-          { label: 'MHPI Nominal', data: [194,195,197,200,207,224,229.1], borderColor: C.navy },
-          { label: 'Real MHPI', data: [160,160,159,156,157,165,167], borderColor: C.orange, borderDash: [4,3] }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false }
-    }).update();
-
+  google.charts.load('current', {packages: ['corechart']});
+  google.charts.setOnLoadCallback(function(){
+    drawAllCharts();
     setLang(localStorage.getItem('lang')||'en');
   });
+
+  function drawAllCharts() {
+    drawYieldSpread();
+    drawPipelinePressure();
+    drawTxTrend();
+    drawOverhangPipeline();
+    drawYieldCity();
+    drawMHPI();
+  }
+
+  // Common chart area settings
+  var CA = {width:'80%',height:'75%'};
+  var BG = 'transparent';
+  var GC = '#e8f0f9'; // gridline color
+
+  function drawYieldSpread() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string','Period');
+    data.addColumn('number','Rental Yield %');
+    data.addColumn('number','OPR %');
+    data.addRows([
+      ['2019',4.80,3.00],['2020',4.60,1.75],['2021',4.70,1.75],['2022',4.90,2.75],
+      ['2023Q1',5.16,3.00],['2023Q3',5.20,3.00],['2024Q1',5.16,3.00],['2024Q3',5.24,3.00],
+      ['2025Q1',5.10,3.00],['2025Q3',5.19,2.75]
+    ]);
+    var options = {
+      backgroundColor:BG, chartArea:CA, legend:{position:'bottom',textStyle:{color:MUTED,fontSize:11}},
+      colors:[GREEN,RED], curveType:'function',
+      vAxis:{minValue:1,maxValue:6,format:"#.##'%'",gridlines:{color:GC},textStyle:{color:MUTED,fontSize:10}},
+      hAxis:{textStyle:{color:MUTED,fontSize:9},slantedText:true,slantedTextAngle:45},
+      series:{1:{lineDashStyle:[4,3]}}
+    };
+    new google.visualization.LineChart(document.getElementById('chart-yield-spread')).draw(data,options);
+  }
+
+  function drawPipelinePressure() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string','Year');
+    data.addColumn('number','Landed (months)');
+    data.addColumn('number','High-rise (months)');
+    data.addColumn('number','6-month benchmark');
+    data.addRows([
+      ['2019',7,24,6],['2020',8,20,6],['2021',7,22,6],['2022',6,18,6],
+      ['2023',6,16,6],['2024',7,20,6],['2025E',8,22,6]
+    ]);
+    var options = {
+      backgroundColor:BG, chartArea:CA, legend:{position:'bottom',textStyle:{color:MUTED,fontSize:11}},
+      colors:[GREEN,ORANGE,RED], curveType:'function',
+      vAxis:{title:'Months',gridlines:{color:GC},textStyle:{color:MUTED,fontSize:10}},
+      hAxis:{textStyle:{color:MUTED,fontSize:10}},
+      series:{2:{lineDashStyle:[4,3],lineWidth:1,pointSize:0}}
+    };
+    new google.visualization.LineChart(document.getElementById('chart-pipeline-pressure')).draw(data,options);
+  }
+
+  function drawTxTrend() {
+    var data = google.visualization.arrayToDataTable([
+      ['Year','Transactions'],
+      ['2019',328000],['2020',295000],['2021',295000],['2022',390000],
+      ['2023',398000],['2024',420525],['2025 Q1-Q3',308000]
+    ]);
+    var options = {
+      backgroundColor:BG, chartArea:CA, legend:{position:'none'},
+      colors:[NAVY], curveType:'function',
+      vAxis:{gridlines:{color:GC},textStyle:{color:MUTED,fontSize:10},format:'short'},
+      hAxis:{textStyle:{color:MUTED,fontSize:9},slantedText:true}
+    };
+    new google.visualization.LineChart(document.getElementById('chart-tx-trend')).draw(data,options);
+  }
+
+  function drawOverhangPipeline() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string','Period');
+    data.addColumn('number','Residential Only');
+    data.addColumn('number','Total incl. SA');
+    data.addRows([
+      ['2018',32313,null],['2019',36863,null],['2020',31092,null],['2021',26424,null],
+      ['2022',27746,null],['2023',25816,47463],['2024H1',22642,42126],['2025Q3',28672,44794]
+    ]);
+    var options = {
+      backgroundColor:BG, chartArea:CA, legend:{position:'bottom',textStyle:{color:MUTED,fontSize:11}},
+      colors:[NAVY,ORANGE], curveType:'function',
+      vAxis:{gridlines:{color:GC},textStyle:{color:MUTED,fontSize:10},format:'short'},
+      hAxis:{textStyle:{color:MUTED,fontSize:9},slantedText:true},
+      series:{1:{lineDashStyle:[4,3]}}
+    };
+    new google.visualization.LineChart(document.getElementById('chart-overhang-pipeline')).draw(data,options);
+  }
+
+  function drawYieldCity() {
+    var data = google.visualization.arrayToDataTable([
+      ['City','Gross Yield %',{role:'style'}],
+      ['Iskandar Puteri',5.60,GREEN],
+      ['JB City',5.47,GREEN],
+      ['Subang Jaya',5.40,GREEN],
+      ['National Avg',5.19,NAVY],
+      ['KL City',4.60,ORANGE],
+      ['Penang GT',3.77,ORANGE]
+    ]);
+    var options = {
+      backgroundColor:BG, chartArea:{width:'60%',height:'75%'}, legend:{position:'none'},
+      hAxis:{minValue:0,maxValue:7,format:"#.##'%'",gridlines:{color:GC},textStyle:{color:MUTED,fontSize:10}},
+      vAxis:{textStyle:{color:NAVY,fontSize:11}}
+    };
+    new google.visualization.BarChart(document.getElementById('chart-yield-city')).draw(data,options);
+  }
+
+  function drawMHPI() {
+    var data = google.visualization.arrayToDataTable([
+      ['Year','MHPI Nominal','Real MHPI'],
+      ['2019',194,160],['2020',195,160],['2021',197,159],['2022',200,156],
+      ['2023',207,157],['2024',224,165],['2025Q3',229.1,167]
+    ]);
+    var options = {
+      backgroundColor:BG, chartArea:CA, legend:{position:'bottom',textStyle:{color:MUTED,fontSize:11}},
+      colors:[NAVY,ORANGE], curveType:'function',
+      vAxis:{gridlines:{color:GC},textStyle:{color:MUTED,fontSize:10}},
+      hAxis:{textStyle:{color:MUTED,fontSize:10}},
+      series:{1:{lineDashStyle:[4,3]}}
+    };
+    new google.visualization.LineChart(document.getElementById('chart-mhpi')).draw(data,options);
+  }
+
+  // Resize handler
+  window.addEventListener('resize', function(){ drawAllCharts(); });
   </script>
 </body>
 </html>

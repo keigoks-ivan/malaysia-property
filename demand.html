@@ -7,6 +7,7 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
   <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -86,7 +87,7 @@
       <div class="chart-card">
         <h3><span class="lang-en">Transaction Volume Trend</span><span class="lang-zh" style="display:none">交易量趨勢</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Annual residential property transactions</span><span class="lang-zh" style="display:none">年度住宅交易量</span></p>
-        <div style="position:relative;height:220px;"><canvas id="chartTxnVol"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chartTxnVol" style="width:100%;height:100%"></div></div>
       </div>
     </div>
 
@@ -95,12 +96,12 @@
       <div class="chart-card">
         <h3><span class="lang-en">State YoY Growth</span><span class="lang-zh" style="display:none">各州年增率</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Transaction volume change by state</span><span class="lang-zh" style="display:none">各州交易量變化</span></p>
-        <div style="position:relative;height:220px;"><canvas id="chartStateGrowth"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chartStateGrowth" style="width:100%;height:100%"></div></div>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">Primary vs Secondary Market</span><span class="lang-zh" style="display:none">一手 vs 二手市場</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Market share trend (%)</span><span class="lang-zh" style="display:none">市場佔比趨勢 (%)</span></p>
-        <div style="position:relative;height:220px;"><canvas id="chartPriSec"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chartPriSec" style="width:100%;height:100%"></div></div>
       </div>
     </div>
 
@@ -110,12 +111,12 @@
       <div class="chart-card">
         <h3><span class="lang-en">Loan Applications vs Approval Rate</span><span class="lang-zh" style="display:none">貸款申請 vs 核准率</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Applications (RM bn) &amp; approval rate (%)</span><span class="lang-zh" style="display:none">申請量 (RM 十億) 與核准率 (%)</span></p>
-        <div style="position:relative;height:220px;"><canvas id="chartLoan"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chartLoan" style="width:100%;height:100%"></div></div>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">Take-up Rate by Type</span><span class="lang-zh" style="display:none">依類型去化率</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Months to absorb new supply</span><span class="lang-zh" style="display:none">新供給去化月數</span></p>
-        <div style="position:relative;height:260px;"><canvas id="chartTakeUp"></canvas></div>
+        <div style="position:relative;height:260px;"><div id="chartTakeUp" style="width:100%;height:100%"></div></div>
       </div>
     </div>
 
@@ -128,151 +129,136 @@
 
   <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script>
-    const C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',navy_bg:'rgba(30,58,95,0.08)',green_bg:'rgba(22,163,74,0.08)',orange_bg:'rgba(217,119,6,0.08)'};
-    function fmtNum(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString();}
+    var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
+    var CA={width:'80%',height:'75%'},BG='transparent',GC='#e8f0f9';
+
     function setLang(lang){
-      document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');
-      document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');
-      document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+      document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+      document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+      document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
       localStorage.setItem('lang',lang);
     }
     function switchTab(cid,tab){
-      const w=document.getElementById(cid);if(!w)return;
-      w.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-      w.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));
-      const p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');
-      w.querySelectorAll('.tab-bar button').forEach(b=>{if(b.dataset.tab===tab)b.classList.add('active');});
+      var w=document.getElementById(cid);if(!w)return;
+      w.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+      w.querySelectorAll('.tab-bar button').forEach(function(b){b.classList.remove('active');});
+      var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');
+      w.querySelectorAll('.tab-bar button').forEach(function(b){if(b.dataset.tab===tab)b.classList.add('active');});
     }
 
-    window.addEventListener('load',function(){
-      Chart.defaults.color='#8ba3c0';Chart.defaults.borderColor='#e8f0f9';
-      Chart.defaults.font.family="'Inter',sans-serif";Chart.defaults.font.size=11;
-      Chart.defaults.plugins.legend.labels.usePointStyle=true;
-      Chart.defaults.plugins.legend.labels.pointStyleWidth=8;
-      Chart.defaults.plugins.legend.labels.padding=14;
-      Chart.defaults.elements.line.tension=0.3;Chart.defaults.elements.line.borderWidth=2;
-      Chart.defaults.elements.point.radius=2;Chart.defaults.elements.point.hoverRadius=5;
-      Chart.defaults.elements.bar.borderRadius=2;
-      Chart.defaults.scale.grid={color:'#e8f0f9'};
+    google.charts.load('current',{packages:['corechart']});
+    google.charts.setOnLoadCallback(function(){ drawAllCharts(); setLang(localStorage.getItem('lang')||'en'); });
 
-      // Chart 1: Transaction Volume Trend (line with fill)
-      new Chart(document.getElementById('chartTxnVol'),{
-        type:'line',
-        data:{
-          labels:['2019','2020','2021','2022','2023','2024','2025 Q1-Q3'],
-          datasets:[{
-            label:'Transactions',
-            data:[328000,295000,295000,390000,398000,420525,308000],
-            borderColor:C.navy,
-            backgroundColor:C.navy_bg,
-            fill:true,
-            pointBackgroundColor:C.navy
-          }]
+    function drawAllCharts(){
+      drawTxTrend();
+      drawStateGrowth();
+      drawPriSec();
+      drawLoan();
+      drawTakeUp();
+    }
+
+    function drawTxTrend(){
+      var data=google.visualization.arrayToDataTable([
+        ['Year','Transactions'],
+        ['2019',328000],
+        ['2020',295000],
+        ['2021',295000],
+        ['2022',390000],
+        ['2023',398000],
+        ['2024',420525],
+        ['2025 Q1-Q3',308000]
+      ]);
+      var opts={
+        chartArea:CA,backgroundColor:BG,
+        legend:{position:'none'},
+        colors:[NAVY],
+        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short'},
+        curveType:'function',pointSize:4
+      };
+      new google.visualization.LineChart(document.getElementById('chartTxnVol')).draw(data,opts);
+    }
+
+    function drawStateGrowth(){
+      var labels=['Kelantan','Melaka','Pahang','Selangor','KL','Perlis','N.S.'];
+      var values=[15,8,6,3,-2,-5,-8];
+      var rows=[['State','YoY %',{role:'style'}]];
+      for(var i=0;i<labels.length;i++){
+        rows.push([labels[i],values[i],values[i]>=0?GREEN:RED]);
+      }
+      var data=google.visualization.arrayToDataTable(rows);
+      var opts={
+        chartArea:CA,backgroundColor:BG,
+        legend:{position:'none'},
+        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short',minValue:0},
+        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}}
+      };
+      new google.visualization.BarChart(document.getElementById('chartStateGrowth')).draw(data,opts);
+    }
+
+    function drawPriSec(){
+      var data=google.visualization.arrayToDataTable([
+        ['Year','Primary','Secondary'],
+        ['2020',30,70],
+        ['2021',28,72],
+        ['2022',32,68],
+        ['2023',26,74],
+        ['2024',22,78],
+        ['2025H1',20.6,79.4]
+      ]);
+      var opts={
+        chartArea:CA,backgroundColor:BG,
+        legend:{position:'top',textStyle:{color:MUTED,fontSize:11}},
+        colors:[ORANGE,NAVY],
+        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},maxValue:100,format:'#\'%\''},
+        curveType:'function',pointSize:4
+      };
+      new google.visualization.LineChart(document.getElementById('chartPriSec')).draw(data,opts);
+    }
+
+    function drawLoan(){
+      var data=google.visualization.arrayToDataTable([
+        ['Year','Applications (RM bn)','Approval Rate %'],
+        ['2019',85,48],
+        ['2020',78,46],
+        ['2021',95,44],
+        ['2022',110,43],
+        ['2023',125,42.6],
+        ['2025',130,42]
+      ]);
+      var opts={
+        chartArea:CA,backgroundColor:BG,
+        legend:{position:'top',textStyle:{color:MUTED,fontSize:11}},
+        seriesType:'bars',
+        series:{
+          0:{type:'bars',color:NAVY},
+          1:{type:'line',color:ORANGE,targetAxisIndex:1,lineDashStyle:[5,3],pointSize:4}
         },
-        options:{
-          responsive:true,maintainAspectRatio:false,
-          plugins:{legend:{display:false}},
-          scales:{y:{beginAtZero:false,ticks:{callback:function(v){return fmtNum(v);}}}}
+        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+        vAxes:{
+          0:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},title:'Applications (RM bn)',titleTextStyle:{color:MUTED,fontSize:10},minValue:0},
+          1:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:'transparent'},title:'Approval Rate %',titleTextStyle:{color:MUTED,fontSize:10},minValue:35,maxValue:55,format:'#\'%\''}
         }
-      }).update();
+      };
+      new google.visualization.ComboChart(document.getElementById('chartLoan')).draw(data,opts);
+    }
 
-      // Chart 2: State YoY Growth (vertical bar)
-      var growthData=[15,8,6,3,-2,-5,-8];
-      var growthColors=growthData.map(function(v){return v>=0?'#16a34a':'#dc2626';});
-      new Chart(document.getElementById('chartStateGrowth'),{
-        type:'bar',
-        data:{
-          labels:['Kelantan','Melaka','Pahang','Selangor','KL','Perlis','N.S.'],
-          datasets:[{
-            label:'YoY %',
-            data:growthData,
-            backgroundColor:growthColors,
-            maxBarThickness:40
-          }]
-        },
-        options:{
-          responsive:true,maintainAspectRatio:false,
-          plugins:{legend:{display:false}},
-          scales:{y:{ticks:{callback:function(v){return v+'%';}}},x:{ticks:{maxRotation:45,minRotation:0,font:{size:10}}}}
-        }
-      }).update();
-
-      // Chart 3: Primary vs Secondary (line)
-      new Chart(document.getElementById('chartPriSec'),{
-        type:'line',
-        data:{
-          labels:['2020','2021','2022','2023','2024','2025H1'],
-          datasets:[
-            {label:'Primary',data:[30,28,32,26,22,20.6],borderColor:C.orange,backgroundColor:'transparent',pointBackgroundColor:C.orange},
-            {label:'Secondary',data:[70,72,68,74,78,79.4],borderColor:C.navy,backgroundColor:C.navy_bg,fill:true,pointBackgroundColor:C.navy}
-          ]
-        },
-        options:{
-          responsive:true,maintainAspectRatio:false,
-          plugins:{legend:{position:'top'}},
-          scales:{y:{beginAtZero:false,max:100,ticks:{callback:function(v){return v+'%';}}}}
-        }
-      }).update();
-
-      // Chart 4: Loan App vs Approval (mixed bar+line)
-      new Chart(document.getElementById('chartLoan'),{
-        type:'bar',
-        data:{
-          labels:['2019','2020','2021','2022','2023','2025'],
-          datasets:[
-            {
-              type:'bar',
-              label:'Applications (RM bn)',
-              data:[85,78,95,110,125,130],
-              backgroundColor:C.navy,
-              barThickness:30,
-              yAxisID:'y'
-            },
-            {
-              type:'line',
-              label:'Approval Rate %',
-              data:[48,46,44,43,42.6,42],
-              borderColor:C.orange,
-              borderDash:[5,3],
-              backgroundColor:'transparent',
-              pointBackgroundColor:C.orange,
-              yAxisID:'y1'
-            }
-          ]
-        },
-        options:{
-          responsive:true,maintainAspectRatio:false,
-          plugins:{legend:{position:'top'}},
-          scales:{
-            y:{type:'linear',position:'left',beginAtZero:true,title:{display:true,text:'Applications (RM bn)',font:{size:10}}},
-            y1:{type:'linear',position:'right',min:35,max:55,grid:{drawOnChartArea:false},title:{display:true,text:'Approval Rate %',font:{size:10}},ticks:{callback:function(v){return v+'%';}}}
-          }
-        }
-      }).update();
-
-      // Chart 5: Take-up Rate (vertical bar)
-      new Chart(document.getElementById('chartTakeUp'),{
-        type:'bar',
-        data:{
-          labels:['Landed','High-Rise'],
-          datasets:[{
-            label:'Take-up Rate (%)',
-            data:[14,5.1],
-            backgroundColor:[C.green,C.orange],
-            maxBarThickness:100
-          }]
-        },
-        options:{
-          responsive:true,maintainAspectRatio:false,
-          plugins:{legend:{display:false}},
-          scales:{y:{beginAtZero:true,ticks:{callback:function(v){return v+'%';}}}}
-        }
-      }).update();
-
-      setLang(localStorage.getItem('lang')||'en');
-    });
+    function drawTakeUp(){
+      var data=google.visualization.arrayToDataTable([
+        ['Type','Rate',{role:'style'}],
+        ['Landed',14,GREEN],
+        ['High-Rise',5.1,ORANGE]
+      ]);
+      var opts={
+        chartArea:CA,backgroundColor:BG,
+        legend:{position:'none'},
+        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},minValue:0,format:'#\'%\''}
+      };
+      new google.visualization.ColumnChart(document.getElementById('chartTakeUp')).draw(data,opts);
+    }
   </script>
 </body>
 </html>

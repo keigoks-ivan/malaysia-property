@@ -7,6 +7,7 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
   <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -82,10 +83,10 @@
     <h2 class="section-heading"><span class="lang-en">Three Micro-Markets + Luxury</span><span class="lang-zh" style="display:none">三個微型市場 + 豪宅</span></h2>
     <div id="zone-tabs">
       <div class="tab-bar">
-        <button class="active" data-tab="z1" onclick="switchTab('zone-tabs','z1')"><span class="lang-en">Zone 1: KLCC / Bukit Bintang</span><span class="lang-zh" style="display:none">第一區：KLCC/武吉免登</span></button>
-        <button data-tab="z2" onclick="switchTab('zone-tabs','z2')"><span class="lang-en">Zone 2: Mid Valley / OKR</span><span class="lang-zh" style="display:none">第二區：中谷/舊巴生路</span></button>
-        <button data-tab="z3" onclick="switchTab('zone-tabs','z3')"><span class="lang-en">Zone 3: Kepong / Cheras / Setapak</span><span class="lang-zh" style="display:none">第三區：甲洞/蕉賴/士打末</span></button>
-        <button data-tab="z4" onclick="switchTab('zone-tabs','z4')"><span class="lang-en">Luxury RM1M+</span><span class="lang-zh" style="display:none">豪宅 RM1M+</span></button>
+        <button class="active" data-tab="z1" onclick="switchTab('zone-tabs','z1');drawZ1();"><span class="lang-en">Zone 1: KLCC / Bukit Bintang</span><span class="lang-zh" style="display:none">第一區：KLCC/武吉免登</span></button>
+        <button data-tab="z2" onclick="switchTab('zone-tabs','z2');drawZ2();"><span class="lang-en">Zone 2: Mid Valley / OKR</span><span class="lang-zh" style="display:none">第二區：中谷/舊巴生路</span></button>
+        <button data-tab="z3" onclick="switchTab('zone-tabs','z3');drawZ3();"><span class="lang-en">Zone 3: Kepong / Cheras / Setapak</span><span class="lang-zh" style="display:none">第三區：甲洞/蕉賴/士打末</span></button>
+        <button data-tab="z4" onclick="switchTab('zone-tabs','z4');drawZ4();"><span class="lang-en">Luxury RM1M+</span><span class="lang-zh" style="display:none">豪宅 RM1M+</span></button>
       </div>
 
       <!-- Tab 1: Zone 1 KLCC / Bukit Bintang -->
@@ -111,11 +112,11 @@
         <div class="chart-grid two-col">
           <div class="chart-card">
             <h3><span class="lang-en">Zone 1 Price Trend</span><span class="lang-zh" style="display:none">第一區價格趨勢</span></h3>
-            <div style="position:relative;height:220px;"><canvas id="chart-z1-price"></canvas></div>
+            <div style="position:relative;height:220px;"><div id="chart-z1-price" style="width:100%;height:100%"></div></div>
           </div>
           <div class="chart-card">
             <h3><span class="lang-en">Yield vs Borrowing Cost</span><span class="lang-zh" style="display:none">收益率 vs 借貸成本</span></h3>
-            <div style="position:relative;height:220px;"><canvas id="chart-z1-yield"></canvas></div>
+            <div style="position:relative;height:220px;"><div id="chart-z1-yield" style="width:100%;height:100%"></div></div>
           </div>
         </div>
       </div>
@@ -143,11 +144,11 @@
         <div class="chart-grid two-col">
           <div class="chart-card">
             <h3><span class="lang-en">New Launch Volume</span><span class="lang-zh" style="display:none">新推盤量</span></h3>
-            <div style="position:relative;height:220px;"><canvas id="chart-z2-launch"></canvas></div>
+            <div style="position:relative;height:220px;"><div id="chart-z2-launch" style="width:100%;height:100%"></div></div>
           </div>
           <div class="chart-card">
             <h3><span class="lang-en">Supply vs Demand Balance</span><span class="lang-zh" style="display:none">供需平衡</span></h3>
-            <div style="position:relative;height:220px;"><canvas id="chart-z2-balance"></canvas></div>
+            <div style="position:relative;height:220px;"><div id="chart-z2-balance" style="width:100%;height:100%"></div></div>
           </div>
         </div>
       </div>
@@ -175,12 +176,12 @@
         <div class="chart-grid two-col">
           <div class="chart-card">
             <h3><span class="lang-en">PSF Trap — Size vs PSF</span><span class="lang-zh" style="display:none">呎價陷阱——面積 vs 呎價</span></h3>
-            <div style="position:relative;height:220px;"><canvas id="chart-z3-psf"></canvas></div>
+            <div style="position:relative;height:220px;"><div id="chart-z3-psf" style="width:100%;height:100%"></div></div>
             <p class="chart-footnote"><span class="lang-en">*Illustrative estimates; actual PSF varies by location.</span><span class="lang-zh" style="display:none">*示意估算數據，實際呎價因地段而異。</span></p>
           </div>
           <div class="chart-card">
             <h3><span class="lang-en">SA vs Residential Overhang</span><span class="lang-zh" style="display:none">服務式公寓 vs 住宅積壓</span></h3>
-            <div style="position:relative;height:220px;"><canvas id="chart-z3-sa"></canvas></div>
+            <div style="position:relative;height:220px;"><div id="chart-z3-sa" style="width:100%;height:100%"></div></div>
           </div>
         </div>
       </div>
@@ -223,7 +224,7 @@
 
         <div class="chart-card">
           <h3><span class="lang-en">Luxury Segment Transaction Growth (YoY% 2024)</span><span class="lang-zh" style="display:none">豪宅交易量增長（2024年同比%）</span></h3>
-          <div style="position:relative;height:220px;"><canvas id="chart-luxury-growth"></canvas></div>
+          <div style="position:relative;height:220px;"><div id="chart-luxury-growth" style="width:100%;height:100%"></div></div>
         </div>
       </div>
     </div>
@@ -233,17 +234,17 @@
     <div class="chart-grid two-col">
       <div class="chart-card">
         <h3><span class="lang-en">KL Supply Trend</span><span class="lang-zh" style="display:none">吉隆坡供給趨勢</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-kl-supply"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-kl-supply" style="width:100%;height:100%"></div></div>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">KL Rental Trend</span><span class="lang-zh" style="display:none">吉隆坡租金趨勢</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-kl-rental"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-kl-rental" style="width:100%;height:100%"></div></div>
       </div>
     </div>
 
     <div class="chart-card" style="margin-bottom:12px;">
       <h3><span class="lang-en">Zone PSF Comparison</span><span class="lang-zh" style="display:none">各區呎價比較</span></h3>
-      <div style="position:relative;height:220px;"><canvas id="chart-zone-psf"></canvas></div>
+      <div style="position:relative;height:220px;"><div id="chart-zone-psf" style="width:100%;height:100%"></div></div>
     </div>
 
     <!-- KL Summary -->
@@ -275,123 +276,125 @@
 
   <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script>
-  const C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',navy_bg:'rgba(30,58,95,0.08)',green_bg:'rgba(22,163,74,0.08)',orange_bg:'rgba(217,119,6,0.08)'};
-  function fmtNum(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString();}
+  var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
+  var CA={width:'80%',height:'75%'},BG='transparent',GC='#e8f0f9';
   function setLang(lang){document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));localStorage.setItem('lang',lang);}
-  var tabChartInits={},tabChartDone={};
-  function initTabCharts(tabId){if(tabChartDone[tabId])return;if(tabChartInits[tabId]){tabChartInits[tabId]();tabChartDone[tabId]=true;}}
-  function switchTab(cid,tab){const w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));w.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));const p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(b=>{if(b.dataset.tab===tab)b.classList.add('active');});setTimeout(function(){initTabCharts('tab-'+tab);},300);}
+  function switchTab(cid,tab){var w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));w.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(b=>{if(b.dataset.tab===tab)b.classList.add('active');});}
+  google.charts.load('current',{packages:['corechart']});
+  google.charts.setOnLoadCallback(function(){drawAllCharts();setLang(localStorage.getItem('lang')||'en');});
+  window.addEventListener('resize',function(){drawAllCharts();});
 
-  window.addEventListener('load', function() {
-    // Restore language
-    // ── Zone 1 Charts (lazy) ──
-    tabChartInits['tab-z1']=function(){
-      new Chart(document.getElementById('chart-z1-price'), {
-        type: 'line',
-        data: {
-          labels: ['2019','2020','2021','2022','2023','2024','2025Q3'],
-          datasets: [{label:'Avg PSF (RM)',data:[1800,1650,1700,1900,2000,2100,2050],borderColor:C.navy,backgroundColor:C.navy_bg,fill:true,tension:0.3}]
-        },
-        options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: function(v){ return 'RM '+v; } } } } }
-      }).update();
-      new Chart(document.getElementById('chart-z1-yield'), {
-        type: 'bar',
-        data: {
-          labels: ['Gross Yield','OPR','Mortgage Rate'],
-          datasets: [{label:'%',data:[4.0,2.75,4.35],backgroundColor:[C.navy,C.green,C.red],barThickness:30}]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { max: 5, ticks: { callback: function(v){ return v+'%'; } } } } }
-      }).update();
-    };
+  function drawZ1(){
+    var d1=google.visualization.arrayToDataTable([
+      ['Year','Avg PSF (RM)'],
+      ['2019',1800],['2020',1650],['2021',1700],['2022',1900],['2023',2000],['2024',2100],['2025Q3',2050]
+    ]);
+    new google.visualization.LineChart(document.getElementById('chart-z1-price')).draw(d1,{
+      chartArea:CA,backgroundColor:BG,colors:[NAVY],legend:{position:'bottom'},
+      vAxis:{format:'RM #,###',gridlines:{color:GC}},hAxis:{gridlines:{color:GC}},curveType:'function'
+    });
 
-    // ── KL Supply Pipeline Charts (eager) ──
+    var d2=google.visualization.arrayToDataTable([
+      ['Metric','%',{role:'style'}],
+      ['Gross Yield',4.0,NAVY],['OPR',2.75,GREEN],['Mortgage Rate',4.35,RED]
+    ]);
+    new google.visualization.ColumnChart(document.getElementById('chart-z1-yield')).draw(d2,{
+      chartArea:CA,backgroundColor:BG,legend:'none',
+      vAxis:{maxValue:5,format:"#'%'",gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
+    });
+  }
 
-    new Chart(document.getElementById('chart-kl-supply'), {
-      type: 'line',
-      data: {
-        labels: ['2019','2020','2021','2022','2023','2024','2025 Q1-Q3'],
-        datasets: [
-          { label: 'Completions', data: [8500,7200,6800,7500,9800,9600,7418], borderColor: C.green, backgroundColor: C.green_bg, fill: false, tension: 0.3 },
-          { label: 'Starts', data: [9200,6100,7800,8900,9400,11013,null], borderColor: C.navy, fill: false, tension: 0.3 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: function(v){ return fmtNum(v); } } } } }
-    }).update();
+  function drawZ2(){
+    var d1=google.visualization.arrayToDataTable([
+      ['Year','New Launches (units)'],
+      ['2022',2800],['2023',3500],['2024',4200],['2025E',3000]
+    ]);
+    new google.visualization.ColumnChart(document.getElementById('chart-z2-launch')).draw(d1,{
+      chartArea:CA,backgroundColor:BG,colors:[NAVY],legend:{position:'bottom'},
+      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
+    });
 
-    new Chart(document.getElementById('chart-kl-rental'), {
-      type: 'line',
-      data: {
-        labels: ['2019','2020','2021','2022','2023','2024','2025'],
-        datasets: [{
-          label: 'Avg Rent (RM/month)',
-          data: [2450,2300,2350,2550,2680,2730,2901],
-          borderColor: C.green,
-          backgroundColor: C.green_bg,
-          fill: true,
-          tension: 0.3
-        }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: function(v){ return 'RM '+v; } } } } }
-    }).update();
+    var d2=google.visualization.arrayToDataTable([
+      ['Year','Completions','Transactions'],
+      ['2022',2200,2500],['2023',2800,3000],['2024',3500,3800]
+    ]);
+    new google.visualization.ColumnChart(document.getElementById('chart-z2-balance')).draw(d2,{
+      chartArea:CA,backgroundColor:BG,colors:[ORANGE,GREEN],legend:{position:'bottom'},
+      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
+    });
+  }
 
-    new Chart(document.getElementById('chart-zone-psf'), {
-      type: 'bar',
-      data: {
-        labels: ['KLCC/BB Zone 1','Mid Valley Zone 2','Outer Ring Zone 3'],
-        datasets: [{
-          label: 'Avg PSF (RM)',
-          data: [1800, 700, 490],
-          backgroundColor: [C.orange, C.green, C.red],
-          barThickness: 30
-        }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: function(v){ return 'RM '+v; } } } } }
-    }).update();
+  function drawZ3(){
+    var d1=google.visualization.arrayToDataTable([
+      ['Size','RM per sqft',{role:'style'}],
+      ['Studio 280sqft',1000,RED],['1-Bed 500sqft',900,ORANGE],['2-Bed 850sqft',800,NAVY],['3-Bed 1200sqft',750,GREEN]
+    ]);
+    new google.visualization.ColumnChart(document.getElementById('chart-z3-psf')).draw(d1,{
+      chartArea:CA,backgroundColor:BG,legend:'none',
+      vAxis:{format:'RM #,###',gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
+    });
 
-    // ── Zone 2 ──
-    tabChartInits['tab-z2']=function(){
-      new Chart(document.getElementById('chart-z2-launch'), {
-        type:'bar',
-        data:{labels:['2022','2023','2024','2025E'],datasets:[{label:'New Launches (units)',data:[2800,3500,4200,3000],backgroundColor:C.navy,barThickness:30}]},
-        options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:function(v){return fmtNum(v);}}}}}
-      }).update();
-      new Chart(document.getElementById('chart-z2-balance'), {
-        type:'bar',
-        data:{labels:['2022','2023','2024'],datasets:[{label:'Completions',data:[2200,2800,3500],backgroundColor:C.orange,barThickness:30},{label:'Transactions',data:[2500,3000,3800],backgroundColor:C.green,barThickness:30}]},
-        options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:function(v){return fmtNum(v);}}}}}
-      }).update();
-    };
+    var d2=google.visualization.arrayToDataTable([
+      ['Type','Overhang Units (est.)',{role:'style'}],
+      ['Serviced Apartments',920,RED],['Standard Residential',450,NAVY]
+    ]);
+    new google.visualization.ColumnChart(document.getElementById('chart-z3-sa')).draw(d2,{
+      chartArea:CA,backgroundColor:BG,legend:'none',
+      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
+    });
+  }
 
-    // ── Zone 3 ──
-    tabChartInits['tab-z3']=function(){
-      new Chart(document.getElementById('chart-z3-psf'), {
-        type:'bar',
-        data:{labels:['Studio 280sqft','1-Bed 500sqft','2-Bed 850sqft','3-Bed 1200sqft'],datasets:[{label:'RM per sqft',data:[1000,900,800,750],backgroundColor:[C.red,C.orange,C.navy,C.green],barThickness:30}]},
-        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return 'RM '+v;}}}}}
-      }).update();
-      new Chart(document.getElementById('chart-z3-sa'), {
-        type:'bar',
-        data:{labels:['Serviced Apartments','Standard Residential'],datasets:[{label:'Overhang Units (est.)',data:[920,450],backgroundColor:[C.red,C.navy],barThickness:30}]},
-        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}
-      }).update();
-    };
+  function drawZ4(){
+    var d=google.visualization.arrayToDataTable([
+      ['Segment','YoY %',{role:'style'}],
+      ['<RM300k',-3,RED],['RM300k-500k',-1,ORANGE],['RM500k-1M',2,GREEN],['>RM1M',6.5,'#065f46']
+    ]);
+    new google.visualization.ColumnChart(document.getElementById('chart-luxury-growth')).draw(d,{
+      chartArea:CA,backgroundColor:BG,legend:'none',
+      vAxis:{format:"#'%'",gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
+    });
+  }
 
-    // ── Zone 4 (Luxury) ──
-    tabChartInits['tab-z4']=function(){
-      new Chart(document.getElementById('chart-luxury-growth'), {
-        type:'bar',
-        data:{labels:['<RM300k','RM300k-500k','RM500k-1M','>RM1M'],datasets:[{label:'YoY % (2024)',data:[-3,-1,2,6.5],backgroundColor:[C.red,C.orange,C.green,'#065f46'],barThickness:30}]},
-        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v+'%';}}}}}
-      }).update();
-    };
+  function drawKLSupply(){
+    var d=google.visualization.arrayToDataTable([
+      ['Year','Completions','Starts'],
+      ['2019',8500,9200],['2020',7200,6100],['2021',6800,7800],['2022',7500,8900],['2023',9800,9400],['2024',9600,11013],['2025 Q1-Q3',7418,null]
+    ]);
+    new google.visualization.LineChart(document.getElementById('chart-kl-supply')).draw(d,{
+      chartArea:CA,backgroundColor:BG,colors:[GREEN,NAVY],legend:{position:'bottom'},
+      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}},curveType:'function'
+    });
+  }
 
-    // Init first tab
-    setTimeout(function(){ initTabCharts('tab-z1'); }, 300);
+  function drawKLRental(){
+    var d=google.visualization.arrayToDataTable([
+      ['Year','Avg Rent (RM/month)'],
+      ['2019',2450],['2020',2300],['2021',2350],['2022',2550],['2023',2680],['2024',2730],['2025',2901]
+    ]);
+    new google.visualization.LineChart(document.getElementById('chart-kl-rental')).draw(d,{
+      chartArea:CA,backgroundColor:BG,colors:[GREEN],legend:{position:'bottom'},
+      vAxis:{format:'RM #,###',gridlines:{color:GC}},hAxis:{gridlines:{color:GC}},curveType:'function'
+    });
+  }
 
-    setLang(localStorage.getItem('lang')||'en');
-  });
+  function drawZonePSF(){
+    var d=google.visualization.arrayToDataTable([
+      ['Zone','Avg PSF (RM)',{role:'style'}],
+      ['KLCC/BB Zone 1',1800,ORANGE],['Mid Valley Zone 2',700,GREEN],['Outer Ring Zone 3',490,RED]
+    ]);
+    new google.visualization.ColumnChart(document.getElementById('chart-zone-psf')).draw(d,{
+      chartArea:CA,backgroundColor:BG,legend:'none',
+      vAxis:{format:'RM #,###',gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
+    });
+  }
+
+  function drawAllCharts(){
+    drawZ1();
+    drawKLSupply();
+    drawKLRental();
+    drawZonePSF();
+  }
   </script>
 </body>
 </html>

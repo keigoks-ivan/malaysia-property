@@ -7,6 +7,7 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
   <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -118,19 +119,19 @@
     <div class="chart-grid two-col">
       <div class="chart-card">
         <h3><span class="lang-en">Penang Price Growth vs National</span><span class="lang-zh" style="display:none">檳城房價增長 vs 全國</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-pg-growth"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-pg-growth" style="width:100%;height:100%"></div></div>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">Manufacturing FDI (RM Billion)</span><span class="lang-zh" style="display:none">製造業FDI（十億令吉）</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-pg-fdi"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-pg-fdi" style="width:100%;height:100%"></div></div>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">Gurney Drive PSF — Top Projects</span><span class="lang-zh" style="display:none">Gurney Drive呎價——頂級項目</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-pg-gurney"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-pg-gurney" style="width:100%;height:100%"></div></div>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">Penang Overhang Trend</span><span class="lang-zh" style="display:none">檳城積壓趨勢</span></h3>
-        <div style="position:relative;height:220px;"><canvas id="chart-pg-overhang"></canvas></div>
+        <div style="position:relative;height:220px;"><div id="chart-pg-overhang" style="width:100%;height:100%"></div></div>
       </div>
     </div>
 
@@ -157,64 +158,65 @@
 
   <footer class="footer">A project by <a href="https://investmquest.com" target="_blank">InvestMQuest</a></footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script>
-  const C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',navy_bg:'rgba(30,58,95,0.08)',green_bg:'rgba(22,163,74,0.08)',orange_bg:'rgba(217,119,6,0.08)'};
-  function fmtNum(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString();}
+  var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
+  var CA={width:'80%',height:'75%'},BG='transparent',GC='#e8f0f9';
   function setLang(lang){document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));localStorage.setItem('lang',lang);}
+  function switchTab(cid,tab){var w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));w.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(b=>{if(b.dataset.tab===tab)b.classList.add('active');});}
+  google.charts.load('current',{packages:['corechart']});
+  google.charts.setOnLoadCallback(function(){drawAllCharts();setLang(localStorage.getItem('lang')||'en');});
+  window.addEventListener('resize',function(){drawAllCharts();});
 
-  window.addEventListener('load', function() {
-    // Chart 1: Price Growth vs National
-    new Chart(document.getElementById('chart-pg-growth'), {
-      type: 'line',
-      data: {
-        labels: ['2019','2020','2021','2022','2023','2024','2025H1'],
-        datasets: [
-          { label: 'Penang %', data: [3,2,4,5,5.6,5.7,5], borderColor: C.green, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 3, tension: 0.3 },
-          { label: 'National %', data: [2,1,2,3,2,1,0.1], borderColor: C.navy, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 3, tension: 0.3 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 11 } } } }, scales: { y: { ticks: { callback: v => v+'%', font: { size: 10 } } }, x: { ticks: { font: { size: 10 } } } } }
-    }).update();
+  function drawPenangPrice(){
+    var d=google.visualization.arrayToDataTable([
+      ['Year','Penang %','National %'],
+      ['2019',3,2],['2020',2,1],['2021',4,2],['2022',5,3],['2023',5.6,2],['2024',5.7,1],['2025H1',5,0.1]
+    ]);
+    new google.visualization.LineChart(document.getElementById('chart-pg-growth')).draw(d,{
+      chartArea:CA,backgroundColor:BG,colors:[GREEN,NAVY],legend:{position:'bottom'},
+      vAxis:{format:"#'%'",gridlines:{color:GC}},hAxis:{gridlines:{color:GC}},curveType:'function'
+    });
+  }
 
-    // Chart 2: Manufacturing FDI
-    new Chart(document.getElementById('chart-pg-fdi'), {
-      type: 'bar',
-      data: {
-        labels: ['2019','2020','2021','2022','2023','2024','2025H1'],
-        datasets: [
-          { label: 'FDI (RM B)', data: [8,5,12,18,15,25,12.5], backgroundColor: C.navy, barThickness: 30 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 11 } } } }, scales: { y: { ticks: { callback: v => 'RM '+v+'B', font: { size: 10 } } }, x: { ticks: { font: { size: 10 } } } } }
-    }).update();
+  function drawFDI(){
+    var d=google.visualization.arrayToDataTable([
+      ['Year','FDI (RM B)'],
+      ['2019',8],['2020',5],['2021',12],['2022',18],['2023',15],['2024',25],['2025H1',12.5]
+    ]);
+    new google.visualization.ColumnChart(document.getElementById('chart-pg-fdi')).draw(d,{
+      chartArea:CA,backgroundColor:BG,colors:[NAVY],legend:{position:'bottom'},
+      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
+    });
+  }
 
-    // Chart 3: Gurney Drive PSF (vertical bar)
-    new Chart(document.getElementById('chart-pg-gurney'), {
-      type: 'bar',
-      data: {
-        labels: ['Marriott\nResidences','Sunrise\nGurney','Shorefront','Straits\nResidences','Seri TJ\nPinang'],
-        datasets: [
-          { label: 'PSF (RM)', data: [2069,1872,1318,1287,1193], backgroundColor: C.navy, maxBarThickness: 50 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: v => 'RM '+v, font: { size: 10 } } }, x: { ticks: { maxRotation: 45, minRotation: 0, font: { size: 10 } } } } }
-    }).update();
+  function drawGurney(){
+    var d=google.visualization.arrayToDataTable([
+      ['Project','PSF (RM)'],
+      ['Marriott Residences',2069],['Sunrise Gurney',1872],['Shorefront',1318],['Straits Residences',1287],['Seri TJ Pinang',1193]
+    ]);
+    new google.visualization.BarChart(document.getElementById('chart-pg-gurney')).draw(d,{
+      chartArea:CA,backgroundColor:BG,colors:[NAVY],legend:'none',
+      hAxis:{format:'RM #,###',gridlines:{color:GC}},vAxis:{gridlines:{color:GC}}
+    });
+  }
 
-    // Chart 4: Overhang Trend
-    new Chart(document.getElementById('chart-pg-overhang'), {
-      type: 'line',
-      data: {
-        labels: ['2023H1','2023H2','2024H1','2024H2','2025H1'],
-        datasets: [
-          { label: 'Overhang (units)', data: [2901,2750,2600,2400,2730], borderColor: C.navy, backgroundColor: C.navy_bg, fill: true, borderWidth: 2, pointRadius: 3, tension: 0.3 }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 11 } } } }, scales: { y: { ticks: { font: { size: 10 } } }, x: { ticks: { font: { size: 10 } } } } }
-    }).update();
+  function drawPenangOverhang(){
+    var d=google.visualization.arrayToDataTable([
+      ['Period','Overhang (units)'],
+      ['2023H1',2901],['2023H2',2750],['2024H1',2600],['2024H2',2400],['2025H1',2730]
+    ]);
+    new google.visualization.LineChart(document.getElementById('chart-pg-overhang')).draw(d,{
+      chartArea:CA,backgroundColor:BG,colors:[NAVY],legend:{position:'bottom'},
+      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}},curveType:'function'
+    });
+  }
 
-    setLang(localStorage.getItem('lang')||'en');
-  });
+  function drawAllCharts(){
+    drawPenangPrice();
+    drawFDI();
+    drawGurney();
+    drawPenangOverhang();
+  }
   </script>
 </body>
 </html>
