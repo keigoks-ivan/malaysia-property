@@ -29,6 +29,21 @@ body { background: #eef3f9; font-family: sans-serif; padding: 20px; }
     </div>
   </div>
 </div>
+<h2>Test 4: Bar chart inside chart-grid two-col structure</h2>
+<div class="chart-grid two-col">
+  <div class="chart-card">
+    <h3>Test Chart A (line - should work)</h3>
+    <div style="position:relative;height:220px;">
+      <canvas id="c4a"></canvas>
+    </div>
+  </div>
+  <div class="chart-card">
+    <h3>Test Chart B (bar - problem chart)</h3>
+    <div style="position:relative;height:240px;">
+      <canvas id="c4b"></canvas>
+    </div>
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script>
 Chart.defaults.responsive = true;
@@ -43,6 +58,19 @@ document.addEventListener('DOMContentLoaded', function() {
     type:'bar',
     data:{ labels:['Perak','Johor','Sabah','Selangor','Penang','Kelantan','KL','N.Sembilan','Others'], datasets:[{data:[3300,3293,2771,2757,2730,2599,2287,2205,6730],backgroundColor:'navy',barThickness:16,minBarLength:2}]},
     options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}}}
+  });
+  new Chart(document.getElementById('c4a'), {
+    type: 'line',
+    data: { labels: ['A','B','C','D'], datasets: [{ data: [1,3,2,4], borderColor: 'navy' }] },
+    options: { responsive: true, maintainAspectRatio: false }
+  });
+  new Chart(document.getElementById('c4b'), {
+    type: 'bar',
+    data: {
+      labels: ['Iskandar Puteri','JB City','Subang Jaya','National Avg','KL City','Penang GT'],
+      datasets: [{ data: [5.60,5.47,5.40,5.19,4.60,3.77], backgroundColor: '#1e3a5f', maxBarThickness: 60 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
   });
 });
 var c3done=false;
