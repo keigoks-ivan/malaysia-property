@@ -4,10 +4,14 @@
 <style>
 body { background: #eef3f9; font-family: sans-serif; padding: 20px; }
 .box { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; }
+.lang-en { display: inline; }
+.lang-zh { display: none; }
 </style>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<button onclick="setLang('zh')">切換中文</button>
+<button onclick="setLang('en')">Switch EN</button>
 <h2>Test 1: Vertical bar, 2 labels, barThickness:60</h2>
 <div class="box">
   <div style="position:relative;height:220px;">
@@ -44,11 +48,19 @@ body { background: #eef3f9; font-family: sans-serif; padding: 20px; }
     </div>
   </div>
 </div>
+<script>
+function setLang(lang) {
+  document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');
+  document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');
+  localStorage.setItem('lang', lang);
+}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script>
 Chart.defaults.responsive = true;
 Chart.defaults.maintainAspectRatio = false;
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
+  setLang(localStorage.getItem('lang') || 'en');
   new Chart(document.getElementById('c1'), {
     type:'bar',
     data:{ labels:['WIP','Absorption'], datasets:[{data:[275000,85000],backgroundColor:['orange','green'],barThickness:60}]},
