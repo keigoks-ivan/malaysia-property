@@ -163,7 +163,7 @@
   function fmtNum(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString();}
   function setLang(lang){document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));localStorage.setItem('lang',lang);}
 
-  document.addEventListener('DOMContentLoaded', function() {
+  window.addEventListener('load', function() {
     var savedLang = localStorage.getItem('lang');
     if (savedLang) setLang(savedLang);
 

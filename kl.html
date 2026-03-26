@@ -284,7 +284,7 @@
   function initTabCharts(tabId){if(tabChartDone[tabId])return;if(tabChartInits[tabId]){tabChartInits[tabId]();tabChartDone[tabId]=true;}}
   function switchTab(cid,tab){const w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));w.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));const p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(b=>{if(b.dataset.tab===tab)b.classList.add('active');});setTimeout(function(){initTabCharts('tab-'+tab);},100);}
 
-  document.addEventListener('DOMContentLoaded', function() {
+  window.addEventListener('load', function() {
     // Restore language
     var savedLang = localStorage.getItem('lang');
     if (savedLang) setLang(savedLang);
