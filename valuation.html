@@ -180,7 +180,7 @@
         plugins: { legend: { labels: { filter: function(item){ return item.text === 'Yield Spread %'; } } } },
         scales: { y: { ticks: { callback: function(v){ return v + '%'; } } } }
       }
-    });
+    }).update();
 
     // Chart 2: Median Multiple by State (horizontal bar)
     (function(){
@@ -202,7 +202,7 @@
           plugins: { legend: { labels: { filter: function(item){ return item.text !== 'Median Multiple'; } } } },
           scales: { x: { min: 0, max: 8 } }
         }
-      });
+      }).update();
     })();
 
     // Chart 3: P/R Ratio by City (vertical bar + reference lines)
@@ -221,7 +221,7 @@
         plugins: { legend: { labels: { filter: function(item){ return item.text === 'P/R Ratio' || item.text.includes('preferred'); } } } },
         scales: { y: { min: 0, max: 35 } }
       }
-    });
+    }).update();
 
     // Chart 4: MHPI Nominal vs Real
     new Chart(document.getElementById('chart-mhpi-real'), {
@@ -234,7 +234,7 @@
         ]
       },
       options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: false } } }
-    });
+    }).update();
 
     // Chart 5: APAC P/R Comparison (horizontal bar)
     (function(){
@@ -248,7 +248,7 @@
           datasets: [{ label: 'P/R Ratio', data: data, backgroundColor: colors, barThickness: 20, minBarLength: 2 }]
         },
         options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { min: 0, max: 55 } } }
-      });
+      }).update();
     })();
   });
   </script>

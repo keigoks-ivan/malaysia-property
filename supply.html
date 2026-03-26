@@ -211,7 +211,7 @@
           plugins:{legend:{position:'top'}},
           scales:{y:{beginAtZero:false,ticks:{callback:function(v){return fmtNum(v);}}}}
         }
-      });
+      }).update();
 
       // Chart 2: Projected Completions (vertical bar)
       new Chart(document.getElementById('chartProjected'),{
@@ -229,7 +229,7 @@
           plugins:{legend:{position:'top'}},
           scales:{y:{beginAtZero:false,ticks:{callback:function(v){return fmtNum(v);}}}}
         }
-      });
+      }).update();
 
       // Chart 3: WIP vs Absorption (vertical bar)
       new Chart(document.getElementById('chartWIP'),{
@@ -248,7 +248,7 @@
           plugins:{legend:{display:false}},
           scales:{y:{beginAtZero:true,ticks:{callback:function(v){return fmtNum(v);}}}}
         }
-      });
+      }).update();
 
       // Register tab chart inits
       tabChartInits['tab-national']=function(){
@@ -261,7 +261,7 @@
             datasets:[{label:'Overhang Units',data:ohStateData,backgroundColor:ohStateColors,barThickness:16,minBarLength:2}]
           },
           options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true}}}
-        });
+        }).update();
         new Chart(document.getElementById('chartOhTrend'),{
           type:'line',
           data:{
@@ -269,21 +269,21 @@
             datasets:[{label:'Overhang Units',data:[32313,36863,31092,26424,27746,25816,22642,44794],borderColor:C.navy,backgroundColor:C.navy_bg,fill:true,pointBackgroundColor:C.navy}]
           },
           options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:false,ticks:{callback:function(v){return fmtNum(v);}}}}}
-        });
+        }).update();
       };
       tabChartInits['tab-price']=function(){
         new Chart(document.getElementById('chartOhPrice'),{
           type:'bar',
           data:{labels:['<RM200k','RM200k-300k','RM300k-500k','RM500k-1M','>RM1M'],datasets:[{label:'Overhang Units',data:[880,2150,7800,6990,3300],backgroundColor:C.navy,barThickness:20,minBarLength:2}]},
           options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true}}}
-        });
+        }).update();
       };
       tabChartInits['tab-sa']=function(){
         new Chart(document.getElementById('chartOhSA'),{
           type:'bar',
           data:{labels:['Johor','KL','Selangor','Penang','Others'],datasets:[{label:'SA Overhang',data:[9018,3500,2800,1200,1374],backgroundColor:[C.red,C.red,C.navy,C.navy,C.navy],barThickness:20,minBarLength:2}]},
           options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true}}}
-        });
+        }).update();
       };
 
       // Init first tab
