@@ -83,9 +83,9 @@
     <div id="zone-tabs">
       <div class="tab-bar">
         <button class="active" data-tab="z1" onclick="switchTab('zone-tabs','z1')"><span class="lang-en">Zone 1: KLCC / Bukit Bintang</span><span class="lang-zh" style="display:none">第一區：KLCC/武吉免登</span></button>
-        <button data-tab="z2" onclick="switchTab('zone-tabs','z2'); initZ2();"><span class="lang-en">Zone 2: Mid Valley / OKR</span><span class="lang-zh" style="display:none">第二區：中谷/舊巴生路</span></button>
-        <button data-tab="z3" onclick="switchTab('zone-tabs','z3'); initZ3();"><span class="lang-en">Zone 3: Kepong / Cheras / Setapak</span><span class="lang-zh" style="display:none">第三區：甲洞/蕉賴/士打末</span></button>
-        <button data-tab="z4" onclick="switchTab('zone-tabs','z4'); initZ4();"><span class="lang-en">Luxury RM1M+</span><span class="lang-zh" style="display:none">豪宅 RM1M+</span></button>
+        <button data-tab="z2" onclick="switchTab('zone-tabs','z2')"><span class="lang-en">Zone 2: Mid Valley / OKR</span><span class="lang-zh" style="display:none">第二區：中谷/舊巴生路</span></button>
+        <button data-tab="z3" onclick="switchTab('zone-tabs','z3')"><span class="lang-en">Zone 3: Kepong / Cheras / Setapak</span><span class="lang-zh" style="display:none">第三區：甲洞/蕉賴/士打末</span></button>
+        <button data-tab="z4" onclick="switchTab('zone-tabs','z4')"><span class="lang-en">Luxury RM1M+</span><span class="lang-zh" style="display:none">豪宅 RM1M+</span></button>
       </div>
 
       <!-- Tab 1: Zone 1 KLCC / Bukit Bintang -->
@@ -280,44 +280,34 @@
   const C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',navy_bg:'rgba(30,58,95,0.08)',green_bg:'rgba(22,163,74,0.08)',orange_bg:'rgba(217,119,6,0.08)'};
   function fmtNum(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString();}
   function setLang(lang){document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));localStorage.setItem('lang',lang);}
-  function switchTab(cid,tab){const w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));w.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));const p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(b=>{if(b.dataset.tab===tab)b.classList.add('active');});}
+  var tabChartInits={},tabChartDone={};
+  function initTabCharts(tabId){if(tabChartDone[tabId])return;if(tabChartInits[tabId]){tabChartInits[tabId]();tabChartDone[tabId]=true;}}
+  function switchTab(cid,tab){const w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));w.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));const p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(b=>{if(b.dataset.tab===tab)b.classList.add('active');});setTimeout(function(){initTabCharts('tab-'+tab);},50);}
 
   document.addEventListener('DOMContentLoaded', function() {
     // Restore language
     var savedLang = localStorage.getItem('lang');
     if (savedLang) setLang(savedLang);
 
-    // ── Zone 1 Charts (eager) ──
-
-    new Chart(document.getElementById('chart-z1-price'), {
-      type: 'line',
-      data: {
-        labels: ['2019','2020','2021','2022','2023','2024','2025Q3'],
-        datasets: [{
-          label: 'Avg PSF (RM)',
-          data: [1800,1650,1700,1900,2000,2100,2050],
-          borderColor: C.navy,
-          backgroundColor: C.navy_bg,
-          fill: true,
-          tension: 0.3
-        }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: function(v){ return 'RM '+v; } } } } }
-    });
-
-    new Chart(document.getElementById('chart-z1-yield'), {
-      type: 'bar',
-      data: {
-        labels: ['Gross Yield','OPR','Mortgage Rate'],
-        datasets: [{
-          label: '%',
-          data: [4.0, 2.75, 4.35],
-          backgroundColor: [C.navy, C.green, C.red],
-          barThickness: 30
-        }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { max: 5, ticks: { callback: function(v){ return v+'%'; } } } } }
-    });
+    // ── Zone 1 Charts (lazy) ──
+    tabChartInits['tab-z1']=function(){
+      new Chart(document.getElementById('chart-z1-price'), {
+        type: 'line',
+        data: {
+          labels: ['2019','2020','2021','2022','2023','2024','2025Q3'],
+          datasets: [{label:'Avg PSF (RM)',data:[1800,1650,1700,1900,2000,2100,2050],borderColor:C.navy,backgroundColor:C.navy_bg,fill:true,tension:0.3}]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: function(v){ return 'RM '+v; } } } } }
+      });
+      new Chart(document.getElementById('chart-z1-yield'), {
+        type: 'bar',
+        data: {
+          labels: ['Gross Yield','OPR','Mortgage Rate'],
+          datasets: [{label:'%',data:[4.0,2.75,4.35],backgroundColor:[C.navy,C.green,C.red],barThickness:30}]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { max: 5, ticks: { callback: function(v){ return v+'%'; } } } } }
+      });
+    };
 
     // ── KL Supply Pipeline Charts (eager) ──
 
@@ -363,103 +353,45 @@
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: function(v){ return 'RM '+v; } } } } }
     });
 
-    // ── Zone 2 Lazy Init ──
-    var _z2 = false;
-    window.initZ2 = function() {
-      if (_z2) return; _z2 = true;
-      setTimeout(function() {
-        new Chart(document.getElementById('chart-z2-launch'), {
-          type: 'bar',
-          data: {
-            labels: ['2022','2023','2024','2025E'],
-            datasets: [{
-              label: 'New Launches (units)',
-              data: [2800,3500,4200,3000],
-              backgroundColor: C.navy,
-              barThickness: 30
-            }]
-          },
-          options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: function(v){ return fmtNum(v); } } } } }
-        });
-
-        new Chart(document.getElementById('chart-z2-balance'), {
-          type: 'bar',
-          data: {
-            labels: ['2022','2023','2024'],
-            datasets: [
-              { label: 'Completions', data: [2200,2800,3500], backgroundColor: C.orange, barThickness: 30 },
-              { label: 'Transactions', data: [2500,3000,3800], backgroundColor: C.green, barThickness: 30 }
-            ]
-          },
-          options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: function(v){ return fmtNum(v); } } } } }
-        });
-      }, 50);
+    // ── Zone 2 ──
+    tabChartInits['tab-z2']=function(){
+      new Chart(document.getElementById('chart-z2-launch'), {
+        type:'bar',
+        data:{labels:['2022','2023','2024','2025E'],datasets:[{label:'New Launches (units)',data:[2800,3500,4200,3000],backgroundColor:C.navy,barThickness:30}]},
+        options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:function(v){return fmtNum(v);}}}}}
+      });
+      new Chart(document.getElementById('chart-z2-balance'), {
+        type:'bar',
+        data:{labels:['2022','2023','2024'],datasets:[{label:'Completions',data:[2200,2800,3500],backgroundColor:C.orange,barThickness:30},{label:'Transactions',data:[2500,3000,3800],backgroundColor:C.green,barThickness:30}]},
+        options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:function(v){return fmtNum(v);}}}}}
+      });
     };
 
-    // ── Zone 3 Lazy Init ──
-    var _z3 = false;
-    window.initZ3 = function() {
-      if (_z3) return; _z3 = true;
-      setTimeout(function() {
-        new Chart(document.getElementById('chart-z3-psf'), {
-          type: 'bar',
-          data: {
-            labels: ['Studio 280sqft','1-Bed 500sqft','2-Bed 850sqft','3-Bed 1200sqft'],
-            datasets: [{
-              label: 'RM per sqft',
-              data: [1000,900,800,750],
-              backgroundColor: [C.red, C.orange, C.navy, C.green],
-              barThickness: 30
-            }]
-          },
-          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: function(v){ return 'RM '+v; } } } } }
-        });
-
-        new Chart(document.getElementById('chart-z3-sa'), {
-          type: 'bar',
-          data: {
-            labels: ['Serviced Apartments','Standard Residential'],
-            datasets: [{
-              label: 'Overhang Units (est.)',
-              data: [920, 450],
-              backgroundColor: [C.red, C.navy],
-              barThickness: 30
-            }]
-          },
-          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-        });
-      }, 50);
+    // ── Zone 3 ──
+    tabChartInits['tab-z3']=function(){
+      new Chart(document.getElementById('chart-z3-psf'), {
+        type:'bar',
+        data:{labels:['Studio 280sqft','1-Bed 500sqft','2-Bed 850sqft','3-Bed 1200sqft'],datasets:[{label:'RM per sqft',data:[1000,900,800,750],backgroundColor:[C.red,C.orange,C.navy,C.green],barThickness:30}]},
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return 'RM '+v;}}}}}
+      });
+      new Chart(document.getElementById('chart-z3-sa'), {
+        type:'bar',
+        data:{labels:['Serviced Apartments','Standard Residential'],datasets:[{label:'Overhang Units (est.)',data:[920,450],backgroundColor:[C.red,C.navy],barThickness:30}]},
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}
+      });
     };
 
-    // ── Zone 4 (Luxury) Lazy Init ──
-    var _z4 = false;
-    window.initZ4 = function() {
-      if (_z4) return; _z4 = true;
-      setTimeout(function() {
-        new Chart(document.getElementById('chart-luxury-growth'), {
-          type: 'bar',
-          data: {
-            labels: ['<RM300k','RM300k-500k','RM500k-1M','>RM1M'],
-            datasets: [{
-              label: 'YoY % (2024)',
-              data: [-3, -1, 2, 6.5],
-              backgroundColor: [C.red, C.orange, C.green, '#065f46'],
-              barThickness: 30
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-              y: {
-                ticks: { callback: function(v){ return v+'%'; } }
-              }
-            }
-          }
-        });
-      }, 50);
+    // ── Zone 4 (Luxury) ──
+    tabChartInits['tab-z4']=function(){
+      new Chart(document.getElementById('chart-luxury-growth'), {
+        type:'bar',
+        data:{labels:['<RM300k','RM300k-500k','RM500k-1M','>RM1M'],datasets:[{label:'YoY % (2024)',data:[-3,-1,2,6.5],backgroundColor:[C.red,C.orange,C.green,'#065f46'],barThickness:30}]},
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v+'%';}}}}}
+      });
     };
+
+    // Init first tab
+    initTabCharts('tab-z1');
   });
   </script>
 </body>

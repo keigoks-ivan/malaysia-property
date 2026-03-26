@@ -119,8 +119,8 @@
     <div class="chart-card" id="ohTabs">
       <div class="tab-bar">
         <button class="active" data-tab="national" onclick="switchTab('ohTabs','national')"><span class="lang-en">National Overview</span><span class="lang-zh" style="display:none">全國概覽</span></button>
-        <button data-tab="price" onclick="switchTab('ohTabs','price');initOhPrice()"><span class="lang-en">By Price Band</span><span class="lang-zh" style="display:none">依價格帶</span></button>
-        <button data-tab="sa" onclick="switchTab('ohTabs','sa');initOhSA()"><span class="lang-en">Serviced Apartments</span><span class="lang-zh" style="display:none">服務式公寓</span></button>
+        <button data-tab="price" onclick="switchTab('ohTabs','price')"><span class="lang-en">By Price Band</span><span class="lang-zh" style="display:none">依價格帶</span></button>
+        <button data-tab="sa" onclick="switchTab('ohTabs','sa')"><span class="lang-en">Serviced Apartments</span><span class="lang-zh" style="display:none">服務式公寓</span></button>
       </div>
 
       <!-- Tab 1: National Overview -->
@@ -169,60 +169,18 @@
       document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
       localStorage.setItem('lang',lang);
     }
+    var tabChartInits={},tabChartDone={};
+    function initTabCharts(tabId){
+      if(tabChartDone[tabId])return;
+      if(tabChartInits[tabId]){tabChartInits[tabId]();tabChartDone[tabId]=true;}
+    }
     function switchTab(cid,tab){
       const w=document.getElementById(cid);if(!w)return;
       w.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
       w.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));
       const p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');
       w.querySelectorAll('.tab-bar button').forEach(b=>{if(b.dataset.tab===tab)b.classList.add('active');});
-    }
-
-    var _ohPriceInit=false,_ohSAInit=false;
-
-    function initOhPrice(){
-      if(_ohPriceInit)return;_ohPriceInit=true;
-      new Chart(document.getElementById('chartOhPrice'),{
-        type:'bar',
-        data:{
-          labels:['<RM200k','RM200k-300k','RM300k-500k','RM500k-1M','>RM1M'],
-          datasets:[{
-            label:'Overhang Units',
-            data:[880,2150,7800,6990,3300],
-            backgroundColor:C.navy,
-            barThickness:20,
-            minBarLength:2
-          }]
-        },
-        options:{
-          responsive:true,maintainAspectRatio:false,
-          indexAxis:'y',
-          plugins:{legend:{display:false}},
-          scales:{x:{beginAtZero:true}}
-        }
-      });
-    }
-
-    function initOhSA(){
-      if(_ohSAInit)return;_ohSAInit=true;
-      new Chart(document.getElementById('chartOhSA'),{
-        type:'bar',
-        data:{
-          labels:['Johor','KL','Selangor','Penang','Others'],
-          datasets:[{
-            label:'SA Overhang',
-            data:[9018,3500,2800,1200,1374],
-            backgroundColor:[C.red,C.red,C.navy,C.navy,C.navy],
-            barThickness:20,
-            minBarLength:2
-          }]
-        },
-        options:{
-          responsive:true,maintainAspectRatio:false,
-          indexAxis:'y',
-          plugins:{legend:{display:false}},
-          scales:{x:{beginAtZero:true}}
-        }
-      });
+      setTimeout(function(){initTabCharts('tab-'+tab);},50);
     }
 
     document.addEventListener('DOMContentLoaded',function(){
@@ -292,49 +250,44 @@
         }
       });
 
-      // Chart 4: Overhang by State (horizontal bar)
-      var ohStateData=[3300,3293,2771,2757,2730,2599,2287,2205,6730];
-      var ohStateColors=ohStateData.map(function(v){return v>3000?C.red:C.navy;});
-      new Chart(document.getElementById('chartOhState'),{
-        type:'bar',
-        data:{
-          labels:['Perak','Johor','Sabah','Selangor','Penang','Kelantan','KL','N. Sembilan','Others'],
-          datasets:[{
-            label:'Overhang Units',
-            data:ohStateData,
-            backgroundColor:ohStateColors,
-            barThickness:20,
-            minBarLength:2
-          }]
-        },
-        options:{
-          responsive:true,maintainAspectRatio:false,
-          indexAxis:'y',
-          plugins:{legend:{display:false}},
-          scales:{x:{beginAtZero:true}}
-        }
-      });
+      // Register tab chart inits
+      tabChartInits['tab-national']=function(){
+        var ohStateData=[3300,3293,2771,2757,2730,2599,2287,2205,6730];
+        var ohStateColors=ohStateData.map(function(v){return v>3000?C.red:C.navy;});
+        new Chart(document.getElementById('chartOhState'),{
+          type:'bar',
+          data:{
+            labels:['Perak','Johor','Sabah','Selangor','Penang','Kelantan','KL','N. Sembilan','Others'],
+            datasets:[{label:'Overhang Units',data:ohStateData,backgroundColor:ohStateColors,barThickness:20,minBarLength:2}]
+          },
+          options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true}}}
+        });
+        new Chart(document.getElementById('chartOhTrend'),{
+          type:'line',
+          data:{
+            labels:['2018','2019','2020','2021','2022','2023','2024H1','2025Q3*'],
+            datasets:[{label:'Overhang Units',data:[32313,36863,31092,26424,27746,25816,22642,44794],borderColor:C.navy,backgroundColor:C.navy_bg,fill:true,pointBackgroundColor:C.navy}]
+          },
+          options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:false,ticks:{callback:function(v){return fmtNum(v);}}}}}
+        });
+      };
+      tabChartInits['tab-price']=function(){
+        new Chart(document.getElementById('chartOhPrice'),{
+          type:'bar',
+          data:{labels:['<RM200k','RM200k-300k','RM300k-500k','RM500k-1M','>RM1M'],datasets:[{label:'Overhang Units',data:[880,2150,7800,6990,3300],backgroundColor:C.navy,barThickness:20,minBarLength:2}]},
+          options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true}}}
+        });
+      };
+      tabChartInits['tab-sa']=function(){
+        new Chart(document.getElementById('chartOhSA'),{
+          type:'bar',
+          data:{labels:['Johor','KL','Selangor','Penang','Others'],datasets:[{label:'SA Overhang',data:[9018,3500,2800,1200,1374],backgroundColor:[C.red,C.red,C.navy,C.navy,C.navy],barThickness:20,minBarLength:2}]},
+          options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true}}}
+        });
+      };
 
-      // Chart 5: Overhang Trend (line)
-      new Chart(document.getElementById('chartOhTrend'),{
-        type:'line',
-        data:{
-          labels:['2018','2019','2020','2021','2022','2023','2024H1','2025Q3*'],
-          datasets:[{
-            label:'Overhang Units',
-            data:[32313,36863,31092,26424,27746,25816,22642,44794],
-            borderColor:C.navy,
-            backgroundColor:C.navy_bg,
-            fill:true,
-            pointBackgroundColor:C.navy
-          }]
-        },
-        options:{
-          responsive:true,maintainAspectRatio:false,
-          plugins:{legend:{display:false}},
-          scales:{y:{beginAtZero:false,ticks:{callback:function(v){return fmtNum(v);}}}}
-        }
-      });
+      // Init first tab
+      initTabCharts('tab-national');
     });
   </script>
 </body>
