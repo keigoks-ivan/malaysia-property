@@ -213,7 +213,7 @@
       <div class="chart-inline">
         <h4><span class="lang-en">KL Zone Average PSF</span><span class="lang-zh" style="display:none">吉隆坡三區平均呎價</span></h4>
         <div class="chart-note green"><span class="lang-en">Zone 2 Mid Valley/OKR — best risk-reward in KL</span><span class="lang-zh" style="display:none">第二區中谷/舊巴生路——吉隆坡最佳風險回報區段</span></div>
-        <div id="chart-r-zone" style="height:180px;"></div>
+        <div id="chart-r-zone" style="height:200px;"></div>
       </div>
 
       <h2><span class="lang-en">PENANG: THE INDUSTRIAL THESIS</span><span class="lang-zh" style="display:none">檳城：工業驅動的房市論點</span></h2>
@@ -400,11 +400,11 @@
       [lang==='zh'?'區域':'Zone',lang==='zh'?'平均呎價(RM)':'Avg PSF (RM)',{role:'style'}],
       [lang==='zh'?'第一區\nKLCC/BB':'Zone 1\nKLCC/BB',1800,'color:'+ORANGE],
       [lang==='zh'?'第二區\n中谷/OKR':'Zone 2\nMid Valley',700,'color:'+GREEN],
-      [lang==='zh'?'第三區\n外圍':'Zone 3\nOuter Ring',490,'color:'+RED]
+      [lang==='zh'?'第三區\n外圍':'Zone 3\nOuter',490,'color:'+RED]
     ]);
-    var opts={backgroundColor:BG,chartArea:{width:'82%',height:'75%'},legend:'none',
+    var opts={backgroundColor:BG,chartArea:{width:'80%',height:'65%'},legend:'none',
       vAxis:{format:"RM #,###",textStyle:{fontSize:10},gridlines:{color:GC},minValue:0},
-      hAxis:{textStyle:{fontSize:9}},bar:{groupWidth:'50%'},fontName:'Inter'};
+      hAxis:Object.assign({},baseOpts.hAxis,{textStyle:{color:'#8ba3c0',fontSize:10},slantedText:false}),bar:{groupWidth:'50%'},fontName:'Inter'};
     new google.visualization.ColumnChart(document.getElementById('chart-r-zone')).draw(data,opts);
   }
 
