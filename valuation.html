@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
   <link rel="stylesheet" href="css/style.css">
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -138,147 +138,215 @@
   <footer class="footer">A project by <span>InvestMQuest</span></footer>
 
   <script>
-  var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
-  var CA={width:'80%',height:'75%'},BG='transparent',GC='#e8f0f9';
-  function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none'});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang)});localStorage.setItem('lang',lang);}
-  google.charts.load('current',{packages:['corechart']});
-  google.charts.setOnLoadCallback(function(){drawAllCharts();setLang(localStorage.getItem('lang')||'en');});
-  window.addEventListener('resize',function(){drawAllCharts();});
+  var C = {
+    navy:   '#1e3a5f',
+    green:  '#16a34a',
+    orange: '#d97706',
+    red:    '#dc2626',
+    blue:   '#2563eb',
+    muted:  '#8ba3c0',
+    grid:   '#e8f0f9',
+    text:   '#1e3a5f'
+  };
 
-  function drawAllCharts(){
-    drawYieldSpread();
-    drawMedianMult();
-    drawP2R();
-    drawMHPI();
-    drawAPAC();
+  var baseText = { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 };
+
+  var baseGrid = { left: 50, right: 20, top: 40, bottom: 30, containLabel: true };
+
+  var baseTooltip = {
+    trigger: 'axis',
+    backgroundColor: '#fff',
+    borderColor: '#ccd9e8',
+    borderWidth: 1,
+    textStyle: { color: C.navy, fontSize: 11, fontFamily: 'Inter' }
+  };
+
+  var baseLegend = {
+    top: 8,
+    textStyle: baseText,
+    icon: 'circle',
+    itemWidth: 8,
+    itemHeight: 8
+  };
+
+  function mkAxis(opts) {
+    return Object.assign({
+      axisLine: { lineStyle: { color: C.grid } },
+      axisTick: { show: false },
+      axisLabel: baseText,
+      splitLine: { lineStyle: { color: C.grid } }
+    }, opts || {});
   }
 
-  function drawYieldSpread(){
-    var data=new google.visualization.DataTable();
-    data.addColumn('string','Period');
-    data.addColumn('number','Spread');
-    data.addColumn('number','Zero');
-    data.addColumn('number','2% Threshold');
-    data.addRows([
-      ['2019',1.80,0,2],['2020',2.85,0,2],['2021',2.95,0,2],['2022',2.15,0,2],
-      ['2023Q1',2.16,0,2],['2023Q3',2.20,0,2],['2024Q1',2.16,0,2],['2024Q3',2.24,0,2],
-      ['2025Q1',2.10,0,2],['2025Q3',2.44,0,2]
-    ]);
-    var chart=new google.visualization.LineChart(document.getElementById('chart-spread'));
-    chart.draw(data,{
-      chartArea:CA,backgroundColor:BG,
-      colors:[GREEN,RED,MUTED],
-      legend:{position:'top',textStyle:{color:NAVY,fontSize:11}},
-      series:{
-        0:{lineWidth:2,pointSize:4},
-        1:{lineWidth:1,lineDashStyle:[4,3],pointSize:0,visibleInLegend:false},
-        2:{lineWidth:1,lineDashStyle:[2,2],pointSize:0,visibleInLegend:false}
-      },
-      hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-      vAxis:{format:'#.##\'%\'',textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-      curveType:'function'
-    });
+  function setLang(lang){
+    document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+    document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    localStorage.setItem('lang',lang);
   }
 
-  function drawMedianMult(){
-    var data=new google.visualization.DataTable();
-    data.addColumn('string','State');
-    data.addColumn('number','Median Multiple');
-    data.addColumn({type:'string',role:'style'});
-    var items=[['Sabah',7.0],['Sarawak',6.5],['KL',5.6],['Kelantan',4.6],['Penang',4.7],['National',4.3],['Kedah',4.0],['Johor',4.7],['Melaka',2.3]];
-    items.forEach(function(r){
-      var c=r[1]>4.0?RED:r[1]>3.0?ORANGE:GREEN;
-      data.addRow([r[0],r[1],'color:'+c]);
-    });
-    var chart=new google.visualization.BarChart(document.getElementById('chart-median-mult'));
-    chart.draw(data,{
-      chartArea:CA,backgroundColor:BG,
-      legend:{position:'none'},
-      hAxis:{minValue:0,maxValue:8,textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-      vAxis:{textStyle:{color:MUTED,fontSize:10}},
-      bar:{groupWidth:'70%'}
-    });
-  }
+  var charts = [];
 
-  function drawP2R(){
-    var data=new google.visualization.DataTable();
-    data.addColumn('string','City');
-    data.addColumn('number','P/R Ratio');
-    data.addColumn({type:'string',role:'style'});
-    data.addColumn('number','Rent Preferred (25)');
-    data.addColumn('number','Buy Preferred (15)');
-    var colors=[NAVY,GREEN,RED,NAVY];
-    var labels=['KL','JB','Penang','National'];
-    var vals=[21.7,18.3,26.5,19.3];
-    for(var i=0;i<labels.length;i++){
-      data.addRow([labels[i],vals[i],'color:'+colors[i],25,15]);
-    }
-    var chart=new google.visualization.ComboChart(document.getElementById('chart-p2r'));
-    chart.draw(data,{
-      chartArea:CA,backgroundColor:BG,
-      seriesType:'bars',
-      series:{
-        0:{type:'bars'},
-        1:{type:'line',lineWidth:1,lineDashStyle:[4,3],pointSize:0,color:ORANGE},
-        2:{type:'line',lineWidth:1,lineDashStyle:[4,3],pointSize:0,color:GREEN}
-      },
-      legend:{position:'top',textStyle:{color:NAVY,fontSize:11}},
-      vAxis:{minValue:0,maxValue:35,textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-      hAxis:{textStyle:{color:MUTED,fontSize:10}},
-      bar:{groupWidth:'60%'}
+  window.addEventListener('load', function(){
+    // chart-spread: Yield Spread History (Rental Yield vs OPR)
+    var cSpread = echarts.init(document.getElementById('chart-spread'));
+    charts.push(cSpread);
+    cSpread.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data: ['Rental Yield %','OPR %'] }),
+      grid: baseGrid,
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['2019','2020','2021','2022','23Q1','23Q3','24Q1','24Q3','25Q1','25Q3']
+      }),
+      yAxis: mkAxis({ type: 'value', min: 1, max: 6, axisLabel: Object.assign({}, baseText, { formatter: '{value}%' }) }),
+      series: [
+        {
+          name: 'Rental Yield %',
+          type: 'line',
+          data: [4.80,4.60,4.70,4.90,5.16,5.20,5.16,5.24,5.10,5.19],
+          lineStyle: { color: C.green, width: 2 },
+          itemStyle: { color: C.green },
+          smooth: 0.3,
+          areaStyle: { color: 'rgba(22,163,74,0.08)' },
+          symbol: 'circle', symbolSize: 6
+        },
+        {
+          name: 'OPR %',
+          type: 'line',
+          data: [3.00,1.75,1.75,2.75,3.00,3.00,3.00,3.00,3.00,2.75],
+          lineStyle: { color: C.red, width: 2, type: 'dashed' },
+          itemStyle: { color: C.red },
+          step: 'end',
+          symbol: 'circle', symbolSize: 4
+        }
+      ]
     });
-  }
 
-  function drawMHPI(){
-    var data=new google.visualization.DataTable();
-    data.addColumn('string','Year');
-    data.addColumn('number','Nominal MHPI');
-    data.addColumn('number','Real MHPI');
-    data.addRows([
-      ['2019',194,160],['2020',195,160],['2021',197,159],['2022',200,156],
-      ['2023',207,157],['2024',224,165],['2025Q3',229.1,167]
-    ]);
-    var chart=new google.visualization.LineChart(document.getElementById('chart-mhpi-real'));
-    chart.draw(data,{
-      chartArea:CA,backgroundColor:BG,
-      colors:[NAVY,ORANGE],
-      legend:{position:'top',textStyle:{color:NAVY,fontSize:11}},
-      series:{
-        0:{lineWidth:2,pointSize:3},
-        1:{lineWidth:2,lineDashStyle:[4,3],pointSize:3}
-      },
-      hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-      vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-      curveType:'function'
+    // chart-median-mult: Median Multiple by State
+    var cMM = echarts.init(document.getElementById('chart-median-mult'));
+    charts.push(cMM);
+    var mmLabels = ['Sabah','Sarawak','Kedah','Johor','Melaka','National','Penang','Kelantan','KL'];
+    var mmValues = [2.8, 3.1, 3.2, 3.8, 3.9, 4.3, 4.8, 5.1, 5.6];
+    cMM.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: { left: 80, right: 40, top: 10, bottom: 20, containLabel: false },
+      xAxis: mkAxis({ type: 'value', min: 0, max: 7 }),
+      yAxis: mkAxis({
+        type: 'category',
+        data: mmLabels,
+        axisLabel: { color: C.navy, fontFamily: 'Inter, sans-serif', fontSize: 11 }
+      }),
+      series: [{
+        type: 'bar',
+        data: mmValues.map(function(v){
+          var clr = v > 4.0 ? C.red : v > 3.0 ? C.orange : C.green;
+          return { value: v, itemStyle: { color: clr, borderRadius: [0,4,4,0] } };
+        }),
+        barMaxWidth: 25,
+        label: { show: true, position: 'right', formatter: '{c}x', fontSize: 10, fontFamily: 'Inter' },
+        markLine: {
+          silent: true,
+          symbol: 'none',
+          lineStyle: { color: C.red, type: 'dashed', width: 1 },
+          label: { formatter: 'Unaffordable threshold', fontSize: 9, color: C.red },
+          data: [{ xAxis: 4.0 }]
+        }
+      }]
     });
-  }
 
-  function drawAPAC(){
-    var data=new google.visualization.DataTable();
-    data.addColumn('string','City');
-    data.addColumn('number','P/R Ratio');
-    data.addColumn({type:'string',role:'style'});
-    data.addColumn({type:'string',role:'annotation'});
-    data.addRows([
-      ['Ho Chi Minh',18,'color:'+GREEN,'18x'],
-      ['KL',21.7,'color:'+GREEN,'21.7x'],
-      ['Bangkok',25,'color:'+NAVY,'25x'],
-      ['Tokyo',37,'color:'+NAVY,'37x'],
-      ['Singapore',40,'color:'+NAVY,'40x'],
-      ['Taipei',47,'color:'+ORANGE,'47x'],
-      ['Hong Kong',50,'color:'+ORANGE,'50x'],
-      ['Shanghai',59,'color:'+RED,'59x']
-    ]);
-    var chart=new google.visualization.BarChart(document.getElementById('chart-apac'));
-    chart.draw(data,{
-      chartArea:{width:'52%',height:'85%'},backgroundColor:BG,
-      legend:{position:'none'},
-      hAxis:{minValue:0,maxValue:65,textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-      vAxis:{textStyle:{color:MUTED,fontSize:10}},
-      bar:{groupWidth:'68%'},
-      annotations:{alwaysOutside:true,textStyle:{fontSize:10,color:NAVY,bold:true}}
+    // chart-p2r: Price-to-Rent Ratio by City
+    var cP2R = echarts.init(document.getElementById('chart-p2r'));
+    charts.push(cP2R);
+    var p2rLabels = ['KL City','Penang','JB','Subang Jaya'];
+    var p2rValues = [21.7, 18.5, 15.2, 19.8];
+    cP2R.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: { left: 80, right: 40, top: 10, bottom: 20, containLabel: false },
+      xAxis: mkAxis({ type: 'value', min: 0, max: 30 }),
+      yAxis: mkAxis({
+        type: 'category',
+        data: p2rLabels.slice().reverse(),
+        axisLabel: { color: C.navy, fontFamily: 'Inter, sans-serif', fontSize: 11 }
+      }),
+      series: [{
+        type: 'bar',
+        data: p2rValues.slice().reverse().map(function(v){
+          return { value: v, itemStyle: { color: C.navy, borderRadius: [0,4,4,0] } };
+        }),
+        barMaxWidth: 30,
+        label: { show: true, position: 'right', formatter: '{c}', fontSize: 10, fontFamily: 'Inter' }
+      }]
     });
-  }
+
+    // chart-mhpi-real: MHPI Nominal vs Real
+    var cMHPI = echarts.init(document.getElementById('chart-mhpi-real'));
+    charts.push(cMHPI);
+    cMHPI.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data: ['Nominal MHPI','Real MHPI'] }),
+      grid: baseGrid,
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['2019','2020','2021','2022','2023','2024','2025Q3']
+      }),
+      yAxis: mkAxis({ type: 'value' }),
+      series: [
+        {
+          name: 'Nominal MHPI',
+          type: 'line',
+          data: [194,195,197,200,207,224,229.1],
+          lineStyle: { color: C.navy, width: 2 },
+          itemStyle: { color: C.navy },
+          symbol: 'circle', symbolSize: 6
+        },
+        {
+          name: 'Real MHPI',
+          type: 'line',
+          data: [160,160,159,156,157,165,167],
+          lineStyle: { color: C.muted, width: 2, type: 'dashed' },
+          itemStyle: { color: C.muted },
+          symbol: 'circle', symbolSize: 6
+        }
+      ]
+    });
+
+    // chart-apac: APAC Price-to-Rent
+    var cAPAC = echarts.init(document.getElementById('chart-apac'));
+    charts.push(cAPAC);
+    var apacLabels = ['Ho Chi Minh','KL','Bangkok','Tokyo','Singapore','Taipei','Hong Kong','Shanghai'];
+    var apacValues = [18, 21.7, 25, 37, 40, 47, 50, 59];
+    cAPAC.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: { left: 90, right: 50, top: 10, bottom: 20, containLabel: false },
+      xAxis: mkAxis({ type: 'value', min: 0, max: 65 }),
+      yAxis: mkAxis({
+        type: 'category',
+        data: apacLabels,
+        axisLabel: { color: C.navy, fontFamily: 'Inter, sans-serif', fontSize: 11 }
+      }),
+      series: [{
+        type: 'bar',
+        data: apacValues.map(function(v, i){
+          var clr;
+          if (apacLabels[i] === 'KL') clr = C.green;
+          else if (v <= 25) clr = C.green;
+          else if (v <= 40) clr = C.navy;
+          else if (v <= 50) clr = C.orange;
+          else clr = C.red;
+          return { value: v, itemStyle: { color: clr, borderRadius: [0,4,4,0] } };
+        }),
+        barMaxWidth: 25,
+        label: { show: true, position: 'right', formatter: '{c}x', fontSize: 10, fontFamily: 'Inter', fontWeight: 'bold', color: C.navy }
+      }]
+    });
+
+    setLang(localStorage.getItem('lang')||'en');
+  });
+
+  window.addEventListener('resize', function(){
+    charts.forEach(function(c){ c.resize(); });
+  });
   </script>
 </body>
 </html>
