@@ -5,30 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Market Report | Malaysia Property Monitor</title>
   <meta name="color-scheme" content="light">
-  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
+  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}</style>
   <link rel="stylesheet" href="css/style.css">
   <style>
     .report-container{max-width:860px;margin:0 auto;padding:32px 20px}
     .report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}
     .report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}
     .report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#8ba3c0;margin-bottom:8px}
-    .report-header .report-note{font-size:12px;color:#6b8ab0;font-style:italic}
     .report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}
-    .exec-split{display:grid;grid-template-columns:55% 45%;gap:24px;margin-bottom:32px}
-    .exec-text p{font-family:Georgia,serif;font-size:15px;line-height:1.85;color:#2c3e50;margin-bottom:16px}
-    .exec-charts{display:flex;flex-direction:column;gap:12px}
-    .mini-chart{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:4px;padding:10px 12px}
-    .mini-chart h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:2px}
-    .mini-chart .mini-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:6px}
-    .mini-note.green{color:#16a34a}.mini-note.orange{color:#d97706}
-    .mini-chart .chart-wrap-mini{position:relative;height:130px}
-    .report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:32px;margin-bottom:14px}
-    .report-body>h2:first-child{margin-top:0}
-    .report-sections p{font-family:Georgia,serif;font-size:15px;line-height:1.85;color:#2c3e50;margin-bottom:16px}
+    .report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}
+    .report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}
     .report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+    .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}
+    .chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+    .chart-inline .chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:8px}
+    .chart-note.green{color:#16a34a}
+    .chart-note.orange{color:#d97706}
+    .chart-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#8ba3c0!important;line-height:1.6!important;margin-bottom:3px!important}
-    @media(max-width:700px){.exec-split{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+    @media(max-width:700px){.chart-row{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
@@ -69,83 +65,203 @@
 
   <div class="report-container">
     <div class="report-header">
-      <h1><span class="lang-en">MALAYSIA PROPERTY MARKET REPORT</span><span class="lang-zh" style="display:none">馬來西亞房地產市場報告</span></h1>
+      <h1><span class="lang-en">MALAYSIA PROPERTY MARKET REPORT</span><span class="lang-zh" style="display:none">馬來西亞住宅房地產市場報告</span></h1>
       <div class="report-meta"><span class="lang-en">March 2026 · Institutional Research</span><span class="lang-zh" style="display:none">2026年3月 · 機構研究報告</span></div>
-      <div class="report-note"><span class="lang-en">Based on NAPIC Q3 2025, H1 2025, and Global Property Guide Q1 2026 data.</span><span class="lang-zh" style="display:none">基於NAPIC 2025年Q3及H1、Global Property Guide 2026年Q1數據。</span></div>
     </div>
     <div class="report-body">
+
+      <!-- EXECUTIVE SUMMARY -->
       <h2><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
-      <div class="exec-split">
-        <div class="exec-text">
-          <div class="lang-en">
-            <p>Malaysia's residential property market enters 2026 in a state that rewards careful reading. The headline indicators — a decade-high transaction volume of <strong>420,525 units</strong> in 2024, a positive rental yield spread of <strong>+2.44%</strong> above OPR, and valuations modest against regional peers — support a broadly constructive long-term view. But beneath these numbers, structural tensions have been building that will define market performance through at least 2027. The central thesis for 2026 is not bullish or bearish: it is <strong>selective</strong>.</p>
-            <p>The demand picture is bifurcating. Transaction volume dipped <strong>3.5%</strong> in Q3 2025 to 108,250 units, yet total transaction value surged <strong>12.5%</strong> to RM64.39 billion. The secondary market accounts for <strong>79.4%</strong> of H1 2025 residential transactions. New launches fell nearly <strong>50% year-on-year</strong>. The affordable segment below RM300,000 accounts for <strong>53.1%</strong> of all residential sales.</p>
-            <p>The financing constraint is the market's most binding structural barrier. Loan approval rate at <strong>42.6%</strong>, household debt at <strong>81.9% of GDP</strong>. OPR cut to <strong>2.75%</strong>. Median multiple <strong>4.3x nationally</strong>, <strong>5.6x in KL</strong>.</p>
-            <p>Housing starts contracted <strong>12.1%</strong> in Q1–Q3 2025. But <strong>69,303 units</strong> delivered, up <strong>25.3%</strong>. Unsold stock risen <strong>30.5%</strong> to <strong>44,794 units</strong>. Supply relief not until 2027.</p>
-            <p>Below RM300,000: undersupply. RM500k–1M high-rise: systemic oversupply, <strong>17,892 unsold SA units</strong>. RM400k–700k landed: most liquid zone.</p>
-            <p>KL prices declined <strong>4.3%</strong>, rents rose <strong>6.1%</strong> to <strong>RM2,901/month</strong>. Outlook: landed <strong>2–4%</strong>, rentals <strong>4–6%</strong>. Risks: OPR reversal, <strong>8% foreign stamp duty</strong>.</p>
-          </div>
-          <div class="lang-zh" style="display:none">
-            <p>馬來西亞住宅房市在2026年是一個需要仔細解讀才能看清機會的市場。2024年全年成交<strong>420,525套</strong>，創十年新高；租金收益率高於OPR <strong>2.44個百分點</strong>。投資邏輯：<strong>選擇性進場</strong>。</p>
-            <p>需求K型分化。Q3成交量-3.5%至108,250筆，成交值+12.5%。中古屋佔<strong>79.4%</strong>。30萬以下佔需求<strong>53.1%</strong>。</p>
-            <p>房貸核准率<strong>42.6%</strong>。家庭負債佔GDP <strong>81.9%</strong>。OPR降至<strong>2.75%</strong>。房價所得比全國<strong>4.3倍</strong>、吉隆坡<strong>5.6倍</strong>。</p>
-            <p>新開工年減<strong>12.1%</strong>。完工<strong>69,303戶</strong>增25.3%。待售餘屋增<strong>30.5%</strong>至<strong>44,794套</strong>。2027年後緩解。</p>
-            <p>30萬以下供不應求。50至100萬服務式公寓過剩<strong>17,892套</strong>。40至70萬有地最具流動性。</p>
-            <p>吉隆坡房價跌<strong>4.3%</strong>，租金漲<strong>6.1%</strong>至<strong>RM 2,901</strong>。有地升值<strong>2至4%</strong>，租金增長<strong>4至6%</strong>。</p>
-          </div>
+
+      <div class="lang-en">
+        <p>Malaysia's residential property market enters 2026 carrying a fundamental contradiction that has become impossible to ignore. Transaction volumes reached a decade high of <strong>420,525 units</strong> in 2024, and gross rental yields of <strong>5.19%</strong> continue to produce a positive carry spread of <strong>+2.44%</strong> above the Overnight Policy Rate — one of the few remaining yield advantages in Asian real estate. On a regional basis, Kuala Lumpur's price-to-rent ratio of <strong>21.7x</strong> looks modest against Singapore's 40x and Hong Kong's 50x, and the weaker ringgit creates a structural FX entry discount for USD and SGD-denominated capital.</p>
+        <p>Yet the same market that looks attractively priced from a regional perspective is showing clear signs of structural stress from a domestic one. Unsold completed stock has risen <strong>30.5% year-on-year</strong> to <strong>44,794 units</strong> including serviced apartments — reversing three consecutive years of improvement. More than half of all mortgage applications are rejected, with the loan approval rate stuck at <strong>42.6%</strong> against a backdrop of household debt at <strong>81.9% of GDP</strong>. And the 2024 construction boom of <strong>106,236 housing starts</strong> is still working its way through the pipeline, with completions running at an elevated <strong>69,303 units</strong> in the first three quarters of 2025 alone — arriving into an absorption environment that is already stretched.</p>
+        <p>The market's central problem is structural mismatch, not aggregate weakness. Genuine demand exists and is substantial — but it is concentrated in the sub-RM300,000 segment where <strong>53.1%</strong> of buyers are focused, while the majority of new supply has been built in the RM500,000–RM1,000,000 high-rise band where absorption now takes <strong>18–24 months</strong>. The financing system compounds this mismatch: M40 households in Klang Valley face a median multiple of <strong>5.6x</strong> in Kuala Lumpur, with effective purchasing power that caps out well below the median asking price of most new launches. No amount of rate adjustment can bridge an affordability gap that has been accumulating since 2012.</p>
+        <p>The investment thesis for 2026 is therefore selective rather than directional. The completion wave from 2024 starts will keep supply pressure elevated through 2026 and into 2027. But developers have already responded — new launches fell <strong>31.8%</strong> in the first nine months of 2025, planned supply contracted <strong>31.7%</strong>, and only <strong>19% of developers</strong> expressed optimism in REHDA's 2H2025 survey. The pipeline is thinning. The conditions for eventual rebalancing are being set, even if the timeline extends beyond the current year.</p>
+        <p>For investors, the current environment favors income over capital gains, established corridors over peripheral launches, and patience over urgency. The falling purchase price and rising rent dynamic in Kuala Lumpur — where average rents climbed <strong>6.1%</strong> to <strong>RM2,901 per month</strong> while prices fell <strong>4.3%</strong> — represents the most favorable yield entry conditions in five years. That window is unlikely to persist beyond 2027, when the supply pressure begins to materially ease.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>馬來西亞住宅房市在進入2026年之際，呈現出一個需要仔細拆解才能看清的複雜局面。從表面數字看，市場似乎健康：2024年全年成交量達<strong>420,525套</strong>，創十年新高；租金毛收益率<strong>5.19%</strong>對比隔夜政策利率（OPR）<strong>2.75%</strong>，仍維持<strong>+2.44個百分點</strong>的正向持有利差——在亞太房地產市場中，這已是少數尚存正向利差的主要市場之一。以區域視角衡量，吉隆坡的房價租金比約<strong>21.7倍</strong>，相較新加坡約40倍、香港約50倍，顯得相當低廉，加上令吉匯率偏弱，對持有美元或新幣的外資而言，進場的匯率成本天然較低。</p>
+        <p>然而，同一個市場在本地視角下卻呈現截然不同的面貌。含服務式公寓的待售完工餘屋已達<strong>44,794套</strong>，年增<strong>30.5%</strong>，扭轉了此前連續三年改善的趨勢。房貸批准率停滯在<strong>42.6%</strong>，超過半數的申請人遭到拒絕；全國家庭負債佔GDP高達<strong>81.9%</strong>。2024年激增的<strong>106,236戶</strong>開工量正在逐步完工，2025年前三季已有<strong>69,303戶</strong>取得使用執照推案入市——在吸收能力已然吃緊的環境下，持續為市場帶來供給壓力。</p>
+        <p>市場的核心問題是結構性錯配，而非整體需求疲弱。真實需求是存在的——但它集中在30萬令吉以下的可負擔市場（佔所有買家需求的<strong>53.1%</strong>），而絕大多數新推案卻集中在50至100萬令吉的高層住宅，去化月數長達<strong>18至24個月</strong>。融資條件的制約進一步放大了這個錯配：吉隆坡M40家庭面臨的<strong>房價所得比高達5.6倍</strong>，有效購買力遠低於大多數新推案的要價。這個負擔能力缺口自2012年起持續累積，單靠利率調整無法從根本上彌合。</p>
+        <p>2026年的投資邏輯因此是<strong>選擇性的，而非方向性的</strong>。2024年的開工潮帶來的完工交屋壓力將持續至2026年並延伸至2027年。但建商已做出務實反應——2025年前三季新推案量年減<strong>31.8%</strong>，規劃供給量年減<strong>31.7%</strong>，僅<strong>19%</strong>的業者對後市表達樂觀。新建供給正在收縮，市場重新平衡的條件正在醞釀，只是時間軸延伸至當前年度之外。</p>
+        <p>對投資者而言，當前環境的最佳布局方向是：以收租代替炒賣，選擇成熟走廊而非周邊新盤，以耐心等待代替急迫進場。吉隆坡月租年增<strong>6.1%</strong>至<strong>RM 2,901</strong>，而房價年跌<strong>4.3%</strong>——這是過去五年來最有利的收益型投資進場條件。這個視窗不太可能在2027年供給壓力開始實質緩解後仍然存在。</p>
+      </div>
+
+      <!-- Exec Summary Charts Row -->
+      <div class="chart-row">
+        <div class="chart-inline">
+          <h4><span class="lang-en">Yield Spread Monitor</span><span class="lang-zh" style="display:none">利差監測</span></h4>
+          <div class="chart-note green"><span class="lang-en">Current Spread: +2.44%</span><span class="lang-zh" style="display:none">當前利差：+2.44%</span></div>
+          <div id="chart-r-yield" style="height:160px;"></div>
         </div>
-        <div class="exec-charts">
-          <div class="mini-chart">
-            <h4><span class="lang-en">Yield Spread Monitor</span><span class="lang-zh" style="display:none">利差監測</span></h4>
-            <div class="mini-note green"><span class="lang-en">Current Spread: +2.44%</span><span class="lang-zh" style="display:none">當前利差: +2.44%</span></div>
-            <div class="chart-wrap-mini"><div id="chart-r-yield" style="width:100%;height:100%"></div></div>
-          </div>
-          <div class="mini-chart">
-            <h4><span class="lang-en">Demand vs Supply Mismatch</span><span class="lang-zh" style="display:none">需求 vs 供給錯配</span></h4>
-            <div class="mini-note orange"><span class="lang-en">53% of buyers vs 18% of supply below RM300k</span><span class="lang-zh" style="display:none">53%買家需求 vs 僅18%供給低於RM300k</span></div>
-            <div class="chart-wrap-mini"><div id="chart-r-mismatch" style="width:100%;height:100%"></div></div>
-          </div>
-          <div class="mini-chart">
-            <h4><span class="lang-en">Completion Wave vs Absorption</span><span class="lang-zh" style="display:none">完工交屋潮 vs 吸收量</span></h4>
-            <div class="mini-note orange"><span class="lang-en">Supply peak 2026–2027</span><span class="lang-zh" style="display:none">供給高峰2026至2027年</span></div>
-            <div class="chart-wrap-mini"><div id="chart-r-wave" style="width:100%;height:100%"></div></div>
-          </div>
+        <div class="chart-inline">
+          <h4><span class="lang-en">Demand vs Supply Mismatch</span><span class="lang-zh" style="display:none">需求 vs 供給錯配</span></h4>
+          <div class="chart-note orange"><span class="lang-en">53% buyers vs 18% supply below RM300k</span><span class="lang-zh" style="display:none">53%需求 vs 18%供給集中在30萬以下</span></div>
+          <div id="chart-r-mismatch" style="height:160px;"></div>
+        </div>
+        <div class="chart-inline">
+          <h4><span class="lang-en">Completion Wave vs Absorption</span><span class="lang-zh" style="display:none">完工交屋潮 vs 吸收量</span></h4>
+          <div class="chart-note orange"><span class="lang-en">Supply peak 2026–2027</span><span class="lang-zh" style="display:none">供給高峰2026至2027年</span></div>
+          <div id="chart-r-wave" style="height:160px;"></div>
         </div>
       </div>
 
-      <div class="report-sections">
-        <div class="lang-en">
-          <h2>SUPPLY: THE DELIVERY WAVE</h2>
-          <p>Understanding Malaysia's supply problem requires tracking a time-lagged system. The 2024 housing starts of <strong>106,236 units</strong> — up 20.6% — will complete between 2026 and 2028. In Q1–Q3 2025, <strong>69,303 units</strong> were delivered, up 25.3%, yet high-rise absorption takes <strong>18–24 months</strong>. New launches collapsed <strong>31.8%</strong>, planned supply fell <strong>31.7%</strong>, and only <strong>19%</strong> of developers expressed optimism. Serviced apartments: <strong>17,892 units</strong> unsold, carrying commercial utility rates and complex financing.</p>
-          <h2>DEMAND: INTENT WITHOUT ACCESS</h2>
-          <p>The <strong>420,525</strong> transactions in 2024 reflect genuine demand. Q3 2025 cooling to <strong>108,250</strong> reflects exhaustion of the most capable buyer segment. H1 2025 new launches fell to <strong>23,380 units</strong>, only <strong>24%</strong> sold; take-up was <strong>10.8%</strong> in Q1, <strong>5.1%</strong> for high-rise in Q3. The sub-RM300k segment (<strong>53.1%</strong> of demand) remains undersupplied. Secondary market at <strong>79.4%</strong> shows preference for proven locations.</p>
-          <h2>VALUATION: TWO FRAMEWORKS, TWO CONCLUSIONS</h2>
-          <p><strong>5.19%</strong> yield vs <strong>2.75%</strong> OPR = <strong>+2.44%</strong> spread. KL P/R <strong>21.7x</strong> vs Singapore 40x, Hong Kong 50x — undervalued regionally. But median multiple <strong>4.3x</strong> nationally, KL terrace <strong>5.6x</strong> — unaffordable by Demographia standards. Both conclusions are correct for different buyer populations.</p>
-          <h2>KUALA LUMPUR: CORRECTION AND OPPORTUNITY</h2>
-          <p>KL's <strong>4.3%</strong> decline is supply-driven: completions surged <strong>32.7%</strong>, starts fell <strong>14.9%</strong>. Rents rose <strong>6.1%</strong> to <strong>RM2,901/month</strong>. KLCC corridor: capital appreciation play. Mid Valley/OKR (RM400k–800k): best risk-reward. Outer ring: serviced apartment overhang, PSF trap, highest loan rejection.</p>
-          <h2>INFRASTRUCTURE CATALYSTS</h2>
-          <p>JB–Singapore RTS (end-2026): JB yields at <strong>5.47–5.60%</strong>. MRT3 Circle Line (approved 2025, complete 2030–31): Sentul, Wangsa Maju, Seputeh pricing in. Data centers: industrial property value +<strong>21.3%</strong> in 2025.</p>
-          <h2>OUTLOOK: 12-MONTH VIEW</h2>
-          <p>High-rise consolidation, landed <strong>2–4%</strong>, rentals <strong>4–6%</strong>. Supply pressure through 2026, relief from 2027. Risks: OPR reversal, GDP below <strong>5.2%</strong>, <strong>8% foreign stamp duty</strong>. The current window — falling prices, rising rents, positive spread — is the best entry for income investors in five years.</p>
-        </div>
-        <div class="lang-zh" style="display:none">
-          <h2>供給面：完工交屋潮尚未退去</h2>
-          <p>2024年新開工<strong>106,236戶</strong>，年增20.6%，將在2026至2028年間完工交屋。2025年前三季完工<strong>69,303戶</strong>，年增25.3%，高層去化月數<strong>18至24個月</strong>。新推案量年減<strong>31.8%</strong>，規劃量年減<strong>31.7%</strong>，僅<strong>19%</strong>業者樂觀。服務式公寓待售<strong>17,892套</strong>，商業水電費率和複雜融資條件。</p>
-          <h2>需求面：想買的人很多，能成交的不夠</h2>
-          <p>2024年<strong>420,525套</strong>成交反映真實需求。Q3降至<strong>108,250筆</strong>。上半年新推案<strong>23,380戶</strong>，銷售率僅<strong>24%</strong>；即時去化率<strong>10.8%</strong>，高層<strong>5.1%</strong>。30萬以下佔需求<strong>53.1%</strong>但長期供不應求。中古屋佔<strong>79.4%</strong>。</p>
-          <h2>估值：兩個框架，兩個結論</h2>
-          <p>租金收益率<strong>5.19%</strong> vs OPR <strong>2.75%</strong> = 利差<strong>+2.44%</strong>。吉隆坡房價租金比<strong>21.7倍</strong> vs 新加坡40倍、香港50倍——區域低估。但房價所得比全國<strong>4.3倍</strong>、吉隆坡有地<strong>5.6倍</strong>——嚴重不可負擔。兩個結論同時成立。</p>
-          <h2>吉隆坡：房價修正與收益機會並存</h2>
-          <p>年跌<strong>4.3%</strong>由供給驅動：完工量增<strong>32.7%</strong>，開工減<strong>14.9%</strong>。月租漲<strong>6.1%</strong>至<strong>RM 2,901</strong>。KLCC走廊：資本增值型。中谷/舊巴生路（RM40至80萬）：最佳風險回報。外圍：服務式公寓餘屋集中、呎價陷阱。</p>
-          <h2>基礎建設催化劑</h2>
-          <p>新山-新加坡RTS（目標2026年底通車）：新山收益率<strong>5.47至5.60%</strong>。MRT3環線（2025年核准，2030至31年完工）。數據中心投資帶動工業地產成交值年增<strong>21.3%</strong>。</p>
-          <h2>展望：未來12個月</h2>
-          <p>高層整理，有地升值<strong>2至4%</strong>，租金增長<strong>4至6%</strong>。供給壓力持續至2026年，2027年起鬆動。風險：OPR上調、GDP低於<strong>5.2%</strong>、外國買家<strong>8%印花稅</strong>。當前視窗——房價修正、租金上升、正向利差——是五年來最佳收益型進場環境。</p>
-        </div>
+      <!-- SUPPLY -->
+      <h2><span class="lang-en">SUPPLY: THE DELIVERY WAVE</span><span class="lang-zh" style="display:none">供給面：完工交屋潮尚未退去</span></h2>
+
+      <div class="lang-en">
+        <p>The supply challenge facing Malaysia's residential market is best understood through the lens of a time-lagged system with locked-in consequences. A residential project commenced in 2024 cannot be un-built. The <strong>106,236 units</strong> started that year — a 20.6% increase over 2023 — will arrive in the market between 2026 and 2028 regardless of what happens to demand in the interim. This is the completion wave, and it is the single most important supply-side variable for the next two years.</p>
+        <p>The 2025 data shows the absorption system already under stress. In Q1–Q3 2025, <strong>69,303 units</strong> were completed and received their Certificate of Completion and Compliance, a 25.3% year-on-year increase. High-rise developments now take <strong>18–24 months</strong> to achieve meaningful sales penetration — three to four times the six-month benchmark. The unsold completed stock reached <strong>28,672 residential units</strong> worth RM17.25 billion as of Q3 2025, rising to <strong>44,794 units</strong> when serviced apartments are included, up 30.5% year-on-year.</p>
+        <p>The developer response has been rational and relatively swift. New residential launches in the first nine months of 2025 fell <strong>31.8% year-on-year</strong> to 24,913 units. New planned supply contracted <strong>31.7%</strong>. Only <strong>41% of developers</strong> planned new launches in H2 2025. This pullback is the necessary precondition for eventual supply tightening — but the units already under construction cannot be recalled. The completion wave is locked in through 2027.</p>
+        <p>The serviced apartment segment deserves specific attention. Developers historically favored this format because commercial land classification exempts them from affordable housing quota requirements. The result was a sustained wave of supply in the RM500,000–RM1,000,000 band across KL, JB, and Penang that bears limited relationship to actual demand. The <strong>17,892 unsold serviced apartment units</strong> as of Q3 2025 carry commercial utility rates typically four to six times higher than residential tariffs, complex financing conditions, and maintenance cost structures that erode the yield advantage used to market these units. Clearing this inventory will require either extended time or significant structural repricing.</p>
       </div>
 
+      <div class="lang-zh" style="display:none">
+        <p>理解馬來西亞住宅市場的供給挑戰，需要把它看作一個有時間滯後、且後果已經鎖定的系統。2024年動工的房屋無法被叫停。那一年的<strong>106,236戶</strong>開工量——較2023年年增20.6%——將在2026至2028年間陸續完工交屋，無論屆時需求環境如何演變。這就是完工交屋潮，也是未來兩年最重要的供給面變數。</p>
+        <p>2025年的數據顯示，市場的吸收系統已在承壓。前三季有<strong>69,303戶</strong>取得使用執照，年增25.3%。高層住宅要達到有意義的銷售滲透率，現在需要<strong>18至24個月</strong>——是健康市場6個月基準的三到四倍。截至2025年Q3，住宅待售餘屋達<strong>28,672套</strong>，市值RM 172.5億；納入服務式公寓後升至<strong>44,794套</strong>，年增30.5%。</p>
+        <p>建商的反應是務實且相對迅速的。2025年前三季新推案量年減<strong>31.8%</strong>至24,913套，新規劃供給量年減<strong>31.7%</strong>，僅<strong>41%</strong>的業者計劃在2025年下半年進行新推案。這個在規劃端的主動收縮，是市場最終重新平衡的必要前提——但在建的案量無法召回，完工交屋潮已成定局，將持續至2027年。</p>
+        <p>服務式公寓市場需要單獨審視。建商長期偏好開發服務式公寓，原因在於商業用地定性讓他們免於住宅可負擔配額的要求，降低了土地成本。結果是在吉隆坡、新山和檳城的50至100萬令吉價格帶，形成了一波與實際需求脫節的大規模供給。目前<strong>17,892套</strong>待售服務式公寓，面臨商業水電費率（通常比住宅高四到六倍）、更複雜的融資申請條件，以及侵蝕收益率的管理費結構。清理這批庫存，需要時間或大幅降價。</p>
+      </div>
+
+      <div class="chart-inline">
+        <h4><span class="lang-en">Annual Supply Pipeline</span><span class="lang-zh" style="display:none">年度供給管線</span></h4>
+        <div class="chart-note orange"><span class="lang-en">2024 starts of 106,236 will complete 2026–2028</span><span class="lang-zh" style="display:none">2024年開工的106,236戶將在2026至2028年完工交屋</span></div>
+        <div id="chart-r-pipeline" style="height:200px;"></div>
+      </div>
+
+      <!-- DEMAND -->
+      <h2><span class="lang-en">DEMAND: INTENT WITHOUT ACCESS</span><span class="lang-zh" style="display:none">需求面：想買的人很多，能成交的不夠</span></h2>
+
+      <div class="lang-en">
+        <p>The demand picture for Malaysian residential property is more nuanced than either the headline transaction figures or the overhang statistics suggest. The <strong>420,525</strong> transactions recorded in 2024 represent the highest annual volume in a decade, demonstrating that underlying purchase intent is real and persistent. The cooling in Q3 2025 to <strong>108,250 transactions</strong> does not represent demand destruction — it represents the progressive exhaustion of the most financially capable segment of latent demand, as the remaining buyers increasingly fail the financing filter.</p>
+        <p>The most revealing indicator is not transaction volume but take-up rate at new launches. In Q1 2025, only <strong>10.8%</strong> of new residential units launched were sold on launch day. For high-rise projects in Q3 2025, that figure was <strong>5.1%</strong>. Landed properties performed better at <strong>14%</strong>. The divergence maps almost exactly onto loan approval rates: landed buyers have stronger financial profiles and clearer income documentation. A take-up rate below 10% at launch is not a sign of disinterest — it is a sign that the majority of potential participants have been structurally filtered out by the financing system.</p>
+        <p>The loan approval rate of <strong>42.6%</strong> means that more than half of all mortgage applications are declined. Malaysia's household debt-to-GDP ratio of <strong>81.9%</strong> is among the highest in ASEAN, and debt-service ratios in Klang Valley and Penang are at their practical limits for M40 households. The government's SJKP guarantee scheme — with RM10 billion in guarantees targeting approximately 20,000 first-time buyers — provides incremental improvement but addresses financing access at the margin rather than the underlying affordability gap.</p>
+        <p>The K-shaped structure of demand defines the opportunity set. In the sub-RM300,000 segment, genuine undersupply exists in locations with real employment anchors. The RM300,000–RM500,000 band shows the healthiest primary market take-up. Above RM500,000 in high-rise and serviced apartment formats, demand is institutionally constrained by the financing filter. The secondary market's <strong>79.4%</strong> share of H1 2025 residential transactions is the direct expression of buyers gravitating toward segments where value, location quality, and financing accessibility intersect most favorably.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>馬來西亞住宅市場的需求面，比宏觀成交量數字或待售餘屋統計所呈現的更為複雜。2024年的<strong>420,525套</strong>成交量代表真實且持久的購屋意願。2025年Q3降至<strong>108,250筆</strong>，並非需求崩潰——而是財務條件最佳的那批潛在買家已逐步完成置業，剩餘的需求愈來愈難通過融資篩選。</p>
+        <p>新推案的即時去化率，是比成交量更能說明需求品質的指標。2025年Q1，新推案的即時銷售率僅<strong>10.8%</strong>。2025年Q3，高層住宅的即時去化率只有<strong>5.1%</strong>，有地住宅為<strong>14%</strong>。兩者之間的差距幾乎完整映射了房貸批准率的差異——有地住宅的買家財務條件更扎實，通過融資審核的比例更高。推案當季去化率低於10%，不代表市場沒有人想買，而是大多數潛在買家被系統性地排除在外了。</p>
+        <p><strong>42.6%</strong>的房貸批准率意味著超過一半的申請人遭拒。馬來西亞的家庭負債佔GDP比高達<strong>81.9%</strong>，居東南亞前列；Klang Valley和檳城的M40家庭，償債比例已在實際上限附近。政府的住宅信用保證計畫（SJKP）提供100億令吉保證額度，是邊際性的改善，但它解決的是融資管道問題，而非底層的負擔能力差距。</p>
+        <p>K型需求結構是當前市場週期最核心的特徵。30萬令吉以下的可負擔市場，在具有真實就業錨點的地點，存在真實且持續的供不應求。30至50萬令吉的中間帶，需求健康，一手市場去化率最為理想。50萬令吉以上的高層和服務式公寓，需求受到融資篩選機制的系統性制約。中古屋市場佔<strong>79.4%</strong>的成交比重，是買家主動選擇價值、地點品質和融資可及性最佳交集的直接表達。</p>
+      </div>
+
+      <div class="chart-inline">
+        <h4><span class="lang-en">New Launch Take-up Rate Q3 2025</span><span class="lang-zh" style="display:none">新推案即時去化率 2025年Q3</span></h4>
+        <div class="chart-note orange"><span class="lang-en">High-rise: only 5.1% sold on launch day</span><span class="lang-zh" style="display:none">高層住宅：推出當日僅5.1%售出</span></div>
+        <div id="chart-r-takeup" style="height:180px;"></div>
+      </div>
+
+      <!-- VALUATION -->
+      <h2><span class="lang-en">VALUATION: TWO FRAMEWORKS, TWO CONCLUSIONS</span><span class="lang-zh" style="display:none">估值：兩個框架，兩個結論</span></h2>
+
+      <div class="lang-en">
+        <p>Malaysian residential property presents a bifurcated valuation picture that produces diametrically opposed conclusions depending on the analytical framework applied — and both conclusions are simultaneously correct for different buyer populations.</p>
+        <p>From a yield and regional comparison perspective, the investment case is reasonably compelling. The gross rental yield of <strong>5.19%</strong> against an OPR of <strong>2.75%</strong> produces a positive carry spread of <strong>+2.44%</strong> — historically a signal of relative value. Against regional peers, Kuala Lumpur's price-to-rent ratio of <strong>21.7x</strong> compares favorably to Singapore's approximately 40x and Hong Kong's approximately 50x. For investors with USD, SGD, or AUD capital, the ringgit's trading range represents a structural cost-of-entry discount. The combination of positive carry, regional valuation discount, and FX tailwind has historically attracted significant foreign institutional interest to specific high-quality segments of the KL market.</p>
+        <p>From a domestic affordability perspective, however, the picture is materially less favorable. At <strong>4.3x</strong> median annual household income nationally — rising to <strong>5.6x</strong> for terrace houses in Kuala Lumpur — Malaysian housing is classified as "severely unaffordable" by the Demographia methodology, which sets the "seriously unaffordable" threshold at 4.0x. This ceiling is not merely a statistical observation — it is the mechanism that produces the 42.6% loan approval rate. The ceiling is structural and will not be meaningfully moved by OPR adjustments alone.</p>
+        <p>The real house price picture adds important context. The MHPI has grown modestly in nominal terms — approximately 1–3% annually — but adjusted for CPI inflation, real house prices have been effectively flat to slightly declining since 2022. This is not a bubble profile; it is a market adjusting real valuations downward through inflation erosion while maintaining nominal stability. The absence of speculative froth means that any price correction will be supply-driven and bounded rather than sentiment-driven and self-reinforcing.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>馬來西亞住宅房產的估值，會因分析框架不同而得出截然相反的結論——而兩個結論對不同的買家群體而言，同時都是成立的。</p>
+        <p>從收益率和區域比較的角度，投資論點具有合理的說服力。<strong>5.19%</strong>的租金毛收益率對比<strong>2.75%</strong>的OPR，產生<strong>+2.44個百分點</strong>的正向持有利差——在歷史上是相對價值的訊號。以區域同儕比較，吉隆坡的房價租金比<strong>21.7倍</strong>，相較新加坡約40倍、香港約50倍，明顯偏低。對持有美元、新幣或澳幣的資金，令吉在歷史水平的偏弱狀態，構成結構性的進場成本折讓。</p>
+        <p>然而從本地負擔能力的角度，圖景截然不同。以全國家庭收入中位數的<strong>4.3倍</strong>計算——吉隆坡有地住宅更高達<strong>5.6倍</strong>——馬來西亞住房在Demographia評估中被列為「嚴重不可負擔」類別（標準為4.0倍以上）。這個天花板不僅是統計數字，更是產生<strong>42.6%</strong>房貸批准率的機制——單靠OPR調整無法從根本上移動這個門檻。</p>
+        <p>實質房價的走勢提供了重要補充。MHPI近年來的名義增長溫和，但經通脹調整後，實質房價自2022年以來已呈現停滯到略微下跌的態勢。這不是泡沫正在醞釀的特徵，而是市場透過通脹侵蝕緩慢向下調整實質估值的特徵。投機浮沫的缺席意味著即便發生價格修正，也將是由供給驅動、有限度的修正，而非情緒驅動、自我強化的下行螺旋。</p>
+      </div>
+
+      <div class="chart-inline">
+        <h4><span class="lang-en">KL vs Asia Pacific Price-to-Rent</span><span class="lang-zh" style="display:none">吉隆坡 vs 亞太城市房價租金比</span></h4>
+        <div class="chart-note green"><span class="lang-en">KL at 21.7x — significantly undervalued vs regional peers</span><span class="lang-zh" style="display:none">吉隆坡21.7倍——相較區域同儕明顯低估</span></div>
+        <div id="chart-r-apac" style="height:200px;"></div>
+      </div>
+
+      <!-- KUALA LUMPUR -->
+      <h2><span class="lang-en">KUALA LUMPUR: CORRECTION AND OPPORTUNITY</span><span class="lang-zh" style="display:none">吉隆坡：修正即機會</span></h2>
+
+      <div class="lang-en">
+        <p>Kuala Lumpur's residential market is the clearest expression of the broader national dynamics. The city-level headline — average prices down <strong>4.3% year-on-year</strong> in Q3 2025, the only major Malaysian city recording a decline — is supply-driven rather than demand-driven. Completions surged <strong>32.7%</strong> in Q1–Q3 2025 while new starts declined <strong>14.9%</strong>. The correction is concentrated in high-rise and serviced apartment segments — the <strong>3,643 unsold units</strong> worth RM3.16 billion recorded in KL for H1 2025 are disproportionately clustered in the KLCC-adjacent SOHO segment and the outer-ring serviced apartment belt.</p>
+        <p>The rental market tells a structurally different story. KL average monthly rents reached <strong>RM2,901</strong> in 2025, up <strong>6.1% year-on-year</strong>, driven by the return of expatriates, the expansion of multinational operations at TRX, and continued absorption from would-be buyers who cannot clear the financing hurdle. Falling purchase prices and rising rents is the precise dynamic that creates favorable entry conditions for income-focused investors: yields are expanding because rents rise while capital values remain flat or decline.</p>
+        <p><strong>Zone 1 — KLCC/Bukit Bintang:</strong> Average PSF of RM1,200–2,500+ positions these assets as the cheapest comparable luxury condominiums in a global city of KL's economic weight. Gross yields average 3–4%, covering borrowing costs for unlevered foreign capital. The current 8–12% discount below asking price in oversupplied pockets is creating entry opportunities in branded residences at TRX, Pavilion Bukit Bintang, and the KLCC fringe.</p>
+        <p><strong>Zone 2 — Mid Valley/Old Klang Road:</strong> The most fundamentally sound investment zone in KL at present. The RM400,000–RM800,000 price band aligns with the accessible financing range for dual-income M40+ households. Take-up rates are the highest in the city. A typical 2-bedroom unit achieves RM2,500–4,500 per month, producing gross yields of <strong>5–6%</strong> — genuine positive carry in the current rate environment. The Old Klang Road gentrification dynamic adds an appreciation layer that the outer ring lacks.</p>
+        <p><strong>Zone 3 — Kepong/Cheras/Setapak:</strong> The outer ring bears the heaviest concentration of structural risk. Serviced apartment dominance, widespread PSF traps, commercial utility rates, and the most challenging loan approval profile of any KL zone combine to create a segment requiring extreme selectivity. The majority of KL's overhang is concentrated here. Specific transit-oriented developments proximate to MRT stations can generate competitive yields, but the margin for selection error is narrow.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>吉隆坡住宅市場是全國宏觀動態最清晰的縮影。市級層面——2025年Q3平均房價年跌<strong>4.3%</strong>，是全馬主要城市中唯一下跌的，也是四年來首次持續修正——是供給驅動而非需求驅動的。2025年前三季完工量年增<strong>32.7%</strong>，而新開工戶數同期年減<strong>14.9%</strong>。修正集中在高層和服務式公寓區段——2025年上半年吉隆坡<strong>3,643套</strong>市值RM 31.6億的待售完工住宅，不成比例地集中在KLCC鄰近的SOHO區段和外圍服務式公寓帶。</p>
+        <p>租賃市場呈現結構性不同的面貌。吉隆坡2025年平均月租達<strong>RM 2,901</strong>，年增<strong>6.1%</strong>，由外籍人士回流、TRX金融區跨國企業擴張，以及無法通過購屋融資審核的潛在買家持續租屋帶動。購屋價格下跌與租金上升的背離態勢，是為收益型投資者創造有利進場條件的精確機制：收益率因租金上升、資產價值平穩到下跌而擴大。</p>
+        <p><strong>第一區——城中城/武吉免登：</strong> RM 1,200至2,500+的呎價，使這些資產成為全球主要城市中最具價格競爭力的頂級公寓之一。本區租金毛收益率平均3至4%，僅能勉強覆蓋本地槓桿買家的借貸成本，但對無槓桿的外資而言代表真實的相對價值。目前過剩地段8至12%的折扣，正在TRX、Pavilion武吉免登和KLCC邊緣的品牌住宅中創造進場機會。</p>
+        <p><strong>第二區——中谷/舊巴生路：</strong> 目前吉隆坡基本面最健全的投資區段。40至80萬令吉的價格帶，符合雙薪M40+家庭的可融資範圍，新推案去化率是全市最高的，租賃市場深度充足——典型兩房單位月租RM 2,500至4,500，帶來<strong>5至6%</strong>的租金毛收益率，在當前利率環境下是真實的正向現金流。舊巴生路的仕紳化動態為這個走廊增添了第三區所欠缺的升值層次。</p>
+        <p><strong>第三區——甲洞/蕉賴/士打末：</strong> 外圍地帶集中了吉隆坡市場最高的結構性風險。服務式公寓主導、普遍的呎價陷阱、商業水電費率，以及全市最複雜的貸款申辦環境，共同構成了一個需要極高選擇性的區段。吉隆坡待售餘屋的絕大多數集中於此。毗鄰MRT站點和就業中心、具有真實租賃深度的特定案子可產生有競爭力的收益率，但選擇的容錯空間極窄。</p>
+      </div>
+
+      <div class="chart-inline">
+        <h4><span class="lang-en">KL Zone PSF Comparison</span><span class="lang-zh" style="display:none">吉隆坡各區呎價比較</span></h4>
+        <div class="chart-note green"><span class="lang-en">Zone 2 Mid Valley/OKR — best risk-reward in KL</span><span class="lang-zh" style="display:none">第二區中谷/舊巴生路——吉隆坡最佳風險回報區段</span></div>
+        <div id="chart-r-klzone" style="height:180px;"></div>
+      </div>
+
+      <!-- PENANG -->
+      <h2><span class="lang-en">PENANG: THE INDUSTRIAL THESIS</span><span class="lang-zh" style="display:none">檳城：工業驅動的房市論點</span></h2>
+
+      <div class="lang-en">
+        <p>Penang's property market is structurally distinct from KL in one fundamental way: its demand drivers are industrial rather than financial. The state attracted <strong>RM12.5 billion</strong> in approved manufacturing investment in H1 2025, a <strong>150% year-on-year</strong> increase, cementing Penang's position as Malaysia's leading destination for semiconductor and E&amp;E FDI. Intel's expansion, Motorola's continued presence, and a growing wave of US and Taiwanese fabtech investment generate sustained demand from skilled engineers and management professionals — a housing demand profile that is more stable, income-qualified, and less speculative than the expatriate and MM2H-driven market characterizing KL's premium segments.</p>
+        <p>High-end properties above RM1 million grew <strong>7–10% in 2024</strong>, the strongest performance of any segment in Malaysia that year. Premium pricing is concentrated in Gurney Drive and Pulau Tikus — where land scarcity is genuinely structural — and in the Tanjung Bungah/Seri Tanjung Pinang corridor. Gurney Drive's Marriott Residences transacted at <strong>RM2,069 PSF</strong> in 2024, with Sunrise Gurney at <strong>RM1,872 PSF</strong> — figures that remain well below comparable waterfront assets in Singapore or Hong Kong.</p>
+        <p>A critical clarification on the foreign buyer framework: the RM3 million minimum cited applies exclusively to <strong>landed houses</strong> on Penang Island. The threshold for <strong>condominiums</strong> is <strong>RM1 million</strong>. The mainland threshold is RM500,000 for strata units. The 8% stamp duty from January 2026, combined with the state consent levy of approximately 3%, brings total foreign buyer transaction costs to <strong>12–14%</strong> above purchase price — a factor that materially changes the return calculus for yield-seeking foreign investors.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>檳城的房地產市場在結構上有別於吉隆坡，核心差異在於需求驅動力是工業而非金融資本。該州在2025年上半年吸引了<strong>RM 125億</strong>的核准製造業投資，年增<strong>150%</strong>，鞏固了檳城作為馬來西亞首要半導體和電子電機外資目的地的地位。英特爾、摩托羅拉，以及不斷湧入的美國和台灣晶圓廠科技業投資，持續為技術工程師和管理專業人員創造住房需求——這種需求結構比吉隆坡以外籍人士和MM2H為主的高端市場更為穩定。</p>
+        <p>超過百萬令吉的高端物業在2024年增值<strong>7至10%</strong>，是馬來西亞所有市場區段中表現最亮眼的。溢價集中在Gurney Drive和Pulau Tikus——土地稀缺是結構性的而非週期性的——以及Tanjung Bungah和Seri Tanjung Pinang走廊。Gurney Drive最貴的開發項目Marriott Residences在2024年的成交呎價達<strong>RM 2,069</strong>，Sunrise Gurney達<strong>RM 1,872</strong>——這些數字相較新加坡或香港的可比海濱資產，仍顯得相當低廉。</p>
+        <p>關於外國買家規定，有必要澄清一個普遍誤解：<strong>RM 300萬</strong>的門檻僅適用於檳城島的<strong>有地住宅</strong>；<strong>公寓</strong>的門檻是<strong>RM 100萬</strong>，與大多數其他州份一致。2026年1月起實施的<strong>8%印花稅</strong>，加上州政府同意費約3%，使外國買家的總交易成本達到成交價的<strong>12至14%</strong>以上——這個成本需要對照收益率優勢和匯率優勢進行審慎計算。</p>
+      </div>
+
+      <div class="chart-inline">
+        <h4><span class="lang-en">Penang Manufacturing FDI</span><span class="lang-zh" style="display:none">檳城製造業外資</span></h4>
+        <div class="chart-note green"><span class="lang-en">+150% YoY in H1 2025 — Malaysia's top manufacturing FDI destination</span><span class="lang-zh" style="display:none">2025年上半年年增150%——馬來西亞首要製造業外資目的地</span></div>
+        <div id="chart-r-fdi" style="height:180px;"></div>
+      </div>
+
+      <!-- INFRASTRUCTURE -->
+      <h2><span class="lang-en">INFRASTRUCTURE CATALYSTS</span><span class="lang-zh" style="display:none">基礎建設催化劑</span></h2>
+
+      <div class="lang-en">
+        <p>Three infrastructure projects have moved from speculative to confirmed timelines over the past 12 months, with demand effects already measurable in transaction and rental data.</p>
+        <p>The <strong>JB–Singapore RTS</strong>, targeting operations by end-2026, has produced the most immediate and measurable impact. Rental yields in the JB Sentral corridor have risen to <strong>5.47–5.60%</strong>, the highest in peninsular Malaysia, driven by Singaporean cross-border demand and the Johor-Singapore SEZ framework. Forest City, which appeared structurally stranded two years ago, is showing early signs of absorption.</p>
+        <p>The <strong>MRT3 Circle Line</strong> received final government approval in 2025, with substantial completion targeted for 2030–2031. Historical patterns from MRT1 and MRT2 suggest that properties within 500 meters of announced stations begin pricing in the connectivity premium within 12–18 months of a confirmed timeline — making currently underserved corridors along the Circle Line alignment (Sentul, Wangsa Maju, Seputeh, Bukit Jalil) the earliest-stage catalyst opportunity in the residential market today.</p>
+        <p>The <strong>data center investment wave</strong> — Microsoft's USD2.2 billion, Google's USD2 billion, and multiple regional hyperscalers in Johor and Selangor — is producing measurable spillover rental demand in Kulai/Sedenak and Cyberjaya/Shah Alam. Industrial property value surged <strong>21.3%</strong> in 2025. This is a multi-year demand driver structurally independent of the residential property cycle.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>過去12個月，三個基礎建設項目從推測性轉為確認性，其需求效應已在成交和租金數據中可見。</p>
+        <p><strong>新山至新加坡輕軌系統（RTS）</strong>，目標2026年底通車，是目前影響最直接、效應最可量化的催化劑。新山中央走廊的租金收益率已升至<strong>5.47至5.60%</strong>，為馬來西亞半島最高水平，由新加坡跨境需求和柔佛-新加坡特別經濟區（SEZ）框架帶動。</p>
+        <p><strong>MRT3環線</strong>於2025年獲政府最終批准，目標2030至2031年主體完工。MRT1和MRT2的歷史模式顯示，已確認時間表的車站周邊500公尺以內的物業，通常在12至18個月內開始反映交通連通性溢價——使環線沿線目前服務不足的吉隆坡走廊（善南、旺沙瑪朱、士拍、武吉加里爾）成為住宅市場中最早期的催化劑機會。</p>
+        <p><strong>數據中心投資浪潮</strong>——微軟22億美元、谷歌20億美元，以及多個區域超大規模雲端業者在柔佛和雪蘭莪的大規模部署——正在柔佛古來/士乃和雪蘭莪賽城/沙亞南帶動可量化的住宅租賃需求。工業地產成交總值2025年年增<strong>21.3%</strong>。這是一個在結構上獨立於住宅房產週期的多年期需求驅動力。</p>
+      </div>
+
+      <!-- OUTLOOK -->
+      <h2><span class="lang-en">OUTLOOK AND KEY RISKS</span><span class="lang-zh" style="display:none">展望與主要風險</span></h2>
+
+      <div class="lang-en">
+        <p>The base case for the Malaysian residential market over the next 12 months is consolidation rather than recovery or deterioration. Well-located landed property in established corridors should see modest appreciation of <strong>2–4%</strong> in nominal terms. High-rise urban segments will continue to face price pressure from the completion wave. Rental growth of <strong>4–6%</strong> in major urban centers is the most reliable near-term performance driver, underpinned by returning expatriates, constrained homeownership access, and urban in-migration.</p>
+        <p><strong>Risk 1 — OPR Reversal:</strong> Bank Negara's cut to <strong>2.75%</strong> is currently priced as a floor. An OPR reversal would rapidly compress the yield spread — the single most important investment metric in the market — and materially worsen the financing environment for M40 buyers already at the edge of qualifying debt-service ratios.</p>
+        <p><strong>Risk 2 — Economic Deceleration:</strong> Malaysia's GDP tracked at <strong>5.2%</strong> in Q3 2025. A deceleration below 4% — driven by global trade disruption, commodity price weakness, or deteriorating manufacturing FDI flows — would reduce household income formation, increase loan default rates, and suppress transaction volumes.</p>
+        <p><strong>Risk 3 — Foreign Demand Erosion:</strong> The 8% stamp duty introduced in January 2026 is already impacting foreign buyer inquiry volumes in KLCC and premium Penang. If further restrictions are introduced, the premium residential segments that depend heavily on foreign capital for price support and liquidity could face accelerated correction.</p>
+        <p>The actionable conclusion: the current environment creates its best opportunities for those who can identify high-quality rental assets at corrected prices in established corridors, hold through the completion cycle with adequate liquidity, and exit into the absorption recovery that becomes more probable from 2027 onwards. The window for this positioning is open now and unlikely to remain open past the point at which supply pressure begins to visibly ease.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>馬來西亞住宅市場未來12個月的基本情景是整固而非復甦或惡化。成熟走廊的優質有地住宅應可在名義上實現<strong>2至4%</strong>的溫和升值。高層城市住宅區段將繼續面臨完工交屋潮帶來的價格壓力。主要城市的租金增長<strong>4至6%</strong>，是近期最可靠的績效驅動力。</p>
+        <p><strong>風險一——OPR逆轉：</strong> 馬來西亞國家銀行降息至<strong>2.75%</strong>，目前在市場定價中被視為底部。若OPR逆轉上調，將迅速壓縮持有利差——市場中最重要的單一投資指標——並對已在償債比率邊緣的M40買家實質性惡化融資環境。</p>
+        <p><strong>風險二——經濟增速放緩：</strong> 馬來西亞GDP在2025年Q3的追蹤水平為<strong>5.2%</strong>。若因全球貿易中斷、大宗商品價格走弱，或製造業外資流入惡化，導致增速降至4%以下，家庭所得形成將放緩，成交量將受到直接衝擊。</p>
+        <p><strong>風險三——外資需求侵蝕：</strong> 2026年1月起實施的<strong>8%印花稅</strong>，已在KLCC和檳城高端市場的外資問詢量中產生可量化的衝擊。若後續有進一步限制措施出台，高度依賴外資支撐價格和流動性的頂級住宅區段可能面臨加速修正。</p>
+        <p>給投資者的可執行結論：當前環境最佳的機會，屬於那些能夠在成熟走廊以修正後的價格識別高品質租賃資產、持有穿越完工交屋週期並保持充足流動性，在2027年後吸收復甦愈加確定時退場的投資者。這個布局視窗現在是開著的，不太可能在供給壓力開始實質緩解之後仍然存在。</p>
+      </div>
+
+      <!-- FOOTER -->
       <div class="report-footer">
-        <p><span class="lang-en">Data sources: NAPIC Q3 2025 · NAPIC H1 2025 · Global Property Guide Q1 2026 · BNM · DOSM · REHDA 2H2025</span><span class="lang-zh" style="display:none">數據來源：NAPIC 2025年Q3 · NAPIC 2025年H1 · Global Property Guide 2026年Q1 · BNM · DOSM · REHDA 2H2025</span></p>
+        <p><span class="lang-en">Data sources: NAPIC Q3 2025 · NAPIC H1 2025 · Global Property Guide Q1 2026 · BNM · DOSM · REHDA 2H2025 · Juwai IQI · Bamboo Routes · PropCashflow</span><span class="lang-zh" style="display:none">數據來源：NAPIC 2025年Q3 · NAPIC 2025年H1 · Global Property Guide 2026年Q1 · 馬來西亞國家銀行 · 統計局 · 房地產發展商協會 2H2025</span></p>
         <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
       </div>
     </div>
@@ -156,19 +272,13 @@
   <script>
   var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
   var BG='transparent',GC='#e8f0f9';
+  var miniCA={left:'10%',top:'8%',width:'85%',height:'65%'};
 
   function setLang(lang){
     document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
     document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
     document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
     localStorage.setItem('lang',lang);
-    // Toggle report sections
-    var execEn=document.getElementById('exec-en'),execZh=document.getElementById('exec-zh');
-    var secEn=document.getElementById('sections-en'),secZh=document.getElementById('sections-zh');
-    if(execEn)execEn.style.display=lang==='zh'?'none':'block';
-    if(execZh)execZh.style.display=lang==='zh'?'block':'none';
-    if(secEn)secEn.style.display=lang==='zh'?'none':'block';
-    if(secZh)secZh.style.display=lang==='zh'?'block':'none';
   }
 
   google.charts.load('current',{packages:['corechart']});
@@ -181,91 +291,107 @@
     drawRYield();
     drawRMismatch();
     drawRWave();
+    drawRPipeline();
+    drawRTakeup();
+    drawRApac();
+    drawRKLZone();
+    drawRFDI();
   }
 
-  // Mini chart options use smaller chartArea and fonts
-  var miniCA={left:'12%',top:'5%',width:'82%',height:'70%'};
-
   function drawRYield(){
-    var el=document.getElementById('chart-r-yield');
-    if(!el||!el.offsetWidth)return;
+    var el=document.getElementById('chart-r-yield');if(!el)return;
     var data=new google.visualization.DataTable();
-    data.addColumn('string','Year');
-    data.addColumn('number','Yield');
-    data.addColumn('number','OPR');
-    data.addRows([
-      ['19',4.80,3.00],['20',4.60,1.75],['21',4.70,1.75],['22',4.90,2.75],
-      ['23Q1',5.16,3.00],['23Q3',5.20,3.00],['24Q1',5.16,3.00],['24Q3',5.24,3.00],
-      ['25Q1',5.10,3.00],['25Q3',5.19,2.75]
-    ]);
-    var options={
-      legend:'none',
-      backgroundColor:BG,
-      chartArea:miniCA,
-      vAxis:{minValue:1,maxValue:6,textStyle:{fontSize:9},format:'#.#\'%\'',gridlines:{color:GC}},
-      hAxis:{textStyle:{fontSize:8},slantedText:false},
-      series:{
-        0:{color:GREEN,lineWidth:1.5,pointSize:2,curveType:'function'},
-        1:{color:RED,lineWidth:1,pointSize:1,lineDashStyle:[4,3],curveType:'function'}
-      },
-      fontName:'Inter',
-      tooltip:{textStyle:{fontSize:10}}
-    };
-    var chart=new google.visualization.LineChart(el);
-    chart.draw(data,options);
+    data.addColumn('string','Year');data.addColumn('number','Yield');data.addColumn('number','OPR');
+    data.addRows([['2019',4.80,3.00],['2020',4.60,1.75],['2021',4.70,1.75],['2022',4.90,2.75],['23Q1',5.16,3.00],['23Q3',5.20,3.00],['24Q1',5.16,3.00],['24Q3',5.24,3.00],['25Q1',5.10,3.00],['25Q3',5.19,2.75]]);
+    new google.visualization.LineChart(el).draw(data,{
+      legend:'none',backgroundColor:BG,chartArea:miniCA,colors:[GREEN,RED],
+      vAxis:{minValue:1,maxValue:6,textStyle:{fontSize:9},format:"#.#'%'",gridlines:{color:GC}},
+      hAxis:{textStyle:{fontSize:7},slantedText:false},
+      series:{0:{lineWidth:1.5,pointSize:2,curveType:'function'},1:{lineWidth:1,pointSize:1,lineDashStyle:[4,3],curveType:'function'}},
+      fontName:'Inter'
+    });
   }
 
   function drawRMismatch(){
-    var el=document.getElementById('chart-r-mismatch');
-    if(!el||!el.offsetWidth)return;
-    var data=new google.visualization.DataTable();
-    data.addColumn('string','Range');
-    data.addColumn('number','Demand %');
-    data.addColumn('number','Supply %');
-    data.addRows([
-      ['<300k',53.1,18],['300-500k',27.3,25],['500k-1M',13.8,38],['>1M',5.8,19]
-    ]);
-    var options={
-      backgroundColor:BG,
-      chartArea:miniCA,
-      vAxis:{textStyle:{fontSize:9},format:'#\'%\'',gridlines:{color:GC}},
-      hAxis:{textStyle:{fontSize:8}},
-      series:{0:{color:NAVY},1:{color:ORANGE}},
-      bar:{groupWidth:'60%'},
-      legend:{position:'top',textStyle:{fontSize:9}},
-      fontName:'Inter',
-      tooltip:{textStyle:{fontSize:10}}
-    };
-    var chart=new google.visualization.ColumnChart(el);
-    chart.draw(data,options);
+    var el=document.getElementById('chart-r-mismatch');if(!el)return;
+    var data=google.visualization.arrayToDataTable([['Range','Demand %','Supply %'],['<300k',53.1,18],['300-500k',27.3,25],['500k-1M',13.8,38],['>1M',5.8,19]]);
+    new google.visualization.ColumnChart(el).draw(data,{
+      backgroundColor:BG,chartArea:miniCA,colors:[NAVY,ORANGE],
+      vAxis:{textStyle:{fontSize:9},format:"#'%'",gridlines:{color:GC}},
+      hAxis:{textStyle:{fontSize:7}},bar:{groupWidth:'60%'},
+      legend:{position:'top',textStyle:{fontSize:8}},fontName:'Inter'
+    });
   }
 
   function drawRWave(){
-    var el=document.getElementById('chart-r-wave');
-    if(!el||!el.offsetWidth)return;
-    var data=new google.visualization.DataTable();
-    data.addColumn('string','Year');
-    data.addColumn('number','Completions');
-    data.addColumn('number','Absorption');
-    data.addRows([
-      ['21',76393,82000],['22',71981,82000],['23',74893,83000],['24',82135,85000],
-      ['25E',92000,85000],['26E',95000,85000],['27E',85000,85000]
-    ]);
-    var options={
-      backgroundColor:BG,
-      chartArea:miniCA,
+    var el=document.getElementById('chart-r-wave');if(!el)return;
+    var data=google.visualization.arrayToDataTable([['Year','Completions','Absorption'],['2021',76393,82000],['2022',71981,82000],['2023',74893,83000],['2024',82135,85000],['2026E',95000,85000],['2027E',85000,85000]]);
+    new google.visualization.LineChart(el).draw(data,{
+      backgroundColor:BG,chartArea:miniCA,colors:[ORANGE,GREEN],
       vAxis:{textStyle:{fontSize:9},format:'short',gridlines:{color:GC}},
-      hAxis:{textStyle:{fontSize:8}},
-      series:{
-        0:{color:ORANGE,lineWidth:1.5,pointSize:2,curveType:'function'},
-        1:{color:GREEN,lineWidth:1,pointSize:0,lineDashStyle:[4,3],curveType:'function'}
-      },
-      legend:{position:'top',textStyle:{fontSize:9}},
-      fontName:'Inter',
-      tooltip:{textStyle:{fontSize:10}}
-    };
-    var chart=new google.visualization.LineChart(el);
-    chart.draw(data,options);
+      hAxis:{textStyle:{fontSize:7}},
+      series:{0:{lineWidth:1.5,pointSize:2,curveType:'function'},1:{lineWidth:1,pointSize:0,lineDashStyle:[4,3],curveType:'function'}},
+      legend:{position:'top',textStyle:{fontSize:8}},fontName:'Inter'
+    });
+  }
+
+  function drawRPipeline(){
+    var el=document.getElementById('chart-r-pipeline');if(!el)return;
+    var data=google.visualization.arrayToDataTable([
+      ['Year','Planned','Starts','Completions'],
+      ['2019',85000,82000,78000],['2020',60000,65000,72000],['2021',77585,86258,76393],['2022',89111,97804,71981],['2023',80964,88114,74893],['2024',100461,106236,82135],['2025 Q1-Q3',49602,64843,69303]
+    ]);
+    new google.visualization.LineChart(el).draw(data,{
+      backgroundColor:BG,chartArea:{left:'10%',top:'10%',width:'85%',height:'70%'},colors:[MUTED,NAVY,GREEN],
+      series:{0:{lineDashStyle:[6,3],lineWidth:1.5},1:{lineWidth:2,pointSize:3},2:{lineWidth:2,pointSize:3}},
+      vAxis:{textStyle:{fontSize:10},format:'short',gridlines:{color:GC}},
+      hAxis:{textStyle:{fontSize:9}},
+      legend:{position:'top',textStyle:{fontSize:10}},fontName:'Inter',curveType:'function'
+    });
+  }
+
+  function drawRTakeup(){
+    var el=document.getElementById('chart-r-takeup');if(!el)return;
+    var data=google.visualization.arrayToDataTable([['Type','Rate',{role:'style'}],['Landed',14,GREEN],['High-Rise',5.1,ORANGE]]);
+    new google.visualization.ColumnChart(el).draw(data,{
+      backgroundColor:BG,chartArea:{left:'10%',top:'5%',width:'85%',height:'75%'},
+      legend:'none',vAxis:{textStyle:{fontSize:10},format:"#'%'",gridlines:{color:GC},minValue:0},
+      hAxis:{textStyle:{fontSize:11}},bar:{groupWidth:'50%'},fontName:'Inter'
+    });
+  }
+
+  function drawRApac(){
+    var el=document.getElementById('chart-r-apac');if(!el)return;
+    var data=google.visualization.arrayToDataTable([
+      ['City','P/R',{role:'style'}],['KL',21.7,'color:'+GREEN],['Bangkok',25,'color:'+NAVY],['Ho Chi Minh',18,'color:'+NAVY],['Singapore',40,'color:'+NAVY],['Hong Kong',50,'color:'+NAVY]
+    ]);
+    new google.visualization.BarChart(el).draw(data,{
+      backgroundColor:BG,chartArea:{left:'18%',top:'5%',width:'75%',height:'80%'},
+      legend:'none',hAxis:{minValue:0,maxValue:55,textStyle:{fontSize:10},gridlines:{color:GC}},
+      vAxis:{textStyle:{fontSize:10}},bar:{groupWidth:'60%'},fontName:'Inter'
+    });
+  }
+
+  function drawRKLZone(){
+    var el=document.getElementById('chart-r-klzone');if(!el)return;
+    var data=google.visualization.arrayToDataTable([
+      ['Zone','PSF (RM)',{role:'style'}],['Zone 1\nKLCC/BB',1800,'color:'+ORANGE],['Zone 2\nMid Valley',700,'color:'+GREEN],['Zone 3\nOuter Ring',490,'color:'+RED]
+    ]);
+    new google.visualization.ColumnChart(el).draw(data,{
+      backgroundColor:BG,chartArea:{left:'12%',top:'5%',width:'82%',height:'75%'},
+      legend:'none',vAxis:{textStyle:{fontSize:10},format:"RM #,###",gridlines:{color:GC},minValue:0},
+      hAxis:{textStyle:{fontSize:9}},bar:{groupWidth:'50%'},fontName:'Inter'
+    });
+  }
+
+  function drawRFDI(){
+    var el=document.getElementById('chart-r-fdi');if(!el)return;
+    var data=google.visualization.arrayToDataTable([['Period','FDI (RM B)'],['2021',12],['2022',18],['2023',15],['2024',25],['2025 H1',12.5]]);
+    new google.visualization.ColumnChart(el).draw(data,{
+      backgroundColor:BG,chartArea:{left:'10%',top:'5%',width:'85%',height:'75%'},colors:[NAVY],
+      legend:'none',vAxis:{textStyle:{fontSize:10},gridlines:{color:GC},minValue:0},
+      hAxis:{textStyle:{fontSize:9}},bar:{groupWidth:'50%'},fontName:'Inter'
+    });
   }
 
   window.addEventListener('resize',function(){drawAllCharts();});
