@@ -141,8 +141,8 @@
           <p class="chart-subtitle"><span class="lang-en">Model-based projection · Residential only</span><span class="lang-zh" style="display:none">模型推演 · 僅住宅類</span></p>
           <div style="position:relative;height:240px;"><div id="chartOhForecast" style="width:100%;height:100%"></div></div>
           <div class="insight-box" style="margin-top:12px;">
-            <div class="lang-en"><strong>Forecast logic:</strong> Overhang(t+1) = Overhang(t) + Completions(t+1) − Absorption(t+1). Completions derived from lagged starts: 2024's 106,236 units peak in 2026 (~100,000 completions); 2025 annualised starts ~86,000 deliver in 2027; pipeline contraction drives 2028 to ~66,000. Absorption held at 85,000/year (5-year average). Peak overhang ~47,000 units in 2027, clearing to near-zero by 2029.</div>
-            <div class="lang-zh" style="display:none"><strong>推演邏輯：</strong>待售餘屋（下期）= 待售餘屋（本期）+ 完工量 − 吸收量。完工量依開工量滯後推算：2024年的106,236戶在2026年形成完工高峰（約100,000戶）；2025年年化開工約86,000戶將於2027年交屋；推案大減使2028年完工降至約66,000戶。年均吸收量維持85,000戶（五年均值）。待售餘屋高峰預計落在2027年約47,000套，2029年趨近清零。</div>
+            <div class="lang-en">Base case (absorption 85,000/yr): overhang peaks at ~47,000 units in 2027, normalising to ~14,000 by 2029. Bull case (90,000/yr absorption, OPR stays low): peak ~42,000, clears faster to ~8,000. Bear case (75,000/yr, OPR reversal or economic slowdown): peak ~57,000 in 2027, still elevated at ~28,000 in 2029. All scenarios assume completions derived from lagged 2024–2025 starts data.</div>
+            <div class="lang-zh" style="display:none">基本情境（年均吸收85,000套）：待售餘屋在2027年高峰約47,000套，2029年回落至約14,000套。樂觀情境（吸收90,000套，OPR維持低位）：高峰約42,000套，2029年降至約8,000套。保守情境（吸收75,000套，OPR逆轉或經濟放緩）：高峰約57,000套，2029年仍達28,000套。三個情境的完工量均依據2024至2025年已知開工數據推算。</div>
           </div>
         </div>
       </div>
@@ -296,16 +296,18 @@
       };
       new google.visualization.LineChart(document.getElementById('chartOhTrend')).draw(data,opts);
 
-      var fData=google.visualization.arrayToDataTable([
-        ['Year','Historical','Forecast'],
-        ['2023',25816,null],['2024H1',22642,null],['2025Q3',28672,null],
-        ['2025E',null,31000],['2026E',null,46000],['2027E',null,47000],['2028E',null,28000],['2029E',null,0]
+      var fData=new google.visualization.DataTable();
+      fData.addColumn('string','Year');fData.addColumn('number','Historical');
+      fData.addColumn('number','Bull (90K)');fData.addColumn('number','Base (85K)');fData.addColumn('number','Bear (75K)');
+      fData.addRows([
+        ['2023',25816,null,null,null],['2024H1',22642,null,null,null],['2025*',28672,28672,28672,28672],
+        ['26E',null,43000,46000,51000],['27E',null,42000,47000,57000],['28E',null,22000,28000,42000],['29E',null,8000,14000,28000]
       ]);
       new google.visualization.LineChart(document.getElementById('chartOhForecast')).draw(fData,{
-        chartArea:CA,backgroundColor:BG,colors:[NAVY,ORANGE],
-        legend:{position:'top',textStyle:{color:MUTED,fontSize:11}},
-        series:{1:{lineDashStyle:[6,3]}},lineWidth:2,pointSize:4,
-        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+        chartArea:CA,backgroundColor:BG,colors:[NAVY,GREEN,ORANGE,RED],
+        legend:{position:'top',textStyle:{color:MUTED,fontSize:10}},
+        series:{1:{lineDashStyle:[4,2],lineWidth:1.5},2:{lineDashStyle:[6,3]},3:{lineDashStyle:[8,4],lineWidth:1.5}},lineWidth:2,pointSize:4,
+        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},slantedText:true,slantedTextAngle:45},
         vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short',minValue:0},
         curveType:'function'
       });
