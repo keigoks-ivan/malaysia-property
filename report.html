@@ -26,7 +26,7 @@
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#8ba3c0!important;line-height:1.6!important;margin-bottom:3px!important}
     @media(max-width:700px){.chart-row{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -282,167 +282,238 @@
   <footer class="footer">A project by <span>InvestMQuest</span></footer>
 
   <script>
-  var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
-  var BG='transparent',GC='#e8f0f9';
-  var baseOpts={backgroundColor:BG,chartArea:{width:'85%',height:'75%'},legend:{textStyle:{color:MUTED,fontSize:10}},hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},fontName:'Inter'};
+  var C = {
+    navy:'#1e3a5f', green:'#16a34a', orange:'#d97706',
+    red:'#dc2626', blue:'#2563eb', muted:'#8ba3c0',
+    grid:'#e8f0f9', text:'#1e3a5f'
+  };
+  var baseText = { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 };
+  var baseTooltip = {
+    trigger: 'axis', backgroundColor: '#fff',
+    borderColor: '#ccd9e8', borderWidth: 1,
+    textStyle: { color: C.navy, fontSize: 11, fontFamily: 'Inter' }
+  };
+  var baseLegend = { top: 8, textStyle: baseText, icon: 'circle', itemWidth: 8, itemHeight: 8 };
+
+  function fmtNum(v) { return v >= 1000 ? (v/1000).toFixed(0)+'K' : v; }
+  function mkAxis(opts) {
+    return Object.assign({
+      axisLine: { lineStyle: { color: C.grid } },
+      axisTick: { show: false },
+      axisLabel: baseText,
+      splitLine: { lineStyle: { color: C.grid } }
+    }, opts || {});
+  }
+
+  var allCharts = [];
+
+  function initAllCharts(lang) {
+    allCharts.forEach(function(c){ if(c) c.dispose(); });
+    allCharts = [];
+    drawYieldSpread(lang);
+    drawMismatch(lang);
+    drawCompletionWave(lang);
+    drawSupplyPipeline(lang);
+    drawOhForecast(lang);
+    drawTakeup(lang);
+    drawAPAC(lang);
+    drawZonePSF(lang);
+    drawFDI(lang);
+  }
 
   function setLang(lang){
     document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
     document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
     document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
     localStorage.setItem('lang',lang);
-    if(window._chartsLoaded) drawAllReportCharts(lang);
-  }
-
-  google.charts.load('current',{packages:['corechart']});
-  google.charts.setOnLoadCallback(function(){
-    window._chartsLoaded=true;
-    var lang=localStorage.getItem('lang')||'en';
-    drawAllReportCharts(lang);
-    setLang(lang);
-  });
-
-  function drawAllReportCharts(lang){
-    drawYieldSpread(lang);drawMismatch(lang);drawCompletionWave(lang);
-    drawSupplyPipeline(lang);drawOhForecast(lang);drawTakeup(lang);drawAPAC(lang);
-    drawZonePSF(lang);drawFDI(lang);
+    initAllCharts(lang);
   }
 
   function drawYieldSpread(lang){
-    var data=google.visualization.arrayToDataTable([
-      [lang==='zh'?'年份':'Year',lang==='zh'?'租金收益率%':'Rental Yield %',lang==='zh'?'OPR%':'OPR %'],
-      ['2019',4.80,3.00],['2020',4.60,1.75],['2021',4.70,1.75],['2022',4.90,2.75],
-      ['23Q1',5.16,3.00],['23Q3',5.20,3.00],['24Q1',5.16,3.00],['24Q3',5.24,3.00],
-      ['25Q1',5.10,3.00],['25Q3',5.19,2.75]
-    ]);
-    var opts={backgroundColor:BG,chartArea:{width:'75%',height:'72%',left:'18%'},colors:[GREEN,RED],legend:'none',
-      vAxis:{minValue:1,maxValue:6,format:"#.##'%'",textStyle:{color:'#8ba3c0',fontSize:10},gridlines:{color:GC}},
-      hAxis:{textStyle:{fontSize:7},slantedText:false},
-      series:{0:{lineWidth:1.5,pointSize:2,curveType:'function'},1:{lineWidth:1,pointSize:1,lineDashStyle:[4,3],curveType:'function'}},fontName:'Inter'};
-    new google.visualization.LineChart(document.getElementById('chart-r-yield-spread')).draw(data,opts);
+    var c = echarts.init(document.getElementById('chart-r-yield-spread'));
+    allCharts.push(c);
+    c.setOption({
+      tooltip: baseTooltip,
+      grid: { left:40, right:10, top:30, bottom:25, containLabel:true },
+      xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','23Q1','23Q3','24Q1','24Q3','25Q1','25Q3'], axisLabel:{ color:C.muted, fontSize:8 } }),
+      yAxis: mkAxis({ type:'value', min:1, max:6, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
+      series: [
+        { type:'line', data:[4.80,4.60,4.70,4.90,5.16,5.20,5.16,5.24,5.10,5.19], lineStyle:{color:C.green,width:1.5}, itemStyle:{color:C.green}, smooth:0.3, areaStyle:{color:'rgba(22,163,74,0.08)'}, symbol:'circle', symbolSize:4 },
+        { type:'line', data:[3.00,1.75,1.75,2.75,3.00,3.00,3.00,3.00,3.00,2.75], lineStyle:{color:C.red,width:1,type:'dashed'}, itemStyle:{color:C.red}, step:'end', symbol:'circle', symbolSize:3 }
+      ]
+    });
   }
 
   function drawMismatch(lang){
-    var data=google.visualization.arrayToDataTable([
-      [lang==='zh'?'價格帶':'Price Band',lang==='zh'?'需求%':'Demand %',lang==='zh'?'供給%':'Supply %'],
-      [lang==='zh'?'<30萬':'<RM300k',53.1,18],[lang==='zh'?'30-50萬':'300-500k',27.3,25],
-      [lang==='zh'?'50萬-1M':'500k-1M',13.8,38],[lang==='zh'?'>1M':'>RM1M',5.8,19]
-    ]);
-    var opts={backgroundColor:BG,chartArea:{width:'75%',height:'72%',left:'18%'},colors:[NAVY,ORANGE],
-      vAxis:{format:"#'%'",textStyle:{color:'#8ba3c0',fontSize:10},gridlines:{color:GC}},
-      hAxis:{textStyle:{fontSize:7}},bar:{groupWidth:'60%'},
-      legend:{position:'top',textStyle:{fontSize:8}},fontName:'Inter'};
-    new google.visualization.ColumnChart(document.getElementById('chart-r-mismatch')).draw(data,opts);
+    var c = echarts.init(document.getElementById('chart-r-mismatch'));
+    allCharts.push(c);
+    var labels = lang==='zh' ? ['<30\u842c','30-50\u842c','50\u842c-1M','>1M'] : ['<RM300k','300-500k','500k-1M','>RM1M'];
+    c.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u9700\u6c42%':'Demand %', lang==='zh'?'\u4f9b\u7d66%':'Supply %'], textStyle:{fontSize:8,color:C.muted} }),
+      grid: { left:35, right:10, top:30, bottom:25, containLabel:true },
+      xAxis: mkAxis({ type:'category', data:labels, axisLabel:{fontSize:8,color:C.muted} }),
+      yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:'{value}%'} }),
+      series: [
+        { name:lang==='zh'?'\u9700\u6c42%':'Demand %', type:'bar', data:[53.1,27.3,13.8,5.8], itemStyle:{color:C.navy,borderRadius:[3,3,0,0]}, barMaxWidth:30 },
+        { name:lang==='zh'?'\u4f9b\u7d66%':'Supply %', type:'bar', data:[18,25,38,19], itemStyle:{color:C.orange,borderRadius:[3,3,0,0]}, barMaxWidth:30 }
+      ]
+    });
   }
 
   function drawCompletionWave(lang){
-    var data=google.visualization.arrayToDataTable([
-      [lang==='zh'?'年份':'Year',lang==='zh'?'完工量':'Completions',lang==='zh'?'吸收量':'Absorption'],
-      ['2021',76393,82000],['2022',71981,82000],['2023',74893,83000],
-      ['2024',82135,85000],['2026E',95000,85000],['2027E',85000,85000]
-    ]);
-    var opts={backgroundColor:BG,chartArea:{width:'75%',height:'72%',left:'18%'},colors:[ORANGE,GREEN],
-      vAxis:{format:'#,###',textStyle:{color:'#8ba3c0',fontSize:10},gridlines:{color:GC}},
-      hAxis:{textStyle:{fontSize:7}},
-      series:{0:{lineWidth:1.5,pointSize:2,curveType:'function'},1:{lineWidth:1,pointSize:0,lineDashStyle:[4,3],curveType:'function'}},
-      legend:{position:'top',textStyle:{fontSize:8}},fontName:'Inter'};
-    new google.visualization.LineChart(document.getElementById('chart-r-wave')).draw(data,opts);
+    var c = echarts.init(document.getElementById('chart-r-wave'));
+    allCharts.push(c);
+    c.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u5b8c\u5de5\u91cf':'Completions', lang==='zh'?'\u5438\u6536\u91cf':'Absorption'], textStyle:{fontSize:8,color:C.muted} }),
+      grid: { left:40, right:10, top:30, bottom:25, containLabel:true },
+      xAxis: mkAxis({ type:'category', data:['2021','2022','2023','2024','2026E','2027E'], axisLabel:{fontSize:8,color:C.muted} }),
+      yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
+      series: [
+        { name:lang==='zh'?'\u5b8c\u5de5\u91cf':'Completions', type:'line', data:[76393,71981,74893,82135,95000,85000], lineStyle:{color:C.orange,width:1.5}, itemStyle:{color:C.orange}, smooth:0.2, symbol:'circle', symbolSize:4 },
+        { name:lang==='zh'?'\u5438\u6536\u91cf':'Absorption', type:'line', data:[82000,82000,83000,85000,85000,85000], lineStyle:{color:C.green,width:1,type:'dashed'}, itemStyle:{color:C.green}, symbol:'none' }
+      ]
+    });
   }
 
   function drawSupplyPipeline(lang){
-    var data=google.visualization.arrayToDataTable([
-      [lang==='zh'?'年份':'Year',lang==='zh'?'規劃量':'Planned',lang==='zh'?'開工戶數':'Starts',lang==='zh'?'完工量':'Completions'],
-      ['2019',85000,82000,78000],['2020',60000,65000,72000],['2021',77585,86258,76393],
-      ['2022',89111,97804,71981],['2023',80964,88114,74893],['2024',100461,106236,82135],
-      [lang==='zh'?'2025前三季':'2025 Q1-Q3',49602,64843,69303]
-    ]);
-    var opts={backgroundColor:BG,chartArea:{width:'85%',height:'70%'},colors:[MUTED,NAVY,GREEN],
-      vAxis:{format:'short',textStyle:{fontSize:10},gridlines:{color:GC}},
-      hAxis:{textStyle:{fontSize:9}},lineWidth:2,pointSize:3,
-      series:{0:{lineDashStyle:[4,2]}},
-      legend:{position:'top',textStyle:{fontSize:10}},fontName:'Inter',curveType:'function'};
-    new google.visualization.LineChart(document.getElementById('chart-r-supply')).draw(data,opts);
-  }
-
-  function drawTakeup(lang){
-    var data=google.visualization.arrayToDataTable([
-      [lang==='zh'?'類型':'Type',lang==='zh'?'去化率%':'Take-up %',{role:'style'}],
-      [lang==='zh'?'有地住宅':'Landed',14,GREEN],
-      [lang==='zh'?'高層住宅':'High-Rise',5.1,ORANGE]
-    ]);
-    var opts={backgroundColor:BG,chartArea:{width:'85%',height:'75%'},legend:'none',
-      vAxis:{minValue:0,maxValue:20,format:"#'%'",textStyle:{fontSize:10},gridlines:{color:GC}},
-      hAxis:{textStyle:{fontSize:11}},bar:{groupWidth:'50%'},fontName:'Inter'};
-    new google.visualization.ColumnChart(document.getElementById('chart-r-takeup')).draw(data,opts);
-  }
-
-  function drawAPAC(lang){
-    var data=google.visualization.arrayToDataTable([
-      [lang==='zh'?'城市':'City',lang==='zh'?'房價租金比（倍）':'Price-to-Rent Ratio',{role:'style'},{role:'annotation'}],
-      [lang==='zh'?'胡志明市':'Ho Chi Minh',18,GREEN,'18x'],
-      ['KL',21.7,GREEN,'21.7x'],
-      ['Bangkok',25,NAVY,'25x'],
-      [lang==='zh'?'東京（全市）':'Tokyo (City)',37,NAVY,'37x'],
-      ['Singapore',40,NAVY,'40x'],
-      [lang==='zh'?'台北':'Taipei',47,ORANGE,'47x'],
-      ['Hong Kong',50,ORANGE,'50x'],
-      [lang==='zh'?'上海':'Shanghai',59,RED,'59x']
-    ]);
-    var opts={backgroundColor:BG,chartArea:{width:'52%',height:'85%'},legend:'none',
-      hAxis:{minValue:0,maxValue:65,textStyle:{fontSize:10},gridlines:{color:GC}},
-      vAxis:{textStyle:{fontSize:10}},bar:{groupWidth:'68%'},fontName:'Inter',
-      annotations:{alwaysOutside:true,textStyle:{fontSize:10,color:NAVY,bold:true}}};
-    new google.visualization.BarChart(document.getElementById('chart-r-apac')).draw(data,opts);
-  }
-
-  function drawZonePSF(lang){
-    var data=google.visualization.arrayToDataTable([
-      [lang==='zh'?'區域':'Zone',lang==='zh'?'平均呎價(RM)':'Avg PSF (RM)',{role:'style'}],
-      [lang==='zh'?'第一區\nKLCC/BB':'Zone 1\nKLCC/BB',1800,'color:'+ORANGE],
-      [lang==='zh'?'第二區\n中谷/OKR':'Zone 2\nMid Valley',700,'color:'+GREEN],
-      [lang==='zh'?'第三區\n外圍':'Zone 3\nOuter',490,'color:'+RED]
-    ]);
-    var opts={backgroundColor:BG,chartArea:{width:'80%',height:'65%'},legend:'none',
-      vAxis:{format:"RM #,###",textStyle:{fontSize:10},gridlines:{color:GC},minValue:0},
-      hAxis:Object.assign({},baseOpts.hAxis,{textStyle:{color:'#8ba3c0',fontSize:10},slantedText:false}),bar:{groupWidth:'50%'},fontName:'Inter'};
-    new google.visualization.ColumnChart(document.getElementById('chart-r-zone')).draw(data,opts);
-  }
-
-  function drawFDI(lang){
-    var data=google.visualization.arrayToDataTable([
-      [lang==='zh'?'年份':'Period',lang==='zh'?'FDI(十億RM)':'FDI (RM B)',{role:'style'}],
-      ['2021',12,NAVY],['2022',18,NAVY],['2023',15,NAVY],['2024',25,NAVY],
-      [lang==='zh'?'2025上半年':'2025 H1',12.5,GREEN]
-    ]);
-    var opts={backgroundColor:BG,chartArea:{width:'85%',height:'75%'},legend:'none',
-      vAxis:{textStyle:{fontSize:10},gridlines:{color:GC},minValue:0},
-      hAxis:{textStyle:{fontSize:9}},bar:{groupWidth:'65%'},fontName:'Inter'};
-    new google.visualization.ColumnChart(document.getElementById('chart-r-fdi')).draw(data,opts);
+    var c = echarts.init(document.getElementById('chart-r-supply'));
+    allCharts.push(c);
+    var lastLabel = lang==='zh' ? '2025\u524d\u4e09\u5b63' : '2025 Q1-Q3';
+    c.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u898f\u5283\u91cf':'Planned', lang==='zh'?'\u958b\u5de5\u6236\u6578':'Starts', lang==='zh'?'\u5b8c\u5de5\u91cf':'Completions'] }),
+      grid: { left:50, right:15, top:35, bottom:25, containLabel:true },
+      xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024',lastLabel], axisLabel:{fontSize:9,color:C.muted} }),
+      yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
+      series: [
+        { name:lang==='zh'?'\u898f\u5283\u91cf':'Planned', type:'line', data:[85000,60000,77585,89111,80964,100461,49602], lineStyle:{color:C.muted,width:2,type:'dashed'}, itemStyle:{color:C.muted}, smooth:0.2, symbol:'circle', symbolSize:4 },
+        { name:lang==='zh'?'\u958b\u5de5\u6236\u6578':'Starts', type:'line', data:[82000,65000,86258,97804,88114,106236,64843], lineStyle:{color:C.navy,width:2}, itemStyle:{color:C.navy}, smooth:0.2, symbol:'circle', symbolSize:4 },
+        { name:lang==='zh'?'\u5b8c\u5de5\u91cf':'Completions', type:'line', data:[78000,72000,76393,71981,74893,82135,69303], lineStyle:{color:C.green,width:2}, itemStyle:{color:C.green}, smooth:0.2, symbol:'circle', symbolSize:4 }
+      ]
+    });
   }
 
   function drawOhForecast(lang){
-    var data=new google.visualization.DataTable();
-    data.addColumn('string',lang==='zh'?'年份':'Year');
-    data.addColumn('number',lang==='zh'?'歷史':'Historical');
-    data.addColumn('number',lang==='zh'?'樂觀':'Bull');
-    data.addColumn('number',lang==='zh'?'基本':'Base');
-    data.addColumn('number',lang==='zh'?'保守':'Bear');
-    data.addRows([
-      ['2023',25816,null,null,null],['2024H1',22642,null,null,null],['2025*',28672,28672,28672,28672],
-      ['2026E',null,43000,46000,51000],['2027E',null,42000,47000,57000],['2028E',null,22000,28000,42000],['2029E',null,8000,14000,28000]
-    ]);
-    var opts={backgroundColor:BG,chartArea:{width:'80%',height:'72%'},colors:[NAVY,GREEN,ORANGE,RED],
-      legend:{position:'top',textStyle:{fontSize:10}},
-      series:{1:{lineDashStyle:[4,2],lineWidth:1.5},2:{lineDashStyle:[6,3]},3:{lineDashStyle:[8,4],lineWidth:1.5}},lineWidth:2,pointSize:4,
-      hAxis:Object.assign({},baseOpts.hAxis,{slantedText:true,slantedTextAngle:30,textStyle:{color:'#8ba3c0',fontSize:9},showTextEvery:1}),
-      vAxis:{textStyle:{fontSize:10},gridlines:{color:GC},format:'#,###',minValue:0},
-      fontName:'Inter',curveType:'function'};
-    new google.visualization.LineChart(document.getElementById('chart-r-oh-forecast')).draw(data,opts);
+    var c = echarts.init(document.getElementById('chart-r-oh-forecast'));
+    allCharts.push(c);
+    c.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u6b77\u53f2':'Historical', lang==='zh'?'\u6a02\u89c0':'Bull', lang==='zh'?'\u57fa\u672c':'Base', lang==='zh'?'\u4fdd\u5b88':'Bear'] }),
+      grid: { left:50, right:15, top:35, bottom:25, containLabel:true },
+      xAxis: mkAxis({ type:'category', data:['2023','2024H1','25*','26E','27E','28E','29E'], axisLabel:{fontSize:9,color:C.muted,rotate:0,interval:0} }),
+      yAxis: mkAxis({ type:'value', min:0, axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
+      series: [
+        { name:lang==='zh'?'\u6b77\u53f2':'Historical', type:'line', data:[25816,22642,28672,null,null,null,null], lineStyle:{color:C.navy,width:2}, itemStyle:{color:C.navy}, areaStyle:{color:'rgba(30,58,95,0.08)'}, symbol:'circle', symbolSize:5 },
+        { name:lang==='zh'?'\u6a02\u89c0':'Bull', type:'line', data:[null,null,28672,43000,42000,22000,8000], lineStyle:{color:C.green,width:1.5,type:[4,2]}, itemStyle:{color:C.green}, symbol:'circle', symbolSize:4 },
+        { name:lang==='zh'?'\u57fa\u672c':'Base', type:'line', data:[null,null,28672,46000,47000,28000,14000], lineStyle:{color:C.orange,width:2,type:[6,3]}, itemStyle:{color:C.orange}, symbol:'circle', symbolSize:5 },
+        { name:lang==='zh'?'\u4fdd\u5b88':'Bear', type:'line', data:[null,null,28672,51000,57000,42000,28000], lineStyle:{color:C.red,width:1.5,type:[8,4]}, itemStyle:{color:C.red}, symbol:'circle', symbolSize:4 }
+      ]
+    });
   }
 
-  window.addEventListener('resize',function(){
-    var lang=localStorage.getItem('lang')||'en';
-    drawAllReportCharts(lang);
+  function drawTakeup(lang){
+    var c = echarts.init(document.getElementById('chart-r-takeup'));
+    allCharts.push(c);
+    var labels = lang==='zh' ? ['\u6709\u5730\u4f4f\u5b85','\u9ad8\u5c64\u4f4f\u5b85'] : ['Landed','High-Rise'];
+    c.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
+      grid: { left:40, right:10, top:15, bottom:25, containLabel:true },
+      xAxis: mkAxis({ type:'category', data:labels }),
+      yAxis: mkAxis({ type:'value', max:20, axisLabel:{fontSize:9,color:C.muted, formatter:'{value}%'} }),
+      series: [{
+        type:'bar',
+        data:[
+          { value:14, itemStyle:{color:C.green,borderRadius:[4,4,0,0]} },
+          { value:5.1, itemStyle:{color:C.orange,borderRadius:[4,4,0,0]} }
+        ],
+        barMaxWidth:120,
+        label:{ show:true, position:'top', formatter:'{c}%', fontSize:11, fontFamily:'JetBrains Mono, monospace' }
+      }]
+    });
+  }
+
+  function drawAPAC(lang){
+    var c = echarts.init(document.getElementById('chart-r-apac'));
+    allCharts.push(c);
+    var labels = lang==='zh'
+      ? ['\u80e1\u5fd7\u660e\u5e02','\u5409\u9686\u5761','\u66fc\u8c37','\u6771\u4eac\uff08\u5168\u5e02\uff09','\u65b0\u52a0\u5761','\u53f0\u5317','\u9999\u6e2f','\u4e0a\u6d77']
+      : ['Ho Chi Minh','KL','Bangkok','Tokyo','Singapore','Taipei','Hong Kong','Shanghai'];
+    var values = [18, 21.7, 25, 37, 40, 47, 50, 59];
+    var colors = [C.green, C.green, C.navy, C.navy, C.navy, C.orange, C.orange, C.red];
+    c.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
+      grid: { left:90, right:50, top:10, bottom:15, containLabel:false },
+      xAxis: mkAxis({ type:'value', min:0, max:65 }),
+      yAxis: mkAxis({ type:'category', data:labels, axisLabel:{color:C.navy,fontSize:10,fontFamily:'Inter'} }),
+      series: [{
+        type:'bar',
+        data: values.map(function(v,i){ return { value:v, itemStyle:{color:colors[i],borderRadius:[0,4,4,0]} }; }),
+        barMaxWidth:22,
+        label:{ show:true, position:'right', formatter:'{c}x', fontSize:10, fontFamily:'Inter', fontWeight:'bold', color:C.navy }
+      }]
+    });
+  }
+
+  function drawZonePSF(lang){
+    var c = echarts.init(document.getElementById('chart-r-zone'));
+    allCharts.push(c);
+    var labels = lang==='zh'
+      ? ['\u7b2c\u4e00\u5340\nKLCC/BB','\u7b2c\u4e8c\u5340\n\u4e2d\u8c37/OKR','\u7b2c\u4e09\u5340\n\u5916\u570d']
+      : ['Zone 1\nKLCC/BB','Zone 2\nMid Valley/OKR','Zone 3\nOuter Ring'];
+    c.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
+      grid: { left:50, right:15, top:15, bottom:30, containLabel:true },
+      xAxis: mkAxis({ type:'category', data:labels }),
+      yAxis: mkAxis({ type:'value', min:0, axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return 'RM '+v.toLocaleString();}} }),
+      series: [{
+        type:'bar',
+        data:[
+          { value:1800, itemStyle:{color:C.orange,borderRadius:[4,4,0,0]} },
+          { value:700, itemStyle:{color:C.green,borderRadius:[4,4,0,0]} },
+          { value:490, itemStyle:{color:C.red,borderRadius:[4,4,0,0]} }
+        ],
+        barMaxWidth:100,
+        label:{ show:true, position:'top', formatter:'RM {c} psf', fontSize:10, fontFamily:'JetBrains Mono, monospace' }
+      }]
+    });
+  }
+
+  function drawFDI(lang){
+    var c = echarts.init(document.getElementById('chart-r-fdi'));
+    allCharts.push(c);
+    var lastLabel = lang==='zh' ? '2025\u4e0a\u534a\u5e74' : '2025 H1';
+    c.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
+      grid: { left:40, right:10, top:15, bottom:25, containLabel:true },
+      xAxis: mkAxis({ type:'category', data:['2021','2022','2023','2024',lastLabel], axisLabel:{fontSize:9,color:C.muted} }),
+      yAxis: mkAxis({ type:'value', min:0 }),
+      series: [{
+        type:'bar',
+        data:[
+          { value:12, itemStyle:{color:C.navy,borderRadius:[4,4,0,0]} },
+          { value:18, itemStyle:{color:C.navy,borderRadius:[4,4,0,0]} },
+          { value:15, itemStyle:{color:C.navy,borderRadius:[4,4,0,0]} },
+          { value:25, itemStyle:{color:C.navy,borderRadius:[4,4,0,0]} },
+          { value:12.5, itemStyle:{color:C.green,borderRadius:[4,4,0,0]} }
+        ],
+        barMaxWidth:50,
+        label:{ show:true, position:'top', formatter:'RM {c}B', fontSize:10, fontFamily:'JetBrains Mono, monospace' },
+        markPoint:{
+          data:[{ coord:[lastLabel,12.5], symbol:'pin', symbolSize:40, label:{formatter:'+150%\nYoY',fontSize:8}, itemStyle:{color:C.green} }]
+        }
+      }]
+    });
+  }
+
+  window.addEventListener('load', function(){
+    var lang = localStorage.getItem('lang') || 'en';
+    setLang(lang);
+  });
+
+  window.addEventListener('resize', function(){
+    allCharts.forEach(function(c){ if(c) c.resize(); });
   });
   </script>
 </body>
