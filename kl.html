@@ -403,17 +403,18 @@
 
   function drawKLForecast(){
     var data=new google.visualization.DataTable();
-    data.addColumn('string','Year');data.addColumn('number','Historical');
-    data.addColumn('number','Bull');data.addColumn('number','Base');data.addColumn('number','Bear');
+    data.addColumn('string','Year');data.addColumn('number','Historical / 歷史');
+    data.addColumn('number','Bull (90K)');data.addColumn('number','Base (85K)');data.addColumn('number','Bear (75K)');
     data.addRows([
-      ['24H1',3643,null,null,null],
+      ['2023',4100,null,null,null],
+      ['2024H1',3643,3643,3643,3643],
       ['25E',null,4000,4200,4400],['26E',null,5600,6100,6800],['27E',null,5500,6400,7500],['28E',null,3000,3900,5700],['29E',null,1000,1800,3800]
     ]);
     new google.visualization.LineChart(document.getElementById('chartKLForecast')).draw(data,{
       chartArea:CA,backgroundColor:BG,colors:[NAVY,GREEN,ORANGE,RED],
       legend:{position:'top',textStyle:{color:MUTED,fontSize:10}},
-      series:{1:{lineDashStyle:[4,2],lineWidth:1.5},2:{lineDashStyle:[6,3]},3:{lineDashStyle:[8,4],lineWidth:1.5}},lineWidth:2,pointSize:4,
-      hAxis:{textStyle:{color:MUTED,fontSize:9},gridlines:{color:GC},slantedText:true,slantedTextAngle:45,showTextEvery:1},
+      series:{0:{lineWidth:2,pointSize:5},1:{lineDashStyle:[4,2],lineWidth:1.5,pointSize:3},2:{lineDashStyle:[6,3],lineWidth:2,pointSize:4},3:{lineDashStyle:[8,4],lineWidth:1.5,pointSize:3}},
+      hAxis:{textStyle:{color:MUTED,fontSize:9},gridlines:{color:GC},slantedText:false,maxRotation:0,showTextEvery:1},
       vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short',minValue:0},
       curveType:'function'
     });
