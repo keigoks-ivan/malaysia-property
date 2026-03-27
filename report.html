@@ -134,6 +134,16 @@
         <div id="chart-r-supply" style="height:200px;"></div>
       </div>
 
+      <div class="chart-inline">
+        <h4><span class="lang-en">Overhang Forecast 2025–2029</span><span class="lang-zh" style="display:none">待售餘屋預測 2025–2029年</span></h4>
+        <div class="chart-note orange"><span class="lang-en">Peak ~47,000 units in 2027 · Relief from 2028</span><span class="lang-zh" style="display:none">2027年高峰約47,000套 · 2028年起緩解</span></div>
+        <div id="chart-r-oh-forecast" style="height:220px;"></div>
+        <div class="insight-box" style="margin-top:10px;">
+          <div class="lang-en">Overhang peaks at ~47,000 units in 2027 as 2024's record starts deliver. Absorption held at 85,000/year. Full clearance projected by 2029.</div>
+          <div class="lang-zh" style="display:none">待售餘屋在2027年達到高峰約47,000套，隨後隨著推案量大減快速去化，預計2029年趨近清零。</div>
+        </div>
+      </div>
+
       <h2><span class="lang-en">DEMAND: INTENT WITHOUT ACCESS</span><span class="lang-zh" style="display:none">需求面：想買的人很多，能成交的不夠</span></h2>
 
       <div class="lang-en">
@@ -292,7 +302,7 @@
 
   function drawAllReportCharts(lang){
     drawYieldSpread(lang);drawMismatch(lang);drawCompletionWave(lang);
-    drawSupplyPipeline(lang);drawTakeup(lang);drawAPAC(lang);
+    drawSupplyPipeline(lang);drawOhForecast(lang);drawTakeup(lang);drawAPAC(lang);
     drawZonePSF(lang);drawFDI(lang);
   }
 
@@ -406,6 +416,24 @@
       vAxis:{textStyle:{fontSize:10},gridlines:{color:GC},minValue:0},
       hAxis:{textStyle:{fontSize:9}},bar:{groupWidth:'65%'},fontName:'Inter'};
     new google.visualization.ColumnChart(document.getElementById('chart-r-fdi')).draw(data,opts);
+  }
+
+  function drawOhForecast(lang){
+    var data=new google.visualization.DataTable();
+    data.addColumn('string',lang==='zh'?'年份':'Year');
+    data.addColumn('number',lang==='zh'?'歷史':'Historical');
+    data.addColumn('number',lang==='zh'?'預測':'Forecast');
+    data.addRows([
+      ['2023',25816,null],['2024H1',22642,null],['2025Q3',28672,null],
+      ['2025E',null,31000],['2026E',null,46000],['2027E',null,47000],['2028E',null,28000],['2029E',null,0]
+    ]);
+    var opts={backgroundColor:BG,chartArea:{width:'85%',height:'75%'},colors:[NAVY,ORANGE],
+      legend:{position:'top',textStyle:{fontSize:10}},
+      series:{1:{lineDashStyle:[6,3]}},lineWidth:2,pointSize:4,
+      hAxis:{textStyle:{fontSize:9},gridlines:{color:GC}},
+      vAxis:{textStyle:{fontSize:10},gridlines:{color:GC},format:'#,###',minValue:0},
+      fontName:'Inter',curveType:'function'};
+    new google.visualization.LineChart(document.getElementById('chart-r-oh-forecast')).draw(data,opts);
   }
 
   window.addEventListener('resize',function(){

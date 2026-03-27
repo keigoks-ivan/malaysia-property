@@ -138,8 +138,8 @@
       </div>
     </div>
 
-    <!-- Main Charts: Yield Spread + Supply Pipeline -->
-    <div class="chart-grid main-split" style="margin-top:20px;">
+    <!-- Charts -->
+    <div class="chart-grid two-col" style="margin-top:20px;">
       <div class="chart-card">
         <h3><span class="lang-en">Yield Spread Monitor</span><span class="lang-zh" style="display:none">利差監測儀</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Gross Rental Yield vs OPR</span><span class="lang-zh" style="display:none">租金收益率 vs OPR</span></p>
@@ -150,25 +150,13 @@
         </div>
       </div>
       <div class="chart-card">
-        <h3><span class="lang-en">Supply Pipeline Pressure</span><span class="lang-zh" style="display:none">新建供給壓力</span></h3>
-        <p class="chart-subtitle"><span class="lang-en">Months of supply by property type</span><span class="lang-zh" style="display:none">各類型房產去化月數</span></p>
-        <div style="position:relative;height:220px;"><div id="chart-pipeline-pressure" style="width:100%;height:100%"></div></div>
-        <div class="insight-box">
-          <span class="lang-en">High-rise takes 22 months to clear vs 6-month benchmark.</span>
-          <span class="lang-zh" style="display:none">高層住宅需22個月去化，遠超6個月的健康基準。</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Secondary Charts -->
-    <div class="chart-grid two-col">
-      <div class="chart-card">
-        <h3><span class="lang-en">Transaction Volume Trend</span><span class="lang-zh" style="display:none">交易量趨勢</span></h3>
-        <div style="position:relative;height:220px;"><div id="chart-tx-trend" style="width:100%;height:100%"></div></div>
-      </div>
-      <div class="chart-card">
-        <h3><span class="lang-en">Overhang Pipeline</span><span class="lang-zh" style="display:none">待售餘屋趨勢</span></h3>
+        <h3><span class="lang-en">Overhang Pipeline &amp; Forecast</span><span class="lang-zh" style="display:none">待售餘屋趨勢與預測</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">Residential overhang units · Historical + Forecast</span><span class="lang-zh" style="display:none">住宅待售餘屋 · 歷史+預測</span></p>
         <div style="position:relative;height:220px;"><div id="chart-overhang-pipeline" style="width:100%;height:100%"></div></div>
+        <div class="insight-box">
+          <span class="lang-en">Overhang peaks ~47,000 units in 2026–2027 as the 2024 construction boom completes delivery. Relief begins from 2028 as reduced starts (−12.1% in 2025) flow through the pipeline. Full clearance projected by 2029.</span>
+          <span class="lang-zh" style="display:none">待售餘屋預計在2026至2027年達到高峰約47,000套，來自2024年大量開工的完工交屋潮。隨著2025年開工大減（−12.1%），供給壓力預計從2028年開始明顯緩解，2029年趨近清零。</span>
+        </div>
       </div>
       <div class="chart-card">
         <h3><span class="lang-en">Rental Yield by City (Q1 2026)</span><span class="lang-zh" style="display:none">各城市租金收益率（2026年Q1）</span></h3>
@@ -176,8 +164,8 @@
         <p class="chart-footnote"><span class="lang-en">Green = above OPR (2.75%) = positive carry | Orange = below OPR</span><span class="lang-zh" style="display:none">綠色 = 高於OPR（2.75%）= 正向利差 | 橙色 = 低於OPR</span></p>
       </div>
       <div class="chart-card">
-        <h3><span class="lang-en">MHPI Nominal vs Real</span><span class="lang-zh" style="display:none">房價指數：名義 vs 實質</span></h3>
-        <div style="position:relative;height:220px;"><div id="chart-mhpi" style="width:100%;height:100%"></div></div>
+        <h3><span class="lang-en">Transaction Volume Trend</span><span class="lang-zh" style="display:none">交易量趨勢</span></h3>
+        <div style="position:relative;height:220px;"><div id="chart-tx-trend" style="width:100%;height:100%"></div></div>
       </div>
     </div>
 
@@ -208,11 +196,9 @@
 
   function drawAllCharts() {
     drawYieldSpread();
-    drawPipelinePressure();
-    drawTxTrend();
     drawOverhangPipeline();
     drawYieldCity();
-    drawMHPI();
+    drawTxTrend();
   }
 
   // Common chart area settings
@@ -240,26 +226,6 @@
     new google.visualization.LineChart(document.getElementById('chart-yield-spread')).draw(data,options);
   }
 
-  function drawPipelinePressure() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string','Year');
-    data.addColumn('number','Landed (months)');
-    data.addColumn('number','High-rise (months)');
-    data.addColumn('number','6-month benchmark');
-    data.addRows([
-      ['2019',7,24,6],['2020',8,20,6],['2021',7,22,6],['2022',6,18,6],
-      ['2023',6,16,6],['2024',7,20,6],['2025E',8,22,6]
-    ]);
-    var options = {
-      backgroundColor:BG, chartArea:CA, legend:{position:'bottom',textStyle:{color:MUTED,fontSize:11}},
-      colors:[GREEN,ORANGE,RED], curveType:'function',
-      vAxis:{title:'Months',gridlines:{color:GC},textStyle:{color:MUTED,fontSize:10}},
-      hAxis:{textStyle:{color:MUTED,fontSize:10}},
-      series:{2:{lineDashStyle:[4,3],lineWidth:1,pointSize:0}}
-    };
-    new google.visualization.LineChart(document.getElementById('chart-pipeline-pressure')).draw(data,options);
-  }
-
   function drawTxTrend() {
     var data = google.visualization.arrayToDataTable([
       ['Year','Transactions'],
@@ -278,18 +244,20 @@
   function drawOverhangPipeline() {
     var data = new google.visualization.DataTable();
     data.addColumn('string','Period');
-    data.addColumn('number','Residential Only');
-    data.addColumn('number','Total incl. SA');
+    data.addColumn('number','Historical');
+    data.addColumn('number','Forecast');
     data.addRows([
       ['2018',32313,null],['2019',36863,null],['2020',31092,null],['2021',26424,null],
-      ['2022',27746,null],['2023',25816,47463],['2024H1',22642,42126],['2025Q3',28672,44794]
+      ['2022',27746,null],['2023',25816,null],['2024H1',22642,null],['2025Q3',28672,null],
+      ['2025E',null,31000],['2026E',null,46000],['2027E',null,47000],['2028E',null,28000],['2029E',null,0]
     ]);
     var options = {
-      backgroundColor:BG, chartArea:CA, legend:{position:'bottom',textStyle:{color:MUTED,fontSize:11}},
+      backgroundColor:BG, chartArea:CA, legend:{position:'top',textStyle:{color:MUTED,fontSize:11}},
       colors:[NAVY,ORANGE], curveType:'function',
-      vAxis:{gridlines:{color:GC},textStyle:{color:MUTED,fontSize:10},format:'short'},
-      hAxis:{textStyle:{color:MUTED,fontSize:9},slantedText:true},
-      series:{1:{lineDashStyle:[4,3]}}
+      vAxis:{gridlines:{color:GC},textStyle:{color:MUTED,fontSize:10},format:'short',minValue:0},
+      hAxis:{textStyle:{color:MUTED,fontSize:9},slantedText:true,slantedTextAngle:45},
+      series:{1:{lineDashStyle:[6,3]}},
+      lineWidth:2, pointSize:3
     };
     new google.visualization.LineChart(document.getElementById('chart-overhang-pipeline')).draw(data,options);
   }
@@ -310,22 +278,6 @@
       vAxis:{textStyle:{color:NAVY,fontSize:11}}
     };
     new google.visualization.BarChart(document.getElementById('chart-yield-city')).draw(data,options);
-  }
-
-  function drawMHPI() {
-    var data = google.visualization.arrayToDataTable([
-      ['Year','MHPI Nominal','Real MHPI'],
-      ['2019',194,160],['2020',195,160],['2021',197,159],['2022',200,156],
-      ['2023',207,157],['2024',224,165],['2025Q3',229.1,167]
-    ]);
-    var options = {
-      backgroundColor:BG, chartArea:CA, legend:{position:'bottom',textStyle:{color:MUTED,fontSize:11}},
-      colors:[NAVY,ORANGE], curveType:'function',
-      vAxis:{gridlines:{color:GC},textStyle:{color:MUTED,fontSize:10}},
-      hAxis:{textStyle:{color:MUTED,fontSize:10}},
-      series:{1:{lineDashStyle:[4,3]}}
-    };
-    new google.visualization.LineChart(document.getElementById('chart-mhpi')).draw(data,options);
   }
 
   // Resize handler

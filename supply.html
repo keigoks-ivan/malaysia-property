@@ -136,6 +136,15 @@
             <div style="position:relative;height:220px;"><div id="chartOhTrend" style="width:100%;height:100%"></div></div>
           </div>
         </div>
+        <div class="chart-card" style="margin-top:16px;">
+          <h3><span class="lang-en">Overhang Forecast 2025–2029</span><span class="lang-zh" style="display:none">待售餘屋預測 2025–2029年</span></h3>
+          <p class="chart-subtitle"><span class="lang-en">Model-based projection · Residential only</span><span class="lang-zh" style="display:none">模型推演 · 僅住宅類</span></p>
+          <div style="position:relative;height:240px;"><div id="chartOhForecast" style="width:100%;height:100%"></div></div>
+          <div class="insight-box" style="margin-top:12px;">
+            <div class="lang-en"><strong>Forecast logic:</strong> Overhang(t+1) = Overhang(t) + Completions(t+1) − Absorption(t+1). Completions derived from lagged starts: 2024's 106,236 units peak in 2026 (~100,000 completions); 2025 annualised starts ~86,000 deliver in 2027; pipeline contraction drives 2028 to ~66,000. Absorption held at 85,000/year (5-year average). Peak overhang ~47,000 units in 2027, clearing to near-zero by 2029.</div>
+            <div class="lang-zh" style="display:none"><strong>推演邏輯：</strong>待售餘屋（下期）= 待售餘屋（本期）+ 完工量 − 吸收量。完工量依開工量滯後推算：2024年的106,236戶在2026年形成完工高峰（約100,000戶）；2025年年化開工約86,000戶將於2027年交屋；推案大減使2028年完工降至約66,000戶。年均吸收量維持85,000戶（五年均值）。待售餘屋高峰預計落在2027年約47,000套，2029年趨近清零。</div>
+          </div>
+        </div>
       </div>
 
       <!-- Tab 2: By Price Band -->
@@ -286,6 +295,20 @@
         curveType:'function',pointSize:4
       };
       new google.visualization.LineChart(document.getElementById('chartOhTrend')).draw(data,opts);
+
+      var fData=google.visualization.arrayToDataTable([
+        ['Year','Historical','Forecast'],
+        ['2023',25816,null],['2024H1',22642,null],['2025Q3',28672,null],
+        ['2025E',null,31000],['2026E',null,46000],['2027E',null,47000],['2028E',null,28000],['2029E',null,0]
+      ]);
+      new google.visualization.LineChart(document.getElementById('chartOhForecast')).draw(fData,{
+        chartArea:CA,backgroundColor:BG,colors:[NAVY,ORANGE],
+        legend:{position:'top',textStyle:{color:MUTED,fontSize:11}},
+        series:{1:{lineDashStyle:[6,3]}},lineWidth:2,pointSize:4,
+        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short',minValue:0},
+        curveType:'function'
+      });
     }
 
     function drawOhPrice(){
