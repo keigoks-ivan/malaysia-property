@@ -136,10 +136,36 @@
         <span class="kpi-badge badge-green"><span class="lang-en">Cut Jul 2025</span><span class="lang-zh" style="display:none">2025年7月降息</span></span>
         <div class="kpi-source">BNM</div>
       </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label"><span class="lang-en">MHPI YoY (2025Q3)</span><span class="lang-zh" style="display:none">房價指數年增率（2025Q3）</span></div>
+        <div class="kpi-value">+0.14%</div>
+        <span class="kpi-badge badge-orange"><span class="lang-en">Near-flat in real terms</span><span class="lang-zh" style="display:none">實質持平</span></span>
+        <div class="kpi-source">JPPH Q3 2025</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label"><span class="lang-en">KL Avg Price YoY</span><span class="lang-zh" style="display:none">吉隆坡平均房價年增率</span></div>
+        <div class="kpi-value">−4.3%</div>
+        <span class="kpi-badge badge-red"><span class="lang-en">Q3 2025 · Supply-driven</span><span class="lang-zh" style="display:none">2025年Q3 · 供給驅動</span></span>
+        <div class="kpi-source">JPPH Q3 2025</div>
+      </div>
     </div>
 
-    <!-- Charts -->
+    <!-- Charts: Row 1 - MHPI + City Price -->
     <div class="chart-grid two-col" style="margin-top:20px;">
+      <div class="chart-card">
+        <h3><span class="lang-en">Malaysia House Price Index (MHPI)</span><span class="lang-zh" style="display:none">馬來西亞房價指數（MHPI）</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">Nominal vs Real · YoY% Change</span><span class="lang-zh" style="display:none">名義 vs 實質 · 年增率</span></p>
+        <div style="position:relative;height:240px;"><div id="chart-mhpi-dash" style="width:100%;height:100%"></div></div>
+      </div>
+      <div class="chart-card">
+        <h3><span class="lang-en">Average Price by Major City</span><span class="lang-zh" style="display:none">主要城市平均房價</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">Q3 2025 · RM · YoY% Change</span><span class="lang-zh" style="display:none">2025年Q3 · 令吉 · 年增率</span></p>
+        <div style="position:relative;height:240px;"><div id="chart-city-price" style="width:100%;height:100%"></div></div>
+      </div>
+    </div>
+
+    <!-- Charts: Row 2 - Yield Spread + Overhang + Yield City + Tx Trend -->
+    <div class="chart-grid two-col">
       <div class="chart-card">
         <h3><span class="lang-en">Yield Spread Monitor</span><span class="lang-zh" style="display:none">利差監測儀</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Gross Rental Yield vs OPR</span><span class="lang-zh" style="display:none">租金收益率 vs OPR</span></p>
@@ -195,6 +221,8 @@
   });
 
   function drawAllCharts() {
+    drawMHPIDash();
+    drawCityPrice();
     drawYieldSpread();
     drawOverhangPipeline();
     drawYieldCity();
@@ -205,6 +233,51 @@
   var CA = {width:'80%',height:'75%'};
   var BG = 'transparent';
   var GC = '#e8f0f9'; // gridline color
+
+  function drawMHPIDash() {
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','Year');
+    data.addColumn('number','Nominal Index');
+    data.addColumn('number','Real Index');
+    data.addColumn('number','YoY % (Nominal)');
+    data.addRows([
+      ['2019',194,160,1.1],['2020',195,160,0.5],['2021',197,159,1.0],['2022',200,156,1.5],
+      ['2023',207,157,3.5],['2024',224,165,8.2],['2025Q3',229.1,167,0.14]
+    ]);
+    new google.visualization.ComboChart(document.getElementById('chart-mhpi-dash')).draw(data,{
+      backgroundColor:BG,chartArea:CA,
+      seriesType:'line',
+      series:{0:{color:NAVY,lineWidth:2,pointSize:3},1:{color:MUTED,lineWidth:2,pointSize:3,lineDashStyle:[5,3]},2:{type:'bars',color:'rgba(22,163,74,0.6)',targetAxisIndex:1}},
+      vAxes:{0:{title:'Index',titleTextStyle:{color:MUTED,fontSize:10},textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},1:{title:'YoY %',titleTextStyle:{color:MUTED,fontSize:10},textStyle:{color:MUTED,fontSize:10},gridlines:{color:'transparent'},format:"#.#'%'"}},
+      hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      legend:{position:'top',textStyle:{color:MUTED,fontSize:10}},
+      bar:{groupWidth:'50%'}
+    });
+  }
+
+  function drawCityPrice() {
+    var data=new google.visualization.DataTable();
+    data.addColumn('string','City');
+    data.addColumn('number','Avg Price (RM)');
+    data.addColumn({type:'string',role:'style'});
+    data.addColumn('number','YoY %');
+    data.addRows([
+      ['National\nAvg',494384,NAVY,3.2],
+      ['Penang',504845,GREEN,5.7],
+      ['Selangor',510000,NAVY,2.1],
+      ['KL',804642,ORANGE,-4.3],
+      ['Johor',380000,NAVY,1.8]
+    ]);
+    new google.visualization.ComboChart(document.getElementById('chart-city-price')).draw(data,{
+      backgroundColor:BG,chartArea:CA,
+      seriesType:'bars',
+      series:{0:{},1:{type:'line',color:RED,lineWidth:2,pointSize:5,targetAxisIndex:1}},
+      vAxes:{0:{title:'RM',titleTextStyle:{color:MUTED,fontSize:10},textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short'},1:{title:'YoY %',titleTextStyle:{color:MUTED,fontSize:10},textStyle:{color:MUTED,fontSize:10},gridlines:{color:'transparent'},format:"#.#'%'",viewWindow:{min:-8,max:10}}},
+      hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      legend:{position:'top',textStyle:{color:MUTED,fontSize:10}},
+      bar:{groupWidth:'55%'}
+    });
+  }
 
   function drawYieldSpread() {
     var data = new google.visualization.DataTable();
