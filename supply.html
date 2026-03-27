@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
   <link rel="stylesheet" href="css/style.css">
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -60,28 +60,28 @@
         <div class="node-title"><span class="lang-en">Land</span><span class="lang-zh" style="display:none">土地</span></div>
         <div class="node-sub">12-18m</div>
       </div>
-      <div class="pipeline-arrow"><span>→</span></div>
+      <div class="pipeline-arrow"><span>&rarr;</span></div>
       <div class="pipeline-node">
         <div class="node-title"><span class="lang-en">BP Approval</span><span class="lang-zh" style="display:none">建築計畫核准</span></div>
         <div class="node-sub">6-12m</div>
       </div>
-      <div class="pipeline-arrow"><span>→</span></div>
+      <div class="pipeline-arrow"><span>&rarr;</span></div>
       <div class="pipeline-node">
         <div class="node-title"><span class="lang-en">Starts</span><span class="lang-zh" style="display:none">新開工</span></div>
         <div class="node-value">64,843</div>
         <div class="node-sub">Q1-Q3 2025</div>
       </div>
-      <div class="pipeline-arrow"><span>→</span></div>
+      <div class="pipeline-arrow"><span>&rarr;</span></div>
       <div class="pipeline-node">
         <div class="node-title"><span class="lang-en">Completions</span><span class="lang-zh" style="display:none">完工</span></div>
         <div class="node-value">69,303</div>
       </div>
-      <div class="pipeline-arrow"><span>→</span></div>
+      <div class="pipeline-arrow"><span>&rarr;</span></div>
       <div class="pipeline-node">
         <div class="node-title">CCC</div>
         <div class="node-sub">0-9m</div>
       </div>
-      <div class="pipeline-arrow"><span>→</span></div>
+      <div class="pipeline-arrow"><span>&rarr;</span></div>
       <div class="pipeline-node" style="border-left:3px solid #dc2626;">
         <div class="node-title"><span class="lang-en">Overhang</span><span class="lang-zh" style="display:none">待售餘屋</span></div>
         <div class="node-value">28,672</div>
@@ -119,9 +119,9 @@
 
     <div class="chart-card" id="ohTabs">
       <div class="tab-bar">
-        <button class="active" data-tab="national" onclick="switchTab('ohTabs','national');drawOhState();drawOhTrend();"><span class="lang-en">National Overview</span><span class="lang-zh" style="display:none">全國概覽</span></button>
-        <button data-tab="price" onclick="switchTab('ohTabs','price');drawOhPrice();"><span class="lang-en">By Price Band</span><span class="lang-zh" style="display:none">依價格帶</span></button>
-        <button data-tab="sa" onclick="switchTab('ohTabs','sa');drawOhSA();"><span class="lang-en">Serviced Apartments</span><span class="lang-zh" style="display:none">服務式公寓</span></button>
+        <button class="active" data-tab="national" onclick="switchTab('ohTabs','national')"><span class="lang-en">National Overview</span><span class="lang-zh" style="display:none">全國概覽</span></button>
+        <button data-tab="price" onclick="switchTab('ohTabs','price')"><span class="lang-en">By Price Band</span><span class="lang-zh" style="display:none">依價格帶</span></button>
+        <button data-tab="sa" onclick="switchTab('ohTabs','sa')"><span class="lang-en">Serviced Apartments</span><span class="lang-zh" style="display:none">服務式公寓</span></button>
       </div>
 
       <!-- Tab 1: National Overview -->
@@ -170,185 +170,329 @@
   <footer class="footer">A project by <span>InvestMQuest</span></footer>
 
   <script>
-    var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
-    var CA={width:'80%',height:'75%'},BG='transparent',GC='#e8f0f9';
+  var C = {
+    navy:'#1e3a5f', green:'#16a34a', orange:'#d97706',
+    red:'#dc2626', blue:'#2563eb', muted:'#8ba3c0',
+    grid:'#e8f0f9', text:'#1e3a5f'
+  };
+  var baseText = { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 };
+  var baseGrid = { left: 50, right: 20, top: 40, bottom: 30, containLabel: true };
+  var baseTooltip = {
+    trigger: 'axis', backgroundColor: '#fff',
+    borderColor: '#ccd9e8', borderWidth: 1,
+    textStyle: { color: C.navy, fontSize: 11, fontFamily: 'Inter' }
+  };
+  var baseLegend = { top: 8, textStyle: baseText, icon: 'circle', itemWidth: 8, itemHeight: 8 };
 
-    function setLang(lang){
-      document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
-      document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
-      document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
-      localStorage.setItem('lang',lang);
-    }
-    function switchTab(cid,tab){
-      var w=document.getElementById(cid);if(!w)return;
-      w.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
-      w.querySelectorAll('.tab-bar button').forEach(function(b){b.classList.remove('active');});
-      var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');
-      w.querySelectorAll('.tab-bar button').forEach(function(b){if(b.dataset.tab===tab)b.classList.add('active');});
-    }
+  function fmtNum(v) {
+    return v >= 1000 ? (v/1000).toFixed(0) + 'K' : v;
+  }
+  function mkAxis(opts) {
+    return Object.assign({
+      axisLine: { lineStyle: { color: C.grid } },
+      axisTick: { show: false },
+      axisLabel: baseText,
+      splitLine: { lineStyle: { color: C.grid } }
+    }, opts || {});
+  }
 
-    google.charts.load('current',{packages:['corechart']});
-    google.charts.setOnLoadCallback(function(){ drawAllCharts(); setLang(localStorage.getItem('lang')||'en'); });
+  function setLang(lang){
+    document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+    document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    localStorage.setItem('lang',lang);
+  }
 
-    function drawAllCharts(){
-      drawPipeline();
-      drawProjected();
-      drawWIP();
-      drawOhState();
-      drawOhTrend();
-    }
+  var ohStateChart, ohPriceChart, ohSAChart;
 
-    function drawPipeline(){
-      var data=google.visualization.arrayToDataTable([
-        ['Year','Planned','Starts','Completions'],
-        ['2019',85000,82000,78000],
-        ['2020',60000,65000,72000],
-        ['2021',77585,86258,76393],
-        ['2022',89111,97804,71981],
-        ['2023',80964,88114,74893],
-        ['2024',100461,106236,82135],
-        ['2025 Q1-Q3',49602,64843,69303]
-      ]);
-      var opts={
-        chartArea:CA,backgroundColor:BG,
-        legend:{position:'top',textStyle:{color:MUTED,fontSize:11}},
-        colors:[MUTED,NAVY,GREEN],
-        series:{0:{lineDashStyle:[6,3]}},
-        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short'},
-        curveType:'function',pointSize:4
-      };
-      new google.visualization.LineChart(document.getElementById('chartPipeline')).draw(data,opts);
-    }
+  function switchTab(cid, tab){
+    var w = document.getElementById(cid); if(!w) return;
+    w.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    w.querySelectorAll('.tab-bar button').forEach(function(b){ b.classList.remove('active'); });
+    var p = w.querySelector('#tab-'+tab); if(p) p.classList.add('active');
+    w.querySelectorAll('.tab-bar button').forEach(function(b){ if(b.dataset.tab===tab) b.classList.add('active'); });
+    setTimeout(function(){
+      if (ohStateChart) ohStateChart.resize();
+      if (ohPriceChart) ohPriceChart.resize();
+      if (ohSAChart) ohSAChart.resize();
+      allCharts.forEach(function(c){ if(c) c.resize(); });
+    }, 100);
+  }
 
-    function drawProjected(){
-      var data=google.visualization.arrayToDataTable([
-        ['Year','Historical','Projected Low','Projected High'],
-        ['2022',71981,null,null],
-        ['2023',74893,null,null],
-        ['2024',82135,null,null],
-        ['2026E',null,90000,100000],
-        ['2027E',null,85000,95000],
-        ['2028E',null,75000,85000]
-      ]);
-      var opts={
-        chartArea:CA,backgroundColor:BG,
-        legend:{position:'top',textStyle:{color:MUTED,fontSize:11}},
-        colors:[NAVY,'#b3c2d1','#f9e8c5'],
-        isStacked:false,
-        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short'}
-      };
-      new google.visualization.ColumnChart(document.getElementById('chartProjected')).draw(data,opts);
-    }
+  var allCharts = [];
 
-    function drawWIP(){
-      var data=google.visualization.arrayToDataTable([
-        ['Category','Units',{role:'style'}],
-        ['WIP in Pipeline*',275000,ORANGE],
-        ['Annual Absorption',85000,GREEN]
-      ]);
-      var opts={
-        chartArea:CA,backgroundColor:BG,
-        legend:{position:'none'},
-        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short',minValue:0}
-      };
-      new google.visualization.ColumnChart(document.getElementById('chartWIP')).draw(data,opts);
-    }
+  window.addEventListener('load', function(){
+    // chartPipeline
+    var cPipe = echarts.init(document.getElementById('chartPipeline'));
+    allCharts.push(cPipe);
+    cPipe.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data: ['Planned','Starts','Completions'] }),
+      grid: baseGrid,
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['2019','2020','2021','2022','2023','2024','2025\u524dQ3']
+      }),
+      yAxis: mkAxis({
+        type: 'value',
+        axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtNum(v); } })
+      }),
+      series: [
+        {
+          name: 'Planned', type: 'line',
+          data: [85000,60000,77585,89111,80964,100461,49602],
+          lineStyle: { color: C.muted, width: 2, type: 'dashed' },
+          itemStyle: { color: C.muted },
+          smooth: 0.2, symbol: 'circle', symbolSize: 6
+        },
+        {
+          name: 'Starts', type: 'line',
+          data: [82000,65000,86258,97804,88114,106236,64843],
+          lineStyle: { color: C.navy, width: 2 },
+          itemStyle: { color: C.navy },
+          smooth: 0.2, symbol: 'circle', symbolSize: 6
+        },
+        {
+          name: 'Completions', type: 'line',
+          data: [78000,72000,76393,71981,74893,82135,69303],
+          lineStyle: { color: C.green, width: 2 },
+          itemStyle: { color: C.green },
+          smooth: 0.2, symbol: 'circle', symbolSize: 6
+        }
+      ]
+    });
 
-    function drawOhState(){
-      var labels=['Perak','Johor','Sabah','Selangor','Penang','Kelantan','KL','N.S.','Others'];
-      var values=[3300,3293,2771,2757,2730,2599,2287,2205,6730];
-      var rows=[['State','Units',{role:'style'}]];
-      for(var i=0;i<labels.length;i++){
-        rows.push([labels[i],values[i],values[i]>3000?RED:NAVY]);
-      }
-      var data=google.visualization.arrayToDataTable(rows);
-      var opts={
-        chartArea:CA,backgroundColor:BG,
-        legend:{position:'none'},
-        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short',minValue:0},
-        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}}
-      };
-      new google.visualization.BarChart(document.getElementById('chartOhState')).draw(data,opts);
-    }
+    // chartProjected
+    var cProj = echarts.init(document.getElementById('chartProjected'));
+    allCharts.push(cProj);
+    cProj.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data: ['Historical','Projected Low','Projected High'] }),
+      grid: baseGrid,
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['2022','2023','2024','2026E','2027E','2028E']
+      }),
+      yAxis: mkAxis({
+        type: 'value',
+        axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtNum(v); } })
+      }),
+      series: [
+        {
+          name: 'Historical', type: 'bar',
+          data: [71981, 74893, 82135, null, null, null],
+          itemStyle: { color: C.navy, borderRadius: [3,3,0,0] },
+          barMaxWidth: 40,
+          label: { show: true, position: 'top', fontSize: 9, formatter: function(p){ return p.value ? fmtNum(p.value) : ''; } }
+        },
+        {
+          name: 'Projected Low', type: 'bar',
+          data: [null, null, null, 90000, 85000, 75000],
+          itemStyle: { color: 'rgba(30,58,95,0.2)', borderRadius: [3,3,0,0] },
+          barMaxWidth: 40,
+          label: { show: true, position: 'top', fontSize: 9, formatter: function(p){ return p.value ? fmtNum(p.value) : ''; } }
+        },
+        {
+          name: 'Projected High', type: 'bar',
+          data: [null, null, null, 100000, 95000, 85000],
+          itemStyle: { color: 'rgba(217,119,6,0.2)', borderColor: C.orange, borderWidth: 1, borderRadius: [3,3,0,0] },
+          barMaxWidth: 40,
+          label: { show: true, position: 'top', fontSize: 9, formatter: function(p){ return p.value ? fmtNum(p.value) : ''; } }
+        }
+      ]
+    });
 
-    function drawOhTrend(){
-      var data=google.visualization.arrayToDataTable([
-        ['Year','Overhang Units'],
-        ['2018',32313],
-        ['2019',36863],
-        ['2020',31092],
-        ['2021',26424],
-        ['2022',27746],
-        ['2023',25816],
-        ['2024H1',22642],
-        ['2025Q3*',44794]
-      ]);
-      var opts={
-        chartArea:CA,backgroundColor:BG,
-        legend:{position:'none'},
-        colors:[NAVY],
-        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short'},
-        curveType:'function',pointSize:4
-      };
-      new google.visualization.LineChart(document.getElementById('chartOhTrend')).draw(data,opts);
+    // chartWIP
+    var cWIP = echarts.init(document.getElementById('chartWIP'));
+    allCharts.push(cWIP);
+    cWIP.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: baseGrid,
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['WIP in Pipeline*', 'Annual Absorption']
+      }),
+      yAxis: mkAxis({
+        type: 'value', min: 0,
+        axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtNum(v); } })
+      }),
+      series: [{
+        type: 'bar',
+        data: [
+          { value: 275000, itemStyle: { color: C.orange, borderRadius: [4,4,0,0] } },
+          { value: 85000, itemStyle: { color: C.green, borderRadius: [4,4,0,0] } }
+        ],
+        barMaxWidth: 120,
+        label: {
+          show: true, position: 'top', fontSize: 12,
+          fontFamily: 'JetBrains Mono, monospace',
+          formatter: function(p){ return fmtNum(p.value); }
+        }
+      }]
+    });
 
-      var fData=new google.visualization.DataTable();
-      fData.addColumn('string','Year');fData.addColumn('number','Historical');
-      fData.addColumn('number','Bull (90K)');fData.addColumn('number','Base (85K)');fData.addColumn('number','Bear (75K)');
-      fData.addRows([
-        ['2023',25816,null,null,null],['24H1',22642,null,null,null],['25*',28672,28672,28672,28672],
-        ['26E',null,43000,46000,51000],['27E',null,42000,47000,57000],['28E',null,22000,28000,42000],['29E',null,8000,14000,28000]
-      ]);
-      new google.visualization.LineChart(document.getElementById('chartOhForecast')).draw(fData,{
-        chartArea:CA,backgroundColor:BG,colors:[NAVY,GREEN,ORANGE,RED],
-        legend:{position:'top',textStyle:{color:MUTED,fontSize:10}},
-        series:{1:{lineDashStyle:[4,2],lineWidth:1.5},2:{lineDashStyle:[6,3]},3:{lineDashStyle:[8,4],lineWidth:1.5}},lineWidth:2,pointSize:4,
-        hAxis:{textStyle:{color:MUTED,fontSize:9},gridlines:{color:GC},slantedText:true,slantedTextAngle:45,showTextEvery:1},
-        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short',minValue:0},
-        curveType:'function'
-      });
-    }
+    // chartOhState
+    ohStateChart = echarts.init(document.getElementById('chartOhState'));
+    allCharts.push(ohStateChart);
+    var osLabels = ['Perak','Johor','Sabah','Selangor','Penang','Kelantan','KL','N. Sembilan','Others'];
+    var osValues = [3300,3293,2771,2757,2730,2599,2287,2205,6730];
+    ohStateChart.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: { left: 90, right: 50, top: 10, bottom: 20, containLabel: false },
+      xAxis: mkAxis({ type: 'value', min: 0 }),
+      yAxis: mkAxis({
+        type: 'category',
+        data: osLabels.slice().reverse(),
+        axisLabel: { color: C.navy, fontFamily: 'Inter, sans-serif', fontSize: 11 }
+      }),
+      series: [{
+        type: 'bar',
+        data: osValues.slice().reverse().map(function(v){
+          return { value: v, itemStyle: { color: v > 3000 ? C.red : C.navy, borderRadius: [0,4,4,0] } };
+        }),
+        barMaxWidth: 22,
+        label: { show: true, position: 'right', formatter: function(p){ return fmtNum(p.value); }, fontSize: 10, fontFamily: 'Inter' }
+      }]
+    });
 
-    function drawOhPrice(){
-      var data=google.visualization.arrayToDataTable([
-        ['Price Band','Units'],
-        ['<200k',880],
-        ['200-300k',2150],
-        ['300-500k',7800],
-        ['500k-1M',6990],
-        ['>1M',3300]
-      ]);
-      var opts={
-        chartArea:CA,backgroundColor:BG,
-        legend:{position:'none'},
-        colors:[NAVY],
-        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short',minValue:0}
-      };
-      new google.visualization.ColumnChart(document.getElementById('chartOhPrice')).draw(data,opts);
-    }
+    // chartOhTrend
+    var cOhTrend = echarts.init(document.getElementById('chartOhTrend'));
+    allCharts.push(cOhTrend);
+    cOhTrend.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data: ['Residential','Total incl SA'] }),
+      grid: baseGrid,
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['2018','2019','2020','2021','2022','2023','2024H1','2025Q3']
+      }),
+      yAxis: mkAxis({
+        type: 'value',
+        axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtNum(v); } })
+      }),
+      series: [
+        {
+          name: 'Residential', type: 'line',
+          data: [32313,36863,31092,26424,27746,25816,22642,28672],
+          lineStyle: { color: C.navy, width: 2 },
+          itemStyle: { color: C.navy },
+          areaStyle: { color: 'rgba(30,58,95,0.08)' },
+          symbol: 'circle', symbolSize: 5
+        },
+        {
+          name: 'Total incl SA', type: 'line',
+          data: [null,null,null,null,null,47463,42126,44794],
+          lineStyle: { color: C.orange, width: 2, type: 'dashed' },
+          itemStyle: { color: C.orange },
+          symbol: 'circle', symbolSize: 5
+        }
+      ]
+    });
 
-    function drawOhSA(){
-      var data=google.visualization.arrayToDataTable([
-        ['State','Units',{role:'style'}],
-        ['Johor',9018,RED],
-        ['KL',3500,RED],
-        ['Selangor',2800,NAVY],
-        ['Penang',1200,NAVY],
-        ['Others',1374,NAVY]
-      ]);
-      var opts={
-        chartArea:CA,backgroundColor:BG,
-        legend:{position:'none'},
-        hAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-        vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short',minValue:0}
-      };
-      new google.visualization.ColumnChart(document.getElementById('chartOhSA')).draw(data,opts);
-    }
+    // chartOhForecast
+    var cOhFc = echarts.init(document.getElementById('chartOhForecast'));
+    allCharts.push(cOhFc);
+    cOhFc.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data: ['Historical','Bull (90K)','Base (85K)','Bear (75K)'] }),
+      grid: baseGrid,
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['2023','2024H1','25*','26E','27E','28E','29E'],
+        axisLabel: Object.assign({}, baseText, { rotate: 0, interval: 0 })
+      }),
+      yAxis: mkAxis({
+        type: 'value', min: 0,
+        axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtNum(v); } })
+      }),
+      series: [
+        {
+          name: 'Historical', type: 'line',
+          data: [25816,22642,28672,null,null,null,null],
+          lineStyle: { color: C.navy, width: 2 },
+          itemStyle: { color: C.navy },
+          areaStyle: { color: 'rgba(30,58,95,0.08)' },
+          symbol: 'circle', symbolSize: 5
+        },
+        {
+          name: 'Bull (90K)', type: 'line',
+          data: [null,null,28672,43000,42000,22000,8000],
+          lineStyle: { color: C.green, width: 1.5, type: [4,2] },
+          itemStyle: { color: C.green },
+          symbol: 'circle', symbolSize: 4
+        },
+        {
+          name: 'Base (85K)', type: 'line',
+          data: [null,null,28672,46000,47000,28000,14000],
+          lineStyle: { color: C.orange, width: 2, type: [6,3] },
+          itemStyle: { color: C.orange },
+          symbol: 'circle', symbolSize: 5
+        },
+        {
+          name: 'Bear (75K)', type: 'line',
+          data: [null,null,28672,51000,57000,42000,28000],
+          lineStyle: { color: C.red, width: 1.5, type: [8,4] },
+          itemStyle: { color: C.red },
+          symbol: 'circle', symbolSize: 4
+        }
+      ]
+    });
+
+    // chartOhPrice (lazy — init now but hidden tab)
+    ohPriceChart = echarts.init(document.getElementById('chartOhPrice'));
+    allCharts.push(ohPriceChart);
+    ohPriceChart.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: baseGrid,
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['<200k','200-300k','300-500k','500k-1M','>1M']
+      }),
+      yAxis: mkAxis({
+        type: 'value', min: 0,
+        axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtNum(v); } })
+      }),
+      series: [{
+        type: 'bar',
+        data: [1200, 4800, 8900, 9200, 4572].map(function(v){
+          return { value: v, itemStyle: { color: C.navy, borderRadius: [4,4,0,0] } };
+        }),
+        barMaxWidth: 50,
+        label: { show: true, position: 'top', fontSize: 10, formatter: function(p){ return fmtNum(p.value); } }
+      }]
+    });
+
+    // chartOhSA
+    ohSAChart = echarts.init(document.getElementById('chartOhSA'));
+    allCharts.push(ohSAChart);
+    var saColors = [C.orange, C.orange, C.navy, C.navy, C.muted];
+    ohSAChart.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: baseGrid,
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['Johor','KL','Selangor','Penang','Others']
+      }),
+      yAxis: mkAxis({
+        type: 'value', min: 0,
+        axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtNum(v); } })
+      }),
+      series: [{
+        type: 'bar',
+        data: [6200, 4100, 3800, 1900, 1892].map(function(v, i){
+          return { value: v, itemStyle: { color: saColors[i], borderRadius: [4,4,0,0] } };
+        }),
+        barMaxWidth: 50,
+        label: { show: true, position: 'top', fontSize: 10, formatter: function(p){ return fmtNum(p.value); } }
+      }]
+    });
+
+    setLang(localStorage.getItem('lang')||'en');
+  });
+
+  window.addEventListener('resize', function(){
+    allCharts.forEach(function(c){ if(c) c.resize(); });
+  });
   </script>
 </body>
 </html>

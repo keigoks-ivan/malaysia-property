@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
   <link rel="stylesheet" href="css/style.css">
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -21,7 +21,6 @@
       <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
       <a href="kl.html"><span class="lang-en">KL</span><span class="lang-zh" style="display:none">吉隆坡</span></a>
       <a href="penang.html" class="active"><span class="lang-en">Penang</span><span class="lang-zh" style="display:none">檳城</span></a>
-      <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
     </nav>
     <div class="lang-switcher">
       <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
@@ -39,7 +38,6 @@
     <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
     <a href="kl.html"><span class="lang-en">KL</span><span class="lang-zh" style="display:none">吉隆坡</span></a>
     <a href="penang.html" class="active"><span class="lang-en">Penang</span><span class="lang-zh" style="display:none">檳城</span></a>
-    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
     <div class="mobile-meta">
       <span class="opr-badge">OPR: 2.75% ▼</span>
       <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
@@ -120,7 +118,7 @@
     <h2 class="section-heading"><span class="lang-en">Charts</span><span class="lang-zh" style="display:none">圖表</span></h2>
     <div class="chart-grid two-col">
       <div class="chart-card">
-        <h3><span class="lang-en">Penang Price Growth vs National</span><span class="lang-zh" style="display:none">檳城房價增長 vs 全國</span></h3>
+        <h3><span class="lang-en">Penang Price Growth Trend</span><span class="lang-zh" style="display:none">檳城房價趨勢</span></h3>
         <div style="position:relative;height:220px;"><div id="chart-pg-growth" style="width:100%;height:100%"></div></div>
       </div>
       <div class="chart-card">
@@ -161,64 +159,163 @@
   <footer class="footer">A project by <span>InvestMQuest</span></footer>
 
   <script>
-  var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
-  var CA={width:'80%',height:'75%'},BG='transparent',GC='#e8f0f9';
-  function setLang(lang){document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));localStorage.setItem('lang',lang);}
-  function switchTab(cid,tab){var w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));w.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(b=>{if(b.dataset.tab===tab)b.classList.add('active');});}
-  google.charts.load('current',{packages:['corechart']});
-  google.charts.setOnLoadCallback(function(){drawAllCharts();setLang(localStorage.getItem('lang')||'en');});
-  window.addEventListener('resize',function(){drawAllCharts();});
+  var C = {
+    navy:'#1e3a5f', green:'#16a34a', orange:'#d97706',
+    red:'#dc2626', blue:'#2563eb', muted:'#8ba3c0',
+    grid:'#e8f0f9', text:'#1e3a5f'
+  };
+  var baseText = { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 };
+  var baseGrid = { left: 50, right: 20, top: 40, bottom: 30, containLabel: true };
+  var baseTooltip = {
+    trigger: 'axis', backgroundColor: '#fff',
+    borderColor: '#ccd9e8', borderWidth: 1,
+    textStyle: { color: C.navy, fontSize: 11, fontFamily: 'Inter' }
+  };
+  var baseLegend = { top: 8, textStyle: baseText, icon: 'circle', itemWidth: 8, itemHeight: 8 };
 
-  function drawPenangPrice(){
-    var d=google.visualization.arrayToDataTable([
-      ['Year','Penang %','National %'],
-      ['2019',3,2],['2020',2,1],['2021',4,2],['2022',5,3],['2023',5.6,2],['2024',5.7,1],['2025H1',5,0.1]
-    ]);
-    new google.visualization.LineChart(document.getElementById('chart-pg-growth')).draw(d,{
-      chartArea:CA,backgroundColor:BG,colors:[GREEN,NAVY],legend:{position:'bottom'},
-      vAxis:{format:"#'%'",gridlines:{color:GC}},hAxis:{gridlines:{color:GC}},curveType:'function'
+  function fmtRM(v) {
+    if (v >= 1000000) return 'RM ' + (v/1000000).toFixed(1) + 'M';
+    if (v >= 1000) return 'RM ' + (v/1000).toFixed(0) + 'K';
+    return 'RM ' + v;
+  }
+  function mkAxis(opts) {
+    return Object.assign({
+      axisLine: { lineStyle: { color: C.grid } },
+      axisTick: { show: false },
+      axisLabel: baseText,
+      splitLine: { lineStyle: { color: C.grid } }
+    }, opts || {});
+  }
+
+  function setLang(lang){
+    document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+    document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    localStorage.setItem('lang',lang);
+  }
+  function switchTab(cid,tab){
+    var w=document.getElementById(cid);if(!w)return;
+    w.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+    w.querySelectorAll('.tab-bar button').forEach(function(b){b.classList.remove('active');});
+    var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');
+    w.querySelectorAll('.tab-bar button').forEach(function(b){if(b.dataset.tab===tab)b.classList.add('active');});
+  }
+
+  var allCharts = [];
+
+  window.addEventListener('load', function(){
+    // chart-pg-growth: Penang price trend
+    var cGrowth = echarts.init(document.getElementById('chart-pg-growth'));
+    allCharts.push(cGrowth);
+    cGrowth.setOption({
+      tooltip: baseTooltip,
+      grid: baseGrid,
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['2019','2020','2021','2022','2023','2024','2025Q3']
+      }),
+      yAxis: mkAxis({
+        type: 'value',
+        axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtRM(v); } })
+      }),
+      series: [{
+        type: 'line',
+        data: [420000, 415000, 430000, 445000, 465000, 478000, 504845],
+        lineStyle: { color: C.navy, width: 2 },
+        itemStyle: { color: C.navy },
+        areaStyle: { color: 'rgba(30,58,95,0.08)' },
+        smooth: 0.2,
+        symbol: 'circle', symbolSize: 6,
+        markPoint: {
+          data: [{ type: 'max', name: 'Max' }],
+          label: { formatter: 'RM 505K', fontSize: 10 },
+          symbolSize: 45,
+          itemStyle: { color: C.green }
+        }
+      }]
     });
-  }
 
-  function drawFDI(){
-    var d=google.visualization.arrayToDataTable([
-      ['Year','FDI (RM B)'],
-      ['2019',8],['2020',5],['2021',12],['2022',18],['2023',15],['2024',25],['2025H1',12.5]
-    ]);
-    new google.visualization.ColumnChart(document.getElementById('chart-pg-fdi')).draw(d,{
-      chartArea:CA,backgroundColor:BG,colors:[NAVY],legend:{position:'bottom'},
-      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
+    // chart-pg-fdi: Manufacturing FDI
+    var cFDI = echarts.init(document.getElementById('chart-pg-fdi'));
+    allCharts.push(cFDI);
+    var fdiLabels = ['2021','2022','2023','2024','2025 H1'];
+    var fdiValues = [12, 18, 15, 25, 12.5];
+    cFDI.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: baseGrid,
+      xAxis: mkAxis({ type: 'category', data: fdiLabels }),
+      yAxis: mkAxis({ type: 'value' }),
+      series: [{
+        type: 'bar',
+        data: fdiValues.map(function(v, i){
+          return {
+            value: v,
+            itemStyle: { color: i === fdiValues.length - 1 ? C.green : C.navy, borderRadius: [4,4,0,0] }
+          };
+        }),
+        barMaxWidth: 50,
+        label: { show: true, position: 'top', formatter: '{c}B', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' },
+        markPoint: {
+          data: [{ coord: ['2025 H1', 12.5], symbol: 'pin', symbolSize: 40, label: { formatter: '+150%\nYoY', fontSize: 9 }, itemStyle: { color: C.green } }]
+        }
+      }]
     });
-  }
 
-  function drawGurney(){
-    var d=google.visualization.arrayToDataTable([
-      ['Project','PSF (RM)'],
-      ['Marriott Residences',2069],['Sunrise Gurney',1872],['Shorefront',1318],['Straits Residences',1287],['Seri TJ Pinang',1193]
-    ]);
-    new google.visualization.BarChart(document.getElementById('chart-pg-gurney')).draw(d,{
-      chartArea:CA,backgroundColor:BG,colors:[NAVY],legend:'none',
-      hAxis:{format:'RM #,###',gridlines:{color:GC}},vAxis:{gridlines:{color:GC}}
+    // chart-pg-gurney: Gurney Drive PSF
+    var cGurney = echarts.init(document.getElementById('chart-pg-gurney'));
+    allCharts.push(cGurney);
+    var gnLabels = ['Seri TJ Pinang','Straits Res.','Shorefront','Sunrise Gurney','Marriott Res.'];
+    var gnValues = [980, 1200, 1450, 1872, 2069];
+    cGurney.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: { left: 110, right: 60, top: 10, bottom: 20, containLabel: false },
+      xAxis: mkAxis({ type: 'value', min: 0 }),
+      yAxis: mkAxis({
+        type: 'category',
+        data: gnLabels,
+        axisLabel: { color: C.navy, fontFamily: 'Inter, sans-serif', fontSize: 11 }
+      }),
+      series: [{
+        type: 'bar',
+        data: gnValues.map(function(v, i){
+          var clr = i >= 3 ? C.orange : C.navy;
+          return { value: v, itemStyle: { color: clr, borderRadius: [0,4,4,0] } };
+        }),
+        barMaxWidth: 25,
+        label: { show: true, position: 'right', formatter: 'RM {c} psf', fontSize: 10, fontFamily: 'Inter' }
+      }]
     });
-  }
 
-  function drawPenangOverhang(){
-    var d=google.visualization.arrayToDataTable([
-      ['Period','Overhang (units)'],
-      ['2023H1',2901],['2023H2',2750],['2024H1',2600],['2024H2',2400],['2025H1',2730]
-    ]);
-    new google.visualization.LineChart(document.getElementById('chart-pg-overhang')).draw(d,{
-      chartArea:CA,backgroundColor:BG,colors:[NAVY],legend:{position:'bottom'},
-      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}},curveType:'function'
+    // chart-pg-overhang: Penang overhang trend
+    var cOH = echarts.init(document.getElementById('chart-pg-overhang'));
+    allCharts.push(cOH);
+    cOH.setOption({
+      tooltip: baseTooltip,
+      grid: baseGrid,
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['2020','2021','2022','2023','2024H1','2025Q3']
+      }),
+      yAxis: mkAxis({ type: 'value' }),
+      series: [{
+        type: 'line',
+        data: [3200, 2900, 2750, 2850, 2901, 2730],
+        lineStyle: { color: C.orange, width: 2 },
+        itemStyle: { color: C.orange },
+        smooth: 0.2,
+        symbol: 'circle', symbolSize: 6,
+        markPoint: {
+          data: [{ coord: ['2025Q3', 2730], symbol: 'circle', symbolSize: 40, label: { formatter: '2,730', fontSize: 10, fontWeight: 'bold' }, itemStyle: { color: C.orange } }]
+        }
+      }]
     });
-  }
 
-  function drawAllCharts(){
-    drawPenangPrice();
-    drawFDI();
-    drawGurney();
-    drawPenangOverhang();
-  }
+    setLang(localStorage.getItem('lang')||'en');
+  });
+
+  window.addEventListener('resize', function(){
+    allCharts.forEach(function(c){ if(c) c.resize(); });
+  });
   </script>
 </body>
 </html>

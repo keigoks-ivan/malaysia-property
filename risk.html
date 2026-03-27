@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
   <link rel="stylesheet" href="css/style.css">
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -195,66 +195,128 @@
   <footer class="footer">A project by <span>InvestMQuest</span></footer>
 
   <script>
-  var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
-  var CA={width:'80%',height:'75%'},BG='transparent',GC='#e8f0f9';
-  var _currentLang='en';
-  function setLang(lang){_currentLang=lang;document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none'});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang)});localStorage.setItem('lang',lang);drawAllCharts();}
-  google.charts.load('current',{packages:['corechart']});
-  google.charts.setOnLoadCallback(function(){drawAllCharts();setLang(localStorage.getItem('lang')||'en');});
-  window.addEventListener('resize',function(){drawAllCharts();});
+  var C = {
+    navy:'#1e3a5f', green:'#16a34a', orange:'#d97706',
+    red:'#dc2626', blue:'#2563eb', muted:'#8ba3c0',
+    grid:'#e8f0f9', text:'#1e3a5f'
+  };
+  var baseText = { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 };
+  var baseGrid = { left: 50, right: 20, top: 40, bottom: 30, containLabel: true };
+  var baseTooltip = {
+    trigger: 'axis', backgroundColor: '#fff',
+    borderColor: '#ccd9e8', borderWidth: 1,
+    textStyle: { color: C.navy, fontSize: 11, fontFamily: 'Inter' }
+  };
+  var baseLegend = { top: 8, textStyle: baseText, icon: 'circle', itemWidth: 8, itemHeight: 8 };
 
-  function drawAllCharts(){
-    drawRadar();
-    drawRateSensitivity();
+  function mkAxis(opts) {
+    return Object.assign({
+      axisLine: { lineStyle: { color: C.grid } },
+      axisTick: { show: false },
+      axisLabel: baseText,
+      splitLine: { lineStyle: { color: C.grid } }
+    }, opts || {});
   }
 
-  function drawRadar(){
-    var lang=_currentLang;
-    var labels=lang==='zh'
-      ?['供給過量','可負擔性','利率','政策','外資需求','開發商財務']
-      :['Oversupply','Affordability','Interest Rate','Policy','Foreign Demand','Developer Financial'];
-    var scores=[7,8,4,6,5,5];
-    var data=new google.visualization.DataTable();
-    data.addColumn('string','Dimension');
-    data.addColumn('number',lang==='zh'?'風險分數 (1-10)':'Risk Score (1-10)');
-    data.addColumn({type:'string',role:'style'});
-    for(var i=0;i<labels.length;i++){
-      var c=scores[i]>=7?RED:scores[i]>=5?ORANGE:GREEN;
-      data.addRow([labels[i],scores[i],'color:'+c]);
-    }
-    var chart=new google.visualization.BarChart(document.getElementById('chart-radar'));
-    chart.draw(data,{
-      chartArea:CA,backgroundColor:BG,
-      legend:{position:'none'},
-      hAxis:{minValue:0,maxValue:10,textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},title:lang==='zh'?'風險分數 (1-10)':'Risk Score (1-10)',titleTextStyle:{color:NAVY,fontSize:11}},
-      vAxis:{textStyle:{color:NAVY,fontSize:11}},
-      bar:{groupWidth:'65%'}
+  function setLang(lang){
+    document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+    document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    localStorage.setItem('lang',lang);
+  }
+
+  var allCharts = [];
+
+  window.addEventListener('load', function(){
+    // chart-radar: ECharts radar chart
+    var cRadar = echarts.init(document.getElementById('chart-radar'));
+    allCharts.push(cRadar);
+    cRadar.setOption({
+      tooltip: { trigger: 'item' },
+      legend: Object.assign({}, baseLegend, { data: ['Current Risk','2023 Baseline'] }),
+      radar: {
+        indicator: [
+          { name: '\u6d41\u52d5\u6027 / Liquidity', max: 10 },
+          { name: '\u4fe1\u8cb8 / Credit', max: 10 },
+          { name: '\u4f9b\u7d66 / Supply', max: 10 },
+          { name: '\u7e3d\u7d93 / Macro', max: 10 },
+          { name: '\u653f\u7b56 / Policy', max: 10 },
+          { name: '\u5916\u8cc7 / Foreign', max: 10 }
+        ],
+        shape: 'polygon',
+        splitLine: { lineStyle: { color: C.grid } },
+        splitArea: { show: false },
+        axisLine: { lineStyle: { color: C.grid } },
+        axisName: { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 10 }
+      },
+      series: [{
+        type: 'radar',
+        data: [
+          {
+            name: 'Current Risk',
+            value: [6,7,8,5,6,5],
+            lineStyle: { color: C.red, width: 2 },
+            itemStyle: { color: C.red },
+            areaStyle: { color: 'rgba(220,38,38,0.1)' }
+          },
+          {
+            name: '2023 Baseline',
+            value: [5,6,5,5,4,4],
+            lineStyle: { color: C.muted, width: 2, type: 'dashed' },
+            itemStyle: { color: C.muted },
+            areaStyle: { color: 'rgba(139,163,192,0.08)' }
+          }
+        ]
+      }]
     });
-  }
 
-  function drawRateSensitivity(){
-    var data=new google.visualization.DataTable();
-    data.addColumn('string','OPR');
-    data.addColumn('number','Monthly Payment (RM)');
-    data.addColumn({type:'string',role:'annotation'});
-    var oprLabels=['2.25%','2.50%','2.75%','3.00%','3.25%','3.50%'];
-    var payments=[2156,2228,2302,2378,2455,2535];
-    for(var i=0;i<oprLabels.length;i++){
-      var ann=oprLabels[i]==='2.75%'?'Current':'';
-      data.addRow([oprLabels[i],payments[i],ann]);
-    }
-    var chart=new google.visualization.LineChart(document.getElementById('chart-rate-sensitivity'));
-    chart.draw(data,{
-      chartArea:CA,backgroundColor:BG,
-      colors:[NAVY],
-      legend:{position:'top',textStyle:{color:NAVY,fontSize:11}},
-      series:{0:{lineWidth:2,pointSize:4}},
-      hAxis:{title:'OPR %',titleTextStyle:{color:NAVY,fontSize:11},textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-      vAxis:{format:'RM #,###',textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
-      annotations:{textStyle:{fontSize:10,color:RED,bold:true}},
-      curveType:'function'
+    // chart-rate-sensitivity: dual-axis line
+    var cRate = echarts.init(document.getElementById('chart-rate-sensitivity'));
+    allCharts.push(cRate);
+    cRate.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data: ['Yield Spread','Affordability Index'] }),
+      grid: { left: 50, right: 50, top: 45, bottom: 30, containLabel: true },
+      xAxis: mkAxis({
+        type: 'category',
+        data: ['OPR 2.0%','OPR 2.5%','OPR 2.75%','OPR 3.0%','OPR 3.5%']
+      }),
+      yAxis: [
+        mkAxis({ type: 'value', name: 'Spread %', nameTextStyle: baseText, axisLabel: Object.assign({}, baseText, { formatter: '{value}%' }) }),
+        mkAxis({ type: 'value', name: 'Affordability', nameTextStyle: baseText, splitLine: { show: false } })
+      ],
+      series: [
+        {
+          name: 'Yield Spread', type: 'line',
+          data: [3.19, 2.69, 2.44, 2.19, 1.69],
+          lineStyle: { color: C.green, width: 2 },
+          itemStyle: { color: C.green },
+          symbol: 'circle', symbolSize: 6
+        },
+        {
+          name: 'Affordability Index', type: 'line',
+          yAxisIndex: 1,
+          data: [88, 82, 79, 75, 68],
+          lineStyle: { color: C.orange, width: 2 },
+          itemStyle: { color: C.orange },
+          symbol: 'circle', symbolSize: 6,
+          markLine: {
+            silent: true,
+            symbol: 'none',
+            lineStyle: { color: C.navy, type: 'dashed', width: 1 },
+            label: { formatter: 'Current', fontSize: 10, color: C.navy },
+            data: [{ xAxis: 'OPR 2.75%' }]
+          }
+        }
+      ]
     });
-  }
+
+    setLang(localStorage.getItem('lang')||'en');
+  });
+
+  window.addEventListener('resize', function(){
+    allCharts.forEach(function(c){ if(c) c.resize(); });
+  });
   </script>
 </body>
 </html>
