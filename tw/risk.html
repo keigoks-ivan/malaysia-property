@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Risk Monitor | Taiwan Property Monitor</title>
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+<link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector">
+    <button class="market-btn" onclick="toggleMarketMenu()">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span> ▾</button>
+    <div class="market-dropdown" id="marketDropdown">
+      <a href="../index.html">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="index.html" class="active">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+    </div>
+  </div>
+  <nav>
+    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html" class="active"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="taipei.html"><span class="lang-en">Taipei</span><span class="lang-zh" style="display:none">台北</span></a>
+    <a href="hsinchu.html"><span class="lang-en">Hsinchu</span><span class="lang-zh" style="display:none">新竹</span></a>
+    <a href="taichung.html"><span class="lang-en">Taichung</span><span class="lang-zh" style="display:none">台中</span></a>
+    <a href="kaohsiung.html"><span class="lang-en">Kaohsiung</span><span class="lang-zh" style="display:none">高雄</span></a>
+  </nav>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <span class="opr-badge">CBS: 2.0%</span>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html" class="active"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="taipei.html"><span class="lang-en">Taipei</span><span class="lang-zh" style="display:none">台北</span></a>
+  <a href="hsinchu.html"><span class="lang-en">Hsinchu</span><span class="lang-zh" style="display:none">新竹</span></a>
+  <a href="taichung.html"><span class="lang-en">Taichung</span><span class="lang-zh" style="display:none">台中</span></a>
+  <a href="kaohsiung.html"><span class="lang-en">Kaohsiung</span><span class="lang-zh" style="display:none">高雄</span></a>
+  <span class="opr-badge" style="margin:10px 16px;display:inline-block">CBS: 2.0%</span>
+  <div class="lang-switcher" style="padding:10px 16px">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+</div>
+
+<main class="dashboard">
+  <h1 class="page-title"><span class="lang-en">Risk Monitor</span><span class="lang-zh" style="display:none">風險監測</span></h1>
+
+  <!-- KPI Cards -->
+  <div class="kpi-row">
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">Taipei Mortgage Burden</span><span class="lang-zh" style="display:none">台北房貸負擔率</span></div>
+      <div class="kpi-value">68%</div>
+      <div class="kpi-delta negative"><span class="lang-en">Warning level</span><span class="lang-zh" style="display:none">警戒水準</span></div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">Bank Mortgage Ratio</span><span class="lang-zh" style="display:none">銀行房貸集中度</span></div>
+      <div class="kpi-value" style="font-size:18px"><span class="lang-en">Near ceiling</span><span class="lang-zh" style="display:none">接近上限</span></div>
+      <div class="kpi-delta negative"><span class="lang-en">Regulatory limit</span><span class="lang-zh" style="display:none">法定上限</span></div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">7th Credit Control</span><span class="lang-zh" style="display:none">第七波信用管制</span></div>
+      <div class="kpi-value" style="font-size:18px"><span class="lang-en">Still active</span><span class="lang-zh" style="display:none">持續中</span></div>
+      <div class="kpi-delta negative"><span class="lang-en">Most aggressive wave</span><span class="lang-zh" style="display:none">最嚴厲一波</span></div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">Earthquake Risk</span><span class="lang-zh" style="display:none">地震風險</span></div>
+      <div class="kpi-value" style="font-size:18px"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></div>
+      <div class="kpi-delta" style="color:#d97706"><span class="lang-en">Seismic zone</span><span class="lang-zh" style="display:none">地震帶</span></div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">Birth Rate</span><span class="lang-zh" style="display:none">出生率</span></div>
+      <div class="kpi-value">0.87</div>
+      <div class="kpi-delta negative"><span class="lang-en">Demographic decline</span><span class="lang-zh" style="display:none">人口結構衰退</span></div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">Geopolitical Risk</span><span class="lang-zh" style="display:none">地緣政治風險</span></div>
+      <div class="kpi-value" style="font-size:16px"><span class="lang-en">Taiwan Strait</span><span class="lang-zh" style="display:none">台灣海峽</span></div>
+      <div class="kpi-delta" style="color:#d97706"><span class="lang-en">Elevated uncertainty</span><span class="lang-zh" style="display:none">不確定性升高</span></div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="chart-row">
+    <div class="chart-card half">
+      <h3><span class="lang-en">Risk Radar</span><span class="lang-zh" style="display:none">風險雷達圖</span></h3>
+      <div class="radar-wrap">
+        <div id="chartTwRisk" style="width:100%;height:320px"></div>
+      </div>
+    </div>
+    <div class="chart-card half">
+      <h3><span class="lang-en">Rate Sensitivity Analysis</span><span class="lang-zh" style="display:none">利率敏感度分析</span></h3>
+      <div id="chartTwRateSensitivity" style="height:220px"></div>
+    </div>
+  </div>
+
+  <!-- Policy Timeline -->
+  <h2 class="section-heading"><span class="lang-en">Policy Timeline</span><span class="lang-zh" style="display:none">政策時間軸</span></h2>
+  <div class="timeline">
+    <div class="timeline-item red">
+      <div class="tl-date">2022 H2</div>
+      <div class="tl-text"><span class="lang-en">CBS rate hikes begin</span><span class="lang-zh" style="display:none">央行開始升息</span></div>
+    </div>
+    <div class="timeline-item red">
+      <div class="tl-date">2023 Jun</div>
+      <div class="tl-text"><span class="lang-en">5th credit control round</span><span class="lang-zh" style="display:none">第五波信用管制</span></div>
+    </div>
+    <div class="timeline-item red">
+      <div class="tl-date">2024 Sep</div>
+      <div class="tl-text"><span class="lang-en">7th credit control &mdash; most aggressive round targeting multi-property owners and corporate buyers</span><span class="lang-zh" style="display:none">第七波信用管制 &mdash; 最嚴厲措施，針對多屋族及法人</span></div>
+    </div>
+    <div class="timeline-item red">
+      <div class="tl-date">2024 Q4</div>
+      <div class="tl-text"><span class="lang-en">Transaction volume collapses under policy pressure</span><span class="lang-zh" style="display:none">成交量在政策壓力下崩跌</span></div>
+    </div>
+    <div class="timeline-item green">
+      <div class="tl-date">2025</div>
+      <div class="tl-text"><span class="lang-en">New youth housing loan program launched to support first-time buyers</span><span class="lang-zh" style="display:none">推出青年安心成家貸款新方案支持首購族</span></div>
+    </div>
+    <div class="timeline-item gray">
+      <div class="tl-date">2026 Jan</div>
+      <div class="tl-text"><span class="lang-en">Market watching for easing signals from CBS</span><span class="lang-zh" style="display:none">市場關注央行鬆綁信號</span></div>
+    </div>
+  </div>
+
+  <!-- Key Risk Factors -->
+  <h2 class="section-heading"><span class="lang-en">Key Risk Factors</span><span class="lang-zh" style="display:none">主要風險因素</span></h2>
+  <div class="summary-grid">
+    <div class="summary-card red-left">
+      <h4><span class="lang-en">Credit Control</span><span class="lang-zh" style="display:none">信用管制</span></h4>
+      <p><span class="lang-en">The 7th wave of selective credit controls is the most aggressive in Taiwan's history. LTV caps as low as 30% for third-property buyers, corporate purchase restrictions, and grace period bans have frozen speculative demand. Any relaxation would be a major sentiment catalyst.</span><span class="lang-zh" style="display:none">第七波選擇性信用管制是台灣史上最嚴厲措施。第三戶購屋者貸款成數僅三成、法人購屋限制及寬限期禁止，已凍結投機需求。任何鬆綁都將成為重大市場催化劑。</span></p>
+    </div>
+    <div class="summary-card red-left">
+      <h4><span class="lang-en">Demographic Decline</span><span class="lang-zh" style="display:none">人口衰退</span></h4>
+      <p><span class="lang-en">Taiwan's fertility rate of 0.87 is among the world's lowest. Population peaked in 2020 and is now declining. Long-term housing demand faces structural headwinds, particularly outside major metro areas where vacancy rates already exceed 10%.</span><span class="lang-zh" style="display:none">台灣出生率 0.87 為全球最低之一。人口於 2020 年見頂後持續下降。長期住宅需求面臨結構性逆風，尤其在空屋率已超過 10% 的非都會區。</span></p>
+    </div>
+    <div class="summary-card orange-left">
+      <h4><span class="lang-en">Geopolitical</span><span class="lang-zh" style="display:none">地緣政治</span></h4>
+      <p><span class="lang-en">Taiwan Strait tensions remain an overhang on property valuations. While markets have largely priced in baseline risk, any escalation could trigger capital flight and sharp repricing. Foreign institutional investors increasingly factor this into Taiwan exposure limits.</span><span class="lang-zh" style="display:none">台海緊張局勢持續壓制房產估值。雖然市場已大致反映基線風險，任何升級都可能引發資金外逃和劇烈重新定價。外資機構投資者日益將此納入台灣曝險上限考量。</span></p>
+    </div>
+    <div class="summary-card orange-left">
+      <h4><span class="lang-en">Rate Sensitivity</span><span class="lang-zh" style="display:none">利率敏感度</span></h4>
+      <p><span class="lang-en">With yield spreads at +0.11%, Taiwan's property market is acutely sensitive to rate movements. A 50bp CBS hike would push spreads deeply negative and could tip affordability ratios past critical thresholds in major cities.</span><span class="lang-zh" style="display:none">利差僅 +0.11%，台灣房市對利率變動極為敏感。央行升息 50 個基點將使利差深陷負值，並可能使主要城市的負擔能力比率突破臨界門檻。</span></p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>A project by InvestMQuest.</p>
+</footer>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',grid:'#e8f0f9',text:'#1e3a5f'};
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function fmtK(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+
+/* Chart: Risk Radar */
+echarts.init(document.getElementById('chartTwRisk')).setOption({
+  legend:Object.assign({},baseLegend,{data:['Current Risk','2023 Baseline']}),
+  radar:{
+    indicator:[
+      {name:'Liquidity\n/\u6d41\u52d5\u6027',max:10},
+      {name:'Credit\n/\u4fe1\u8cb8',max:10},
+      {name:'Supply\n/\u4f9b\u7d66',max:10},
+      {name:'Macro\n/\u7e3d\u7d93',max:10},
+      {name:'Policy\n/\u653f\u7b56',max:10},
+      {name:'Geopolitical\n/\u5730\u7de3',max:10}
+    ],
+    shape:'polygon',
+    splitNumber:5,
+    axisName:{color:C.navy,fontSize:10,fontFamily:'Inter'},
+    splitLine:{lineStyle:{color:C.grid}},
+    splitArea:{areaStyle:{color:['rgba(238,243,249,0.3)','rgba(255,255,255,0.3)']}},
+    axisLine:{lineStyle:{color:C.grid}}
+  },
+  series:[{
+    type:'radar',
+    data:[
+      {
+        name:'Current Risk',
+        value:[6,8,6,5,9,7],
+        lineStyle:{color:C.red,width:2},
+        itemStyle:{color:C.red},
+        areaStyle:{color:'rgba(220,38,38,0.1)'},
+        symbol:'circle',
+        symbolSize:5
+      },
+      {
+        name:'2023 Baseline',
+        value:[5,6,5,5,6,6],
+        lineStyle:{color:C.muted,type:'dashed',width:1.5},
+        itemStyle:{color:C.muted},
+        areaStyle:{color:'rgba(139,163,192,0.08)'},
+        symbol:'circle',
+        symbolSize:4
+      }
+    ]
+  }]
+});
+
+/* Chart: Rate Sensitivity */
+echarts.init(document.getElementById('chartTwRateSensitivity')).setOption({
+  tooltip:baseTooltip,
+  legend:Object.assign({},baseLegend,{data:['Yield Spread','Affordability Index']}),
+  grid:baseGrid,
+  xAxis:mkAxis({type:'category',data:['CBS 1.5%','CBS 2.0%','CBS 2.5%','CBS 3.0%']}),
+  yAxis:[
+    mkAxis({type:'value',axisLabel:{formatter:'{value}%'},name:'Yield Spread',nameTextStyle:baseText}),
+    mkAxis({type:'value',position:'right',axisLabel:{formatter:'{value}'},name:'Affordability',nameTextStyle:baseText,splitLine:{show:false}})
+  ],
+  series:[
+    {
+      name:'Yield Spread',type:'line',smooth:0.2,
+      data:[0.74,0.24,-0.26,-0.76],
+      lineStyle:{color:C.green},itemStyle:{color:C.green},
+      symbol:'circle',symbolSize:6,
+      markLine:{
+        silent:true,symbol:'none',
+        lineStyle:{color:C.navy,type:'dashed',width:1},
+        data:[{xAxis:'CBS 2.0%',label:{formatter:'Current',fontSize:10,color:C.navy,position:'insideEndTop'}}]
+      }
+    },
+    {
+      name:'Affordability Index',type:'line',smooth:0.2,
+      yAxisIndex:1,
+      data:[72,68,63,58],
+      lineStyle:{color:C.orange},itemStyle:{color:C.orange},
+      symbol:'circle',symbolSize:6
+    }
+  ]
+});
+
+/* Restore language preference */
+(function(){var lang=localStorage.getItem('lang');if(lang)setLang(lang);})();
+</script>
+</body>
+</html>

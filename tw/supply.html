@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Supply Analysis | Taiwan Property Monitor</title>
+<link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector">
+    <button class="market-btn" onclick="toggleMarketMenu()">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span> ▾</button>
+    <div class="market-dropdown" id="marketDropdown">
+      <a href="../index.html">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="index.html" class="active">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+    </div>
+  </div>
+  <nav>
+    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html" class="active"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="taipei.html"><span class="lang-en">Taipei</span><span class="lang-zh" style="display:none">台北</span></a>
+    <a href="hsinchu.html"><span class="lang-en">Hsinchu</span><span class="lang-zh" style="display:none">新竹</span></a>
+    <a href="taichung.html"><span class="lang-en">Taichung</span><span class="lang-zh" style="display:none">台中</span></a>
+    <a href="kaohsiung.html"><span class="lang-en">Kaohsiung</span><span class="lang-zh" style="display:none">高雄</span></a>
+  </nav>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <span class="opr-badge">CBS: 2.0%</span>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html" class="active"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="taipei.html"><span class="lang-en">Taipei</span><span class="lang-zh" style="display:none">台北</span></a>
+  <a href="hsinchu.html"><span class="lang-en">Hsinchu</span><span class="lang-zh" style="display:none">新竹</span></a>
+  <a href="taichung.html"><span class="lang-en">Taichung</span><span class="lang-zh" style="display:none">台中</span></a>
+  <a href="kaohsiung.html"><span class="lang-en">Kaohsiung</span><span class="lang-zh" style="display:none">高雄</span></a>
+</div>
+
+<main class="dashboard">
+  <h1 class="page-title"><span class="lang-en">Supply Pipeline Analysis</span><span class="lang-zh" style="display:none">供給分析</span></h1>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">2025 New Launches</span><span class="lang-zh" style="display:none">2025年新推案量</span></div>
+      <div class="kpi-value">~90,000 <span class="kpi-unit">units</span></div>
+      <div class="kpi-delta negative">-38% YoY</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">Unsold Inventory</span><span class="lang-zh" style="display:none">待售餘屋</span></div>
+      <div class="kpi-value">~82,000 <span class="kpi-unit">units</span></div>
+      <div class="kpi-delta" style="color:#d97706">Q3 2025</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">Building Permits</span><span class="lang-zh" style="display:none">建照核發</span></div>
+      <div class="kpi-value">120,000 <span class="kpi-unit">units</span></div>
+      <div class="kpi-delta" style="color:#2563eb">2024</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">Occupancy Permits</span><span class="lang-zh" style="display:none">使照核發</span></div>
+      <div class="kpi-value">95,000 <span class="kpi-unit">units</span></div>
+      <div class="kpi-delta" style="color:#2563eb">2024</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">Vacant Units</span><span class="lang-zh" style="display:none">空屋數</span></div>
+      <div class="kpi-value">~1.66M <span class="kpi-unit">(9.6%)</span></div>
+      <div class="kpi-delta" style="color:#d97706">National</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">Developer Confidence</span><span class="lang-zh" style="display:none">開發商信心</span></div>
+      <div class="kpi-value" style="font-size:20px">Conservative</div>
+      <div class="kpi-delta negative">Cautious outlook</div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-card full">
+      <h3><span class="lang-en">Building Permits vs Occupancy Permits vs New Launches</span><span class="lang-zh" style="display:none">建照 vs 使照 vs 新推案量</span></h3>
+      <div id="chartTwPipeline" style="height:370px"></div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-card half">
+      <h3><span class="lang-en">Unsold Inventory by City</span><span class="lang-zh" style="display:none">各城市待售餘屋</span></h3>
+      <div id="chartTwInventory" style="height:370px"></div>
+    </div>
+    <div class="chart-card half">
+      <h3><span class="lang-en">Vacancy Rate Trend</span><span class="lang-zh" style="display:none">空屋率趨勢</span></h3>
+      <div id="chartTwVacancy" style="height:370px"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>A project by InvestMQuest.</p>
+</footer>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',grid:'#e8f0f9',text:'#1e3a5f'};
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function fmtK(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+
+/* Chart: Building Permits vs Occupancy Permits vs New Launches */
+echarts.init(document.getElementById('chartTwPipeline')).setOption({
+  tooltip:baseTooltip,
+  legend:Object.assign({},baseLegend,{data:['Building Permits','Occupancy Permits','New Launches']}),
+  grid:baseGrid,
+  xAxis:mkAxis({type:'category',data:['2020','2021','2022','2023','2024','2025E']}),
+  yAxis:mkAxis({type:'value',axisLabel:{formatter:function(v){return fmtK(v);}}}),
+  series:[
+    {name:'Building Permits',type:'line',smooth:0.2,data:[130000,140000,145000,135000,120000,100000],lineStyle:{color:C.muted,type:'dashed'},itemStyle:{color:C.muted},symbol:'circle',symbolSize:6},
+    {name:'Occupancy Permits',type:'line',smooth:0.2,data:[85000,92000,98000,93000,95000,88000],lineStyle:{color:C.navy},itemStyle:{color:C.navy},symbol:'circle',symbolSize:6},
+    {name:'New Launches',type:'line',smooth:0.2,data:[115000,120000,130000,115000,145000,90000],lineStyle:{color:C.green},itemStyle:{color:C.green},symbol:'circle',symbolSize:6}
+  ]
+});
+
+/* Chart: Unsold Inventory by City (horizontal bar) */
+(function(){
+  var labels=['Taipei','New Taipei','Taoyuan','Taichung','Tainan','Kaohsiung','Hsinchu'];
+  var vals=[8200,15400,12800,18600,9200,11400,6800];
+  var colors=vals.map(function(v){
+    if(v===18600) return C.red;
+    if(v>12000) return C.orange;
+    return C.navy;
+  });
+  echarts.init(document.getElementById('chartTwInventory')).setOption({
+    tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'}}),
+    grid:{left:10,right:60,top:10,bottom:10,containLabel:true},
+    xAxis:mkAxis({type:'value',axisLabel:{formatter:function(v){return fmtK(v);}}}),
+    yAxis:mkAxis({type:'category',data:labels,inverse:true}),
+    series:[{
+      type:'bar',
+      data:vals.map(function(v,i){return {value:v,itemStyle:{color:colors[i],borderRadius:[0,4,4,0]}};}),
+      label:{show:true,position:'right',formatter:'{c}',fontSize:11,fontFamily:'Inter, sans-serif',color:C.navy},
+      barWidth:20
+    }]
+  });
+})();
+
+/* Chart: Vacancy Rate Trend */
+echarts.init(document.getElementById('chartTwVacancy')).setOption({
+  tooltip:baseTooltip,
+  grid:baseGrid,
+  xAxis:mkAxis({type:'category',data:['2015','2016','2018','2020','2022','2024']}),
+  yAxis:mkAxis({type:'value',min:4,max:12,axisLabel:{formatter:'{value}%'}}),
+  series:[{
+    type:'line',
+    data:[10.3,9.9,9.7,9.9,9.8,9.6],
+    smooth:0.2,
+    lineStyle:{color:C.orange,width:2},
+    itemStyle:{color:C.orange},
+    symbol:'circle',
+    symbolSize:7,
+    areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(217,119,6,0.15)'},{offset:1,color:'rgba(217,119,6,0)'}])},
+    markLine:{
+      silent:true,
+      symbol:'none',
+      lineStyle:{color:C.green,type:'dashed',width:1},
+      label:{formatter:'Healthy benchmark',fontSize:10,color:C.green,fontFamily:'Inter, sans-serif'},
+      data:[{yAxis:5}]
+    }
+  }]
+});
+</script>
+</body>
+</html>

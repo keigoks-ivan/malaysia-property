@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Demand Analysis | Taiwan Property Monitor</title>
+<link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector">
+    <button class="market-btn" onclick="toggleMarketMenu()">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span> ▾</button>
+    <div class="market-dropdown" id="marketDropdown">
+      <a href="../index.html">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="index.html" class="active">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+    </div>
+  </div>
+  <nav>
+    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html" class="active"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="taipei.html"><span class="lang-en">Taipei</span><span class="lang-zh" style="display:none">台北</span></a>
+    <a href="hsinchu.html"><span class="lang-en">Hsinchu</span><span class="lang-zh" style="display:none">新竹</span></a>
+    <a href="taichung.html"><span class="lang-en">Taichung</span><span class="lang-zh" style="display:none">台中</span></a>
+    <a href="kaohsiung.html"><span class="lang-en">Kaohsiung</span><span class="lang-zh" style="display:none">高雄</span></a>
+  </nav>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <span class="opr-badge">CBS: 2.0%</span>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html" class="active"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="taipei.html"><span class="lang-en">Taipei</span><span class="lang-zh" style="display:none">台北</span></a>
+  <a href="hsinchu.html"><span class="lang-en">Hsinchu</span><span class="lang-zh" style="display:none">新竹</span></a>
+  <a href="taichung.html"><span class="lang-en">Taichung</span><span class="lang-zh" style="display:none">台中</span></a>
+  <a href="kaohsiung.html"><span class="lang-en">Kaohsiung</span><span class="lang-zh" style="display:none">高雄</span></a>
+</div>
+
+<main class="dashboard">
+  <h1 class="page-title"><span class="lang-en">Demand Analysis</span><span class="lang-zh" style="display:none">需求分析</span></h1>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">2025E Transactions</span><span class="lang-zh" style="display:none">2025年預估交易量</span></div>
+      <div class="kpi-value">270,000</div>
+      <div class="kpi-delta negative">8-year low</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">First-time Buyer Share</span><span class="lang-zh" style="display:none">首購族比例</span></div>
+      <div class="kpi-value">~42%</div>
+      <div class="kpi-delta" style="color:#2563eb">Rising</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">Loan Approval Rate</span><span class="lang-zh" style="display:none">貸款核准率</span></div>
+      <div class="kpi-value">62%</div>
+      <div class="kpi-delta" style="color:#d97706">Tightening</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">New Youth Housing Loans</span><span class="lang-zh" style="display:none">新青安貸款申請</span></div>
+      <div class="kpi-value">150,000+</div>
+      <div class="kpi-delta positive">Applications</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">Renter Population</span><span class="lang-zh" style="display:none">租屋人口比例</span></div>
+      <div class="kpi-value">~39%</div>
+      <div class="kpi-delta" style="color:#2563eb">Structural</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="lang-en">Foreign Buyer Share</span><span class="lang-zh" style="display:none">外國買家比例</span></div>
+      <div class="kpi-value">&lt;1%</div>
+      <div class="kpi-delta" style="color:#2563eb">Minimal</div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-card half">
+      <h3><span class="lang-en">Transaction Volume Trend</span><span class="lang-zh" style="display:none">交易量趨勢</span></h3>
+      <div id="chartTwTxn" style="height:370px"></div>
+    </div>
+    <div class="chart-card half">
+      <h3><span class="lang-en">City YoY Growth (%)</span><span class="lang-zh" style="display:none">各城市年增率 (%)</span></h3>
+      <div id="chartTwCityGrowth" style="height:370px"></div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-card half">
+      <h3><span class="lang-en">Buyer Structure (%)</span><span class="lang-zh" style="display:none">買方結構 (%)</span></h3>
+      <div id="chartTwBuyers" style="height:370px"></div>
+    </div>
+    <div class="chart-card half">
+      <h3><span class="lang-en">5-Bank New Mortgage Amount (NT$ Bn)</span><span class="lang-zh" style="display:none">五大銀行新增房貸金額 (新台幣十億)</span></h3>
+      <div id="chartTwLoan" style="height:370px"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>A project by InvestMQuest.</p>
+</footer>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',grid:'#e8f0f9',text:'#1e3a5f'};
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function fmtK(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+
+/* Chart: Transaction Volume Trend */
+echarts.init(document.getElementById('chartTwTxn')).setOption({
+  tooltip:baseTooltip,
+  grid:baseGrid,
+  xAxis:mkAxis({type:'category',data:['2019','2020','2021','2022','2023','2024','2025E']}),
+  yAxis:mkAxis({type:'value',axisLabel:{formatter:function(v){return fmtK(v);}}}),
+  series:[{
+    type:'line',
+    data:[290000,310000,340000,280000,300000,350000,270000],
+    smooth:0.2,
+    lineStyle:{color:C.navy,width:2},
+    itemStyle:{color:C.navy},
+    symbol:'circle',
+    symbolSize:7,
+    areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(30,58,95,0.15)'},{offset:1,color:'rgba(30,58,95,0)'}])},
+    markPoint:{
+      data:[
+        {type:'max',name:'Max',symbolSize:50,label:{fontSize:10,fontFamily:'Inter'}},
+        {type:'min',name:'Min',symbolSize:50,label:{fontSize:10,fontFamily:'Inter'}}
+      ],
+      itemStyle:{color:C.navy}
+    }
+  }]
+});
+
+/* Chart: City YoY Growth (horizontal bar) */
+(function(){
+  var labels=['Keelung','Hsinchu','Tainan','Kaohsiung','New Taipei','Taipei','Taichung'];
+  var vals=[-45,-41,-28,-26,-24,-22,-21];
+  echarts.init(document.getElementById('chartTwCityGrowth')).setOption({
+    tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+': '+p[0].value+'%';}}),
+    grid:{left:10,right:60,top:10,bottom:10,containLabel:true},
+    xAxis:mkAxis({type:'value',axisLabel:{formatter:'{value}%'}}),
+    yAxis:mkAxis({type:'category',data:labels,inverse:true}),
+    series:[{
+      type:'bar',
+      data:vals.map(function(v){return {value:v,itemStyle:{color:C.red}};}),
+      label:{show:true,position:'right',formatter:function(p){return (p.value>0?'+':'')+p.value+'%';},fontSize:11,fontFamily:'Inter, sans-serif',color:C.red},
+      barWidth:20
+    }]
+  });
+})();
+
+/* Chart: Buyer Structure */
+echarts.init(document.getElementById('chartTwBuyers')).setOption({
+  tooltip:baseTooltip,
+  legend:Object.assign({},baseLegend,{data:['First-time','Upgrader','Investor']}),
+  grid:baseGrid,
+  xAxis:mkAxis({type:'category',data:['2020','2021','2022','2023','2024','2025H1']}),
+  yAxis:mkAxis({type:'value',axisLabel:{formatter:'{value}%'},min:15,max:50}),
+  series:[
+    {name:'First-time',type:'line',smooth:0.2,data:[38,40,41,40,42,44],lineStyle:{color:C.navy},itemStyle:{color:C.navy},symbol:'circle',symbolSize:6},
+    {name:'Upgrader',type:'line',smooth:0.2,data:[35,34,33,34,33,32],lineStyle:{color:C.muted},itemStyle:{color:C.muted},symbol:'circle',symbolSize:6},
+    {name:'Investor',type:'line',smooth:0.2,data:[27,26,26,26,25,24],lineStyle:{color:C.orange},itemStyle:{color:C.orange},symbol:'circle',symbolSize:6}
+  ]
+});
+
+/* Chart: 5-Bank New Mortgage Amount */
+(function(){
+  var labels=['2021','2022','2023','2024','2025Q1-Q3'];
+  var vals=[920,1050,1100,1380,820];
+  var colors=[C.navy,C.navy,C.navy,C.green,C.red];
+  echarts.init(document.getElementById('chartTwLoan')).setOption({
+    tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+': NT$'+p[0].value+'Bn';}}),
+    grid:baseGrid,
+    xAxis:mkAxis({type:'category',data:labels}),
+    yAxis:mkAxis({type:'value',axisLabel:{formatter:function(v){return v;}}}),
+    series:[{
+      type:'bar',
+      data:vals.map(function(v,i){return {value:v,itemStyle:{color:colors[i]}};}),
+      label:{show:true,position:'top',formatter:'{c}',fontSize:11,fontFamily:'Inter, sans-serif',color:C.navy},
+      barWidth:40,
+      markPoint:{
+        data:[{name:'Peak',coord:['2024',1380],value:'Peak',symbolSize:50,label:{fontSize:10,fontFamily:'Inter'},itemStyle:{color:C.green}}]
+      }
+    }]
+  });
+})();
+</script>
+</body>
+</html>

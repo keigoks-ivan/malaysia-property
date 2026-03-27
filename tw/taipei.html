@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taipei Deep Dive | Taiwan Property Monitor</title>
+  <meta name="color-scheme" content="light">
+  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+  .market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+  </style>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="logo">PROPERTY MONITOR</a>
+    <div class="market-selector">
+      <button class="market-btn" onclick="toggleMarketMenu()">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span> ▾</button>
+      <div class="market-dropdown" id="marketDropdown">
+        <a href="../index.html">🇲🇾 Malaysia / 馬來西亞</a>
+        <a href="index.html" class="active">🇹🇼 Taiwan / 台灣</a>
+      </div>
+    </div>
+    <nav>
+      <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+      <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">總覽</span></a>
+      <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+      <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+      <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+      <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+      <a href="taipei.html" class="active">Taipei / 台北</a>
+      <a href="hsinchu.html">Hsinchu / 新竹</a>
+      <a href="taichung.html">Taichung / 台中</a>
+      <a href="kaohsiung.html">Kaohsiung / 高雄</a>
+    </nav>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+    </div>
+    <span class="opr-badge">CBS: 2.0%</span>
+    <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+  </header>
+  <div class="mobile-menu">
+    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="taipei.html" class="active">Taipei / 台北</a>
+    <a href="hsinchu.html">Hsinchu / 新竹</a>
+    <a href="taichung.html">Taichung / 台中</a>
+    <a href="kaohsiung.html">Kaohsiung / 高雄</a>
+    <div class="mobile-meta">
+      <span class="opr-badge">CBS: 2.0%</span>
+      <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="page-header">
+      <span class="updated"><span class="lang-en">LAST UPDATED: Q3 2025</span><span class="lang-zh" style="display:none">最後更新：2025年Q3</span></span>
+      <h1><span class="lang-en">Taipei &mdash; Deep Dive</span><span class="lang-zh" style="display:none">台北深度分析</span></h1>
+      <p class="subtitle"><span class="lang-en">Micro-Market Analysis Across Taipei's Three Zones</span><span class="lang-zh" style="display:none">台北三區微型市場分析</span></p>
+    </div>
+
+    <div class="section-label"><span class="lang-en">KEY METRICS</span><span class="lang-zh" style="display:none">關鍵指標</span></div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="kpi-card blue">
+        <div class="kpi-label"><span class="lang-en">TAIPEI AVG PRICE</span><span class="lang-zh" style="display:none">台北平均房價</span></div>
+        <div class="kpi-value">NT$83<span style="font-size:13px"><span class="lang-en">W/ping</span><span class="lang-zh" style="display:none">萬/坪</span></span></div>
+        <span class="kpi-badge badge-blue">Q3 2025</span>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label"><span class="lang-en">YoY CHANGE</span><span class="lang-zh" style="display:none">年增率</span></div>
+        <div class="kpi-value">-2.1%</div>
+        <span class="kpi-badge badge-red">Q3 2025</span>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label"><span class="lang-en">AVG MONTHLY RENT</span><span class="lang-zh" style="display:none">平均月租金</span></div>
+        <div class="kpi-value">NT$25,000</div>
+        <span class="kpi-badge badge-green"><span class="lang-en">2BR</span><span class="lang-zh" style="display:none">兩房</span></span>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label"><span class="lang-en">RENTAL YIELD</span><span class="lang-zh" style="display:none">租金收益率</span></div>
+        <div class="kpi-value">2.11%</div>
+        <span class="kpi-badge badge-orange"><span class="lang-en">Gross</span><span class="lang-zh" style="display:none">毛收益</span></span>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label"><span class="lang-en">MEDIAN MULTIPLE</span><span class="lang-zh" style="display:none">房價所得比</span></div>
+        <div class="kpi-value">16.36x</div>
+        <span class="kpi-badge badge-red"><span class="lang-en">Globally unaffordable</span><span class="lang-zh" style="display:none">全球最難負擔</span></span>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-label"><span class="lang-en">XINYI DISTRICT PEAK</span><span class="lang-zh" style="display:none">信義區高點</span></div>
+        <div class="kpi-value">&gt;200<span style="font-size:13px"><span class="lang-en">W/ping</span><span class="lang-zh" style="display:none">萬/坪</span></span></div>
+        <span class="kpi-badge badge-blue"><span class="lang-en">Luxury segment</span><span class="lang-zh" style="display:none">豪宅市場</span></span>
+      </div>
+    </div>
+
+    <div class="section-label"><span class="lang-en">THREE ZONES</span><span class="lang-zh" style="display:none">三大分區</span></div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="micro-card">
+        <h4><span class="lang-en">Zone 1: Xinyi / Da'an (Core)</span><span class="lang-zh" style="display:none">第一區：信義／大安（核心區）</span></h4>
+        <div class="kpi-value" style="font-size:18px;">120–250<span style="font-size:12px"><span class="lang-en">W/ping</span><span class="lang-zh" style="display:none">萬/坪</span></span></div>
+        <p style="font-size:12px;color:#8ba3c0;margin-top:6px;"><span class="lang-en">Luxury residential and commercial core. Home to Taiwan's most expensive addresses.</span><span class="lang-zh" style="display:none">豪宅住宅及商業核心區域，台灣最貴地段所在。</span></p>
+      </div>
+      <div class="micro-card">
+        <h4><span class="lang-en">Zone 2: Neihu / Nangang (Tech Corridor)</span><span class="lang-zh" style="display:none">第二區：內湖／南港（科技走廊）</span></h4>
+        <div class="kpi-value" style="font-size:18px;">60–90<span style="font-size:12px"><span class="lang-en">W/ping</span><span class="lang-zh" style="display:none">萬/坪</span></span></div>
+        <p style="font-size:12px;color:#8ba3c0;margin-top:6px;"><span class="lang-en">Tech industry hub with strong rental demand from young professionals.</span><span class="lang-zh" style="display:none">科技產業重鎮，年輕專業人士租賃需求強勁。</span></p>
+      </div>
+      <div class="micro-card">
+        <h4><span class="lang-en">Zone 3: Wenshan / Shilin (Outer)</span><span class="lang-zh" style="display:none">第三區：文山／士林（外圍區）</span></h4>
+        <div class="kpi-value" style="font-size:18px;">45–65<span style="font-size:12px"><span class="lang-en">W/ping</span><span class="lang-zh" style="display:none">萬/坪</span></span></div>
+        <p style="font-size:12px;color:#8ba3c0;margin-top:6px;"><span class="lang-en">Affordable entry points with MRT connectivity. Popular with first-time buyers.</span><span class="lang-zh" style="display:none">具MRT捷運連通性的入門價位區域，首購族熱門選擇。</span></p>
+      </div>
+    </div>
+
+    <div class="section-label"><span class="lang-en">CHARTS</span><span class="lang-zh" style="display:none">圖表</span></div>
+    <div class="chart-grid two-col">
+      <div class="chart-card">
+        <h3><span class="lang-en">District Avg Price</span><span class="lang-zh" style="display:none">各行政區平均房價</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">NT$ 10K per ping · Q3 2025</span><span class="lang-zh" style="display:none">萬元/坪 · 2025年Q3</span></p>
+        <div style="position:relative;height:280px;"><div id="chartTaipeiDistrict" style="width:100%;height:100%"></div></div>
+      </div>
+      <div class="chart-card">
+        <h3><span class="lang-en">Taipei Rent Trend</span><span class="lang-zh" style="display:none">台北租金趨勢</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">Average 2BR Monthly Rent</span><span class="lang-zh" style="display:none">兩房平均月租</span></p>
+        <div style="position:relative;height:220px;"><div id="chartTaipeiRent" style="width:100%;height:100%"></div></div>
+      </div>
+    </div>
+
+    <div class="section-label"><span class="lang-en">SUMMARY</span><span class="lang-zh" style="display:none">總結</span></div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(2,1fr);">
+      <div class="summary-card" style="border-left:4px solid #dc2626;">
+        <h4><span class="lang-en">Price Correction</span><span class="lang-zh" style="display:none">價格修正</span></h4>
+        <p><span class="lang-en">Taipei -2.1% &mdash; policy-driven correction, not a demand collapse. Credit tightening measures are cooling speculative activity.</span><span class="lang-zh" style="display:none">台北 -2.1% — 政策驅動的修正，非需求崩潰。信用緊縮措施正在冷卻投機活動。</span></p>
+      </div>
+      <div class="summary-card" style="border-left:4px solid #16a34a;">
+        <h4><span class="lang-en">Rental Bright Spot</span><span class="lang-zh" style="display:none">租賃亮點</span></h4>
+        <p><span class="lang-en">Rents continue rising steadily, with yields expanding as prices soften. Landlords benefit from tight rental supply.</span><span class="lang-zh" style="display:none">租金持續穩定上漲，收益率因房價軟化而擴大。房東受惠於租賃供給吃緊。</span></p>
+      </div>
+      <div class="summary-card" style="border-left:4px solid #16a34a;">
+        <h4><span class="lang-en">Zone 2 Best Value</span><span class="lang-zh" style="display:none">第二區最佳價值</span></h4>
+        <p><span class="lang-en">Neihu/Nangang tech corridor offers the best risk-adjusted value with strong employment anchors and improving infrastructure.</span><span class="lang-zh" style="display:none">內湖／南港科技走廊提供最佳風險調整價值，擁有強勁就業支撐及持續改善的基礎建設。</span></p>
+      </div>
+      <div class="summary-card" style="border-left:4px solid #d97706;">
+        <h4><span class="lang-en">Zone 1 Caution</span><span class="lang-zh" style="display:none">第一區警示</span></h4>
+        <p><span class="lang-en">Xinyi luxury segment faces credit controls and weaker demand from high-net-worth buyers. Premium compression expected.</span><span class="lang-zh" style="display:none">信義豪宅市場面臨信用管控及高淨值買家需求減弱。預期溢價將壓縮。</span></p>
+      </div>
+    </div>
+
+    <div class="source-footer">
+      <span class="lang-en">Sinyi Realty &middot; MOI 2024 &middot; CBC &middot; Global Property Guide Q1 2026<br><em>Not investment advice.</em></span>
+      <span class="lang-zh" style="display:none">信義房屋 &middot; 內政部 2024 &middot; 中央銀行 &middot; Global Property Guide 2026年Q1<br><em>非投資建議。</em></span>
+    </div>
+  </main>
+
+  <footer class="footer">A project by <span>InvestMQuest</span></footer>
+
+  <script>
+  var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',grid:'#e8f0f9',text:'#1e3a5f'};
+  var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+  var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+  var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+  var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+  function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+  function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);}
+  function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+  document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+
+  var charts=[];
+  window.addEventListener('load',function(){
+    // chartTaipeiDistrict — horizontal bar
+    var c1=echarts.init(document.getElementById('chartTaipeiDistrict'));charts.push(c1);
+    var distLabels=['Wenshan','Shilin','Beitou','Zhongshan','Songshan','Datong','Da\'an','Xinyi'];
+    var distData=[55,62,58,85,95,72,120,145];
+    c1.setOption({
+      tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'}}),
+      grid:{left:80,right:60,top:20,bottom:20,containLabel:false},
+      xAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return 'NT$'+v+'W';}})}),
+      yAxis:mkAxis({type:'category',data:distLabels,axisLabel:{color:C.navy,fontFamily:'Inter',fontSize:11}}),
+      series:[{type:'bar',data:distData.map(function(v){return{value:v,itemStyle:{color:v>=100?C.red:v>=80?C.orange:C.navy,borderRadius:[0,4,4,0]}};}),barMaxWidth:22,label:{show:true,position:'right',formatter:function(p){return 'NT$'+p.value+'W';},fontSize:10,fontFamily:'JetBrains Mono'}}]
+    });
+
+    // chartTaipeiRent — line
+    var c2=echarts.init(document.getElementById('chartTaipeiRent'));charts.push(c2);
+    var rentLabels=['2020','2021','2022','2023','2024','2025'];
+    var rentData=[20000,21000,22500,23500,24500,25000];
+    c2.setOption({
+      tooltip:baseTooltip,grid:baseGrid,
+      xAxis:mkAxis({type:'category',data:rentLabels}),
+      yAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return 'NT$'+(v/1000)+'K';}})}),
+      series:[{type:'line',data:rentData,lineStyle:{color:C.green,width:2},itemStyle:{color:C.green},areaStyle:{color:'rgba(22,163,74,0.08)'},smooth:0.2,symbol:'circle',symbolSize:6,
+        markPoint:{data:[{coord:['2025',25000],symbol:'pin',symbolSize:50,label:{formatter:'NT$25K\n+2% YoY',fontSize:9,lineHeight:13},itemStyle:{color:C.green}}]}
+      }]
+    });
+
+    setLang(localStorage.getItem('lang')||'en');
+  });
+  window.addEventListener('resize',function(){charts.forEach(function(c){c.resize();});});
+  </script>
+</body>
+</html>

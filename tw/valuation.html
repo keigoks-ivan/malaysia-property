@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Valuation Monitor | Taiwan Property Monitor</title>
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+<link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector">
+    <button class="market-btn" onclick="toggleMarketMenu()">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span> ▾</button>
+    <div class="market-dropdown" id="marketDropdown">
+      <a href="../index.html">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="index.html" class="active">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+    </div>
+  </div>
+  <nav>
+    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html" class="active"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="taipei.html"><span class="lang-en">Taipei</span><span class="lang-zh" style="display:none">台北</span></a>
+    <a href="hsinchu.html"><span class="lang-en">Hsinchu</span><span class="lang-zh" style="display:none">新竹</span></a>
+    <a href="taichung.html"><span class="lang-en">Taichung</span><span class="lang-zh" style="display:none">台中</span></a>
+    <a href="kaohsiung.html"><span class="lang-en">Kaohsiung</span><span class="lang-zh" style="display:none">高雄</span></a>
+  </nav>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <span class="opr-badge">CBS: 2.0%</span>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html" class="active"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="taipei.html"><span class="lang-en">Taipei</span><span class="lang-zh" style="display:none">台北</span></a>
+  <a href="hsinchu.html"><span class="lang-en">Hsinchu</span><span class="lang-zh" style="display:none">新竹</span></a>
+  <a href="taichung.html"><span class="lang-en">Taichung</span><span class="lang-zh" style="display:none">台中</span></a>
+  <a href="kaohsiung.html"><span class="lang-en">Kaohsiung</span><span class="lang-zh" style="display:none">高雄</span></a>
+  <span class="opr-badge" style="margin:10px 16px;display:inline-block">CBS: 2.0%</span>
+  <div class="lang-switcher" style="padding:10px 16px">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+</div>
+
+<main class="dashboard">
+  <h1 class="page-title"><span class="lang-en">Valuation Monitor</span><span class="lang-zh" style="display:none">估值監測</span></h1>
+
+  <!-- KPI Cards -->
+  <div class="kpi-row">
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">Taipei P/R Ratio</span><span class="lang-zh" style="display:none">台北租金比</span></div>
+      <div class="kpi-value">47x</div>
+      <div class="kpi-delta negative"><span class="lang-en">Among world's most expensive</span><span class="lang-zh" style="display:none">全球最貴之一</span></div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">National Median Multiple</span><span class="lang-zh" style="display:none">全國房價所得比</span></div>
+      <div class="kpi-value">10.76x</div>
+      <div class="kpi-delta negative">MOI 2024</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">Taipei Median Multiple</span><span class="lang-zh" style="display:none">台北房價所得比</span></div>
+      <div class="kpi-value">16.36x</div>
+      <div class="kpi-delta negative">MOI 2024</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">Hsinchu Median Multiple</span><span class="lang-zh" style="display:none">新竹房價所得比</span></div>
+      <div class="kpi-value">12.5x</div>
+      <div class="kpi-delta" style="color:#d97706">MOI 2024</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">Taipei Rental Yield</span><span class="lang-zh" style="display:none">台北租金回報率</span></div>
+      <div class="kpi-value">2.11%</div>
+      <div class="kpi-delta" style="color:#d97706"><span class="lang-en">Low yield environment</span><span class="lang-zh" style="display:none">低回報環境</span></div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">Yield Spread vs CBS</span><span class="lang-zh" style="display:none">利差 vs 央行利率</span></div>
+      <div class="kpi-value">+0.11%</div>
+      <div class="kpi-delta" style="color:#d97706"><span class="lang-en">Near zero carry</span><span class="lang-zh" style="display:none">接近零利差</span></div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="chart-row">
+    <div class="chart-card half">
+      <h3><span class="lang-en">Median Multiple by City</span><span class="lang-zh" style="display:none">各城市房價所得比</span></h3>
+      <div id="chartTwMedianMult" style="height:280px"></div>
+    </div>
+    <div class="chart-card half">
+      <h3><span class="lang-en">APAC Price-to-Rent Comparison</span><span class="lang-zh" style="display:none">亞太租金比比較</span></h3>
+      <div id="chartTwAPAC" style="height:280px"></div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-card half">
+      <h3><span class="lang-en">Yield vs CBS Rate</span><span class="lang-zh" style="display:none">租金回報率 vs 央行利率</span></h3>
+      <div id="chartTwYieldSpread" style="height:220px"></div>
+      <div class="insight-box" style="border-left-color:#d97706">
+        <span class="lang-en">Spread near zero &mdash; Taiwan property yields barely cover borrowing cost. Unlike Malaysia's +2.44% spread, Taiwan's +0.11% offers no meaningful carry.</span>
+        <span class="lang-zh" style="display:none">利差趨近於零 &mdash; 台灣房產收益幾乎無法覆蓋借貸成本。與馬來西亞 +2.44% 的利差不同，台灣 +0.11% 幾乎沒有套利空間。</span>
+      </div>
+    </div>
+    <div class="chart-card half">
+      <h3><span class="lang-en">Nominal vs Real Price Index</span><span class="lang-zh" style="display:none">名目 vs 實質房價指數</span></h3>
+      <div id="chartTwPriceReal" style="height:220px"></div>
+    </div>
+  </div>
+
+  <!-- Summary Framework -->
+  <h2 class="section-heading"><span class="lang-en">Valuation Framework</span><span class="lang-zh" style="display:none">估值框架</span></h2>
+  <div class="summary-grid">
+    <div class="summary-card red-left">
+      <h4><span class="lang-en">Price-to-Income</span><span class="lang-zh" style="display:none">房價所得比</span></h4>
+      <p><span class="lang-en">National median multiple of 10.76x far exceeds the 5.1x "severely unaffordable" threshold. Taipei at 16.36x is among the most stretched globally, requiring over 16 years of household income to purchase a median home.</span><span class="lang-zh" style="display:none">全國房價所得比 10.76 倍遠超「嚴重不可負擔」的 5.1 倍門檻。台北 16.36 倍為全球最高水準之一，需超過 16 年家庭所得才能購買中位數住宅。</span></p>
+    </div>
+    <div class="summary-card red-left">
+      <h4><span class="lang-en">Price-to-Rent</span><span class="lang-zh" style="display:none">房價租金比</span></h4>
+      <p><span class="lang-en">Taipei's P/R ratio of 47x implies a gross yield of ~2.1%. Among APAC cities, only Hong Kong and Shanghai are more expensive on this metric. Rental income alone cannot justify current prices.</span><span class="lang-zh" style="display:none">台北租金比 47 倍意味著毛租金回報率約 2.1%。亞太城市中僅香港和上海更貴。單靠租金收入無法支撐當前房價。</span></p>
+    </div>
+    <div class="summary-card orange-left">
+      <h4><span class="lang-en">Yield Spread</span><span class="lang-zh" style="display:none">利差分析</span></h4>
+      <p><span class="lang-en">At +0.11%, the spread between rental yield and CBS rate is negligible. Any further rate increase would push spreads negative, meaning investors would lose money on a leveraged rental basis. Capital appreciation is the sole return driver.</span><span class="lang-zh" style="display:none">利差僅 +0.11%，租金回報與央行利率之間的差距微乎其微。任何進一步升息都將導致負利差，表示槓桿租賃投資將虧損。資本增值是唯一回報驅動力。</span></p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>A project by InvestMQuest.</p>
+</footer>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',grid:'#e8f0f9',text:'#1e3a5f'};
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function fmtK(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+
+/* Chart: Median Multiple by City */
+(function(){
+  var cities=['Taoyuan','Kaohsiung','Tainan','Taichung','Hsinchu','New Taipei','Taipei'];
+  var vals=[9.2,10.1,10.3,12.69,12.5,13.71,16.36];
+  var colors=vals.map(function(v){return v>12?C.red:v>10?C.orange:C.navy;});
+  echarts.init(document.getElementById('chartTwMedianMult')).setOption({
+    tooltip:Object.assign({},baseTooltip,{trigger:'item',formatter:function(p){return p.name+': '+p.value+'x';}}),
+    grid:{left:90,right:50,top:10,bottom:10,containLabel:false},
+    xAxis:mkAxis({type:'value',show:false}),
+    yAxis:mkAxis({type:'category',data:cities,axisLabel:{fontSize:11,color:C.navy},splitLine:{show:false}}),
+    series:[{
+      type:'bar',
+      data:vals.map(function(v,i){return{value:v,itemStyle:{color:colors[i],borderRadius:[0,4,4,0]}};}),
+      barWidth:18,
+      label:{show:true,position:'right',formatter:'{c}x',fontSize:11,color:C.navy,fontFamily:'Inter'},
+      markLine:{silent:true,symbol:'none',lineStyle:{color:C.red,type:'dashed',width:1},data:[{xAxis:10,label:{formatter:'Severely Unaffordable',fontSize:9,color:C.red,position:'insideEndTop'}}]}
+    }]
+  });
+})();
+
+/* Chart: APAC Price-to-Rent */
+(function(){
+  var cities=['Ho Chi Minh','KL','Bangkok','Tokyo','Singapore','Taipei','Hong Kong','Shanghai'];
+  var vals=[18,21.7,25,37,40,47,50,59];
+  var colors=vals.map(function(v,i){
+    if(cities[i]==='KL') return C.green;
+    if(cities[i]==='Taipei') return C.orange;
+    if(v<=25) return C.green;
+    if(v<=40) return C.navy;
+    if(v<=50) return C.orange;
+    return C.red;
+  });
+  echarts.init(document.getElementById('chartTwAPAC')).setOption({
+    tooltip:Object.assign({},baseTooltip,{trigger:'item',formatter:function(p){return p.name+': '+p.value+'x';}}),
+    grid:{left:90,right:50,top:10,bottom:10,containLabel:false},
+    xAxis:mkAxis({type:'value',show:false}),
+    yAxis:mkAxis({type:'category',data:cities,axisLabel:{fontSize:11,color:C.navy},splitLine:{show:false}}),
+    series:[{
+      type:'bar',
+      data:vals.map(function(v,i){return{value:v,itemStyle:{color:colors[i],borderRadius:[0,4,4,0]}};}),
+      barWidth:18,
+      label:{show:true,position:'right',formatter:'{c}x',fontSize:11,color:C.navy,fontFamily:'Inter'}
+    }]
+  });
+})();
+
+/* Chart: Yield vs CBS Rate */
+echarts.init(document.getElementById('chartTwYieldSpread')).setOption({
+  tooltip:baseTooltip,
+  legend:Object.assign({},baseLegend,{data:['Rental Yield','CBS Rate']}),
+  grid:baseGrid,
+  xAxis:mkAxis({type:'category',data:['2019','2020','2021','2022','2023','2024','2025Q2']}),
+  yAxis:mkAxis({type:'value',axisLabel:{formatter:'{value}%'}}),
+  series:[
+    {name:'Rental Yield',type:'line',smooth:0.3,data:[2.8,2.6,2.4,2.3,2.2,2.15,2.24],lineStyle:{color:C.orange},itemStyle:{color:C.orange},symbol:'circle',symbolSize:5,areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(217,119,6,0.15)'},{offset:1,color:'rgba(217,119,6,0.02)'}]}}},
+    {name:'CBS Rate',type:'line',step:'end',data:[1.375,1.125,1.125,1.625,1.875,2.0,2.0],lineStyle:{color:C.red,type:'dashed'},itemStyle:{color:C.red},symbol:'circle',symbolSize:5}
+  ]
+});
+
+/* Chart: Nominal vs Real Price Index */
+echarts.init(document.getElementById('chartTwPriceReal')).setOption({
+  tooltip:baseTooltip,
+  legend:Object.assign({},baseLegend,{data:['Nominal Index','Real Index']}),
+  grid:baseGrid,
+  xAxis:mkAxis({type:'category',data:['2019','2020','2021','2022','2023','2024','2025Q3']}),
+  yAxis:mkAxis({type:'value'}),
+  series:[
+    {name:'Nominal Index',type:'line',smooth:0.2,data:[100,102,108,118,128,148,149],lineStyle:{color:C.navy},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5},
+    {name:'Real Index',type:'line',smooth:0.2,data:[100,101,104,109,115,128,127],lineStyle:{color:C.muted,type:'dashed'},itemStyle:{color:C.muted},symbol:'circle',symbolSize:5}
+  ]
+});
+
+/* Restore language preference */
+(function(){var lang=localStorage.getItem('lang');if(lang)setLang(lang);})();
+</script>
+</body>
+</html>
