@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
   <link rel="stylesheet" href="css/style.css">
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
   <header class="navbar">
@@ -83,10 +83,10 @@
     <h2 class="section-heading"><span class="lang-en">Three Micro-Markets + Luxury</span><span class="lang-zh" style="display:none">三個微型市場 + 豪宅</span></h2>
     <div id="zone-tabs">
       <div class="tab-bar">
-        <button class="active" data-tab="z1" onclick="switchTab('zone-tabs','z1');drawZ1();"><span class="lang-en">Zone 1: KLCC / Bukit Bintang</span><span class="lang-zh" style="display:none">第一區：KLCC/武吉免登</span></button>
-        <button data-tab="z2" onclick="switchTab('zone-tabs','z2');drawZ2();"><span class="lang-en">Zone 2: Mid Valley / OKR</span><span class="lang-zh" style="display:none">第二區：中谷/舊巴生路</span></button>
-        <button data-tab="z3" onclick="switchTab('zone-tabs','z3');drawZ3();"><span class="lang-en">Zone 3: Kepong / Cheras / Setapak</span><span class="lang-zh" style="display:none">第三區：甲洞/蕉賴/士打末</span></button>
-        <button data-tab="z4" onclick="switchTab('zone-tabs','z4');drawZ4();"><span class="lang-en">Luxury RM1M+</span><span class="lang-zh" style="display:none">豪宅 RM1M+</span></button>
+        <button class="active" data-tab="z1" onclick="switchTab('zone-tabs','z1')"><span class="lang-en">Zone 1: KLCC / Bukit Bintang</span><span class="lang-zh" style="display:none">第一區：KLCC/武吉免登</span></button>
+        <button data-tab="z2" onclick="switchTab('zone-tabs','z2')"><span class="lang-en">Zone 2: Mid Valley / OKR</span><span class="lang-zh" style="display:none">第二區：中谷/舊巴生路</span></button>
+        <button data-tab="z3" onclick="switchTab('zone-tabs','z3')"><span class="lang-en">Zone 3: Kepong / Cheras / Setapak</span><span class="lang-zh" style="display:none">第三區：甲洞/蕉賴/士打末</span></button>
+        <button data-tab="z4" onclick="switchTab('zone-tabs','z4')"><span class="lang-en">Luxury RM1M+</span><span class="lang-zh" style="display:none">豪宅 RM1M+</span></button>
       </div>
 
       <!-- Tab 1: Zone 1 KLCC / Bukit Bintang -->
@@ -143,7 +143,7 @@
         </div>
         <div class="chart-grid two-col">
           <div class="chart-card">
-            <h3><span class="lang-en">New Launch Volume</span><span class="lang-zh" style="display:none">新推盤量</span></h3>
+            <h3><span class="lang-en">New Launch Take-up Rate</span><span class="lang-zh" style="display:none">新推案去化率</span></h3>
             <div style="position:relative;height:220px;"><div id="chart-z2-launch" style="width:100%;height:100%"></div></div>
           </div>
           <div class="chart-card">
@@ -223,7 +223,7 @@
         </div>
 
         <div class="chart-card">
-          <h3><span class="lang-en">Luxury Segment Transaction Growth (YoY% 2024)</span><span class="lang-zh" style="display:none">豪宅交易量增長（2024年同比%）</span></h3>
+          <h3><span class="lang-en">Luxury Segment Transaction Growth (YoY%)</span><span class="lang-zh" style="display:none">豪宅交易量增長（同比%）</span></h3>
           <div style="position:relative;height:220px;"><div id="chart-luxury-growth" style="width:100%;height:100%"></div></div>
         </div>
       </div>
@@ -289,144 +289,327 @@
   <footer class="footer">A project by <span>InvestMQuest</span></footer>
 
   <script>
-  var NAVY='#1e3a5f',GREEN='#16a34a',ORANGE='#d97706',RED='#dc2626',MUTED='#8ba3c0';
-  var CA={width:'80%',height:'75%'},BG='transparent',GC='#e8f0f9';
-  function setLang(lang){document.querySelectorAll('.lang-en').forEach(e=>e.style.display=lang==='en'?'':'none');document.querySelectorAll('.lang-zh').forEach(e=>e.style.display=lang==='zh'?'':'none');document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));localStorage.setItem('lang',lang);}
-  function switchTab(cid,tab){var w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));w.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(b=>{if(b.dataset.tab===tab)b.classList.add('active');});}
-  google.charts.load('current',{packages:['corechart']});
-  google.charts.setOnLoadCallback(function(){drawAllCharts();setLang(localStorage.getItem('lang')||'en');});
-  window.addEventListener('resize',function(){drawAllCharts();});
+  var C = {
+    navy:'#1e3a5f', green:'#16a34a', orange:'#d97706',
+    red:'#dc2626', blue:'#2563eb', muted:'#8ba3c0',
+    grid:'#e8f0f9', text:'#1e3a5f'
+  };
+  var baseText = { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 };
+  var baseGrid = { left: 50, right: 20, top: 40, bottom: 30, containLabel: true };
+  var baseTooltip = {
+    trigger: 'axis', backgroundColor: '#fff',
+    borderColor: '#ccd9e8', borderWidth: 1,
+    textStyle: { color: C.navy, fontSize: 11, fontFamily: 'Inter' }
+  };
+  var baseLegend = { top: 8, textStyle: baseText, icon: 'circle', itemWidth: 8, itemHeight: 8 };
 
-  function drawZ1(){
-    var d1=google.visualization.arrayToDataTable([
-      ['Year','Avg PSF (RM)'],
-      ['2019',1800],['2020',1650],['2021',1700],['2022',1900],['2023',2000],['2024',2100],['2025Q3',2050]
-    ]);
-    new google.visualization.LineChart(document.getElementById('chart-z1-price')).draw(d1,{
-      chartArea:CA,backgroundColor:BG,colors:[NAVY],legend:{position:'bottom'},
-      vAxis:{format:'RM #,###',gridlines:{color:GC}},hAxis:{gridlines:{color:GC}},curveType:'function'
-    });
-
-    var d2=google.visualization.arrayToDataTable([
-      ['Metric','%',{role:'style'}],
-      ['Gross Yield',4.0,NAVY],['OPR',2.75,GREEN],['Mortgage Rate',4.35,RED]
-    ]);
-    new google.visualization.ColumnChart(document.getElementById('chart-z1-yield')).draw(d2,{
-      chartArea:CA,backgroundColor:BG,legend:'none',
-      vAxis:{maxValue:5,format:"#'%'",gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
-    });
+  function fmtRM(v) {
+    if (v >= 1000000) return 'RM ' + (v/1000000).toFixed(1) + 'M';
+    if (v >= 1000) return 'RM ' + (v/1000).toFixed(0) + 'K';
+    return 'RM ' + v;
+  }
+  function fmtNum(v) { return v >= 1000 ? (v/1000).toFixed(0)+'K' : v; }
+  function mkAxis(opts) {
+    return Object.assign({
+      axisLine: { lineStyle: { color: C.grid } },
+      axisTick: { show: false },
+      axisLabel: baseText,
+      splitLine: { lineStyle: { color: C.grid } }
+    }, opts || {});
   }
 
-  function drawZ2(){
-    var d1=google.visualization.arrayToDataTable([
-      ['Year','New Launches (units)'],
-      ['2022',2800],['2023',3500],['2024',4200],['2025E',3000]
-    ]);
-    new google.visualization.ColumnChart(document.getElementById('chart-z2-launch')).draw(d1,{
-      chartArea:CA,backgroundColor:BG,colors:[NAVY],legend:{position:'bottom'},
-      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
-    });
-
-    var d2=google.visualization.arrayToDataTable([
-      ['Year','Completions','Transactions'],
-      ['2022',2200,2500],['2023',2800,3000],['2024',3500,3800]
-    ]);
-    new google.visualization.ColumnChart(document.getElementById('chart-z2-balance')).draw(d2,{
-      chartArea:CA,backgroundColor:BG,colors:[ORANGE,GREEN],legend:{position:'bottom'},
-      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
-    });
+  function setLang(lang){
+    document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+    document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    localStorage.setItem('lang',lang);
+    allCharts.forEach(function(c){ if(c) c.resize(); });
   }
 
-  function drawZ3(){
-    var d1=google.visualization.arrayToDataTable([
-      ['Size','RM per sqft',{role:'style'}],
-      ['Studio 280sqft',1000,RED],['1-Bed 500sqft',900,ORANGE],['2-Bed 850sqft',800,NAVY],['3-Bed 1200sqft',750,GREEN]
-    ]);
-    new google.visualization.ColumnChart(document.getElementById('chart-z3-psf')).draw(d1,{
-      chartArea:CA,backgroundColor:BG,legend:'none',
-      vAxis:{format:'RM #,###',gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
-    });
-
-    var d2=google.visualization.arrayToDataTable([
-      ['Type','Overhang Units (est.)',{role:'style'}],
-      ['Serviced Apartments',920,RED],['Standard Residential',450,NAVY]
-    ]);
-    new google.visualization.ColumnChart(document.getElementById('chart-z3-sa')).draw(d2,{
-      chartArea:CA,backgroundColor:BG,legend:'none',
-      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
-    });
+  function switchTab(cid, tab){
+    var w = document.getElementById(cid); if(!w) return;
+    w.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    w.querySelectorAll('.tab-bar button').forEach(function(b){ b.classList.remove('active'); });
+    var p = w.querySelector('#tab-'+tab); if(p) p.classList.add('active');
+    w.querySelectorAll('.tab-bar button').forEach(function(b){ if(b.dataset.tab===tab) b.classList.add('active'); });
+    setTimeout(function(){
+      allCharts.forEach(function(c){ if(c) c.resize(); });
+    }, 100);
   }
 
-  function drawZ4(){
-    var d=google.visualization.arrayToDataTable([
-      ['Segment','YoY %',{role:'style'}],
-      ['<RM300k',-3,RED],['RM300k-500k',-1,ORANGE],['RM500k-1M',2,GREEN],['>RM1M',6.5,'#065f46']
-    ]);
-    new google.visualization.ColumnChart(document.getElementById('chart-luxury-growth')).draw(d,{
-      chartArea:CA,backgroundColor:BG,legend:'none',
-      vAxis:{format:"#'%'",gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
-    });
-  }
+  var allCharts = [];
 
-  function drawKLSupply(){
-    var d=google.visualization.arrayToDataTable([
-      ['Year','Completions','Starts'],
-      ['2019',8500,9200],['2020',7200,6100],['2021',6800,7800],['2022',7500,8900],['2023',9800,9400],['2024',9600,11013],['2025 Q1-Q3',7418,null]
-    ]);
-    new google.visualization.LineChart(document.getElementById('chart-kl-supply')).draw(d,{
-      chartArea:CA,backgroundColor:BG,colors:[GREEN,NAVY],legend:{position:'bottom'},
-      vAxis:{gridlines:{color:GC}},hAxis:{gridlines:{color:GC}},curveType:'function'
-    });
-  }
+  window.addEventListener('load', function(){
 
-  function drawKLRental(){
-    var d=google.visualization.arrayToDataTable([
-      ['Year','Avg Rent (RM/month)'],
-      ['2019',2450],['2020',2300],['2021',2350],['2022',2550],['2023',2680],['2024',2730],['2025',2901]
-    ]);
-    new google.visualization.LineChart(document.getElementById('chart-kl-rental')).draw(d,{
-      chartArea:CA,backgroundColor:BG,colors:[GREEN],legend:{position:'bottom'},
-      vAxis:{format:'RM #,###',gridlines:{color:GC}},hAxis:{gridlines:{color:GC}},curveType:'function'
-    });
-  }
+    // ==================== MAIN CHARTS (always visible) ====================
 
-  function drawZonePSF(){
-    var d=google.visualization.arrayToDataTable([
-      ['Zone','Avg PSF (RM)',{role:'style'}],
-      ['KLCC/BB Zone 1',1800,ORANGE],['Mid Valley Zone 2',700,GREEN],['Outer Ring Zone 3',490,RED]
-    ]);
-    new google.visualization.ColumnChart(document.getElementById('chart-zone-psf')).draw(d,{
-      chartArea:CA,backgroundColor:BG,legend:'none',
-      vAxis:{format:'RM #,###',gridlines:{color:GC}},hAxis:{gridlines:{color:GC}}
+    // chart-kl-supply
+    var cSupply = echarts.init(document.getElementById('chart-kl-supply'));
+    allCharts.push(cSupply);
+    cSupply.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data: ['Completions','Starts'] }),
+      grid: baseGrid,
+      xAxis: mkAxis({ type: 'category', data: ['2019','2020','2021','2022','2023','2024','2025 Q1-Q3'] }),
+      yAxis: mkAxis({ type: 'value', axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtNum(v); } }) }),
+      series: [
+        {
+          name: 'Completions', type: 'line',
+          data: [18000,15000,16200,14800,16500,21600,17200],
+          lineStyle: { color: C.navy, width: 2 }, itemStyle: { color: C.navy },
+          areaStyle: { color: 'rgba(30,58,95,0.08)' },
+          smooth: 0.2, symbol: 'circle', symbolSize: 6
+        },
+        {
+          name: 'Starts', type: 'line',
+          data: [19000,14000,17500,16000,15800,19200,10800],
+          lineStyle: { color: C.muted, width: 2, type: 'dashed' }, itemStyle: { color: C.muted },
+          smooth: 0.2, symbol: 'circle', symbolSize: 6
+        }
+      ]
     });
-  }
 
-  function drawKLForecast(){
-    var data=new google.visualization.DataTable();
-    data.addColumn('string','Year');data.addColumn('number','Historical / 歷史');
-    data.addColumn('number','Bull (90K)');data.addColumn('number','Base (85K)');data.addColumn('number','Bear (75K)');
-    data.addRows([
-      ['2023',4100,null,null,null],
-      ['2024H1',3643,3643,3643,3643],
-      ['25E',null,4000,4200,4400],['26E',null,5600,6100,6800],['27E',null,5500,6400,7500],['28E',null,3000,3900,5700],['29E',null,1000,1800,3800]
-    ]);
-    new google.visualization.LineChart(document.getElementById('chartKLForecast')).draw(data,{
-      chartArea:CA,backgroundColor:BG,colors:[NAVY,GREEN,ORANGE,RED],
-      legend:{position:'top',textStyle:{color:MUTED,fontSize:10}},
-      series:{0:{lineWidth:2,pointSize:5},1:{lineDashStyle:[4,2],lineWidth:1.5,pointSize:3},2:{lineDashStyle:[6,3],lineWidth:2,pointSize:4},3:{lineDashStyle:[8,4],lineWidth:1.5,pointSize:3}},
-      hAxis:{textStyle:{color:MUTED,fontSize:9},gridlines:{color:GC},slantedText:false,maxRotation:0,showTextEvery:1},
-      vAxis:{textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC},format:'short',minValue:0},
-      curveType:'function'
+    // chart-kl-rental
+    var cRental = echarts.init(document.getElementById('chart-kl-rental'));
+    allCharts.push(cRental);
+    cRental.setOption({
+      tooltip: baseTooltip,
+      grid: baseGrid,
+      xAxis: mkAxis({ type: 'category', data: ['2019','2020','2021','2022','2023','2024','2025'] }),
+      yAxis: mkAxis({ type: 'value', axisLabel: Object.assign({}, baseText, { formatter: function(v){ return 'RM '+v.toLocaleString(); } }) }),
+      series: [{
+        type: 'line',
+        data: [2350,2200,2180,2450,2550,2730,2901],
+        lineStyle: { color: C.green, width: 2 }, itemStyle: { color: C.green },
+        areaStyle: { color: 'rgba(22,163,74,0.08)' },
+        smooth: 0.3, symbol: 'circle', symbolSize: 6,
+        markPoint: {
+          data: [{ coord: ['2025', 2901], symbol: 'circle', symbolSize: 45,
+            label: { formatter: 'RM 2,901\n+6.1% YoY', fontSize: 9, fontWeight: 'bold' },
+            itemStyle: { color: C.green } }]
+        }
+      }]
     });
-  }
 
-  function drawAllCharts(){
-    drawZ1();
-    drawKLSupply();
-    drawKLRental();
-    drawZonePSF();
-    drawKLForecast();
-  }
+    // chart-zone-psf
+    var cZonePSF = echarts.init(document.getElementById('chart-zone-psf'));
+    allCharts.push(cZonePSF);
+    cZonePSF.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: baseGrid,
+      xAxis: mkAxis({ type: 'category', data: ['Zone 1\nKLCC/BB','Zone 2\nMid Valley','Zone 3\nOuter'] }),
+      yAxis: mkAxis({ type: 'value', axisLabel: Object.assign({}, baseText, { formatter: function(v){ return 'RM '+v.toLocaleString(); } }) }),
+      series: [{
+        type: 'bar',
+        data: [
+          { value: 1800, itemStyle: { color: C.orange, borderRadius: [4,4,0,0] } },
+          { value: 700, itemStyle: { color: C.green, borderRadius: [4,4,0,0] } },
+          { value: 490, itemStyle: { color: C.red, borderRadius: [4,4,0,0] } }
+        ],
+        barMaxWidth: 100,
+        label: { show: true, position: 'top', formatter: 'RM {c} psf', fontSize: 11, fontFamily: 'JetBrains Mono, monospace' }
+      }]
+    });
+
+    // chartKLForecast
+    var cForecast = echarts.init(document.getElementById('chartKLForecast'));
+    allCharts.push(cForecast);
+    cForecast.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data: ['Historical / \u6b77\u53f2','Bull (90K)','Base (85K)','Bear (75K)'] }),
+      grid: baseGrid,
+      xAxis: mkAxis({ type: 'category', data: ['2023','2024H1','25E','26E','27E','28E','29E'], axisLabel: Object.assign({}, baseText, { rotate: 0, interval: 0 }) }),
+      yAxis: mkAxis({ type: 'value', min: 0, axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtNum(v); } }) }),
+      series: [
+        {
+          name: 'Historical / \u6b77\u53f2', type: 'line',
+          data: [4100,3643,null,null,null,null,null],
+          lineStyle: { color: C.navy, width: 2 }, itemStyle: { color: C.navy },
+          areaStyle: { color: 'rgba(30,58,95,0.08)' },
+          symbol: 'circle', symbolSize: 7
+        },
+        {
+          name: 'Bull (90K)', type: 'line',
+          data: [null,3643,4000,5600,5500,3000,1000],
+          lineStyle: { color: C.green, width: 1.5, type: [4,2] }, itemStyle: { color: C.green },
+          symbol: 'circle', symbolSize: 4
+        },
+        {
+          name: 'Base (85K)', type: 'line',
+          data: [null,3643,4200,6100,6400,3900,1800],
+          lineStyle: { color: C.orange, width: 2, type: [6,3] }, itemStyle: { color: C.orange },
+          symbol: 'circle', symbolSize: 5
+        },
+        {
+          name: 'Bear (75K)', type: 'line',
+          data: [null,3643,4400,6800,7500,5700,3800],
+          lineStyle: { color: C.red, width: 1.5, type: [8,4] }, itemStyle: { color: C.red },
+          symbol: 'circle', symbolSize: 4
+        }
+      ]
+    });
+
+    // ==================== TAB: Zone 1 ====================
+
+    // chart-z1-price
+    var cZ1Price = echarts.init(document.getElementById('chart-z1-price'));
+    allCharts.push(cZ1Price);
+    cZ1Price.setOption({
+      tooltip: baseTooltip,
+      grid: baseGrid,
+      xAxis: mkAxis({ type: 'category', data: ['2020','2021','2022','2023','2024','2025Q3'] }),
+      yAxis: mkAxis({ type: 'value', axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtRM(v); } }) }),
+      series: [{
+        type: 'line',
+        data: [850000, 870000, 890000, 920000, 950000, 980000],
+        lineStyle: { color: C.orange, width: 2 }, itemStyle: { color: C.orange },
+        smooth: 0.2, symbol: 'circle', symbolSize: 6
+      }]
+    });
+
+    // chart-z1-yield
+    var cZ1Yield = echarts.init(document.getElementById('chart-z1-yield'));
+    allCharts.push(cZ1Yield);
+    cZ1Yield.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: baseGrid,
+      xAxis: mkAxis({ type: 'category', data: ['KLCC Fringe','TRX','Pavilion BB','Bukit Ceylon'] }),
+      yAxis: mkAxis({ type: 'value', axisLabel: Object.assign({}, baseText, { formatter: '{value}%' }) }),
+      series: [{
+        type: 'bar',
+        data: [3.2, 3.5, 3.8, 4.1].map(function(v){
+          return { value: v, itemStyle: { color: C.orange, borderRadius: [4,4,0,0] } };
+        }),
+        barMaxWidth: 50,
+        label: { show: true, position: 'top', formatter: '{c}%', fontSize: 11 },
+        markLine: {
+          silent: true, symbol: 'none',
+          lineStyle: { color: C.red, type: 'dashed', width: 1 },
+          label: { formatter: 'OPR 2.75%', fontSize: 10, color: C.red },
+          data: [{ yAxis: 2.75 }]
+        }
+      }]
+    });
+
+    // ==================== TAB: Zone 2 ====================
+
+    // chart-z2-launch
+    var cZ2Launch = echarts.init(document.getElementById('chart-z2-launch'));
+    allCharts.push(cZ2Launch);
+    cZ2Launch.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: baseGrid,
+      xAxis: mkAxis({ type: 'category', data: ['OKR North','Mid Valley','Bangsar South','KL Eco City'] }),
+      yAxis: mkAxis({ type: 'value', max: 100, axisLabel: Object.assign({}, baseText, { formatter: '{value}%' }) }),
+      series: [{
+        type: 'bar',
+        data: [68, 74, 71, 65].map(function(v){
+          return { value: v, itemStyle: { color: C.green, borderRadius: [4,4,0,0] } };
+        }),
+        barMaxWidth: 55,
+        label: { show: true, position: 'top', formatter: '{c}%', fontSize: 11 }
+      }]
+    });
+
+    // chart-z2-balance
+    var cZ2Balance = echarts.init(document.getElementById('chart-z2-balance'));
+    allCharts.push(cZ2Balance);
+    cZ2Balance.setOption({
+      tooltip: baseTooltip,
+      legend: Object.assign({}, baseLegend, { data: ['Supply','Demand'] }),
+      grid: baseGrid,
+      xAxis: mkAxis({ type: 'category', data: ['2021','2022','2023','2024','2025E'] }),
+      yAxis: mkAxis({ type: 'value', axisLabel: Object.assign({}, baseText, { formatter: function(v){ return fmtNum(v); } }) }),
+      series: [
+        {
+          name: 'Supply', type: 'line',
+          data: [2800,3100,2900,3200,2800],
+          lineStyle: { color: C.muted, width: 2 }, itemStyle: { color: C.muted },
+          symbol: 'circle', symbolSize: 6
+        },
+        {
+          name: 'Demand', type: 'line',
+          data: [3200,3400,3100,3500,3400],
+          lineStyle: { color: C.navy, width: 2 }, itemStyle: { color: C.navy },
+          symbol: 'circle', symbolSize: 6
+        }
+      ]
+    });
+
+    // ==================== TAB: Zone 3 ====================
+
+    // chart-z3-psf
+    var cZ3PSF = echarts.init(document.getElementById('chart-z3-psf'));
+    allCharts.push(cZ3PSF);
+    cZ3PSF.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: { left: 100, right: 60, top: 10, bottom: 20, containLabel: false },
+      xAxis: mkAxis({ type: 'value', min: 0 }),
+      yAxis: mkAxis({
+        type: 'category',
+        data: ['Kepong','Setapak','Cheras North','Cheras South','Wangsa Maju'],
+        axisLabel: { color: C.navy, fontFamily: 'Inter, sans-serif', fontSize: 11 }
+      }),
+      series: [{
+        type: 'bar',
+        data: [380, 420, 450, 490, 510].map(function(v){
+          return { value: v, itemStyle: { color: C.red, borderRadius: [0,4,4,0] } };
+        }),
+        barMaxWidth: 22,
+        label: { show: true, position: 'right', formatter: 'RM {c} psf', fontSize: 10, fontFamily: 'Inter' }
+      }]
+    });
+
+    // chart-z3-sa
+    var cZ3SA = echarts.init(document.getElementById('chart-z3-sa'));
+    allCharts.push(cZ3SA);
+    cZ3SA.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: baseGrid,
+      xAxis: mkAxis({ type: 'category', data: ['Kepong','Setapak','Cheras','Wangsa Maju','Others'] }),
+      yAxis: mkAxis({ type: 'value' }),
+      series: [{
+        type: 'bar',
+        data: [420, 380, 520, 290, 310].map(function(v){
+          return { value: v, itemStyle: { color: C.red, borderRadius: [4,4,0,0] } };
+        }),
+        barMaxWidth: 50,
+        label: { show: true, position: 'top', fontSize: 10 }
+      }]
+    });
+
+    // ==================== TAB: Luxury ====================
+
+    // chart-luxury-growth
+    var cLuxury = echarts.init(document.getElementById('chart-luxury-growth'));
+    allCharts.push(cLuxury);
+    cLuxury.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } }),
+      grid: baseGrid,
+      xAxis: mkAxis({ type: 'category', data: ['2021','2022','2023','2024','2025E'] }),
+      yAxis: mkAxis({ type: 'value', axisLabel: Object.assign({}, baseText, { formatter: '{value}%' }) }),
+      series: [{
+        type: 'bar',
+        data: [2.1, 3.4, 4.2, 6.5, 5.8].map(function(v){
+          return { value: v, itemStyle: { color: C.orange, borderRadius: [4,4,0,0] } };
+        }),
+        barMaxWidth: 55,
+        label: { show: true, position: 'top', formatter: function(p){ return '+'+p.value+'%'; }, fontSize: 10, fontFamily: 'JetBrains Mono, monospace' },
+        markLine: {
+          silent: true, symbol: 'none',
+          lineStyle: { color: C.muted, type: 'dashed', width: 1 },
+          label: { show: false },
+          data: [{ yAxis: 0 }]
+        }
+      }]
+    });
+
+    setLang(localStorage.getItem('lang')||'en');
+  });
+
+  window.addEventListener('resize', function(){
+    allCharts.forEach(function(c){ if(c) c.resize(); });
+  });
   </script>
 </body>
 </html>
