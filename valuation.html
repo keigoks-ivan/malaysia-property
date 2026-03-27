@@ -108,7 +108,7 @@
       <div class="chart-card">
         <h3><span class="lang-en">KL vs Asia Pacific Price-to-Rent</span><span class="lang-zh" style="display:none">吉隆坡 vs 亞太城市房價租金比</span></h3>
         <p class="chart-subtitle"><span class="lang-en">Lower = more attractive for buyers</span><span class="lang-zh" style="display:none">越低=對買家越有吸引力</span></p>
-        <div style="position:relative;height:220px;"><div id="chart-apac" style="width:100%;height:100%"></div></div>
+        <div style="position:relative;height:280px;"><div id="chart-apac" style="width:100%;height:100%"></div></div>
         <div class="insight-box"><span class="lang-en">KL remains significantly undervalued vs regional peers on a price-to-rent basis.</span><span class="lang-zh" style="display:none">以房價租金比衡量，吉隆坡相對區域同儕仍顯著低估。</span></div>
       </div>
     </div>
@@ -258,20 +258,25 @@
     data.addColumn('string','City');
     data.addColumn('number','P/R Ratio');
     data.addColumn({type:'string',role:'style'});
+    data.addColumn({type:'string',role:'annotation'});
     data.addRows([
-      ['KL',21.7,'color:'+GREEN],
-      ['Bangkok',25,'color:'+NAVY],
-      ['Ho Chi Minh',18,'color:'+NAVY],
-      ['Singapore',40,'color:'+NAVY],
-      ['Hong Kong',50,'color:'+NAVY]
+      ['Ho Chi Minh',18,'color:'+GREEN,'18x'],
+      ['KL',21.7,'color:'+GREEN,'21.7x'],
+      ['Bangkok',25,'color:'+NAVY,'25x'],
+      ['Tokyo',37,'color:'+NAVY,'37x'],
+      ['Singapore',40,'color:'+NAVY,'40x'],
+      ['Taipei',47,'color:'+ORANGE,'47x'],
+      ['Hong Kong',50,'color:'+ORANGE,'50x'],
+      ['Shanghai',59,'color:'+RED,'59x']
     ]);
     var chart=new google.visualization.BarChart(document.getElementById('chart-apac'));
     chart.draw(data,{
-      chartArea:CA,backgroundColor:BG,
+      chartArea:{width:'52%',height:'85%'},backgroundColor:BG,
       legend:{position:'none'},
-      hAxis:{minValue:0,maxValue:55,textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
+      hAxis:{minValue:0,maxValue:65,textStyle:{color:MUTED,fontSize:10},gridlines:{color:GC}},
       vAxis:{textStyle:{color:MUTED,fontSize:10}},
-      bar:{groupWidth:'60%'}
+      bar:{groupWidth:'68%'},
+      annotations:{alwaysOutside:true,textStyle:{fontSize:10,color:NAVY,bold:true}}
     });
   }
   </script>
