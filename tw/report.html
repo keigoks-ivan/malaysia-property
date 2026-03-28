@@ -245,6 +245,8 @@
     red:'#dc2626', blue:'#2563eb', muted:'#8ba3c0',
     grid:'#e8f0f9', text:'#1e3a5f'
   };
+  function fmtPrice(v,lang){lang=lang||localStorage.getItem('lang')||'en';var a=v*10000;if(lang==='zh')return 'NT$'+v+'\u842c';if(a>=1000000)return 'NT$'+(a/1000000).toFixed(2)+'M';return 'NT$'+Math.round(a/1000)+'K';}
+  function fmtPriceShort(v,lang){lang=lang||localStorage.getItem('lang')||'en';var a=v*10000;if(lang==='zh')return v+'\u842c';if(a>=1000000)return(a/1000000).toFixed(1)+'M';return Math.round(a/1000)+'K';}
   var baseText = { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 };
   var baseTooltip = {
     trigger: 'axis', backgroundColor: '#fff',

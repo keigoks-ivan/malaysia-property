@@ -156,7 +156,7 @@
       <div class="chart-card">
         <h3><span class="lang-en">Average Price by Major City</span><span class="lang-zh" style="display:none">六都平均房價比較</span></h3>
         <p class="chart-subtitle"><span class="lang-en">NT$ 10K per ping · Q3 2025</span><span class="lang-zh" style="display:none">萬元/坪 · 2025年Q3</span></p>
-        <div style="position:relative;height:240px;"><div id="chart-tw-city-price" style="width:100%;height:100%"></div></div>
+        <div style="position:relative;height:280px;"><div id="chart-tw-city-price" style="width:100%;height:100%"></div></div>
       </div>
     </div>
 
@@ -189,6 +189,8 @@
 
   <script>
   var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',grid:'#e8f0f9',text:'#1e3a5f'};
+  function fmtPrice(v,lang){lang=lang||localStorage.getItem('lang')||'en';var a=v*10000;if(lang==='zh')return 'NT$'+v+'\u842c';if(a>=1000000)return 'NT$'+(a/1000000).toFixed(2)+'M';return 'NT$'+Math.round(a/1000)+'K';}
+  function fmtPriceShort(v,lang){lang=lang||localStorage.getItem('lang')||'en';var a=v*10000;if(lang==='zh')return v+'\u842c';if(a>=1000000)return(a/1000000).toFixed(1)+'M';return Math.round(a/1000)+'K';}
   var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
   var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
   var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
@@ -196,19 +198,14 @@
   function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
   function fmtK(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
 
-  function setLang(lang){
-    document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
-    document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
-    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
-    localStorage.setItem('lang',lang);
-  }
+  function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}initCharts(lang);}
   function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
   document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
 
-  var charts=[];
-  window.addEventListener('load',function(){
+  var allCharts=[];
+  function initCharts(lang){
     // chart-tw-price-index
-    var c1=echarts.init(document.getElementById('chart-tw-price-index'));charts.push(c1);
+    var c1=echarts.init(document.getElementById('chart-tw-price-index'));allCharts.push(c1);
     c1.setOption({
       tooltip:baseTooltip,legend:Object.assign({},baseLegend,{data:['YoY %','Nominal Index']}),
       grid:{left:50,right:50,top:45,bottom:30,containLabel:true},
@@ -221,24 +218,24 @@
     });
 
     // chart-tw-city-price
-    var c2=echarts.init(document.getElementById('chart-tw-city-price'));charts.push(c2);
+    var c2=echarts.init(document.getElementById('chart-tw-city-price'));allCharts.push(c2);
     var cityLabels=['Taipei','New Taipei','Taichung','Tainan','Kaohsiung','Taoyuan'];
     var cityPrices=[118,70,43,41,33,35];
     var cityYoY=[1.9,14.5,12.0,14.6,8.0,8.6];
     var cityColors=[C.orange,C.red,C.navy,C.navy,C.navy,C.navy];
     c2.setOption({
       tooltip:baseTooltip,legend:Object.assign({},baseLegend,{data:['Avg Price','YoY %']}),
-      grid:{left:50,right:50,top:45,bottom:30,containLabel:true},
-      xAxis:mkAxis({type:'category',data:cityLabels}),
-      yAxis:[mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return 'NT$'+v+'W';}})}),mkAxis({type:'value',splitLine:{show:false},min:-2,max:18,axisLabel:Object.assign({},baseText,{formatter:'{value}%'})})],
+      grid:{left:50,right:60,top:45,bottom:50,containLabel:true},
+      xAxis:mkAxis({type:'category',data:cityLabels,axisLabel:Object.assign({},baseText,{rotate:30,interval:0})}),
+      yAxis:[mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return fmtPriceShort(v,lang);}})}),mkAxis({type:'value',splitLine:{show:false},min:-2,max:18,axisLabel:Object.assign({},baseText,{formatter:'{value}%'})})],
       series:[
-        {name:'Avg Price',type:'bar',data:cityPrices.map(function(v,i){return{value:v,itemStyle:{color:cityColors[i],borderRadius:[4,4,0,0]}};}),barMaxWidth:55,label:{show:true,position:'top',fontFamily:'JetBrains Mono',fontSize:10,formatter:function(p){return 'NT$'+p.value+'W';}}},
+        {name:'Avg Price',type:'bar',data:cityPrices.map(function(v,i){return{value:v,itemStyle:{color:cityColors[i],borderRadius:[4,4,0,0]}};}),barMaxWidth:55,label:{show:true,position:'top',fontFamily:'JetBrains Mono',fontSize:10,formatter:function(p){return fmtPrice(p.value,lang);}}},
         {name:'YoY %',type:'line',yAxisIndex:1,data:cityYoY.map(function(v){return{value:v,itemStyle:{color:v>=0?C.green:C.red}};}),lineStyle:{color:C.red,width:2},symbol:'circle',symbolSize:8,label:{show:true,position:'bottom',fontFamily:'JetBrains Mono',fontSize:10,formatter:function(p){return(p.value>=0?'+':'')+p.value+'%';}}}
       ]
     });
 
     // chart-tw-transactions
-    var c3=echarts.init(document.getElementById('chart-tw-transactions'));charts.push(c3);
+    var c3=echarts.init(document.getElementById('chart-tw-transactions'));allCharts.push(c3);
     c3.setOption({
       tooltip:baseTooltip,grid:baseGrid,
       xAxis:mkAxis({type:'category',data:['2019','2020','2021','2022','2023','2024','2025']}),
@@ -249,7 +246,7 @@
     });
 
     // chart-tw-yield
-    var c4=echarts.init(document.getElementById('chart-tw-yield'));charts.push(c4);
+    var c4=echarts.init(document.getElementById('chart-tw-yield'));allCharts.push(c4);
     var ycLabels=['Kaohsiung','Tainan','Taichung','Taoyuan','National','New Taipei','Taipei','Hsinchu'];
     var ycVals=[3.1,2.9,2.8,2.6,2.24,2.2,2.11,1.9];
     c4.setOption({
@@ -263,7 +260,7 @@
     });
 
     // chart-tw-mortgage
-    var c5=echarts.init(document.getElementById('chart-tw-mortgage'));charts.push(c5);
+    var c5=echarts.init(document.getElementById('chart-tw-mortgage'));allCharts.push(c5);
     c5.setOption({
       tooltip:baseTooltip,legend:Object.assign({},baseLegend,{data:['Taipei','National']}),grid:baseGrid,
       xAxis:mkAxis({type:'category',data:['2019','2020','2021','2022','2023','2024','2025H1']}),
@@ -277,7 +274,7 @@
     });
 
     // chart-tw-supply-demand
-    var c6=echarts.init(document.getElementById('chart-tw-supply-demand'));charts.push(c6);
+    var c6=echarts.init(document.getElementById('chart-tw-supply-demand'));allCharts.push(c6);
     c6.setOption({
       tooltip:baseTooltip,legend:Object.assign({},baseLegend,{data:['New Launches','Transactions']}),grid:baseGrid,
       xAxis:mkAxis({type:'category',data:['2021','2022','2023','2024','2025']}),
@@ -288,9 +285,9 @@
       ]
     });
 
-    setLang(localStorage.getItem('lang')||'en');
-  });
-  window.addEventListener('resize',function(){charts.forEach(function(c){c.resize();});});
+  }
+  window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+  window.addEventListener('resize',function(){allCharts.forEach(function(c){c.resize();});});
   </script>
 </body>
 </html>

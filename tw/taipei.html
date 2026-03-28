@@ -162,31 +162,33 @@
 
   <script>
   var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',grid:'#e8f0f9',text:'#1e3a5f'};
+  function fmtPrice(v,lang){lang=lang||localStorage.getItem('lang')||'en';var a=v*10000;if(lang==='zh')return 'NT$'+v+'\u842c';if(a>=1000000)return 'NT$'+(a/1000000).toFixed(2)+'M';return 'NT$'+Math.round(a/1000)+'K';}
+  function fmtPriceShort(v,lang){lang=lang||localStorage.getItem('lang')||'en';var a=v*10000;if(lang==='zh')return v+'\u842c';if(a>=1000000)return(a/1000000).toFixed(1)+'M';return Math.round(a/1000)+'K';}
   var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
   var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
   var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
   var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
   function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
-  function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);}
+  function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}initCharts(lang);}
   function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
   document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
 
-  var charts=[];
-  window.addEventListener('load',function(){
+  var allCharts=[];
+  function initCharts(lang){
     // chartTaipeiDistrict — horizontal bar
-    var c1=echarts.init(document.getElementById('chartTaipeiDistrict'));charts.push(c1);
+    var c1=echarts.init(document.getElementById('chartTaipeiDistrict'));allCharts.push(c1);
     var distLabels=['Wenshan','Shilin','Beitou','Zhongshan','Songshan','Datong','Da\'an','Xinyi'];
     var distData=[55,62,58,85,95,72,120,145];
     c1.setOption({
       tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'}}),
       grid:{left:80,right:60,top:20,bottom:20,containLabel:false},
-      xAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return 'NT$'+v+'W';}})}),
+      xAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return fmtPriceShort(v,lang);}})}),
       yAxis:mkAxis({type:'category',data:distLabels,axisLabel:{color:C.navy,fontFamily:'Inter',fontSize:11}}),
-      series:[{type:'bar',data:distData.map(function(v){return{value:v,itemStyle:{color:v>=100?C.red:v>=80?C.orange:C.navy,borderRadius:[0,4,4,0]}};}),barMaxWidth:22,label:{show:true,position:'right',formatter:function(p){return 'NT$'+p.value+'W';},fontSize:10,fontFamily:'JetBrains Mono'}}]
+      series:[{type:'bar',data:distData.map(function(v){return{value:v,itemStyle:{color:v>=100?C.red:v>=80?C.orange:C.navy,borderRadius:[0,4,4,0]}};}),barMaxWidth:22,label:{show:true,position:'right',formatter:function(p){return fmtPrice(p.value,lang);},fontSize:10,fontFamily:'JetBrains Mono'}}]
     });
 
     // chartTaipeiRent — line
-    var c2=echarts.init(document.getElementById('chartTaipeiRent'));charts.push(c2);
+    var c2=echarts.init(document.getElementById('chartTaipeiRent'));allCharts.push(c2);
     var rentLabels=['2020','2021','2022','2023','2024','2025'];
     var rentData=[20000,21000,22500,23500,24500,25000];
     c2.setOption({
@@ -197,10 +199,9 @@
         markPoint:{data:[{coord:['2025',25000],symbol:'pin',symbolSize:50,label:{formatter:'NT$25K\n+2% YoY',fontSize:9,lineHeight:13},itemStyle:{color:C.green}}]}
       }]
     });
-
-    setLang(localStorage.getItem('lang')||'en');
-  });
-  window.addEventListener('resize',function(){charts.forEach(function(c){c.resize();});});
+  }
+  window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+  window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
   </script>
 </body>
 </html>

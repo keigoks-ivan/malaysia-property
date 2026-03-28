@@ -6,9 +6,7 @@
 <title>Demand Analysis | Taiwan Property Monitor</title>
 <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="tw.css">
-<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js">setLang(localStorage.getItem('lang')||'en');
-window.addEventListener('resize',function(){document.querySelectorAll('[id^=chart]').forEach(function(el){var c=echarts.getInstanceByDom(el);if(c)c.resize();});});
-</script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
 .market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
 </style>
@@ -122,18 +120,24 @@ window.addEventListener('resize',function(){document.querySelectorAll('[id^=char
 
 <script>
 var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#8ba3c0',grid:'#e8f0f9',text:'#1e3a5f'};
+function fmtPrice(v,lang){lang=lang||localStorage.getItem('lang')||'en';var a=v*10000;if(lang==='zh')return 'NT$'+v+'\u842c';if(a>=1000000)return 'NT$'+(a/1000000).toFixed(2)+'M';return 'NT$'+Math.round(a/1000)+'K';}
+function fmtPriceShort(v,lang){lang=lang||localStorage.getItem('lang')||'en';var a=v*10000;if(lang==='zh')return v+'\u842c';if(a>=1000000)return(a/1000000).toFixed(1)+'M';return Math.round(a/1000)+'K';}
 var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
 var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
 var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
 var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
 function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
 function fmtK(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
-function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);}
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}initCharts(lang);}
 function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
 document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
 
+function initCharts(lang){
+allCharts.length=0;
+
 /* Chart: Transaction Volume Trend */
-echarts.init(document.getElementById('chartTwTxn')).setOption({
+var c1=echarts.init(document.getElementById('chartTwTxn'));
+c1.setOption({
   tooltip:baseTooltip,
   grid:baseGrid,
   xAxis:mkAxis({type:'category',data:['2019','2020','2021','2022','2023','2024','2025']}),
@@ -156,27 +160,29 @@ echarts.init(document.getElementById('chartTwTxn')).setOption({
     }
   }]
 });
+allCharts.push(c1);
 
 /* Chart: City YoY Growth (horizontal bar) */
-(function(){
-  var labels=['Keelung','Hsinchu','Tainan','Kaohsiung','New Taipei','Taipei','Taichung'];
-  var vals=[-45,-41,-28,-26,-24,-22,-21];
-  echarts.init(document.getElementById('chartTwCityGrowth')).setOption({
-    tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+': '+p[0].value+'%';}}),
-    grid:{left:10,right:60,top:10,bottom:10,containLabel:true},
-    xAxis:mkAxis({type:'value',axisLabel:{formatter:'{value}%'}}),
-    yAxis:mkAxis({type:'category',data:labels,inverse:true}),
-    series:[{
-      type:'bar',
-      data:vals.map(function(v){return {value:v,itemStyle:{color:C.red}};}),
-      label:{show:true,position:'right',formatter:function(p){return (p.value>0?'+':'')+p.value+'%';},fontSize:11,fontFamily:'Inter, sans-serif',color:C.red},
-      barWidth:20
-    }]
-  });
-})();
+var labels2=['Keelung','Hsinchu','Tainan','Kaohsiung','New Taipei','Taipei','Taichung'];
+var vals2=[-45,-41,-28,-26,-24,-22,-21];
+var c2=echarts.init(document.getElementById('chartTwCityGrowth'));
+c2.setOption({
+  tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+': '+p[0].value+'%';}}),
+  grid:{left:10,right:60,top:10,bottom:10,containLabel:true},
+  xAxis:mkAxis({type:'value',axisLabel:{formatter:'{value}%'}}),
+  yAxis:mkAxis({type:'category',data:labels2,inverse:true}),
+  series:[{
+    type:'bar',
+    data:vals2.map(function(v){return {value:v,itemStyle:{color:C.red}};}),
+    label:{show:true,position:'right',formatter:function(p){return (p.value>0?'+':'')+p.value+'%';},fontSize:11,fontFamily:'Inter, sans-serif',color:C.red},
+    barWidth:20
+  }]
+});
+allCharts.push(c2);
 
 /* Chart: Buyer Structure */
-echarts.init(document.getElementById('chartTwBuyers')).setOption({
+var c3=echarts.init(document.getElementById('chartTwBuyers'));
+c3.setOption({
   tooltip:baseTooltip,
   legend:Object.assign({},baseLegend,{data:['First-time','Upgrader','Investor']}),
   grid:baseGrid,
@@ -188,30 +194,34 @@ echarts.init(document.getElementById('chartTwBuyers')).setOption({
     {name:'Investor',type:'line',smooth:0.2,data:[27,26,26,26,25,24],lineStyle:{color:C.orange},itemStyle:{color:C.orange},symbol:'circle',symbolSize:6}
   ]
 });
+allCharts.push(c3);
 
 /* Chart: 5-Bank New Mortgage Amount */
-(function(){
-  var labels=['2021','2022','2023','2024','2025Q1-Q3'];
-  var vals=[920,1050,1100,1380,820];
-  var colors=[C.navy,C.navy,C.navy,C.green,C.red];
-  echarts.init(document.getElementById('chartTwLoan')).setOption({
-    tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+': NT$'+p[0].value+'Bn';}}),
-    grid:baseGrid,
-    xAxis:mkAxis({type:'category',data:labels}),
-    yAxis:mkAxis({type:'value',axisLabel:{formatter:function(v){return v;}}}),
-    series:[{
-      type:'bar',
-      data:vals.map(function(v,i){return {value:v,itemStyle:{color:colors[i]}};}),
-      label:{show:true,position:'top',formatter:'{c}',fontSize:11,fontFamily:'Inter, sans-serif',color:C.navy},
-      barWidth:40,
-      markPoint:{
-        data:[{name:'Peak',coord:['2024',1380],value:'Peak',symbolSize:50,label:{fontSize:10,fontFamily:'Inter'},itemStyle:{color:C.green}}]
-      }
-    }]
-  });
-})();
-setLang(localStorage.getItem('lang')||'en');
-window.addEventListener('resize',function(){document.querySelectorAll('[id^=chart]').forEach(function(el){var c=echarts.getInstanceByDom(el);if(c)c.resize();});});
+var labels4=['2021','2022','2023','2024','2025Q1-Q3'];
+var vals4=[920,1050,1100,1380,820];
+var colors4=[C.navy,C.navy,C.navy,C.green,C.red];
+var c4=echarts.init(document.getElementById('chartTwLoan'));
+c4.setOption({
+  tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+': NT$'+p[0].value+'Bn';}}),
+  grid:baseGrid,
+  xAxis:mkAxis({type:'category',data:labels4}),
+  yAxis:mkAxis({type:'value',axisLabel:{formatter:function(v){return v;}}}),
+  series:[{
+    type:'bar',
+    data:vals4.map(function(v,i){return {value:v,itemStyle:{color:colors4[i]}};}),
+    label:{show:true,position:'top',formatter:'{c}',fontSize:11,fontFamily:'Inter, sans-serif',color:C.navy},
+    barWidth:40,
+    markPoint:{
+      data:[{name:'Peak',coord:['2024',1380],value:'Peak',symbolSize:50,label:{fontSize:10,fontFamily:'Inter'},itemStyle:{color:C.green}}]
+    }
+  }]
+});
+allCharts.push(c4);
+}
+
+var allCharts=[];
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
 </script>
 </body>
 </html>
