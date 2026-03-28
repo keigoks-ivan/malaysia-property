@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Zealand Property Market Report</title>
+  <meta name="color-scheme" content="light">
+  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}
+  .market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+  </style>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../tw/tw.css">
+  <style>
+    .report-container{max-width:860px;margin:0 auto;padding:32px 20px}
+    .report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}
+    .report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}
+    .report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}
+    .report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}
+    .report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}
+    .report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}
+    .report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+    .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}
+    .chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+    .chart-inline .chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:8px}
+    .chart-note.green{color:#16a34a}
+    .chart-note.orange{color:#d97706}
+    .chart-note.red{color:#dc2626}
+    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+    .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
+    .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
+    .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
+    .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
+    .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+  <header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector">
+    <button class="market-btn" onclick="toggleMarketMenu()">🇳🇿 <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span> ▾</button>
+    <div class="market-dropdown" id="marketDropdown">
+      <a href="../index.html">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="../tw/index.html">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+      <a href="../jp/index.html">🇯🇵 <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a>
+      <a href="../au/index.html">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a>
+      <a href="index.html" class="active">🇳🇿 <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a>
+    </div>
+  </div>
+  <nav>
+    <a href="report.html" class="active"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="auckland.html"><span class="lang-en">Auckland</span><span class="lang-zh" style="display:none">奧克蘭</span></a>
+    <a href="christchurch.html"><span class="lang-en">Christchurch</span><span class="lang-zh" style="display:none">基督城</span></a>
+  </nav>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <span class="opr-badge">OCR: 3.25% ▼</span>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html" class="active"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="auckland.html"><span class="lang-en">Auckland</span><span class="lang-zh" style="display:none">奧克蘭</span></a>
+  <a href="christchurch.html"><span class="lang-en">Christchurch</span><span class="lang-zh" style="display:none">基督城</span></a>
+  <div class="mobile-meta">
+    <span class="opr-badge">OCR: 3.25% ▼</span>
+    <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  </div>
+</div>
+
+  <div class="report-container">
+    <div class="report-header">
+      <div class="lang-en">
+        <h1>NEW ZEALAND PROPERTY MARKET REPORT</h1>
+        <div class="report-meta">March 2026 &middot; Market Research</div>
+      </div>
+      <div class="lang-zh" style="display:none">
+        <h1>紐西蘭住宅房地產市場報告</h1>
+        <div class="report-meta">2026年3月 &middot; 市場研究</div>
+      </div>
+    </div>
+    <div class="report-body">
+
+      <h2><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+
+      <div class="lang-en">
+        <p>New Zealand's residential property market is navigating a turning point in early 2026. The RBNZ has delivered <strong>225 basis points</strong> of cumulative OCR cuts since August 2024, bringing the Official Cash Rate to <strong>3.25%</strong>, with markets pricing a terminal rate of <strong>2.75%</strong> by mid-2026. Despite aggressive monetary easing, the national median house price of <strong>NZ$820,000</strong> remains <strong>15%</strong> below the November 2021 peak of NZ$965,000. A two-speed dynamic has emerged: Christchurch leads the recovery at just <strong>$4,000</strong> below its peak with yields of <strong>4.8%</strong>, while Auckland languishes with <strong>31 weeks</strong> of inventory and prices still <strong>24.9%</strong> below their 2022 high. National rental yields of <strong>4.2%</strong> produce a spread of <strong>+0.95%</strong> over the OCR &mdash; the most attractive carry position since 2021. However, ANZ has flagged the risk of an OCR hike by December 2026 if inflation surprises to the upside, introducing policy uncertainty into an otherwise improving outlook.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>紐西蘭住宅房市在2026年初正經歷轉折點。紐西蘭儲備銀行（RBNZ）自2024年8月以來已累計降息<strong>225個基點</strong>，將官方現金利率（OCR）降至<strong>3.25%</strong>，市場預期終端利率將於2026年中達到<strong>2.75%</strong>。儘管貨幣政策大幅寬鬆，全國房屋中位價<strong>NZ$820,000</strong>仍較2021年11月高峰NZ$965,000低<strong>15%</strong>。市場呈現雙速格局：基督城以僅差<strong>$4,000</strong>即達高峰及<strong>4.8%</strong>收益率領先復甦，而奧克蘭則以<strong>31週</strong>庫存及房價仍較2022年高點低<strong>24.9%</strong>而表現疲弱。全國租金收益率<strong>4.2%</strong>與OCR之間的利差為<strong>+0.95%</strong>——為2021年以來最具吸引力的持有收益。然而，ANZ已警示若通膨意外上行，2026年12月前可能重啟加息，為本來改善中的前景增添政策不確定性。</p>
+      </div>
+
+      <!-- Exec Summary Mini Charts -->
+      <div class="report-chart-grid">
+        <div class="report-chart-card">
+          <h4><span class="lang-en">Yield vs OCR Rate</span><span class="lang-zh" style="display:none">收益率 vs OCR利率</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">Current Spread: +0.95%</span><span class="lang-zh" style="display:none">當前利差：+0.95%</span></div>
+          <div id="chart-r-nz-yield" style="height:180px;min-height:180px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">OCR Trajectory</span><span class="lang-zh" style="display:none">OCR利率走勢</span></h4>
+          <div class="chart-meta green"><span class="lang-en">3.25% &mdash; 225bps of cuts delivered</span><span class="lang-zh" style="display:none">3.25%——已降息225個基點</span></div>
+          <div id="chart-r-nz-ocr" style="height:180px;min-height:180px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">Monthly Transactions</span><span class="lang-zh" style="display:none">月度成交量</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">Recovery from 2023 lows</span><span class="lang-zh" style="display:none">自2023年低點回升</span></div>
+          <div id="chart-r-nz-txn" style="height:180px;min-height:180px;"></div>
+        </div>
+      </div>
+
+      <h2><span class="lang-en">RATE CUTTING CYCLE</span><span class="lang-zh" style="display:none">降息週期</span></h2>
+
+      <div class="lang-en">
+        <p>The Reserve Bank of New Zealand embarked on one of the most aggressive easing cycles among developed economies, cutting the OCR by <strong>225 basis points</strong> from <strong>5.50%</strong> in August 2024 to <strong>3.25%</strong> by February 2026. This included two consecutive 50-basis-point cuts in October and November 2024, signaling the RBNZ's urgency to support an economy that had fallen into technical recession. The transmission to mortgage rates has been meaningful: the average two-year fixed rate has dropped from <strong>7.0%</strong> to approximately <strong>5.2%</strong>, improving borrowing capacity by roughly <strong>NZ$80,000&ndash;100,000</strong> for the median household.</p>
+        <p>Market pricing implies a further <strong>50 basis points</strong> of cuts, targeting a terminal rate of <strong>2.75%</strong> by mid-2026. However, this benign outlook carries an important caveat: ANZ, New Zealand's largest bank, has publicly forecasted the possibility of an OCR hike back to <strong>3.50%</strong> or higher by December 2026 if non-tradeable inflation remains sticky above <strong>4%</strong>. This creates an asymmetric risk environment &mdash; the base case is supportive, but the tail risk of policy reversal could catch over-leveraged borrowers off guard.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>紐西蘭儲備銀行展開了已開發經濟體中最積極的寬鬆週期之一，將OCR從2024年8月的<strong>5.50%</strong>降至2026年2月的<strong>3.25%</strong>，累計降息<strong>225個基點</strong>。其中包括2024年10月和11月連續兩次50個基點的降息，顯示RBNZ支撐已陷入技術性衰退之經濟的急迫性。利率傳導效果顯著：兩年期固定房貸平均利率從<strong>7.0%</strong>降至約<strong>5.2%</strong>，中位家庭借款能力提升約<strong>NZ$8萬至10萬</strong>。</p>
+        <p>市場定價隱含再降<strong>50個基點</strong>，目標終端利率為2026年中的<strong>2.75%</strong>。然而這一樂觀前景附帶重要但書：紐西蘭最大銀行ANZ已公開預測，若非貿易財通膨持續黏著在<strong>4%</strong>以上，2026年12月前OCR可能重新升至<strong>3.50%</strong>或更高。這創造了不對稱的風險環境——基本情境利好，但政策逆轉的尾部風險可能令過度槓桿的借款人措手不及。</p>
+      </div>
+
+      <h2><span class="lang-en">SUPPLY</span><span class="lang-zh" style="display:none">供給面</span></h2>
+
+      <div class="lang-en">
+        <p>New Zealand's building consent pipeline has weakened significantly. Annual residential consents fell to approximately <strong>32,000</strong> in 2025, down from the peak of <strong>51,000</strong> in 2022. The decline reflects developer caution amid elevated construction costs, tighter lending conditions, and uncertainty about demand. Multi-unit consents, which had driven the 2021&ndash;2022 boom, have fallen <strong>40%</strong> from their peak as apartment developers face viability challenges with current build costs exceeding <strong>NZ$5,000/sqm</strong> in Auckland.</p>
+        <p>The supply pipeline contraction is a medium-term positive for existing homeowners and investors. With population growth driven by record net migration of <strong>135,000</strong> in 2023 (moderating to an estimated <strong>80,000</strong> in 2025), the dwelling deficit continues to widen. Auckland alone requires an estimated <strong>12,000&ndash;15,000</strong> new dwellings annually but is tracking below <strong>10,000</strong> consents. The supply-demand imbalance will eventually translate to renewed price pressure, particularly once interest rates stabilize at lower levels and buyer confidence returns.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>紐西蘭建築許可管線明顯走弱。2025年年度住宅許可降至約<strong>32,000</strong>份，遠低於2022年高峰的<strong>51,000</strong>份。下降反映開發商在建設成本高企、貸款條件收緊及需求不確定性下的謹慎態度。曾推動2021至2022年建設潮的多戶型許可較高峰下降<strong>40%</strong>，因公寓開發商在奧克蘭當前建設成本超過<strong>NZ$5,000/平方米</strong>的環境下面臨可行性挑戰。</p>
+        <p>供給管線萎縮對現有業主和投資者是中期利好。在2023年創紀錄的<strong>135,000</strong>淨移民（2025年估計放緩至<strong>80,000</strong>）推動人口增長的背景下，住宅缺口持續擴大。僅奧克蘭每年就需約<strong>12,000至15,000</strong>套新住宅，但許可量追蹤在<strong>10,000</strong>套以下。供需失衡最終將轉化為新的價格壓力，特別是在利率穩定在較低水準且買家信心回歸之後。</p>
+      </div>
+
+      <div class="chart-inline">
+        <h4><span class="lang-en">Building Consents Trend</span><span class="lang-zh" style="display:none">建築許可趨勢</span></h4>
+        <div class="chart-note red"><span class="lang-en">2025: ~32K consents &mdash; 37% below 2022 peak</span><span class="lang-zh" style="display:none">2025年：約3.2萬份許可——較2022年高峰低37%</span></div>
+        <div id="chart-r-nz-consents" style="height:220px;min-height:180px;"></div>
+      </div>
+
+      <h2><span class="lang-en">DEMAND</span><span class="lang-zh" style="display:none">需求面</span></h2>
+
+      <div class="lang-en">
+        <p>Sales volumes are recovering from their 2023 nadir. REINZ reported approximately <strong>5,800</strong> residential sales per month in late 2025, up from the cyclical low of <strong>4,200</strong> in mid-2023 but still well below the 2021 peak of <strong>9,500</strong> monthly transactions. First-home buyers have been the most active segment, supported by lower deposit requirements and improved borrowing capacity from OCR cuts. Investor activity remains subdued relative to historical norms, constrained by the removal of interest deductibility (partially restored to <strong>80%</strong> from April 2025) and extended bright-line test periods.</p>
+        <p>The rental market is showing signs of easing for the first time in several years. National median weekly rents have plateaued at approximately <strong>NZ$600</strong>, with Auckland rents declining <strong>2&ndash;3%</strong> year-on-year as elevated inventory provides tenants with more choice. Christchurch rents remain firm at <strong>NZ$520/week</strong> with yields of <strong>4.8%</strong>. The rental market softening is a headwind for investors seeking income, but the improving yield spread over the OCR partially compensates.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>銷售量正從2023年低谷回升。REINZ報告2025年下半年月均住宅銷售約<strong>5,800</strong>套，高於2023年中的週期低點<strong>4,200</strong>套，但仍遠低於2021年月均<strong>9,500</strong>套的高峰。首購族是最活躍的群體，受益於較低的首付要求及降息帶來的借貸能力改善。投資者活動相對歷史常態仍偏弱，受限於利息抵扣取消（自2025年4月部分恢復至<strong>80%</strong>）及延長的明線測試期。</p>
+        <p>租賃市場數年來首次出現緩和跡象。全國週租中位數在約<strong>NZ$600</strong>趨穩，奧克蘭租金年減<strong>2至3%</strong>，因高庫存為租戶提供更多選擇。基督城租金維持穩健在<strong>NZ$520/週</strong>，收益率<strong>4.8%</strong>。租賃市場軟化對追求收入的投資者構成逆風，但與OCR之間改善的利差部分抵消了這一影響。</p>
+      </div>
+
+      <h2><span class="lang-en">VALUATION</span><span class="lang-zh" style="display:none">估值</span></h2>
+
+      <div class="lang-en">
+        <p>New Zealand's national rental yield of <strong>4.2%</strong> against the OCR of <strong>3.25%</strong> produces a spread of <strong>+0.95%</strong> &mdash; the widest positive spread since 2021 and a meaningful improvement from the <strong>-1.3%</strong> negative spread that prevailed when the OCR peaked at <strong>5.50%</strong>. Christchurch offers the most attractive carry at <strong>4.8%</strong> yield, with suburban pockets like Riccarton and Shirley delivering <strong>5.5&ndash;5.8%</strong>. Auckland's yield of <strong>3.96%</strong> provides marginal positive carry over the OCR but leaves little buffer against rate surprises.</p>
+        <p>The national price-to-income ratio remains elevated at <strong>7.5x</strong>, though this has improved from the peak of <strong>9.5x</strong> in late 2021. Auckland at <strong>9.2x</strong> remains severely unaffordable by international standards, while Christchurch at <strong>5.8x</strong> is broadly in line with long-run New Zealand averages. The peak discount analysis shows Christchurch virtually at par (<strong>-0.6%</strong>), while Auckland carries the deepest discount at <strong>-24.9%</strong> &mdash; suggesting either significant upside potential or a structural repricing to lower equilibrium levels.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>紐西蘭全國租金收益率<strong>4.2%</strong>扣除OCR <strong>3.25%</strong>後，利差為<strong>+0.95%</strong>——為2021年以來最寬的正利差，較OCR高峰<strong>5.50%</strong>時<strong>-1.3%</strong>的負利差大幅改善。基督城以<strong>4.8%</strong>收益率提供最具吸引力的持有收益，瑞卡頓和雪利等郊區更達<strong>5.5至5.8%</strong>。奧克蘭收益率<strong>3.96%</strong>對OCR僅有微弱正利差，對利率意外幾無緩衝。</p>
+        <p>全國房價對收入比仍偏高在<strong>7.5倍</strong>，但已從2021年末高峰的<strong>9.5倍</strong>改善。奧克蘭<strong>9.2倍</strong>以國際標準仍屬嚴重不可負擔，而基督城<strong>5.8倍</strong>大致符合紐西蘭長期平均。峰值折價分析顯示基督城幾乎持平（<strong>-0.6%</strong>），而奧克蘭承擔最深折價<strong>-24.9%</strong>——暗示要麼具有顯著上行潛力，要麼正經歷向更低均衡水準的結構性重新定價。</p>
+      </div>
+
+      <div class="chart-inline">
+        <h4><span class="lang-en">Peak Discount by Region</span><span class="lang-zh" style="display:none">各地區峰值折價</span></h4>
+        <div class="chart-note orange"><span class="lang-en">Auckland -24.9% &mdash; deepest correction</span><span class="lang-zh" style="display:none">奧克蘭 -24.9%——最深修正</span></div>
+        <div id="chart-r-nz-peak" style="height:280px;min-height:180px;"></div>
+      </div>
+
+      <h2><span class="lang-en">AUCKLAND</span><span class="lang-zh" style="display:none">奧克蘭</span></h2>
+
+      <div class="lang-en">
+        <p>Auckland's median house price of <strong>NZ$1,014,000</strong> remains stubbornly below its 2022 peak of <strong>NZ$1.35M</strong>, a correction of <strong>24.9%</strong> that ranks among the deepest in the developed world. The inventory overhang is the primary headwind: at <strong>31 weeks</strong> of supply, Auckland is firmly in buyer's market territory, with sellers facing extended listing times averaging <strong>45 days</strong> and increasing price negotiation pressure. The correction has been concentrated in the premium suburbs &mdash; Herne Bay, Orakei, and Remuera have seen declines of <strong>25&ndash;30%</strong> from peak, while South and West Auckland have proven more resilient at <strong>15&ndash;20%</strong> off peak.</p>
+        <p>The path to recovery in Auckland hinges on inventory normalization. Historical analysis suggests that a buyer's market transitions to balanced at approximately <strong>20 weeks</strong> of inventory and to a seller's market below <strong>15 weeks</strong>. At the current absorption rate, Auckland is unlikely to reach balanced conditions before late 2026 at the earliest. The silver lining is yield improvement: as prices have fallen while rents held relatively steady, Auckland's gross yield has risen to <strong>3.96%</strong>, providing marginally positive carry over the OCR for the first time since 2021.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>奧克蘭房屋中位價<strong>NZ$1,014,000</strong>頑固地低於2022年高峰<strong>NZ$1.35M</strong>，修正幅度達<strong>24.9%</strong>，為已開發國家中最深之列。庫存積壓是主要逆風：<strong>31週</strong>的供給量令奧克蘭穩居買方市場，賣方面臨平均<strong>45天</strong>的延長掛牌時間及日益增大的議價壓力。修正集中在高端區域——赫恩灣、奧拉凱和雷穆拉較高峰下跌<strong>25至30%</strong>，而南區和西區奧克蘭較為堅韌，僅較高峰低<strong>15至20%</strong>。</p>
+        <p>奧克蘭的復甦路徑取決於庫存正常化。歷史分析顯示，買方市場在庫存約<strong>20週</strong>時轉為平衡，低於<strong>15週</strong>時轉為賣方市場。按當前去化速度，奧克蘭最早要到2026年末才能達到平衡狀態。一線曙光是收益率改善：房價下跌而租金相對持穩，奧克蘭毛收益率已升至<strong>3.96%</strong>，自2021年以來首次對OCR產生微弱正利差。</p>
+      </div>
+
+      <h2><span class="lang-en">CHRISTCHURCH</span><span class="lang-zh" style="display:none">基督城</span></h2>
+
+      <div class="lang-en">
+        <p>Christchurch is New Zealand's standout performer, with its median house price of <strong>NZ$697,000</strong> sitting just <strong>$4,000</strong> below the 2022 peak of <strong>NZ$701,000</strong> &mdash; a recovery rate that no other major New Zealand city has matched. The post-earthquake rebuild, now effectively complete, has left Christchurch with one of the youngest and most energy-efficient housing stocks in the country. This modern stock commands a premium from buyers who value low-maintenance living and lower insurance costs.</p>
+        <p>The fundamental value proposition is compelling. At <strong>31%</strong> below Auckland's median price, Christchurch offers comparable liveability with significantly better affordability. Average gross yields of <strong>4.8%</strong> and suburban yields of <strong>5&ndash;6%</strong> in areas like Riccarton, Addington, and Shirley provide the best carry trade in the country. The University of Canterbury drives rental demand in the inner suburbs, while new family-oriented developments in Halswell and Rolleston are absorbing domestic migration. The risk to Christchurch is its relative lack of economic diversification compared to Auckland, though the city's growing tech sector and established agricultural services base provide some offset.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>基督城是紐西蘭表現最突出的市場，房屋中位價<strong>NZ$697,000</strong>僅比2022年高峰<strong>NZ$701,000</strong>低<strong>$4,000</strong>——復甦速度為紐西蘭各主要城市之最。震後重建現已基本完成，為基督城留下全國最年輕、最節能的住宅存量之一。這些現代化住宅因低維護成本和較低保險費用而受到買家青睞。</p>
+        <p>基本面價值主張極具說服力。較奧克蘭中位價低<strong>31%</strong>的情況下，基督城提供相當的宜居性和顯著更好的可負擔性。平均毛收益率<strong>4.8%</strong>，瑞卡頓、艾丁頓和雪利等區域的郊區收益率<strong>5至6%</strong>，提供全國最佳的套利交易。坎特伯雷大學推動內城區租賃需求，而霍斯威爾和羅爾斯頓面向家庭的新開發項目正在吸收國內遷移。基督城的風險在於相比奧克蘭經濟多元化程度較低，不過該市不斷成長的科技產業和成熟的農業服務基礎提供了部分抵消。</p>
+      </div>
+
+      <h2><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
+
+      <div class="lang-en">
+        <p>Base case for 2026: <strong>+3&ndash;5%</strong> nationally. Christchurch to outperform. Auckland remains range-bound until inventory normalizes below 20 weeks. Key risk: ANZ forecasts OCR hike by December 2026 if inflation surprises.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>2026年基本情境：全國上漲<strong>3至5%</strong>。基督城將跑贏大盤。奧克蘭在庫存正常化至20週以下之前將維持區間震盪。主要風險：ANZ預測若通膨意外上行，2026年12月前可能重啟加息。</p>
+      </div>
+
+      <div class="report-footer">
+        <p><span class="lang-en">Data sources: REINZ &middot; RBNZ &middot; Stats NZ &middot; CoreLogic NZ &middot; Trade Me Property</span><span class="lang-zh" style="display:none">數據來源：REINZ &middot; 紐西蘭儲備銀行 (RBNZ) &middot; 紐西蘭統計局 &middot; CoreLogic NZ &middot; Trade Me Property</span></p>
+        <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">A project by <span>InvestMQuest</span></footer>
+
+  <script>
+  var C = {
+    navy:'#1e3a5f', green:'#16a34a', orange:'#d97706',
+    red:'#dc2626', blue:'#2563eb', muted:'#5a7a9a',
+    grid:'#e8f0f9', text:'#1e3a5f'
+  };
+  function fmtNZD(v){if(v>=1000000)return 'NZ$'+(v/1000000).toFixed(1)+'M';if(v>=1000)return 'NZ$'+(v/1000).toFixed(0)+'K';return 'NZ$'+v;}
+  function fmtNZDShort(v){if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return(v/1000).toFixed(0)+'K';return ''+v;}
+  function fmtK(v){if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return(v/1000).toFixed(0)+'K';return v;}
+  var baseText = { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 };
+  var baseTooltip = {
+    trigger: 'axis', backgroundColor: '#fff',
+    borderColor: '#ccd9e8', borderWidth: 1,
+    textStyle: { color: C.navy, fontSize: 11, fontFamily: 'Inter' }
+  };
+  var baseLegend = { top: 8, textStyle: baseText, icon: 'circle', itemWidth: 8, itemHeight: 8 };
+
+  function mkAxis(opts) {
+    return Object.assign({
+      axisLine: { lineStyle: { color: C.grid } },
+      axisTick: { show: false },
+      axisLabel: baseText,
+      splitLine: { lineStyle: { color: C.grid } }
+    }, opts || {});
+  }
+
+  function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+  document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+
+  var allCharts = [];
+
+  function initAllCharts(lang) {
+    allCharts.forEach(function(c){ if(c) c.dispose(); });
+    allCharts = [];
+    drawYield(lang);
+    drawOCR(lang);
+    drawTxn(lang);
+    drawConsents(lang);
+    drawPeak(lang);
+  }
+
+  function setLang(lang){
+    document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+    document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    localStorage.setItem('lang',lang);
+    initAllCharts(lang);
+  }
+
+  function drawYield(lang){
+    var c = echarts.init(document.getElementById('chart-r-nz-yield'));
+    allCharts.push(c);
+    c.setOption({
+      tooltip: baseTooltip,
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
+      xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024','2025','2026'], axisLabel:{ color:C.muted, fontSize:8 } }),
+      yAxis: mkAxis({ type:'value', min:0, max:7, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
+      series: [
+        { name:lang==='zh'?'租金收益率':'Rental Yield', type:'line', data:[3.8,3.6,3.2,3.5,4.0,4.1,4.15,4.2], lineStyle:{color:C.green,width:1.5}, itemStyle:{color:C.green}, smooth:0.3, areaStyle:{color:'rgba(22,163,74,0.08)'}, symbol:'circle', symbolSize:4 },
+        { name:lang==='zh'?'OCR利率':'OCR Rate', type:'line', data:[1.00,0.25,0.25,3.00,5.50,5.50,4.25,3.25], lineStyle:{color:C.red,width:1,type:'dashed'}, itemStyle:{color:C.red}, step:'end', symbol:'circle', symbolSize:3 }
+      ]
+    });
+  }
+
+  function drawOCR(lang){
+    var c = echarts.init(document.getElementById('chart-r-nz-ocr'));
+    allCharts.push(c);
+    c.setOption({
+      tooltip: baseTooltip,
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
+      xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024 Aug','2025','2026 Feb'], axisLabel:{ color:C.muted, fontSize:8 } }),
+      yAxis: mkAxis({ type:'value', min:0, max:6, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
+      series: [
+        { name:'OCR', type:'line', data:[1.00,0.25,0.25,3.00,5.50,5.50,4.25,3.25], lineStyle:{color:C.navy,width:2}, itemStyle:{color:C.navy}, step:'end', symbol:'circle', symbolSize:5,
+          markPoint:{data:[{coord:['2023',5.50],symbol:'pin',symbolSize:40,label:{formatter:'5.50% Peak',fontSize:8},itemStyle:{color:C.red}},{coord:['2026 Feb',3.25],symbol:'pin',symbolSize:40,label:{formatter:'3.25%',fontSize:8},itemStyle:{color:C.green}}]}
+        }
+      ]
+    });
+  }
+
+  function drawTxn(lang){
+    var c = echarts.init(document.getElementById('chart-r-nz-txn'));
+    allCharts.push(c);
+    c.setOption({
+      tooltip: baseTooltip,
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
+      xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024','2025'], axisLabel:{ color:C.muted, fontSize:8 } }),
+      yAxis: mkAxis({ type:'value', axisLabel:{ color:C.muted, fontSize:9, formatter:function(v){return fmtK(v);} } }),
+      series: [
+        { name:lang==='zh'?'月均成交':'Monthly Sales', type:'line', data:[6200,5800,9500,6800,4200,4800,5800], lineStyle:{color:C.orange,width:1.5}, itemStyle:{color:C.orange}, smooth:0.3, areaStyle:{color:'rgba(217,119,6,0.08)'}, symbol:'circle', symbolSize:4 }
+      ]
+    });
+  }
+
+  function drawConsents(lang){
+    var c = echarts.init(document.getElementById('chart-r-nz-consents'));
+    allCharts.push(c);
+    c.setOption({
+      tooltip: baseTooltip,
+      grid:{left:50,right:20,top:30,bottom:30,containLabel:true},
+      xAxis: mkAxis({ type:'category', data:['2018','2019','2020','2021','2022','2023','2024','2025'], axisLabel:{ color:C.muted, fontSize:9 } }),
+      yAxis: mkAxis({ type:'value', axisLabel:{ color:C.muted, fontSize:9, formatter:function(v){return fmtK(v);} } }),
+      series: [
+        { name:lang==='zh'?'建築許可':'Building Consents', type:'line', data:[32000,37000,38000,48000,51000,42000,36000,32000], lineStyle:{color:C.navy,width:2}, itemStyle:{color:C.navy}, smooth:0.2, areaStyle:{color:'rgba(30,58,95,0.06)'}, symbol:'circle', symbolSize:5,
+          markPoint:{data:[{coord:['2022',51000],symbol:'pin',symbolSize:45,label:{formatter:'51K Peak',fontSize:9},itemStyle:{color:C.red}}]}
+        }
+      ]
+    });
+  }
+
+  function drawPeak(lang){
+    var c = echarts.init(document.getElementById('chart-r-nz-peak'));
+    allCharts.push(c);
+    var labels = lang==='zh'?['基督城','威靈頓','陶朗加','漢密爾頓','全國','奧克蘭']:['Christchurch','Wellington','Tauranga','Hamilton','National','Auckland'];
+    var data = [-0.6,-12.5,-15.8,-18.2,-15.0,-24.9];
+    c.setOption({
+      tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(params){var p=params[0];return p.name+': '+p.value.toFixed(1)+'%';}}),
+      grid:{left:110,right:60,top:20,bottom:20,containLabel:false},
+      xAxis: mkAxis({ type:'value', axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
+      yAxis: mkAxis({ type:'category', data:labels, axisLabel:{color:C.navy,fontFamily:'Inter',fontSize:11} }),
+      series:[{type:'bar',data:data.map(function(v){return{value:v,itemStyle:{color:v>-5?C.green:v>-15?C.orange:C.red,borderRadius:v<0?[4,0,0,4]:[0,4,4,0]}};}),barMaxWidth:22,label:{show:true,position:'left',formatter:function(p){return p.value.toFixed(1)+'%';},fontSize:10,fontFamily:'JetBrains Mono'}}]
+    });
+  }
+
+  window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+  window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+  </script>
+</body>
+</html>
