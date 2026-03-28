@@ -162,6 +162,19 @@
         <div id="chart-r-tw-supply" style="height:200px;min-height:180px;"></div>
       </div>
 
+      <h2><span class="lang-en">PRESALE MARKET: VOLUME CRASH, PRICES HOLD</span><span class="lang-zh" style="display:none">預售屋市場：量縮價不跌</span></h2>
+
+      <div class="lang-en">
+        <p>Taiwan's 2025 market produced a rare phenomenon: transaction volumes collapsed <strong>25%</strong>, yet presale prices across all six metropolitan areas rose year-on-year. Tainan led with <strong>+14.6%</strong> to NT$41W/ping; New Taipei followed at <strong>+14.5%</strong> to NT$70W/ping; Taichung gained <strong>+12%</strong> to NT$43W; Kaohsiung rose <strong>+8%</strong>; even Taipei — with the highest base — edged up <strong>+1.9%</strong> to NT$118W/ping.</p>
+        <p>Three structural factors support this "volume crash, price hold" pattern: first, inflation expectations discourage sellers from cutting prices; second, developers prefer non-price concessions (free renovation packages) over headline price reductions; third, presale properties defer mortgage pressure during construction, maintaining appeal for first-time buyers.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>2025年台灣房市出現罕見現象：成交量崩跌<strong>25%</strong>，但六都預售屋價格卻全面上漲。台南漲幅最驚人，達<strong>+14.6%</strong>，均價來到每坪<strong>41萬元</strong>；新北緊追在後，漲<strong>+14.5%</strong>至每坪<strong>70萬元</strong>；台中漲<strong>12%</strong>至<strong>43萬元</strong>；高雄漲<strong>8%</strong>；就連基期最高的台北，也微幅上漲<strong>1.9%</strong>至每坪<strong>118萬元</strong>。</p>
+        <p>這種「量縮價撐」的格局有三個結構性支撐：第一，通膨預期讓屋主惜售；第二，建商寧願用「買房送裝潢」等優惠讓利，而非直接降價護盤；第三，預售屋在工程期間不需立即面對房貸壓力，對首購族仍有吸引力。</p>
+        <p>但市場分化越來越明顯。南部城市（台南、高雄）以較低的基期和科技園區題材支撐漲勢，而台北則因負擔能力天花板而呈現量縮後的溫和盤整。中信房屋的數據顯示，二手屋市場的降幅遠大於預售屋，透露出市場的結構性差距：<strong>新屋賣給未來，舊屋找不到當下</strong>。</p>
+      </div>
+
       <h2><span class="lang-en">DEMAND</span><span class="lang-zh" style="display:none">需求面</span></h2>
 
       <div class="lang-en">
@@ -192,6 +205,12 @@
         <h4><span class="lang-en">APAC Median Multiple Comparison</span><span class="lang-zh" style="display:none">亞太房價所得比比較</span></h4>
         <div class="chart-note red"><span class="lang-en">Taipei 15.41x &mdash; globally unaffordable</span><span class="lang-zh" style="display:none">台北15.41倍——全球最難負擔之一</span></div>
         <div id="chart-r-tw-apac" style="height:280px;min-height:180px;"></div>
+      </div>
+
+      <div class="chart-inline">
+        <h4><span class="lang-en">Six Metros Presale Price (NT$ Wan/Ping)</span><span class="lang-zh" style="display:none">六都預售屋均價（萬元/坪）</span></h4>
+        <div class="chart-note green"><span class="lang-en">All 6 metros up YoY despite volume crash</span><span class="lang-zh" style="display:none">成交量崩跌，六都預售屋價格仍全面上漲</span></div>
+        <div id="chart-r-tw-city6" style="height:220px;min-height:180px;"></div>
       </div>
 
       <h2><span class="lang-en">TAIPEI</span><span class="lang-zh" style="display:none">台北</span></h2>
@@ -284,6 +303,7 @@
     drawTransactionTrend(lang);
     drawSupplyPipeline(lang);
     drawAPAC(lang);
+    drawCity6(lang);
   }
 
   function setLang(lang){
@@ -366,14 +386,14 @@
     var c = echarts.init(document.getElementById('chart-r-tw-apac'));
     allCharts.push(c);
     var labels = lang==='zh'
-      ? ['\u5409\u9686\u5761 4.3x','\u66fc\u8c37 6.9x','\u6771\u4eac 11.2x','\u53f0\u7063 9.89x','\u53f0\u4e2d 11.55x','\u65b0\u7af9 10.80x','\u9ad8\u96c4 10.1x','\u53f0\u5317 15.41x','\u6df1\u5733 18.2x','\u9999\u6e2f 20.7x']
-      : ['KL 4.3x','Bangkok 6.9x','Tokyo 11.2x','Taiwan 9.89x','Taichung 11.55x','Hsinchu 10.80x','Kaohsiung 10.1x','Taipei 15.41x','Shenzhen 18.2x','Hong Kong 20.7x'];
-    var values = [4.3, 6.9, 11.2, 9.89, 11.9, 10.80, 9.61, 15.41, 18.2, 20.7];
+      ? ['吉隆坡 4.3x','曼谷 6.9x','福岡 8.5x','高雄 9.61x','全國 9.89x','台中 11.9x','新北 13.03x','台北 15.41x','東京 15.1x','香港 46.9x']
+      : ['KL 4.3x','Bangkok 6.9x','Fukuoka 8.5x','Kaohsiung 9.61x','National 9.89x','Taichung 11.9x','New Taipei 13.03x','Taipei 15.41x','Tokyo 15.1x','Hong Kong 46.9x'];
+    var values = [4.3, 6.9, 8.5, 9.61, 9.89, 11.9, 13.03, 15.41, 15.1, 46.9];
     var colors = values.map(function(v){ return v <= 5 ? C.green : v <= 11 ? C.orange : C.red; });
     c.setOption({
       tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
       grid: { left:100, right:50, top:10, bottom:15, containLabel:false },
-      xAxis: mkAxis({ type:'value', min:0, max:25 }),
+      xAxis: mkAxis({ type:'value', min:0, max:50 }),
       yAxis: mkAxis({ type:'category', data:labels, axisLabel:{color:C.navy,fontSize:9,fontFamily:'Inter'} }),
       series: [{
         type:'bar',
@@ -382,6 +402,14 @@
         label:{ show:true, position:'right', formatter:'{c}x', fontSize:9, fontFamily:'Inter', fontWeight:'bold', color:C.navy }
       }]
     });
+  }
+
+  function drawCity6(lang){
+    var c=echarts.init(document.getElementById('chart-r-tw-city6'));allCharts.push(c);
+    var labels=lang==='zh'?['高雄\n33萬','台南\n41萬','台中\n43萬','桃園\n35萬','新北\n70萬','台北\n118萬']:['Kaohsiung\n33W','Tainan\n41W','Taichung\n43W','Taoyuan\n35W','New Taipei\n70W','Taipei\n118W'];
+    var prices=[33,41,43,35,70,118];var yoys=[8.0,14.6,12.0,8.6,14.5,1.9];
+    var colors=[C.navy,C.navy,C.navy,C.navy,C.red,C.orange];
+    c.setOption({tooltip:baseTooltip,legend:Object.assign({},baseLegend,{data:[lang==='zh'?'均價(萬/坪)':'Price(W/P)','YoY%']}),grid:{left:12,right:12,top:28,bottom:20,containLabel:true},xAxis:mkAxis({type:'category',data:labels,axisLabel:{color:'#5a7a9a',fontSize:9,interval:0}}),yAxis:[mkAxis({type:'value',axisLabel:{color:'#5a7a9a',fontSize:9}}),mkAxis({type:'value',splitLine:{show:false},min:0,max:20,axisLabel:{color:'#5a7a9a',fontSize:9,formatter:'{value}%'}})],series:[{name:lang==='zh'?'均價(萬/坪)':'Price(W/P)',type:'bar',data:prices.map(function(v,i){return{value:v,itemStyle:{color:colors[i],borderRadius:[3,3,0,0]}};}),barMaxWidth:40,label:{show:true,position:'top',formatter:function(p){return p.value+'W';},fontSize:9}},{name:'YoY%',type:'line',yAxisIndex:1,data:yoys,lineStyle:{color:C.green,width:2},itemStyle:{color:C.green},symbol:'circle',symbolSize:6,label:{show:true,position:'top',formatter:function(p){return '+'+p.value+'%';},fontSize:9,color:C.green}}]});
   }
 
   window.addEventListener('load', function(){
