@@ -187,8 +187,10 @@ function initCharts(lang){
   /* Chart: Risk Radar */
   var c1=echarts.init(document.getElementById('chartJpRisk'));allCharts.push(c1);
   c1.setOption({
-    legend:Object.assign({},baseLegend,{data:['Current Risk','2020 Baseline']}),
+    legend:{bottom:0,textStyle:{color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:11},icon:'circle',itemWidth:8,itemHeight:8,data:['Current Risk','2020 Baseline']},
     radar:{
+      center:['50%','52%'],radius:'58%',nameGap:8,
+      name:{textStyle:{color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:10}},
       indicator:[
         {name:'Liquidity\n/\u6d41\u52d5\u6027',max:10},
         {name:'Credit\n/\u4fe1\u8cb8',max:10},
@@ -198,7 +200,6 @@ function initCharts(lang){
         {name:'Demographics\n/\u4eba\u53e3',max:10}
       ],
       shape:'polygon',splitNumber:5,
-      axisName:{color:C.navy,fontSize:10,fontFamily:'Inter'},
       splitLine:{lineStyle:{color:C.grid}},
       splitArea:{areaStyle:{color:['rgba(238,243,249,0.3)','rgba(255,255,255,0.3)']}},
       axisLine:{lineStyle:{color:C.grid}}
@@ -213,16 +214,16 @@ function initCharts(lang){
   var c2=echarts.init(document.getElementById('chartJpRateSensitivity'));allCharts.push(c2);
   c2.setOption({
     tooltip:baseTooltip,
-    legend:Object.assign({},baseLegend,{data:['Yield Spread','Affordability']}),
-    grid:baseGrid,
+    legend:{top:8,textStyle:{color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:11},icon:'circle',itemWidth:8,itemHeight:8,data:['Yield Spread','Affordability']},
+    grid:{left:15,right:15,top:40,bottom:30,containLabel:true},
     xAxis:mkAxis({type:'category',data:['BOJ 0.5%','BOJ 1.0%','BOJ 1.5%','BOJ 2.0%']}),
     yAxis:[
-      mkAxis({type:'value',axisLabel:{formatter:'{value}%'},name:'Yield Spread',nameTextStyle:baseText}),
-      mkAxis({type:'value',position:'right',axisLabel:{formatter:'{value}'},name:'Affordability',nameTextStyle:baseText,splitLine:{show:false}})
+      mkAxis({type:'value',axisLabel:{formatter:'{value}%',color:'#5a7a9a',fontSize:10},splitLine:{lineStyle:{color:'#e8f0f9'}}}),
+      mkAxis({type:'value',position:'right',axisLabel:{formatter:'{value}',color:'#5a7a9a',fontSize:10},splitLine:{show:false}})
     ],
     series:[
       {name:'Yield Spread',type:'line',smooth:0.2,data:[3.84,3.34,2.84,2.34],lineStyle:{color:C.green},itemStyle:{color:C.green},symbol:'circle',symbolSize:6,
-        markLine:{silent:true,symbol:'none',lineStyle:{color:C.navy,type:'dashed',width:1},data:[{xAxis:'BOJ 0.5%',label:{formatter:'Current',fontSize:10,color:C.navy,position:'insideEndTop'}}]}
+        markLine:{silent:true,symbol:'none',lineStyle:{color:C.navy,type:'dashed',width:1},data:[{xAxis:'BOJ 0.5%',label:{formatter:'Current',position:'insideStartTop',fontSize:9,color:'#5a7a9a'}}]}
       },
       {name:'Affordability',type:'line',smooth:0.2,yAxisIndex:1,data:[75,70,64,58],lineStyle:{color:C.orange},itemStyle:{color:C.orange},symbol:'circle',symbolSize:6}
     ]

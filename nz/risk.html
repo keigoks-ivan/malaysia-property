@@ -200,8 +200,10 @@
     var c1=echarts.init(document.getElementById('chartNzRisk'));allCharts.push(c1);
     c1.setOption({
       tooltip:{trigger:'item'},
-      legend:Object.assign({},baseLegend,{data:[lang==='zh'?'現況 2025':'Current 2025','2023']}),
+      legend:{bottom:0,textStyle:{color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:11},icon:'circle',itemWidth:8,itemHeight:8,data:[lang==='zh'?'現況 2025':'Current 2025','2023']},
       radar:{
+        center:['50%','52%'],radius:'58%',nameGap:8,
+        name:{textStyle:{color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:10}},
         indicator:[
           {name:lang==='zh'?'流動性':'Liquidity',max:10},
           {name:lang==='zh'?'信用':'Credit',max:10},
@@ -213,8 +215,7 @@
         shape:'polygon',
         splitArea:{areaStyle:{color:['rgba(30,58,95,0.02)','rgba(30,58,95,0.05)']}},
         axisLine:{lineStyle:{color:C.grid}},
-        splitLine:{lineStyle:{color:C.grid}},
-        name:{textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}}
+        splitLine:{lineStyle:{color:C.grid}}
       },
       series:[{
         type:'radar',

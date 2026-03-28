@@ -243,8 +243,12 @@
     allCharts.push(cRadar);
     cRadar.setOption({
       tooltip: { trigger: 'item' },
-      legend: Object.assign({}, baseLegend, { data: ['Current Risk','2023 Baseline'] }),
+      legend: { bottom: 0, textStyle: { color: '#5a7a9a', fontFamily: 'Inter, sans-serif', fontSize: 11 }, icon: 'circle', itemWidth: 8, itemHeight: 8, data: ['Current Risk','2023 Baseline'] },
       radar: {
+        center: ['50%', '52%'],
+        radius: '58%',
+        nameGap: 8,
+        name: { textStyle: { color: '#5a7a9a', fontFamily: 'Inter, sans-serif', fontSize: 10 } },
         indicator: [
           { name: '\u6d41\u52d5\u6027 / Liquidity', max: 10 },
           { name: '\u4fe1\u8cb8 / Credit', max: 10 },
@@ -256,8 +260,7 @@
         shape: 'polygon',
         splitLine: { lineStyle: { color: C.grid } },
         splitArea: { show: false },
-        axisLine: { lineStyle: { color: C.grid } },
-        axisName: { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 10 }
+        axisLine: { lineStyle: { color: C.grid } }
       },
       series: [{
         type: 'radar',
@@ -285,15 +288,15 @@
     allCharts.push(cRate);
     cRate.setOption({
       tooltip: baseTooltip,
-      legend: Object.assign({}, baseLegend, { data: ['Yield Spread','Affordability Index'] }),
-      grid: { left: 50, right: 50, top: 45, bottom: 30, containLabel: true },
+      legend: { top: 8, textStyle: { color: '#5a7a9a', fontFamily: 'Inter, sans-serif', fontSize: 11 }, icon: 'circle', itemWidth: 8, itemHeight: 8, data: ['Yield Spread','Affordability Index'] },
+      grid: { left: 15, right: 15, top: 40, bottom: 30, containLabel: true },
       xAxis: mkAxis({
         type: 'category',
         data: ['OPR 2.0%','OPR 2.5%','OPR 2.75%','OPR 3.0%','OPR 3.5%']
       }),
       yAxis: [
-        mkAxis({ type: 'value', name: 'Spread %', nameTextStyle: baseText, axisLabel: Object.assign({}, baseText, { formatter: '{value}%' }) }),
-        mkAxis({ type: 'value', name: 'Affordability', nameTextStyle: baseText, splitLine: { show: false } })
+        mkAxis({ type: 'value', axisLabel: { formatter: '{value}%', color: '#5a7a9a', fontSize: 10 }, splitLine: { lineStyle: { color: '#e8f0f9' } } }),
+        mkAxis({ type: 'value', axisLabel: { formatter: '{value}', color: '#5a7a9a', fontSize: 10 }, splitLine: { show: false } })
       ],
       series: [
         {
@@ -314,7 +317,7 @@
             silent: true,
             symbol: 'none',
             lineStyle: { color: C.navy, type: 'dashed', width: 1 },
-            label: { formatter: 'Current', fontSize: 10, color: C.navy },
+            label: { formatter: 'Current', position: 'insideStartTop', fontSize: 9, color: '#5a7a9a' },
             data: [{ xAxis: 'OPR 2.75%' }]
           }
         }
