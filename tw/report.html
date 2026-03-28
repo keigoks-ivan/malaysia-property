@@ -25,10 +25,13 @@
     .chart-note.green{color:#16a34a}
     .chart-note.orange{color:#d97706}
     .chart-note.red{color:#dc2626}
-    .chart-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+    .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
+    .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
+    .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
-    @media(max-width:700px){.chart-row{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
@@ -106,21 +109,21 @@
       </div>
 
       <!-- Exec Summary Charts -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0;">
-        <div class="chart-inline">
+      <div class="report-chart-grid">
+        <div class="report-chart-card">
           <h4><span class="lang-en">Yield vs CBS Rate</span><span class="lang-zh" style="display:none">收益率 vs 央行利率</span></h4>
-          <div class="chart-note orange"><span class="lang-en">Current Spread: +0.24%</span><span class="lang-zh" style="display:none">當前利差：+0.24%</span></div>
-          <div id="chart-r-tw-yield" style="height:180px;"></div>
+          <div class="chart-meta orange"><span class="lang-en">Current Spread: +0.24%</span><span class="lang-zh" style="display:none">當前利差：+0.24%</span></div>
+          <div id="chart-r-tw-yield" style="height:180px;min-height:180px;"></div>
         </div>
-        <div class="chart-inline">
+        <div class="report-chart-card">
           <h4><span class="lang-en">Demand vs Supply Mismatch</span><span class="lang-zh" style="display:none">需求 vs 供給錯配</span></h4>
-          <div class="chart-note orange"><span class="lang-en">42% first-time vs 15% supply &lt;NT$30M</span><span class="lang-zh" style="display:none">42%首購需求 vs 僅15%供給低於3000萬</span></div>
-          <div id="chart-r-tw-mismatch" style="height:180px;"></div>
+          <div class="chart-meta orange"><span class="lang-en">42% first-time vs 15% supply &lt;NT$30M</span><span class="lang-zh" style="display:none">42%首購需求 vs 僅15%供給低於3000萬</span></div>
+          <div id="chart-r-tw-mismatch" style="height:180px;min-height:180px;"></div>
         </div>
-        <div class="chart-inline">
+        <div class="report-chart-card">
           <h4><span class="lang-en">Transaction Volume Trend</span><span class="lang-zh" style="display:none">成交量趨勢</span></h4>
-          <div class="chart-note red"><span class="lang-en">2025: 263K &mdash; 8-year low, -25% YoY</span><span class="lang-zh" style="display:none">2025年：26.3萬棟——近8年新低，年減25%</span></div>
-          <div id="chart-r-tw-wave" style="height:180px;"></div>
+          <div class="chart-meta red"><span class="lang-en">2025: 263K &mdash; 8-year low, -25% YoY</span><span class="lang-zh" style="display:none">2025年：26.3萬棟——近8年新低，年減25%</span></div>
+          <div id="chart-r-tw-wave" style="height:180px;min-height:180px;"></div>
         </div>
       </div>
 
@@ -155,7 +158,7 @@
       <div class="chart-inline">
         <h4><span class="lang-en">Supply Pipeline</span><span class="lang-zh" style="display:none">供給管線趨勢</span></h4>
         <div class="chart-note orange"><span class="lang-en">New launches -38% in 2025 &mdash; pipeline thinning from 2027</span><span class="lang-zh" style="display:none">2025年新推案減38%——2027年起管線收窄</span></div>
-        <div id="chart-r-tw-supply" style="height:200px;"></div>
+        <div id="chart-r-tw-supply" style="height:200px;min-height:180px;"></div>
       </div>
 
       <h2><span class="lang-en">DEMAND</span><span class="lang-zh" style="display:none">需求面</span></h2>
@@ -187,7 +190,7 @@
       <div class="chart-inline">
         <h4><span class="lang-en">APAC Median Multiple Comparison</span><span class="lang-zh" style="display:none">亞太房價所得比比較</span></h4>
         <div class="chart-note red"><span class="lang-en">Taipei 15.41x &mdash; globally unaffordable</span><span class="lang-zh" style="display:none">台北15.41倍——全球最難負擔之一</span></div>
-        <div id="chart-r-tw-apac" style="height:280px;"></div>
+        <div id="chart-r-tw-apac" style="height:280px;min-height:180px;"></div>
       </div>
 
       <h2><span class="lang-en">TAIPEI</span><span class="lang-zh" style="display:none">台北</span></h2>
@@ -295,7 +298,7 @@
     allCharts.push(c);
     c.setOption({
       tooltip: baseTooltip,
-      grid: { left:40, right:10, top:30, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024','25Q3'], axisLabel:{ color:C.muted, fontSize:8 } }),
       yAxis: mkAxis({ type:'value', min:0, max:3, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
       series: [
@@ -312,7 +315,7 @@
     c.setOption({
       tooltip: baseTooltip,
       legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u9700\u6c42%':'Demand %', lang==='zh'?'\u4f9b\u7d66%':'Supply %'], textStyle:{fontSize:8,color:C.muted} }),
-      grid: { left:35, right:10, top:30, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:labels, axisLabel:{fontSize:7,color:C.muted} }),
       yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:'{value}%'} }),
       series: [
@@ -327,7 +330,7 @@
     allCharts.push(c);
     c.setOption({
       tooltip: baseTooltip,
-      grid: { left:45, right:10, top:15, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024','2025'], axisLabel:{fontSize:8,color:C.muted} }),
       yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
       series: [{
@@ -348,7 +351,7 @@
     c.setOption({
       tooltip: baseTooltip,
       legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u65b0\u63a8\u6848':'New Launches', lang==='zh'?'\u6210\u4ea4\u91cf':'Transactions'] }),
-      grid: { left:50, right:15, top:35, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:['2021','2022','2023','2024','2025'], axisLabel:{fontSize:9,color:C.muted} }),
       yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
       series: [

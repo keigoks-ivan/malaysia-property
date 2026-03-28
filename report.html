@@ -21,10 +21,13 @@
     .chart-inline .chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:8px}
     .chart-note.green{color:#16a34a}
     .chart-note.orange{color:#d97706}
-    .chart-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+    .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
+    .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
+    .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
-    @media(max-width:700px){.chart-row{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
@@ -103,21 +106,21 @@
       </div>
 
       <!-- Exec Summary Charts -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0;">
-        <div class="chart-inline">
+      <div class="report-chart-grid">
+        <div class="report-chart-card">
           <h4><span class="lang-en">Yield Spread Monitor</span><span class="lang-zh" style="display:none">利差監測</span></h4>
-          <div class="chart-note green"><span class="lang-en">Current Spread: +2.44%</span><span class="lang-zh" style="display:none">當前利差：+2.44%</span></div>
-          <div id="chart-r-yield-spread" style="height:180px;"></div>
+          <div class="chart-meta green"><span class="lang-en">Current Spread: +2.44%</span><span class="lang-zh" style="display:none">當前利差：+2.44%</span></div>
+          <div id="chart-r-yield-spread" style="height:180px;min-height:180px;"></div>
         </div>
-        <div class="chart-inline">
+        <div class="report-chart-card">
           <h4><span class="lang-en">Demand vs Supply Mismatch</span><span class="lang-zh" style="display:none">需求 vs 供給錯配</span></h4>
-          <div class="chart-note orange"><span class="lang-en">53% of buyers vs 18% of supply below RM300k</span><span class="lang-zh" style="display:none">53%買家需求 vs 僅18%供給低於30萬</span></div>
-          <div id="chart-r-mismatch" style="height:180px;"></div>
+          <div class="chart-meta orange"><span class="lang-en">53% of buyers vs 18% of supply below RM300k</span><span class="lang-zh" style="display:none">53%買家需求 vs 僅18%供給低於30萬</span></div>
+          <div id="chart-r-mismatch" style="height:180px;min-height:180px;"></div>
         </div>
-        <div class="chart-inline">
+        <div class="report-chart-card">
           <h4><span class="lang-en">Completion Wave vs Absorption</span><span class="lang-zh" style="display:none">完工交屋潮 vs 吸收量</span></h4>
-          <div class="chart-note orange"><span class="lang-en">Supply peak 2026–2027</span><span class="lang-zh" style="display:none">供給高峰2026至2027年</span></div>
-          <div id="chart-r-wave" style="height:180px;"></div>
+          <div class="chart-meta orange"><span class="lang-en">Supply peak 2026–2027</span><span class="lang-zh" style="display:none">供給高峰2026至2027年</span></div>
+          <div id="chart-r-wave" style="height:180px;min-height:180px;"></div>
         </div>
       </div>
 
@@ -142,13 +145,13 @@
       <div class="chart-inline">
         <h4><span class="lang-en">Annual Supply Pipeline</span><span class="lang-zh" style="display:none">每年推案與完工概況</span></h4>
         <div class="chart-note orange"><span class="lang-en">2024 starts of 106,236 will complete 2026–2028</span><span class="lang-zh" style="display:none">2024年開工的106,236戶將在2026至2028年完工</span></div>
-        <div id="chart-r-supply" style="height:200px;"></div>
+        <div id="chart-r-supply" style="height:200px;min-height:180px;"></div>
       </div>
 
       <div class="chart-inline">
         <h4><span class="lang-en">Overhang Forecast 2025–2029</span><span class="lang-zh" style="display:none">待售餘屋預測 2025–2029年</span></h4>
         <div class="chart-note orange"><span class="lang-en">Peak ~47,000 units in 2027 · Relief from 2028</span><span class="lang-zh" style="display:none">2027年高峰約47,000套 · 2028年起緩解</span></div>
-        <div id="chart-r-oh-forecast" style="height:260px;"></div>
+        <div id="chart-r-oh-forecast" style="height:260px;min-height:180px;"></div>
         <div class="insight-box" style="margin-top:10px;">
           <div class="lang-en">Base case (absorption 85,000/yr): overhang peaks at ~47,000 units in 2027, normalising to ~14,000 by 2029. Bull case (90,000/yr): peak ~42,000, clears faster to ~8,000. Bear case (75,000/yr): peak ~57,000, still elevated at ~28,000 in 2029.</div>
           <div class="lang-zh" style="display:none">基本情境（年均吸收85,000套）：待售餘屋在2027年高峰約47,000套，2029年回落至約14,000套。樂觀情境（吸收90,000套）：高峰約42,000套，2029年降至約8,000套。保守情境（吸收75,000套）：高峰約57,000套，2029年仍達28,000套。</div>
@@ -175,7 +178,7 @@
       <div class="chart-inline">
         <h4><span class="lang-en">New Launch Take-up Rate Q3 2025</span><span class="lang-zh" style="display:none">新推案即時去化率 2025年Q3</span></h4>
         <div class="chart-note orange"><span class="lang-en">High-rise: only 5.1% sold on launch day</span><span class="lang-zh" style="display:none">高層住宅：推出當日僅5.1%售出</span></div>
-        <div id="chart-r-takeup" style="height:180px;"></div>
+        <div id="chart-r-takeup" style="height:180px;min-height:180px;"></div>
       </div>
 
       <h2><span class="lang-en">VALUATION: TWO FRAMEWORKS, TWO CONCLUSIONS</span><span class="lang-zh" style="display:none">估值：兩個框架，兩個結論</span></h2>
@@ -197,7 +200,7 @@
       <div class="chart-inline">
         <h4><span class="lang-en">KL vs Asia Pacific Price-to-Rent</span><span class="lang-zh" style="display:none">吉隆坡 vs 亞太城市房價租金比</span></h4>
         <div class="chart-note green"><span class="lang-en">Lower = better value for buyers. KL and Ho Chi Minh are the clear standouts in Asia.</span><span class="lang-zh" style="display:none">數值越低代表買家越划算。吉隆坡和胡志明市是亞洲最具相對價值的市場。</span></div>
-        <div id="chart-r-apac" style="height:280px;"></div>
+        <div id="chart-r-apac" style="height:280px;min-height:180px;"></div>
       </div>
 
       <h2><span class="lang-en">KUALA LUMPUR: CORRECTION AND OPPORTUNITY</span><span class="lang-zh" style="display:none">吉隆坡：修正即機會</span></h2>
@@ -222,7 +225,7 @@
       <div class="chart-inline">
         <h4><span class="lang-en">KL Zone Average PSF</span><span class="lang-zh" style="display:none">吉隆坡三區平均呎價</span></h4>
         <div class="chart-note green"><span class="lang-en">Zone 2 Mid Valley/OKR — best risk-reward in KL</span><span class="lang-zh" style="display:none">第二區中谷/舊巴生路——吉隆坡最佳風險回報區段</span></div>
-        <div id="chart-r-zone" style="height:200px;"></div>
+        <div id="chart-r-zone" style="height:200px;min-height:180px;"></div>
       </div>
 
       <h2><span class="lang-en">PENANG: THE INDUSTRIAL THESIS</span><span class="lang-zh" style="display:none">檳城：工業驅動的房市論點</span></h2>
@@ -243,7 +246,7 @@
       <div class="chart-inline">
         <h4><span class="lang-en">Penang Manufacturing FDI</span><span class="lang-zh" style="display:none">檳城製造業外資</span></h4>
         <div class="chart-note green"><span class="lang-en">+150% YoY in H1 2025 — Malaysia's top manufacturing FDI destination</span><span class="lang-zh" style="display:none">2025年上半年年增150%——馬來西亞首要製造業外資目的地</span></div>
-        <div id="chart-r-fdi" style="height:180px;"></div>
+        <div id="chart-r-fdi" style="height:180px;min-height:180px;"></div>
       </div>
 
       <h2><span class="lang-en">INFRASTRUCTURE CATALYSTS</span><span class="lang-zh" style="display:none">基礎建設催化劑</span></h2>
@@ -345,7 +348,7 @@
     allCharts.push(c);
     c.setOption({
       tooltip: baseTooltip,
-      grid: { left:40, right:10, top:30, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','23Q1','23Q3','24Q1','24Q3','25Q1','25Q3'], axisLabel:{ color:C.muted, fontSize:8 } }),
       yAxis: mkAxis({ type:'value', min:1, max:6, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
       series: [
@@ -362,7 +365,7 @@
     c.setOption({
       tooltip: baseTooltip,
       legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u9700\u6c42%':'Demand %', lang==='zh'?'\u4f9b\u7d66%':'Supply %'], textStyle:{fontSize:8,color:C.muted} }),
-      grid: { left:35, right:10, top:30, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:labels, axisLabel:{fontSize:8,color:C.muted} }),
       yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:'{value}%'} }),
       series: [
@@ -378,7 +381,7 @@
     c.setOption({
       tooltip: baseTooltip,
       legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u5b8c\u5de5\u91cf':'Completions', lang==='zh'?'\u5438\u6536\u91cf':'Absorption'], textStyle:{fontSize:8,color:C.muted} }),
-      grid: { left:40, right:10, top:30, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:['2021','2022','2023','2024','2026E','2027E'], axisLabel:{fontSize:8,color:C.muted} }),
       yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
       series: [
@@ -395,7 +398,7 @@
     c.setOption({
       tooltip: baseTooltip,
       legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u898f\u5283\u91cf':'Planned', lang==='zh'?'\u958b\u5de5\u6236\u6578':'Starts', lang==='zh'?'\u5b8c\u5de5\u91cf':'Completions'] }),
-      grid: { left:50, right:15, top:35, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024',lastLabel], axisLabel:{fontSize:9,color:C.muted} }),
       yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
       series: [
@@ -412,7 +415,7 @@
     c.setOption({
       tooltip: baseTooltip,
       legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u6b77\u53f2':'Historical', lang==='zh'?'\u6a02\u89c0':'Bull', lang==='zh'?'\u57fa\u672c':'Base', lang==='zh'?'\u4fdd\u5b88':'Bear'] }),
-      grid: { left:50, right:15, top:35, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:['2023','2024H1','25*','26E','27E','28E','29E'], axisLabel:{fontSize:9,color:C.muted,rotate:0,interval:0} }),
       yAxis: mkAxis({ type:'value', min:0, axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
       series: [
@@ -430,7 +433,7 @@
     var labels = lang==='zh' ? ['\u6709\u5730\u4f4f\u5b85','\u9ad8\u5c64\u4f4f\u5b85'] : ['Landed','High-Rise'];
     c.setOption({
       tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
-      grid: { left:40, right:10, top:15, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:labels }),
       yAxis: mkAxis({ type:'value', max:20, axisLabel:{fontSize:9,color:C.muted, formatter:'{value}%'} }),
       series: [{
@@ -475,7 +478,7 @@
       : ['Zone 1\nKLCC/BB','Zone 2\nMid Valley/OKR','Zone 3\nOuter Ring'];
     c.setOption({
       tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
-      grid: { left:50, right:15, top:15, bottom:30, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:labels }),
       yAxis: mkAxis({ type:'value', min:0, axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return 'RM '+v.toLocaleString();}} }),
       series: [{
@@ -497,7 +500,7 @@
     var lastLabel = lang==='zh' ? '2025\u4e0a\u534a\u5e74' : '2025 H1';
     c.setOption({
       tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
-      grid: { left:40, right:10, top:15, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:['2021','2022','2023','2024',lastLabel], axisLabel:{fontSize:9,color:C.muted} }),
       yAxis: mkAxis({ type:'value', min:0 }),
       series: [{

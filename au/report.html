@@ -25,10 +25,13 @@
     .chart-note.green{color:#16a34a}
     .chart-note.orange{color:#d97706}
     .chart-note.red{color:#dc2626}
-    .chart-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+    .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
+    .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
+    .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
-    @media(max-width:700px){.chart-row{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
@@ -104,21 +107,21 @@
       </div>
 
       <!-- Exec Summary Mini Charts -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0;">
-        <div class="chart-inline">
+      <div class="report-chart-grid">
+        <div class="report-chart-card">
           <h4><span class="lang-en">Yield vs RBA Rate</span><span class="lang-zh" style="display:none">收益率 vs RBA利率</span></h4>
-          <div class="chart-note orange"><span class="lang-en">Current Spread: +0.84%</span><span class="lang-zh" style="display:none">當前利差：+0.84%</span></div>
-          <div id="chart-r-au-yield" style="height:180px;"></div>
+          <div class="chart-meta orange"><span class="lang-en">Current Spread: +0.84%</span><span class="lang-zh" style="display:none">當前利差：+0.84%</span></div>
+          <div id="chart-r-au-yield" style="height:180px;min-height:180px;"></div>
         </div>
-        <div class="chart-inline">
+        <div class="report-chart-card">
           <h4><span class="lang-en">National Vacancy Trend</span><span class="lang-zh" style="display:none">全國空置率趨勢</span></h4>
-          <div class="chart-note red"><span class="lang-en">1.7% &mdash; well below equilibrium</span><span class="lang-zh" style="display:none">1.7%——遠低於均衡水準</span></div>
-          <div id="chart-r-au-vacancy" style="height:180px;"></div>
+          <div class="chart-meta red"><span class="lang-en">1.7% &mdash; well below equilibrium</span><span class="lang-zh" style="display:none">1.7%——遠低於均衡水準</span></div>
+          <div id="chart-r-au-vacancy" style="height:180px;min-height:180px;"></div>
         </div>
-        <div class="chart-inline">
+        <div class="report-chart-card">
           <h4><span class="lang-en">National Weekly Rent</span><span class="lang-zh" style="display:none">全國週租金趨勢</span></h4>
-          <div class="chart-note orange"><span class="lang-en">$627/wk &mdash; +7.3% YoY</span><span class="lang-zh" style="display:none">$627/週——年增7.3%</span></div>
-          <div id="chart-r-au-rent" style="height:180px;"></div>
+          <div class="chart-meta orange"><span class="lang-en">$627/wk &mdash; +7.3% YoY</span><span class="lang-zh" style="display:none">$627/週——年增7.3%</span></div>
+          <div id="chart-r-au-rent" style="height:180px;min-height:180px;"></div>
         </div>
       </div>
 
@@ -137,7 +140,7 @@
       <div class="chart-inline">
         <h4><span class="lang-en">Housing Starts &amp; Completions</span><span class="lang-zh" style="display:none">住宅開工與竣工趨勢</span></h4>
         <div class="chart-note red"><span class="lang-en">2025: 163K completions &mdash; 32% below target</span><span class="lang-zh" style="display:none">2025年：竣工16.3萬套——低於目標32%</span></div>
-        <div id="chart-r-au-starts" style="height:220px;"></div>
+        <div id="chart-r-au-starts" style="height:220px;min-height:180px;"></div>
       </div>
 
       <h2><span class="lang-en">DEMAND</span><span class="lang-zh" style="display:none">需求面</span></h2>
@@ -167,7 +170,7 @@
       <div class="chart-inline">
         <h4><span class="lang-en">Years to Own &mdash; Capital Cities</span><span class="lang-zh" style="display:none">購房年數——首府城市</span></h4>
         <div class="chart-note red"><span class="lang-en">Sydney 10.2 years &mdash; severely unaffordable</span><span class="lang-zh" style="display:none">雪梨10.2年——嚴重不可負擔</span></div>
-        <div id="chart-r-au-afford" style="height:280px;"></div>
+        <div id="chart-r-au-afford" style="height:280px;min-height:180px;"></div>
       </div>
 
       <h2><span class="lang-en">SYDNEY</span><span class="lang-zh" style="display:none">雪梨</span></h2>
@@ -279,7 +282,7 @@
     allCharts.push(c);
     c.setOption({
       tooltip: baseTooltip,
-      grid: { left:40, right:10, top:30, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024','2025','2026'], axisLabel:{ color:C.muted, fontSize:8 } }),
       yAxis: mkAxis({ type:'value', min:0, max:6, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
       series: [
@@ -294,7 +297,7 @@
     allCharts.push(c);
     c.setOption({
       tooltip: baseTooltip,
-      grid: { left:40, right:10, top:15, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024','2025','2026'], axisLabel:{ color:C.muted, fontSize:8 } }),
       yAxis: mkAxis({ type:'value', min:0, max:4, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
       series: [{
@@ -320,7 +323,7 @@
     allCharts.push(c);
     c.setOption({
       tooltip: baseTooltip,
-      grid: { left:40, right:10, top:15, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024','2025','2026'], axisLabel:{ color:C.muted, fontSize:8 } }),
       yAxis: mkAxis({ type:'value', min:350, max:700, axisLabel:{ color:C.muted, fontSize:9, formatter:'${value}' } }),
       series: [{
@@ -345,7 +348,7 @@
     c.setOption({
       tooltip: baseTooltip,
       legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'開工':'Starts', lang==='zh'?'竣工':'Completions', lang==='zh'?'年度目標':'Annual Target'] }),
-      grid: { left:50, right:15, top:35, bottom:25, containLabel:true },
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:yrs, axisLabel:{ fontSize:9, color:C.muted } }),
       yAxis: mkAxis({ type:'value', min:100, max:260, axisLabel:{ fontSize:9, color:C.muted, formatter:function(v){return fmtNum(v);} } }),
       series: [
