@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Gold Coast Deep Dive | Australia Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../tw/tw.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+
+<header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector">
+    <button class="market-btn" onclick="toggleMarketMenu()">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span> ▾</button>
+    <div class="market-dropdown" id="marketDropdown">
+      <a href="../index.html">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="../tw/index.html">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+      <a href="../jp/index.html">🇯🇵 <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a>
+      <a href="index.html" class="active">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a>
+    </div>
+  </div>
+  <nav>
+    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="sydney.html"><span class="lang-en">Sydney</span><span class="lang-zh" style="display:none">雪梨</span></a>
+    <a href="melbourne.html"><span class="lang-en">Melbourne</span><span class="lang-zh" style="display:none">墨爾本</span></a>
+    <a href="brisbane.html"><span class="lang-en">Brisbane</span><span class="lang-zh" style="display:none">布里斯本</span></a>
+    <a href="goldcoast.html" class="active"><span class="lang-en">Gold Coast</span><span class="lang-zh" style="display:none">黃金海岸</span></a>
+  </nav>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <span class="opr-badge">RBA: 3.85% ▲</span>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="sydney.html"><span class="lang-en">Sydney</span><span class="lang-zh" style="display:none">雪梨</span></a>
+  <a href="melbourne.html"><span class="lang-en">Melbourne</span><span class="lang-zh" style="display:none">墨爾本</span></a>
+  <a href="brisbane.html"><span class="lang-en">Brisbane</span><span class="lang-zh" style="display:none">布里斯本</span></a>
+  <a href="goldcoast.html" class="active"><span class="lang-en">Gold Coast</span><span class="lang-zh" style="display:none">黃金海岸</span></a>
+  <div class="mobile-meta">
+    <span class="opr-badge">RBA: 3.85% ▲</span>
+    <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  </div>
+</div>
+
+<main class="container">
+  <div class="page-header">
+    <span class="updated"><span class="lang-en">LAST UPDATED: Q4 2024</span><span class="lang-zh" style="display:none">最後更新：2024年Q4</span></span>
+    <h1><span class="lang-en">Gold Coast &mdash; Deep Dive</span><span class="lang-zh" style="display:none">黃金海岸深度分析</span></h1>
+    <p class="subtitle"><span class="lang-en">Lifestyle Premium and Infrastructure Growth</span><span class="lang-zh" style="display:none">生活方式溢價與基礎建設成長</span></p>
+  </div>
+
+  <div class="section-label"><span class="lang-en">KEY METRICS</span><span class="lang-zh" style="display:none">關鍵指標</span></div>
+  <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
+    <div class="kpi-card green">
+      <div class="kpi-label"><span class="lang-en">MEDIAN HOUSE PRICE</span><span class="lang-zh" style="display:none">房屋中位價</span></div>
+      <div class="kpi-value">A$1.17M</div>
+      <span class="kpi-badge badge-green"><span class="lang-en">+9&ndash;12% YoY</span><span class="lang-zh" style="display:none">年增+9&ndash;12%</span></span>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label"><span class="lang-en">WEEKLY RENT (HOUSES)</span><span class="lang-zh" style="display:none">每週租金（獨棟）</span></div>
+      <div class="kpi-value">A$780</div>
+      <span class="kpi-badge badge-green"><span class="lang-en">Strong growth</span><span class="lang-zh" style="display:none">強勁成長</span></span>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label"><span class="lang-en">GROSS YIELD</span><span class="lang-zh" style="display:none">毛收益率</span></div>
+      <div class="kpi-value"><span class="lang-en">4.3% / 5.0%</span><span class="lang-zh" style="display:none">4.3% / 5.0%</span></div>
+      <span class="kpi-badge badge-green"><span class="lang-en">Houses / Units</span><span class="lang-zh" style="display:none">獨棟 / 公寓</span></span>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">VACANCY RATE</span><span class="lang-zh" style="display:none">空置率</span></div>
+      <div class="kpi-value">1.1%</div>
+      <span class="kpi-badge badge-orange"><span class="lang-en">Tight market</span><span class="lang-zh" style="display:none">緊張市場</span></span>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label"><span class="lang-en">LIGHT RAIL STAGE 3</span><span class="lang-zh" style="display:none">輕軌第三期</span></div>
+      <div class="kpi-value"><span class="lang-en">Underway</span><span class="lang-zh" style="display:none">進行中</span></div>
+      <span class="kpi-badge badge-green"><span class="lang-en">Burleigh extension</span><span class="lang-zh" style="display:none">伯利角延伸</span></span>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label"><span class="lang-en">QLD NET MIGRATION</span><span class="lang-zh" style="display:none">昆州淨移民</span></div>
+      <div class="kpi-value">104,842</div>
+      <span class="kpi-badge badge-green"><span class="lang-en">Annual inflow</span><span class="lang-zh" style="display:none">年度流入</span></span>
+    </div>
+  </div>
+
+  <div class="section-label"><span class="lang-en">THREE ZONES</span><span class="lang-zh" style="display:none">三大分區</span></div>
+  <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
+    <div class="micro-card">
+      <h4><span class="lang-en">Surfers Paradise / Main Beach</span><span class="lang-zh" style="display:none">衝浪者天堂／主海灘</span></h4>
+      <div class="kpi-value" style="font-size:18px;">A$800K&ndash;1.5M</div>
+      <p style="font-size:12px;color:#5a7a9a;margin-top:6px;"><span class="lang-en">Premium beachfront units and lifestyle apartments. Tourist and short-stay rental demand. Iconic Gold Coast addresses.</span><span class="lang-zh" style="display:none">頂級海濱公寓與生活方式住宅。旅遊及短租需求。黃金海岸標誌性地段。</span></p>
+    </div>
+    <div class="micro-card">
+      <h4><span class="lang-en">Southport / Bundall</span><span class="lang-zh" style="display:none">南港／邦德爾</span></h4>
+      <div class="kpi-value" style="font-size:18px;">A$700K&ndash;1.0M</div>
+      <p style="font-size:12px;color:#5a7a9a;margin-top:6px;"><span class="lang-en">Gold Coast's CBD and commercial hub. Stable demand from professionals. Light rail connectivity boosts appeal.</span><span class="lang-zh" style="display:none">黃金海岸CBD及商業中心。專業人士穩定需求。輕軌連接提升吸引力。</span></p>
+    </div>
+    <div class="micro-card">
+      <h4><span class="lang-en">Northern (Coomera, Pimpama)</span><span class="lang-zh" style="display:none">北區（庫梅拉、平帕馬）</span></h4>
+      <div class="kpi-value" style="font-size:18px;">A$550&ndash;750K</div>
+      <p style="font-size:12px;color:#5a7a9a;margin-top:6px;"><span class="lang-en">Highest yields on the Gold Coast. New master-planned communities, Dreamworld corridor, and strong family demand.</span><span class="lang-zh" style="display:none">黃金海岸最高收益率區域。新規劃社區、夢幻世界走廊及強勁家庭需求。</span></p>
+    </div>
+  </div>
+
+  <div class="section-label"><span class="lang-en">CHARTS</span><span class="lang-zh" style="display:none">圖表</span></div>
+  <div class="chart-grid two-col">
+    <div class="chart-card">
+      <h3><span class="lang-en">Gold Coast Median House Price</span><span class="lang-zh" style="display:none">黃金海岸房屋中位價走勢</span></h3>
+      <p class="chart-subtitle"><span class="lang-en">A$ &middot; 2020&ndash;2025</span><span class="lang-zh" style="display:none">澳幣 &middot; 2020&ndash;2025</span></p>
+      <div style="position:relative;height:260px;"><div id="chartGCPrice" style="width:100%;height:100%"></div></div>
+    </div>
+    <div class="chart-card">
+      <h3><span class="lang-en">Gold Coast Yield by Suburb</span><span class="lang-zh" style="display:none">黃金海岸各區收益率</span></h3>
+      <p class="chart-subtitle"><span class="lang-en">Gross Rental Yield %</span><span class="lang-zh" style="display:none">毛租金收益率 %</span></p>
+      <div style="position:relative;height:280px;"><div id="chartGCYield" style="width:100%;height:100%"></div></div>
+    </div>
+  </div>
+
+  <div class="section-label"><span class="lang-en">SUMMARY</span><span class="lang-zh" style="display:none">總結</span></div>
+  <div class="kpi-grid" style="grid-template-columns:repeat(2,1fr);">
+    <div class="summary-card" style="border-left:4px solid #16a34a;">
+      <h4><span class="lang-en">Lifestyle Migration</span><span class="lang-zh" style="display:none">生活方式移民</span></h4>
+      <p><span class="lang-en">Queensland's net migration of 104,842 annually is heavily concentrated on the Gold Coast. Remote work trends and lifestyle preferences continue to drive interstate relocation.</span><span class="lang-zh" style="display:none">昆士蘭年度淨移民104,842人大量集中於黃金海岸。遠端工作趨勢與生活方式偏好持續推動州際遷移。</span></p>
+    </div>
+    <div class="summary-card" style="border-left:4px solid #16a34a;">
+      <h4><span class="lang-en">Yield Advantage</span><span class="lang-zh" style="display:none">收益率優勢</span></h4>
+      <p><span class="lang-en">At 4.3% houses and 5.0% units, Gold Coast yields significantly outperform Sydney and Melbourne. Northern suburbs like Coomera offer the best income returns.</span><span class="lang-zh" style="display:none">獨棟4.3%與公寓5.0%的收益率顯著優於雪梨和墨爾本。庫梅拉等北區提供最佳收入回報。</span></p>
+    </div>
+    <div class="summary-card" style="border-left:4px solid #2563eb;">
+      <h4><span class="lang-en">Light Rail Catalyst</span><span class="lang-zh" style="display:none">輕軌催化劑</span></h4>
+      <p><span class="lang-en">Stage 3 extension to Burleigh Heads will connect more southern suburbs to the network, lifting property values along the corridor as seen in Stages 1-2.</span><span class="lang-zh" style="display:none">第三期延伸至伯利角將連接更多南部郊區，如第一、二期所見沿線房產升值。</span></p>
+    </div>
+    <div class="summary-card" style="border-left:4px solid #d97706;">
+      <h4><span class="lang-en">Tourism Exposure</span><span class="lang-zh" style="display:none">旅遊曝險</span></h4>
+      <p><span class="lang-en">Heavy reliance on tourism and short-stay rentals creates cyclical risk. Surfers Paradise units are particularly exposed to regulatory changes in short-term letting.</span><span class="lang-zh" style="display:none">高度依賴旅遊與短租創造週期性風險。衝浪者天堂公寓尤其面臨短租法規變動風險。</span></p>
+    </div>
+  </div>
+
+  <div class="source-footer">
+    <span class="lang-en">CoreLogic &middot; Domain &middot; SQM Research &middot; Queensland Government &middot; RBA Q4 2024<br><em>Not investment advice.</em></span>
+    <span class="lang-zh" style="display:none">CoreLogic &middot; Domain &middot; SQM Research &middot; 昆士蘭州政府 &middot; RBA 2024年Q4<br><em>非投資建議。</em></span>
+  </div>
+</main>
+
+<footer class="footer">A project by <span>InvestMQuest</span></footer>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9',text:'#1e3a5f'};
+function fmtAUD(v){if(v>=1000000)return 'A$'+(v/1000000).toFixed(2)+'M';if(v>=1000)return 'A$'+(v/1000).toFixed(0)+'K';return 'A$'+v;}
+function fmtAUDShort(v){if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return(v/1000).toFixed(0)+'K';return v;}
+function fmtK(v){if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return(v/1000).toFixed(0)+'K';return v;}
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}initCharts(lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+
+var allCharts=[];
+function initCharts(lang){
+  allCharts.length=0;
+
+  /* chartGCPrice — line with area */
+  var c1=echarts.init(document.getElementById('chartGCPrice'));allCharts.push(c1);
+  var priceLabels=['2020','2021','2022','2023','2024','2025'];
+  var priceData=[640000,810000,920000,980000,1060000,1170000];
+  c1.setOption({
+    tooltip:baseTooltip,grid:baseGrid,
+    xAxis:mkAxis({type:'category',data:priceLabels}),
+    yAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return fmtAUDShort(v);}})}),
+    series:[{type:'line',data:priceData,lineStyle:{color:C.green,width:2},itemStyle:{color:C.green},areaStyle:{color:'rgba(22,163,74,0.08)'},smooth:0.2,symbol:'circle',symbolSize:6,
+      markPoint:{data:[{coord:['2025',1170000],symbol:'pin',symbolSize:50,label:{formatter:fmtAUD(1170000),fontSize:9,lineHeight:13},itemStyle:{color:C.green}}]}
+    }]
+  });
+
+  /* chartGCYield — horizontal bar */
+  var c2=echarts.init(document.getElementById('chartGCYield'));allCharts.push(c2);
+  var yieldLabels=['Main Beach (Units)','Surfers Paradise (Units)','Southport (Units)','Northern (Houses)','Ashmore (Units)'];
+  var yieldData=[3.2,4.5,4.8,5.5,5.3];
+  c2.setOption({
+    tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+': '+p[0].value+'%';}}),
+    grid:{left:140,right:50,top:20,bottom:20,containLabel:false},
+    xAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return v+'%';}})}),
+    yAxis:mkAxis({type:'category',data:yieldLabels,axisLabel:{color:C.navy,fontFamily:'Inter',fontSize:11}}),
+    series:[{type:'bar',data:yieldData.map(function(v){return{value:v,itemStyle:{color:v>=5?C.green:v>=4?C.navy:C.orange,borderRadius:[0,4,4,0]}};}),barMaxWidth:22,label:{show:true,position:'right',formatter:function(p){return p.value+'%';},fontSize:10,fontFamily:'JetBrains Mono'}}]
+  });
+}
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+</script>
+</body>
+</html>
