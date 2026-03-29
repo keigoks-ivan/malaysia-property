@@ -3,41 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Sydney Deep Dive | Australia Property Monitor</title>
-<meta name="color-scheme" content="light">
-<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
-.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
-</style>
+<title>Sydney | Australia Property Monitor</title>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../tw/tw.css">
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}
+.navbar{background:#fff!important}
+.kpi-card,.chart-card,.summary-card,.micro-card{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}
+.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}
+.market-btn:hover{background:#dde8f2}
+.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.1);min-width:155px;z-index:100}
+.market-dropdown.open{display:block}
+.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}
+.market-dropdown a:hover{background:#f4f7fc}
+.market-dropdown a.active{font-weight:600}
+</style>
 </head>
 <body>
 
 <header class="navbar">
   <a href="../index.html" class="logo">PROPERTY MONITOR</a>
   <div class="market-selector">
-    <button class="market-btn" onclick="toggleMarketMenu()">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span> ▾</button>
+    <button class="market-btn" onclick="toggleMarketMenu()">
+      🇦🇺
+      <span class="lang-en">Australia</span>
+      <span class="lang-zh" style="display:none">澳洲</span>
+      ▾
+    </button>
     <div class="market-dropdown" id="marketDropdown">
-      <a href="../index.html">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
-      <a href="../tw/index.html">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
-      <a href="../jp/index.html">🇯🇵 <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a>
-      <a href="index.html" class="active">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a>
-      <a href="../nz/index.html">🇳🇿 <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a>
-      <a href="../uk/index.html">🇬🇧 <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a>
+      <a href="../index.html"
+>
+        🇲🇾
+        <span class="lang-en">Malaysia</span>
+        <span class="lang-zh" style="display:none">馬來西亞</span>
+      </a>
+      <a href="../tw/index.html"
+>
+        🇹🇼
+        <span class="lang-en">Taiwan</span>
+        <span class="lang-zh" style="display:none">台灣</span>
+      </a>
+      <a href="../jp/index.html"
+>
+        🇯🇵
+        <span class="lang-en">Japan</span>
+        <span class="lang-zh" style="display:none">日本</span>
+      </a>
+      <a href="../au/index.html"
+class="active">
+        🇦🇺
+        <span class="lang-en">Australia</span>
+        <span class="lang-zh" style="display:none">澳洲</span>
+      </a>
+      <a href="../nz/index.html"
+>
+        🇳🇿
+        <span class="lang-en">New Zealand</span>
+        <span class="lang-zh" style="display:none">紐西蘭</span>
+      </a>
+      <a href="../uk/index.html"
+>
+        🇬🇧
+        <span class="lang-en">United Kingdom</span>
+        <span class="lang-zh" style="display:none">英國</span>
+      </a>
     </div>
   </div>
   <nav>
-    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
-    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
-    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
-    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
-    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
-    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
-    <a href="sydney.html" class="active"><span class="lang-en">Sydney</span><span class="lang-zh" style="display:none">雪梨</span></a>
-    <a href="melbourne.html"><span class="lang-en">Melbourne</span><span class="lang-zh" style="display:none">墨爾本</span></a>
-    <a href="brisbane.html"><span class="lang-en">Brisbane</span><span class="lang-zh" style="display:none">布里斯本</span></a>
-    <a href="goldcoast.html"><span class="lang-en">Gold Coast</span><span class="lang-zh" style="display:none">黃金海岸</span></a>
+    <a href="report.html">
+      <span class="lang-en">Report</span>
+      <span class="lang-zh" style="display:none">報告</span>
+    </a>
+    <a href="index.html">
+      <span class="lang-en">Dashboard</span>
+      <span class="lang-zh" style="display:none">總覽</span>
+    </a>
+    <a href="supply.html">
+      <span class="lang-en">Supply</span>
+      <span class="lang-zh" style="display:none">供給</span>
+    </a>
+    <a href="demand.html">
+      <span class="lang-en">Demand</span>
+      <span class="lang-zh" style="display:none">需求</span>
+    </a>
+    <a href="valuation.html">
+      <span class="lang-en">Valuation</span>
+      <span class="lang-zh" style="display:none">估值</span>
+    </a>
+    <a href="risk.html">
+      <span class="lang-en">Risk</span>
+      <span class="lang-zh" style="display:none">風險</span>
+    </a>
+    <a href="sydney.html" class="active">
+      <span class="lang-en">Sydney</span>
+      <span class="lang-zh" style="display:none">雪梨</span>
+    </a>
+    <a href="melbourne.html">
+      <span class="lang-en">Melbourne</span>
+      <span class="lang-zh" style="display:none">墨爾本</span>
+    </a>
+    <a href="brisbane.html">
+      <span class="lang-en">Brisbane</span>
+      <span class="lang-zh" style="display:none">布里斯本</span>
+    </a>
+    <a href="goldcoast.html">
+      <span class="lang-en">Gold Coast</span>
+      <span class="lang-zh" style="display:none">黃金海岸</span>
+    </a>
   </nav>
   <div class="lang-switcher">
     <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
@@ -46,32 +120,67 @@
   <span class="opr-badge">RBA: 3.85% ▲</span>
   <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
 </header>
+
 <div class="mobile-menu">
-  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
-  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
-  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
-  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
-  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
-  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
-  <a href="sydney.html" class="active"><span class="lang-en">Sydney</span><span class="lang-zh" style="display:none">雪梨</span></a>
-  <a href="melbourne.html"><span class="lang-en">Melbourne</span><span class="lang-zh" style="display:none">墨爾本</span></a>
-  <a href="brisbane.html"><span class="lang-en">Brisbane</span><span class="lang-zh" style="display:none">布里斯本</span></a>
-  <a href="goldcoast.html"><span class="lang-en">Gold Coast</span><span class="lang-zh" style="display:none">黃金海岸</span></a>
+  <a href="report.html">
+    <span class="lang-en">Report</span>
+    <span class="lang-zh" style="display:none">報告</span>
+  </a>
+  <a href="index.html">
+    <span class="lang-en">Dashboard</span>
+    <span class="lang-zh" style="display:none">總覽</span>
+  </a>
+  <a href="supply.html">
+    <span class="lang-en">Supply</span>
+    <span class="lang-zh" style="display:none">供給</span>
+  </a>
+  <a href="demand.html">
+    <span class="lang-en">Demand</span>
+    <span class="lang-zh" style="display:none">需求</span>
+  </a>
+  <a href="valuation.html">
+    <span class="lang-en">Valuation</span>
+    <span class="lang-zh" style="display:none">估值</span>
+  </a>
+  <a href="risk.html">
+    <span class="lang-en">Risk</span>
+    <span class="lang-zh" style="display:none">風險</span>
+  </a>
+  <a href="sydney.html">
+    <span class="lang-en">Sydney</span>
+    <span class="lang-zh" style="display:none">雪梨</span>
+  </a>
+  <a href="melbourne.html">
+    <span class="lang-en">Melbourne</span>
+    <span class="lang-zh" style="display:none">墨爾本</span>
+  </a>
+  <a href="brisbane.html">
+    <span class="lang-en">Brisbane</span>
+    <span class="lang-zh" style="display:none">布里斯本</span>
+  </a>
+  <a href="goldcoast.html">
+    <span class="lang-en">Gold Coast</span>
+    <span class="lang-zh" style="display:none">黃金海岸</span>
+  </a>
   <div class="mobile-meta">
-    <span class="opr-badge">RBA: 3.85% ▲</span>
-    <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+    <span class="opr-badge">RBA: 3.85%</span>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+    </div>
   </div>
 </div>
 
 <main class="container">
   <div class="page-header">
-    <span class="updated"><span class="lang-en">LAST UPDATED: Q4 2024</span><span class="lang-zh" style="display:none">最後更新：2024年Q4</span></span>
-    <h1><span class="lang-en">Sydney &mdash; Deep Dive</span><span class="lang-zh" style="display:none">雪梨深度分析</span></h1>
+    <h1>
+      <span class="lang-en">Sydney — Deep Dive</span>
+      <span class="lang-zh" style="display:none">雪梨深度分析</span>
+    </h1>
     <p class="subtitle"><span class="lang-en">Australia's Most Expensive Market</span><span class="lang-zh" style="display:none">澳洲最昂貴的市場</span></p>
   </div>
 
-  <div class="section-label"><span class="lang-en">KEY METRICS</span><span class="lang-zh" style="display:none">關鍵指標</span></div>
-  <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
+  <div class="kpi-grid">
     <div class="kpi-card blue">
       <div class="kpi-label"><span class="lang-en">MEDIAN HOUSE PRICE</span><span class="lang-zh" style="display:none">房屋中位價</span></div>
       <div class="kpi-value">A$1.31M</div>
@@ -84,7 +193,7 @@
     </div>
     <div class="kpi-card orange">
       <div class="kpi-label"><span class="lang-en">GROSS YIELD</span><span class="lang-zh" style="display:none">毛收益率</span></div>
-      <div class="kpi-value"><span class="lang-en">2.9% / 4.0%</span><span class="lang-zh" style="display:none">2.9% / 4.0%</span></div>
+      <div class="kpi-value">2.9% / 4.0%</div>
       <span class="kpi-badge badge-orange"><span class="lang-en">Houses / Units</span><span class="lang-zh" style="display:none">獨棟 / 公寓</span></span>
     </div>
     <div class="kpi-card orange">
@@ -94,122 +203,264 @@
     </div>
     <div class="kpi-card red">
       <div class="kpi-label"><span class="lang-en">AFFORDABILITY</span><span class="lang-zh" style="display:none">可負擔性</span></div>
-      <div class="kpi-value"><span class="lang-en">85 yrs</span><span class="lang-zh" style="display:none">85年</span></div>
+      <div class="kpi-value"></div>
       <span class="kpi-badge badge-red"><span class="lang-en">Median income to buy</span><span class="lang-zh" style="display:none">中位收入購屋年限</span></span>
     </div>
     <div class="kpi-card green">
       <div class="kpi-label"><span class="lang-en">5Y RENT GROWTH</span><span class="lang-zh" style="display:none">五年租金成長</span></div>
       <div class="kpi-value">+42.9%</div>
-      <span class="kpi-badge badge-green"><span class="lang-en">2019&ndash;2024</span><span class="lang-zh" style="display:none">2019&ndash;2024</span></span>
+      <span class="kpi-badge badge-green"><span class="lang-en">2019-2024</span><span class="lang-zh" style="display:none">2019-2024</span></span>
     </div>
   </div>
 
-  <div class="section-label"><span class="lang-en">THREE ZONES</span><span class="lang-zh" style="display:none">三大分區</span></div>
+
+
+  <h2 class="section-heading"><span class="lang-en">Key Zones</span><span class="lang-zh" style="display:none">重點區域</span></h2>
   <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
     <div class="micro-card">
-      <h4><span class="lang-en">Eastern / Inner (Bondi, Surry Hills)</span><span class="lang-zh" style="display:none">東區／內城區（邦迪、薩里山）</span></h4>
-      <div class="kpi-value" style="font-size:18px;">A$2M+</div>
+      <h3><span class="lang-en">Eastern / Inner (Bondi, Surry Hills)</span><span class="lang-zh" style="display:none">東區／內城區（邦迪、薩里山）</span></h3>
       <p style="font-size:12px;color:#5a7a9a;margin-top:6px;"><span class="lang-en">Premium lifestyle suburbs with harbour views and beach access. Trophy houses dominate.</span><span class="lang-zh" style="display:none">頂級生活區，擁有港灣景觀和海灘通道。以豪宅為主。</span></p>
     </div>
     <div class="micro-card">
-      <h4><span class="lang-en">North Shore (Neutral Bay)</span><span class="lang-zh" style="display:none">北岸（中性灣）</span></h4>
-      <div class="kpi-value" style="font-size:18px;">A$2.5M+</div>
+      <h3><span class="lang-en">North Shore (Neutral Bay)</span><span class="lang-zh" style="display:none">北岸（中性灣）</span></h3>
       <p style="font-size:12px;color:#5a7a9a;margin-top:6px;"><span class="lang-en">Family-oriented prestige suburbs. Excellent schools and harbour proximity command top prices.</span><span class="lang-zh" style="display:none">家庭導向頂級地段。優質學校與港灣鄰近性推動最高價位。</span></p>
     </div>
     <div class="micro-card">
-      <h4><span class="lang-en">Western (Parramatta, Penrith)</span><span class="lang-zh" style="display:none">西區（帕拉馬塔、彭里斯）</span></h4>
-      <div class="kpi-value" style="font-size:18px;">A$800K&ndash;1.2M</div>
+      <h3><span class="lang-en">Western (Parramatta, Penrith)</span><span class="lang-zh" style="display:none">西區（帕拉馬塔、彭里斯）</span></h3>
       <p style="font-size:12px;color:#5a7a9a;margin-top:6px;"><span class="lang-en">Growth corridor with improving infrastructure and higher rental yields. First-home buyer territory.</span><span class="lang-zh" style="display:none">成長走廊，基礎建設持續改善，租金收益率較高。首購族熱區。</span></p>
     </div>
   </div>
 
-  <div class="section-label"><span class="lang-en">CHARTS</span><span class="lang-zh" style="display:none">圖表</span></div>
+
+  <h2 class="section-heading"><span class="lang-en">Charts</span><span class="lang-zh" style="display:none">圖表</span></h2>
   <div class="chart-grid two-col">
     <div class="chart-card">
       <h3><span class="lang-en">Sydney Median House Price</span><span class="lang-zh" style="display:none">雪梨房屋中位價走勢</span></h3>
-      <p class="chart-subtitle"><span class="lang-en">A$ &middot; 2019&ndash;2025</span><span class="lang-zh" style="display:none">澳幣 &middot; 2019&ndash;2025</span></p>
-      <div style="position:relative;height:260px;"><div id="chartSydneyPrice" style="width:100%;height:100%"></div></div>
+<p class="chart-subtitle"><span class="lang-en">A$ - 2019-2025</span><span class="lang-zh" style="display:none">澳幣 - 2019-2025</span></p>      <div style="position:relative;height:220px;"><div id="median_house_price" style="width:100%;height:100%"></div></div>
     </div>
     <div class="chart-card">
       <h3><span class="lang-en">Sydney Zone Price Comparison</span><span class="lang-zh" style="display:none">雪梨各區房價比較</span></h3>
-      <p class="chart-subtitle"><span class="lang-en">Median House Price by Zone</span><span class="lang-zh" style="display:none">各區房屋中位價</span></p>
-      <div style="position:relative;height:280px;"><div id="chartSydneyZone" style="width:100%;height:100%"></div></div>
+<p class="chart-subtitle"><span class="lang-en">Median House Price by Zone</span><span class="lang-zh" style="display:none">各區房屋中位價</span></p>      <div style="position:relative;height:220px;"><div id="zone_price_comparison" style="width:100%;height:100%"></div></div>
     </div>
   </div>
 
-  <div class="section-label"><span class="lang-en">SUMMARY</span><span class="lang-zh" style="display:none">總結</span></div>
-  <div class="kpi-grid" style="grid-template-columns:repeat(2,1fr);">
-    <div class="summary-card" style="border-left:4px solid #dc2626;">
-      <h4><span class="lang-en">Affordability Crisis</span><span class="lang-zh" style="display:none">可負擔性危機</span></h4>
-      <p><span class="lang-en">At 85 years of median income to buy a median house, Sydney remains one of the world's least affordable cities. Policy intervention risk remains elevated.</span><span class="lang-zh" style="display:none">以中位收入購買中位房價需85年，雪梨仍為全球最難負擔城市之一。政策干預風險持續偏高。</span></p>
-    </div>
-    <div class="summary-card" style="border-left:4px solid #16a34a;">
-      <h4><span class="lang-en">Rental Strength</span><span class="lang-zh" style="display:none">租賃強勢</span></h4>
-      <p><span class="lang-en">Weekly rents at A$817 are the highest in Australia. Five-year rent growth of +42.9% reflects chronic undersupply and record migration.</span><span class="lang-zh" style="display:none">每週租金A$817為全澳最高。五年租金成長+42.9%反映長期供給不足與創紀錄移民。</span></p>
-    </div>
-    <div class="summary-card" style="border-left:4px solid #d97706;">
-      <h4><span class="lang-en">East-West Divide</span><span class="lang-zh" style="display:none">東西差距</span></h4>
-      <p><span class="lang-en">Eastern Suburbs command 3x the price of Western Sydney. Parramatta's emergence as a second CBD is narrowing this gap over time.</span><span class="lang-zh" style="display:none">東區房價為西雪梨的3倍。帕拉馬塔崛起為第二CBD正逐步縮小此差距。</span></p>
-    </div>
-    <div class="summary-card" style="border-left:4px solid #2563eb;">
-      <h4><span class="lang-en">Yield Strategy</span><span class="lang-zh" style="display:none">收益策略</span></h4>
-      <p><span class="lang-en">Units at 4.0% yield significantly outperform houses at 2.9%. Western Sydney offers the best income returns for investors seeking cash flow.</span><span class="lang-zh" style="display:none">公寓4.0%收益率顯著優於獨棟2.9%。西雪梨為追求現金流投資者提供最佳收入回報。</span></p>
-    </div>
-  </div>
 
-  <div class="source-footer">
-    <span class="lang-en">CoreLogic &middot; Domain &middot; SQM Research &middot; ABS &middot; RBA Q4 2024<br><em>Not investment advice.</em></span>
-    <span class="lang-zh" style="display:none">CoreLogic &middot; Domain &middot; SQM Research &middot; ABS &middot; RBA 2024年Q4<br><em>非投資建議。</em></span>
-  </div>
+
 </main>
 
 <footer class="footer">A project by <span>InvestMQuest</span></footer>
 
 <script>
-var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9',text:'#1e3a5f'};
-function fmtAUD(v){if(v>=1000000)return 'A$'+(v/1000000).toFixed(2)+'M';if(v>=1000)return 'A$'+(v/1000).toFixed(0)+'K';return 'A$'+v;}
-function fmtAUDShort(v){if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return(v/1000).toFixed(0)+'K';return v;}
-function fmtK(v){if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return(v/1000).toFixed(0)+'K';return v;}
-var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
-var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
+var baseText={color:C.muted,fontFamily:'Inter,sans-serif',fontSize:11};
 var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
-var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+var baseLegend={bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
 function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
-function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}initCharts(lang);}
 function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
-document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
-
-var allCharts=[];
-function initCharts(lang){
-  allCharts.length=0;
-
-  /* chartSydneyPrice — line with area */
-  var c1=echarts.init(document.getElementById('chartSydneyPrice'));allCharts.push(c1);
-  var priceLabels=['2019','2020','2021','2022','2023','2024','2025'];
-  var priceData=[870000,870000,1150000,1100000,980000,1120000,1310000];
-  c1.setOption({
-    tooltip:baseTooltip,grid:baseGrid,
-    xAxis:mkAxis({type:'category',data:priceLabels}),
-    yAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return fmtAUDShort(v);}})}),
-    series:[{type:'line',data:priceData,lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},areaStyle:{color:'rgba(30,58,95,0.08)'},smooth:0.2,symbol:'circle',symbolSize:6,
-      markPoint:{data:[{coord:['2025',1310000],symbol:'pin',symbolSize:50,label:{formatter:fmtAUD(1310000),fontSize:9,lineHeight:13},itemStyle:{color:C.navy}}]}
-    }]
-  });
-
-  /* chartSydneyZone — horizontal bar */
-  var c2=echarts.init(document.getElementById('chartSydneyZone'));allCharts.push(c2);
-  var zoneLabels=['Penrith','Parramatta','Inner West','North Shore','Eastern Suburbs','CBD'];
-  var zoneData=[820000,920000,1400000,2100000,2600000,1100000];
-  c2.setOption({
-    tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'}}),
-    grid:{left:110,right:70,top:20,bottom:20,containLabel:false},
-    xAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return fmtAUDShort(v);}})}),
-    yAxis:mkAxis({type:'category',data:zoneLabels,axisLabel:{color:C.navy,fontFamily:'Inter',fontSize:11}}),
-    series:[{type:'bar',data:zoneData.map(function(v){return{value:v,itemStyle:{color:v>=2000000?C.red:v>=1200000?C.orange:C.navy,borderRadius:[0,4,4,0]}};}),barMaxWidth:22,label:{show:true,position:'right',formatter:function(p){return fmtAUD(p.value);},fontSize:10,fontFamily:'JetBrains Mono'}}]
-  });
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector'))document.getElementById('marketDropdown').classList.remove('open');});
+function switchTab(cid,tab){var w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});w.querySelectorAll('.tab-bar button').forEach(function(b){b.classList.remove('active');});var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(function(b){if(b.dataset.tab===tab)b.classList.add('active');});setTimeout(function(){allCharts.forEach(function(c){if(c)c.resize();});},100);}
+function setLang(lang){
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  localStorage.setItem('lang',lang);
+  if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}
+  if(typeof initCharts==='function')initCharts(lang);
 }
+var allCharts=[];
 window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
 window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+function fmtK(v){return v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':v;}
+function fmtRM(v){if(v>=1000000)return'RM '+(v/1000000).toFixed(1)+'M';if(v>=1000)return'RM '+(v/1000).toFixed(0)+'K';return'RM '+v;}
+
+function initCharts(lang){
+  var DATA = {"median_house_price": {"data": [870000, 870000, 1150000, 1100000, 980000, 1120000, 1310000], "id": "chartSydneyPrice", "subtitle_en": "A$ - 2019-2025", "subtitle_zh": "\u6fb3\u5e63 - 2019-2025", "title_en": "Sydney Median House Price", "title_zh": "\u96ea\u68a8\u623f\u5c4b\u4e2d\u4f4d\u50f9\u8d70\u52e2", "type": "area_line", "xAxis": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"]}, "zone_price_comparison": {"data": [820000, 920000, 1400000, 2100000, 2600000, 1100000], "id": "chartSydneyZone", "subtitle_en": "Median House Price by Zone", "subtitle_zh": "\u5404\u5340\u623f\u5c4b\u4e2d\u4f4d\u50f9", "title_en": "Sydney Zone Price Comparison", "title_zh": "\u96ea\u68a8\u5404\u5340\u623f\u50f9\u6bd4\u8f03", "type": "horizontal_bar", "yAxis": ["Penrith", "Parramatta", "Inner West", "North Shore", "Eastern Suburbs", "CBD"]}};
+  var en = lang !== 'zh';
+
+  function initChart(id){
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var c = echarts.init(el);
+    allCharts.push(c);
+    return c;
+  }
+
+  function dsColor(ds, idx){
+    var palette = [C.navy, C.green, C.orange, C.red, C.blue, C.muted];
+    return ds.color || palette[idx % palette.length];
+  }
+
+  function buildLineStyle(ds, idx){
+    var style = { color: dsColor(ds, idx), width: ds.width || 2 };
+    if(ds.lineType) style.type = ds.lineType;
+    return style;
+  }
+
+  function buildMarkLine(cfg){
+    if(!cfg) return undefined;
+    var ml = {
+      silent: true, symbol: 'none',
+      lineStyle: { color: C.red, type: 'dashed', width: 1 },
+      label: { formatter: cfg.label || '', fontSize: 10, color: C.red },
+      data: []
+    };
+    if(cfg.xAxis !== undefined) ml.data.push({ xAxis: cfg.xAxis });
+    if(cfg.yAxis !== undefined) ml.data.push({ yAxis: cfg.yAxis });
+    return ml;
+  }
+
+  function buildMarkPoint(cfg){
+    if(!cfg) return undefined;
+    var items = Array.isArray(cfg) ? cfg : [cfg];
+    var mpData = items.map(function(mp){
+      var d = {};
+      if(mp.type) d.type = mp.type;
+      if(mp.coord) d.coord = mp.coord;
+      if(mp.label) d.label = { formatter: mp.label, fontSize: 9, fontWeight: 'bold' };
+      d.symbolSize = mp.symbolSize || 50;
+      if(mp.color) d.itemStyle = { color: mp.color };
+      else if(mp.type === 'max') d.itemStyle = { color: C.green };
+      else if(mp.type === 'min') d.itemStyle = { color: C.red };
+      return d;
+    });
+    return { data: mpData };
+  }
+
+  /* Iterate over all city charts */
+  Object.keys(DATA).forEach(function(chartId){
+    var info = DATA[chartId];
+
+    var chart = initChart(chartId);
+    if(!chart) return;
+
+    var chartType = (info.type || '').toLowerCase();
+    var isHorizontal = chartType.indexOf('horizontal') >= 0;
+    var hasDualAxis = chartType.indexOf('dual') >= 0 ||
+                      (info.datasets && info.datasets.some(function(ds){ return ds.yAxisIndex === 1; }));
+
+    /* Use localized labels if available */
+    var labels = info.labels;
+    if(en && info.labels_en) labels = info.labels_en;
+    if(!en && info.labels_zh) labels = info.labels_zh;
+
+    var legendNames = (info.datasets || []).map(function(ds){
+      return en ? (ds.name_en || ds.name || '') : (ds.name_zh || ds.name || '');
+    });
+
+    /* Build series */
+    var series = (info.datasets || []).map(function(ds, idx){
+      var name = en ? (ds.name_en || ds.name || '') : (ds.name_zh || ds.name || '');
+      var s = { name: name, type: ds.type || 'line' };
+      var clr = dsColor(ds, idx);
+
+      if(ds.colors && Array.isArray(ds.colors)){
+        s.data = ds.data.map(function(v, i){
+          return { value: v, itemStyle: { color: ds.colors[i], borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] } };
+        });
+      } else if(ds.data && typeof ds.data[0] === 'object' && ds.data[0] !== null && ds.data[0].value !== undefined){
+        s.data = ds.data.map(function(d){
+          return { value: d.value, itemStyle: { color: d.color || clr, borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] } };
+        });
+      } else {
+        s.data = ds.data;
+      }
+
+      if(ds.type === 'bar'){
+        s.barMaxWidth = isHorizontal ? 22 : 55;
+        if(!ds.colors && !ds.color_positive){
+          s.itemStyle = { color: clr, borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] };
+        }
+        if(ds.color_positive){
+          s.itemStyle = {
+            color: function(p){ return p.value >= 0 ? ds.color_positive : (ds.color_negative || C.red); },
+            borderRadius: [3,3,0,0]
+          };
+          s.barMaxWidth = 35;
+          s.label = { show: true, position: 'top', fontFamily: 'JetBrains Mono, monospace', fontSize: 9, formatter: function(p){ return p.value + '%'; } };
+        }
+        if(!ds.color_positive && ds.type === 'bar' && !isHorizontal && idx === 0){
+          s.label = { show: true, position: 'top', fontFamily: 'JetBrains Mono, monospace', fontSize: 10,
+            formatter: function(p){ return typeof p.value === 'number' && p.value >= 1000 ? fmtK(p.value) : p.value; } };
+        }
+        if(isHorizontal){
+          s.label = { show: true, position: 'right', formatter: '{c}', fontSize: 10, fontFamily: 'Inter', fontWeight: 'bold', color: C.navy };
+        }
+      }
+
+      if(ds.type === 'line'){
+        s.lineStyle = buildLineStyle(ds, idx);
+        s.itemStyle = { color: clr };
+        s.symbol = 'circle';
+        s.symbolSize = ds.symbolSize || 6;
+        if(ds.step) s.step = ds.step;
+        if(ds.areaStyle) s.areaStyle = { color: 'rgba(30,58,95,0.08)' };
+        if(ds.smooth !== undefined) s.smooth = ds.smooth;
+        else s.smooth = 0.2;
+        if(ds.yAxisIndex === 1){
+          s.yAxisIndex = 1;
+          s.symbolSize = 8;
+          s.label = { show: true, position: 'bottom', fontFamily: 'JetBrains Mono, monospace', fontSize: 10,
+            formatter: function(p){ return (p.value >= 0 ? '+' : '') + p.value + '%'; } };
+        }
+      }
+
+      if(ds.markPoint) s.markPoint = buildMarkPoint(ds.markPoint);
+      if(ds.markLine) s.markLine = buildMarkLine(ds.markLine);
+      return s;
+    });
+
+    if(info.markLine && series.length > 0){
+      var lastS = series[series.length - 1];
+      if(!lastS.markLine) lastS.markLine = buildMarkLine(info.markLine);
+    }
+
+    /* Build axes */
+    var xAxisCfg, yAxisCfg;
+    if(isHorizontal){
+      var maxVal = 0;
+      (info.datasets || []).forEach(function(ds){ ds.data.forEach(function(v){ if(typeof v === 'number' && v > maxVal) maxVal = v; }); });
+      xAxisCfg = mkAxis({ type: 'value', min: 0 });
+      yAxisCfg = mkAxis({ type: 'category', data: (labels || []).slice().reverse(), axisLabel: { color: C.navy, fontFamily: 'Inter, sans-serif', fontSize: 11 } });
+      series.forEach(function(s){ if(Array.isArray(s.data)) s.data = s.data.slice().reverse(); });
+    } else {
+      xAxisCfg = mkAxis({ type: 'category', data: labels });
+      if(hasDualAxis){
+        yAxisCfg = [
+          mkAxis({ type: 'value' }),
+          mkAxis({ type: 'value', splitLine: { show: false }, axisLabel: Object.assign({}, baseText, { formatter: '{value}%' }) })
+        ];
+      } else {
+        yAxisCfg = mkAxis({ type: 'value' });
+      }
+    }
+
+    var grid;
+    if(isHorizontal){
+      grid = { left: 110, right: 50, top: 20, bottom: 20, containLabel: false };
+    } else if(hasDualAxis){
+      grid = { left: 50, right: 50, top: 45, bottom: 30, containLabel: true };
+    } else {
+      grid = Object.assign({}, baseGrid);
+    }
+
+    var option = {
+      tooltip: isHorizontal
+        ? Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } })
+        : baseTooltip,
+      grid: grid,
+      xAxis: xAxisCfg,
+      yAxis: yAxisCfg,
+      series: series
+    };
+
+    if(legendNames.length > 1){
+      option.legend = Object.assign({}, baseLegend, { top: 8, data: legendNames });
+    }
+
+    chart.setOption(option);
+  });
+}
 </script>
 </body>
 </html>

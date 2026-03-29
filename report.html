@@ -1,536 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Market Report | Malaysia Property Monitor</title>
-  <meta name="color-scheme" content="light">
-  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}</style>
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    .report-container{max-width:860px;margin:0 auto;padding:32px 20px}
-    .report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}
-    .report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}
-    .report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}
-    .report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}
-    .report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}
-    .report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}
-    .report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
-    .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}
-    .chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
-    .chart-inline .chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:8px}
-    .chart-note.green{color:#16a34a}
-    .chart-note.orange{color:#d97706}
-    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
-    .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
-    .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
-    .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
-    .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
-    .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
-    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Report | Malaysia Property Monitor</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="tw/tw.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}
+.navbar{background:#fff!important}
+.kpi-card,.chart-card,.summary-card,.micro-card{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}
+.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}
+.market-btn:hover{background:#dde8f2}
+.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.1);min-width:155px;z-index:100}
+.market-dropdown.open{display:block}
+.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}
+.market-dropdown a:hover{background:#f4f7fc}
+.market-dropdown a.active{font-weight:600}
+</style>
+<style>
+  .report-container{max-width:860px;margin:0 auto;padding:32px 20px}
+  .report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}
+  .report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}
+  .report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}
+  .report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}
+  .report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}
+  .report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}
+  .report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+  .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}
+  .chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+  .chart-inline .chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:8px}
+  .chart-note.green{color:#16a34a}
+  .chart-note.orange{color:#d97706}
+  .chart-note.red{color:#dc2626}
+  .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+  .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
+  .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
+  .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
+  .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
+  .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
+  @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+  @media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
 </head>
 <body>
-  <header class="navbar">
-    <a href="index.html" class="logo">PROPERTY MONITOR</a>
-    <div class="market-selector">
-      <button class="market-btn" onclick="toggleMarketMenu()">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span> ▾</button>
-      <div class="market-dropdown" id="marketDropdown">
-        <a href="index.html" class="active">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
-        <a href="tw/index.html">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
-        <a href="jp/index.html">🇯🇵 <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a>
-        <a href="au/index.html">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a>
-        <a href="nz/index.html">🇳🇿 <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a>
-        <a href="uk/index.html">🇬🇧 <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a>
-      </div>
+
+<header class="navbar">
+  <a href="index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector">
+    <button class="market-btn" onclick="toggleMarketMenu()">
+      🇲🇾
+      <span class="lang-en">Malaysia</span>
+      <span class="lang-zh" style="display:none">馬來西亞</span>
+      ▾
+    </button>
+    <div class="market-dropdown" id="marketDropdown">
+      <a href="index.html"
+class="active">
+        🇲🇾
+        <span class="lang-en">Malaysia</span>
+        <span class="lang-zh" style="display:none">馬來西亞</span>
+      </a>
+      <a href="tw/index.html"
+>
+        🇹🇼
+        <span class="lang-en">Taiwan</span>
+        <span class="lang-zh" style="display:none">台灣</span>
+      </a>
+      <a href="jp/index.html"
+>
+        🇯🇵
+        <span class="lang-en">Japan</span>
+        <span class="lang-zh" style="display:none">日本</span>
+      </a>
+      <a href="au/index.html"
+>
+        🇦🇺
+        <span class="lang-en">Australia</span>
+        <span class="lang-zh" style="display:none">澳洲</span>
+      </a>
+      <a href="nz/index.html"
+>
+        🇳🇿
+        <span class="lang-en">New Zealand</span>
+        <span class="lang-zh" style="display:none">紐西蘭</span>
+      </a>
+      <a href="uk/index.html"
+>
+        🇬🇧
+        <span class="lang-en">United Kingdom</span>
+        <span class="lang-zh" style="display:none">英國</span>
+      </a>
     </div>
-    <nav>
-      <a href="report.html" class="active"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
-      <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">總覽</span></a>
-      <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
-      <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
-      <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
-      <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
-      <a href="kl.html"><span class="lang-en">KL</span><span class="lang-zh" style="display:none">吉隆坡</span></a>
-      <a href="penang.html"><span class="lang-en">Penang</span><span class="lang-zh" style="display:none">檳城</span></a>
-    </nav>
+  </div>
+  <nav>
+    <a href="report.html" class="active">
+      <span class="lang-en">Report</span>
+      <span class="lang-zh" style="display:none">報告</span>
+    </a>
+    <a href="index.html">
+      <span class="lang-en">Dashboard</span>
+      <span class="lang-zh" style="display:none">總覽</span>
+    </a>
+    <a href="supply.html">
+      <span class="lang-en">Supply</span>
+      <span class="lang-zh" style="display:none">供給</span>
+    </a>
+    <a href="demand.html">
+      <span class="lang-en">Demand</span>
+      <span class="lang-zh" style="display:none">需求</span>
+    </a>
+    <a href="valuation.html">
+      <span class="lang-en">Valuation</span>
+      <span class="lang-zh" style="display:none">估值</span>
+    </a>
+    <a href="risk.html">
+      <span class="lang-en">Risk</span>
+      <span class="lang-zh" style="display:none">風險</span>
+    </a>
+    <a href="kl.html">
+      <span class="lang-en">Kuala Lumpur</span>
+      <span class="lang-zh" style="display:none">吉隆坡</span>
+    </a>
+    <a href="penang.html">
+      <span class="lang-en">Penang</span>
+      <span class="lang-zh" style="display:none">檳城</span>
+    </a>
+  </nav>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <span class="opr-badge">OPR: 2.75% ▼</span>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+
+<div class="mobile-menu">
+  <a href="report.html">
+    <span class="lang-en">Report</span>
+    <span class="lang-zh" style="display:none">報告</span>
+  </a>
+  <a href="index.html">
+    <span class="lang-en">Dashboard</span>
+    <span class="lang-zh" style="display:none">總覽</span>
+  </a>
+  <a href="supply.html">
+    <span class="lang-en">Supply</span>
+    <span class="lang-zh" style="display:none">供給</span>
+  </a>
+  <a href="demand.html">
+    <span class="lang-en">Demand</span>
+    <span class="lang-zh" style="display:none">需求</span>
+  </a>
+  <a href="valuation.html">
+    <span class="lang-en">Valuation</span>
+    <span class="lang-zh" style="display:none">估值</span>
+  </a>
+  <a href="risk.html">
+    <span class="lang-en">Risk</span>
+    <span class="lang-zh" style="display:none">風險</span>
+  </a>
+  <a href="kl.html">
+    <span class="lang-en">Kuala Lumpur</span>
+    <span class="lang-zh" style="display:none">吉隆坡</span>
+  </a>
+  <a href="penang.html">
+    <span class="lang-en">Penang</span>
+    <span class="lang-zh" style="display:none">檳城</span>
+  </a>
+  <div class="mobile-meta">
+    <span class="opr-badge">OPR: 2.75%</span>
     <div class="lang-switcher">
       <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
       <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
     </div>
-    <span class="opr-badge">OPR: 2.75% ▼</span>
-    <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
-  </header>
-  <div class="mobile-menu">
-    <a href="report.html" class="active"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
-    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">總覽</span></a>
-    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
-    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
-    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
-    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
-    <a href="kl.html"><span class="lang-en">KL</span><span class="lang-zh" style="display:none">吉隆坡</span></a>
-    <a href="penang.html"><span class="lang-en">Penang</span><span class="lang-zh" style="display:none">檳城</span></a>
-    <div class="mobile-meta">
-      <span class="opr-badge">OPR: 2.75% ▼</span>
-      <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  </div>
+</div>
+
+<div class="report-container">
+  <div class="report-header">
+    <div class="lang-en">
+      <h1></h1>
+      <div class="report-meta"></div>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <h1></h1>
+      <div class="report-meta"></div>
     </div>
   </div>
+  <div class="report-body">
 
-  <div class="report-container">
-    <div class="report-header">
-      <div class="lang-en">
-        <h1>MALAYSIA PROPERTY MARKET REPORT</h1>
-        <div class="report-meta">March 2026 · Institutional Research</div>
-      </div>
-      <div class="lang-zh" style="display:none">
-        <h1>馬來西亞住宅房地產市場報告</h1>
-        <div class="report-meta">2026年3月 · 機構研究</div>
-      </div>
-    </div>
-    <div class="report-body">
 
-      <h2><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
-
-      <div class="lang-en">
-        <p>Malaysia's residential property market enters 2026 carrying a fundamental contradiction that has become impossible to ignore. Transaction volumes reached a decade high of <strong>420,525 units</strong> in 2024, and gross rental yields of <strong>5.19%</strong> continue to produce a positive carry spread of <strong>+2.44%</strong> above the Overnight Policy Rate — one of the few remaining yield advantages in Asian real estate. On a regional basis, Kuala Lumpur's price-to-rent ratio of <strong>21.7x</strong> looks modest against Singapore's 40x and Hong Kong's 50x, and the weaker ringgit creates a structural FX entry discount for USD and SGD-denominated capital.</p>
-        <p>Yet the same market that looks attractively priced from a regional perspective is showing clear signs of structural stress from a domestic one. Unsold completed stock has risen <strong>30.5% year-on-year</strong> to <strong>44,794 units</strong> including serviced apartments — reversing three consecutive years of improvement. More than half of all mortgage applications are rejected, with the loan approval rate stuck at <strong>42.6%</strong> against a backdrop of household debt at <strong>81.9% of GDP</strong>. And the 2024 construction boom of <strong>106,236 housing starts</strong> is still working its way through the pipeline, with completions running at an elevated <strong>69,303 units</strong> in the first three quarters of 2025 alone — arriving into an absorption environment that is already stretched.</p>
-        <p>The market's central problem is structural mismatch, not aggregate weakness. Genuine demand exists and is substantial — but it is concentrated in the sub-RM300,000 segment where <strong>53.1%</strong> of buyers are focused, while the majority of new supply has been built in the RM500,000–RM1,000,000 high-rise band where absorption now takes <strong>18–24 months</strong>. The financing system compounds this mismatch: M40 households in Klang Valley face a median multiple of <strong>5.6x</strong> in Kuala Lumpur, with effective purchasing power that caps out well below the median asking price of most new launches. No amount of rate adjustment can bridge an affordability gap that has been accumulating since 2012.</p>
-        <p>The investment thesis for 2026 is therefore selective rather than directional. The completion wave from 2024 starts will keep supply pressure elevated through 2026 and into 2027. But developers have already responded — new launches fell <strong>31.8%</strong> in the first nine months of 2025, planned supply contracted <strong>31.7%</strong>, and only <strong>19% of developers</strong> expressed optimism in REHDA's 2H2025 survey. The pipeline is thinning. The conditions for eventual rebalancing are being set, even if the timeline extends beyond the current year.</p>
-        <p>For investors, the current environment favors income over capital gains, established corridors over peripheral launches, and patience over urgency. The falling purchase price and rising rent dynamic in Kuala Lumpur — where average rents climbed <strong>6.1%</strong> to <strong>RM2,901 per month</strong> while prices fell <strong>4.3%</strong> — represents the most favorable yield entry conditions in five years. That window is unlikely to persist beyond 2027, when the supply pressure begins to materially ease.</p>
-      </div>
-
-      <div class="lang-zh" style="display:none">
-        <p>先說幾個好消息。2024年馬來西亞全年賣出了<strong>420,525套</strong>房子，是近十年最高紀錄，代表真的有很多人想買房。目前的租金報酬率（Gross Rental Yield）<strong>5.19%</strong>比銀行利率高出<strong>2.44個百分點</strong>，買房收租還算划算。跟周邊國家比，吉隆坡的房價租金比（Price-to-Rent Ratio）只有<strong>21.7倍</strong>，新加坡是40倍、香港是50倍——馬來西亞的房子，對外資來說其實還算便宜。</p>
-        <p>但現實面有幾個讓人擔心的地方。目前市場上賣不掉的新成屋（含服務式公寓，Serviced Apartment）已經堆到<strong>44,794套</strong>，比去年多了<strong>30.5%</strong>。超過一半想申請房貸的人被銀行拒絕，核准率只有<strong>42.6%</strong>。問題不是沒人想買，是很多人根本貸不到款。再加上2024年那一波大量動工的<strong>106,236戶</strong>房子，正陸陸續續蓋完準備推案（Launch），光是2025年前三季就交屋了<strong>69,303戶</strong>，市場根本消化不完。</p>
-        <p>問題的核心是：錢跟房子沒有對上。大多數想買房的人集中在30萬令吉（RM）以下的平價市場（佔所有買方需求的<strong>53.1%</strong>），但建商蓋的大多是50萬到100萬令吉的高樓層住宅，這些房子現在要賣掉平均得等<strong>18到24個月</strong>。加上吉隆坡一般受薪家庭的房價所得比（Median Multiple）高達<strong>5.6倍</strong>，很多人根本借不到夠買房的錢。降利率有幫助，但沒辦法從根本解決這個問題。</p>
-        <p>2026年的投資邏輯是什麼？不是全面看多，也不是全面看空，而是<strong>要選對地方、選對產品</strong>。交屋潮還會一路壓到2027年，但建商已經在減少新推案了——前三季新推案量少了<strong>31.8%</strong>——未來的新供給會慢慢縮小。對有意投資的人來說，現在最好的機會是買來收租，不是等著房價漲。吉隆坡租金漲了<strong>6.1%</strong>到每月<strong>RM 2,901</strong>，但房價跌了<strong>4.3%</strong>——這樣的組合，過去五年沒有出現過，是真正的進場時機，但這個窗口不會一直開著。</p>
-      </div>
-
-      <!-- Exec Summary Charts -->
-      <div class="report-chart-grid">
-        <div class="report-chart-card">
-          <h4><span class="lang-en">Yield Spread Monitor</span><span class="lang-zh" style="display:none">利差監測</span></h4>
-          <div class="chart-meta green"><span class="lang-en">Current Spread: +2.44%</span><span class="lang-zh" style="display:none">當前利差：+2.44%</span></div>
-          <div id="chart-r-yield-spread" style="height:180px;min-height:180px;"></div>
-        </div>
-        <div class="report-chart-card">
-          <h4><span class="lang-en">Demand vs Supply Mismatch</span><span class="lang-zh" style="display:none">需求 vs 供給錯配</span></h4>
-          <div class="chart-meta orange"><span class="lang-en">53% of buyers vs 18% of supply below RM300k</span><span class="lang-zh" style="display:none">53%買家需求 vs 僅18%供給低於30萬</span></div>
-          <div id="chart-r-mismatch" style="height:180px;min-height:180px;"></div>
-        </div>
-        <div class="report-chart-card">
-          <h4><span class="lang-en">Completion Wave vs Absorption</span><span class="lang-zh" style="display:none">完工交屋潮 vs 吸收量</span></h4>
-          <div class="chart-meta orange"><span class="lang-en">Supply peak 2026–2027</span><span class="lang-zh" style="display:none">供給高峰2026至2027年</span></div>
-          <div id="chart-r-wave" style="height:180px;min-height:180px;"></div>
-        </div>
-      </div>
-
-      <h2><span class="lang-en">SUPPLY: THE DELIVERY WAVE</span><span class="lang-zh" style="display:none">供給面：完工交屋潮尚未退去</span></h2>
-
-      <div class="lang-en">
-        <p>The supply challenge facing Malaysia's residential market is best understood through the lens of a time-lagged system with locked-in consequences. A residential project commenced in 2024 cannot be un-built. The <strong>106,236 units</strong> started that year — a 20.6% increase over 2023 — will arrive in the market between 2026 and 2028 regardless of what happens to demand in the interim. This is the completion wave, and it is the single most important supply-side variable for the next two years.</p>
-        <p>The 2025 data shows the absorption system already under stress. In Q1–Q3 2025, <strong>69,303 units</strong> were completed and received their Certificate of Completion and Compliance, a 25.3% year-on-year increase. High-rise developments now take <strong>18–24 months</strong> to achieve meaningful sales penetration — three to four times the six-month benchmark. The unsold completed stock reached <strong>28,672 residential units</strong> worth RM17.25 billion as of Q3 2025, rising to <strong>44,794 units</strong> when serviced apartments are included, up 30.5% year-on-year.</p>
-        <p>The developer response has been rational and relatively swift. New residential launches in the first nine months of 2025 fell <strong>31.8% year-on-year</strong> to 24,913 units. New planned supply contracted <strong>31.7%</strong>. Only <strong>41% of developers</strong> planned new launches in H2 2025. This pullback is the necessary precondition for eventual supply tightening — but the units already under construction cannot be recalled. The completion wave is locked in through 2027.</p>
-        <p>The serviced apartment segment deserves specific attention. Developers historically favored this format because commercial land classification exempts them from affordable housing quota requirements. The result was a sustained wave of supply in the RM500,000–RM1,000,000 band across KL, JB, and Penang that bears limited relationship to actual demand. The <strong>17,892 unsold serviced apartment units</strong> as of Q3 2025 carry commercial utility rates typically four to six times higher than residential tariffs, complex financing conditions, and maintenance cost structures that erode the yield advantage used to market these units. Clearing this inventory will require either extended time or significant structural repricing.</p>
-        <p>The outlook for overhang depends critically on absorption. Under the <strong>base case</strong> (absorption held at 85,000 units/year, consistent with the five-year average), overhang peaks at approximately <strong>47,000 units in 2027</strong> before declining to around 14,000 by 2029 — a level consistent with healthy market inventory of roughly two months' supply. The <strong>bull case</strong> (absorption rising to 90,000/year on sustained OPR stability and GDP above 5%) sees the peak contained at 42,000 units and a faster recovery to approximately 8,000 units by 2029. The <strong>bear case</strong> (absorption falling to 75,000/year under OPR reversal or economic deceleration below 4% GDP) produces a peak of 57,000 units in 2027 that remains stubbornly elevated at 28,000 through 2029. All three scenarios share the same completion curve, derived from lagged 2024–2025 starts data — what differs is only the demand side.</p>
-      </div>
-
-      <div class="lang-zh" style="display:none">
-        <p>馬來西亞的供給問題，說白了就是一個時間差的問題。一棟高樓住宅從動工到取得使用執照（Certificate of Completion and Compliance，CCC）完工，通常需要三到四年。2024年動工的<strong>106,236戶</strong>——比2023年多了20.6%——不管市場之後怎麼走，這批房子都會在2026到2028年間陸續推案。這就是大家說的「交屋潮」，也是未來兩年影響市場最大的變數。</p>
-        <p>2025年的數字說明壓力已經到了。前三季完工交屋<strong>69,303戶</strong>，年增25.3%。高樓住宅從推案到賣掉一定比例，現在平均要等<strong>18到24個月</strong>，是正常市場6個月標準的三到四倍。截至2025年第三季，住宅待售餘屋（Overhang）<strong>28,672套</strong>；加上服務式公寓就是<strong>44,794套</strong>，年增30.5%。</p>
-        <p>建商其實已經在踩煞車了。2025年前三季新推案量年減<strong>31.8%</strong>，規劃量（Planned Supply）年減<strong>31.7%</strong>，只有<strong>41%</strong>的業者說下半年還有推案計畫。這是好事，代表未來新供給會慢慢變少。但問題是已經在蓋的案子收不回來，交屋潮的慣性至少要到2027年才會退。</p>
-        <p>服務式公寓（Serviced Apartment）的狀況特別麻煩。這類產品建商愛蓋，因為商業用地的法律定性讓他們可以繞開住宅可負擔配額的規定，省下不少成本。結果就是吉隆坡、新山、檳城50萬到100萬令吉這個價格帶，堆出了一大批跟真實需求脫節的供給。現在積壓的<strong>17,892套</strong>服務式公寓，除了定價偏高，還有商業水電費率（比住宅高四到六倍）、貸款更難辦、管理費又貴等問題。這批庫存要消化，只能靠時間或大幅降價，兩個都不是短期利多。</p>
-        <p>待售餘屋的走勢，關鍵在於吸收量的假設。<strong>基本情境</strong>（年均吸收85,000套，與五年均值一致）下，待售餘屋在<strong>2027年高峰約47,000套</strong>，隨後回落至2029年的約14,000套——大致相當於兩個月去化量的健康庫存水位。<strong>樂觀情境</strong>（OPR維持低位、GDP持續5%以上帶動吸收量升至90,000套）下，高峰壓縮至42,000套，2029年更快回落至約8,000套。<strong>保守情境</strong>（OPR逆轉或GDP跌破4%導致吸收量降至75,000套）下，2027年高峰達57,000套，2029年仍高達28,000套，去化速度明顯偏慢。三個情境的完工量曲線相同，均依據2024至2025年已知開工數據的時間滯後推算——差別只在需求端的假設。</p>
-      </div>
-
-      <div class="chart-inline">
-        <h4><span class="lang-en">Annual Supply Pipeline</span><span class="lang-zh" style="display:none">每年推案與完工概況</span></h4>
-        <div class="chart-note orange"><span class="lang-en">2024 starts of 106,236 will complete 2026–2028</span><span class="lang-zh" style="display:none">2024年開工的106,236戶將在2026至2028年完工</span></div>
-        <div id="chart-r-supply" style="height:200px;min-height:180px;"></div>
-      </div>
-
-      <div class="chart-inline">
-        <h4><span class="lang-en">Overhang Forecast 2025–2029</span><span class="lang-zh" style="display:none">待售餘屋預測 2025–2029年</span></h4>
-        <div class="chart-note orange"><span class="lang-en">Peak ~47,000 units in 2027 · Relief from 2028</span><span class="lang-zh" style="display:none">2027年高峰約47,000套 · 2028年起緩解</span></div>
-        <div id="chart-r-oh-forecast" style="height:260px;min-height:180px;"></div>
-        <div class="insight-box" style="margin-top:10px;">
-          <div class="lang-en">Base case (absorption 85,000/yr): overhang peaks at ~47,000 units in 2027, normalising to ~14,000 by 2029. Bull case (90,000/yr): peak ~42,000, clears faster to ~8,000. Bear case (75,000/yr): peak ~57,000, still elevated at ~28,000 in 2029.</div>
-          <div class="lang-zh" style="display:none">基本情境（年均吸收85,000套）：待售餘屋在2027年高峰約47,000套，2029年回落至約14,000套。樂觀情境（吸收90,000套）：高峰約42,000套，2029年降至約8,000套。保守情境（吸收75,000套）：高峰約57,000套，2029年仍達28,000套。</div>
-        </div>
-      </div>
-
-      <h2><span class="lang-en">DEMAND: INTENT WITHOUT ACCESS</span><span class="lang-zh" style="display:none">需求面：想買的人很多，能成交的不夠</span></h2>
-
-      <div class="lang-en">
-        <p>The demand picture for Malaysian residential property is more nuanced than either the headline transaction figures or the overhang statistics suggest. The <strong>420,525</strong> transactions recorded in 2024 represent the highest annual volume in a decade, demonstrating that underlying purchase intent is real and persistent. The cooling in Q3 2025 to <strong>108,250 transactions</strong> does not represent demand destruction — it represents the progressive exhaustion of the most financially capable segment of latent demand, as the remaining buyers increasingly fail the financing filter.</p>
-        <p>The most revealing indicator is not transaction volume but take-up rate at new launches. In Q1 2025, only <strong>10.8%</strong> of new residential units launched were sold on launch day. For high-rise projects in Q3 2025, that figure was <strong>5.1%</strong>. Landed properties performed better at <strong>14%</strong>. The divergence maps almost exactly onto loan approval rates: landed buyers have stronger financial profiles and clearer income documentation. A take-up rate below 10% at launch is not a sign of disinterest — it is a sign that the majority of potential participants have been structurally filtered out by the financing system.</p>
-        <p>The loan approval rate of <strong>42.6%</strong> means that more than half of all mortgage applications are declined. Malaysia's household debt-to-GDP ratio of <strong>81.9%</strong> is among the highest in ASEAN, and debt-service ratios in Klang Valley and Penang are at their practical limits for M40 households. The government's SJKP guarantee scheme — with RM10 billion in guarantees targeting approximately 20,000 first-time buyers — provides incremental improvement but addresses financing access at the margin rather than the underlying affordability gap.</p>
-        <p>The K-shaped structure of demand defines the opportunity set. In the sub-RM300,000 segment, genuine undersupply exists in locations with real employment anchors. The RM300,000–RM500,000 band shows the healthiest primary market take-up. Above RM500,000 in high-rise and serviced apartment formats, demand is institutionally constrained by the financing filter. The secondary market's <strong>79.4%</strong> share of H1 2025 residential transactions is the direct expression of buyers gravitating toward segments where value, location quality, and financing accessibility intersect most favorably.</p>
-      </div>
-
-      <div class="lang-zh" style="display:none">
-        <p>一句話說完馬來西亞的需求問題：不是沒人想買，是太多人的貸款申請被銀行退件了。</p>
-        <p>2024年<strong>420,525套</strong>的成交量，證明購屋意願是真實存在的。2025年第三季降到<strong>108,250筆</strong>，不是大家不想買了，而是財務條件比較好的那批人已經買完了，留下來的人愈來愈難拿到房貸。</p>
-        <p>看新案子的首日銷售率（Take-up Rate），比成交量更能說明問題。2025年第一季，新推案當天售出的比例只有<strong>10.8%</strong>；第三季，高樓住宅更低，只有<strong>5.1%</strong>；有地住宅（Landed Property）稍好，是<strong>14%</strong>。有地住宅賣得快，是因為買家的財務狀況通常比較紮實，貸款比較容易過關。首日去化率這麼低，不是沒人要買，而是大多數想買的人都被貸款門檻擋住了。</p>
-        <p>房貸核准率<strong>42.6%</strong>的背後，是全國家庭負債佔GDP高達<strong>81.9%</strong>——在東南亞名列前茅。很多家庭現有的月供已經快到上限，再多借一筆房貸，銀行一算就說不行。政府推出的住宅信用保證計畫（Skim Jaminan Kredit Perumahan，SJKP）（100億令吉的保證額度，幫助約兩萬名首購族），方向是對的，但只能解決一小部分問題，根本的負擔能力問題還在那裡。</p>
-        <p>需求的分布就像個K字型——往兩個方向分開走。30萬令吉以下的平價市場，是真的供不應求，但私人建商蓋了賺不到錢；30萬到50萬令吉的中間帶，需求健康，預售市場表現最好；50萬令吉以上的高樓和服務式公寓，需求被貸款門檻擋住了。中古屋佔成交量的<strong>79.4%</strong>，就是因為買家知道，在那些地段成熟、貸款條件清楚的中古市場，才最容易找到真正划算的選擇。</p>
-      </div>
-
-      <div class="chart-inline">
-        <h4><span class="lang-en">New Launch Take-up Rate Q3 2025</span><span class="lang-zh" style="display:none">新推案即時去化率 2025年Q3</span></h4>
-        <div class="chart-note orange"><span class="lang-en">High-rise: only 5.1% sold on launch day</span><span class="lang-zh" style="display:none">高層住宅：推出當日僅5.1%售出</span></div>
-        <div id="chart-r-takeup" style="height:180px;min-height:180px;"></div>
-      </div>
-
-      <h2><span class="lang-en">VALUATION: TWO FRAMEWORKS, TWO CONCLUSIONS</span><span class="lang-zh" style="display:none">估值：兩個框架，兩個結論</span></h2>
-
-      <div class="lang-en">
-        <p>Malaysian residential property presents a bifurcated valuation picture that produces diametrically opposed conclusions depending on the analytical framework applied — and both conclusions are simultaneously correct for different buyer populations.</p>
-        <p>From a yield and regional comparison perspective, the investment case is reasonably compelling. The gross rental yield of <strong>5.19%</strong> against an OPR of <strong>2.75%</strong> produces a positive carry spread of <strong>+2.44%</strong> — historically a signal of relative value. Against regional peers, Kuala Lumpur's price-to-rent ratio of <strong>21.7x</strong> is the lowest in this eight-city comparison — below Bangkok (25x), Tokyo (37x), Singapore (40x), Taipei (47x), Hong Kong (50x), and Shanghai (59x). Even Ho Chi Minh City at 18x is the only market that edges KL out on this metric. For yield-seeking capital rotating out of overpriced Asian markets, the relative value case is unambiguous.</p>
-        <p>From a domestic affordability perspective, however, the picture is materially less favorable. At <strong>4.3x</strong> median annual household income nationally — rising to <strong>5.6x</strong> for terrace houses in Kuala Lumpur — Malaysian housing is classified as "severely unaffordable" by the Demographia methodology. This ceiling is structural and will not be meaningfully moved by OPR adjustments alone.</p>
-        <p>The real house price picture adds important context. The MHPI has grown modestly in nominal terms — approximately 1–3% annually — but adjusted for CPI inflation, real house prices have been effectively flat to slightly declining since 2022. This is not a bubble profile; it is a market adjusting real valuations downward through inflation erosion while maintaining nominal stability.</p>
-      </div>
-
-      <div class="lang-zh" style="display:none">
-        <p>怎麼看馬來西亞的房市估值，取決於你站在哪個角度。</p>
-        <p>對外資來說，理由挺充分的：<strong>5.19%</strong>的租金報酬率（Gross Rental Yield）比<strong>2.75%</strong>的隔夜政策利率（Overnight Policy Rate，OPR）高出<strong>2.44個百分點</strong>，持有房產有正現金流（Positive Carry）。以區域同儕比較，吉隆坡的房價租金比（Price-to-Rent Ratio）<strong>21.7倍</strong>，在這八個城市的比較中幾乎墊底——低於曼谷（25倍）、東京（37倍）、新加坡（40倍）、台北（47倍）、香港（50倍）和上海（59倍）。唯一比吉隆坡更低的是胡志明市（18倍）。對於想從高估亞洲市場中找到相對價值的資金而言，這個比較結果說得很清楚。</p>
-        <p>但對本地買家來說，感受完全不同。全國房價所得比（Median Multiple）<strong>4.3倍</strong>，吉隆坡的有地住宅更高達<strong>5.6倍</strong>——不吃不喝五年半才能存夠買一棟有地住宅。國際標準裡，超過4倍就算「嚴重不可負擔（Severely Unaffordable）」了。這不只是個統計數字，它就是產生<strong>42.6%</strong>房貸退件率的直接原因——銀行按照償債比率算，很多中等收入家庭根本貸不到夠的錢。降利率可以減輕一點壓力，但解決不了這個根本的問題。</p>
-        <p>還有一點值得注意：住宅價格指數（Malaysia House Price Index，MHPI）每年名義上漲幅大概是1到3%，但扣掉通膨，實質房價從2022年起其實就已經是持平到微跌的狀態了。這不是泡沫，而是市場在通膨的侵蝕下，悄悄把實質房價往下調整，同時維持名義上的穩定。沒有投機泡沫，就算之後發生價格修正，也不會是那種恐慌式的崩跌，而是有限度的、供給驅動的調整。</p>
-      </div>
-
-      <div class="chart-inline">
-        <h4><span class="lang-en">KL vs Asia Pacific Price-to-Rent</span><span class="lang-zh" style="display:none">吉隆坡 vs 亞太城市房價租金比</span></h4>
-        <div class="chart-note green"><span class="lang-en">Lower = better value for buyers. KL and Ho Chi Minh are the clear standouts in Asia.</span><span class="lang-zh" style="display:none">數值越低代表買家越划算。吉隆坡和胡志明市是亞洲最具相對價值的市場。</span></div>
-        <div id="chart-r-apac" style="height:280px;min-height:180px;"></div>
-      </div>
-
-      <h2><span class="lang-en">KUALA LUMPUR: CORRECTION AND OPPORTUNITY</span><span class="lang-zh" style="display:none">吉隆坡：修正即機會</span></h2>
-
-      <div class="lang-en">
-        <p>Kuala Lumpur's residential market is the clearest expression of the broader national dynamics. The city-level headline — average prices down <strong>4.3% year-on-year</strong> in Q3 2025, the only major Malaysian city recording a decline — is supply-driven rather than demand-driven. Completions surged <strong>32.7%</strong> in Q1–Q3 2025 while new starts declined <strong>14.9%</strong>. The correction is concentrated in high-rise and serviced apartment segments — the <strong>3,643 unsold units</strong> worth RM3.16 billion recorded in KL for H1 2025 are disproportionately clustered in the KLCC-adjacent SOHO segment and the outer-ring serviced apartment belt.</p>
-        <p>The rental market tells a structurally different story. KL average monthly rents reached <strong>RM2,901</strong> in 2025, up <strong>6.1% year-on-year</strong>, driven by the return of expatriates, the expansion of multinational operations at TRX, and continued absorption from would-be buyers who cannot clear the financing hurdle.</p>
-        <p><strong>Zone 1 — KLCC/Bukit Bintang:</strong> Average PSF of RM1,200–2,500+. Gross yields average 3–4%. The current 8–12% discount below asking price in oversupplied pockets is creating entry opportunities in branded residences at TRX, Pavilion Bukit Bintang, and the KLCC fringe.</p>
-        <p><strong>Zone 2 — Mid Valley/Old Klang Road:</strong> The most fundamentally sound investment zone in KL. The RM400,000–RM800,000 price band aligns with M40+ financing capacity. Gross yields of <strong>5–6%</strong> — genuine positive carry in the current rate environment.</p>
-        <p><strong>Zone 3 — Kepong/Cheras/Setapak:</strong> The outer ring bears the heaviest concentration of structural risk. Serviced apartment dominance, PSF traps, commercial utility rates. The majority of KL's overhang is concentrated here.</p>
-      </div>
-
-      <div class="lang-zh" style="display:none">
-        <p>吉隆坡是馬來西亞最值得深究的城市，但也最複雜，因為三個區域的運作邏輯完全不同。</p>
-        <p>從整座城市來看，2025年第三季平均房價年跌<strong>4.3%</strong>，是全馬主要城市中唯一下跌的，也是四年來第一次持續下修。但這不是需求出了問題，而是完工交屋量太多——前三季完工量年增<strong>32.7%</strong>，同時新開工戶數卻年減<strong>14.9%</strong>。下跌的主要是高樓層和服務式公寓，中價位的有地住宅走廊基本上撐住了。2025年上半年吉隆坡積壓了<strong>3,643套</strong>、市值RM 31.6億的待售完工住宅，大部分集中在KLCC周邊的SOHO和外圍的服務式公寓帶。</p>
-        <p>但租屋市場是另一回事。2025年吉隆坡平均月租<strong>RM 2,901</strong>，年漲<strong>6.1%</strong>。外籍人士（Expatriate）回來了，吐翠交易所（Tun Razak Exchange，TRX）金融區的跨國企業持續擴張，還有一批因為貸款申請被拒只好繼續租屋的潛在買家——這些人一起撐起了租屋需求。房價跌、租金漲同步發生，對以收益為目標的投資人來說，這是近五年來最好的進場時機。</p>
-        <p><strong>第一區——城中城（KLCC）/武吉免登（Bukit Bintang）：</strong> 每坪RM 1,200到2,500+，這些物件的定價邏輯是跟新加坡、香港比，不是跟本地收入比。對第二家園計畫（Malaysia My Second Home，MM2H）持有人、外商高管和海外高資產投資人，這裡是「全球大城市裡最便宜的頂級公寓」。租金報酬率3到4%，本地貸款買的人幾乎只能付利息，但不用槓桿的外資是可以接受的。目前供過於求的地段有8到12%的議價空間，TRX、Pavilion武吉免登和KLCC邊緣的品牌住宅（Branded Residence）出現了不錯的進場機會。</p>
-        <p><strong>第二區——中谷（Mid Valley）/舊巴生路（Old Klang Road）：</strong> 目前吉隆坡風險報酬比最好的投資區段。40萬到80萬令吉的價格帶，是雙薪中等收入家庭貸款能過關的上限，新推案去化率是全市最高的，租屋需求也最深厚——兩房單位月租RM 2,500到4,500，報酬率<strong>5到6%</strong>，在現在的利率環境下是真的有正現金流。舊巴生路正在仕紳化（Gentrification），年輕人、咖啡廳、共同工作空間（Co-working Space）慢慢進駐，這個增值趨勢是外圍地帶沒有的。</p>
-        <p><strong>第三區——甲洞（Kepong）/蕉賴（Cheras）/士打末（Setapak）：</strong> 結構性風險最高的一區。服務式公寓太多、每坪陷阱（PSF Trap）很常見（預售時高價買進、中古幾乎賣不掉）、商業水電費率、全市最難核准的貸款條件——這些問題疊在一起，選錯了就是長期套牢。吉隆坡大部分的待售餘屋都堆在這裡。緊鄰捷運（MRT）站、有真實租屋需求的特定案子還是有機會，但容錯的空間非常窄。</p>
-      </div>
-
-      <div class="chart-inline">
-        <h4><span class="lang-en">KL Zone Average PSF</span><span class="lang-zh" style="display:none">吉隆坡三區平均呎價</span></h4>
-        <div class="chart-note green"><span class="lang-en">Zone 2 Mid Valley/OKR — best risk-reward in KL</span><span class="lang-zh" style="display:none">第二區中谷/舊巴生路——吉隆坡最佳風險回報區段</span></div>
-        <div id="chart-r-zone" style="height:200px;min-height:180px;"></div>
-      </div>
-
-      <h2><span class="lang-en">PENANG: THE INDUSTRIAL THESIS</span><span class="lang-zh" style="display:none">檳城：工業驅動的房市論點</span></h2>
-
-      <div class="lang-en">
-        <p>Penang's property market is structurally distinct from KL in one fundamental way: its demand drivers are industrial rather than financial. The state attracted <strong>RM12.5 billion</strong> in approved manufacturing investment in H1 2025, a <strong>150% year-on-year</strong> increase, cementing Penang's position as Malaysia's leading destination for semiconductor and E&amp;E FDI.</p>
-        <p>High-end properties above RM1 million grew <strong>7–10% in 2024</strong>. Gurney Drive's Marriott Residences transacted at <strong>RM2,069 PSF</strong>, with Sunrise Gurney at <strong>RM1,872 PSF</strong>.</p>
-        <p>A critical clarification: the RM3 million minimum applies exclusively to <strong>landed houses</strong> on Penang Island. The threshold for <strong>condominiums</strong> is <strong>RM1 million</strong>. The 8% stamp duty from January 2026, combined with the state consent levy of approximately 3%, brings total foreign buyer transaction costs to <strong>12–14%</strong> above purchase price.</p>
-      </div>
-
-      <div class="lang-zh" style="display:none">
-        <p>檳城跟吉隆坡最大的差別，在於驅動房市的力量不同。吉隆坡靠的是金融資本和外資，檳城靠的是製造業（Manufacturing）和工廠。</p>
-        <p>2025年上半年，檳城核准的製造業投資達<strong>RM 125億</strong>，年增<strong>150%</strong>，是全馬吸引半導體（Semiconductor）和電子電機（E&E）外資最多的縣市。英特爾（Intel）持續擴廠、摩托羅拉（Motorola）維持運作、美國和台灣晶圓廠相關企業不斷進駐，帶來了一批工程師和技術管理人員的住房需求。這群人的需求比較穩定、薪資有保障、投機成分也比較低。</p>
-        <p>百萬令吉以上的高端物件在2024年漲了<strong>7到10%</strong>，是全馬所有市場區段中表現最突出的。漲最多的集中在葛尼大道（Gurney Drive）和布拉奧（Pulau Tikus）——這裡的土地早就滿了，不可能再出現新的海景地段。葛尼大道最貴的萬豪公寓（Marriott Residences）在2024年的成交每坪均價達<strong>RM 2,069</strong>，升禧葛尼（Sunrise Gurney）是<strong>RM 1,872</strong>——跟新加坡或香港的同類海景公寓相比，這個價格還算便宜。</p>
-        <p>有一件事一定要說清楚：<strong>RM 300萬</strong>的外國買家門檻，只適用於檳城島的<strong>有地住宅</strong>（獨棟、透天）；<strong>公寓</strong>的門檻是<strong>RM 100萬</strong>，跟其他縣市一樣。大陸（北海，Seberang Perai）的公寓門檻是RM 50萬。2026年1月起實施的<strong>8%印花稅（Stamp Duty）</strong>，加上州政府的同意費（State Consent Fee）約3%，外國買家的全部交易成本大概會比買價多<strong>12到14%</strong>。這個成本一定要放進整體報酬率的計算裡，不能忽略。</p>
-      </div>
-
-      <div class="chart-inline">
-        <h4><span class="lang-en">Penang Manufacturing FDI</span><span class="lang-zh" style="display:none">檳城製造業外資</span></h4>
-        <div class="chart-note green"><span class="lang-en">+150% YoY in H1 2025 — Malaysia's top manufacturing FDI destination</span><span class="lang-zh" style="display:none">2025年上半年年增150%——馬來西亞首要製造業外資目的地</span></div>
-        <div id="chart-r-fdi" style="height:180px;min-height:180px;"></div>
-      </div>
-
-      <h2><span class="lang-en">INFRASTRUCTURE CATALYSTS</span><span class="lang-zh" style="display:none">基礎建設催化劑</span></h2>
-
-      <div class="lang-en">
-        <p>Three infrastructure projects have moved from speculative to confirmed timelines over the past 12 months, with demand effects already measurable in transaction and rental data.</p>
-        <p>The <strong>JB–Singapore RTS</strong>, targeting operations by end-2026, has produced the most immediate impact. Rental yields in the JB Sentral corridor have risen to <strong>5.47–5.60%</strong>, the highest in peninsular Malaysia.</p>
-        <p>The <strong>MRT3 Circle Line</strong> received final government approval in 2025, with substantial completion targeted for 2030–2031. Currently underserved corridors along the alignment (Sentul, Wangsa Maju, Seputeh, Bukit Jalil) represent the earliest-stage catalyst opportunity.</p>
-        <p>The <strong>data center investment wave</strong> — Microsoft's USD2.2 billion, Google's USD2 billion — is producing measurable spillover rental demand. Industrial property value surged <strong>21.3%</strong> in 2025.</p>
-      </div>
-
-      <div class="lang-zh" style="display:none">
-        <p>過去一年，有三個基礎建設項目從「說說而已」變成了「有具體時間表」，而且效果已經開始在數據裡看到了。</p>
-        <p><strong>新山至新加坡輕軌系統（Johor Bahru–Singapore Rapid Transit System，RTS Link）</strong>，目標2026年底通車。新山中央走廊的租金報酬率已升至<strong>5.47到5.60%</strong>，是馬來西亞半島最高水準，背後是新加坡人跨境買房的需求，以及柔佛-新加坡特別經濟區（Johor-Singapore Special Economic Zone，JS-SEZ）帶動的真實就業和居住需求。曾經一度看起來快變成空城的森林城市（Forest City），也因為SEZ開始出現了早期去化的跡象。</p>
-        <p><strong>捷運三號環線（MRT3 Circle Line）</strong>在2025年拿到政府最終核准，目標2030到2031年完工。從MRT1和MRT2的經驗來看，站點周邊500公尺的物件，通常在時間表確定後12到18個月內就會開始把交通增值（Transit Premium）反映在房價上。環線沿線目前比較冷門的吉隆坡走廊——善南（Sentul）、旺沙瑪朱（Wangsa Maju）、士拍（Seputeh）、武吉加里爾（Bukit Jalil）——可能是現在最早期的布局機會。</p>
-        <p><strong>資料中心投資潮（Data Center Wave）</strong>——微軟（Microsoft）22億美元、谷歌（Google）20億美元，加上多家雲端大廠在柔佛和雪蘭莪的大規模進駐——正在帶動周邊地區的租屋需求。2025年工業地產（Industrial Property）的成交總值年增<strong>21.3%</strong>。這個需求跟住宅景氣週期無關，持續性更有保障。</p>
-      </div>
-
-      <h2><span class="lang-en">OUTLOOK AND KEY RISKS</span><span class="lang-zh" style="display:none">展望與主要風險</span></h2>
-
-      <div class="lang-en">
-        <p>The base case for the next 12 months is consolidation. Landed property: <strong>2–4%</strong> appreciation. High-rise: continued pressure. Rental growth: <strong>4–6%</strong> in major urban centers.</p>
-        <p><strong>Risk 1 — OPR Reversal:</strong> Bank Negara's cut to <strong>2.75%</strong> is priced as a floor. A reversal would compress the yield spread and worsen M40 financing access.</p>
-        <p><strong>Risk 2 — Economic Deceleration:</strong> GDP at <strong>5.2%</strong> in Q3 2025. A drop below 4% would suppress transaction volumes.</p>
-        <p><strong>Risk 3 — Foreign Demand Erosion:</strong> The <strong>8% stamp duty</strong> from January 2026 is already impacting foreign buyer inquiry volumes.</p>
-        <p>The actionable conclusion: the current environment creates its best opportunities for those who can identify high-quality rental assets at corrected prices in established corridors, hold through the completion cycle, and exit into the absorption recovery from 2027 onwards. The window is open now.</p>
-      </div>
-
-      <div class="lang-zh" style="display:none">
-        <p>基本情境是：市場在盤整，不是反轉，也不是崩盤。</p>
-        <p>成熟走廊的優質有地住宅，名義上有機會升值<strong>2到4%</strong>，由真實的自住需求支撐。高樓城市住宅繼續承壓，因為交屋潮還沒退。主要城市的租金持續增長<strong>4到6%</strong>，是現階段最可靠的收益來源——外籍人士回流、首購族貸不到款只好繼續租、城市人口持續增加，這個支撐的結構很紮實。</p>
-        <p><strong>風險一——政策利率逆轉（OPR Reversal）：</strong> 現在市場把<strong>2.75%</strong>當底部在看。一旦升息，持有利差（Carry Spread）馬上收窄，租金報酬率的吸引力就下降，而且讓很多已經在貸款邊緣的家庭更難買房。</p>
-        <p><strong>風險二——經濟放緩：</strong> 馬來西亞GDP目前追蹤<strong>5.2%</strong>。如果全球貿易出狀況、大宗商品下跌，或製造業投資減少，家庭所得成長放緩，成交量就會直接受衝擊。</p>
-        <p><strong>風險三——外資需求萎縮：</strong> <strong>8%的印花稅</strong>從2026年1月開始，已經讓外資詢問量明顯下滑了。如果後續還有更多限制措施，高度依賴外資撐盤的頂級住宅區段，修正可能加速。</p>
-        <p>給投資人的一句話結論：現在最好的機會，是在成熟走廊找到品質好、價格已修正的租賃物件，抱著足夠的耐心撐過交屋潮，等到2027年後市場重新平衡再考慮退場。這個窗口現在是開著的。等到供給壓力退去，就不一樣了。</p>
-      </div>
-
-      <div class="report-footer">
-        <p><span class="lang-en">Data sources: NAPIC Q3 2025 · NAPIC H1 2025 · Global Property Guide Q1 2026 · BNM · DOSM · REHDA 2H2025 · Juwai IQI · PropCashflow</span><span class="lang-zh" style="display:none">數據來源：NAPIC 2025年Q3 · NAPIC 2025年H1 · Global Property Guide 2026年Q1 · 馬來西亞國家銀行 · 統計局 · 房地產發展商協會 2H2025</span></p>
-        <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
-      </div>
-    </div>
   </div>
+</div>
 
-  <footer class="footer">A project by <span>InvestMQuest</span></footer>
+<footer class="footer">A project by <span>InvestMQuest</span></footer>
 
-  <script>
-  var C = {
-    navy:'#1e3a5f', green:'#16a34a', orange:'#d97706',
-    red:'#dc2626', blue:'#2563eb', muted:'#5a7a9a',
-    grid:'#e8f0f9', text:'#1e3a5f'
-  };
-  var baseText = { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 };
-  var baseTooltip = {
-    trigger: 'axis', backgroundColor: '#fff',
-    borderColor: '#ccd9e8', borderWidth: 1,
-    textStyle: { color: C.navy, fontSize: 11, fontFamily: 'Inter' }
-  };
-  var baseLegend = { top: 8, textStyle: baseText, icon: 'circle', itemWidth: 8, itemHeight: 8 };
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
+var baseText={color:C.muted,fontFamily:'Inter,sans-serif',fontSize:11};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+var baseLegend={bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector'))document.getElementById('marketDropdown').classList.remove('open');});
+function switchTab(cid,tab){var w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});w.querySelectorAll('.tab-bar button').forEach(function(b){b.classList.remove('active');});var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(function(b){if(b.dataset.tab===tab)b.classList.add('active');});setTimeout(function(){allCharts.forEach(function(c){if(c)c.resize();});},100);}
+function setLang(lang){
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  localStorage.setItem('lang',lang);
+  if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}
+  if(typeof initCharts==='function')initCharts(lang);
+}
+var allCharts=[];
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+function fmtK(v){return v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':v;}
+function fmtRM(v){if(v>=1000000)return'RM '+(v/1000000).toFixed(1)+'M';if(v>=1000)return'RM '+(v/1000).toFixed(0)+'K';return'RM '+v;}
+function fmtNum(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
 
-  function fmtNum(v) { return v >= 1000 ? (v/1000).toFixed(0)+'K' : v; }
-  function mkAxis(opts) {
-    return Object.assign({
-      axisLine: { lineStyle: { color: C.grid } },
-      axisTick: { show: false },
-      axisLabel: baseText,
-      splitLine: { lineStyle: { color: C.grid } }
-    }, opts || {});
-  }
+function initCharts(lang){
+  var DATA = {"chart-apac": {"datasets": [{"data": [18, 21.7, 25, 37, 40, 47, 50, 59], "name": "P/R Ratio", "type": "bar"}], "labels": ["Ho Chi Minh", "KL", "Bangkok", "Tokyo", "Singapore", "Taipei", "Hong Kong", "Shanghai"], "page": "valuation", "subtitle_en": "Lower = more attractive for buyers", "subtitle_zh": "\u8d8a\u4f4e=\u5c0d\u8cb7\u5bb6\u8d8a\u6709\u5438\u5f15\u529b", "title_en": "KL vs Asia Pacific Price-to-Rent", "title_zh": "\u5409\u9686\u5761 vs \u4e9e\u592a\u57ce\u5e02\u623f\u50f9\u79df\u91d1\u6bd4", "type": "bar (horizontal)"}, "chart-city-price": {"datasets": [{"colors": ["#1e3a5f", "#16a34a", "#1e3a5f", "#d97706", "#1e3a5f"], "data": [494384, 504845, 510000, 804642, 380000], "name": "Avg Price", "type": "bar"}, {"data": [3.2, 5.7, 2.1, -4.3, 1.8], "name": "YoY %", "type": "line", "yAxisIndex": 1}], "labels": ["National Avg", "Penang", "Selangor", "KL", "Johor"], "page": "index", "subtitle_en": "Q3 2025 \u00b7 RM \u00b7 YoY% Change", "subtitle_zh": "2025\u5e74Q3 \u00b7 \u4ee4\u5409 \u00b7 \u5e74\u589e\u7387", "title_en": "Average Price by Major City", "title_zh": "\u4e3b\u8981\u57ce\u5e02\u5e73\u5747\u623f\u50f9", "type": "bar+line (dual axis)"}, "chart-median-mult": {"datasets": [{"data": [2.8, 3.1, 3.2, 3.8, 3.9, 4.3, 4.8, 5.1, 5.6], "name": "Median Multiple", "type": "bar"}], "labels": ["Sabah", "Sarawak", "Kedah", "Johor", "Melaka", "National", "Penang", "Kelantan", "KL"], "markLine": {"label": "Unaffordable threshold", "xAxis": 4.0}, "page": "valuation", "title_en": "Median Multiple by State (2022)", "title_zh": "\u5404\u5dde\u623f\u50f9\u6240\u5f97\u6bd4\uff082022\u5e74\uff09", "type": "bar (horizontal)"}, "chart-mhpi-dash": {"datasets": [{"data": [1.1, 0.5, 1.0, 1.5, 3.5, 8.2, 0.14], "name": "YoY %", "type": "bar", "yAxisIndex": 1}, {"color": "#1e3a5f", "data": [194, 195, 197, 200, 207, 224, 229.1], "name": "Nominal Index", "type": "line"}, {"color": "#5a7a9a", "data": [160, 160, 159, 156, 157, 165, 167], "lineType": "dashed", "name": "Real Index", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025Q3"], "page": "index", "subtitle_en": "Nominal vs Real \u00b7 YoY% Change", "subtitle_zh": "\u540d\u7fa9 vs \u5be6\u8cea \u00b7 \u5e74\u589e\u7387", "title_en": "Malaysia House Price Index (MHPI)", "title_zh": "\u99ac\u4f86\u897f\u4e9e\u623f\u50f9\u6307\u6578\uff08MHPI\uff09", "type": "bar+line (dual axis)"}, "chart-mhpi-real": {"datasets": [{"color": "#1e3a5f", "data": [194, 195, 197, 200, 207, 224, 229.1], "name": "Nominal MHPI", "type": "line"}, {"color": "#5a7a9a", "data": [160, 160, 159, 156, 157, 165, 167], "lineType": "dashed", "name": "Real MHPI", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025Q3"], "page": "valuation", "title_en": "MHPI Nominal vs Real", "title_zh": "\u623f\u50f9\u6307\u6578\uff1a\u540d\u7fa9 vs \u5be6\u8cea", "type": "line (dual series)"}, "chart-overhang-pipeline": {"datasets": [{"color": "#1e3a5f", "data": [32313, 36863, 31092, 26424, 27746, 25816, 22642, 28672, null, null, null, null], "name": "Historical", "type": "line"}, {"color": "#16a34a", "data": [null, null, null, null, null, null, null, 28672, 43000, 42000, 22000, 8000], "name": "Bull (90K)", "type": "line"}, {"color": "#d97706", "data": [null, null, null, null, null, null, null, 28672, 46000, 47000, 28000, 14000], "name": "Base (85K)", "type": "line"}, {"color": "#dc2626", "data": [null, null, null, null, null, null, null, 28672, 51000, 57000, 42000, 28000], "name": "Bear (75K)", "type": "line"}], "labels": ["2018", "2019", "2020", "2021", "2022", "2023", "24H1", "25*", "26E", "27E", "28E", "29E"], "page": "index", "subtitle_en": "Residential overhang units \u00b7 Historical + Forecast", "subtitle_zh": "\u4f4f\u5b85\u5f85\u552e\u9918\u5c4b \u00b7 \u6b77\u53f2+\u9810\u6e2c", "title_en": "Overhang Pipeline \u0026 Forecast", "title_zh": "\u5f85\u552e\u9918\u5c4b\u8da8\u52e2\u8207\u9810\u6e2c", "type": "line (multi-scenario)"}, "chart-p2r": {"datasets": [{"color": "#1e3a5f", "data": [21.7, 18.5, 15.2, 19.8], "name": "P/R Ratio", "type": "bar"}], "labels": ["KL City", "Penang", "JB", "Subang Jaya"], "page": "valuation", "title_en": "Price-to-Rent Ratio by City", "title_zh": "\u5404\u57ce\u5e02\u623f\u50f9\u79df\u91d1\u6bd4", "type": "bar (horizontal)"}, "chart-r-apac": {"datasets": [{"colors": ["#16a34a", "#16a34a", "#1e3a5f", "#1e3a5f", "#1e3a5f", "#d97706", "#d97706", "#dc2626"], "data": [18, 21.7, 25, 37, 40, 47, 50, 59], "name": "P/R Ratio", "type": "bar"}], "labels_en": ["Ho Chi Minh", "KL", "Bangkok", "Tokyo", "Singapore", "Taipei", "Hong Kong", "Shanghai"], "labels_zh": ["\u80e1\u5fd7\u660e\u5e02", "\u5409\u9686\u5761", "\u66fc\u8c37", "\u6771\u4eac\uff08\u5168\u5e02\uff09", "\u65b0\u52a0\u5761", "\u53f0\u5317", "\u9999\u6e2f", "\u4e0a\u6d77"], "page": "report", "title_en": "KL vs Asia Pacific Price-to-Rent", "title_zh": "\u5409\u9686\u5761 vs \u4e9e\u592a\u57ce\u5e02\u623f\u50f9\u79df\u91d1\u6bd4", "type": "bar (horizontal)"}, "chart-r-fdi": {"datasets": [{"colors": ["#1e3a5f", "#1e3a5f", "#1e3a5f", "#1e3a5f", "#16a34a"], "data": [12, 18, 15, 25, 12.5], "name": "RM Billion", "type": "bar"}], "labels_en": ["2021", "2022", "2023", "2024", "2025 H1"], "labels_zh": ["2021", "2022", "2023", "2024", "2025\u4e0a\u534a\u5e74"], "markPoint": {"coord": ["2025 H1", 12.5], "label": "+150% YoY"}, "page": "report", "title_en": "Penang Manufacturing FDI", "title_zh": "\u6ab3\u57ce\u88fd\u9020\u696d\u5916\u8cc7", "type": "bar"}, "chart-r-mismatch": {"datasets": [{"color": "#1e3a5f", "data": [53.1, 27.3, 13.8, 5.8], "name_en": "Demand %", "name_zh": "\u9700\u6c42%", "type": "bar"}, {"color": "#d97706", "data": [18, 25, 38, 19], "name_en": "Supply %", "name_zh": "\u4f9b\u7d66%", "type": "bar"}], "labels_en": ["\u003cRM300k", "300-500k", "500k-1M", "\u003eRM1M"], "labels_zh": ["\u003c30\u842c", "30-50\u842c", "50\u842c-1M", "\u003e1M"], "page": "report", "title_en": "Demand vs Supply Mismatch", "title_zh": "\u9700\u6c42 vs \u4f9b\u7d66\u932f\u914d", "type": "bar (grouped)"}, "chart-r-oh-forecast": {"datasets": [{"color": "#1e3a5f", "data": [25816, 22642, 28672, null, null, null, null], "name_en": "Historical", "name_zh": "\u6b77\u53f2", "type": "line"}, {"color": "#16a34a", "data": [null, null, 28672, 43000, 42000, 22000, 8000], "name_en": "Bull", "name_zh": "\u6a02\u89c0", "type": "line"}, {"color": "#d97706", "data": [null, null, 28672, 46000, 47000, 28000, 14000], "name_en": "Base", "name_zh": "\u57fa\u672c", "type": "line"}, {"color": "#dc2626", "data": [null, null, 28672, 51000, 57000, 42000, 28000], "name_en": "Bear", "name_zh": "\u4fdd\u5b88", "type": "line"}], "labels": ["2023", "2024H1", "25*", "26E", "27E", "28E", "29E"], "page": "report", "title_en": "Overhang Forecast 2025\u20132029", "title_zh": "\u5f85\u552e\u9918\u5c4b\u9810\u6e2c 2025\u20132029\u5e74", "type": "line (multi-scenario)"}, "chart-r-supply": {"datasets": [{"color": "#5a7a9a", "data": [85000, 60000, 77585, 89111, 80964, 100461, 49602], "lineType": "dashed", "name_en": "Planned", "name_zh": "\u898f\u5283\u91cf", "type": "line"}, {"color": "#1e3a5f", "data": [82000, 65000, 86258, 97804, 88114, 106236, 64843], "name_en": "Starts", "name_zh": "\u958b\u5de5\u6236\u6578", "type": "line"}, {"color": "#16a34a", "data": [78000, 72000, 76393, 71981, 74893, 82135, 69303], "name_en": "Completions", "name_zh": "\u5b8c\u5de5\u91cf", "type": "line"}], "labels_en": ["2019", "2020", "2021", "2022", "2023", "2024", "2025 Q1-Q3"], "labels_zh": ["2019", "2020", "2021", "2022", "2023", "2024", "2025\u524d\u4e09\u5b63"], "page": "report", "title_en": "Annual Supply Pipeline", "title_zh": "\u6bcf\u5e74\u63a8\u6848\u8207\u5b8c\u5de5\u6982\u6cc1", "type": "line (3 series)"}, "chart-r-takeup": {"datasets": [{"data": [{"color": "#16a34a", "value": 14}, {"color": "#d97706", "value": 5.1}], "name": "Take-up %", "type": "bar"}], "labels_en": ["Landed", "High-Rise"], "labels_zh": ["\u6709\u5730\u4f4f\u5b85", "\u9ad8\u5c64\u4f4f\u5b85"], "page": "report", "title_en": "New Launch Take-up Rate Q3 2025", "title_zh": "\u65b0\u63a8\u6848\u5373\u6642\u53bb\u5316\u7387 2025\u5e74Q3", "type": "bar"}, "chart-r-wave": {"datasets": [{"color": "#d97706", "data": [76393, 71981, 74893, 82135, 95000, 85000], "name_en": "Completions", "name_zh": "\u5b8c\u5de5\u91cf", "type": "line"}, {"color": "#16a34a", "data": [82000, 82000, 83000, 85000, 85000, 85000], "lineType": "dashed", "name_en": "Absorption", "name_zh": "\u5438\u6536\u91cf", "type": "line"}], "labels": ["2021", "2022", "2023", "2024", "2026E", "2027E"], "page": "report", "title_en": "Completion Wave vs Absorption", "title_zh": "\u5b8c\u5de5\u4ea4\u5c4b\u6f6e vs \u5438\u6536\u91cf", "type": "line (dual series)"}, "chart-r-yield-spread": {"datasets": [{"color": "#16a34a", "data": [4.8, 4.6, 4.7, 4.9, 5.16, 5.2, 5.16, 5.24, 5.1, 5.19], "name": "Rental Yield", "type": "line"}, {"color": "#dc2626", "data": [3.0, 1.75, 1.75, 2.75, 3.0, 3.0, 3.0, 3.0, 3.0, 2.75], "lineType": "dashed", "name": "OPR", "step": "end", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "23Q1", "23Q3", "24Q1", "24Q3", "25Q1", "25Q3"], "page": "report", "title_en": "Yield Spread Monitor", "title_zh": "\u5229\u5dee\u76e3\u6e2c", "type": "line (dual series)"}, "chart-r-zone": {"datasets": [{"data": [{"color": "#d97706", "value": 1800}, {"color": "#16a34a", "value": 700}, {"color": "#dc2626", "value": 490}], "name": "PSF (RM)", "type": "bar"}], "labels_en": ["Zone 1\nKLCC/BB", "Zone 2\nMid Valley/OKR", "Zone 3\nOuter Ring"], "labels_zh": ["\u7b2c\u4e00\u5340\nKLCC/BB", "\u7b2c\u4e8c\u5340\n\u4e2d\u8c37/OKR", "\u7b2c\u4e09\u5340\n\u5916\u570d"], "page": "report", "title_en": "KL Zone Average PSF", "title_zh": "\u5409\u9686\u5761\u4e09\u5340\u5e73\u5747\u544e\u50f9", "type": "bar"}, "chart-radar": {"datasets": [{"color": "#dc2626", "data": [6, 7, 8, 5, 6, 5], "name": "Current Risk"}, {"color": "#5a7a9a", "data": [5, 6, 5, 5, 4, 4], "lineType": "dashed", "name": "2023 Baseline"}], "indicators": [{"max": 10, "name_en": "Liquidity", "name_zh": "\u6d41\u52d5\u6027"}, {"max": 10, "name_en": "Credit", "name_zh": "\u4fe1\u8cb8"}, {"max": 10, "name_en": "Supply", "name_zh": "\u4f9b\u7d66"}, {"max": 10, "name_en": "Macro", "name_zh": "\u7e3d\u7d93"}, {"max": 10, "name_en": "Policy", "name_zh": "\u653f\u7b56"}, {"max": 10, "name_en": "Foreign", "name_zh": "\u5916\u8cc7"}], "page": "risk", "subtitle_en": "1 = Low Risk, 10 = Extreme Risk", "subtitle_zh": "1 = \u4f4e\u98a8\u96aa\uff0c10 = \u6975\u9ad8\u98a8\u96aa", "title_en": "Risk Radar \u2014 6 Dimensions", "title_zh": "\u98a8\u96aa\u96f7\u9054\u2014\u20146\u7dad\u5ea6", "type": "radar"}, "chart-rate-sensitivity": {"datasets": [{"color": "#16a34a", "data": [3.19, 2.69, 2.44, 2.19, 1.69], "name": "Yield Spread", "type": "line"}, {"color": "#d97706", "data": [88, 82, 79, 75, 68], "name": "Affordability Index", "type": "line", "yAxisIndex": 1}], "labels": ["OPR 2.0%", "OPR 2.5%", "OPR 2.75%", "OPR 3.0%", "OPR 3.5%"], "markLine": {"label": "Current", "xAxis": "OPR 2.75%"}, "page": "risk", "title_en": "Monthly Payment vs OPR (RM500k, 30yr loan)", "title_zh": "\u6708\u4f9b vs OPR\uff0850\u842c\u4ee4\u5409\u300130\u5e74\u671f\u8cb8\u6b3e\uff09", "type": "line (dual axis)"}, "chart-spread": {"datasets": [{"color": "#16a34a", "data": [4.8, 4.6, 4.7, 4.9, 5.16, 5.2, 5.16, 5.24, 5.1, 5.19], "name": "Rental Yield %", "type": "line"}, {"color": "#dc2626", "data": [3.0, 1.75, 1.75, 2.75, 3.0, 3.0, 3.0, 3.0, 3.0, 2.75], "lineType": "dashed", "name": "OPR %", "step": "end", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "23Q1", "23Q3", "24Q1", "24Q3", "25Q1", "25Q3"], "page": "valuation", "subtitle_en": "Rental Yield minus OPR \u2014 Positive = relative value", "subtitle_zh": "\u79df\u91d1\u6536\u76ca\u7387\u6e1bOPR\u2014\u2014\u6b63\u503c=\u76f8\u5c0d\u50f9\u503c", "title_en": "Yield Spread History", "title_zh": "\u5229\u5dee\u6b77\u53f2\u8d70\u52e2", "type": "line (dual series)"}, "chart-tx-trend": {"datasets": [{"color": "#1e3a5f", "data": [328000, 295000, 295000, 390000, 398000, 420525, 308000], "markPoint": {"label": "Decade High", "type": "max"}, "name": "Transactions", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025 Q1-Q3"], "page": "index", "title_en": "Transaction Volume Trend", "title_zh": "\u4ea4\u6613\u91cf\u8da8\u52e2", "type": "line"}, "chart-yield-city": {"datasets": [{"data": [5.6, 5.47, 5.4, 5.19, 4.6, 3.77], "name": "Yield %", "type": "bar"}], "labels": ["Iskandar Puteri", "JB City", "Subang Jaya", "National Avg", "KL City", "Penang GT"], "markLine": {"label": "OPR 2.75%", "yAxis": 2.75}, "page": "index", "title_en": "Rental Yield by City (Q1 2026)", "title_zh": "\u5404\u57ce\u5e02\u79df\u91d1\u6536\u76ca\u7387\uff082026\u5e74Q1\uff09", "type": "bar (horizontal)"}, "chart-yield-spread": {"datasets": [{"color": "#16a34a", "data": [4.8, 4.6, 4.7, 4.9, 5.16, 5.2, 5.16, 5.24, 5.1, 5.19], "name": "Rental Yield %", "type": "line"}, {"color": "#dc2626", "data": [3.0, 1.75, 1.75, 2.75, 3.0, 3.0, 3.0, 3.0, 3.0, 2.75], "lineType": "dashed", "name": "OPR %", "step": "end", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "23Q1", "23Q3", "24Q1", "24Q3", "25Q1", "25Q3"], "page": "index", "subtitle_en": "Gross Rental Yield vs OPR", "subtitle_zh": "\u79df\u91d1\u6536\u76ca\u7387 vs OPR", "title_en": "Yield Spread Monitor", "title_zh": "\u5229\u5dee\u76e3\u6e2c\u5100", "type": "line (dual series)"}, "chartLoan": {"datasets": [{"color": "#d97706", "data": [48.2, 44.1, 46.3, 45.8, 44.2, 43.1, 42.6], "name": "Approval Rate", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025Q3"], "markLine": {"label": "42.6% Current", "yAxis": 42.6}, "page": "demand", "subtitle_en": "Approval rate (%)", "subtitle_zh": "\u6838\u51c6\u7387 (%)", "title_en": "Loan Approval Rate Trend", "title_zh": "\u8cb8\u6b3e\u6838\u51c6\u7387\u8da8\u52e2", "type": "line"}, "chartOhForecast": {"datasets": [{"color": "#1e3a5f", "data": [25816, 22642, 28672, null, null, null, null], "name": "Historical", "type": "line"}, {"color": "#16a34a", "data": [null, null, 28672, 43000, 42000, 22000, 8000], "name": "Bull (90K)", "type": "line"}, {"color": "#d97706", "data": [null, null, 28672, 46000, 47000, 28000, 14000], "name": "Base (85K)", "type": "line"}, {"color": "#dc2626", "data": [null, null, 28672, 51000, 57000, 42000, 28000], "name": "Bear (75K)", "type": "line"}], "labels": ["2023", "2024H1", "25*", "26E", "27E", "28E", "29E"], "page": "supply", "subtitle_en": "Model-based projection \u00b7 Residential only", "subtitle_zh": "\u6a21\u578b\u63a8\u6f14 \u00b7 \u50c5\u4f4f\u5b85\u985e", "title_en": "Overhang Forecast 2025\u20132029", "title_zh": "\u5f85\u552e\u9918\u5c4b\u9810\u6e2c 2025\u20132029\u5e74", "type": "line (multi-scenario)"}, "chartOhPrice": {"datasets": [{"color": "#1e3a5f", "data": [1200, 4800, 8900, 9200, 4572], "name": "Units", "type": "bar"}], "labels": ["\u003c200k", "200-300k", "300-500k", "500k-1M", "\u003e1M"], "page": "supply", "title_en": "Overhang by Price Band", "title_zh": "\u4f9d\u50f9\u683c\u5e36\u5206\u985e\u5f85\u552e\u9918\u5c4b", "type": "bar"}, "chartOhSA": {"datasets": [{"colors": ["#d97706", "#d97706", "#1e3a5f", "#1e3a5f", "#5a7a9a"], "data": [6200, 4100, 3800, 1900, 1892], "name": "Units", "type": "bar"}], "labels": ["Johor", "KL", "Selangor", "Penang", "Others"], "page": "supply", "title_en": "Serviced Apartment Overhang by State", "title_zh": "\u5404\u5dde\u670d\u52d9\u5f0f\u516c\u5bd3\u5f85\u552e\u9918\u5c4b", "type": "bar"}, "chartOhState": {"datasets": [{"data": [3300, 3293, 2771, 2757, 2730, 2599, 2287, 2205, 6730], "name": "Units", "type": "bar"}], "labels": ["Perak", "Johor", "Sabah", "Selangor", "Penang", "Kelantan", "KL", "N. Sembilan", "Others"], "page": "supply", "title_en": "Overhang by State", "title_zh": "\u5404\u5dde\u5f85\u552e\u9918\u5c4b", "type": "bar (horizontal)"}, "chartOhTrend": {"datasets": [{"color": "#1e3a5f", "data": [32313, 36863, 31092, 26424, 27746, 25816, 22642, 28672], "name": "Residential", "type": "line"}, {"color": "#d97706", "data": [null, null, null, null, null, 47463, 42126, 44794], "lineType": "dashed", "name": "Total incl SA", "type": "line"}], "labels": ["2018", "2019", "2020", "2021", "2022", "2023", "2024H1", "2025Q3"], "page": "supply", "title_en": "Overhang Trend", "title_zh": "\u5f85\u552e\u9918\u5c4b\u8da8\u52e2", "type": "line (dual series)"}, "chartPipeline": {"datasets": [{"color": "#5a7a9a", "data": [85000, 60000, 77585, 89111, 80964, 100461, 49602], "lineType": "dashed", "name": "Planned", "type": "line"}, {"color": "#1e3a5f", "data": [82000, 65000, 86258, 97804, 88114, 106236, 64843], "name": "Starts", "type": "line"}, {"color": "#16a34a", "data": [78000, 72000, 76393, 71981, 74893, 82135, 69303], "name": "Completions", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025\u524dQ3"], "page": "supply", "subtitle_en": "Planned vs Starts vs Completions", "subtitle_zh": "\u8a08\u756b vs \u958b\u5de5 vs \u5b8c\u5de5", "title_en": "Annual Supply Pipeline", "title_zh": "\u6bcf\u5e74\u63a8\u6848\u8207\u5b8c\u5de5\u6982\u6cc1", "type": "line (3 series)"}, "chartPriSec": {"datasets": [{"color": "#1e3a5f", "data": [28, 26, 24, 22, 21, 21, 20.6], "name": "Primary", "type": "line"}, {"color": "#5a7a9a", "data": [72, 74, 76, 78, 79, 79, 79.4], "name": "Secondary", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025 H1"], "page": "demand", "subtitle_en": "Market share trend (%)", "subtitle_zh": "\u5e02\u5834\u4f54\u6bd4\u8da8\u52e2 (%)", "title_en": "Primary vs Secondary Market", "title_zh": "\u4e00\u624b vs \u4e8c\u624b\u5e02\u5834", "type": "line (dual series)"}, "chartProjected": {"datasets": [{"color": "#1e3a5f", "data": [71981, 74893, 82135, null, null, null], "name": "Historical", "type": "bar"}, {"color": "rgba(30,58,95,0.2)", "data": [null, null, null, 90000, 85000, 75000], "name": "Projected Low", "type": "bar"}, {"borderColor": "#d97706", "color": "rgba(217,119,6,0.2)", "data": [null, null, null, 100000, 95000, 85000], "name": "Projected High", "type": "bar"}], "labels": ["2022", "2023", "2024", "2026E", "2027E", "2028E"], "page": "supply", "subtitle_en": "Historical \u0026 Forecast Range", "subtitle_zh": "\u6b77\u53f2\u8207\u9810\u6e2c\u5340\u9593", "title_en": "Projected Completions", "title_zh": "\u9810\u8a08\u5b8c\u5de5\u91cf", "type": "bar (grouped)"}, "chartStateGrowth": {"datasets": [{"data": [12.3, 8.7, 6.2, 4.1, -4.3, 2.8, 3.5], "name": "YoY %", "type": "bar"}], "labels": ["Kelantan", "Melaka", "Pahang", "Selangor", "KL", "Perlis", "N. Sembilan"], "page": "demand", "subtitle_en": "Transaction volume change by state", "subtitle_zh": "\u5404\u5dde\u4ea4\u6613\u91cf\u8b8a\u5316", "title_en": "State YoY Growth", "title_zh": "\u5404\u5dde\u5e74\u589e\u7387", "type": "bar (horizontal)"}, "chartTakeUp": {"datasets": [{"data": [{"color": "#16a34a", "value": 14}, {"color": "#d97706", "value": 5.1}], "name": "Take-up %", "type": "bar"}], "labels": ["Landed / \u6709\u5730\u4f4f\u5b85", "High-Rise / \u9ad8\u5c64\u4f4f\u5b85"], "page": "demand", "subtitle_en": "Day-1 take-up rate (%)", "subtitle_zh": "\u9996\u65e5\u53bb\u5316\u7387 (%)", "title_en": "Take-up Rate by Type", "title_zh": "\u4f9d\u985e\u578b\u53bb\u5316\u7387", "type": "bar"}, "chartTxnVol": {"datasets": [{"color": "#1e3a5f", "data": [328000, 295000, 295000, 390000, 398000, 420525, 308000], "markPoint": {"label": "Decade High", "type": "max"}, "name": "Transactions", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025 Q1-Q3"], "page": "demand", "subtitle_en": "Annual residential property transactions", "subtitle_zh": "\u5e74\u5ea6\u4f4f\u5b85\u4ea4\u6613\u91cf", "title_en": "Transaction Volume Trend", "title_zh": "\u4ea4\u6613\u91cf\u8da8\u52e2", "type": "line"}, "chartWIP": {"datasets": [{"data": [{"color": "#d97706", "value": 275000}, {"color": "#16a34a", "value": 85000}], "name": "Value", "type": "bar"}], "labels": ["WIP in Pipeline*", "Annual Absorption"], "page": "supply", "subtitle_en": "Pipeline Imbalance", "subtitle_zh": "\u7ba1\u7dda\u5931\u8861", "title_en": "WIP vs Absorption", "title_zh": "\u5728\u5efa\u5de5\u7a0b vs \u5e74\u5438\u6536\u91cf", "type": "bar"}};
+  var en = lang !== 'zh';
 
-  var allCharts = [];
-
-  function initAllCharts(lang) {
-    allCharts.forEach(function(c){ if(c) c.dispose(); });
-    allCharts = [];
-    drawYieldSpread(lang);
-    drawMismatch(lang);
-    drawCompletionWave(lang);
-    drawSupplyPipeline(lang);
-    drawOhForecast(lang);
-    drawTakeup(lang);
-    drawAPAC(lang);
-    drawZonePSF(lang);
-    drawFDI(lang);
-  }
-
-  function setLang(lang){
-    document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
-    document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
-    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
-    localStorage.setItem('lang',lang);
-    initAllCharts(lang);
-  }
-  function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
-  document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){var d=document.getElementById('marketDropdown');if(d)d.classList.remove('open');}});
-
-  function drawYieldSpread(lang){
-    var c = echarts.init(document.getElementById('chart-r-yield-spread'));
+  function initChart(id){
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var c = echarts.init(el);
     allCharts.push(c);
-    c.setOption({
-      tooltip: baseTooltip,
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','23Q1','23Q3','24Q1','24Q3','25Q1','25Q3'], axisLabel:{ color:C.muted, fontSize:8 } }),
-      yAxis: mkAxis({ type:'value', min:1, max:6, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
-      series: [
-        { type:'line', data:[4.80,4.60,4.70,4.90,5.16,5.20,5.16,5.24,5.10,5.19], lineStyle:{color:C.green,width:1.5}, itemStyle:{color:C.green}, smooth:0.3, areaStyle:{color:'rgba(22,163,74,0.08)'}, symbol:'circle', symbolSize:4 },
-        { type:'line', data:[3.00,1.75,1.75,2.75,3.00,3.00,3.00,3.00,3.00,2.75], lineStyle:{color:C.red,width:1,type:'dashed'}, itemStyle:{color:C.red}, step:'end', symbol:'circle', symbolSize:3 }
-      ]
+    return c;
+  }
+
+  function dsColor(ds, idx){
+    var palette = [C.navy, C.green, C.orange, C.red, C.blue, C.muted];
+    return ds.color || palette[idx % palette.length];
+  }
+
+  function buildLineStyle(ds, idx){
+    var style = { color: dsColor(ds, idx), width: ds.width || 2 };
+    if(ds.lineType) style.type = ds.lineType;
+    return style;
+  }
+
+  function buildMarkLine(cfg){
+    if(!cfg) return undefined;
+    var ml = {
+      silent: true, symbol: 'none',
+      lineStyle: { color: C.red, type: 'dashed', width: 1 },
+      label: { formatter: cfg.label || '', fontSize: 10, color: C.red },
+      data: []
+    };
+    if(cfg.xAxis !== undefined) ml.data.push({ xAxis: cfg.xAxis });
+    if(cfg.yAxis !== undefined) ml.data.push({ yAxis: cfg.yAxis });
+    return ml;
+  }
+
+  function buildMarkPoint(cfg){
+    if(!cfg) return undefined;
+    var items = Array.isArray(cfg) ? cfg : [cfg];
+    var mpData = items.map(function(mp){
+      var d = {};
+      if(mp.type) d.type = mp.type;
+      if(mp.coord) d.coord = mp.coord;
+      if(mp.label) d.label = { formatter: mp.label, fontSize: 9, fontWeight: 'bold' };
+      d.symbolSize = mp.symbolSize || 50;
+      if(mp.color) d.itemStyle = { color: mp.color };
+      else if(mp.type === 'max') d.itemStyle = { color: C.green };
+      else if(mp.type === 'min') d.itemStyle = { color: C.red };
+      return d;
     });
+    return { data: mpData };
   }
 
-  function drawMismatch(lang){
-    var c = echarts.init(document.getElementById('chart-r-mismatch'));
-    allCharts.push(c);
-    var labels = lang==='zh' ? ['<30\u842c','30-50\u842c','50\u842c-1M','>1M'] : ['<RM300k','300-500k','500k-1M','>RM1M'];
-    c.setOption({
-      tooltip: baseTooltip,
-      legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u9700\u6c42%':'Demand %', lang==='zh'?'\u4f9b\u7d66%':'Supply %'], textStyle:{fontSize:8,color:C.muted} }),
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:labels, axisLabel:{fontSize:8,color:C.muted} }),
-      yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:'{value}%'} }),
-      series: [
-        { name:lang==='zh'?'\u9700\u6c42%':'Demand %', type:'bar', data:[53.1,27.3,13.8,5.8], itemStyle:{color:C.navy,borderRadius:[3,3,0,0]}, barMaxWidth:30 },
-        { name:lang==='zh'?'\u4f9b\u7d66%':'Supply %', type:'bar', data:[18,25,38,19], itemStyle:{color:C.orange,borderRadius:[3,3,0,0]}, barMaxWidth:30 }
-      ]
+  /* Iterate over all charts belonging to page 'report' */
+  Object.keys(DATA).forEach(function(chartId){
+    var info = DATA[chartId];
+    if(info.page !== 'report') return;
+
+    var chart = initChart(chartId);
+    if(!chart) return;
+
+    var chartType = (info.type || '').toLowerCase();
+    var isHorizontal = chartType.indexOf('horizontal') >= 0;
+    var hasDualAxis = chartType.indexOf('dual') >= 0 ||
+                      (info.datasets && info.datasets.some(function(ds){ return ds.yAxisIndex === 1; }));
+
+    /* Use localized labels if available */
+    var labels = info.labels;
+    if(en && info.labels_en) labels = info.labels_en;
+    if(!en && info.labels_zh) labels = info.labels_zh;
+
+    var legendNames = (info.datasets || []).map(function(ds){
+      return en ? (ds.name_en || ds.name || '') : (ds.name_zh || ds.name || '');
     });
-  }
 
-  function drawCompletionWave(lang){
-    var c = echarts.init(document.getElementById('chart-r-wave'));
-    allCharts.push(c);
-    c.setOption({
-      tooltip: baseTooltip,
-      legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u5b8c\u5de5\u91cf':'Completions', lang==='zh'?'\u5438\u6536\u91cf':'Absorption'], textStyle:{fontSize:8,color:C.muted} }),
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:['2021','2022','2023','2024','2026E','2027E'], axisLabel:{fontSize:8,color:C.muted} }),
-      yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
-      series: [
-        { name:lang==='zh'?'\u5b8c\u5de5\u91cf':'Completions', type:'line', data:[76393,71981,74893,82135,95000,85000], lineStyle:{color:C.orange,width:1.5}, itemStyle:{color:C.orange}, smooth:0.2, symbol:'circle', symbolSize:4 },
-        { name:lang==='zh'?'\u5438\u6536\u91cf':'Absorption', type:'line', data:[82000,82000,83000,85000,85000,85000], lineStyle:{color:C.green,width:1,type:'dashed'}, itemStyle:{color:C.green}, symbol:'none' }
-      ]
-    });
-  }
+    /* Build series */
+    var series = (info.datasets || []).map(function(ds, idx){
+      var name = en ? (ds.name_en || ds.name || '') : (ds.name_zh || ds.name || '');
+      var s = { name: name, type: ds.type || 'line' };
+      var clr = dsColor(ds, idx);
 
-  function drawSupplyPipeline(lang){
-    var c = echarts.init(document.getElementById('chart-r-supply'));
-    allCharts.push(c);
-    var lastLabel = lang==='zh' ? '2025\u524d\u4e09\u5b63' : '2025 Q1-Q3';
-    c.setOption({
-      tooltip: baseTooltip,
-      legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u898f\u5283\u91cf':'Planned', lang==='zh'?'\u958b\u5de5\u6236\u6578':'Starts', lang==='zh'?'\u5b8c\u5de5\u91cf':'Completions'] }),
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024',lastLabel], axisLabel:{fontSize:9,color:C.muted} }),
-      yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
-      series: [
-        { name:lang==='zh'?'\u898f\u5283\u91cf':'Planned', type:'line', data:[85000,60000,77585,89111,80964,100461,49602], lineStyle:{color:C.muted,width:2,type:'dashed'}, itemStyle:{color:C.muted}, smooth:0.2, symbol:'circle', symbolSize:4 },
-        { name:lang==='zh'?'\u958b\u5de5\u6236\u6578':'Starts', type:'line', data:[82000,65000,86258,97804,88114,106236,64843], lineStyle:{color:C.navy,width:2}, itemStyle:{color:C.navy}, smooth:0.2, symbol:'circle', symbolSize:4 },
-        { name:lang==='zh'?'\u5b8c\u5de5\u91cf':'Completions', type:'line', data:[78000,72000,76393,71981,74893,82135,69303], lineStyle:{color:C.green,width:2}, itemStyle:{color:C.green}, smooth:0.2, symbol:'circle', symbolSize:4 }
-      ]
-    });
-  }
+      if(ds.colors && Array.isArray(ds.colors)){
+        s.data = ds.data.map(function(v, i){
+          return { value: v, itemStyle: { color: ds.colors[i], borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] } };
+        });
+      } else {
+        s.data = ds.data;
+      }
 
-  function drawOhForecast(lang){
-    var c = echarts.init(document.getElementById('chart-r-oh-forecast'));
-    allCharts.push(c);
-    c.setOption({
-      tooltip: baseTooltip,
-      legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u6b77\u53f2':'Historical', lang==='zh'?'\u6a02\u89c0':'Bull', lang==='zh'?'\u57fa\u672c':'Base', lang==='zh'?'\u4fdd\u5b88':'Bear'] }),
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:['2023','2024H1','25*','26E','27E','28E','29E'], axisLabel:{fontSize:9,color:C.muted,rotate:0,interval:0} }),
-      yAxis: mkAxis({ type:'value', min:0, axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
-      series: [
-        { name:lang==='zh'?'\u6b77\u53f2':'Historical', type:'line', data:[25816,22642,28672,null,null,null,null], lineStyle:{color:C.navy,width:2}, itemStyle:{color:C.navy}, areaStyle:{color:'rgba(30,58,95,0.08)'}, symbol:'circle', symbolSize:5 },
-        { name:lang==='zh'?'\u6a02\u89c0':'Bull', type:'line', data:[null,null,28672,43000,42000,22000,8000], lineStyle:{color:C.green,width:1.5,type:[4,2]}, itemStyle:{color:C.green}, symbol:'circle', symbolSize:4 },
-        { name:lang==='zh'?'\u57fa\u672c':'Base', type:'line', data:[null,null,28672,46000,47000,28000,14000], lineStyle:{color:C.orange,width:2,type:[6,3]}, itemStyle:{color:C.orange}, symbol:'circle', symbolSize:5 },
-        { name:lang==='zh'?'\u4fdd\u5b88':'Bear', type:'line', data:[null,null,28672,51000,57000,42000,28000], lineStyle:{color:C.red,width:1.5,type:[8,4]}, itemStyle:{color:C.red}, symbol:'circle', symbolSize:4 }
-      ]
-    });
-  }
-
-  function drawTakeup(lang){
-    var c = echarts.init(document.getElementById('chart-r-takeup'));
-    allCharts.push(c);
-    var labels = lang==='zh' ? ['\u6709\u5730\u4f4f\u5b85','\u9ad8\u5c64\u4f4f\u5b85'] : ['Landed','High-Rise'];
-    c.setOption({
-      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:labels }),
-      yAxis: mkAxis({ type:'value', max:20, axisLabel:{fontSize:9,color:C.muted, formatter:'{value}%'} }),
-      series: [{
-        type:'bar',
-        data:[
-          { value:14, itemStyle:{color:C.green,borderRadius:[4,4,0,0]} },
-          { value:5.1, itemStyle:{color:C.orange,borderRadius:[4,4,0,0]} }
-        ],
-        barMaxWidth:120,
-        label:{ show:true, position:'top', formatter:'{c}%', fontSize:11, fontFamily:'JetBrains Mono, monospace' }
-      }]
-    });
-  }
-
-  function drawAPAC(lang){
-    var c = echarts.init(document.getElementById('chart-r-apac'));
-    allCharts.push(c);
-    var labels = lang==='zh'
-      ? ['\u80e1\u5fd7\u660e\u5e02','\u5409\u9686\u5761','\u66fc\u8c37','\u6771\u4eac\uff08\u5168\u5e02\uff09','\u65b0\u52a0\u5761','\u53f0\u5317','\u9999\u6e2f','\u4e0a\u6d77']
-      : ['Ho Chi Minh','KL','Bangkok','Tokyo','Singapore','Taipei','Hong Kong','Shanghai'];
-    var values = [18, 21.7, 25, 37, 40, 47, 50, 59];
-    var colors = [C.green, C.green, C.navy, C.navy, C.navy, C.orange, C.orange, C.red];
-    c.setOption({
-      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
-      grid: { left:90, right:50, top:10, bottom:15, containLabel:false },
-      xAxis: mkAxis({ type:'value', min:0, max:65 }),
-      yAxis: mkAxis({ type:'category', data:labels, axisLabel:{color:C.navy,fontSize:10,fontFamily:'Inter'} }),
-      series: [{
-        type:'bar',
-        data: values.map(function(v,i){ return { value:v, itemStyle:{color:colors[i],borderRadius:[0,4,4,0]} }; }),
-        barMaxWidth:22,
-        label:{ show:true, position:'right', formatter:'{c}x', fontSize:10, fontFamily:'Inter', fontWeight:'bold', color:C.navy }
-      }]
-    });
-  }
-
-  function drawZonePSF(lang){
-    var c = echarts.init(document.getElementById('chart-r-zone'));
-    allCharts.push(c);
-    var labels = lang==='zh'
-      ? ['\u7b2c\u4e00\u5340\nKLCC/BB','\u7b2c\u4e8c\u5340\n\u4e2d\u8c37/OKR','\u7b2c\u4e09\u5340\n\u5916\u570d']
-      : ['Zone 1\nKLCC/BB','Zone 2\nMid Valley/OKR','Zone 3\nOuter Ring'];
-    c.setOption({
-      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:labels }),
-      yAxis: mkAxis({ type:'value', min:0, axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return 'RM '+v.toLocaleString();}} }),
-      series: [{
-        type:'bar',
-        data:[
-          { value:1800, itemStyle:{color:C.orange,borderRadius:[4,4,0,0]} },
-          { value:700, itemStyle:{color:C.green,borderRadius:[4,4,0,0]} },
-          { value:490, itemStyle:{color:C.red,borderRadius:[4,4,0,0]} }
-        ],
-        barMaxWidth:100,
-        label:{ show:true, position:'top', formatter:'RM {c} psf', fontSize:10, fontFamily:'JetBrains Mono, monospace' }
-      }]
-    });
-  }
-
-  function drawFDI(lang){
-    var c = echarts.init(document.getElementById('chart-r-fdi'));
-    allCharts.push(c);
-    var lastLabel = lang==='zh' ? '2025\u4e0a\u534a\u5e74' : '2025 H1';
-    c.setOption({
-      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:['2021','2022','2023','2024',lastLabel], axisLabel:{fontSize:9,color:C.muted} }),
-      yAxis: mkAxis({ type:'value', min:0 }),
-      series: [{
-        type:'bar',
-        data:[
-          { value:12, itemStyle:{color:C.navy,borderRadius:[4,4,0,0]} },
-          { value:18, itemStyle:{color:C.navy,borderRadius:[4,4,0,0]} },
-          { value:15, itemStyle:{color:C.navy,borderRadius:[4,4,0,0]} },
-          { value:25, itemStyle:{color:C.navy,borderRadius:[4,4,0,0]} },
-          { value:12.5, itemStyle:{color:C.green,borderRadius:[4,4,0,0]} }
-        ],
-        barMaxWidth:50,
-        label:{ show:true, position:'top', formatter:'RM {c}B', fontSize:10, fontFamily:'JetBrains Mono, monospace' },
-        markPoint:{
-          data:[{ coord:[lastLabel,12.5], symbol:'pin', symbolSize:40, label:{formatter:'+150%\nYoY',fontSize:8}, itemStyle:{color:C.green} }]
+      if(ds.type === 'bar'){
+        s.barMaxWidth = isHorizontal ? 22 : 55;
+        if(!ds.colors) s.itemStyle = { color: clr, borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] };
+        if(ds.color_positive){
+          s.itemStyle = {
+            color: function(p){ return p.value >= 0 ? ds.color_positive : (ds.color_negative || C.red); },
+            borderRadius: [3,3,0,0]
+          };
+          s.label = { show: true, position: 'top', fontFamily: 'JetBrains Mono, monospace', fontSize: 9, formatter: function(p){ return p.value + '%'; } };
         }
-      }]
+        if(isHorizontal){
+          s.label = { show: true, position: 'right', formatter: '{c}', fontSize: 10, fontFamily: 'Inter', fontWeight: 'bold', color: C.navy };
+        } else if(!ds.color_positive && idx === 0){
+          s.label = { show: true, position: 'top', fontFamily: 'JetBrains Mono, monospace', fontSize: 10,
+            formatter: function(p){ return typeof p.value === 'number' && p.value >= 1000 ? fmtNum(p.value) : p.value; } };
+        }
+      }
+
+      if(ds.type === 'line'){
+        s.lineStyle = buildLineStyle(ds, idx);
+        s.itemStyle = { color: clr };
+        s.symbol = 'circle';
+        s.symbolSize = ds.symbolSize || 4;
+        if(ds.step) s.step = ds.step;
+        if(ds.areaStyle) s.areaStyle = { color: 'rgba(' + hexToRgb(clr) + ',0.08)' };
+        if(ds.smooth !== undefined) s.smooth = ds.smooth;
+        else s.smooth = 0.2;
+        if(ds.yAxisIndex === 1) s.yAxisIndex = 1;
+      }
+
+      if(ds.markPoint) s.markPoint = buildMarkPoint(ds.markPoint);
+      if(ds.markLine) s.markLine = buildMarkLine(ds.markLine);
+      return s;
     });
-  }
 
-  window.addEventListener('load', function(){
-    var lang = localStorage.getItem('lang') || 'en';
-    setLang(lang);
-  });
+    if(info.markLine && series.length > 0){
+      var lastS = series[series.length - 1];
+      if(!lastS.markLine) lastS.markLine = buildMarkLine(info.markLine);
+    }
 
-  window.addEventListener('resize', function(){
-    allCharts.forEach(function(c){ if(c) c.resize(); });
+    /* Build axes */
+    var xAxisCfg, yAxisCfg;
+    var compactLabel = { color: C.muted, fontSize: 9 };
+
+    if(isHorizontal){
+      xAxisCfg = mkAxis({ type: 'value', min: 0 });
+      yAxisCfg = mkAxis({ type: 'category', data: (labels || []).slice().reverse(), axisLabel: { color: C.navy, fontSize: 10, fontFamily: 'Inter' } });
+      series.forEach(function(s){ if(Array.isArray(s.data)) s.data = s.data.slice().reverse(); });
+    } else {
+      xAxisCfg = mkAxis({ type: 'category', data: labels, axisLabel: compactLabel });
+      if(hasDualAxis){
+        yAxisCfg = [
+          mkAxis({ type: 'value', axisLabel: compactLabel }),
+          mkAxis({ type: 'value', splitLine: { show: false }, axisLabel: Object.assign({}, compactLabel, { formatter: '{value}%' }) })
+        ];
+      } else {
+        yAxisCfg = mkAxis({ type: 'value', axisLabel: compactLabel });
+      }
+    }
+
+    var grid = isHorizontal
+      ? { left: 90, right: 50, top: 10, bottom: 15, containLabel: false }
+      : { left: 12, right: 12, top: 28, bottom: 20, containLabel: true };
+
+    var option = {
+      tooltip: isHorizontal
+        ? Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } })
+        : baseTooltip,
+      grid: grid,
+      xAxis: xAxisCfg,
+      yAxis: yAxisCfg,
+      series: series
+    };
+
+    if(legendNames.length > 1){
+      option.legend = Object.assign({}, baseLegend, { top: 8, data: legendNames, textStyle: { fontSize: 8, color: C.muted } });
+    }
+
+    chart.setOption(option);
   });
-  </script>
+}
+
+/* Helper: hex color to rgb string */
+function hexToRgb(hex){
+  if(!hex || hex.charAt(0) !== '#') return '30,58,95';
+  var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return r+','+g+','+b;
+}
+</script>
 </body>
 </html>

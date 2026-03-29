@@ -1,43 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Risk Monitor | Australia Property Monitor</title>
-  <meta name="color-scheme" content="light">
-  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
-  .timeline{display:flex;flex-wrap:wrap;gap:0;margin:20px 0;position:relative}.timeline::before{content:'';position:absolute;top:18px;left:0;right:0;height:2px;background:#ccd9e8}.tl-item{flex:1;min-width:140px;text-align:center;position:relative;padding-top:36px}.tl-dot{width:12px;height:12px;border-radius:50%;background:#1e3a5f;position:absolute;top:12px;left:50%;transform:translateX(-50%);border:2px solid #fff;box-shadow:0 0 0 2px #ccd9e8}.tl-item.highlight .tl-dot{background:#dc2626;box-shadow:0 0 0 2px #dc2626}.tl-date{font-size:11px;font-weight:600;color:#1e3a5f;font-family:Inter,sans-serif}.tl-desc{font-size:10px;color:#5a7a9a;margin-top:4px;font-family:Inter,sans-serif;line-height:1.4}
-  .risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}.risk-card{background:#fff;border:1px solid #ccd9e8;border-radius:10px;padding:20px;border-left:4px solid #dc2626}.risk-card.amber{border-left-color:#d97706}.risk-card h4{font-size:13px;color:#1e3a5f;margin:0 0 6px;font-family:Inter,sans-serif}.risk-card .risk-level{font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:8px}.risk-card .risk-level.high{background:#fef2f2;color:#dc2626}.risk-card .risk-level.medium{background:#fffbeb;color:#d97706}.risk-card p{font-size:12px;color:#5a7a9a;margin:0;font-family:Inter,sans-serif;line-height:1.5}
-  </style>
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../tw/tw.css">
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Risk Monitor | Australia Property Monitor</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../tw/tw.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}
+.navbar{background:#fff!important}
+.kpi-card,.chart-card,.summary-card,.micro-card{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}
+.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}
+.market-btn:hover{background:#dde8f2}
+.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.1);min-width:155px;z-index:100}
+.market-dropdown.open{display:block}
+.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}
+.market-dropdown a:hover{background:#f4f7fc}
+.market-dropdown a.active{font-weight:600}
+</style>
+<style>
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:12px}
+.summary-card{background:#fff;border:1px solid #ccd9e8;border-radius:10px;padding:18px 22px}
+.summary-card h4{margin:0 0 8px;font-size:13px;color:#1e3a5f;font-family:Inter,sans-serif}
+.summary-card p{margin:0;font-size:12px;color:#5a7a9a;line-height:1.6;font-family:Inter,sans-serif}
+.green-left{border-left:4px solid #16a34a}
+.red-left{border-left:4px solid #dc2626}
+.orange-left{border-left:4px solid #d97706}
+.blue-left{border-left:4px solid #2563eb}
+.timeline{position:relative;padding-left:24px;margin:16px 0}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:#ccd9e8}
+.timeline-item{position:relative;padding:10px 0 10px 20px;font-family:Inter,sans-serif}
+.timeline-item::before{content:'';position:absolute;left:-20px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--dot-color,#ccd9e8);border:2px solid #fff;box-shadow:0 0 0 2px var(--dot-color,#ccd9e8)}
+.timeline-item.green::before{--dot-color:#16a34a}
+.timeline-item.red::before{--dot-color:#dc2626}
+.timeline-item.orange::before{--dot-color:#d97706}
+.timeline-item.gray::before{--dot-color:#94a3b8}
+.tl-date{display:inline-block;min-width:80px;font-weight:600;font-size:12px;color:#1e3a5f}
+.tl-text{font-size:12px;color:#5a7a9a;line-height:1.5}
+.table-scroll{overflow-x:auto}
+.data-table{width:100%;border-collapse:collapse;font-family:Inter,sans-serif;font-size:12px}
+.data-table th{text-align:left;padding:10px 12px;border-bottom:2px solid #ccd9e8;color:#5a7a9a;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.3px}
+.data-table td{padding:10px 12px;border-bottom:1px solid #eef3f9;color:#1e3a5f}
+.cell-green{color:#16a34a}
+.cell-orange{color:#d97706}
+.cell-red{color:#dc2626}
+.chart-footnote{font-size:11px;color:#5a7a9a;font-family:Inter,sans-serif;margin-top:10px;font-style:italic}
+</style>
 </head>
 <body>
-  <header class="navbar">
+
+<header class="navbar">
   <a href="../index.html" class="logo">PROPERTY MONITOR</a>
   <div class="market-selector">
-    <button class="market-btn" onclick="toggleMarketMenu()">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span> ▾</button>
+    <button class="market-btn" onclick="toggleMarketMenu()">
+      🇦🇺
+      <span class="lang-en">Australia</span>
+      <span class="lang-zh" style="display:none">澳洲</span>
+      ▾
+    </button>
     <div class="market-dropdown" id="marketDropdown">
-      <a href="../index.html">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
-      <a href="../tw/index.html">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
-      <a href="../jp/index.html">🇯🇵 <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a>
-      <a href="index.html" class="active">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a>
-      <a href="../nz/index.html">🇳🇿 <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a>
-      <a href="../uk/index.html">🇬🇧 <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a>
+      <a href="../index.html"
+>
+        🇲🇾
+        <span class="lang-en">Malaysia</span>
+        <span class="lang-zh" style="display:none">馬來西亞</span>
+      </a>
+      <a href="../tw/index.html"
+>
+        🇹🇼
+        <span class="lang-en">Taiwan</span>
+        <span class="lang-zh" style="display:none">台灣</span>
+      </a>
+      <a href="../jp/index.html"
+>
+        🇯🇵
+        <span class="lang-en">Japan</span>
+        <span class="lang-zh" style="display:none">日本</span>
+      </a>
+      <a href="../au/index.html"
+class="active">
+        🇦🇺
+        <span class="lang-en">Australia</span>
+        <span class="lang-zh" style="display:none">澳洲</span>
+      </a>
+      <a href="../nz/index.html"
+>
+        🇳🇿
+        <span class="lang-en">New Zealand</span>
+        <span class="lang-zh" style="display:none">紐西蘭</span>
+      </a>
+      <a href="../uk/index.html"
+>
+        🇬🇧
+        <span class="lang-en">United Kingdom</span>
+        <span class="lang-zh" style="display:none">英國</span>
+      </a>
     </div>
   </div>
   <nav>
-    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
-    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
-    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
-    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
-    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
-    <a href="risk.html" class="active"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
-    <a href="sydney.html"><span class="lang-en">Sydney</span><span class="lang-zh" style="display:none">雪梨</span></a>
-    <a href="melbourne.html"><span class="lang-en">Melbourne</span><span class="lang-zh" style="display:none">墨爾本</span></a>
-    <a href="brisbane.html"><span class="lang-en">Brisbane</span><span class="lang-zh" style="display:none">布里斯本</span></a>
-    <a href="goldcoast.html"><span class="lang-en">Gold Coast</span><span class="lang-zh" style="display:none">黃金海岸</span></a>
+    <a href="report.html">
+      <span class="lang-en">Report</span>
+      <span class="lang-zh" style="display:none">報告</span>
+    </a>
+    <a href="index.html">
+      <span class="lang-en">Dashboard</span>
+      <span class="lang-zh" style="display:none">總覽</span>
+    </a>
+    <a href="supply.html">
+      <span class="lang-en">Supply</span>
+      <span class="lang-zh" style="display:none">供給</span>
+    </a>
+    <a href="demand.html">
+      <span class="lang-en">Demand</span>
+      <span class="lang-zh" style="display:none">需求</span>
+    </a>
+    <a href="valuation.html">
+      <span class="lang-en">Valuation</span>
+      <span class="lang-zh" style="display:none">估值</span>
+    </a>
+    <a href="risk.html" class="active">
+      <span class="lang-en">Risk</span>
+      <span class="lang-zh" style="display:none">風險</span>
+    </a>
+    <a href="sydney.html">
+      <span class="lang-en">Sydney</span>
+      <span class="lang-zh" style="display:none">雪梨</span>
+    </a>
+    <a href="melbourne.html">
+      <span class="lang-en">Melbourne</span>
+      <span class="lang-zh" style="display:none">墨爾本</span>
+    </a>
+    <a href="brisbane.html">
+      <span class="lang-en">Brisbane</span>
+      <span class="lang-zh" style="display:none">布里斯本</span>
+    </a>
+    <a href="goldcoast.html">
+      <span class="lang-en">Gold Coast</span>
+      <span class="lang-zh" style="display:none">黃金海岸</span>
+    </a>
   </nav>
   <div class="lang-switcher">
     <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
@@ -46,259 +148,291 @@
   <span class="opr-badge">RBA: 3.85% ▲</span>
   <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
 </header>
+
 <div class="mobile-menu">
-  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
-  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
-  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
-  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
-  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
-  <a href="risk.html" class="active"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
-  <a href="sydney.html"><span class="lang-en">Sydney</span><span class="lang-zh" style="display:none">雪梨</span></a>
-  <a href="melbourne.html"><span class="lang-en">Melbourne</span><span class="lang-zh" style="display:none">墨爾本</span></a>
-  <a href="brisbane.html"><span class="lang-en">Brisbane</span><span class="lang-zh" style="display:none">布里斯本</span></a>
-  <a href="goldcoast.html"><span class="lang-en">Gold Coast</span><span class="lang-zh" style="display:none">黃金海岸</span></a>
+  <a href="report.html">
+    <span class="lang-en">Report</span>
+    <span class="lang-zh" style="display:none">報告</span>
+  </a>
+  <a href="index.html">
+    <span class="lang-en">Dashboard</span>
+    <span class="lang-zh" style="display:none">總覽</span>
+  </a>
+  <a href="supply.html">
+    <span class="lang-en">Supply</span>
+    <span class="lang-zh" style="display:none">供給</span>
+  </a>
+  <a href="demand.html">
+    <span class="lang-en">Demand</span>
+    <span class="lang-zh" style="display:none">需求</span>
+  </a>
+  <a href="valuation.html">
+    <span class="lang-en">Valuation</span>
+    <span class="lang-zh" style="display:none">估值</span>
+  </a>
+  <a href="risk.html">
+    <span class="lang-en">Risk</span>
+    <span class="lang-zh" style="display:none">風險</span>
+  </a>
+  <a href="sydney.html">
+    <span class="lang-en">Sydney</span>
+    <span class="lang-zh" style="display:none">雪梨</span>
+  </a>
+  <a href="melbourne.html">
+    <span class="lang-en">Melbourne</span>
+    <span class="lang-zh" style="display:none">墨爾本</span>
+  </a>
+  <a href="brisbane.html">
+    <span class="lang-en">Brisbane</span>
+    <span class="lang-zh" style="display:none">布里斯本</span>
+  </a>
+  <a href="goldcoast.html">
+    <span class="lang-en">Gold Coast</span>
+    <span class="lang-zh" style="display:none">黃金海岸</span>
+  </a>
   <div class="mobile-meta">
-    <span class="opr-badge">RBA: 3.85% ▲</span>
-    <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+    <span class="opr-badge">RBA: 3.85%</span>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+    </div>
   </div>
 </div>
 
-  <main class="container">
-    <div class="page-header">
-      <span class="updated"><span class="lang-en">LAST UPDATED: Q1 2026</span><span class="lang-zh" style="display:none">最後更新：2026年Q1</span></span>
-      <h1><span class="lang-en">Risk Monitor</span><span class="lang-zh" style="display:none">風險監測</span></h1>
-      <p class="subtitle"><span class="lang-en">Macro Risks, Rate Sensitivity &amp; Policy Timeline</span><span class="lang-zh" style="display:none">總體風險、利率敏感度與政策時間線</span></p>
-    </div>
+<main class="container">
+  <div class="page-header">
+    <span class="updated"><span class="lang-en">LAST UPDATED: 2026 Q1</span><span class="lang-zh" style="display:none">最後更新：2026年第一季</span></span>
+    <h1><span class="lang-en">Risk Monitor</span><span class="lang-zh" style="display:none">風險監測</span></h1>
+    <p class="subtitle"><span class="lang-en">Australia Property Risk Assessment</span><span class="lang-zh" style="display:none">澳洲房地產風險評估</span></p>
+  </div>
 
-    <div class="section-label"><span class="lang-en">KEY RISK INDICATORS</span><span class="lang-zh" style="display:none">關鍵風險指標</span></div>
-    <div class="kpi-grid">
-      <div class="kpi-card red">
-        <div class="kpi-label"><span class="lang-en">RBA CASH RATE</span><span class="lang-zh" style="display:none">RBA基準利率</span></div>
-        <div class="kpi-value">3.85%</div>
-        <span class="kpi-badge badge-red"><span class="lang-en">Feb 2026 cut</span><span class="lang-zh" style="display:none">2026年2月降息</span></span>
-        <div class="kpi-source">RBA</div>
+  <div class="kpi-grid">
+    <div class="kpi-card blue">
+      <div class="kpi-label">
+        <span class="lang-en"></span>
+        <span class="lang-zh" style="display:none"></span>
       </div>
-      <div class="kpi-card red">
-        <div class="kpi-label"><span class="lang-en">AFFORDABILITY</span><span class="lang-zh" style="display:none">負擔能力</span></div>
-        <div class="kpi-value"><span class="lang-en">Worst</span><span class="lang-zh" style="display:none">最差</span></div>
-        <span class="kpi-badge badge-red"><span class="lang-en">Since 1995</span><span class="lang-zh" style="display:none">自1995年以來</span></span>
-        <div class="kpi-source">ANZ/CoreLogic</div>
-      </div>
-      <div class="kpi-card orange">
-        <div class="kpi-label"><span class="lang-en">CONSTRUCTION GAP</span><span class="lang-zh" style="display:none">建設缺口</span></div>
-        <div class="kpi-value"><span class="lang-en">Wide</span><span class="lang-zh" style="display:none">擴大</span></div>
-        <span class="kpi-badge badge-orange"><span class="lang-en">Below 300K target</span><span class="lang-zh" style="display:none">低於30萬套目標</span></span>
-      </div>
-      <div class="kpi-card orange">
-        <div class="kpi-label"><span class="lang-en">MIGRATION POLICY</span><span class="lang-zh" style="display:none">移民政策</span></div>
-        <div class="kpi-value"><span class="lang-en">Uncertain</span><span class="lang-zh" style="display:none">不確定</span></div>
-        <span class="kpi-badge badge-orange"><span class="lang-en">Cap changes</span><span class="lang-zh" style="display:none">上限調整</span></span>
-      </div>
-      <div class="kpi-card orange">
-        <div class="kpi-label"><span class="lang-en">US TARIFF RISK</span><span class="lang-zh" style="display:none">美國關稅風險</span></div>
-        <div class="kpi-value"><span class="lang-en">Elevated</span><span class="lang-zh" style="display:none">升高</span></div>
-        <span class="kpi-badge badge-orange"><span class="lang-en">Trade exposure</span><span class="lang-zh" style="display:none">貿易曝險</span></span>
-      </div>
-      <div class="kpi-card orange">
-        <div class="kpi-label"><span class="lang-en">CLIMATE RISK</span><span class="lang-zh" style="display:none">氣候風險</span></div>
-        <div class="kpi-value"><span class="lang-en">Rising</span><span class="lang-zh" style="display:none">上升</span></div>
-        <span class="kpi-badge badge-orange"><span class="lang-en">Flood &amp; fire</span><span class="lang-zh" style="display:none">洪水與火災</span></span>
+      <div class="kpi-value">
+        
       </div>
     </div>
-
-    <div class="section-label"><span class="lang-en">RISK ASSESSMENT</span><span class="lang-zh" style="display:none">風險評估</span></div>
-
-    <div class="chart-grid two-col">
-      <div class="chart-card">
-        <h3><span class="lang-en">Risk Radar: Current vs 2020</span><span class="lang-zh" style="display:none">風險雷達：目前 vs 2020</span></h3>
-        <p class="chart-subtitle"><span class="lang-en">Multi-dimensional risk scoring (1-10)</span><span class="lang-zh" style="display:none">多維度風險評分 (1-10)</span></p>
-        <div style="position:relative;height:340px;"><div id="chartAuRisk" style="width:100%;height:100%"></div></div>
+    <div class="kpi-card blue">
+      <div class="kpi-label">
+        <span class="lang-en"></span>
+        <span class="lang-zh" style="display:none"></span>
       </div>
-      <div class="chart-card">
-        <h3><span class="lang-en">Rate Sensitivity Analysis</span><span class="lang-zh" style="display:none">利率敏感度分析</span></h3>
-        <p class="chart-subtitle"><span class="lang-en">Yield spread &amp; affordability across RBA scenarios</span><span class="lang-zh" style="display:none">不同RBA利率情境下的利差與負擔能力</span></p>
-        <div style="position:relative;height:340px;"><div id="chartAuRateSensitivity" style="width:100%;height:100%"></div></div>
+      <div class="kpi-value">
+        
       </div>
     </div>
-
-    <div class="section-label"><span class="lang-en">POLICY TIMELINE</span><span class="lang-zh" style="display:none">政策時間線</span></div>
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-date">2022</div>
-        <div class="tl-desc"><span class="lang-en">Rate hikes begin</span><span class="lang-zh" style="display:none">開始升息</span></div>
+    <div class="kpi-card blue">
+      <div class="kpi-label">
+        <span class="lang-en"></span>
+        <span class="lang-zh" style="display:none"></span>
       </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-date">2023</div>
-        <div class="tl-desc"><span class="lang-en">Peak 4.35%</span><span class="lang-zh" style="display:none">峰值 4.35%</span></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-date">2024</div>
-        <div class="tl-desc"><span class="lang-en">Held at 4.35%</span><span class="lang-zh" style="display:none">維持 4.35%</span></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-date">2025</div>
-        <div class="tl-desc"><span class="lang-en">Held at 4.35%</span><span class="lang-zh" style="display:none">維持 4.35%</span></div>
-      </div>
-      <div class="tl-item highlight">
-        <div class="tl-dot"></div>
-        <div class="tl-date">Feb 2026</div>
-        <div class="tl-desc"><span class="lang-en">Rate cut to 3.85%</span><span class="lang-zh" style="display:none">降息至 3.85%</span></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-date"><span class="lang-en">Next</span><span class="lang-zh" style="display:none">未來</span></div>
-        <div class="tl-desc"><span class="lang-en">Watching for further cuts</span><span class="lang-zh" style="display:none">觀察是否進一步降息</span></div>
+      <div class="kpi-value">
+        
       </div>
     </div>
-
-    <div class="section-label"><span class="lang-en">RISK FACTORS</span><span class="lang-zh" style="display:none">風險因素</span></div>
-    <div class="risk-grid">
-      <div class="risk-card">
-        <h4><span class="lang-en">RBA Policy</span><span class="lang-zh" style="display:none">RBA政策</span></h4>
-        <span class="risk-level high"><span class="lang-en">HIGH</span><span class="lang-zh" style="display:none">高</span></span>
-        <p><span class="lang-en">After holding at 4.35% for over two years, the RBA cut to 3.85% in Feb 2026. Further cuts depend on inflation trajectory. Any reversal would severely impact mortgage holders on variable rates.</span><span class="lang-zh" style="display:none">在維持4.35%超過兩年後，RBA於2026年2月降息至3.85%。後續降息取決於通膨走勢。任何逆轉將嚴重衝擊浮動利率房貸持有者。</span></p>
+    <div class="kpi-card blue">
+      <div class="kpi-label">
+        <span class="lang-en"></span>
+        <span class="lang-zh" style="display:none"></span>
       </div>
-      <div class="risk-card">
-        <h4><span class="lang-en">Affordability Crisis</span><span class="lang-zh" style="display:none">負擔能力危機</span></h4>
-        <span class="risk-level high"><span class="lang-en">HIGH</span><span class="lang-zh" style="display:none">高</span></span>
-        <p><span class="lang-en">Worst affordability since 1995. Sydney requires 85 years of median savings. National price-to-income at 8.2x. Social and political pressure mounting for intervention.</span><span class="lang-zh" style="display:none">自1995年以來最差的負擔能力。雪梨需85年中位數儲蓄。全國房價所得比8.2倍。社會與政治壓力持續增加。</span></p>
-      </div>
-      <div class="risk-card amber">
-        <h4><span class="lang-en">Construction Deficit</span><span class="lang-zh" style="display:none">建設缺口</span></h4>
-        <span class="risk-level medium"><span class="lang-en">MEDIUM</span><span class="lang-zh" style="display:none">中</span></span>
-        <p><span class="lang-en">Housing starts ~158K pa vs 300K target. Construction costs +25-29% since 2020. Labour shortages and material costs constrain the pipeline. This supports prices but worsens the housing crisis.</span><span class="lang-zh" style="display:none">住宅開工約15.8萬套/年，遠低於30萬套目標。營建成本自2020年上漲25-29%。勞動力短缺與材料成本制約供給管線，支撐房價但加劇住房危機。</span></p>
-      </div>
-      <div class="risk-card amber">
-        <h4><span class="lang-en">Climate Risk</span><span class="lang-zh" style="display:none">氣候風險</span></h4>
-        <span class="risk-level medium"><span class="lang-en">MEDIUM</span><span class="lang-zh" style="display:none">中</span></span>
-        <p><span class="lang-en">Increasing frequency of floods, bushfires, and extreme weather. Insurance costs rising sharply in exposed regions. Potential repricing of coastal and flood-prone properties.</span><span class="lang-zh" style="display:none">洪水、叢林火災和極端天氣頻率增加。高風險地區保險成本急劇上升。沿海和易洪地區房產面臨重新定價風險。</span></p>
+      <div class="kpi-value">
+        
       </div>
     </div>
-
-    <div class="source-footer">
-      <span class="lang-en"><strong>Sources:</strong> RBA, ABS, CoreLogic, ANZ, APRA. Data as of Q1 2026 unless stated otherwise.</span>
-      <span class="lang-zh" style="display:none"><strong>資料來源：</strong>RBA、ABS、CoreLogic、ANZ、APRA。除另行標註外，資料截至2026年Q1。</span>
+    <div class="kpi-card blue">
+      <div class="kpi-label">
+        <span class="lang-en"></span>
+        <span class="lang-zh" style="display:none"></span>
+      </div>
+      <div class="kpi-value">
+        
+      </div>
     </div>
-  </main>
+  </div>
 
-  <footer class="footer">A project by <span>InvestMQuest</span></footer>
 
-  <script>
-  var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9',text:'#1e3a5f'};
-  function fmtAUD(v){if(v>=1000000)return 'A$'+(v/1000000).toFixed(2)+'M';if(v>=1000)return 'A$'+Math.round(v/1000)+'K';return 'A$'+v;}
-  function fmtAUDShort(v){if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return Math.round(v/1000)+'K';return v.toString();}
-  var baseText={color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:11};
-  var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
-  var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
-  var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
-  function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
-  function fmtK(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
-  function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}initCharts(lang);}
-  function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
-  document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
-  var allCharts=[];
 
-  function initCharts(lang){
-    var en=lang==='en';
 
-    // Chart 1: Risk Radar
-    var indicators=[
-      {name:en?'Liquidity':'流動性',max:10},
-      {name:en?'Credit':'信用',max:10},
-      {name:en?'Supply':'供給',max:10},
-      {name:en?'Macro':'總經',max:10},
-      {name:en?'Policy':'政策',max:10},
-      {name:en?'Affordability':'負擔能力',max:10}
-    ];
-    var c1=echarts.init(document.getElementById('chartAuRisk'));
-    c1.setOption({
-      tooltip:{trigger:'item'},
-      legend:{bottom:0,textStyle:{color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:11},icon:'circle',itemWidth:8,itemHeight:8,data:[en?'Current (2026)':'目前 (2026)',en?'Baseline (2020)':'基準 (2020)']},
-      radar:{
-        center:['50%','52%'],radius:'58%',nameGap:8,
-        name:{textStyle:{color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:10}},
-        indicator:indicators,
-        shape:'polygon',
-        splitNumber:5,
-        splitLine:{lineStyle:{color:C.grid}},
-        splitArea:{areaStyle:{color:['rgba(232,240,249,0.3)','rgba(232,240,249,0.1)']}},
-        axisLine:{lineStyle:{color:C.grid}}
-      },
-      series:[{
-        type:'radar',
-        data:[
-          {
-            value:[4,7,8,5,6,9],
-            name:en?'Current (2026)':'目前 (2026)',
-            lineStyle:{color:C.red,width:2},
-            itemStyle:{color:C.red},
-            areaStyle:{color:'rgba(220,38,38,0.15)'}
-          },
-          {
-            value:[3,3,6,4,4,7],
-            name:en?'Baseline (2020)':'基準 (2020)',
-            lineStyle:{color:C.muted,width:1.5,type:'dashed'},
-            itemStyle:{color:C.muted},
-            areaStyle:{color:'rgba(90,122,154,0.08)'}
-          }
-        ]
-      }]
-    });
-    allCharts.push(c1);
 
-    // Chart 2: Rate Sensitivity (dual-axis)
-    var scenarios=['RBA 3.0%','RBA 3.5%','RBA 3.85%','RBA 4.5%','RBA 5.0%'];
-    var c2=echarts.init(document.getElementById('chartAuRateSensitivity'));
-    c2.setOption({
-      tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}},
-      legend:{top:8,textStyle:{color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:11},icon:'circle',itemWidth:8,itemHeight:8,data:[en?'Yield Spread %':'利差%',en?'Affordability Index':'負擔能力指數']},
-      grid:{left:15,right:15,top:40,bottom:30,containLabel:true},
-      xAxis:mkAxis({type:'category',data:scenarios,axisLabel:{rotate:15,fontSize:10}}),
-      yAxis:[
-        mkAxis({type:'value',position:'left',axisLabel:{formatter:'{value}%',color:'#5a7a9a',fontSize:10},splitLine:{lineStyle:{color:'#e8f0f9'}}}),
-        mkAxis({type:'value',position:'right',axisLabel:{formatter:'{value}',color:'#5a7a9a',fontSize:10},splitLine:{show:false}})
-      ],
-      series:[
-        {
-          name:en?'Yield Spread %':'利差%',
-          type:'bar',
-          yAxisIndex:0,
-          data:[
-            {value:1.69,itemStyle:{color:C.green}},
-            {value:1.19,itemStyle:{color:C.green}},
-            {value:0.84,itemStyle:{color:C.orange}},
-            {value:0.19,itemStyle:{color:C.orange}},
-            {value:-0.31,itemStyle:{color:C.red}}
-          ],
-          barWidth:'35%',
-          itemStyle:{borderRadius:[3,3,0,0]}
-        },
-        {
-          name:en?'Affordability Index':'負擔能力指數',
-          type:'line',
-          yAxisIndex:1,
-          data:[75,70,65,58,50],
-          smooth:true,
-          symbol:'circle',symbolSize:6,
-          lineStyle:{color:C.navy,width:2},
-          itemStyle:{color:C.navy}
+
+
+</main>
+
+<footer class="footer">A project by <span>InvestMQuest</span></footer>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
+var baseText={color:C.muted,fontFamily:'Inter,sans-serif',fontSize:11};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+var baseLegend={bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector'))document.getElementById('marketDropdown').classList.remove('open');});
+function switchTab(cid,tab){var w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});w.querySelectorAll('.tab-bar button').forEach(function(b){b.classList.remove('active');});var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(function(b){if(b.dataset.tab===tab)b.classList.add('active');});setTimeout(function(){allCharts.forEach(function(c){if(c)c.resize();});},100);}
+function setLang(lang){
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  localStorage.setItem('lang',lang);
+  if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}
+  if(typeof initCharts==='function')initCharts(lang);
+}
+var allCharts=[];
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+var DATA = {"dashboard": {"annual_transactions": {"data": [470000, 450000, 580000, 510000, 490000, 550000, 565073], "id": "chart-au-transactions", "subtitle_en": "National annual transactions", "subtitle_zh": "\u5168\u570b\u5e74\u5ea6\u6210\u4ea4\u91cf", "title_en": "Annual Property Transfers", "title_zh": "\u5e74\u5ea6\u7522\u6b0a\u8f49\u79fb\u91cf", "type": "area_line", "xAxis": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"]}, "city_price_comparison": {"id": "chart-au-city-price", "series": {"median_price": {"data": [920000, 1170000, 1310000, 1310000], "name_en": "Median Price", "name_zh": "\u4e2d\u4f4d\u50f9", "type": "bar"}, "yoy_pct": {"data": [2.0, 10.5, 13.7, 4.0], "name_en": "YoY %", "name_zh": "YoY %", "type": "line", "yAxisIndex": 1}}, "subtitle_en": "Median Price (A$) + YoY%", "subtitle_zh": "\u4e2d\u4f4d\u50f9\u683c\uff08\u6fb3\u5e63\uff09+ \u5e74\u589e\u7387", "title_en": "City Price Comparison", "title_zh": "\u57ce\u5e02\u50f9\u683c\u6bd4\u8f03", "type": "bar_line_combo", "xAxis": ["Melbourne", "Gold Coast", "Brisbane", "Sydney"]}, "gross_rental_yield": {"data": [2.9, 3.0, 3.6, 4.3, 5.0, 4.2, 4.5, 4.0], "id": "chart-au-yield", "markLine": {"label": "RBA 3.85%", "xAxis": 3.85}, "subtitle_en": "Gross yield % with RBA rate reference", "subtitle_zh": "\u6bdb\u6536\u76ca\u7387% \u9644RBA\u5229\u7387\u53c3\u8003\u7dda", "title_en": "Gross Rental Yield by City", "title_zh": "\u5404\u57ce\u5e02\u6bdb\u79df\u91d1\u6536\u76ca\u7387", "type": "horizontal_bar", "yAxis": ["Sydney Houses", "Melbourne Houses", "Brisbane Houses", "Gold Coast Houses", "Gold Coast Units", "Brisbane Units", "Melbourne Units", "Sydney Units"]}, "national_price_index": {"id": "chart-au-price-index", "series": {"national_median": {"data": [549000, 570000, 685000, 735000, 702000, 793000, 840000, 922838], "name_en": "National Median", "name_zh": "\u5168\u570b\u4e2d\u4f4d\u50f9", "type": "line"}, "yoy_pct": {"data": [3.2, 3.8, 20.2, 7.3, -4.5, 13.0, 5.9, 9.9], "name_en": "YoY %", "name_zh": "YoY %", "type": "bar", "yAxisIndex": 1}}, "subtitle_en": "National median (A$) + YoY% Change", "subtitle_zh": "\u5168\u570b\u4e2d\u4f4d\u50f9\uff08\u6fb3\u5e63\uff09+ \u5e74\u589e\u7387", "title_en": "National Median Price Index", "title_zh": "\u5168\u570b\u4e2d\u4f4d\u50f9\u683c\u6307\u6578", "type": "bar_line_combo", "xAxis": ["2019", "2020", "2021", "2022", "2023", "2024", "2025", "Feb 2026"]}, "vacancy_rate": {"data": [1.0, 1.1, 1.4, 1.6, 1.7], "id": "chart-au-vacancy", "markLine": {"label": "Healthy 3%", "yAxis": 3.0}, "subtitle_en": "Vacancy rate % vs healthy benchmark", "subtitle_zh": "\u7a7a\u7f6e\u7387% vs \u5065\u5eb7\u57fa\u6e96", "title_en": "Vacancy Rate by City", "title_zh": "\u5404\u57ce\u5e02\u7a7a\u7f6e\u7387", "type": "bar", "xAxis": ["Brisbane", "Gold Coast", "Melbourne", "Sydney", "National"]}, "weekly_rent_trend": {"id": "chart-au-rent", "series": {"brisbane": {"data": [430, 450, 520, 620, 720, 740], "name_en": "Brisbane", "name_zh": "\u5e03\u91cc\u65af\u672c"}, "gold_coast": {"data": [530, 570, 630, 700, 750, 780], "name_en": "Gold Coast", "name_zh": "\u9ec3\u91d1\u6d77\u5cb8"}, "national": {"data": [477, 487, 520, 582, 648, 681], "name_en": "National", "name_zh": "\u5168\u570b"}, "sydney": {"data": [570, 580, 650, 750, 795, 817], "name_en": "Sydney", "name_zh": "\u96ea\u68a8"}}, "subtitle_en": "Median weekly rent (A$)", "subtitle_zh": "\u6bcf\u9031\u79df\u91d1\u4e2d\u4f4d\u6578\uff08\u6fb3\u5e63\uff09", "title_en": "Weekly Rent Trend", "title_zh": "\u6bcf\u9031\u79df\u91d1\u8da8\u52e2", "type": "multi_line", "xAxis": ["2020", "2021", "2022", "2023", "2024", "2025 Q4"]}}, "demand": {"buyer_type_composition": {"id": "chartAuBuyerType", "series": {"investor": {"data": [32, 30, 35, 38, 42], "name_en": "Investor", "name_zh": "\u6295\u8cc7\u8005"}, "owner_occupier": {"data": [68, 70, 65, 62, 58], "name_en": "Owner-Occupier", "name_zh": "\u81ea\u4f4f"}}, "subtitle_en": "Owner-occupier vs Investor loan share", "subtitle_zh": "\u81ea\u4f4f vs \u6295\u8cc7\u8005\u8cb8\u6b3e\u4f54\u6bd4", "title_en": "Buyer Type Composition", "title_zh": "\u8cb7\u5bb6\u985e\u578b\u7d50\u69cb", "type": "multi_line", "xAxis": ["2021", "2022", "2023", "2024", "2025"]}, "migration_vs_price": {"id": "chartAuMigration", "series": {"net_migration_k": {"data": [240, -96, -85, 320, 510, 490, 450], "name_en": "Net Migration (K)", "name_zh": "\u6de8\u79fb\u6c11(\u5343)", "type": "bar"}, "price_yoy_pct": {"data": [3.2, 3.8, 20.2, 7.3, -4.5, 13.0, 5.9], "name_en": "Price YoY %", "name_zh": "\u623f\u50f9\u5e74\u589e%", "type": "line", "yAxisIndex": 1}}, "subtitle_en": "Net overseas migration \u0026 price YoY", "subtitle_zh": "\u6d77\u5916\u6de8\u79fb\u6c11\u8207\u623f\u50f9\u5e74\u589e\u7387", "title_en": "Migration vs Price Growth", "title_zh": "\u79fb\u6c11 vs \u623f\u50f9\u6210\u9577", "type": "bar_line_combo", "xAxis": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"]}, "property_transfers": {"data": [470000, 450000, 580000, 510000, 490000, 550000, 565073], "id": "chartAuTxn", "subtitle_en": "National residential transactions", "subtitle_zh": "\u5168\u570b\u4f4f\u5b85\u4ea4\u6613\u91cf", "title_en": "Property Transfers (Annual)", "title_zh": "\u5e74\u5ea6\u4e0d\u52d5\u7522\u79fb\u8f49\u91cf", "type": "area_line", "xAxis": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"]}}, "report": {"brisbane_5y_trend": {"data": [700000, 870000, 980000, 990000, 1150000, 1310000], "id": "chart-r-au-brisbane5y", "title_en": "Brisbane 5-Year Price Trend", "title_zh": "\u5e03\u91cc\u65af\u672c\u4e94\u5e74\u623f\u50f9\u8da8\u52e2", "type": "area_line", "xAxis": ["2021", "2022", "2023", "2024", "2025", "2026"]}, "city_median_yoy": {"id": "chart-r-au-city", "series": {"median_price": {"data": [920000, 1170000, 1310000, 1310000], "name_en": "Median Price", "name_zh": "\u4e2d\u4f4d\u50f9", "type": "bar"}, "yoy_pct": {"data": [2.0, 10.5, 4.0, 13.7], "name_en": "YoY%", "name_zh": "YoY%", "type": "line", "yAxisIndex": 1}}, "title_en": "City Median \u0026 YoY", "title_zh": "\u5404\u57ce\u5e02\u4e2d\u4f4d\u50f9\u8207\u5e74\u589e\u7387", "type": "bar_line_combo", "xAxis_en": ["Melbourne", "Gold Coast", "Sydney", "Brisbane"], "xAxis_zh": ["\u58a8\u723e\u672c", "\u9ec3\u91d1\u6d77\u5cb8", "\u96ea\u68a8", "\u5e03\u91cc\u65af\u672c"]}, "national_median_price": {"data": [549000, 570000, 685000, 735000, 702000, 793000, 922838], "id": "chart-r-au-price", "title_en": "National Median Price", "title_zh": "\u5168\u570b\u4e2d\u4f4d\u623f\u50f9\u8da8\u52e2", "type": "area_line", "xAxis": ["2020", "2021", "2022", "2023", "2024", "2025", "2026"]}, "vacancy_rates": {"data": [1.0, 1.1, 1.4, 1.6, 1.7], "id": "chart-r-au-vacancy", "markLine": {"label_en": "Equilibrium 3%", "label_zh": "\u5747\u8861 3%", "yAxis": 3.0}, "title_en": "Vacancy Rates", "title_zh": "\u7a7a\u7f6e\u7387", "type": "bar", "xAxis_en": ["Brisbane", "Gold Coast", "Melbourne", "Sydney", "National"], "xAxis_zh": ["\u5e03\u91cc\u65af\u672c", "\u9ec3\u91d1\u6d77\u5cb8", "\u58a8\u723e\u672c", "\u96ea\u68a8", "\u5168\u570b"]}, "weekly_rent_by_city": {"id": "chart-r-au-rent", "series": {"brisbane": {"data": [430, 450, 520, 620, 720, 740], "name_en": "Brisbane", "name_zh": "\u5e03\u91cc\u65af\u672c"}, "gold_coast": {"data": [530, 570, 630, 700, 750, 780], "name_en": "Gold Coast", "name_zh": "\u9ec3\u91d1\u6d77\u5cb8"}, "national": {"data": [477, 487, 520, 582, 648, 681], "name_en": "National", "name_zh": "\u5168\u570b"}, "sydney": {"data": [570, 580, 650, 750, 795, 817], "name_en": "Sydney", "name_zh": "\u96ea\u68a8"}}, "title_en": "Weekly Rent by City", "title_zh": "\u5404\u57ce\u5e02\u9031\u79df\u91d1\u8da8\u52e2", "type": "multi_line", "xAxis": ["2021", "2022", "2023", "2024", "2025", "2026"]}, "yield_vs_rba": {"data": [2.9, 3.0, 3.6, 4.2, 4.3, 4.5, 4.69, 5.0], "id": "chart-r-au-yield", "markLine": {"label": "RBA 3.85%", "xAxis": 3.85}, "title_en": "Rental Yield vs RBA Rate", "title_zh": "\u79df\u91d1\u6536\u76ca\u7387 vs RBA\u5229\u7387", "type": "horizontal_bar", "yAxis_en": ["Sydney Houses", "Melbourne Houses", "Brisbane Houses", "Brisbane Units", "GC Houses", "Melbourne Units", "National", "GC Units"], "yAxis_zh": ["\u96ea\u68a8\u7368\u7acb\u5c4b", "\u58a8\u723e\u672c\u7368\u7acb\u5c4b", "\u5e03\u91cc\u65af\u672c\u7368\u7acb\u5c4b", "\u5e03\u91cc\u65af\u672c\u516c\u5bd3", "\u9ec3\u91d1\u6d77\u5cb8\u7368\u7acb\u5c4b", "\u58a8\u723e\u672c\u516c\u5bd3", "\u5168\u570b", "\u9ec3\u91d1\u6d77\u5cb8\u516c\u5bd3"]}}, "risk": {"policy_timeline": [{"date": "2022", "desc_en": "Rate hikes begin", "desc_zh": "\u958b\u59cb\u5347\u606f", "highlight": false}, {"date": "2023", "desc_en": "Peak 4.35%", "desc_zh": "\u5cf0\u503c 4.35%", "highlight": false}, {"date": "2024", "desc_en": "Held at 4.35%", "desc_zh": "\u7dad\u6301 4.35%", "highlight": false}, {"date": "2025", "desc_en": "Held at 4.35%", "desc_zh": "\u7dad\u6301 4.35%", "highlight": false}, {"date": "Feb 2026", "desc_en": "Rate cut to 3.85%", "desc_zh": "\u964d\u606f\u81f3 3.85%", "highlight": true}, {"date_en": "Next", "date_zh": "\u672a\u4f86", "desc_en": "Watching for further cuts", "desc_zh": "\u89c0\u5bdf\u662f\u5426\u9032\u4e00\u6b65\u964d\u606f", "highlight": false}], "rate_sensitivity": {"id": "chartAuRateSensitivity", "series": {"affordability_index": {"data": [75, 70, 65, 58, 50], "name_en": "Affordability Index", "name_zh": "\u8ca0\u64d4\u80fd\u529b\u6307\u6578", "type": "line", "yAxisIndex": 1}, "yield_spread_pct": {"data": [1.69, 1.19, 0.84, 0.19, -0.31], "name_en": "Yield Spread %", "name_zh": "\u5229\u5dee%", "type": "bar"}}, "subtitle_en": "Yield spread \u0026 affordability across RBA scenarios", "subtitle_zh": "\u4e0d\u540cRBA\u5229\u7387\u60c5\u5883\u4e0b\u7684\u5229\u5dee\u8207\u8ca0\u64d4\u80fd\u529b", "title_en": "Rate Sensitivity Analysis", "title_zh": "\u5229\u7387\u654f\u611f\u5ea6\u5206\u6790", "type": "bar_line_combo", "xAxis": ["RBA 3.0%", "RBA 3.5%", "RBA 3.85%", "RBA 4.5%", "RBA 5.0%"]}, "risk_factors": [{"desc_en": "After holding at 4.35% for over two years, the RBA cut to 3.85% in Feb 2026. Further cuts depend on inflation trajectory. Any reversal would severely impact mortgage holders on variable rates.", "desc_zh": "\u5728\u7dad\u63014.35%\u8d85\u904e\u5169\u5e74\u5f8c\uff0cRBA\u65bc2026\u5e742\u6708\u964d\u606f\u81f33.85%\u3002\u5f8c\u7e8c\u964d\u606f\u53d6\u6c7a\u65bc\u901a\u81a8\u8d70\u52e2\u3002\u4efb\u4f55\u9006\u8f49\u5c07\u56b4\u91cd\u885d\u64ca\u6d6e\u52d5\u5229\u7387\u623f\u8cb8\u6301\u6709\u8005\u3002", "level": "high", "title_en": "RBA Policy", "title_zh": "RBA\u653f\u7b56"}, {"desc_en": "Worst affordability since 1995. Sydney requires 85 years of median savings. National price-to-income at 8.2x. Social and political pressure mounting for intervention.", "desc_zh": "\u81ea1995\u5e74\u4ee5\u4f86\u6700\u5dee\u7684\u8ca0\u64d4\u80fd\u529b\u3002\u96ea\u68a8\u970085\u5e74\u4e2d\u4f4d\u6578\u5132\u84c4\u3002\u5168\u570b\u623f\u50f9\u6240\u5f97\u6bd48.2\u500d\u3002\u793e\u6703\u8207\u653f\u6cbb\u58d3\u529b\u6301\u7e8c\u589e\u52a0\u3002", "level": "high", "title_en": "Affordability Crisis", "title_zh": "\u8ca0\u64d4\u80fd\u529b\u5371\u6a5f"}, {"desc_en": "Housing starts ~158K pa vs 300K target. Construction costs +25-29% since 2020. Labour shortages and material costs constrain the pipeline. This supports prices but worsens the housing crisis.", "desc_zh": "\u4f4f\u5b85\u958b\u5de5\u7d0415.8\u842c\u5957/\u5e74\uff0c\u9060\u4f4e\u65bc30\u842c\u5957\u76ee\u6a19\u3002\u71df\u5efa\u6210\u672c\u81ea2020\u5e74\u4e0a\u6f3225-29%\u3002\u52de\u52d5\u529b\u77ed\u7f3a\u8207\u6750\u6599\u6210\u672c\u5236\u7d04\u4f9b\u7d66\u7ba1\u7dda\uff0c\u652f\u6490\u623f\u50f9\u4f46\u52a0\u5287\u4f4f\u623f\u5371\u6a5f\u3002", "level": "medium", "title_en": "Construction Deficit", "title_zh": "\u5efa\u8a2d\u7f3a\u53e3"}, {"desc_en": "Increasing frequency of floods, bushfires, and extreme weather. Insurance costs rising sharply in exposed regions. Potential repricing of coastal and flood-prone properties.", "desc_zh": "\u6d2a\u6c34\u3001\u53e2\u6797\u706b\u707d\u548c\u6975\u7aef\u5929\u6c23\u983b\u7387\u589e\u52a0\u3002\u9ad8\u98a8\u96aa\u5730\u5340\u4fdd\u96aa\u6210\u672c\u6025\u5287\u4e0a\u5347\u3002\u6cbf\u6d77\u548c\u6613\u6d2a\u5730\u5340\u623f\u7522\u9762\u81e8\u91cd\u65b0\u5b9a\u50f9\u98a8\u96aa\u3002", "level": "medium", "title_en": "Climate Risk", "title_zh": "\u6c23\u5019\u98a8\u96aa"}], "risk_radar": {"id": "chartAuRisk", "indicator_max": 10, "indicators_en": ["Liquidity", "Credit", "Supply", "Macro", "Policy", "Affordability"], "indicators_zh": ["\u6d41\u52d5\u6027", "\u4fe1\u7528", "\u4f9b\u7d66", "\u7e3d\u7d93", "\u653f\u7b56", "\u8ca0\u64d4\u80fd\u529b"], "series": {"baseline_2020": {"data": [3, 3, 6, 4, 4, 7], "name_en": "Baseline (2020)", "name_zh": "\u57fa\u6e96 (2020)"}, "current_2026": {"data": [4, 7, 8, 5, 6, 9], "name_en": "Current (2026)", "name_zh": "\u76ee\u524d (2026)"}}, "subtitle_en": "Multi-dimensional risk scoring (1-10)", "subtitle_zh": "\u591a\u7dad\u5ea6\u98a8\u96aa\u8a55\u5206 (1-10)", "title_en": "Risk Radar: Current vs 2020", "title_zh": "\u98a8\u96aa\u96f7\u9054\uff1a\u76ee\u524d vs 2020", "type": "radar"}}, "supply": {"housing_starts": {"data": [170000, 150000, 210000, 195000, 175000, 165000, 158000], "id": "chartAuStarts", "subtitle_en": "National dwelling commencements", "subtitle_zh": "\u5168\u570b\u4f4f\u5b85\u958b\u5de5\u91cf", "title_en": "Housing Starts (Annual)", "title_zh": "\u5e74\u5ea6\u4f4f\u5b85\u958b\u5de5\u6578", "type": "area_line", "xAxis": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"]}, "rental_listings_index": {"id": "chartAuListings", "series": {"current": {"data": [100, 90, 82, 78, 83], "name_en": "Current", "name_zh": "\u76ee\u524d"}, "five_year_avg": {"data": [100, 100, 100, 100, 100], "name_en": "5Y Average", "name_zh": "\u4e94\u5e74\u5e73\u5747"}}, "subtitle_en": "Current vs 5-Year Average", "subtitle_zh": "\u76ee\u524d vs \u4e94\u5e74\u5e73\u5747", "title_en": "Rental Listings Index", "title_zh": "\u79df\u8cc3\u639b\u724c\u6307\u6578", "type": "multi_line", "xAxis": ["2022", "2023", "2024", "2025", "2026Q1"]}, "vacancy_trend": {"data": [2.1, 1.9, 1.5, 1.3, 1.5, 1.8, 1.7], "id": "chartAuVacancy", "markLine": {"label_en": "Healthy 3%", "label_zh": "\u5065\u5eb7\u6c34\u6e96 3%", "yAxis": 3}, "subtitle_en": "National residential vacancy", "subtitle_zh": "\u5168\u570b\u4f4f\u5b85\u7a7a\u7f6e\u7387", "title_en": "Vacancy Rate Trend", "title_zh": "\u7a7a\u7f6e\u7387\u8da8\u52e2", "type": "line", "xAxis": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"]}}, "valuation": {"apac_price_comparison": {"data": [3500, 4500, 6500, 6800, 12000, 7200, 8500, 9500, 14000, 18000], "id": "chartAuAPAC", "subtitle_en": "AUD per sqm across major cities", "subtitle_zh": "\u4e3b\u8981\u57ce\u5e02\u6bcf\u5e73\u65b9\u516c\u5c3a\u6fb3\u5e63\u50f9\u683c", "title_en": "APAC Price Comparison", "title_zh": "\u4e9e\u592a\u623f\u50f9\u6bd4\u8f03", "type": "horizontal_bar", "unit": "A$/sqm", "yAxis_en": ["Brisbane", "Gold Coast", "Melbourne", "Perth", "Sydney", "Auckland", "Taipei", "Tokyo", "Singapore", "Hong Kong"], "yAxis_zh": ["\u5e03\u91cc\u65af\u672c", "\u9ec3\u91d1\u6d77\u5cb8", "\u58a8\u723e\u672c", "\u4f2f\u65af", "\u96ea\u68a8", "\u5967\u514b\u862d", "\u53f0\u5317", "\u6771\u4eac", "\u65b0\u52a0\u5761", "\u9999\u6e2f"]}, "years_to_own": {"data": [32.7, 55.6, 64.5, 85.0], "id": "chartAuAffordability", "markLine": {"label_en": "30yr benchmark", "label_zh": "30\u5e74\u57fa\u6e96", "xAxis": 30}, "subtitle_en": "Median household income basis", "subtitle_zh": "\u4ee5\u5bb6\u5ead\u4e2d\u4f4d\u6578\u6240\u5f97\u8a08\u7b97", "title_en": "Years to Own a Home", "title_zh": "\u8cfc\u5c4b\u6240\u9700\u5e74\u6578", "type": "horizontal_bar", "yAxis_en": ["Gold Coast", "Melbourne", "Brisbane", "Sydney"], "yAxis_zh": ["\u9ec3\u91d1\u6d77\u5cb8", "\u58a8\u723e\u672c", "\u5e03\u91cc\u65af\u672c", "\u96ea\u68a8"]}, "yield_vs_rba": {"id": "chartAuYieldSpread", "series": {"gross_yield": {"data": [4.8, 4.9, 3.5, 3.6, 4.2, 4.9, 4.92, 4.69], "name_en": "Gross Yield", "name_zh": "\u6bdb\u6536\u76ca\u7387"}, "rba_cash_rate": {"data": [1.5, 0.1, 0.1, 2.85, 4.35, 4.35, 4.35, 3.85], "name_en": "RBA Cash Rate", "name_zh": "RBA\u57fa\u6e96\u5229\u7387"}}, "subtitle_en": "Gross rental yield spread over policy rate", "subtitle_zh": "\u6bdb\u79df\u91d1\u6536\u76ca\u7387\u8207\u653f\u7b56\u5229\u7387\u4e4b\u5229\u5dee", "title_en": "Yield vs RBA Cash Rate", "title_zh": "\u6536\u76ca\u7387 vs RBA\u57fa\u6e96\u5229\u7387", "type": "multi_line", "xAxis": ["2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026Q1"]}}};
+
+function initCharts(lang) {
+  var page = 'risk';
+
+  Object.keys(DATA).forEach(function(id) {
+    var cfg = DATA[id];
+    if (cfg.page !== page) return;
+    var el = document.getElementById(id);
+    if (!el) return;
+
+    var chart = echarts.init(el);
+    allCharts.push(chart);
+
+    /* Radar chart */
+    if (cfg.type === 'radar') {
+      var indicators = (cfg.indicators || []).map(function(ind) {
+        var label;
+        if (lang === 'zh') {
+          label = (ind.name_zh || ind.name_en) + ' / ' + ind.name_en;
+        } else {
+          label = ind.name_en + (ind.name_zh ? ' / ' + ind.name_zh : '');
         }
-      ],
-      markLine:{
-        silent:true,
-        lineStyle:{color:C.red,type:'dashed',width:1},
-        data:[]
-      }
-    });
-    allCharts.push(c2);
-  }
+        return { name: label, max: ind.max || 10 };
+      });
+      var seriesData = (cfg.datasets || []).map(function(ds) {
+        var obj = {
+          name: ds.name,
+          value: ds.data,
+          lineStyle: { color: ds.color, width: 2 },
+          itemStyle: { color: ds.color },
+          areaStyle: { color: ds.color === '#dc2626' ? 'rgba(220,38,38,0.1)' : 'rgba(139,163,192,0.08)' },
+          symbol: 'circle',
+          symbolSize: 5
+        };
+        if (ds.lineType === 'dashed') {
+          obj.lineStyle.type = 'dashed';
+          obj.lineStyle.width = 1.5;
+        }
+        return obj;
+      });
+      chart.setOption({
+        tooltip: { trigger: 'item' },
+        legend: { bottom: 0, textStyle: { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 }, icon: 'circle', itemWidth: 8, itemHeight: 8, data: cfg.datasets.map(function(d){ return d.name; }) },
+        radar: {
+          center: ['50%','52%'], radius: '58%', nameGap: 8,
+          name: { textStyle: { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 10 } },
+          indicator: indicators,
+          shape: 'polygon',
+          splitNumber: 5,
+          splitLine: { lineStyle: { color: C.grid } },
+          splitArea: { areaStyle: { color: ['rgba(238,243,249,0.3)','rgba(255,255,255,0.3)'] } },
+          axisLine: { lineStyle: { color: C.grid } }
+        },
+        series: [{ type: 'radar', data: seriesData }]
+      });
+      return;
+    }
 
-  window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
-  window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
-  </script>
+    /* Standard charts: line, bar, line (dual axis) */
+    var labels = cfg.labels || [];
+    if (cfg.labels_en && cfg.labels_zh) {
+      labels = lang === 'zh' ? cfg.labels_zh : cfg.labels_en;
+    }
+
+    var isHorizontalBar = (cfg.type || '').indexOf('horizontal') >= 0;
+
+    var series = (cfg.datasets || []).map(function(ds) {
+      var s = {
+        name: ds.name_en ? (lang === 'zh' ? (ds.name_zh || ds.name_en) : ds.name_en) : ds.name,
+        type: ds.type || 'line',
+        data: ds.data
+      };
+
+      if (ds.color) {
+        s.lineStyle = { color: ds.color, width: 2 };
+        s.itemStyle = { color: ds.color };
+      }
+      if (ds.lineType === 'dashed') {
+        s.lineStyle = s.lineStyle || {};
+        s.lineStyle.type = 'dashed';
+      }
+      if (ds.step) s.step = ds.step;
+      if (ds.yAxisIndex !== undefined) s.yAxisIndex = ds.yAxisIndex;
+      if (ds.smooth) s.smooth = ds.smooth;
+
+      if (s.type === 'line') {
+        s.symbol = 'circle';
+        s.symbolSize = 6;
+        if (ds.areaStyle) s.areaStyle = ds.areaStyle;
+      }
+      if (s.type === 'bar') {
+        s.barMaxWidth = 25;
+        if (ds.showLabel !== false) {
+          s.label = { show: true, position: isHorizontalBar ? 'right' : 'top', formatter: cfg.labelFormat || '{c}', fontSize: 10, fontFamily: 'Inter' };
+        }
+      }
+
+      return s;
+    });
+
+    var option = {
+      tooltip: baseTooltip,
+      grid: isHorizontalBar
+        ? { left: 90, right: 50, top: 10, bottom: 20, containLabel: false }
+        : { left: 15, right: 15, top: 40, bottom: 30, containLabel: true }
+    };
+
+    /* Legend */
+    if (series.length > 1) {
+      option.legend = { top: 8, textStyle: { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 }, icon: 'circle', itemWidth: 8, itemHeight: 8, data: series.map(function(s){ return s.name; }) };
+    }
+
+    /* Axes */
+    if (isHorizontalBar) {
+      option.xAxis = mkAxis({ type: 'value' });
+      option.yAxis = mkAxis({
+        type: 'category', data: labels,
+        axisLabel: { color: C.navy, fontFamily: 'Inter, sans-serif', fontSize: 11 }
+      });
+    } else {
+      option.xAxis = mkAxis({ type: 'category', data: labels });
+      var hasSecondY = series.some(function(s){ return s.yAxisIndex === 1; });
+      if (hasSecondY) {
+        option.yAxis = [
+          mkAxis({ type: 'value', axisLabel: Object.assign({}, baseText, { formatter: cfg.yFormat || '{value}%' }), splitLine: { lineStyle: { color: C.grid } } }),
+          mkAxis({ type: 'value', position: 'right', axisLabel: Object.assign({}, baseText, { formatter: '{value}' }), splitLine: { show: false } })
+        ];
+      } else {
+        option.yAxis = mkAxis({ type: 'value', axisLabel: cfg.yFormat ? Object.assign({}, baseText, { formatter: cfg.yFormat }) : baseText });
+      }
+    }
+
+    /* Mark line */
+    if (cfg.markLine && series.length > 0) {
+      var mlIdx = cfg.markLine.seriesIndex || (series.length - 1);
+      series[mlIdx].markLine = {
+        silent: true, symbol: 'none',
+        lineStyle: { color: cfg.markLine.color || C.navy, type: 'dashed', width: 1 },
+        label: { formatter: cfg.markLine.label || 'Current', position: 'insideStartTop', fontSize: 9, color: C.muted },
+        data: [{ xAxis: cfg.markLine.xAxis }]
+      };
+    }
+
+    option.series = series;
+    chart.setOption(option);
+  });
+}
+</script>
 </body>
 </html>
