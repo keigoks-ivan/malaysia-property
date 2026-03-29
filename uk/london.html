@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>London | United Kingdom Property Monitor</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../tw/tw.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}
+.navbar{background:#fff!important}
+.kpi-card,.chart-card,.summary-card,.micro-card{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}
+.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}
+.market-btn:hover{background:#dde8f2}
+.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.1);min-width:155px;z-index:100}
+.market-dropdown.open{display:block}
+.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}
+.market-dropdown a:hover{background:#f4f7fc}
+.market-dropdown a.active{font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector">
+    <button class="market-btn" onclick="toggleMarketMenu()">
+      🇬🇧
+      <span class="lang-en">United Kingdom</span>
+      <span class="lang-zh" style="display:none">英國</span>
+      ▾
+    </button>
+    <div class="market-dropdown" id="marketDropdown">
+      <a href="../index.html"
+>
+        🇲🇾
+        <span class="lang-en">Malaysia</span>
+        <span class="lang-zh" style="display:none">馬來西亞</span>
+      </a>
+      <a href="../tw/index.html"
+>
+        🇹🇼
+        <span class="lang-en">Taiwan</span>
+        <span class="lang-zh" style="display:none">台灣</span>
+      </a>
+      <a href="../jp/index.html"
+>
+        🇯🇵
+        <span class="lang-en">Japan</span>
+        <span class="lang-zh" style="display:none">日本</span>
+      </a>
+      <a href="../au/index.html"
+>
+        🇦🇺
+        <span class="lang-en">Australia</span>
+        <span class="lang-zh" style="display:none">澳洲</span>
+      </a>
+      <a href="../nz/index.html"
+>
+        🇳🇿
+        <span class="lang-en">New Zealand</span>
+        <span class="lang-zh" style="display:none">紐西蘭</span>
+      </a>
+      <a href="../uk/index.html"
+class="active">
+        🇬🇧
+        <span class="lang-en">United Kingdom</span>
+        <span class="lang-zh" style="display:none">英國</span>
+      </a>
+    </div>
+  </div>
+  <nav>
+    <a href="report.html">
+      <span class="lang-en">Report</span>
+      <span class="lang-zh" style="display:none">報告</span>
+    </a>
+    <a href="index.html">
+      <span class="lang-en">Dashboard</span>
+      <span class="lang-zh" style="display:none">市場總覽</span>
+    </a>
+    <a href="supply.html">
+      <span class="lang-en">Supply</span>
+      <span class="lang-zh" style="display:none">供給</span>
+    </a>
+    <a href="demand.html">
+      <span class="lang-en">Demand</span>
+      <span class="lang-zh" style="display:none">需求</span>
+    </a>
+    <a href="valuation.html">
+      <span class="lang-en">Valuation</span>
+      <span class="lang-zh" style="display:none">估值</span>
+    </a>
+    <a href="risk.html">
+      <span class="lang-en">Risk</span>
+      <span class="lang-zh" style="display:none">風險</span>
+    </a>
+    <a href="london.html" class="active">
+      <span class="lang-en">London</span>
+      <span class="lang-zh" style="display:none">倫敦</span>
+    </a>
+    <a href="manchester.html">
+      <span class="lang-en">Manchester</span>
+      <span class="lang-zh" style="display:none">曼徹斯特</span>
+    </a>
+    <a href="birmingham.html">
+      <span class="lang-en">Birmingham</span>
+      <span class="lang-zh" style="display:none">伯明翰</span>
+    </a>
+    <a href="edinburgh.html">
+      <span class="lang-en">Edinburgh</span>
+      <span class="lang-zh" style="display:none">愛丁堡</span>
+    </a>
+    <a href="newcastle.html">
+      <span class="lang-en">Newcastle</span>
+      <span class="lang-zh" style="display:none">紐卡斯爾</span>
+    </a>
+  </nav>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <span class="opr-badge">BoE: 3.75% ▼</span>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+
+<div class="mobile-menu">
+  <a href="report.html">
+    <span class="lang-en">Report</span>
+    <span class="lang-zh" style="display:none">報告</span>
+  </a>
+  <a href="index.html">
+    <span class="lang-en">Dashboard</span>
+    <span class="lang-zh" style="display:none">市場總覽</span>
+  </a>
+  <a href="supply.html">
+    <span class="lang-en">Supply</span>
+    <span class="lang-zh" style="display:none">供給</span>
+  </a>
+  <a href="demand.html">
+    <span class="lang-en">Demand</span>
+    <span class="lang-zh" style="display:none">需求</span>
+  </a>
+  <a href="valuation.html">
+    <span class="lang-en">Valuation</span>
+    <span class="lang-zh" style="display:none">估值</span>
+  </a>
+  <a href="risk.html">
+    <span class="lang-en">Risk</span>
+    <span class="lang-zh" style="display:none">風險</span>
+  </a>
+  <a href="london.html">
+    <span class="lang-en">London</span>
+    <span class="lang-zh" style="display:none">倫敦</span>
+  </a>
+  <a href="manchester.html">
+    <span class="lang-en">Manchester</span>
+    <span class="lang-zh" style="display:none">曼徹斯特</span>
+  </a>
+  <a href="birmingham.html">
+    <span class="lang-en">Birmingham</span>
+    <span class="lang-zh" style="display:none">伯明翰</span>
+  </a>
+  <a href="edinburgh.html">
+    <span class="lang-en">Edinburgh</span>
+    <span class="lang-zh" style="display:none">愛丁堡</span>
+  </a>
+  <a href="newcastle.html">
+    <span class="lang-en">Newcastle</span>
+    <span class="lang-zh" style="display:none">紐卡斯爾</span>
+  </a>
+  <div class="mobile-meta">
+    <span class="opr-badge">BoE: 3.75%</span>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+  <div class="page-header">
+    <h1>
+      <span class="lang-en">London — Deep Dive</span>
+      <span class="lang-zh" style="display:none">倫敦深度分析</span>
+    </h1>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">Avg House Price</span><span class="lang-zh" style="display:none">平均房價</span></div>
+      <div class="kpi-value">£547,000</div>
+      <span class="kpi-badge badge-red"><span class="lang-en">Oct 2025 · -2.4% YoY</span><span class="lang-zh" style="display:none">2025年10月 · 年減-2.4%</span></span>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">Prime Central London</span><span class="lang-zh" style="display:none">黃金地段</span></div>
+      <div class="kpi-value">£1.2M+</div>
+      <span class="kpi-badge badge-orange"><span class="lang-en">Kensington & Chelsea</span><span class="lang-zh" style="display:none">肯辛頓與切爾西</span></span>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">Rental Yield</span><span class="lang-zh" style="display:none">租金報酬率</span></div>
+      <div class="kpi-value">3–4%</div>
+      <span class="kpi-badge badge-red"><span class="lang-en">Below BoE rate</span><span class="lang-zh" style="display:none">低於基準利率</span></span>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">Price-to-Income</span><span class="lang-zh" style="display:none">房價所得比</span></div>
+      <div class="kpi-value">8.6x</div>
+      <span class="kpi-badge badge-red"><span class="lang-en">Disposable income basis</span><span class="lang-zh" style="display:none">可支配所得計算</span></span>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">YoY Growth</span><span class="lang-zh" style="display:none">年增率</span></div>
+      <div class="kpi-value">-1.2%</div>
+      <span class="kpi-badge badge-red"><span class="lang-en">Nov 2025 · lagging UK avg</span><span class="lang-zh" style="display:none">2025年11月 · 落後全國</span></span>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-label"><span class="lang-en">Foreign Buyer Share</span><span class="lang-zh" style="display:none">外資買家比例</span></div>
+      <div class="kpi-value">~25%</div>
+      <span class="kpi-badge badge-blue"><span class="lang-en">Prime central London</span><span class="lang-zh" style="display:none">黃金地段</span></span>
+    </div>
+  </div>
+
+
+
+
+
+  <h2 class="section-heading"><span class="lang-en">Charts</span><span class="lang-zh" style="display:none">圖表</span></h2>
+  <div class="chart-grid two-col">
+    <div class="chart-card">
+      <h3><span class="lang-en">London Avg House Price Trend</span><span class="lang-zh" style="display:none">倫敦平均房價趨勢</span></h3>
+      <div style="position:relative;height:220px;"><div id="price_trend" style="width:100%;height:100%"></div></div>
+    </div>
+    <div class="chart-card">
+      <h3><span class="lang-en">Borough Price Range (£)</span><span class="lang-zh" style="display:none">各行政區房價（英鎊）</span></h3>
+      <div style="position:relative;height:220px;"><div id="borough_comparison" style="width:100%;height:100%"></div></div>
+    </div>
+  </div>
+
+
+
+</main>
+
+<footer class="footer">A project by <span>InvestMQuest</span></footer>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
+var baseText={color:C.muted,fontFamily:'Inter,sans-serif',fontSize:11};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+var baseLegend={bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector'))document.getElementById('marketDropdown').classList.remove('open');});
+function switchTab(cid,tab){var w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});w.querySelectorAll('.tab-bar button').forEach(function(b){b.classList.remove('active');});var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(function(b){if(b.dataset.tab===tab)b.classList.add('active');});setTimeout(function(){allCharts.forEach(function(c){if(c)c.resize();});},100);}
+function setLang(lang){
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  localStorage.setItem('lang',lang);
+  if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}
+  if(typeof initCharts==='function')initCharts(lang);
+}
+var allCharts=[];
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+function fmtK(v){return v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':v;}
+function fmtRM(v){if(v>=1000000)return'RM '+(v/1000000).toFixed(1)+'M';if(v>=1000)return'RM '+(v/1000).toFixed(0)+'K';return'RM '+v;}
+
+function initCharts(lang){
+  var DATA = {"borough_comparison": {"data": [357000, 420000, 480000, 620000, 780000, 1200000], "labels_en": ["Barking", "Croydon", "Lewisham", "Hackney", "Islington", "Kensington"], "labels_zh": ["\u5df4\u91d1", "\u514b\u7f85\u4f0a\u767b", "\u5289\u6613\u820d\u59c6", "\u54c8\u514b\u5c3c", "\u4f0a\u65af\u9748\u9813", "\u80af\u8f9b\u9813"], "title_en": "Borough Price Range (\u00a3)", "title_zh": "\u5404\u884c\u653f\u5340\u623f\u50f9\uff08\u82f1\u938a\uff09"}, "price_trend": {"data": [480000, 496000, 520000, 540000, 530000, 520000, 547000], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "Oct 2025"], "title_en": "London Avg House Price Trend", "title_zh": "\u502b\u6566\u5e73\u5747\u623f\u50f9\u8da8\u52e2", "yoy": [3.2, 3.3, 4.8, 3.8, -1.9, -1.9, -2.4]}};
+  var en = lang !== 'zh';
+
+  function initChart(id){
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var c = echarts.init(el);
+    allCharts.push(c);
+    return c;
+  }
+
+  function dsColor(ds, idx){
+    var palette = [C.navy, C.green, C.orange, C.red, C.blue, C.muted];
+    return ds.color || palette[idx % palette.length];
+  }
+
+  function buildLineStyle(ds, idx){
+    var style = { color: dsColor(ds, idx), width: ds.width || 2 };
+    if(ds.lineType) style.type = ds.lineType;
+    return style;
+  }
+
+  function buildMarkLine(cfg){
+    if(!cfg) return undefined;
+    var ml = {
+      silent: true, symbol: 'none',
+      lineStyle: { color: C.red, type: 'dashed', width: 1 },
+      label: { formatter: cfg.label || '', fontSize: 10, color: C.red },
+      data: []
+    };
+    if(cfg.xAxis !== undefined) ml.data.push({ xAxis: cfg.xAxis });
+    if(cfg.yAxis !== undefined) ml.data.push({ yAxis: cfg.yAxis });
+    return ml;
+  }
+
+  function buildMarkPoint(cfg){
+    if(!cfg) return undefined;
+    var items = Array.isArray(cfg) ? cfg : [cfg];
+    var mpData = items.map(function(mp){
+      var d = {};
+      if(mp.type) d.type = mp.type;
+      if(mp.coord) d.coord = mp.coord;
+      if(mp.label) d.label = { formatter: mp.label, fontSize: 9, fontWeight: 'bold' };
+      d.symbolSize = mp.symbolSize || 50;
+      if(mp.color) d.itemStyle = { color: mp.color };
+      else if(mp.type === 'max') d.itemStyle = { color: C.green };
+      else if(mp.type === 'min') d.itemStyle = { color: C.red };
+      return d;
+    });
+    return { data: mpData };
+  }
+
+  /* Iterate over all city charts */
+  Object.keys(DATA).forEach(function(chartId){
+    var info = DATA[chartId];
+
+    var chart = initChart(chartId);
+    if(!chart) return;
+
+    var chartType = (info.type || '').toLowerCase();
+    var isHorizontal = chartType.indexOf('horizontal') >= 0;
+    var hasDualAxis = chartType.indexOf('dual') >= 0 ||
+                      (info.datasets && info.datasets.some(function(ds){ return ds.yAxisIndex === 1; }));
+
+    /* Use localized labels if available */
+    var labels = info.labels;
+    if(en && info.labels_en) labels = info.labels_en;
+    if(!en && info.labels_zh) labels = info.labels_zh;
+
+    var legendNames = (info.datasets || []).map(function(ds){
+      return en ? (ds.name_en || ds.name || '') : (ds.name_zh || ds.name || '');
+    });
+
+    /* Build series */
+    var series = (info.datasets || []).map(function(ds, idx){
+      var name = en ? (ds.name_en || ds.name || '') : (ds.name_zh || ds.name || '');
+      var s = { name: name, type: ds.type || 'line' };
+      var clr = dsColor(ds, idx);
+
+      if(ds.colors && Array.isArray(ds.colors)){
+        s.data = ds.data.map(function(v, i){
+          return { value: v, itemStyle: { color: ds.colors[i], borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] } };
+        });
+      } else if(ds.data && typeof ds.data[0] === 'object' && ds.data[0] !== null && ds.data[0].value !== undefined){
+        s.data = ds.data.map(function(d){
+          return { value: d.value, itemStyle: { color: d.color || clr, borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] } };
+        });
+      } else {
+        s.data = ds.data;
+      }
+
+      if(ds.type === 'bar'){
+        s.barMaxWidth = isHorizontal ? 22 : 55;
+        if(!ds.colors && !ds.color_positive){
+          s.itemStyle = { color: clr, borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] };
+        }
+        if(ds.color_positive){
+          s.itemStyle = {
+            color: function(p){ return p.value >= 0 ? ds.color_positive : (ds.color_negative || C.red); },
+            borderRadius: [3,3,0,0]
+          };
+          s.barMaxWidth = 35;
+          s.label = { show: true, position: 'top', fontFamily: 'JetBrains Mono, monospace', fontSize: 9, formatter: function(p){ return p.value + '%'; } };
+        }
+        if(!ds.color_positive && ds.type === 'bar' && !isHorizontal && idx === 0){
+          s.label = { show: true, position: 'top', fontFamily: 'JetBrains Mono, monospace', fontSize: 10,
+            formatter: function(p){ return typeof p.value === 'number' && p.value >= 1000 ? fmtK(p.value) : p.value; } };
+        }
+        if(isHorizontal){
+          s.label = { show: true, position: 'right', formatter: '{c}', fontSize: 10, fontFamily: 'Inter', fontWeight: 'bold', color: C.navy };
+        }
+      }
+
+      if(ds.type === 'line'){
+        s.lineStyle = buildLineStyle(ds, idx);
+        s.itemStyle = { color: clr };
+        s.symbol = 'circle';
+        s.symbolSize = ds.symbolSize || 6;
+        if(ds.step) s.step = ds.step;
+        if(ds.areaStyle) s.areaStyle = { color: 'rgba(30,58,95,0.08)' };
+        if(ds.smooth !== undefined) s.smooth = ds.smooth;
+        else s.smooth = 0.2;
+        if(ds.yAxisIndex === 1){
+          s.yAxisIndex = 1;
+          s.symbolSize = 8;
+          s.label = { show: true, position: 'bottom', fontFamily: 'JetBrains Mono, monospace', fontSize: 10,
+            formatter: function(p){ return (p.value >= 0 ? '+' : '') + p.value + '%'; } };
+        }
+      }
+
+      if(ds.markPoint) s.markPoint = buildMarkPoint(ds.markPoint);
+      if(ds.markLine) s.markLine = buildMarkLine(ds.markLine);
+      return s;
+    });
+
+    if(info.markLine && series.length > 0){
+      var lastS = series[series.length - 1];
+      if(!lastS.markLine) lastS.markLine = buildMarkLine(info.markLine);
+    }
+
+    /* Build axes */
+    var xAxisCfg, yAxisCfg;
+    if(isHorizontal){
+      var maxVal = 0;
+      (info.datasets || []).forEach(function(ds){ ds.data.forEach(function(v){ if(typeof v === 'number' && v > maxVal) maxVal = v; }); });
+      xAxisCfg = mkAxis({ type: 'value', min: 0 });
+      yAxisCfg = mkAxis({ type: 'category', data: (labels || []).slice().reverse(), axisLabel: { color: C.navy, fontFamily: 'Inter, sans-serif', fontSize: 11 } });
+      series.forEach(function(s){ if(Array.isArray(s.data)) s.data = s.data.slice().reverse(); });
+    } else {
+      xAxisCfg = mkAxis({ type: 'category', data: labels });
+      if(hasDualAxis){
+        yAxisCfg = [
+          mkAxis({ type: 'value' }),
+          mkAxis({ type: 'value', splitLine: { show: false }, axisLabel: Object.assign({}, baseText, { formatter: '{value}%' }) })
+        ];
+      } else {
+        yAxisCfg = mkAxis({ type: 'value' });
+      }
+    }
+
+    var grid;
+    if(isHorizontal){
+      grid = { left: 110, right: 50, top: 20, bottom: 20, containLabel: false };
+    } else if(hasDualAxis){
+      grid = { left: 50, right: 50, top: 45, bottom: 30, containLabel: true };
+    } else {
+      grid = Object.assign({}, baseGrid);
+    }
+
+    var option = {
+      tooltip: isHorizontal
+        ? Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } })
+        : baseTooltip,
+      grid: grid,
+      xAxis: xAxisCfg,
+      yAxis: yAxisCfg,
+      series: series
+    };
+
+    if(legendNames.length > 1){
+      option.legend = Object.assign({}, baseLegend, { top: 8, data: legendNames });
+    }
+
+    chart.setOption(option);
+  });
+}
+</script>
+</body>
+</html>

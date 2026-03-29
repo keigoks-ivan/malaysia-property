@@ -23,6 +23,7 @@ ALL_MARKETS = [
     {"id":"jp",  "flag":"🇯🇵","name_en":"Japan",      "name_zh":"日本",    "path":"jp/index.html"},
     {"id":"au",  "flag":"🇦🇺","name_en":"Australia",  "name_zh":"澳洲",    "path":"au/index.html"},
     {"id":"nz",  "flag":"🇳🇿","name_en":"New Zealand","name_zh":"紐西蘭",  "path":"nz/index.html"},
+    {"id":"uk",  "flag":"🇬🇧","name_en":"United Kingdom","name_zh":"英國","path":"uk/index.html"},
 ]
 
 PAGES = [
