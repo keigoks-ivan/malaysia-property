@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report | United Kingdom Property Monitor</title>
+  <meta name="color-scheme" content="light">
+  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}
+  .market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+  </style>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../tw/tw.css">
+  <style>
+    .report-container{max-width:860px;margin:0 auto;padding:32px 20px}
+    .report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}
+    .report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}
+    .report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}
+    .report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}
+    .report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}
+    .report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}
+    .report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+    .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}
+    .chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+    .chart-inline .chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:8px}
+    .chart-note.green{color:#16a34a}
+    .chart-note.orange{color:#d97706}
+    .chart-note.red{color:#dc2626}
+    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+    .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
+    .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
+    .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
+    .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
+    .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
+    .timeline{display:flex;flex-wrap:wrap;gap:0;margin:20px 0;position:relative}.timeline::before{content:'';position:absolute;top:18px;left:0;right:0;height:2px;background:#ccd9e8}.tl-item{flex:1;min-width:140px;text-align:center;position:relative;padding-top:36px}.tl-dot{width:12px;height:12px;border-radius:50%;background:#1e3a5f;position:absolute;top:12px;left:50%;transform:translateX(-50%);border:2px solid #fff;box-shadow:0 0 0 2px #ccd9e8}.tl-item.highlight .tl-dot{background:#dc2626;box-shadow:0 0 0 2px #dc2626}.tl-date{font-size:11px;font-weight:600;color:#1e3a5f;font-family:Inter,sans-serif}.tl-desc{font-size:10px;color:#5a7a9a;margin-top:4px;font-family:Inter,sans-serif;line-height:1.4}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+  <header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector">
+    <button class="market-btn" onclick="toggleMarketMenu()">&#x1F1EC;&#x1F1E7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span> &#x25BE;</button>
+    <div class="market-dropdown" id="marketDropdown">
+      <a href="../index.html">&#x1F1F2;&#x1F1FE; <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="../tw/index.html">&#x1F1F9;&#x1F1FC; <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+      <a href="../jp/index.html">&#x1F1EF;&#x1F1F5; <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a>
+      <a href="../au/index.html">&#x1F1E6;&#x1F1FA; <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a>
+      <a href="../nz/index.html">&#x1F1F3;&#x1F1FF; <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a>
+      <a href="index.html" class="active">&#x1F1EC;&#x1F1E7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a>
+    </div>
+  </div>
+  <nav>
+    <a href="report.html" class="active"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="london.html"><span class="lang-en">London</span><span class="lang-zh" style="display:none">倫敦</span></a>
+    <a href="manchester.html"><span class="lang-en">Manchester</span><span class="lang-zh" style="display:none">曼徹斯特</span></a>
+    <a href="birmingham.html"><span class="lang-en">Birmingham</span><span class="lang-zh" style="display:none">伯明翰</span></a>
+    <a href="edinburgh.html"><span class="lang-en">Edinburgh</span><span class="lang-zh" style="display:none">愛丁堡</span></a>
+    <a href="newcastle.html"><span class="lang-en">Newcastle</span><span class="lang-zh" style="display:none">紐卡斯爾</span></a>
+  </nav>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <span class="opr-badge">BoE: 3.75% &#x25BC;</span>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html" class="active"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="london.html"><span class="lang-en">London</span><span class="lang-zh" style="display:none">倫敦</span></a>
+  <a href="manchester.html"><span class="lang-en">Manchester</span><span class="lang-zh" style="display:none">曼徹斯特</span></a>
+  <a href="birmingham.html"><span class="lang-en">Birmingham</span><span class="lang-zh" style="display:none">伯明翰</span></a>
+  <a href="edinburgh.html"><span class="lang-en">Edinburgh</span><span class="lang-zh" style="display:none">愛丁堡</span></a>
+  <a href="newcastle.html"><span class="lang-en">Newcastle</span><span class="lang-zh" style="display:none">紐卡斯爾</span></a>
+  <div class="mobile-meta">
+    <span class="opr-badge">BoE: 3.75% &#x25BC;</span>
+    <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  </div>
+</div>
+
+  <div class="report-container">
+    <div class="report-header">
+      <div class="lang-en">
+        <h1>UK PROPERTY MARKET REPORT</h1>
+        <div class="report-meta">March 2026 &middot; Market Research</div>
+      </div>
+      <div class="lang-zh" style="display:none">
+        <h1>英國住宅房地產市場報告</h1>
+        <div class="report-meta">2026年3月 &middot; 市場研究</div>
+      </div>
+    </div>
+    <div class="report-body">
+
+      <!-- SECTION 1: EXECUTIVE SUMMARY -->
+      <h2><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+
+      <div class="lang-en">
+        <p>The UK residential property market in 2025 is defined by a stark north-south divide. While London prices fell <strong>1.2%</strong> year-on-year, the North East delivered <strong>6.8%</strong> growth &mdash; the strongest of any English region. The Bank of England's cutting cycle, which brought the base rate from a peak of <strong>5.25%</strong> to <strong>3.75%</strong> by December 2025, is gradually restoring affordability and transaction volumes, with monthly transactions averaging <strong>~101,000</strong> &mdash; 3% above the five-year mean.</p>
+        <p>The investment thesis in the UK is increasingly regional. Manchester yields of <strong>6.5%</strong>, Birmingham's JLL-rated #1 investment city status, and Newcastle's combination of <strong>6&ndash;8%</strong> yields with a median house price of just <strong>&pound;208,000</strong> present a compelling case for northern city exposure. London, by contrast, offers <strong>3&ndash;4%</strong> yields against a <strong>3.75%</strong> base rate &mdash; negative carry for leveraged investors, making it a pure capital preservation play.</p>
+        <p>The primary risk is regulatory. The Renters Rights Act taking effect in May 2026 abolishes Section 21 no-fault evictions, accelerating the exit of small landlords and tightening rental supply further. EPC upgrade requirements add an estimated <strong>&pound;10,000&ndash;&pound;15,000</strong> cost per non-compliant property. For investors, the window to acquire well-priced assets before these structural changes fully bite may be closing in 2026.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>2025年英國住宅房地產市場的特徵是明顯的南北分化。倫敦房價年跌<strong>1.2%</strong>，而東北部則錄得<strong>6.8%</strong>的增長——為英格蘭所有地區中最強。英格蘭銀行的降息週期將基準利率從<strong>5.25%</strong>的峰值降至2025年12月的<strong>3.75%</strong>，正在逐步恢復可負擔性和交易量，月均交易量約<strong>10.1萬</strong>宗——高出五年均值3%。</p>
+        <p>英國的投資邏輯日益區域化。曼徹斯特<strong>6.5%</strong>的收益率、伯明翰獲JLL評為第一投資城市的地位、以及紐卡斯爾以僅<strong>20.8萬英鎊</strong>的中位房價搭配<strong>6&ndash;8%</strong>收益率的組合，構成了投資北部城市的有力論點。相比之下，倫敦僅提供<strong>3&ndash;4%</strong>的收益率，對比<strong>3.75%</strong>基準利率——對槓桿投資者而言為負利差，使其僅為資本保值工具。</p>
+        <p>主要風險來自法規面。2026年5月生效的租客權益法案廢除了第21條無過失驅逐，加速小型房東退出並進一步收緊租賃供給。EPC升級要求每套不合規房產增加約<strong>1萬至1.5萬英鎊</strong>的成本。對投資者而言，在這些結構性變化全面發酵之前，以合理價格收購資產的窗口可能在2026年即將關閉。</p>
+      </div>
+
+      <!-- Exec Summary Mini Charts -->
+      <div class="report-chart-grid">
+        <div class="report-chart-card">
+          <h4><span class="lang-en">UK Price Trend</span><span class="lang-zh" style="display:none">英國房價趨勢</span></h4>
+          <div class="chart-meta green"><span class="lang-en">&pound;292K avg &mdash; +3.3% YoY</span><span class="lang-zh" style="display:none">&pound;29.2萬均價——年增+3.3%</span></div>
+          <div id="chart-r-uk-price" style="height:180px;min-height:180px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">City Yield Comparison</span><span class="lang-zh" style="display:none">城市收益率比較</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">Northern cities 6&ndash;8% vs London 3&ndash;4%</span><span class="lang-zh" style="display:none">北部城市6&ndash;8% vs 倫敦3&ndash;4%</span></div>
+          <div id="chart-r-uk-yield" style="height:180px;min-height:180px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">North-South Divide</span><span class="lang-zh" style="display:none">南北分化</span></h4>
+          <div class="chart-meta red"><span class="lang-en">NE +6.8% vs London -1.2%</span><span class="lang-zh" style="display:none">東北+6.8% vs 倫敦-1.2%</span></div>
+          <div id="chart-r-uk-ns" style="height:180px;min-height:180px;"></div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: BOE RATE CYCLE -->
+      <h2><span class="lang-en">BOE RATE CYCLE</span><span class="lang-zh" style="display:none">利率週期</span></h2>
+
+      <div class="lang-en">
+        <p>The Bank of England began its hiking cycle in February 2022 from a historic low of <strong>0.25%</strong>, reaching a peak of <strong>5.25%</strong> in August 2023. The September 2022 mini-budget crisis under Liz Truss triggered a gilt market panic, temporarily pushing mortgage rates above <strong>6%</strong> and crystallizing the rate sensitivity of the UK housing market. After holding at 5.25% for a year, the BoE commenced its cutting cycle in August 2024, delivering a series of <strong>25bps</strong> reductions to reach <strong>3.75%</strong> by December 2025.</p>
+        <p>Markets are pricing in further cuts to <strong>3.25&ndash;3.50%</strong> by end-2026, contingent on inflation continuing its downward trajectory. Two-year fixed mortgage rates have fallen to approximately <strong>4.5%</strong> from the 6.4% peak, restoring some affordability but remaining well above the sub-2% era of 2021. Variable-rate borrowers have benefited more directly, but the majority of UK mortgages are on fixed terms of 2&ndash;5 years, creating a delayed transmission effect as borrowers gradually remortgage at higher rates.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>英格蘭銀行於2022年2月從歷史低點<strong>0.25%</strong>開始升息週期，於2023年8月達到<strong>5.25%</strong>的峰值。2022年9月特拉斯政府的迷你預算案引發國債市場恐慌，暫時將房貸利率推高至<strong>6%</strong>以上，充分暴露了英國房市的利率敏感性。在維持5.25%一年後，BoE於2024年8月開始降息，連續多次<strong>25個基點</strong>的下調，至2025年12月降至<strong>3.75%</strong>。</p>
+        <p>市場預期2026年底前將進一步降至<strong>3.25&ndash;3.50%</strong>，取決於通膨是否持續下行。2年期固定房貸利率已從6.4%峰值降至約<strong>4.5%</strong>，一定程度恢復了可負擔性，但仍遠高於2021年不到2%的時代。浮動利率借款人受益更直接，但英國大多數房貸為2至5年固定期限，隨著借款人逐步以更高利率重新抵押，產生延遲傳導效應。</p>
+      </div>
+
+      <!-- SECTION 3: SUPPLY -->
+      <h2><span class="lang-en">SUPPLY</span><span class="lang-zh" style="display:none">供給面</span></h2>
+
+      <div class="lang-en">
+        <p>The UK's housing supply deficit remains one of the market's defining structural features. Annual completions of approximately <strong>220,000</strong> homes consistently fall short of the government's <strong>300,000</strong> target, creating a cumulative shortfall that supports prices even in weaker economic conditions. Planning delays, labour shortages, and elevated construction costs &mdash; up approximately <strong>25%</strong> since 2020 &mdash; continue to constrain the development pipeline. On the rental side, the impending Renters Rights Act is already driving small landlord disposals, reducing the private rental stock and pushing advertised rents higher. New rental supply from build-to-rent (BTR) institutions is growing but remains a fraction of total stock.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>英國住房供給赤字仍是市場最具定義性的結構性特徵之一。年竣工量約<strong>22萬</strong>套，持續低於政府<strong>30萬</strong>套目標，累積的缺口即使在經濟疲弱時期仍支撐房價。規劃延遲、勞動力短缺以及自2020年以來上漲約<strong>25%</strong>的建築成本繼續制約開發管線。租賃方面，即將生效的租客權益法案已在推動小型房東出售物業，減少私人租賃存量並推高掛牌租金。來自機構化長租（BTR）的新增租賃供給正在增長，但仍僅佔總存量的一小部分。</p>
+      </div>
+
+      <!-- SECTION 4: DEMAND -->
+      <h2><span class="lang-en">DEMAND</span><span class="lang-zh" style="display:none">需求面</span></h2>
+
+      <div class="lang-en">
+        <p>Transaction volumes have recovered to approximately <strong>101,000</strong> per month, 3% above the five-year average, supported by the BoE's cutting cycle and improved mortgage availability. First-time buyers remain the largest buyer segment, although stamp duty relief ending in April 2025 created a pull-forward of demand into Q1 2025 followed by a temporary dip. Investor demand is increasingly concentrated in northern cities offering positive yield spreads &mdash; Manchester, Birmingham, and Newcastle have emerged as institutional favourites. Net migration of approximately <strong>700,000</strong> per annum continues to drive underlying housing demand well above the construction run rate.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>月交易量已恢復至約<strong>10.1萬</strong>宗，高出五年均值3%，受BoE降息週期和房貸可用性改善支撐。首次購房者仍是最大買家群體，但2025年4月印花稅寬減期結束導致需求提前至2025年Q1，隨後出現暫時性下跌。投資者需求日益集中於提供正利差的北部城市——曼徹斯特、伯明翰和紐卡斯爾已成為機構投資者的首選。每年約<strong>70萬</strong>的淨移民持續推動基礎住房需求遠超建設速度。</p>
+      </div>
+
+      <!-- SECTION 5: VALUATION -->
+      <h2><span class="lang-en">VALUATION</span><span class="lang-zh" style="display:none">估值</span></h2>
+
+      <div class="lang-en">
+        <p>Valuation across the UK is bifurcated. London's price-to-income ratio of <strong>8.6x</strong> and gross rental yields of <strong>3&ndash;4%</strong> against a <strong>3.75%</strong> base rate make it one of Europe's most expensive and lowest-yielding markets. The national average price-to-income of <strong>6.5x</strong> masks significant regional variation: northern England and Scotland offer ratios of <strong>4&ndash;5x</strong> with yields of <strong>6&ndash;8%</strong>, providing genuine positive carry even at current interest rates. Manchester's <strong>6.5%</strong> yield, Birmingham's <strong>5&ndash;7%</strong> range, and Newcastle's <strong>6&ndash;8%</strong> represent the strongest risk-adjusted income returns in the UK residential sector.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>英國各地估值呈現分化。倫敦房價所得比<strong>8.6倍</strong>，租金收益率僅<strong>3&ndash;4%</strong>，對比<strong>3.75%</strong>基準利率，使其成為歐洲最貴且收益率最低的市場之一。全國平均房價所得比<strong>6.5倍</strong>掩蓋了顯著的區域差異：英格蘭北部和蘇格蘭的比率為<strong>4&ndash;5倍</strong>，收益率<strong>6&ndash;8%</strong>，即使在當前利率水準下仍提供真正的正利差。曼徹斯特<strong>6.5%</strong>、伯明翰<strong>5&ndash;7%</strong>及紐卡斯爾<strong>6&ndash;8%</strong>的收益率代表了英國住宅領域最強的風險調整後收入回報。</p>
+      </div>
+
+      <!-- SECTION 6: LONDON -->
+      <h2><span class="lang-en">LONDON</span><span class="lang-zh" style="display:none">倫敦</span></h2>
+
+      <div class="lang-en">
+        <p>London remains the UK's most liquid but also most challenged market for income investors. Average house prices hover around <strong>&pound;530,000</strong>, with prime central London at multiples of that. Prices fell <strong>1.2%</strong> year-on-year in 2025, underperforming every other English region. Gross rental yields of <strong>3&ndash;4%</strong> offer negative carry against the <strong>3.75%</strong> base rate for leveraged investors. The capital's investment case now rests primarily on long-term capital preservation, global safe-haven demand, and the expectation that further BoE cuts will compress yields and restore modest capital growth. For yield-seeking investors, London is a hold rather than a buy at current pricing.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>倫敦仍是英國流動性最強但對收租投資者最具挑戰的市場。平均房價約<strong>53萬英鎊</strong>，黃金地段為此數倍。2025年房價年跌<strong>1.2%</strong>，表現落後於英格蘭所有其他地區。<strong>3&ndash;4%</strong>的總租金收益率對比<strong>3.75%</strong>基準利率，對槓桿投資者而言為負利差。倫敦的投資邏輯現主要建立在長期資本保值、全球避險需求，以及對BoE進一步降息將壓縮收益率並恢復溫和資本增長的預期之上。對追求收益的投資者而言，以當前定價倫敦是持有而非買入。</p>
+      </div>
+
+      <!-- SECTION 7: NORTHERN CITIES -->
+      <h2><span class="lang-en">NORTHERN CITIES</span><span class="lang-zh" style="display:none">北部城市</span></h2>
+
+      <div class="lang-en">
+        <p>The northern cities of Manchester, Birmingham, Newcastle, and Edinburgh represent the UK's strongest risk-adjusted investment opportunity. Manchester offers <strong>6.5%</strong> yields with robust rental demand from a young professional population and a thriving tech sector. Birmingham, rated the #1 UK investment city by JLL, benefits from HS2 connectivity (Phase 1), a growing financial services cluster, and yields of <strong>5&ndash;7%</strong>. Newcastle stands out for affordability: a median price of just <strong>&pound;208,000</strong> paired with <strong>6&ndash;8%</strong> yields and the North East's <strong>6.8%</strong> annual price growth &mdash; the strongest in England. Edinburgh combines cultural capital status with yields of <strong>5&ndash;6%</strong> and consistent demand from students, festivals, and the financial sector.</p>
+        <p>The north-south divide in both price growth and yields has widened to levels not seen in decades, creating a structural reallocation opportunity for investors willing to look beyond London.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>曼徹斯特、伯明翰、紐卡斯爾和愛丁堡等北部城市代表了英國風險調整後最強的投資機會。曼徹斯特提供<strong>6.5%</strong>的收益率，年輕專業人士和蓬勃發展的科技業帶來強勁租賃需求。伯明翰被JLL評為英國第一投資城市，受益於HS2高鐵連接（第一期）、成長中的金融服務集群，以及<strong>5&ndash;7%</strong>的收益率。紐卡斯爾以可負擔性脫穎而出：中位房價僅<strong>20.8萬英鎊</strong>，搭配<strong>6&ndash;8%</strong>收益率及東北部<strong>6.8%</strong>的年度房價增長——為英格蘭最強。愛丁堡結合文化首府地位、<strong>5&ndash;6%</strong>收益率，以及來自學生、節慶和金融業的持續需求。</p>
+        <p>房價增長和收益率的南北分化已擴大至數十年未見的水準，為願意將目光投向倫敦以外的投資者創造了結構性重配機會。</p>
+      </div>
+
+      <!-- SECTION 8: OUTLOOK -->
+      <h2><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
+
+      <div class="lang-en">
+        <p><strong>Bull case:</strong> BoE cuts to 3.0% by end-2026, mortgage rates fall below 4%, transaction volumes surge. National prices <strong>+5&ndash;7%</strong>, northern cities <strong>+8&ndash;10%</strong>. Rental growth remains strong at <strong>+4&ndash;6%</strong> as landlord supply shrinks under the Renters Rights Act.</p>
+        <p><strong>Base case:</strong> BoE reaches <strong>3.25&ndash;3.50%</strong> by year-end, moderate price growth of <strong>+2&ndash;4%</strong> nationally. Northern cities outperform at <strong>+5&ndash;7%</strong>. London flat to <strong>+1%</strong>. Rents continue rising <strong>+3&ndash;5%</strong> on supply constraints. Transaction volumes hold around 100K/month.</p>
+        <p><strong>Bear case:</strong> Inflation proves sticky, BoE pauses or reverses at <strong>3.75%</strong>. Mortgage rates stall above 4.5%, transaction volumes drop. National prices flat to <strong>-2%</strong>. Regulatory burden from Renters Rights Act and EPC requirements triggers accelerated landlord exits, creating localised price pressure in areas with concentrated buy-to-let stock.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p><strong>樂觀情境：</strong>BoE於2026年底前降至3.0%，房貸利率跌破4%，交易量大增。全國房價<strong>+5&ndash;7%</strong>，北部城市<strong>+8&ndash;10%</strong>。租客權益法案導致房東供給萎縮，租金增長仍強勁達<strong>+4&ndash;6%</strong>。</p>
+        <p><strong>基本情境：</strong>BoE年底達<strong>3.25&ndash;3.50%</strong>，全國溫和漲價<strong>+2&ndash;4%</strong>。北部城市以<strong>+5&ndash;7%</strong>領跑。倫敦持平至<strong>+1%</strong>。租金在供給約束下持續上漲<strong>+3&ndash;5%</strong>。月交易量維持約10萬宗。</p>
+        <p><strong>悲觀情境：</strong>通膨頑固，BoE在<strong>3.75%</strong>暫停或逆轉。房貸利率停滯在4.5%以上，交易量下降。全國房價持平至<strong>-2%</strong>。租客權益法案和EPC要求的法規負擔觸發加速房東退出，在集中買房出租存量的地區造成局部價格壓力。</p>
+      </div>
+
+      <!-- POLICY TIMELINE -->
+      <h2><span class="lang-en">POLICY TIMELINE</span><span class="lang-zh" style="display:none">政策時間線</span></h2>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2022 Feb</div>
+          <div class="tl-desc"><span class="lang-en">BoE begins rate hike from 0.25%</span><span class="lang-zh" style="display:none">開始從0.25%升息</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2022 Sep</div>
+          <div class="tl-desc"><span class="lang-en">Truss mini-budget triggers market chaos</span><span class="lang-zh" style="display:none">特拉斯迷你預算案引發動盪</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2023 Aug</div>
+          <div class="tl-desc"><span class="lang-en">BoE rate peaks at 5.25%</span><span class="lang-zh" style="display:none">基準利率達峰值5.25%</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2024 Aug</div>
+          <div class="tl-desc"><span class="lang-en">First BoE rate cut since 2020</span><span class="lang-zh" style="display:none">2020年以來首次降息</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2025 Apr</div>
+          <div class="tl-desc"><span class="lang-en">Stamp duty relief ends</span><span class="lang-zh" style="display:none">印花稅寬減期結束</span></div>
+        </div>
+        <div class="tl-item highlight">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2025 Dec</div>
+          <div class="tl-desc"><span class="lang-en">BoE rate at 3.75%</span><span class="lang-zh" style="display:none">降至3.75%</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2026 May</div>
+          <div class="tl-desc"><span class="lang-en">Renters Rights Act takes effect</span><span class="lang-zh" style="display:none">租客權益法案生效</span></div>
+        </div>
+      </div>
+
+      <div class="report-footer">
+        <p><span class="lang-en">Data sources: Bank of England &middot; ONS &middot; Rightmove &middot; Zoopla &middot; HMRC &middot; JLL &middot; Savills</span><span class="lang-zh" style="display:none">數據來源：英格蘭銀行 &middot; 英國國家統計局 (ONS) &middot; Rightmove &middot; Zoopla &middot; HMRC &middot; JLL &middot; Savills</span></p>
+        <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">A project by <span>InvestMQuest</span></footer>
+
+  <script>
+  var C = {
+    navy:'#1e3a5f', green:'#16a34a', orange:'#d97706',
+    red:'#dc2626', blue:'#2563eb', muted:'#5a7a9a',
+    grid:'#e8f0f9', text:'#1e3a5f'
+  };
+  function fmtGBP(v){if(v>=1000000)return '\u00A3'+(v/1000000).toFixed(1)+'M';if(v>=1000)return '\u00A3'+(v/1000).toFixed(0)+'K';return '\u00A3'+v;}
+  function fmtGBPShort(v){if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return(v/1000).toFixed(0)+'K';return ''+v;}
+  var baseText = { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 };
+  var baseTooltip = {
+    trigger: 'axis', backgroundColor: '#fff',
+    borderColor: '#ccd9e8', borderWidth: 1,
+    textStyle: { color: C.navy, fontSize: 11, fontFamily: 'Inter' }
+  };
+  var baseLegend = { top: 8, textStyle: baseText, icon: 'circle', itemWidth: 8, itemHeight: 8 };
+
+  function mkAxis(opts) {
+    return Object.assign({
+      axisLine: { lineStyle: { color: C.grid } },
+      axisTick: { show: false },
+      axisLabel: baseText,
+      splitLine: { lineStyle: { color: C.grid } }
+    }, opts || {});
+  }
+
+  function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+  document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+
+  var allCharts = [];
+
+  function initAllCharts(lang) {
+    allCharts.forEach(function(c){ if(c) c.dispose(); });
+    allCharts = [];
+    drawPrice(lang);
+    drawYield(lang);
+    drawNorthSouth(lang);
+  }
+
+  function setLang(lang){
+    document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+    document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    localStorage.setItem('lang',lang);
+    initAllCharts(lang);
+  }
+
+  function drawPrice(lang){
+    var c = echarts.init(document.getElementById('chart-r-uk-price'));
+    allCharts.push(c);
+    var yrs = ['2020','2021','2022','2023','2024','2025'];
+    var data = [250000,265000,285000,282000,283000,292000];
+    c.setOption({
+      tooltip: Object.assign({}, baseTooltip, { formatter:function(p){return p[0].axisValue+'<br/>'+p[0].marker+(lang==='zh'?'均價 ':'Avg ')+fmtGBP(p[0].value);} }),
+      grid:{left:12,right:12,top:12,bottom:20,containLabel:true},
+      xAxis: mkAxis({ type:'category', data:yrs, axisLabel:{ color:C.muted, fontSize:8 } }),
+      yAxis: mkAxis({ type:'value', min:200000, max:320000, axisLabel:{ color:C.muted, fontSize:9, formatter:function(v){return fmtGBPShort(v);} } }),
+      series: [{
+        name:lang==='zh'?'英國均價':'UK Average',
+        type:'line',
+        data:data,
+        lineStyle:{color:C.navy,width:2},
+        itemStyle:{color:C.navy},
+        areaStyle:{color:'rgba(30,58,95,0.08)'},
+        smooth:0.3,
+        symbol:'circle',
+        symbolSize:5,
+        label:{ show:false }
+      }]
+    });
+  }
+
+  function drawYield(lang){
+    var c = echarts.init(document.getElementById('chart-r-uk-yield'));
+    allCharts.push(c);
+    var labels = lang==='zh'
+      ? ['倫敦','愛丁堡','伯明翰','曼徹斯特','紐卡斯爾']
+      : ['London','Edinburgh','Birmingham','Manchester','Newcastle'];
+    var values = [3.5,5.5,6.0,6.5,7.0];
+    var colors = values.map(function(v){ return v < 3.75 ? C.red : v < 5.0 ? C.orange : C.green; });
+    c.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
+      grid: { left:12, right:40, top:10, bottom:15, containLabel:true },
+      xAxis: mkAxis({ type:'value', min:0, max:9, axisLabel:{ fontSize:9, color:C.muted, formatter:'{value}%' } }),
+      yAxis: mkAxis({ type:'category', data:labels, axisLabel:{color:C.navy,fontSize:9,fontFamily:'Inter'} }),
+      series: [{
+        type:'bar',
+        data: values.map(function(v,i){ return { value:v, itemStyle:{color:colors[i],borderRadius:[0,4,4,0]} }; }),
+        barMaxWidth:16,
+        label:{ show:true, position:'right', formatter:function(p){return p.value+'%';}, fontSize:9, fontFamily:'Inter', fontWeight:'bold', color:C.navy },
+        markLine: {
+          silent:true,
+          data:[{ xAxis:3.75, lineStyle:{color:C.red,type:'dashed',width:1.5}, label:{show:true,formatter:'BoE 3.75%',fontSize:9,color:C.red,position:'insideEndTop'} }]
+        }
+      }]
+    });
+  }
+
+  function drawNorthSouth(lang){
+    var c = echarts.init(document.getElementById('chart-r-uk-ns'));
+    allCharts.push(c);
+    var labels = lang==='zh'
+      ? ['倫敦','東南','西南','西密德蘭','西北','東北']
+      : ['London','South East','South West','West Midlands','North West','North East'];
+    var values = [-1.2,1.5,2.8,3.5,4.2,6.8];
+    var colors = values.map(function(v){ return v < 0 ? C.red : v < 3 ? C.orange : C.green; });
+    c.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
+      grid: { left:12, right:40, top:10, bottom:15, containLabel:true },
+      xAxis: mkAxis({ type:'value', min:-2, max:8, axisLabel:{ fontSize:9, color:C.muted, formatter:'{value}%' } }),
+      yAxis: mkAxis({ type:'category', data:labels, axisLabel:{color:C.navy,fontSize:9,fontFamily:'Inter'} }),
+      series: [{
+        type:'bar',
+        data: values.map(function(v,i){ return { value:v, itemStyle:{color:colors[i],borderRadius:v>=0?[0,4,4,0]:[4,0,0,4]} }; }),
+        barMaxWidth:16,
+        label:{ show:true, position:'right', formatter:function(p){return p.value+'%';}, fontSize:9, fontFamily:'Inter', fontWeight:'bold', color:C.navy },
+        markLine: {
+          silent:true,
+          data:[{ xAxis:0, lineStyle:{color:C.muted,type:'solid',width:1}, label:{show:false} }]
+        }
+      }]
+    });
+  }
+
+  window.addEventListener('load', function(){
+    var lang = localStorage.getItem('lang') || 'en';
+    setLang(lang);
+  });
+
+  window.addEventListener('resize', function(){
+    allCharts.forEach(function(c){ if(c) c.resize(); });
+  });
+  </script>
+</body>
+</html>

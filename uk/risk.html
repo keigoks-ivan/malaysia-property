@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Risk Monitor | United Kingdom Property Monitor</title>
+  <meta name="color-scheme" content="light">
+  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+  .timeline{display:flex;flex-wrap:wrap;gap:0;margin:20px 0;position:relative}.timeline::before{content:'';position:absolute;top:18px;left:0;right:0;height:2px;background:#ccd9e8}.tl-item{flex:1;min-width:140px;text-align:center;position:relative;padding-top:36px}.tl-dot{width:12px;height:12px;border-radius:50%;background:#1e3a5f;position:absolute;top:12px;left:50%;transform:translateX(-50%);border:2px solid #fff;box-shadow:0 0 0 2px #ccd9e8}.tl-item.highlight .tl-dot{background:#dc2626;box-shadow:0 0 0 2px #dc2626}.tl-date{font-size:11px;font-weight:600;color:#1e3a5f;font-family:Inter,sans-serif}.tl-desc{font-size:10px;color:#5a7a9a;margin-top:4px;font-family:Inter,sans-serif;line-height:1.4}
+  .risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}.risk-card{background:#fff;border:1px solid #ccd9e8;border-radius:10px;padding:20px;border-left:4px solid #dc2626}.risk-card.amber{border-left-color:#d97706}.risk-card h4{font-size:13px;color:#1e3a5f;margin:0 0 6px;font-family:Inter,sans-serif}.risk-card .risk-level{font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:8px}.risk-card .risk-level.high{background:#fef2f2;color:#dc2626}.risk-card .risk-level.medium{background:#fffbeb;color:#d97706}.risk-card p{font-size:12px;color:#5a7a9a;margin:0;font-family:Inter,sans-serif;line-height:1.5}
+  </style>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../tw/tw.css">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+  <header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector">
+    <button class="market-btn" onclick="toggleMarketMenu()">&#x1F1EC;&#x1F1E7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span> &#x25BE;</button>
+    <div class="market-dropdown" id="marketDropdown">
+      <a href="../index.html">&#x1F1F2;&#x1F1FE; <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="../tw/index.html">&#x1F1F9;&#x1F1FC; <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+      <a href="../jp/index.html">&#x1F1EF;&#x1F1F5; <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a>
+      <a href="../au/index.html">&#x1F1E6;&#x1F1FA; <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a>
+      <a href="../nz/index.html">&#x1F1F3;&#x1F1FF; <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a>
+      <a href="index.html" class="active">&#x1F1EC;&#x1F1E7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a>
+    </div>
+  </div>
+  <nav>
+    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html" class="active"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="london.html"><span class="lang-en">London</span><span class="lang-zh" style="display:none">倫敦</span></a>
+    <a href="manchester.html"><span class="lang-en">Manchester</span><span class="lang-zh" style="display:none">曼徹斯特</span></a>
+    <a href="birmingham.html"><span class="lang-en">Birmingham</span><span class="lang-zh" style="display:none">伯明翰</span></a>
+    <a href="edinburgh.html"><span class="lang-en">Edinburgh</span><span class="lang-zh" style="display:none">愛丁堡</span></a>
+    <a href="newcastle.html"><span class="lang-en">Newcastle</span><span class="lang-zh" style="display:none">紐卡斯爾</span></a>
+  </nav>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <span class="opr-badge">BoE: 3.75% &#x25BC;</span>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html" class="active"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="london.html"><span class="lang-en">London</span><span class="lang-zh" style="display:none">倫敦</span></a>
+  <a href="manchester.html"><span class="lang-en">Manchester</span><span class="lang-zh" style="display:none">曼徹斯特</span></a>
+  <a href="birmingham.html"><span class="lang-en">Birmingham</span><span class="lang-zh" style="display:none">伯明翰</span></a>
+  <a href="edinburgh.html"><span class="lang-en">Edinburgh</span><span class="lang-zh" style="display:none">愛丁堡</span></a>
+  <a href="newcastle.html"><span class="lang-en">Newcastle</span><span class="lang-zh" style="display:none">紐卡斯爾</span></a>
+  <div class="mobile-meta">
+    <span class="opr-badge">BoE: 3.75% &#x25BC;</span>
+    <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  </div>
+</div>
+
+  <main class="container">
+    <div class="page-header">
+      <span class="updated"><span class="lang-en">LAST UPDATED: Q1 2026</span><span class="lang-zh" style="display:none">最後更新：2026年Q1</span></span>
+      <h1><span class="lang-en">Risk Monitor</span><span class="lang-zh" style="display:none">風險監測</span></h1>
+      <p class="subtitle"><span class="lang-en">Macro Risks, Rate Sensitivity &amp; Policy</span><span class="lang-zh" style="display:none">總體風險、利率敏感度與政策</span></p>
+    </div>
+
+    <div class="section-label"><span class="lang-en">KEY RISK INDICATORS</span><span class="lang-zh" style="display:none">關鍵風險指標</span></div>
+    <div class="kpi-grid">
+      <div class="kpi-card blue">
+        <div class="kpi-label"><span class="lang-en">BoE BASE RATE</span><span class="lang-zh" style="display:none">基準利率</span></div>
+        <div class="kpi-value">3.75%</div>
+        <span class="kpi-badge badge-blue"><span class="lang-en">Dec 2025 &middot; further cuts expected</span><span class="lang-zh" style="display:none">2025年12月 &middot; 預期繼續降息</span></span>
+        <div class="kpi-source">BoE</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label"><span class="lang-en">RENTERS RIGHTS ACT</span><span class="lang-zh" style="display:none">租客權益法案</span></div>
+        <div class="kpi-value"><span class="lang-en">May 2026</span><span class="lang-zh" style="display:none">2026年5月</span></div>
+        <span class="kpi-badge badge-red"><span class="lang-en">S.21 abolished &middot; landlord exodus risk</span><span class="lang-zh" style="display:none">無過失驅逐廢除</span></span>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label"><span class="lang-en">STAMP DUTY HEADWIND</span><span class="lang-zh" style="display:none">印花稅阻力</span></div>
+        <div class="kpi-value"><span class="lang-en">Active</span><span class="lang-zh" style="display:none">生效中</span></div>
+        <span class="kpi-badge badge-orange"><span class="lang-en">Relief ended Apr 2025</span><span class="lang-zh" style="display:none">2025年4月寬減期結束</span></span>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label"><span class="lang-en">EPC REQUIREMENTS</span><span class="lang-zh" style="display:none">能源效能憑證</span></div>
+        <div class="kpi-value">2026+</div>
+        <span class="kpi-badge badge-orange"><span class="lang-en">Landlord cost pressure</span><span class="lang-zh" style="display:none">房東成本壓力</span></span>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label"><span class="lang-en">UK GDP 2025</span><span class="lang-zh" style="display:none">英國GDP</span></div>
+        <div class="kpi-value">+1.4%</div>
+        <span class="kpi-badge badge-orange"><span class="lang-en">Below potential growth</span><span class="lang-zh" style="display:none">低於潛力成長率</span></span>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-label"><span class="lang-en">2YR MORTGAGE RATE</span><span class="lang-zh" style="display:none">2年期房貸利率</span></div>
+        <div class="kpi-value">~4.5%</div>
+        <span class="kpi-badge badge-blue"><span class="lang-en">Down from 6.4% peak 2023</span><span class="lang-zh" style="display:none">從2023峰值6.4%下降</span></span>
+      </div>
+    </div>
+
+    <div class="section-label"><span class="lang-en">RISK ASSESSMENT</span><span class="lang-zh" style="display:none">風險評估</span></div>
+
+    <div class="chart-grid two-col">
+      <div class="chart-card">
+        <h3><span class="lang-en">Risk Radar: Current vs 2022</span><span class="lang-zh" style="display:none">風險雷達：目前 vs 2022</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">Multi-dimensional risk scoring (1-10)</span><span class="lang-zh" style="display:none">多維度風險評分 (1-10)</span></p>
+        <div style="position:relative;height:340px;"><div id="chartUkRisk" style="width:100%;height:100%"></div></div>
+      </div>
+      <div class="chart-card">
+        <h3><span class="lang-en">Rate Sensitivity Analysis</span><span class="lang-zh" style="display:none">利率敏感度分析</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">Yield spread &amp; affordability across BoE scenarios</span><span class="lang-zh" style="display:none">不同BoE利率情境下的利差與負擔能力</span></p>
+        <div style="position:relative;height:340px;"><div id="chartUkRateSensitivity" style="width:100%;height:100%"></div></div>
+      </div>
+    </div>
+
+    <div class="section-label"><span class="lang-en">POLICY TIMELINE</span><span class="lang-zh" style="display:none">政策時間線</span></div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2022 Feb</div>
+        <div class="tl-desc"><span class="lang-en">BoE begins rate hike from 0.25%</span><span class="lang-zh" style="display:none">開始從0.25%升息</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2022 Sep</div>
+        <div class="tl-desc"><span class="lang-en">Truss mini-budget triggers market chaos</span><span class="lang-zh" style="display:none">特拉斯迷你預算案引發動盪</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2023 Aug</div>
+        <div class="tl-desc"><span class="lang-en">BoE rate peaks at 5.25%</span><span class="lang-zh" style="display:none">基準利率達峰值5.25%</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2024 Aug</div>
+        <div class="tl-desc"><span class="lang-en">First BoE rate cut since 2020</span><span class="lang-zh" style="display:none">2020年以來首次降息</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2025 Apr</div>
+        <div class="tl-desc"><span class="lang-en">Stamp duty relief ends</span><span class="lang-zh" style="display:none">印花稅寬減期結束</span></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2025 Dec</div>
+        <div class="tl-desc"><span class="lang-en">BoE rate at 3.75%</span><span class="lang-zh" style="display:none">降至3.75%</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2026 May</div>
+        <div class="tl-desc"><span class="lang-en">Renters Rights Act takes effect</span><span class="lang-zh" style="display:none">租客權益法案生效</span></div>
+      </div>
+    </div>
+
+    <div class="section-label"><span class="lang-en">RISK FACTORS</span><span class="lang-zh" style="display:none">風險因素</span></div>
+    <div class="risk-grid">
+      <div class="risk-card">
+        <h4><span class="lang-en">Regulatory Risk</span><span class="lang-zh" style="display:none">法規風險</span></h4>
+        <span class="risk-level high"><span class="lang-en">HIGH</span><span class="lang-zh" style="display:none">高</span></span>
+        <p><span class="lang-en">The Renters Rights Act abolishes Section 21 no-fault evictions from May 2026, accelerating small landlord exits and tightening rental supply. EPC upgrade requirements add &pound;10,000&ndash;&pound;15,000 cost per non-compliant property, further squeezing landlord margins.</span><span class="lang-zh" style="display:none">租客權益法案自2026年5月起廢除第21條無過失驅逐，加速小型房東退出並收緊租賃供給。能源效能憑證（EPC）升級要求每套不合規房產增加1萬至1.5萬英鎊成本，進一步擠壓房東利潤。</span></p>
+      </div>
+      <div class="risk-card">
+        <h4><span class="lang-en">Rate Sensitivity</span><span class="lang-zh" style="display:none">利率敏感度</span></h4>
+        <span class="risk-level high"><span class="lang-en">HIGH</span><span class="lang-zh" style="display:none">高</span></span>
+        <p><span class="lang-en">Despite the BoE cutting cycle, 2-year fixed mortgage rates remain at ~4.5%, down from the 6.4% peak in 2023 but still well above the sub-2% levels of 2021. Leveraged investors face thin or negative carry in London, and mortgage affordability remains stretched for first-time buyers.</span><span class="lang-zh" style="display:none">儘管BoE進入降息週期，2年期固定房貸利率仍約為4.5%，雖已從2023年6.4%的峰值回落，但仍遠高於2021年不到2%的水準。槓桿投資者在倫敦面臨微薄或負利差，首次購房者的房貸負擔能力依然緊張。</span></p>
+      </div>
+      <div class="risk-card amber">
+        <h4><span class="lang-en">Supply Deficit</span><span class="lang-zh" style="display:none">供給赤字</span></h4>
+        <span class="risk-level medium"><span class="lang-en">MEDIUM</span><span class="lang-zh" style="display:none">中</span></span>
+        <p><span class="lang-en">Annual completions of ~220,000 homes fall short of the government's 300,000 target. Planning delays, labour shortages, and rising construction costs continue to constrain supply. The deficit supports prices but worsens housing affordability and rental pressure.</span><span class="lang-zh" style="display:none">年竣工量約22萬套，低於政府30萬套目標。規劃延遲、勞動力短缺及建築成本上漲持續制約供給。赤字支撐房價，但惡化住房可負擔性和租賃壓力。</span></p>
+      </div>
+      <div class="risk-card amber">
+        <h4><span class="lang-en">Affordability</span><span class="lang-zh" style="display:none">可負擔性</span></h4>
+        <span class="risk-level medium"><span class="lang-en">MEDIUM</span><span class="lang-zh" style="display:none">中</span></span>
+        <p><span class="lang-en">London's price-to-income ratio sits at 8.6x, with the national average at 6.5x. While northern cities offer better value, affordability remains a structural barrier for first-time buyers across much of England, particularly in the South East.</span><span class="lang-zh" style="display:none">倫敦房價所得比為8.6倍，全國平均為6.5倍。雖然北部城市提供更好的價值，但可負擔性仍是英格蘭大部分地區、尤其是東南部首次購房者的結構性障礙。</span></p>
+      </div>
+    </div>
+
+    <div class="source-footer">
+      <span class="lang-en"><strong>Sources:</strong> Bank of England, ONS, Rightmove, Zoopla, HMRC, JLL. Data as of Q1 2026 unless stated otherwise.</span>
+      <span class="lang-zh" style="display:none"><strong>資料來源：</strong>英格蘭銀行、英國國家統計局（ONS）、Rightmove、Zoopla、HMRC、JLL。除另行標註外，資料截至2026年Q1。</span>
+    </div>
+  </main>
+
+  <footer class="footer">A project by <span>InvestMQuest</span></footer>
+
+  <script>
+  var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9',text:'#1e3a5f'};
+  var baseText={color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:11};
+  var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+  var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+  var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+  function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+  function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}initCharts(lang);}
+  function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+  document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+  var allCharts=[];
+
+  function initCharts(lang){
+    var en=lang==='en';
+
+    // Chart 1: Risk Radar
+    var indicators=[
+      {name:en?'Liquidity':'流動性',max:10},
+      {name:en?'Credit':'信貸',max:10},
+      {name:en?'Supply':'供給',max:10},
+      {name:en?'Policy':'政策',max:10},
+      {name:en?'Demographics':'人口',max:10},
+      {name:en?'Macro':'總經',max:10}
+    ];
+    var c1=echarts.init(document.getElementById('chartUkRisk'));
+    c1.setOption({
+      tooltip:{trigger:'item'},
+      legend:{bottom:0,textStyle:{color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:11},icon:'circle',itemWidth:8,itemHeight:8,data:[en?'Current (2026)':'目前 (2026)',en?'2022 Baseline':'2022 基準']},
+      radar:{
+        center:['50%','52%'],radius:'58%',nameGap:8,
+        name:{textStyle:{color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:10}},
+        indicator:indicators,
+        shape:'polygon',
+        splitNumber:5,
+        splitLine:{lineStyle:{color:C.grid}},
+        splitArea:{areaStyle:{color:['rgba(232,240,249,0.3)','rgba(232,240,249,0.1)']}},
+        axisLine:{lineStyle:{color:C.grid}}
+      },
+      series:[{
+        type:'radar',
+        data:[
+          {
+            value:[4,5,7,8,4,5],
+            name:en?'Current (2026)':'目前 (2026)',
+            lineStyle:{color:C.red,width:2},
+            itemStyle:{color:C.red},
+            areaStyle:{color:'rgba(220,38,38,0.15)'}
+          },
+          {
+            value:[5,7,6,6,3,6],
+            name:en?'2022 Baseline':'2022 基準',
+            lineStyle:{color:C.muted,width:1.5,type:'dashed'},
+            itemStyle:{color:C.muted},
+            areaStyle:{color:'rgba(90,122,154,0.08)'}
+          }
+        ]
+      }]
+    });
+    allCharts.push(c1);
+
+    // Chart 2: Rate Sensitivity (dual-axis line)
+    var labels=['BoE 2.5%','BoE 3.0%','BoE 3.75%','BoE 4.5%','BoE 5.25%'];
+    var c2=echarts.init(document.getElementById('chartUkRateSensitivity'));
+    c2.setOption({
+      tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}},
+      legend:{top:8,textStyle:{color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:11},icon:'circle',itemWidth:8,itemHeight:8,data:[en?'Yield Spread %':'利差%',en?'Affordability Index':'負擔能力指數']},
+      grid:{left:15,right:15,top:40,bottom:30,containLabel:true},
+      xAxis:mkAxis({type:'category',data:labels,axisLabel:{rotate:15,fontSize:10}}),
+      yAxis:[
+        mkAxis({type:'value',position:'left',axisLabel:{formatter:'{value}%',color:'#5a7a9a',fontSize:10},splitLine:{lineStyle:{color:'#e8f0f9'}}}),
+        mkAxis({type:'value',position:'right',axisLabel:{formatter:'{value}',color:'#5a7a9a',fontSize:10},splitLine:{show:false}})
+      ],
+      series:[
+        {
+          name:en?'Yield Spread %':'利差%',
+          type:'line',
+          yAxisIndex:0,
+          data:[2.87,2.37,1.62,0.87,0.12],
+          smooth:true,
+          symbol:'circle',symbolSize:6,
+          lineStyle:{color:C.green,width:2},
+          itemStyle:{color:C.green},
+          markLine:{
+            silent:true,
+            symbol:'none',
+            lineStyle:{color:C.red,type:'dashed',width:1},
+            data:[{xAxis:'BoE 3.75%',label:{show:true,formatter:en?'Current':'目前',fontSize:10,color:C.red,position:'insideEndTop'}}]
+          }
+        },
+        {
+          name:en?'Affordability Index':'負擔能力指數',
+          type:'line',
+          yAxisIndex:1,
+          data:[85,80,72,63,55],
+          smooth:true,
+          symbol:'circle',symbolSize:6,
+          lineStyle:{color:C.orange,width:2},
+          itemStyle:{color:C.orange}
+        }
+      ]
+    });
+    allCharts.push(c2);
+  }
+
+  window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+  window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+  </script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Dashboard | United Kingdom Property Monitor</title>
+  <meta name="color-scheme" content="light">
+  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+  .market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+  </style>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../tw/tw.css">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+  <header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector">
+    <button class="market-btn" onclick="toggleMarketMenu()">&#x1f1ec;&#x1f1e7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span> &#9662;</button>
+    <div class="market-dropdown" id="marketDropdown">
+      <a href="../index.html">&#x1f1f2;&#x1f1fe; <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="../tw/index.html">&#x1f1f9;&#x1f1fc; <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+      <a href="../jp/index.html">&#x1f1ef;&#x1f1f5; <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a>
+      <a href="../au/index.html">&#x1f1e6;&#x1f1fa; <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a>
+      <a href="../nz/index.html">&#x1f1f3;&#x1f1ff; <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a>
+      <a href="index.html" class="active">&#x1f1ec;&#x1f1e7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a>
+    </div>
+  </div>
+  <nav>
+    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html" class="active"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="london.html"><span class="lang-en">London</span><span class="lang-zh" style="display:none">倫敦</span></a>
+    <a href="manchester.html"><span class="lang-en">Manchester</span><span class="lang-zh" style="display:none">曼徹斯特</span></a>
+    <a href="birmingham.html"><span class="lang-en">Birmingham</span><span class="lang-zh" style="display:none">伯明翰</span></a>
+    <a href="edinburgh.html"><span class="lang-en">Edinburgh</span><span class="lang-zh" style="display:none">愛丁堡</span></a>
+    <a href="newcastle.html"><span class="lang-en">Newcastle</span><span class="lang-zh" style="display:none">紐卡斯爾</span></a>
+  </nav>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
+  <span class="opr-badge">BoE: 3.75% &#9660;</span>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html" class="active"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="london.html"><span class="lang-en">London</span><span class="lang-zh" style="display:none">倫敦</span></a>
+  <a href="manchester.html"><span class="lang-en">Manchester</span><span class="lang-zh" style="display:none">曼徹斯特</span></a>
+  <a href="birmingham.html"><span class="lang-en">Birmingham</span><span class="lang-zh" style="display:none">伯明翰</span></a>
+  <a href="edinburgh.html"><span class="lang-en">Edinburgh</span><span class="lang-zh" style="display:none">愛丁堡</span></a>
+  <a href="newcastle.html"><span class="lang-en">Newcastle</span><span class="lang-zh" style="display:none">紐卡斯爾</span></a>
+  <div class="mobile-meta">
+    <span class="opr-badge">BoE: 3.75% &#9660;</span>
+    <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  </div>
+</div>
+
+  <main class="container">
+    <div class="page-header">
+      <span class="updated"><span class="lang-en">LAST UPDATED: 2025 Full Year / Dec 2025</span><span class="lang-zh" style="display:none">最後更新：2025全年 / 2025年12月</span></span>
+      <h1><span class="lang-en">United Kingdom Property Monitor &middot; Dashboard</span><span class="lang-zh" style="display:none">英國房產監測 &middot; 市場總覽</span></h1>
+      <p class="subtitle"><span class="lang-en">UK Residential Property Analytics</span><span class="lang-zh" style="display:none">英國住宅不動產分析</span></p>
+    </div>
+
+    <div class="section-label"><span class="lang-en">MARKET OVERVIEW</span><span class="lang-zh" style="display:none">市場概況</span></div>
+    <div class="kpi-grid">
+      <div class="kpi-card green">
+        <div class="kpi-label"><span class="lang-en">NATIONAL AVG HOUSE PRICE</span><span class="lang-zh" style="display:none">全國平均房價</span></div>
+        <div class="kpi-value">&pound;268,000</div>
+        <span class="kpi-badge badge-green">+2.4% YoY</span>
+        <div class="kpi-source"><span class="lang-en">Dec 2025 &middot; +2.4% YoY</span><span class="lang-zh" style="display:none">2025年12月 &middot; 年增+2.4%</span></div>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-label"><span class="lang-en">BoE BASE RATE</span><span class="lang-zh" style="display:none">基準利率</span></div>
+        <div class="kpi-value">3.75%</div>
+        <span class="kpi-badge badge-blue"><span class="lang-en">Cutting cycle</span><span class="lang-zh" style="display:none">降息週期</span></span>
+        <div class="kpi-source">Dec 2025</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label"><span class="lang-en">NATIONAL RENTAL YIELD</span><span class="lang-zh" style="display:none">全國租金報酬率</span></div>
+        <div class="kpi-value">5.37%</div>
+        <span class="kpi-badge badge-green"><span class="lang-en">2024 national avg</span><span class="lang-zh" style="display:none">2024年全國均值</span></span>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label"><span class="lang-en">YIELD SPREAD vs BoE</span><span class="lang-zh" style="display:none">利差 vs 基準利率</span></div>
+        <div class="kpi-value">+1.62%</div>
+        <span class="kpi-badge badge-green"><span class="lang-en">Positive carry nationally</span><span class="lang-zh" style="display:none">全國正向利差</span></span>
+      </div>
+    </div>
+
+    <div class="section-label"><span class="lang-en">REGIONAL PERFORMANCE</span><span class="lang-zh" style="display:none">區域表現</span></div>
+    <div class="kpi-grid">
+      <div class="kpi-card green">
+        <div class="kpi-label"><span class="lang-en">NORTH EAST YoY</span><span class="lang-zh" style="display:none">東北地區年增率</span></div>
+        <div class="kpi-value">+6.8%</div>
+        <span class="kpi-badge badge-green"><span class="lang-en">Nov 2025 &middot; highest in England</span><span class="lang-zh" style="display:none">2025年11月 &middot; 英格蘭最高</span></span>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label"><span class="lang-en">LONDON YoY</span><span class="lang-zh" style="display:none">倫敦年增率</span></div>
+        <div class="kpi-value">&minus;1.2%</div>
+        <span class="kpi-badge badge-red"><span class="lang-en">Nov 2025 &middot; lowest in England</span><span class="lang-zh" style="display:none">2025年11月 &middot; 英格蘭最低</span></span>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label"><span class="lang-en">LONDON AVG PRICE</span><span class="lang-zh" style="display:none">倫敦平均房價</span></div>
+        <div class="kpi-value">&pound;547,000</div>
+        <span class="kpi-badge badge-orange">Oct 2025 &middot; &minus;2.4% YoY</span>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label"><span class="lang-en">NEWCASTLE AVG PRICE</span><span class="lang-zh" style="display:none">紐卡斯爾平均房價</span></div>
+        <div class="kpi-value">&pound;208,000</div>
+        <span class="kpi-badge badge-green">Dec 2025 &middot; +6.1% YoY</span>
+      </div>
+    </div>
+
+    <div class="section-label"><span class="lang-en">DEMAND &amp; INVESTMENT</span><span class="lang-zh" style="display:none">需求與投資</span></div>
+    <div class="kpi-grid">
+      <div class="kpi-card green">
+        <div class="kpi-label"><span class="lang-en">NEWCASTLE RENTAL GROWTH</span><span class="lang-zh" style="display:none">紐卡斯爾租金年增率</span></div>
+        <div class="kpi-value">+15.5%</div>
+        <span class="kpi-badge badge-green"><span class="lang-en">Jan 2026 &middot; fastest in UK</span><span class="lang-zh" style="display:none">2026年1月 &middot; 全英最快</span></span>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label"><span class="lang-en">MANCHESTER RENTAL YIELD</span><span class="lang-zh" style="display:none">曼徹斯特租金報酬率</span></div>
+        <div class="kpi-value">6.5%</div>
+        <span class="kpi-badge badge-green"><span class="lang-en">City centre avg &middot; up to 12%</span><span class="lang-zh" style="display:none">市中心均值 &middot; 最高達12%</span></span>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label"><span class="lang-en">MONTHLY TRANSACTIONS</span><span class="lang-zh" style="display:none">月均成交量</span></div>
+        <div class="kpi-value">~101,000</div>
+        <span class="kpi-badge badge-green">2025 avg &middot; +3% vs 5yr avg</span>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label"><span class="lang-en">RENTERS RIGHTS ACT</span><span class="lang-zh" style="display:none">租客權益法案</span></div>
+        <div class="kpi-value">May 2026</div>
+        <span class="kpi-badge badge-red"><span class="lang-en">Section 21 abolished</span><span class="lang-zh" style="display:none">無過失驅逐令廢除</span></span>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="chart-grid two-col" style="margin-top:20px;">
+      <div class="chart-card">
+        <h3><span class="lang-en">UK National Avg House Price Trend</span><span class="lang-zh" style="display:none">英國全國平均房價趨勢</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">National avg (&pound;) + YoY% Change</span><span class="lang-zh" style="display:none">全國均價（英鎊）+ 年增率</span></p>
+        <div style="position:relative;height:240px;"><div id="chartUkPriceTrend" style="width:100%;height:100%"></div></div>
+      </div>
+      <div class="chart-card">
+        <h3><span class="lang-en">City Avg House Price Comparison</span><span class="lang-zh" style="display:none">各城市均價比較</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">Avg Price (&pound;) + YoY%</span><span class="lang-zh" style="display:none">均價（英鎊）+ 年增率</span></p>
+        <div style="position:relative;height:280px;"><div id="chartUkCityPrice" style="width:100%;height:100%"></div></div>
+      </div>
+    </div>
+
+    <div class="chart-grid two-col">
+      <div class="chart-card">
+        <h3><span class="lang-en">Rental Yield by City vs BoE Rate</span><span class="lang-zh" style="display:none">各城市租金報酬率 vs 基準利率</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">Gross yield % with BoE rate reference</span><span class="lang-zh" style="display:none">毛報酬率% 附BoE利率參考線</span></p>
+        <div style="position:relative;height:240px;"><div id="chartUkYield" style="width:100%;height:100%"></div></div>
+      </div>
+      <div class="chart-card">
+        <h3><span class="lang-en">North-South Price Growth Divide</span><span class="lang-zh" style="display:none">南北房價漲幅分化</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">Regional YoY% price change</span><span class="lang-zh" style="display:none">區域年增率</span></p>
+        <div style="position:relative;height:280px;"><div id="chartUkNorthSouth" style="width:100%;height:100%"></div></div>
+      </div>
+    </div>
+
+    <div class="chart-grid two-col">
+      <div class="chart-card">
+        <h3><span class="lang-en">BoE Base Rate &amp; Mortgage Rate</span><span class="lang-zh" style="display:none">基準利率與房貸利率</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">BoE base rate vs 2-year fixed mortgage</span><span class="lang-zh" style="display:none">BoE基準利率 vs 兩年期固定房貸</span></p>
+        <div style="position:relative;height:220px;"><div id="chartUkBoERate" style="width:100%;height:100%"></div></div>
+      </div>
+      <div class="chart-card">
+        <h3><span class="lang-en">Annual Residential Transactions</span><span class="lang-zh" style="display:none">年度住宅成交量</span></h3>
+        <p class="chart-subtitle"><span class="lang-en">National annual transactions</span><span class="lang-zh" style="display:none">全國年度成交量</span></p>
+        <div style="position:relative;height:220px;"><div id="chartUkTransactions" style="width:100%;height:100%"></div></div>
+      </div>
+    </div>
+
+    <div class="source-footer">
+      <span class="lang-en">ONS &middot; Halifax &middot; HomeLet &middot; HMRC &middot; BoE Dec 2025<br><em>Not investment advice.</em></span>
+      <span class="lang-zh" style="display:none">ONS &middot; Halifax &middot; HomeLet &middot; HMRC &middot; BoE 2025年12月<br><em>非投資建議。</em></span>
+    </div>
+  </main>
+
+  <footer class="footer">A project by <span>InvestMQuest</span></footer>
+
+  <script>
+  var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9',text:'#1e3a5f'};
+  function fmtGBP(v){if(v>=1000000)return '\u00a3'+(v/1000000).toFixed(2)+'M';if(v>=1000)return '\u00a3'+Math.round(v/1000)+'K';return '\u00a3'+v;}
+  function fmtGBPShort(v){if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return Math.round(v/1000)+'K';return String(v);}
+  var baseText={color:'#5a7a9a',fontFamily:'Inter, sans-serif',fontSize:11};
+  var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+  var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+  var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+  function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+  function fmtK(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
+
+  function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}initCharts(lang);}
+  function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+  document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+
+  var allCharts=[];
+  function initCharts(lang){
+    var en=lang==='en';
+
+    // chartUkPriceTrend: National Avg House Price Trend — dual-axis bar+line
+    var c1=echarts.init(document.getElementById('chartUkPriceTrend'));allCharts.push(c1);
+    c1.setOption({
+      tooltip:baseTooltip,legend:Object.assign({},baseLegend,{data:['YoY %',en?'National Avg':'全國均價']}),
+      grid:{left:50,right:50,top:45,bottom:30,containLabel:true},
+      xAxis:mkAxis({type:'category',data:['2019','2020','2021','2022','2023','2024','Dec 2025']}),
+      yAxis:[mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return fmtGBPShort(v);}})}),mkAxis({type:'value',splitLine:{show:false},axisLabel:Object.assign({},baseText,{formatter:'{value}%'})})],
+      series:[
+        {name:'YoY %',type:'bar',yAxisIndex:1,data:[1.5,4.3,10.2,9.3,-3.4,2.8,2.4],barMaxWidth:35,itemStyle:{color:function(p){return p.value>=0?'rgba(22,163,74,0.7)':C.red;},borderRadius:[3,3,0,0]},label:{show:true,position:'top',fontFamily:'JetBrains Mono',fontSize:9,formatter:function(p){return p.value+'%';}}},
+        {name:en?'National Avg':'全國均價',type:'line',data:[235000,245000,270000,295000,285000,262000,268000],lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},symbol:'circle',symbolSize:6}
+      ]
+    });
+
+    // chartUkCityPrice: City Avg House Price Comparison — dual-axis bar+line
+    var c2=echarts.init(document.getElementById('chartUkCityPrice'));allCharts.push(c2);
+    var cityLabels=en?['Newcastle','Birmingham','Manchester','Edinburgh','London']:['紐卡斯爾','伯明翰','曼徹斯特','愛丁堡','倫敦'];
+    var cityPrices=[208000,265000,260000,340000,547000];
+    var cityYoY=[6.1,8.5,5.0,4.2,-2.4];
+    var cityColors=[C.green,C.green,C.navy,C.navy,C.red];
+    c2.setOption({
+      tooltip:baseTooltip,legend:Object.assign({},baseLegend,{data:[en?'Avg Price':'均價','YoY %']}),
+      grid:{left:50,right:60,top:45,bottom:50,containLabel:true},
+      xAxis:mkAxis({type:'category',data:cityLabels,axisLabel:Object.assign({},baseText,{rotate:30,interval:0})}),
+      yAxis:[mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return fmtGBPShort(v);}})}),mkAxis({type:'value',splitLine:{show:false},axisLabel:Object.assign({},baseText,{formatter:'{value}%'})})],
+      series:[
+        {name:en?'Avg Price':'均價',type:'bar',data:cityPrices.map(function(v,i){return{value:v,itemStyle:{color:cityColors[i],borderRadius:[4,4,0,0]}};}),barMaxWidth:55,label:{show:true,position:'top',fontFamily:'JetBrains Mono',fontSize:10,formatter:function(p){return fmtGBP(p.value);}}},
+        {name:'YoY %',type:'line',yAxisIndex:1,data:cityYoY.map(function(v){return{value:v,itemStyle:{color:v>=0?C.green:C.red}};}),lineStyle:{color:C.red,width:2},symbol:'circle',symbolSize:8,label:{show:true,position:'bottom',fontFamily:'JetBrains Mono',fontSize:10,formatter:function(p){return(p.value>=0?'+':'')+p.value+'%';}}}
+      ]
+    });
+
+    // chartUkYield: Rental Yield by City vs BoE Rate — horizontal bar
+    var c3=echarts.init(document.getElementById('chartUkYield'));allCharts.push(c3);
+    var yLabels=en?['London','Edinburgh','National','Birmingham','Manchester','Newcastle']:['倫敦','愛丁堡','全國均值','伯明翰','曼徹斯特','紐卡斯爾'];
+    var yVals=[3.5,5.0,5.37,6.5,6.5,7.0];
+    c3.setOption({
+      tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'}}),
+      grid:{left:80,right:50,top:20,bottom:20,containLabel:false},
+      xAxis:mkAxis({type:'value',min:0,max:8,axisLabel:Object.assign({},baseText,{formatter:'{value}%'})}),
+      yAxis:mkAxis({type:'category',data:yLabels.slice().reverse(),axisLabel:{color:C.navy,fontFamily:'Inter',fontSize:11}}),
+      series:[{type:'bar',data:yVals.slice().reverse().map(function(v){return{value:v,itemStyle:{color:v>=3.75?C.green:C.orange,borderRadius:[0,4,4,0]}};}),barMaxWidth:22,label:{show:true,position:'right',formatter:'{c}%',fontSize:11},
+        markLine:{silent:true,symbol:'none',lineStyle:{color:C.red,type:'dashed',width:1},label:{formatter:'BoE 3.75%',fontSize:10,color:C.red},data:[{xAxis:3.75}]}
+      }]
+    });
+
+    // chartUkNorthSouth: North-South Price Growth Divide — horizontal bar
+    var c4=echarts.init(document.getElementById('chartUkNorthSouth'));allCharts.push(c4);
+    var nsLabels=en?['London','South East','East','South West','East Mids','West Mids','Yorks','North West','North East']:['倫敦','東南','東部','西南','東中部','西中部','約克郡','西北','東北'];
+    var nsData=[-1.2,0.8,1.5,1.9,2.8,3.2,4.5,4.8,6.8];
+    c4.setOption({
+      tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'}}),
+      grid:{left:80,right:50,top:20,bottom:20,containLabel:false},
+      xAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:'{value}%'})}),
+      yAxis:mkAxis({type:'category',data:nsLabels.slice().reverse(),axisLabel:{color:C.navy,fontFamily:'Inter',fontSize:11}}),
+      series:[{type:'bar',data:nsData.slice().reverse().map(function(v){return{value:v,itemStyle:{color:v<0?C.red:v<3?C.navy:C.green,borderRadius:v>=0?[0,4,4,0]:[4,0,0,4]}};}),barMaxWidth:22,label:{show:true,position:'right',formatter:function(p){return(p.value>=0?'+':'')+p.value+'%';},fontSize:10}
+      }]
+    });
+
+    // chartUkBoERate: BoE Base Rate & Mortgage Rate — dual line
+    var c5=echarts.init(document.getElementById('chartUkBoERate'));allCharts.push(c5);
+    var rateLabels=['Jan 2022','Aug 2022','Dec 2022','Aug 2023','Nov 2023','Aug 2024','Nov 2024','Dec 2025'];
+    c5.setOption({
+      tooltip:baseTooltip,legend:Object.assign({},baseLegend,{data:[en?'BoE Base Rate':'BoE基準利率',en?'Mortgage 2yr Fixed':'兩年期固定房貸']}),
+      grid:{left:50,right:20,top:45,bottom:30,containLabel:true},
+      xAxis:mkAxis({type:'category',data:rateLabels,axisLabel:Object.assign({},baseText,{rotate:30,interval:0})}),
+      yAxis:mkAxis({type:'value',min:0,max:7,axisLabel:Object.assign({},baseText,{formatter:'{value}%'})}),
+      series:[
+        {name:en?'BoE Base Rate':'BoE基準利率',type:'line',data:[0.25,1.75,3.5,5.25,5.25,5.0,4.75,3.75],lineStyle:{color:C.red,width:2},itemStyle:{color:C.red},symbol:'circle',symbolSize:5,areaStyle:{color:'rgba(220,38,38,0.08)'}},
+        {name:en?'Mortgage 2yr Fixed':'兩年期固定房貸',type:'line',data:[2.2,3.5,5.8,6.4,6.0,5.5,4.8,4.5],lineStyle:{color:C.orange,width:2,type:'dashed'},itemStyle:{color:C.orange},symbol:'circle',symbolSize:5}
+      ]
+    });
+
+    // chartUkTransactions: Annual Residential Transactions — area line
+    var c6=echarts.init(document.getElementById('chartUkTransactions'));allCharts.push(c6);
+    c6.setOption({
+      tooltip:baseTooltip,grid:baseGrid,
+      xAxis:mkAxis({type:'category',data:['2019','2020','2021','2022','2023','2024','2025']}),
+      yAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return fmtK(v);}})}),
+      series:[{type:'line',data:[1176000,735000,1140000,1020000,870000,1020000,1212000],lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},areaStyle:{color:'rgba(30,58,95,0.08)'},smooth:0.2,symbol:'circle',symbolSize:6,
+        markPoint:{data:[{type:'min',name:'Min',label:{formatter:en?'COVID low':'疫情低點',fontSize:9},itemStyle:{color:C.red}}]}
+      }]
+    });
+
+  }
+  window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+  window.addEventListener('resize',function(){allCharts.forEach(function(c){c.resize();});});
+  </script>
+</body>
+</html>
