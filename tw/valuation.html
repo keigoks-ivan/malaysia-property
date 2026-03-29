@@ -2,468 +2,252 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Valuation Analysis | Taiwan Property Monitor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Valuation Monitor | Taiwan Property Monitor</title>
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
 <link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../tw/tw.css">
+  <link rel="stylesheet" href="tw.css">
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-<style>
-html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}
-.navbar{background:#fff!important}
-.kpi-card,.chart-card,.summary-card,.micro-card{background:#fff!important;border-color:#ccd9e8!important}
-.market-selector{position:relative;margin-left:16px}
-.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}
-.market-btn:hover{background:#dde8f2}
-.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.1);min-width:155px;z-index:100}
-.market-dropdown.open{display:block}
-.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}
-.market-dropdown a:hover{background:#f4f7fc}
-.market-dropdown a.active{font-weight:600}
-</style>
-<style>
-.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:12px}
-.summary-card{background:#fff;border:1px solid #ccd9e8;border-radius:10px;padding:18px 22px}
-.summary-card h4{margin:0 0 8px;font-size:13px;color:#1e3a5f;font-family:Inter,sans-serif}
-.summary-card p{margin:0;font-size:12px;color:#5a7a9a;line-height:1.6;font-family:Inter,sans-serif}
-.green-left{border-left:4px solid #16a34a}
-.red-left{border-left:4px solid #dc2626}
-.orange-left{border-left:4px solid #d97706}
-.blue-left{border-left:4px solid #2563eb}
-</style>
 </head>
 <body>
 
 <header class="navbar">
-  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <a href="index.html" class="logo">PROPERTY MONITOR</a>
   <div class="market-selector">
-    <button class="market-btn" onclick="toggleMarketMenu()">
-      🇹🇼
-      <span class="lang-en">Taiwan</span>
-      <span class="lang-zh" style="display:none">台灣</span>
-      ▾
-    </button>
+    <button class="market-btn" onclick="toggleMarketMenu()">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span> ▾</button>
     <div class="market-dropdown" id="marketDropdown">
-      <a href="../index.html"
->
-        🇲🇾
-        <span class="lang-en">Malaysia</span>
-        <span class="lang-zh" style="display:none">馬來西亞</span>
-      </a>
-      <a href="../tw/index.html"
-class="active">
-        🇹🇼
-        <span class="lang-en">Taiwan</span>
-        <span class="lang-zh" style="display:none">台灣</span>
-      </a>
-      <a href="../jp/index.html"
->
-        🇯🇵
-        <span class="lang-en">Japan</span>
-        <span class="lang-zh" style="display:none">日本</span>
-      </a>
-      <a href="../au/index.html"
->
-        🇦🇺
-        <span class="lang-en">Australia</span>
-        <span class="lang-zh" style="display:none">澳洲</span>
-      </a>
-      <a href="../nz/index.html"
->
-        🇳🇿
-        <span class="lang-en">New Zealand</span>
-        <span class="lang-zh" style="display:none">紐西蘭</span>
-      </a>
-      <a href="../uk/index.html"
->
-        🇬🇧
-        <span class="lang-en">United Kingdom</span>
-        <span class="lang-zh" style="display:none">英國</span>
-      </a>
+      <a href="../index.html">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="index.html" class="active">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+      <a href="../jp/index.html">🇯🇵 <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a>
+      <a href="../au/index.html">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a>
+      <a href="../nz/index.html">🇳🇿 <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a>
     </div>
   </div>
   <nav>
-    <a href="report.html">
-      <span class="lang-en">Report</span>
-      <span class="lang-zh" style="display:none">報告</span>
-    </a>
-    <a href="index.html">
-      <span class="lang-en">Dashboard</span>
-      <span class="lang-zh" style="display:none">市場總覽</span>
-    </a>
-    <a href="supply.html">
-      <span class="lang-en">Supply</span>
-      <span class="lang-zh" style="display:none">供給</span>
-    </a>
-    <a href="demand.html">
-      <span class="lang-en">Demand</span>
-      <span class="lang-zh" style="display:none">需求</span>
-    </a>
-    <a href="valuation.html" class="active">
-      <span class="lang-en">Valuation</span>
-      <span class="lang-zh" style="display:none">估值</span>
-    </a>
-    <a href="risk.html">
-      <span class="lang-en">Risk</span>
-      <span class="lang-zh" style="display:none">風險</span>
-    </a>
-    <a href="taipei.html">
-      <span class="lang-en">Taipei</span>
-      <span class="lang-zh" style="display:none">台北</span>
-    </a>
-    <a href="hsinchu.html">
-      <span class="lang-en">Hsinchu</span>
-      <span class="lang-zh" style="display:none">新竹</span>
-    </a>
-    <a href="taichung.html">
-      <span class="lang-en">Taichung</span>
-      <span class="lang-zh" style="display:none">台中</span>
-    </a>
-    <a href="kaohsiung.html">
-      <span class="lang-en">Kaohsiung</span>
-      <span class="lang-zh" style="display:none">高雄</span>
-    </a>
+    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html" class="active"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="taipei.html"><span class="lang-en">Taipei</span><span class="lang-zh" style="display:none">台北</span></a>
+    <a href="hsinchu.html"><span class="lang-en">Hsinchu</span><span class="lang-zh" style="display:none">新竹</span></a>
+    <a href="taichung.html"><span class="lang-en">Taichung</span><span class="lang-zh" style="display:none">台中</span></a>
+    <a href="kaohsiung.html"><span class="lang-en">Kaohsiung</span><span class="lang-zh" style="display:none">高雄</span></a>
   </nav>
   <div class="lang-switcher">
     <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
     <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
   </div>
-  <span class="opr-badge">CBS: 2.0% ▼</span>
+  <span class="opr-badge">CBS: 2.0%</span>
   <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
 </header>
 
 <div class="mobile-menu">
-  <a href="report.html">
-    <span class="lang-en">Report</span>
-    <span class="lang-zh" style="display:none">報告</span>
-  </a>
-  <a href="index.html">
-    <span class="lang-en">Dashboard</span>
-    <span class="lang-zh" style="display:none">市場總覽</span>
-  </a>
-  <a href="supply.html">
-    <span class="lang-en">Supply</span>
-    <span class="lang-zh" style="display:none">供給</span>
-  </a>
-  <a href="demand.html">
-    <span class="lang-en">Demand</span>
-    <span class="lang-zh" style="display:none">需求</span>
-  </a>
-  <a href="valuation.html">
-    <span class="lang-en">Valuation</span>
-    <span class="lang-zh" style="display:none">估值</span>
-  </a>
-  <a href="risk.html">
-    <span class="lang-en">Risk</span>
-    <span class="lang-zh" style="display:none">風險</span>
-  </a>
-  <a href="taipei.html">
-    <span class="lang-en">Taipei</span>
-    <span class="lang-zh" style="display:none">台北</span>
-  </a>
-  <a href="hsinchu.html">
-    <span class="lang-en">Hsinchu</span>
-    <span class="lang-zh" style="display:none">新竹</span>
-  </a>
-  <a href="taichung.html">
-    <span class="lang-en">Taichung</span>
-    <span class="lang-zh" style="display:none">台中</span>
-  </a>
-  <a href="kaohsiung.html">
-    <span class="lang-en">Kaohsiung</span>
-    <span class="lang-zh" style="display:none">高雄</span>
-  </a>
-  <div class="mobile-meta">
-    <span class="opr-badge">CBS: 2.0%</span>
-    <div class="lang-switcher">
-      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
-    </div>
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html" class="active"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="taipei.html"><span class="lang-en">Taipei</span><span class="lang-zh" style="display:none">台北</span></a>
+  <a href="hsinchu.html"><span class="lang-en">Hsinchu</span><span class="lang-zh" style="display:none">新竹</span></a>
+  <a href="taichung.html"><span class="lang-en">Taichung</span><span class="lang-zh" style="display:none">台中</span></a>
+  <a href="kaohsiung.html"><span class="lang-en">Kaohsiung</span><span class="lang-zh" style="display:none">高雄</span></a>
+  <span class="opr-badge" style="margin:10px 16px;display:inline-block">CBS: 2.0%</span>
+  <div class="lang-switcher" style="padding:10px 16px">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
   </div>
 </div>
 
-<main class="container">
-  <div class="page-header">
-    <span class="updated"><span class="lang-en">LAST UPDATED: 2025 Q3</span><span class="lang-zh" style="display:none">最後更新：2025年第三季</span></span>
-    <h1><span class="lang-en">Valuation Monitor</span><span class="lang-zh" style="display:none">估值監測</span></h1>
-    <p class="subtitle"><span class="lang-en">Taiwan Residential Property Valuation</span><span class="lang-zh" style="display:none">台灣住宅房地產估值</span></p>
-  </div>
+<main class="dashboard">
+  <h1 class="page-title"><span class="lang-en">Valuation Monitor</span><span class="lang-zh" style="display:none">估值監測</span></h1>
 
-  <div class="kpi-grid">
-    <div class="kpi-card blue">
-      <div class="kpi-label">
-        <span class="lang-en"></span>
-        <span class="lang-zh" style="display:none"></span>
-      </div>
-      <div class="kpi-value">
-        
-      </div>
+  <!-- KPI Cards -->
+  <div class="kpi-row">
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">Taipei P/R Ratio</span><span class="lang-zh" style="display:none">台北租金比</span></div>
+      <div class="kpi-value">47x</div>
+      <div class="kpi-delta negative"><span class="lang-en">Among world's most expensive</span><span class="lang-zh" style="display:none">全球最貴之一</span></div>
     </div>
-    <div class="kpi-card blue">
-      <div class="kpi-label">
-        <span class="lang-en"></span>
-        <span class="lang-zh" style="display:none"></span>
-      </div>
-      <div class="kpi-value">
-        
-      </div>
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">National Median Multiple</span><span class="lang-zh" style="display:none">全國房價所得比</span></div>
+      <div class="kpi-value">9.89x</div>
+      <div class="kpi-delta negative">MOI 2025 Q2</div>
     </div>
-    <div class="kpi-card blue">
-      <div class="kpi-label">
-        <span class="lang-en"></span>
-        <span class="lang-zh" style="display:none"></span>
-      </div>
-      <div class="kpi-value">
-        
-      </div>
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">Taipei Median Multiple</span><span class="lang-zh" style="display:none">台北房價所得比</span></div>
+      <div class="kpi-value">15.41x</div>
+      <div class="kpi-delta negative">MOI 2025 Q2</div>
     </div>
-    <div class="kpi-card blue">
-      <div class="kpi-label">
-        <span class="lang-en"></span>
-        <span class="lang-zh" style="display:none"></span>
-      </div>
-      <div class="kpi-value">
-        
-      </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">Hsinchu Median Multiple</span><span class="lang-zh" style="display:none">新竹房價所得比</span></div>
+      <div class="kpi-value">12.5x</div>
+      <div class="kpi-delta" style="color:#d97706">MOI 2025 Q2</div>
     </div>
-    <div class="kpi-card blue">
-      <div class="kpi-label">
-        <span class="lang-en"></span>
-        <span class="lang-zh" style="display:none"></span>
-      </div>
-      <div class="kpi-value">
-        
-      </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">Taipei Rental Yield</span><span class="lang-zh" style="display:none">台北租金回報率</span></div>
+      <div class="kpi-value">2.11%</div>
+      <div class="kpi-delta" style="color:#d97706"><span class="lang-en">Low yield environment</span><span class="lang-zh" style="display:none">低回報環境</span></div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">Yield Spread vs CBS</span><span class="lang-zh" style="display:none">利差 vs 央行利率</span></div>
+      <div class="kpi-value">+0.11%</div>
+      <div class="kpi-delta" style="color:#d97706"><span class="lang-en">Near zero carry</span><span class="lang-zh" style="display:none">接近零利差</span></div>
     </div>
   </div>
 
+  <!-- Charts -->
+  <div class="chart-row">
+    <div class="chart-card half">
+      <h3><span class="lang-en">Median Multiple by City</span><span class="lang-zh" style="display:none">各城市房價所得比</span></h3>
+      <div id="chartTwMedianMult" style="height:280px"></div>
+    </div>
+    <div class="chart-card half">
+      <h3><span class="lang-en">APAC Price-to-Rent Comparison</span><span class="lang-zh" style="display:none">亞太租金比比較</span></h3>
+      <div id="chartTwAPAC" style="height:280px"></div>
+    </div>
+  </div>
 
-
-    <div class="chart-card">
-      <h3>
-        <span class="lang-en">Median Multiple by City</span>
-        <span class="lang-zh" style="display:none">各城市房價所得比</span>
-      </h3>
-      <div style="position:relative;height:220px;">
-        <div id="chartTwMedianMult" style="width:100%;height:100%"></div>
+  <div class="chart-row">
+    <div class="chart-card half">
+      <h3><span class="lang-en">Yield vs CBS Rate</span><span class="lang-zh" style="display:none">租金回報率 vs 央行利率</span></h3>
+      <div id="chartTwYieldSpread" style="height:220px"></div>
+      <div class="insight-box" style="border-left-color:#d97706">
+        <span class="lang-en">Spread near zero &mdash; Taiwan property yields barely cover borrowing cost. Unlike Malaysia's +2.44% spread, Taiwan's +0.11% offers no meaningful carry.</span>
+        <span class="lang-zh" style="display:none">利差趨近於零 &mdash; 台灣房產收益幾乎無法覆蓋借貸成本。與馬來西亞 +2.44% 的利差不同，台灣 +0.11% 幾乎沒有套利空間。</span>
       </div>
     </div>
-
-
-
-
-    <div class="chart-card">
-      <h3>
-        <span class="lang-en">APAC Price-to-Rent Comparison</span>
-        <span class="lang-zh" style="display:none">亞太租金比比較</span>
-      </h3>
-      <div style="position:relative;height:220px;">
-        <div id="chartTwAPAC" style="width:100%;height:100%"></div>
-      </div>
+    <div class="chart-card half">
+      <h3><span class="lang-en">Nominal vs Real Price Index</span><span class="lang-zh" style="display:none">名目 vs 實質房價指數</span></h3>
+      <div id="chartTwPriceReal" style="height:220px"></div>
     </div>
+  </div>
 
-
-
-
-    <div class="chart-card">
-      <h3>
-        <span class="lang-en">Yield vs CBS Rate</span>
-        <span class="lang-zh" style="display:none">租金回報率 vs 央行利率</span>
-      </h3>
-      <div style="position:relative;height:220px;">
-        <div id="chartTwYieldSpread" style="width:100%;height:100%"></div>
-      </div>
+  <!-- Summary Framework -->
+  <h2 class="section-heading"><span class="lang-en">Valuation Framework</span><span class="lang-zh" style="display:none">估值框架</span></h2>
+  <div class="summary-grid">
+    <div class="summary-card red-left">
+      <h4><span class="lang-en">Price-to-Income</span><span class="lang-zh" style="display:none">房價所得比</span></h4>
+      <p><span class="lang-en">National median multiple of 9.89x far exceeds the 5.1x "severely unaffordable" threshold. Taipei at 15.41x is among the most stretched globally, requiring over 15 years of household income to purchase a median home.</span><span class="lang-zh" style="display:none">全國房價所得比 9.89 倍遠超「嚴重不可負擔」的 5.1 倍門檻。台北 15.41 倍為全球最高水準之一，需超過 15 年家庭所得才能購買中位數住宅。</span></p>
     </div>
-
-
-
-
-    <div class="chart-card">
-      <h3>
-        <span class="lang-en">Nominal vs Real Price Index</span>
-        <span class="lang-zh" style="display:none">名目 vs 實質房價指數</span>
-      </h3>
-      <div style="position:relative;height:220px;">
-        <div id="chartTwPriceReal" style="width:100%;height:100%"></div>
-      </div>
+    <div class="summary-card red-left">
+      <h4><span class="lang-en">Price-to-Rent</span><span class="lang-zh" style="display:none">房價租金比</span></h4>
+      <p><span class="lang-en">Taipei's P/R ratio of 47x implies a gross yield of ~2.1%. Among APAC cities, only Hong Kong and Shanghai are more expensive on this metric. Rental income alone cannot justify current prices.</span><span class="lang-zh" style="display:none">台北租金比 47 倍意味著毛租金回報率約 2.1%。亞太城市中僅香港和上海更貴。單靠租金收入無法支撐當前房價。</span></p>
     </div>
-
-
-
+    <div class="summary-card orange-left">
+      <h4><span class="lang-en">Yield Spread</span><span class="lang-zh" style="display:none">利差分析</span></h4>
+      <p><span class="lang-en">At +0.11%, the spread between rental yield and CBS rate is negligible. Any further rate increase would push spreads negative, meaning investors would lose money on a leveraged rental basis. Capital appreciation is the sole return driver.</span><span class="lang-zh" style="display:none">利差僅 +0.11%，租金回報與央行利率之間的差距微乎其微。任何進一步升息都將導致負利差，表示槓桿租賃投資將虧損。資本增值是唯一回報驅動力。</span></p>
+    </div>
+  </div>
 
 </main>
 
-<footer class="footer">A project by <span>InvestMQuest</span></footer>
+<footer>
+  <p>A project by InvestMQuest.</p>
+</footer>
 
 <script>
-var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
-var baseText={color:C.muted,fontFamily:'Inter,sans-serif',fontSize:11};
-var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
-var baseLegend={bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9',text:'#1e3a5f'};
+function fmtPrice(v,lang){lang=lang||localStorage.getItem('lang')||'en';var a=v*10000;if(lang==='zh')return 'NT$'+v+'\u842c';if(a>=1000000)return 'NT$'+(a/1000000).toFixed(2)+'M';return 'NT$'+Math.round(a/1000)+'K';}
+function fmtPriceShort(v,lang){lang=lang||localStorage.getItem('lang')||'en';var a=v*10000;if(lang==='zh')return v+'\u842c';if(a>=1000000)return(a/1000000).toFixed(1)+'M';return Math.round(a/1000)+'K';}
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
 var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
 function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function fmtK(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}initCharts(lang);}
 function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
-document.addEventListener('click',function(e){if(!e.target.closest('.market-selector'))document.getElementById('marketDropdown').classList.remove('open');});
-function switchTab(cid,tab){var w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});w.querySelectorAll('.tab-bar button').forEach(function(b){b.classList.remove('active');});var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(function(b){if(b.dataset.tab===tab)b.classList.add('active');});setTimeout(function(){allCharts.forEach(function(c){if(c)c.resize();});},100);}
-function setLang(lang){
-  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
-  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
-  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
-  localStorage.setItem('lang',lang);
-  if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}
-  if(typeof initCharts==='function')initCharts(lang);
-}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+
 var allCharts=[];
-window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
-window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
-var DATA = {"chart-r-tw-apac": {"datasets": [{"color_rule": "green if \u003c=5, orange if \u003c=11, red if \u003e11", "data": [4.3, 6.9, 8.5, 9.61, 9.89, 11.9, 13.03, 15.41, 15.1, 46.9], "name": "Median Multiple", "type": "bar"}], "labels_en": ["KL 4.3x", "Bangkok 6.9x", "Fukuoka 8.5x", "Kaohsiung 9.61x", "National 9.89x", "Taichung 11.9x", "New Taipei 13.03x", "Taipei 15.41x", "Tokyo 15.1x", "Hong Kong 46.9x"], "labels_zh": ["\u5409\u9686\u5761 4.3x", "\u66fc\u8c37 6.9x", "\u798f\u5ca1 8.5x", "\u9ad8\u96c4 9.61x", "\u5168\u570b 9.89x", "\u53f0\u4e2d 11.9x", "\u65b0\u5317 13.03x", "\u53f0\u5317 15.41x", "\u6771\u4eac 15.1x", "\u9999\u6e2f 46.9x"], "page": "report", "subtitle_en": "Taipei 15.41x -- globally unaffordable", "subtitle_zh": "\u53f0\u531715.41\u500d\u2014\u2014\u5168\u7403\u6700\u96e3\u8ca0\u64d4\u4e4b\u4e00", "title_en": "APAC Median Multiple Comparison", "title_zh": "\u4e9e\u592a\u623f\u50f9\u6240\u5f97\u6bd4\u6bd4\u8f03", "type": "horizontal_bar"}, "chart-r-tw-city6": {"datasets": [{"colors": ["#1e3a5f", "#1e3a5f", "#1e3a5f", "#1e3a5f", "#dc2626", "#d97706"], "data": [33, 41, 43, 35, 70, 118], "name_en": "Price(W/P)", "name_zh": "\u5747\u50f9(\u842c/\u576a)", "type": "bar"}, {"color": "#16a34a", "data": [8.0, 14.6, 12.0, 8.6, 14.5, 1.9], "name": "YoY%", "type": "line", "yAxisIndex": 1}], "labels_en": ["Kaohsiung\n33W", "Tainan\n41W", "Taichung\n43W", "Taoyuan\n35W", "New Taipei\n70W", "Taipei\n118W"], "labels_zh": ["\u9ad8\u96c4\n33\u842c", "\u53f0\u5357\n41\u842c", "\u53f0\u4e2d\n43\u842c", "\u6843\u5712\n35\u842c", "\u65b0\u5317\n70\u842c", "\u53f0\u5317\n118\u842c"], "page": "report", "subtitle_en": "All 6 metros up YoY despite volume crash", "subtitle_zh": "\u6210\u4ea4\u91cf\u5d29\u8dcc\uff0c\u516d\u90fd\u9810\u552e\u5c4b\u50f9\u683c\u4ecd\u5168\u9762\u4e0a\u6f32", "title_en": "Six Metros Presale Price (NT$ Wan/Ping)", "title_zh": "\u516d\u90fd\u9810\u552e\u5c4b\u5747\u50f9\uff08\u842c\u5143/\u576a\uff09", "type": "bar+line"}, "chart-r-tw-mismatch": {"datasets": [{"color": "#1e3a5f", "data": [42, 33, 17, 8], "name_en": "Demand %", "name_zh": "\u9700\u6c42%", "type": "bar"}, {"color": "#d97706", "data": [15, 30, 40, 15], "name_en": "Supply %", "name_zh": "\u4f9b\u7d66%", "type": "bar"}], "labels_en": ["\u003cNT$30M", "30-50M", "50M-100M", "\u003e100M"], "labels_zh": ["\u003c3000\u842c", "3000-5000\u842c", "5000\u842c-1\u5104", "\u003e1\u5104"], "page": "report", "subtitle_en": "42% first-time vs 15% supply \u003cNT$30M", "subtitle_zh": "42%\u9996\u8cfc\u9700\u6c42 vs \u50c515%\u4f9b\u7d66\u4f4e\u65bc3000\u842c", "title_en": "Demand vs Supply Mismatch", "title_zh": "\u9700\u6c42 vs \u4f9b\u7d66\u932f\u914d", "type": "bar"}, "chart-r-tw-supply": {"datasets": [{"color": "#d97706", "data": [120000, 130000, 115000, 145000, 90000], "name_en": "New Launches", "name_zh": "\u65b0\u63a8\u6848", "type": "bar"}, {"color": "#1e3a5f", "data": [340000, 280000, 300000, 350000, 263000], "name_en": "Transactions", "name_zh": "\u6210\u4ea4\u91cf", "type": "bar"}], "labels": ["2021", "2022", "2023", "2024", "2025"], "page": "report", "subtitle_en": "New launches -38% in 2025 -- pipeline thinning from 2027", "subtitle_zh": "2025\u5e74\u65b0\u63a8\u6848\u6e1b38%\u2014\u20142027\u5e74\u8d77\u7ba1\u7dda\u6536\u7a84", "title_en": "Supply Pipeline", "title_zh": "\u4f9b\u7d66\u7ba1\u7dda\u8da8\u52e2", "type": "bar"}, "chart-r-tw-wave": {"datasets": [{"areaStyle": true, "color": "#1e3a5f", "data": [290000, 310000, 340000, 280000, 300000, 350000, 263000], "markPoint": [{"color": "#16a34a", "label": "11Y High", "type": "max"}, {"color": "#dc2626", "coord": ["2025", 263000], "label": "8Y Low"}], "name": "Transactions", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"], "page": "report", "subtitle_en": "2025: 263K -- 8-year low, -25% YoY", "subtitle_zh": "2025\u5e74\uff1a26.3\u842c\u68df\u2014\u2014\u8fd18\u5e74\u65b0\u4f4e\uff0c\u5e74\u6e1b25%", "title_en": "Transaction Volume Trend", "title_zh": "\u6210\u4ea4\u91cf\u8da8\u52e2", "type": "line"}, "chart-r-tw-yield": {"datasets": [{"areaStyle": true, "color": "#16a34a", "data": [2.1, 2.05, 2.0, 1.95, 2.05, 2.18, 2.24], "name_en": "Rental Yield", "name_zh": "\u79df\u91d1\u6536\u76ca\u7387", "type": "line"}, {"color": "#dc2626", "data": [1.375, 1.125, 1.125, 1.5, 1.875, 2.0, 2.0], "lineType": "dashed", "name_en": "CBS Rate", "name_zh": "\u592e\u884c\u5229\u7387", "step": "end", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "25Q3"], "page": "report", "subtitle_en": "Current Spread: +0.24%", "subtitle_zh": "\u7576\u524d\u5229\u5dee\uff1a+0.24%", "title_en": "Yield vs CBS Rate", "title_zh": "\u6536\u76ca\u7387 vs \u592e\u884c\u5229\u7387", "type": "line"}, "chart-tw-city-price": {"datasets": [{"colors": ["#d97706", "#dc2626", "#1e3a5f", "#1e3a5f", "#1e3a5f", "#1e3a5f"], "data": [118, 70, 43, 41, 33, 35], "name": "Avg Price", "type": "bar"}, {"color": "#dc2626", "data": [1.9, 14.5, 12.0, 14.6, 8.0, 8.6], "name": "YoY %", "type": "line", "yAxisIndex": 1}], "labels": ["Taipei", "New Taipei", "Taichung", "Tainan", "Kaohsiung", "Taoyuan"], "page": "index", "subtitle_en": "NT$ 10K per ping \u00b7 Q3 2025", "subtitle_zh": "\u842c\u5143/\u576a \u00b7 2025\u5e74Q3", "title_en": "Average Price by Major City", "title_zh": "\u516d\u90fd\u5e73\u5747\u623f\u50f9\u6bd4\u8f03", "type": "bar+line"}, "chart-tw-mortgage": {"datasets": [{"color": "#dc2626", "data": [52, 54, 58, 62, 65, 68, 68], "name": "Taipei", "type": "line"}, {"color": "#d97706", "data": [30, 31, 33, 36, 38, 40, 41], "name": "National", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025H1"], "markLine": {"label": "Warning 40%", "yAxis": 40}, "page": "index", "title_en": "Mortgage Burden Ratio", "title_zh": "\u623f\u8cb8\u8ca0\u64d4\u7387\u8da8\u52e2", "type": "line"}, "chart-tw-price-index": {"datasets": [{"color_negative": "#dc2626", "color_positive": "rgba(22,163,74,0.7)", "data": [2.1, 2.0, 5.9, 9.3, 8.5, 15.6, 0.14, -2.51], "name": "YoY %", "type": "bar", "yAxisIndex": 1}, {"color": "#1e3a5f", "data": [100, 102, 108, 118, 128, 148, 149, 147], "name": "Nominal Index", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025Q3", "2026Q1"], "page": "index", "subtitle_en": "Nominal Index + YoY% Change", "subtitle_zh": "\u540d\u7fa9\u6307\u6578 + \u5e74\u589e\u7387", "title_en": "Taiwan House Price Index", "title_zh": "\u53f0\u7063\u623f\u50f9\u6307\u6578\u8da8\u52e2", "type": "bar+line"}, "chart-tw-supply-demand": {"datasets": [{"color": "#d97706", "data": [120000, 130000, 115000, 145000, 90000], "name": "New Launches", "type": "bar"}, {"color": "#1e3a5f", "data": [340000, 280000, 300000, 350000, 263000], "name": "Transactions", "type": "bar"}], "labels": ["2021", "2022", "2023", "2024", "2025"], "page": "index", "title_en": "New Launches vs Transactions", "title_zh": "\u65b0\u63a8\u6848 vs \u6210\u4ea4\u91cf", "type": "bar"}, "chart-tw-transactions": {"datasets": [{"areaStyle": true, "color": "#1e3a5f", "data": [290000, 310000, 340000, 280000, 300000, 350000, 263000], "markPoint": [{"label": "11Y High", "type": "max"}, {"coord": ["2025", 263000], "label": "8Y Low"}], "name": "Transactions", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"], "page": "index", "title_en": "Transaction Volume Trend", "title_zh": "\u6210\u4ea4\u91cf\u8da8\u52e2", "type": "line"}, "chart-tw-yield": {"datasets": [{"color_rule": "green if \u003e2.0%, orange otherwise", "data": [1.9, 2.11, 2.2, 2.24, 2.6, 2.8, 2.9, 3.1], "name": "Rental Yield", "type": "bar"}], "labels": ["Hsinchu", "Taipei", "New Taipei", "National", "Taoyuan", "Taichung", "Tainan", "Kaohsiung"], "markLine": {"label": "CBS 2.0%", "xAxis": 2.0}, "page": "index", "title_en": "Rental Yield by City", "title_zh": "\u5404\u57ce\u5e02\u79df\u91d1\u6536\u76ca\u7387", "type": "horizontal_bar"}, "chartTwAPAC": {"datasets": [{"color_rule": "green if \u003c=25 or KL, orange if Taipei or \u003c=50, red if \u003e50, navy if \u003c=40", "data": [18, 21.7, 25, 37, 40, 47, 50, 59], "name": "P/R Ratio", "type": "bar"}], "labels": ["Ho Chi Minh", "KL", "Bangkok", "Tokyo", "Singapore", "Taipei", "Hong Kong", "Shanghai"], "page": "valuation", "title_en": "APAC Price-to-Rent Comparison", "title_zh": "\u4e9e\u592a\u79df\u91d1\u6bd4\u6bd4\u8f03", "type": "horizontal_bar"}, "chartTwBuyers": {"datasets": [{"color": "#1e3a5f", "data": [38, 40, 41, 40, 42, 44], "name": "First-time", "type": "line"}, {"color": "#5a7a9a", "data": [35, 34, 33, 34, 33, 32], "name": "Upgrader", "type": "line"}, {"color": "#d97706", "data": [27, 26, 26, 26, 25, 24], "name": "Investor", "type": "line"}], "labels": ["2020", "2021", "2022", "2023", "2024", "2025H1"], "page": "demand", "title_en": "Buyer Structure (%)", "title_zh": "\u8cb7\u65b9\u7d50\u69cb (%)", "type": "line"}, "chartTwCityGrowth": {"datasets": [{"color": "#dc2626", "data": [-45, -41, -28, -26, -24, -22, -21], "name": "YoY Growth", "type": "bar"}], "labels": ["Keelung", "Hsinchu", "Tainan", "Kaohsiung", "New Taipei", "Taipei", "Taichung"], "page": "demand", "title_en": "City YoY Growth (%)", "title_zh": "\u5404\u57ce\u5e02\u5e74\u589e\u7387 (%)", "type": "horizontal_bar"}, "chartTwInventory": {"datasets": [{"color_rule": "red if 18600, orange if \u003e12000, navy otherwise", "colors": ["#1e3a5f", "#d97706", "#d97706", "#dc2626", "#1e3a5f", "#1e3a5f", "#1e3a5f"], "data": [8200, 15400, 12800, 18600, 9200, 11400, 6800], "name": "Unsold Units", "type": "bar"}], "labels": ["Taipei", "New Taipei", "Taoyuan", "Taichung", "Tainan", "Kaohsiung", "Hsinchu"], "page": "supply", "title_en": "Unsold Inventory by City", "title_zh": "\u5404\u57ce\u5e02\u5f85\u552e\u9918\u5c4b", "type": "horizontal_bar"}, "chartTwLoan": {"datasets": [{"colors": ["#1e3a5f", "#1e3a5f", "#1e3a5f", "#16a34a", "#dc2626"], "data": [920, 1050, 1100, 1380, 820], "markPoint": {"coord": ["2024", 1380], "name": "Peak"}, "name": "Mortgage Amount (NT$ Bn)", "type": "bar"}], "labels": ["2021", "2022", "2023", "2024", "2025Q1-Q3"], "page": "demand", "title_en": "5-Bank New Mortgage Amount (NT$ Bn)", "title_zh": "\u4e94\u5927\u9280\u884c\u65b0\u589e\u623f\u8cb8\u91d1\u984d (\u65b0\u53f0\u5e63\u5341\u5104)", "type": "bar"}, "chartTwMedianMult": {"datasets": [{"color_rule": "red if \u003e12, orange if \u003e10, navy otherwise", "data": [9.61, 8.65, 6.05, 9.89, 11.9, 13.03, 15.41], "name": "Median Multiple", "type": "bar"}], "labels": ["Kaohsiung", "Taoyuan", "Keelung", "National", "Taichung", "New Taipei", "Taipei"], "markLine": {"label": "Severely Unaffordable", "xAxis": 10}, "page": "valuation", "title_en": "Median Multiple by City", "title_zh": "\u5404\u57ce\u5e02\u623f\u50f9\u6240\u5f97\u6bd4", "type": "horizontal_bar"}, "chartTwPipeline": {"datasets": [{"color": "#5a7a9a", "data": [130000, 140000, 145000, 135000, 120000, 100000], "lineType": "dashed", "name": "Building Permits", "type": "line"}, {"color": "#1e3a5f", "data": [85000, 92000, 98000, 93000, 95000, 88000], "name": "Occupancy Permits", "type": "line"}, {"color": "#16a34a", "data": [115000, 120000, 130000, 115000, 145000, 90000], "name": "New Launches", "type": "line"}], "labels": ["2020", "2021", "2022", "2023", "2024", "2025E"], "page": "supply", "title_en": "Building Permits vs Occupancy Permits vs New Launches", "title_zh": "\u5efa\u7167 vs \u4f7f\u7167 vs \u65b0\u63a8\u6848\u91cf", "type": "line"}, "chartTwPriceReal": {"datasets": [{"color": "#1e3a5f", "data": [100, 102, 108, 118, 128, 148, 149], "name": "Nominal Index", "type": "line"}, {"color": "#5a7a9a", "data": [100, 101, 104, 109, 115, 128, 127], "lineType": "dashed", "name": "Real Index", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025Q3"], "page": "valuation", "title_en": "Nominal vs Real Price Index", "title_zh": "\u540d\u76ee vs \u5be6\u8cea\u623f\u50f9\u6307\u6578", "type": "line"}, "chartTwRateSensitivity": {"datasets": [{"color": "#16a34a", "data": [0.74, 0.24, -0.26, -0.76], "markLine": {"label": "Current", "xAxis": "CBS 2.0%"}, "name": "Yield Spread", "type": "line"}, {"color": "#d97706", "data": [72, 68, 63, 58], "name": "Affordability Index", "type": "line", "yAxisIndex": 1}], "labels": ["CBS 1.5%", "CBS 2.0%", "CBS 2.5%", "CBS 3.0%"], "page": "risk", "title_en": "Rate Sensitivity Analysis", "title_zh": "\u5229\u7387\u654f\u611f\u5ea6\u5206\u6790", "type": "line"}, "chartTwRisk": {"datasets": [{"color": "#dc2626", "data": [6, 8, 6, 5, 9, 7], "name": "Current Risk"}, {"color": "#5a7a9a", "data": [5, 6, 5, 5, 6, 6], "lineType": "dashed", "name": "2023 Baseline"}], "indicators": [{"max": 10, "name_en": "Liquidity", "name_zh": "\u6d41\u52d5\u6027"}, {"max": 10, "name_en": "Credit", "name_zh": "\u4fe1\u8cb8"}, {"max": 10, "name_en": "Supply", "name_zh": "\u4f9b\u7d66"}, {"max": 10, "name_en": "Macro", "name_zh": "\u7e3d\u7d93"}, {"max": 10, "name_en": "Policy", "name_zh": "\u653f\u7b56"}, {"max": 10, "name_en": "Geopolitical", "name_zh": "\u5730\u7de3"}], "page": "risk", "title_en": "Risk Radar", "title_zh": "\u98a8\u96aa\u96f7\u9054\u5716", "type": "radar"}, "chartTwTxn": {"datasets": [{"areaStyle": true, "color": "#1e3a5f", "data": [290000, 310000, 340000, 280000, 300000, 350000, 263000], "markPoint": [{"label": "Max", "type": "max"}, {"label": "Min", "type": "min"}], "name": "Transactions", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"], "page": "demand", "title_en": "Transaction Volume Trend", "title_zh": "\u4ea4\u6613\u91cf\u8da8\u52e2", "type": "line"}, "chartTwVacancy": {"datasets": [{"areaStyle": true, "color": "#d97706", "data": [10.3, 9.9, 9.7, 9.9, 9.8, 9.6], "name": "Vacancy Rate", "type": "line"}], "labels": ["2015", "2016", "2018", "2020", "2022", "2024"], "markLine": {"label": "Healthy benchmark", "yAxis": 5}, "page": "supply", "title_en": "Vacancy Rate Trend", "title_zh": "\u7a7a\u5c4b\u7387\u8da8\u52e2", "type": "line"}, "chartTwYieldSpread": {"datasets": [{"areaStyle": true, "color": "#d97706", "data": [2.8, 2.6, 2.4, 2.3, 2.2, 2.15, 2.24], "name": "Rental Yield", "type": "line"}, {"color": "#dc2626", "data": [1.375, 1.125, 1.125, 1.625, 1.875, 2.0, 2.0], "lineType": "dashed", "name": "CBS Rate", "step": "end", "type": "line"}], "labels": ["2019", "2020", "2021", "2022", "2023", "2024", "2025Q2"], "page": "valuation", "title_en": "Yield vs CBS Rate", "title_zh": "\u79df\u91d1\u56de\u5831\u7387 vs \u592e\u884c\u5229\u7387", "type": "line"}};
+function initCharts(lang){
+  var c;
 
-function initCharts(lang) {
-  var page = 'valuation';
+  /* Chart: Median Multiple by City */
+  var cities=['Kaohsiung','Taoyuan','Keelung','National','Taichung','New Taipei','Taipei'];
+  var vals=[9.61,8.65,6.05,9.89,11.9,13.03,15.41];
+  var colors=vals.map(function(v){return v>12?C.red:v>10?C.orange:C.navy;});
+  c=echarts.init(document.getElementById('chartTwMedianMult'));
+  allCharts.push(c);
+  c.setOption({
+    tooltip:Object.assign({},baseTooltip,{trigger:'item',formatter:function(p){return p.name+': '+p.value+'x';}}),
+    grid:{left:90,right:50,top:10,bottom:10,containLabel:false},
+    xAxis:mkAxis({type:'value',show:false}),
+    yAxis:mkAxis({type:'category',data:cities,axisLabel:{fontSize:11,color:C.navy},splitLine:{show:false}}),
+    series:[{
+      type:'bar',
+      data:vals.map(function(v,i){return{value:v,itemStyle:{color:colors[i],borderRadius:[0,4,4,0]}};}),
+      barWidth:18,
+      label:{show:true,position:'right',formatter:'{c}x',fontSize:11,color:C.navy,fontFamily:'Inter'},
+      markLine:{silent:true,symbol:'none',lineStyle:{color:C.red,type:'dashed',width:1},data:[{xAxis:10,label:{formatter:'Severely Unaffordable',fontSize:9,color:C.red,position:'insideEndTop'}}]}
+    }]
+  });
 
-  Object.keys(DATA).forEach(function(id) {
-    var cfg = DATA[id];
-    if (cfg.page !== page) return;
-    var el = document.getElementById(id);
-    if (!el) return;
+  /* Chart: APAC Price-to-Rent */
+  var apacCities=['Ho Chi Minh','KL','Bangkok','Tokyo','Singapore','Taipei','Hong Kong','Shanghai'];
+  var apacVals=[18,21.7,25,37,40,47,50,59];
+  var apacColors=apacVals.map(function(v,i){
+    if(apacCities[i]==='KL') return C.green;
+    if(apacCities[i]==='Taipei') return C.orange;
+    if(v<=25) return C.green;
+    if(v<=40) return C.navy;
+    if(v<=50) return C.orange;
+    return C.red;
+  });
+  c=echarts.init(document.getElementById('chartTwAPAC'));
+  allCharts.push(c);
+  c.setOption({
+    tooltip:Object.assign({},baseTooltip,{trigger:'item',formatter:function(p){return p.name+': '+p.value+'x';}}),
+    grid:{left:90,right:50,top:10,bottom:10,containLabel:false},
+    xAxis:mkAxis({type:'value',show:false}),
+    yAxis:mkAxis({type:'category',data:apacCities,axisLabel:{fontSize:11,color:C.navy},splitLine:{show:false}}),
+    series:[{
+      type:'bar',
+      data:apacVals.map(function(v,i){return{value:v,itemStyle:{color:apacColors[i],borderRadius:[0,4,4,0]}};}),
+      barWidth:18,
+      label:{show:true,position:'right',formatter:'{c}x',fontSize:11,color:C.navy,fontFamily:'Inter'}
+    }]
+  });
 
-    var chart = echarts.init(el);
-    allCharts.push(chart);
+  /* Chart: Yield vs CBS Rate */
+  c=echarts.init(document.getElementById('chartTwYieldSpread'));
+  allCharts.push(c);
+  c.setOption({
+    tooltip:baseTooltip,
+    legend:Object.assign({},baseLegend,{data:['Rental Yield','CBS Rate']}),
+    grid:baseGrid,
+    xAxis:mkAxis({type:'category',data:['2019','2020','2021','2022','2023','2024','2025Q2']}),
+    yAxis:mkAxis({type:'value',axisLabel:{formatter:'{value}%'}}),
+    series:[
+      {name:'Rental Yield',type:'line',smooth:0.3,data:[2.8,2.6,2.4,2.3,2.2,2.15,2.24],lineStyle:{color:C.orange},itemStyle:{color:C.orange},symbol:'circle',symbolSize:5,areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(217,119,6,0.15)'},{offset:1,color:'rgba(217,119,6,0.02)'}]}}},
+      {name:'CBS Rate',type:'line',step:'end',data:[1.375,1.125,1.125,1.625,1.875,2.0,2.0],lineStyle:{color:C.red,type:'dashed'},itemStyle:{color:C.red},symbol:'circle',symbolSize:5}
+    ]
+  });
 
-    /* Radar chart */
-    if (cfg.type === 'radar') {
-      var indicators = (cfg.indicators || []).map(function(ind) {
-        return { name: (lang === 'zh' ? (ind.name_zh || ind.name_en) : ind.name_en) + '\n/ ' + (lang === 'zh' ? ind.name_en : (ind.name_zh || '')), max: ind.max || 10 };
-      });
-      var seriesData = (cfg.datasets || []).map(function(ds) {
-        var obj = {
-          name: ds.name,
-          value: ds.data,
-          lineStyle: { color: ds.color, width: 2 },
-          itemStyle: { color: ds.color },
-          areaStyle: { color: ds.color.replace(')', ',0.1)').replace('rgb', 'rgba') },
-          symbol: 'circle', symbolSize: 5
-        };
-        if (ds.lineType === 'dashed') obj.lineStyle.type = 'dashed';
-        return obj;
-      });
-      chart.setOption({
-        tooltip: { trigger: 'item' },
-        legend: Object.assign({}, baseLegend, { data: cfg.datasets.map(function(d){ return d.name; }) }),
-        radar: {
-          center: ['50%','52%'], radius: '58%', nameGap: 8,
-          name: { textStyle: { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 10 } },
-          indicator: indicators,
-          shape: 'polygon',
-          splitLine: { lineStyle: { color: C.grid } },
-          splitArea: { show: false },
-          axisLine: { lineStyle: { color: C.grid } }
-        },
-        series: [{ type: 'radar', data: seriesData }]
-      });
-      return;
-    }
-
-    /* Standard charts: line, bar, bar+line */
-    var labels = cfg.labels || [];
-    if (cfg.labels_en && cfg.labels_zh) {
-      labels = lang === 'zh' ? cfg.labels_zh : cfg.labels_en;
-    }
-
-    var isHorizontalBar = (cfg.type || '').indexOf('horizontal') >= 0 ||
-                          (cfg.type || '').indexOf('bar (horizontal') >= 0;
-
-    var series = (cfg.datasets || []).map(function(ds, i) {
-      var s = {
-        name: ds.name_en ? (lang === 'zh' ? (ds.name_zh || ds.name_en) : ds.name_en) : ds.name,
-        type: ds.type || 'line',
-        data: ds.data
-      };
-
-      if (ds.color) {
-        s.lineStyle = { color: ds.color, width: 2 };
-        s.itemStyle = { color: ds.color };
-      }
-      if (ds.lineType === 'dashed') {
-        s.lineStyle = s.lineStyle || {};
-        s.lineStyle.type = 'dashed';
-      }
-      if (ds.step) s.step = ds.step;
-      if (ds.yAxisIndex !== undefined) s.yAxisIndex = ds.yAxisIndex;
-      if (ds.smooth) s.smooth = ds.smooth;
-
-      if (s.type === 'line') {
-        s.symbol = 'circle';
-        s.symbolSize = 6;
-        if (ds.areaStyle) s.areaStyle = ds.areaStyle;
-      }
-      if (s.type === 'bar') {
-        s.barMaxWidth = 25;
-        /* Color-code bar data by value thresholds if provided */
-        if (cfg.barColorThresholds) {
-          var thr = cfg.barColorThresholds;
-          s.data = ds.data.map(function(v) {
-            var clr = v > (thr.red || 999) ? C.red : v > (thr.orange || 999) ? C.orange : (ds.color || C.navy);
-            return { value: v, itemStyle: { color: clr, borderRadius: isHorizontalBar ? [0,4,4,0] : [4,4,0,0] } };
-          });
-        }
-        if (ds.showLabel !== false) {
-          s.label = { show: true, position: isHorizontalBar ? 'right' : 'top', formatter: cfg.labelFormat || '{c}', fontSize: 10, fontFamily: 'Inter' };
-        }
-      }
-
-      return s;
-    });
-
-    var option = {
-      tooltip: Object.assign({}, baseTooltip, isHorizontalBar ? { trigger: 'axis', axisPointer: { type: 'shadow' } } : {}),
-      grid: isHorizontalBar
-        ? { left: 90, right: 50, top: 10, bottom: 20, containLabel: false }
-        : baseGrid
-    };
-
-    /* Legend */
-    if (series.length > 1) {
-      option.legend = Object.assign({}, baseLegend, { data: series.map(function(s){ return s.name; }) });
-    }
-
-    /* Axes */
-    if (isHorizontalBar) {
-      option.xAxis = mkAxis({ type: 'value', min: cfg.xMin || 0, max: cfg.xMax || undefined });
-      option.yAxis = mkAxis({
-        type: 'category',
-        data: labels,
-        axisLabel: { color: C.navy, fontFamily: 'Inter, sans-serif', fontSize: 11 }
-      });
-    } else {
-      option.xAxis = mkAxis({ type: 'category', data: labels });
-      var yAxes = [];
-      var hasSecondY = series.some(function(s){ return s.yAxisIndex === 1; });
-      yAxes.push(mkAxis({ type: 'value', axisLabel: cfg.yFormat ? Object.assign({}, baseText, { formatter: cfg.yFormat }) : baseText }));
-      if (hasSecondY) {
-        yAxes.push(mkAxis({ type: 'value', position: 'right', axisLabel: baseText, splitLine: { show: false } }));
-      }
-      option.yAxis = yAxes.length === 1 ? yAxes[0] : yAxes;
-      if (cfg.yMin !== undefined) option.yAxis.min = cfg.yMin;
-      if (cfg.yMax !== undefined) option.yAxis.max = cfg.yMax;
-    }
-
-    /* Mark lines */
-    if (cfg.markLine && series.length > 0) {
-      var mlIdx = cfg.markLine.seriesIndex || 0;
-      if (!series[mlIdx].markLine) {
-        series[mlIdx].markLine = {
-          silent: true, symbol: 'none',
-          lineStyle: { color: cfg.markLine.color || C.red, type: 'dashed', width: 1 },
-          label: { formatter: cfg.markLine.label || '', fontSize: 9, color: cfg.markLine.color || C.red },
-          data: [isHorizontalBar ? { xAxis: cfg.markLine.xAxis } : { yAxis: cfg.markLine.yAxis || cfg.markLine.xAxis }]
-        };
-      }
-    }
-
-    option.series = series;
-    chart.setOption(option);
+  /* Chart: Nominal vs Real Price Index */
+  c=echarts.init(document.getElementById('chartTwPriceReal'));
+  allCharts.push(c);
+  c.setOption({
+    tooltip:baseTooltip,
+    legend:Object.assign({},baseLegend,{data:['Nominal Index','Real Index']}),
+    grid:baseGrid,
+    xAxis:mkAxis({type:'category',data:['2019','2020','2021','2022','2023','2024','2025Q3']}),
+    yAxis:mkAxis({type:'value'}),
+    series:[
+      {name:'Nominal Index',type:'line',smooth:0.2,data:[100,102,108,118,128,148,149],lineStyle:{color:C.navy},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5},
+      {name:'Real Index',type:'line',smooth:0.2,data:[100,101,104,109,115,128,127],lineStyle:{color:C.muted,type:'dashed'},itemStyle:{color:C.muted},symbol:'circle',symbolSize:5}
+    ]
   });
 }
+
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
 </script>
 </body>
 </html>

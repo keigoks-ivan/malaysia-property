@@ -3,111 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Tokyo | Japan Property Monitor</title>
+<title>Tokyo Deep Dive | Japan Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../tw/tw.css">
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-<style>
-html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}
-.navbar{background:#fff!important}
-.kpi-card,.chart-card,.summary-card,.micro-card{background:#fff!important;border-color:#ccd9e8!important}
-.market-selector{position:relative;margin-left:16px}
-.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}
-.market-btn:hover{background:#dde8f2}
-.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.1);min-width:155px;z-index:100}
-.market-dropdown.open{display:block}
-.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}
-.market-dropdown a:hover{background:#f4f7fc}
-.market-dropdown a.active{font-weight:600}
-</style>
 </head>
 <body>
 
 <header class="navbar">
   <a href="../index.html" class="logo">PROPERTY MONITOR</a>
   <div class="market-selector">
-    <button class="market-btn" onclick="toggleMarketMenu()">
-      🇯🇵
-      <span class="lang-en">Japan</span>
-      <span class="lang-zh" style="display:none">日本</span>
-      ▾
-    </button>
+    <button class="market-btn" onclick="toggleMarketMenu()">🇯🇵 <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span> ▾</button>
     <div class="market-dropdown" id="marketDropdown">
-      <a href="../index.html"
->
-        🇲🇾
-        <span class="lang-en">Malaysia</span>
-        <span class="lang-zh" style="display:none">馬來西亞</span>
-      </a>
-      <a href="../tw/index.html"
->
-        🇹🇼
-        <span class="lang-en">Taiwan</span>
-        <span class="lang-zh" style="display:none">台灣</span>
-      </a>
-      <a href="../jp/index.html"
-class="active">
-        🇯🇵
-        <span class="lang-en">Japan</span>
-        <span class="lang-zh" style="display:none">日本</span>
-      </a>
-      <a href="../au/index.html"
->
-        🇦🇺
-        <span class="lang-en">Australia</span>
-        <span class="lang-zh" style="display:none">澳洲</span>
-      </a>
-      <a href="../nz/index.html"
->
-        🇳🇿
-        <span class="lang-en">New Zealand</span>
-        <span class="lang-zh" style="display:none">紐西蘭</span>
-      </a>
-      <a href="../uk/index.html"
->
-        🇬🇧
-        <span class="lang-en">United Kingdom</span>
-        <span class="lang-zh" style="display:none">英國</span>
-      </a>
+      <a href="../index.html">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="../tw/index.html">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+      <a href="index.html" class="active">🇯🇵 <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a>
+      <a href="../au/index.html">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a>
+      <a href="../nz/index.html">🇳🇿 <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a>
     </div>
   </div>
   <nav>
-    <a href="report.html">
-      <span class="lang-en">Report</span>
-      <span class="lang-zh" style="display:none">報告</span>
-    </a>
-    <a href="index.html">
-      <span class="lang-en">Dashboard</span>
-      <span class="lang-zh" style="display:none">總覽</span>
-    </a>
-    <a href="supply.html">
-      <span class="lang-en">Supply</span>
-      <span class="lang-zh" style="display:none">供給</span>
-    </a>
-    <a href="demand.html">
-      <span class="lang-en">Demand</span>
-      <span class="lang-zh" style="display:none">需求</span>
-    </a>
-    <a href="valuation.html">
-      <span class="lang-en">Valuation</span>
-      <span class="lang-zh" style="display:none">估值</span>
-    </a>
-    <a href="risk.html">
-      <span class="lang-en">Risk</span>
-      <span class="lang-zh" style="display:none">風險</span>
-    </a>
-    <a href="tokyo.html" class="active">
-      <span class="lang-en">Tokyo</span>
-      <span class="lang-zh" style="display:none">東京</span>
-    </a>
-    <a href="osaka.html">
-      <span class="lang-en">Osaka</span>
-      <span class="lang-zh" style="display:none">大阪</span>
-    </a>
-    <a href="fukuoka.html">
-      <span class="lang-en">Fukuoka</span>
-      <span class="lang-zh" style="display:none">福岡</span>
-    </a>
+    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="tokyo.html" class="active"><span class="lang-en">Tokyo</span><span class="lang-zh" style="display:none">東京</span></a>
+    <a href="osaka.html"><span class="lang-en">Osaka</span><span class="lang-zh" style="display:none">大阪</span></a>
+    <a href="fukuoka.html"><span class="lang-en">Fukuoka</span><span class="lang-zh" style="display:none">福岡</span></a>
   </nav>
   <div class="lang-switcher">
     <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
@@ -116,76 +44,44 @@ class="active">
   <span class="opr-badge">BOJ: 0.5% ▲</span>
   <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
 </header>
-
 <div class="mobile-menu">
-  <a href="report.html">
-    <span class="lang-en">Report</span>
-    <span class="lang-zh" style="display:none">報告</span>
-  </a>
-  <a href="index.html">
-    <span class="lang-en">Dashboard</span>
-    <span class="lang-zh" style="display:none">總覽</span>
-  </a>
-  <a href="supply.html">
-    <span class="lang-en">Supply</span>
-    <span class="lang-zh" style="display:none">供給</span>
-  </a>
-  <a href="demand.html">
-    <span class="lang-en">Demand</span>
-    <span class="lang-zh" style="display:none">需求</span>
-  </a>
-  <a href="valuation.html">
-    <span class="lang-en">Valuation</span>
-    <span class="lang-zh" style="display:none">估值</span>
-  </a>
-  <a href="risk.html">
-    <span class="lang-en">Risk</span>
-    <span class="lang-zh" style="display:none">風險</span>
-  </a>
-  <a href="tokyo.html">
-    <span class="lang-en">Tokyo</span>
-    <span class="lang-zh" style="display:none">東京</span>
-  </a>
-  <a href="osaka.html">
-    <span class="lang-en">Osaka</span>
-    <span class="lang-zh" style="display:none">大阪</span>
-  </a>
-  <a href="fukuoka.html">
-    <span class="lang-en">Fukuoka</span>
-    <span class="lang-zh" style="display:none">福岡</span>
-  </a>
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="tokyo.html" class="active"><span class="lang-en">Tokyo</span><span class="lang-zh" style="display:none">東京</span></a>
+  <a href="osaka.html"><span class="lang-en">Osaka</span><span class="lang-zh" style="display:none">大阪</span></a>
+  <a href="fukuoka.html"><span class="lang-en">Fukuoka</span><span class="lang-zh" style="display:none">福岡</span></a>
   <div class="mobile-meta">
-    <span class="opr-badge">BOJ: 0.5%</span>
-    <div class="lang-switcher">
-      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
-    </div>
+    <span class="opr-badge">BOJ: 0.5% ▲</span>
+    <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
   </div>
 </div>
 
 <main class="container">
   <div class="page-header">
     <span class="updated"><span class="lang-en">LAST UPDATED: Q4 2024</span><span class="lang-zh" style="display:none">最後更新：2024年Q4</span></span>
-    <h1>
-      <span class="lang-en">Tokyo 23 Wards -- Deep Dive</span>
-      <span class="lang-zh" style="display:none">東京23區深度分析</span>
-    </h1>
+    <h1><span class="lang-en">Tokyo 23 Wards &mdash; Deep Dive</span><span class="lang-zh" style="display:none">東京23區深度分析</span></h1>
+    <p class="subtitle"><span class="lang-en">The World's Most Active Urban Property Market</span><span class="lang-zh" style="display:none">全球最活躍的都市房地產市場</span></p>
   </div>
 
-  <div class="kpi-grid">
+  <div class="section-label"><span class="lang-en">KEY METRICS</span><span class="lang-zh" style="display:none">關鍵指標</span></div>
+  <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
     <div class="kpi-card blue">
       <div class="kpi-label"><span class="lang-en">NEW CONDO AVG</span><span class="lang-zh" style="display:none">新建公寓均價</span></div>
-      <div class="kpi-value"></div>
+      <div class="kpi-value"><span class="lang-en">&yen;94M</span><span class="lang-zh" style="display:none">9,400万円</span></div>
       <span class="kpi-badge badge-blue"><span class="lang-en">23-Ward Average</span><span class="lang-zh" style="display:none">23區平均</span></span>
     </div>
     <div class="kpi-card blue">
       <div class="kpi-label"><span class="lang-en">RESALE MEDIAN</span><span class="lang-zh" style="display:none">中古成交中位數</span></div>
-      <div class="kpi-value"></div>
+      <div class="kpi-value"><span class="lang-en">&yen;92M</span><span class="lang-zh" style="display:none">9,200万円</span></div>
       <span class="kpi-badge badge-blue"><span class="lang-en">23-Ward Median</span><span class="lang-zh" style="display:none">23區中位數</span></span>
     </div>
     <div class="kpi-card blue">
       <div class="kpi-label"><span class="lang-en">AVG PER SQM</span><span class="lang-zh" style="display:none">每平米均價</span></div>
-      <div class="kpi-value"></div>
+      <div class="kpi-value"><span class="lang-en">&yen;1.54M/sqm</span><span class="lang-zh" style="display:none">154万円/sqm</span></div>
       <span class="kpi-badge badge-blue"><span class="lang-en">New Build</span><span class="lang-zh" style="display:none">新建</span></span>
     </div>
     <div class="kpi-card orange">
@@ -196,7 +92,7 @@ class="active">
     <div class="kpi-card green">
       <div class="kpi-label"><span class="lang-en">RENT YoY</span><span class="lang-zh" style="display:none">租金年增率</span></div>
       <div class="kpi-value">+6.4%</div>
-      <span class="kpi-badge badge-green"><span class="lang-en">Q4 2024</span><span class="lang-zh" style="display:none">Q4 2024</span></span>
+      <span class="kpi-badge badge-green">Q4 2024</span>
     </div>
     <div class="kpi-card green">
       <div class="kpi-label"><span class="lang-en">LAND PRICE YoY</span><span class="lang-zh" style="display:none">地價年增率</span></div>
@@ -205,257 +101,111 @@ class="active">
     </div>
   </div>
 
-
-
-  <h2 class="section-heading"><span class="lang-en">Key Zones</span><span class="lang-zh" style="display:none">重點區域</span></h2>
+  <div class="section-label"><span class="lang-en">THREE ZONES</span><span class="lang-zh" style="display:none">三大分區</span></div>
   <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);">
     <div class="micro-card">
-      <h3><span class="lang-en">Zone 1: Center 5 (Minato/Chiyoda/Chuo/Shibuya/Shinjuku)</span><span class="lang-zh" style="display:none">第一區：都心5區（港／千代田／中央／渋谷／新宿）</span></h3>
-      <div class="kpi-value" style="font-size:18px;">230-450<span style="font-size:12px"><span class="lang-en">¥M/sqm</span><span class="lang-zh" style="display:none">万円/sqm</span></span></div>
+      <h4><span class="lang-en">Zone 1: Center 5 (Minato/Chiyoda/Chuo/Shibuya/Shinjuku)</span><span class="lang-zh" style="display:none">第一區：都心5區（港／千代田／中央／渋谷／新宿）</span></h4>
+      <div class="kpi-value" style="font-size:18px;"><span class="lang-en">230&ndash;450</span><span class="lang-zh" style="display:none">230&ndash;450</span><span style="font-size:12px"><span class="lang-en"> &yen;M/sqm</span><span class="lang-zh" style="display:none"> 万円/sqm</span></span></div>
       <p style="font-size:12px;color:#5a7a9a;margin-top:6px;"><span class="lang-en">Japan's most prestigious addresses. Global capital flows, trophy assets, ultra-prime luxury.</span><span class="lang-zh" style="display:none">日本最頂級地段。全球資本流入，頂級豪宅與稀缺資產。</span></p>
     </div>
     <div class="micro-card">
-      <h3><span class="lang-en">Zone 2: Yamanote Outer (Setagaya/Meguro/Nakano)</span><span class="lang-zh" style="display:none">第二區：山手線外側（世田谷／目黑／中野）</span></h3>
-      <div class="kpi-value" style="font-size:18px;">100-180<span style="font-size:12px"><span class="lang-en">¥M/sqm</span><span class="lang-zh" style="display:none">万円/sqm</span></span></div>
+      <h4><span class="lang-en">Zone 2: Yamanote Outer (Setagaya/Meguro/Nakano)</span><span class="lang-zh" style="display:none">第二區：山手線外側（世田谷／目黑／中野）</span></h4>
+      <div class="kpi-value" style="font-size:18px;">100&ndash;180<span style="font-size:12px"><span class="lang-en"> &yen;M/sqm</span><span class="lang-zh" style="display:none"> 万円/sqm</span></span></div>
       <p style="font-size:12px;color:#5a7a9a;margin-top:6px;"><span class="lang-en">Residential quality areas with strong family demand. Best value within central Tokyo.</span><span class="lang-zh" style="display:none">高品質住宅區，家庭需求強勁。中央東京最佳性價比。</span></p>
     </div>
     <div class="micro-card">
-      <h3><span class="lang-en">Zone 3: Outer Wards (Adachi/Edogawa/Katsushika)</span><span class="lang-zh" style="display:none">第三區：外圍區（足立／江戸川／葛飾）</span></h3>
-      <div class="kpi-value" style="font-size:18px;">70-110<span style="font-size:12px"><span class="lang-en">¥M/sqm</span><span class="lang-zh" style="display:none">万円/sqm</span></span></div>
+      <h4><span class="lang-en">Zone 3: Outer Wards (Adachi/Edogawa/Katsushika)</span><span class="lang-zh" style="display:none">第三區：外圍區（足立／江戸川／葛飾）</span></h4>
+      <div class="kpi-value" style="font-size:18px;">70&ndash;110<span style="font-size:12px"><span class="lang-en"> &yen;M/sqm</span><span class="lang-zh" style="display:none"> 万円/sqm</span></span></div>
       <p style="font-size:12px;color:#5a7a9a;margin-top:6px;"><span class="lang-en">Affordable entry points with improving infrastructure. Yield-focused investors' target zone.</span><span class="lang-zh" style="display:none">入門價位區域，基礎建設持續改善。收益導向投資者目標區。</span></p>
     </div>
   </div>
 
-
-  <h2 class="section-heading"><span class="lang-en">Charts</span><span class="lang-zh" style="display:none">圖表</span></h2>
+  <div class="section-label"><span class="lang-en">CHARTS</span><span class="lang-zh" style="display:none">圖表</span></div>
   <div class="chart-grid two-col">
     <div class="chart-card">
       <h3><span class="lang-en">Ward Land Price Comparison</span><span class="lang-zh" style="display:none">各區地價比較</span></h3>
-<p class="chart-subtitle"><span class="lang-en">万円/sqm · Official Land Price 2025</span><span class="lang-zh" style="display:none">万円/sqm · 2025年公示地價</span></p>      <div style="position:relative;height:220px;"><div id="chartTokyoWard" style="width:100%;height:100%"></div></div>
+      <p class="chart-subtitle"><span class="lang-en">万円/sqm &middot; Official Land Price 2025</span><span class="lang-zh" style="display:none">万円/sqm &middot; 2025年公示地價</span></p>
+      <div style="position:relative;height:280px;"><div id="chartTokyoWard" style="width:100%;height:100%"></div></div>
     </div>
     <div class="chart-card">
       <h3><span class="lang-en">Tokyo Rent Trend</span><span class="lang-zh" style="display:none">東京租金趨勢</span></h3>
-<p class="chart-subtitle"><span class="lang-en">Average Rent ¥/sqm</span><span class="lang-zh" style="display:none">平均租金 円/sqm</span></p>      <div style="position:relative;height:220px;"><div id="chartTokyoRent" style="width:100%;height:100%"></div></div>
+      <p class="chart-subtitle"><span class="lang-en">Average Rent &yen;/sqm</span><span class="lang-zh" style="display:none">平均租金 円/sqm</span></p>
+      <div style="position:relative;height:220px;"><div id="chartTokyoRent" style="width:100%;height:100%"></div></div>
     </div>
   </div>
 
+  <div class="section-label"><span class="lang-en">SUMMARY</span><span class="lang-zh" style="display:none">總結</span></div>
+  <div class="kpi-grid" style="grid-template-columns:repeat(2,1fr);">
+    <div class="summary-card" style="border-left:4px solid #dc2626;">
+      <h4><span class="lang-en">Center 5 Premium</span><span class="lang-zh" style="display:none">都心5區溢價</span></h4>
+      <p><span class="lang-en">The Center 5 wards command a 3-5x premium over outer wards. Global institutional capital continues to flow into Minato, Chiyoda, and Shibuya trophy assets.</span><span class="lang-zh" style="display:none">都心5區對外圍區溢價達3至5倍。全球機構資本持續流入港區、千代田及渋谷頂級資產。</span></p>
+    </div>
+    <div class="summary-card" style="border-left:4px solid #16a34a;">
+      <h4><span class="lang-en">Yamanote Value</span><span class="lang-zh" style="display:none">山手線價值帶</span></h4>
+      <p><span class="lang-en">Setagaya and Meguro offer strong residential fundamentals at 40-60% below center ward pricing. Family-oriented demand remains resilient.</span><span class="lang-zh" style="display:none">世田谷及目黑提供堅實住宅基本面，價格僅為都心區的40-60%。家庭導向需求持續穩健。</span></p>
+    </div>
+    <div class="summary-card" style="border-left:4px solid #d97706;">
+      <h4><span class="lang-en">Outer Opportunity</span><span class="lang-zh" style="display:none">外圍區機會</span></h4>
+      <p><span class="lang-en">Adachi and Edogawa wards offer the highest yields in the 23-ward area. Infrastructure upgrades are narrowing the convenience gap with inner wards.</span><span class="lang-zh" style="display:none">足立及江戸川區提供23區內最高收益率。基礎建設升級正在縮小與內區的便利性差距。</span></p>
+    </div>
+    <div class="summary-card" style="border-left:4px solid #2563eb;">
+      <h4><span class="lang-en">Foreign Capital</span><span class="lang-zh" style="display:none">外資動向</span></h4>
+      <p><span class="lang-en">Weak yen and BOJ rate normalization have attracted record foreign investment. Cross-border capital accounts for 30%+ of central Tokyo transactions above &yen;100M.</span><span class="lang-zh" style="display:none">日圓貶值及BOJ利率正常化吸引創紀錄外資。跨境資本佔中央東京1億円以上交易的30%以上。</span></p>
+    </div>
+  </div>
 
-
+  <div class="source-footer">
+    <span class="lang-en">REINS &middot; MLIT Land Price Survey &middot; Tokyo Kantei &middot; CBRE Japan Q4 2024<br><em>Not investment advice.</em></span>
+    <span class="lang-zh" style="display:none">REINS &middot; 國土交通省地價調査 &middot; 東京カンテイ &middot; CBRE Japan 2024年Q4<br><em>非投資建議。</em></span>
+  </div>
 </main>
 
 <footer class="footer">A project by <span>InvestMQuest</span></footer>
 
 <script>
-var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
-var baseText={color:C.muted,fontFamily:'Inter,sans-serif',fontSize:11};
-var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
-var baseLegend={bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9',text:'#1e3a5f'};
+function fmtJPY(v,lang){lang=lang||localStorage.getItem('lang')||'en';if(lang==='zh'){if(v>=10000)return(v/10000).toFixed(0)+'\u5104\u5186';return v+'\u4e07\u5186';}var a=v*10000;if(a>=100000000)return '\u00a5'+(a/100000000).toFixed(1)+'B';if(a>=1000000)return '\u00a5'+(a/1000000).toFixed(1)+'M';return '\u00a5'+Math.round(a/1000)+'K';}
+function fmtJPYShort(v,lang){lang=lang||localStorage.getItem('lang')||'en';var a=v*10000;if(lang==='zh'){if(v>=10000)return(v/10000).toFixed(1)+'\u5104';return v+'\u4e07';}if(a>=100000000)return(a/100000000).toFixed(1)+'B';if(a>=1000000)return(a/1000000).toFixed(0)+'M';return Math.round(a/1000)+'K';}
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
 var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
 function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}initCharts(lang);}
 function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
-document.addEventListener('click',function(e){if(!e.target.closest('.market-selector'))document.getElementById('marketDropdown').classList.remove('open');});
-function switchTab(cid,tab){var w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});w.querySelectorAll('.tab-bar button').forEach(function(b){b.classList.remove('active');});var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(function(b){if(b.dataset.tab===tab)b.classList.add('active');});setTimeout(function(){allCharts.forEach(function(c){if(c)c.resize();});},100);}
-function setLang(lang){
-  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
-  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
-  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
-  localStorage.setItem('lang',lang);
-  if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}
-  if(typeof initCharts==='function')initCharts(lang);
-}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
+
 var allCharts=[];
-window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
-window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
-function fmtK(v){return v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':v;}
-function fmtRM(v){if(v>=1000000)return'RM '+(v/1000000).toFixed(1)+'M';if(v>=1000)return'RM '+(v/1000).toFixed(0)+'K';return'RM '+v;}
-
 function initCharts(lang){
-  var DATA = {"chartTokyoRent": {"categories": ["2020", "2021", "2022", "2023", "2024", "2025"], "container_id": "chartTokyoRent", "series": [{"areaStyle": true, "color": "#16a34a", "data": [3600, 3650, 3700, 3900, 4200, 4332], "markPoint": {"coord": ["2025", 4332], "label": "\u00a54,332/sqm +6.4% YoY"}, "type": "line"}], "subtitle_en": "Average Rent \u00a5/sqm", "subtitle_zh": "\u5e73\u5747\u79df\u91d1 \u5186/sqm", "title_en": "Tokyo Rent Trend", "title_zh": "\u6771\u4eac\u79df\u91d1\u8da8\u52e2", "type": "line"}, "chartTokyoWard": {"categories": ["Adachi", "Edogawa", "Itabashi", "Suginami", "Nakano", "Shinjuku", "Meguro", "Shibuya", "Minato", "Chuo"], "container_id": "chartTokyoWard", "series": [{"colorRule": "red if \u003e=300, orange if \u003e=150, navy otherwise", "data": [85, 90, 105, 140, 155, 180, 200, 250, 380, 450], "type": "bar", "unit": "\u4e07\u5186/sqm"}], "subtitle_en": "\u4e07\u5186/sqm \u00b7 Official Land Price 2025", "subtitle_zh": "\u4e07\u5186/sqm \u00b7 2025\u5e74\u516c\u793a\u5730\u50f9", "title_en": "Ward Land Price Comparison", "title_zh": "\u5404\u5340\u5730\u50f9\u6bd4\u8f03", "type": "horizontal-bar"}};
-  var en = lang !== 'zh';
+  allCharts.length=0;
 
-  function initChart(id){
-    var el = document.getElementById(id);
-    if(!el) return null;
-    var c = echarts.init(el);
-    allCharts.push(c);
-    return c;
-  }
+  /* chartTokyoWard — horizontal bar */
+  var c1=echarts.init(document.getElementById('chartTokyoWard'));allCharts.push(c1);
+  var wardLabels=['Adachi','Edogawa','Itabashi','Suginami','Nakano','Shinjuku','Meguro','Shibuya','Minato','Chuo'];
+  var wardData=[85,90,105,140,155,180,200,250,380,450];
+  c1.setOption({
+    tooltip:Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'}}),
+    grid:{left:80,right:60,top:20,bottom:20,containLabel:false},
+    xAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return fmtJPYShort(v,lang);}})}),
+    yAxis:mkAxis({type:'category',data:wardLabels,axisLabel:{color:C.navy,fontFamily:'Inter',fontSize:11}}),
+    series:[{type:'bar',data:wardData.map(function(v){return{value:v,itemStyle:{color:v>=300?C.red:v>=150?C.orange:C.navy,borderRadius:[0,4,4,0]}};}),barMaxWidth:22,label:{show:true,position:'right',formatter:function(p){return fmtJPY(p.value,lang);},fontSize:10,fontFamily:'JetBrains Mono'}}]
+  });
 
-  function dsColor(ds, idx){
-    var palette = [C.navy, C.green, C.orange, C.red, C.blue, C.muted];
-    return ds.color || palette[idx % palette.length];
-  }
-
-  function buildLineStyle(ds, idx){
-    var style = { color: dsColor(ds, idx), width: ds.width || 2 };
-    if(ds.lineType) style.type = ds.lineType;
-    return style;
-  }
-
-  function buildMarkLine(cfg){
-    if(!cfg) return undefined;
-    var ml = {
-      silent: true, symbol: 'none',
-      lineStyle: { color: C.red, type: 'dashed', width: 1 },
-      label: { formatter: cfg.label || '', fontSize: 10, color: C.red },
-      data: []
-    };
-    if(cfg.xAxis !== undefined) ml.data.push({ xAxis: cfg.xAxis });
-    if(cfg.yAxis !== undefined) ml.data.push({ yAxis: cfg.yAxis });
-    return ml;
-  }
-
-  function buildMarkPoint(cfg){
-    if(!cfg) return undefined;
-    var items = Array.isArray(cfg) ? cfg : [cfg];
-    var mpData = items.map(function(mp){
-      var d = {};
-      if(mp.type) d.type = mp.type;
-      if(mp.coord) d.coord = mp.coord;
-      if(mp.label) d.label = { formatter: mp.label, fontSize: 9, fontWeight: 'bold' };
-      d.symbolSize = mp.symbolSize || 50;
-      if(mp.color) d.itemStyle = { color: mp.color };
-      else if(mp.type === 'max') d.itemStyle = { color: C.green };
-      else if(mp.type === 'min') d.itemStyle = { color: C.red };
-      return d;
-    });
-    return { data: mpData };
-  }
-
-  /* Iterate over all city charts */
-  Object.keys(DATA).forEach(function(chartId){
-    var info = DATA[chartId];
-
-    var chart = initChart(chartId);
-    if(!chart) return;
-
-    var chartType = (info.type || '').toLowerCase();
-    var isHorizontal = chartType.indexOf('horizontal') >= 0;
-    var hasDualAxis = chartType.indexOf('dual') >= 0 ||
-                      (info.datasets && info.datasets.some(function(ds){ return ds.yAxisIndex === 1; }));
-
-    /* Use localized labels if available */
-    var labels = info.labels;
-    if(en && info.labels_en) labels = info.labels_en;
-    if(!en && info.labels_zh) labels = info.labels_zh;
-
-    var legendNames = (info.datasets || []).map(function(ds){
-      return en ? (ds.name_en || ds.name || '') : (ds.name_zh || ds.name || '');
-    });
-
-    /* Build series */
-    var series = (info.datasets || []).map(function(ds, idx){
-      var name = en ? (ds.name_en || ds.name || '') : (ds.name_zh || ds.name || '');
-      var s = { name: name, type: ds.type || 'line' };
-      var clr = dsColor(ds, idx);
-
-      if(ds.colors && Array.isArray(ds.colors)){
-        s.data = ds.data.map(function(v, i){
-          return { value: v, itemStyle: { color: ds.colors[i], borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] } };
-        });
-      } else if(ds.data && typeof ds.data[0] === 'object' && ds.data[0] !== null && ds.data[0].value !== undefined){
-        s.data = ds.data.map(function(d){
-          return { value: d.value, itemStyle: { color: d.color || clr, borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] } };
-        });
-      } else {
-        s.data = ds.data;
-      }
-
-      if(ds.type === 'bar'){
-        s.barMaxWidth = isHorizontal ? 22 : 55;
-        if(!ds.colors && !ds.color_positive){
-          s.itemStyle = { color: clr, borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] };
-        }
-        if(ds.color_positive){
-          s.itemStyle = {
-            color: function(p){ return p.value >= 0 ? ds.color_positive : (ds.color_negative || C.red); },
-            borderRadius: [3,3,0,0]
-          };
-          s.barMaxWidth = 35;
-          s.label = { show: true, position: 'top', fontFamily: 'JetBrains Mono, monospace', fontSize: 9, formatter: function(p){ return p.value + '%'; } };
-        }
-        if(!ds.color_positive && ds.type === 'bar' && !isHorizontal && idx === 0){
-          s.label = { show: true, position: 'top', fontFamily: 'JetBrains Mono, monospace', fontSize: 10,
-            formatter: function(p){ return typeof p.value === 'number' && p.value >= 1000 ? fmtK(p.value) : p.value; } };
-        }
-        if(isHorizontal){
-          s.label = { show: true, position: 'right', formatter: '{c}', fontSize: 10, fontFamily: 'Inter', fontWeight: 'bold', color: C.navy };
-        }
-      }
-
-      if(ds.type === 'line'){
-        s.lineStyle = buildLineStyle(ds, idx);
-        s.itemStyle = { color: clr };
-        s.symbol = 'circle';
-        s.symbolSize = ds.symbolSize || 6;
-        if(ds.step) s.step = ds.step;
-        if(ds.areaStyle) s.areaStyle = { color: 'rgba(30,58,95,0.08)' };
-        if(ds.smooth !== undefined) s.smooth = ds.smooth;
-        else s.smooth = 0.2;
-        if(ds.yAxisIndex === 1){
-          s.yAxisIndex = 1;
-          s.symbolSize = 8;
-          s.label = { show: true, position: 'bottom', fontFamily: 'JetBrains Mono, monospace', fontSize: 10,
-            formatter: function(p){ return (p.value >= 0 ? '+' : '') + p.value + '%'; } };
-        }
-      }
-
-      if(ds.markPoint) s.markPoint = buildMarkPoint(ds.markPoint);
-      if(ds.markLine) s.markLine = buildMarkLine(ds.markLine);
-      return s;
-    });
-
-    if(info.markLine && series.length > 0){
-      var lastS = series[series.length - 1];
-      if(!lastS.markLine) lastS.markLine = buildMarkLine(info.markLine);
-    }
-
-    /* Build axes */
-    var xAxisCfg, yAxisCfg;
-    if(isHorizontal){
-      var maxVal = 0;
-      (info.datasets || []).forEach(function(ds){ ds.data.forEach(function(v){ if(typeof v === 'number' && v > maxVal) maxVal = v; }); });
-      xAxisCfg = mkAxis({ type: 'value', min: 0 });
-      yAxisCfg = mkAxis({ type: 'category', data: (labels || []).slice().reverse(), axisLabel: { color: C.navy, fontFamily: 'Inter, sans-serif', fontSize: 11 } });
-      series.forEach(function(s){ if(Array.isArray(s.data)) s.data = s.data.slice().reverse(); });
-    } else {
-      xAxisCfg = mkAxis({ type: 'category', data: labels });
-      if(hasDualAxis){
-        yAxisCfg = [
-          mkAxis({ type: 'value' }),
-          mkAxis({ type: 'value', splitLine: { show: false }, axisLabel: Object.assign({}, baseText, { formatter: '{value}%' }) })
-        ];
-      } else {
-        yAxisCfg = mkAxis({ type: 'value' });
-      }
-    }
-
-    var grid;
-    if(isHorizontal){
-      grid = { left: 110, right: 50, top: 20, bottom: 20, containLabel: false };
-    } else if(hasDualAxis){
-      grid = { left: 50, right: 50, top: 45, bottom: 30, containLabel: true };
-    } else {
-      grid = Object.assign({}, baseGrid);
-    }
-
-    var option = {
-      tooltip: isHorizontal
-        ? Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } })
-        : baseTooltip,
-      grid: grid,
-      xAxis: xAxisCfg,
-      yAxis: yAxisCfg,
-      series: series
-    };
-
-    if(legendNames.length > 1){
-      option.legend = Object.assign({}, baseLegend, { top: 8, data: legendNames });
-    }
-
-    chart.setOption(option);
+  /* chartTokyoRent — line */
+  var c2=echarts.init(document.getElementById('chartTokyoRent'));allCharts.push(c2);
+  var rentLabels=['2020','2021','2022','2023','2024','2025'];
+  var rentData=[3600,3650,3700,3900,4200,4332];
+  c2.setOption({
+    tooltip:baseTooltip,grid:baseGrid,
+    xAxis:mkAxis({type:'category',data:rentLabels}),
+    yAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return '\u00a5'+v.toLocaleString();}})}),
+    series:[{type:'line',data:rentData,lineStyle:{color:C.green,width:2},itemStyle:{color:C.green},areaStyle:{color:'rgba(22,163,74,0.08)'},smooth:0.2,symbol:'circle',symbolSize:6,
+      markPoint:{data:[{coord:['2025',4332],symbol:'pin',symbolSize:50,label:{formatter:'\u00a54,332/sqm\n+6.4% YoY',fontSize:9,lineHeight:13},itemStyle:{color:C.green}}]}
+    }]
   });
 }
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
 </script>
 </body>
 </html>

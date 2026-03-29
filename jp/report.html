@@ -1,137 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Report | Japan Property Monitor</title>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../tw/tw.css">
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-<style>
-html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}
-.navbar{background:#fff!important}
-.kpi-card,.chart-card,.summary-card,.micro-card{background:#fff!important;border-color:#ccd9e8!important}
-.market-selector{position:relative;margin-left:16px}
-.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}
-.market-btn:hover{background:#dde8f2}
-.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.1);min-width:155px;z-index:100}
-.market-dropdown.open{display:block}
-.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}
-.market-dropdown a:hover{background:#f4f7fc}
-.market-dropdown a.active{font-weight:600}
-</style>
-<style>
-  .report-container{max-width:860px;margin:0 auto;padding:32px 20px}
-  .report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}
-  .report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}
-  .report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}
-  .report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}
-  .report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}
-  .report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}
-  .report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
-  .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}
-  .chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
-  .chart-inline .chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:8px}
-  .chart-note.green{color:#16a34a}
-  .chart-note.orange{color:#d97706}
-  .chart-note.red{color:#dc2626}
-  .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
-  .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
-  .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
-  .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
-  .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
-  .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
-  @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
-  @media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Report | Japan Property Monitor</title>
+  <meta name="color-scheme" content="light">
+  <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}
+  .market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+  </style>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../tw/tw.css">
+  <style>
+    .report-container{max-width:860px;margin:0 auto;padding:32px 20px}
+    .report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}
+    .report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}
+    .report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}
+    .report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}
+    .report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}
+    .report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}
+    .report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+    .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}
+    .chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+    .chart-inline .chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:8px}
+    .chart-note.green{color:#16a34a}
+    .chart-note.orange{color:#d97706}
+    .chart-note.red{color:#dc2626}
+    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+    .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
+    .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
+    .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
+    .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
+    .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
-
-<header class="navbar">
+  <header class="navbar">
   <a href="../index.html" class="logo">PROPERTY MONITOR</a>
   <div class="market-selector">
-    <button class="market-btn" onclick="toggleMarketMenu()">
-      🇯🇵
-      <span class="lang-en">Japan</span>
-      <span class="lang-zh" style="display:none">日本</span>
-      ▾
-    </button>
+    <button class="market-btn" onclick="toggleMarketMenu()">🇯🇵 <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span> ▾</button>
     <div class="market-dropdown" id="marketDropdown">
-      <a href="../index.html"
->
-        🇲🇾
-        <span class="lang-en">Malaysia</span>
-        <span class="lang-zh" style="display:none">馬來西亞</span>
-      </a>
-      <a href="../tw/index.html"
->
-        🇹🇼
-        <span class="lang-en">Taiwan</span>
-        <span class="lang-zh" style="display:none">台灣</span>
-      </a>
-      <a href="../jp/index.html"
-class="active">
-        🇯🇵
-        <span class="lang-en">Japan</span>
-        <span class="lang-zh" style="display:none">日本</span>
-      </a>
-      <a href="../au/index.html"
->
-        🇦🇺
-        <span class="lang-en">Australia</span>
-        <span class="lang-zh" style="display:none">澳洲</span>
-      </a>
-      <a href="../nz/index.html"
->
-        🇳🇿
-        <span class="lang-en">New Zealand</span>
-        <span class="lang-zh" style="display:none">紐西蘭</span>
-      </a>
-      <a href="../uk/index.html"
->
-        🇬🇧
-        <span class="lang-en">United Kingdom</span>
-        <span class="lang-zh" style="display:none">英國</span>
-      </a>
+      <a href="../index.html">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a>
+      <a href="../tw/index.html">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a>
+      <a href="index.html" class="active">🇯🇵 <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a>
+      <a href="../au/index.html">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a>
+      <a href="../nz/index.html">🇳🇿 <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a>
     </div>
   </div>
   <nav>
-    <a href="report.html" class="active">
-      <span class="lang-en">Report</span>
-      <span class="lang-zh" style="display:none">報告</span>
-    </a>
-    <a href="index.html">
-      <span class="lang-en">Dashboard</span>
-      <span class="lang-zh" style="display:none">總覽</span>
-    </a>
-    <a href="supply.html">
-      <span class="lang-en">Supply</span>
-      <span class="lang-zh" style="display:none">供給</span>
-    </a>
-    <a href="demand.html">
-      <span class="lang-en">Demand</span>
-      <span class="lang-zh" style="display:none">需求</span>
-    </a>
-    <a href="valuation.html">
-      <span class="lang-en">Valuation</span>
-      <span class="lang-zh" style="display:none">估值</span>
-    </a>
-    <a href="risk.html">
-      <span class="lang-en">Risk</span>
-      <span class="lang-zh" style="display:none">風險</span>
-    </a>
-    <a href="tokyo.html">
-      <span class="lang-en">Tokyo</span>
-      <span class="lang-zh" style="display:none">東京</span>
-    </a>
-    <a href="osaka.html">
-      <span class="lang-en">Osaka</span>
-      <span class="lang-zh" style="display:none">大阪</span>
-    </a>
-    <a href="fukuoka.html">
-      <span class="lang-en">Fukuoka</span>
-      <span class="lang-zh" style="display:none">福岡</span>
-    </a>
+    <a href="report.html" class="active"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+    <a href="tokyo.html"><span class="lang-en">Tokyo</span><span class="lang-zh" style="display:none">東京</span></a>
+    <a href="osaka.html"><span class="lang-en">Osaka</span><span class="lang-zh" style="display:none">大阪</span></a>
+    <a href="fukuoka.html"><span class="lang-en">Fukuoka</span><span class="lang-zh" style="display:none">福岡</span></a>
   </nav>
   <div class="lang-switcher">
     <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
@@ -140,274 +66,378 @@ class="active">
   <span class="opr-badge">BOJ: 0.5% ▲</span>
   <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
 </header>
-
 <div class="mobile-menu">
-  <a href="report.html">
-    <span class="lang-en">Report</span>
-    <span class="lang-zh" style="display:none">報告</span>
-  </a>
-  <a href="index.html">
-    <span class="lang-en">Dashboard</span>
-    <span class="lang-zh" style="display:none">總覽</span>
-  </a>
-  <a href="supply.html">
-    <span class="lang-en">Supply</span>
-    <span class="lang-zh" style="display:none">供給</span>
-  </a>
-  <a href="demand.html">
-    <span class="lang-en">Demand</span>
-    <span class="lang-zh" style="display:none">需求</span>
-  </a>
-  <a href="valuation.html">
-    <span class="lang-en">Valuation</span>
-    <span class="lang-zh" style="display:none">估值</span>
-  </a>
-  <a href="risk.html">
-    <span class="lang-en">Risk</span>
-    <span class="lang-zh" style="display:none">風險</span>
-  </a>
-  <a href="tokyo.html">
-    <span class="lang-en">Tokyo</span>
-    <span class="lang-zh" style="display:none">東京</span>
-  </a>
-  <a href="osaka.html">
-    <span class="lang-en">Osaka</span>
-    <span class="lang-zh" style="display:none">大阪</span>
-  </a>
-  <a href="fukuoka.html">
-    <span class="lang-en">Fukuoka</span>
-    <span class="lang-zh" style="display:none">福岡</span>
-  </a>
+  <a href="report.html" class="active"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
+  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a>
+  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
+  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
+  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
+  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
+  <a href="tokyo.html"><span class="lang-en">Tokyo</span><span class="lang-zh" style="display:none">東京</span></a>
+  <a href="osaka.html"><span class="lang-en">Osaka</span><span class="lang-zh" style="display:none">大阪</span></a>
+  <a href="fukuoka.html"><span class="lang-en">Fukuoka</span><span class="lang-zh" style="display:none">福岡</span></a>
   <div class="mobile-meta">
-    <span class="opr-badge">BOJ: 0.5%</span>
-    <div class="lang-switcher">
-      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
-    </div>
+    <span class="opr-badge">BOJ: 0.5% ▲</span>
+    <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
   </div>
 </div>
 
-<div class="report-container">
-  <div class="report-header">
-    <div class="lang-en">
-      <h1></h1>
-      <div class="report-meta"></div>
+  <div class="report-container">
+    <div class="report-header">
+      <div class="lang-en">
+        <h1>JAPAN PROPERTY MARKET REPORT</h1>
+        <div class="report-meta">March 2026 &middot; Market Research</div>
+      </div>
+      <div class="lang-zh" style="display:none">
+        <h1>日本住宅房地產市場報告</h1>
+        <div class="report-meta">2026年3月 &middot; 市場研究</div>
+      </div>
     </div>
-    <div class="lang-zh" style="display:none">
-      <h1></h1>
-      <div class="report-meta"></div>
+    <div class="report-body">
+
+      <!-- 1. EXECUTIVE SUMMARY -->
+      <h2><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+
+      <div class="lang-en">
+        <p>Japan's residential property market in 2025 presents one of the most compelling investment narratives in Asia Pacific: a structurally undersupplied urban market, the world's most accommodative monetary policy turning gradually tighter, and a weaker yen attracting record foreign capital. The national condominium price index rose <strong>8.28%</strong> year-on-year, while Tokyo's new-build prices surged 20%+ in peak months. Fukuoka has emerged as the standout performer with <strong>21.8%</strong> YoY growth and rental yields of <strong>4.98%</strong> &mdash; the best combination of income and appreciation in Japan.</p>
+        <p>The central risk is BOJ rate normalization: at <strong>0.5%</strong>, financing costs remain extraordinarily low, but any acceleration toward 1.5&ndash;2.0% would materially compress the positive carry that has driven urban price inflation for the past decade. The national rental yield of <strong>4.34%</strong> produces a spread of <strong>+3.84%</strong> over the policy rate &mdash; far more attractive than Taiwan's <strong>+0.24%</strong> or even Malaysia's <strong>+2.44%</strong>. For foreign investors, Japan offers the rare combination of institutional-grade transparency, yield support, and currency discount.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>日本住宅市場在2025年呈現亞太地區最引人注目的投資敘事之一：結構性供不應求的都市市場、全球最寬鬆的貨幣政策正逐步收緊、以及弱勢日圓吸引創紀錄的外資。全國公寓價格指數年增<strong>8.28%</strong>，東京新建案在高峰月份漲幅超過20%。福岡以<strong>21.8%</strong>的年成長率和<strong>4.98%</strong>的租金收益率脫穎而出——是日本收租與增值兼具的最佳組合。</p>
+        <p>核心風險在於日銀升息正常化：政策利率<strong>0.5%</strong>下，融資成本仍極度低廉，但若加速升至1.5到2.0%，將大幅壓縮過去十年驅動都市房價上漲的正利差。全國租金收益率<strong>4.34%</strong>與政策利率之間的利差達<strong>+3.84%</strong>——遠優於台灣的<strong>+0.24%</strong>甚至馬來西亞的<strong>+2.44%</strong>。對外國投資人而言，日本提供了機構級透明度、收益率支撐與匯率折價的稀有組合。</p>
+      </div>
+
+      <!-- Exec Summary Mini Charts -->
+      <div class="report-chart-grid">
+        <div class="report-chart-card">
+          <h4><span class="lang-en">Yield vs BOJ Rate</span><span class="lang-zh" style="display:none">收益率 vs BOJ利率</span></h4>
+          <div class="chart-meta green"><span class="lang-en">Current Spread: +3.84%</span><span class="lang-zh" style="display:none">當前利差：+3.84%</span></div>
+          <div id="chart-r-jp-yield" style="height:180px;min-height:180px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">3-City Condo Prices</span><span class="lang-zh" style="display:none">三大城市公寓價格</span></h4>
+          <div class="chart-meta green"><span class="lang-en">Fukuoka leads with +21.8% YoY</span><span class="lang-zh" style="display:none">福岡年增21.8%領先</span></div>
+          <div id="chart-r-jp-city" style="height:180px;min-height:180px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">Housing Starts Trend</span><span class="lang-zh" style="display:none">新建開工趨勢</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">2025: ~760K &mdash; declining trend</span><span class="lang-zh" style="display:none">2025年：約76萬戶——持續下降</span></div>
+          <div id="chart-r-jp-starts" style="height:180px;min-height:180px;"></div>
+        </div>
+      </div>
+
+      <!-- 2. BOJ RATE NORMALIZATION -->
+      <h2><span class="lang-en">BOJ RATE NORMALIZATION</span><span class="lang-zh" style="display:none">BOJ升息正常化</span></h2>
+
+      <div class="lang-en">
+        <p>The Bank of Japan has moved from <strong>-0.1%</strong> to <strong>0.5%</strong> in three hikes, ending the world's last negative-rate regime. The path has been deliberate: exiting negative rates in March 2024, lifting to 0.25% in July 2024, and reaching 0.5% in January 2025. This normalization fundamentally alters the financing calculus for Japanese real estate, though the impact remains modest in absolute terms.</p>
+        <p>A 35-year mortgage now costs approximately <strong>1.5&ndash;2.0%</strong>, still extraordinarily cheap by global standards. Against a national rental yield of <strong>4.34%</strong>, this produces a positive carry spread of <strong>+2.84%</strong> at the upper bound of mortgage rates &mdash; comfortably above the breakeven threshold. The key risk is pace rather than direction: gradual normalization toward 1.0&ndash;1.5% is manageable, but any acceleration beyond market expectations would compress spreads and trigger repricing in rate-sensitive segments.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>日本銀行已透過三次升息，從<strong>-0.1%</strong>升至<strong>0.5%</strong>，終結了全球最後一個負利率政策。升息路徑循序漸進：2024年3月退出負利率，2024年7月升至0.25%，2025年1月達到0.5%。這一正常化根本性地改變了日本房地產的融資計算，儘管絕對水準的衝擊仍然有限。</p>
+        <p>35年期房貸利率目前約<strong>1.5到2.0%</strong>，以全球標準仍屬極低。對照全國<strong>4.34%</strong>的租金收益率，在房貸利率上限下仍產生<strong>+2.84%</strong>的正利差——遠高於損益平衡閾值。關鍵風險在於速度而非方向：逐步升至1.0到1.5%可控，但若超出市場預期的加速升息，將壓縮利差並觸發利率敏感板塊的重新定價。</p>
+      </div>
+
+      <!-- 3. SUPPLY -->
+      <h2><span class="lang-en">SUPPLY: SHRINKING STARTS AND THE AKIYA PARADOX</span><span class="lang-zh" style="display:none">供給：開工萎縮與空屋悖論</span></h2>
+
+      <div class="lang-en">
+        <p>Japan's housing starts have been in secular decline, falling from <strong>905,000 units</strong> in 2019 to an estimated <strong>760,000</strong> in 2025 &mdash; a drop of <strong>-4.6%</strong> year-on-year. The decline is driven by demographics and rising construction costs, which have surged <strong>25&ndash;29%</strong> since 2021 due to materials inflation and a chronic labor shortage in the building trades. Developers are prioritizing margin over volume across all three major metros.</p>
+        <p>The akiya (vacant home) crisis presents a paradox: nationally, <strong>13.8%</strong> of homes are vacant &mdash; over <strong>9 million units</strong> &mdash; yet these are overwhelmingly located in rural and depopulating areas with zero investment relevance. The urban-rural mismatch is extreme: in the three major metro areas where investment demand concentrates, vacancy is structurally low and new supply is constrained. Construction cost escalation acts as a floor under new-build pricing, as developers cannot profitably deliver units below replacement cost.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>日本新建開工數持續下降，從2019年的<strong>90.5萬戶</strong>降至2025年預估的<strong>76萬戶</strong>，年減<strong>-4.6%</strong>。下降的驅動因素是人口結構與建設成本飆升——自2021年以來因建材通膨和建築業長期缺工已上漲<strong>25到29%</strong>。三大都會區的開發商均優先追求利潤而非銷量。</p>
+        <p>空屋問題呈現一個悖論：全國空屋率高達<strong>13.8%</strong>，超過<strong>900萬戶</strong>，但這些空屋絕大多數位於人口外流的鄉村地區，對投資毫無意義。城鄉落差極為懸殊：在投資需求集中的三大都會區，空置率在結構上偏低，新供給也受限。建設成本的攀升為新建案價格提供了底部支撐，因為開發商無法在低於重置成本的情況下獲利交付。</p>
+      </div>
+
+      <!-- 4. DEMAND -->
+      <h2><span class="lang-en">DEMAND: FOREIGN CAPITAL AND RESALE BOOM</span><span class="lang-zh" style="display:none">需求：外資湧入與中古屋榮景</span></h2>
+
+      <div class="lang-en">
+        <p>Foreign capital has become the single most important marginal demand driver in Japan's urban property markets. The weak yen has made Japanese real estate extraordinarily cheap in foreign currency terms. Foreign buyer share in Tokyo's luxury segment has reached an estimated <strong>27%</strong>, up from just <strong>12%</strong> in 2020. Taiwanese, Mainland Chinese, Hong Kong, and Singaporean buyers dominate the cross-border flow, drawn by yield spreads unavailable in their home markets.</p>
+        <p>The domestic resale market is booming in parallel. Pre-owned condominium prices in Greater Tokyo surged <strong>+27.17%</strong> in H1 2025, reflecting genuine end-user demand from dual-income households upgrading within the metro area. The weak yen effect is a double catalyst: it attracts foreign capital while simultaneously making imports more expensive, pushing domestic buyers toward existing housing stock rather than new-builds with imported materials.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>外資已成為日本都市房市最重要的邊際需求驅動力。弱勢日圓使日本房地產以外幣計價極為便宜。東京豪宅市場的外資買家佔比已從2020年的<strong>12%</strong>攀升至<strong>27%</strong>。台灣、中國大陸、香港和新加坡買家主導跨境資金流入，被自己市場無法獲得的利差所吸引。</p>
+        <p>國內中古屋市場同步蓬勃發展。首都圈中古公寓價格在2025年上半年飆升<strong>+27.17%</strong>，反映的是雙薪家庭在都會區換屋的真實自住需求。弱勢日圓形成雙重催化：既吸引外資，又因進口成本上升推動國內買家轉向現有房源，而非使用進口建材的新建案。</p>
+      </div>
+
+      <div class="chart-inline">
+        <h4><span class="lang-en">Foreign Buyer Share in Tokyo Luxury</span><span class="lang-zh" style="display:none">東京豪宅外資買家佔比</span></h4>
+        <div class="chart-note green"><span class="lang-en">Record 27% in 2025</span><span class="lang-zh" style="display:none">2025年創27%新高</span></div>
+        <div id="chart-r-jp-foreign" style="height:220px;min-height:180px;"></div>
+      </div>
+
+      <!-- 5. VALUATION -->
+      <h2><span class="lang-en">VALUATION</span><span class="lang-zh" style="display:none">估值</span></h2>
+
+      <div class="lang-en">
+        <p>Japan's national rental yield of <strong>4.34%</strong> against a BOJ policy rate of <strong>0.5%</strong> produces a yield spread of <strong>+3.84%</strong> &mdash; the widest positive carry in developed Asia. This spread is the fundamental valuation anchor: as long as it remains above +2.0%, the income case for Japanese property holds regardless of capital appreciation trends. By comparison, Taiwan's spread is a razor-thin <strong>+0.24%</strong> and Malaysia's is <strong>+2.44%</strong>.</p>
+        <p>In an APAC price-to-rent comparison, Tokyo sits at <strong>37x</strong> &mdash; elevated but justified by the near-zero financing cost environment. Compared to Taipei at <strong>47x</strong> and Hong Kong at <strong>50x</strong>, Tokyo offers materially better value. The carry advantage makes Japan uniquely attractive for leveraged income strategies, with Fukuoka and Osaka offering the best value entry points in the Japanese market.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>日本全國租金收益率<strong>4.34%</strong>，扣除BOJ政策利率<strong>0.5%</strong>後，利差達<strong>+3.84%</strong>——是已開發亞洲最大的正利差。這個利差是根本的估值錨定：只要維持在+2.0%以上，日本房產的收租邏輯就成立，無論資本增值趨勢如何。相比之下，台灣利差僅<strong>+0.24%</strong>，馬來西亞為<strong>+2.44%</strong>。</p>
+        <p>在亞太區域房價租金比的比較中，東京<strong>37倍</strong>雖偏高，但在近零融資成本環境下仍屬合理。相較於台北<strong>47倍</strong>和香港<strong>50倍</strong>，東京的估值明顯更具價值。利差優勢使日本對槓桿收租策略格外具有吸引力，其中福岡和大阪是日本市場中最佳的價值進入點。</p>
+      </div>
+
+      <div class="chart-inline">
+        <h4><span class="lang-en">APAC Price-to-Rent Comparison</span><span class="lang-zh" style="display:none">亞太房價租金比比較</span></h4>
+        <div class="chart-note green"><span class="lang-en">Japan offers widest yield spread in developed Asia</span><span class="lang-zh" style="display:none">日本擁有已開發亞洲最大利差</span></div>
+        <div id="chart-r-jp-apac" style="height:320px;min-height:180px;"></div>
+      </div>
+
+      <!-- 6. TOKYO 23 WARDS -->
+      <h2><span class="lang-en">TOKYO 23 WARDS</span><span class="lang-zh" style="display:none">東京23區</span></h2>
+
+      <div class="lang-en">
+        <p>Tokyo's 23-ward area continues to set records. The average new-build condominium price reached <strong>&yen;94 million</strong> in 2025, with a peak month breaching the psychological <strong>&yen;100 million</strong> threshold. Land prices rose <strong>+7.9%</strong> year-on-year, the highest appreciation among Japan's major markets, reflecting persistent demand for central urban sites.</p>
+        <p>The rental market is equally buoyant. Average asking rents hit <strong>&yen;4,332/sqm</strong>, up <strong>+6.4%</strong> year-on-year, driven by tight vacancy and strong demand from both domestic professionals and the growing expatriate population. The combination of rising rents and appreciating land values underpins the total return thesis for Tokyo's core wards, even as entry prices reach historically elevated levels.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>東京23區持續刷新紀錄。2025年新建公寓均價達<strong>9,400萬日圓</strong>，高峰月份突破<strong>1億日圓</strong>的心理關口。地價年增<strong>+7.9%</strong>，為日本主要市場中最高漲幅，反映了核心都市用地的持續需求。</p>
+        <p>租賃市場同樣強勁。平均招租租金達<strong>每平方公尺4,332日圓</strong>，年增<strong>+6.4%</strong>，受惠於低空置率以及國內專業人士和日益增長的外派人口的強勁需求。租金上漲與地價增值的組合支撐了東京核心區的總回報邏輯，即便入場價格已達歷史高位。</p>
+      </div>
+
+      <!-- 7. FUKUOKA -->
+      <h2><span class="lang-en">FUKUOKA</span><span class="lang-zh" style="display:none">福岡</span></h2>
+
+      <div class="lang-en">
+        <p>Fukuoka has delivered <strong>13 consecutive years</strong> of price appreciation, the longest winning streak in Japan. The average condominium price reached <strong>&yen;68 million</strong> in 2025, up <strong>+21.8%</strong> year-on-year, outpacing both Tokyo and Osaka. The city's population continues to grow &mdash; one of the few major Japanese cities with positive net migration &mdash; driven by a thriving startup ecosystem, Kyushu's role as a semiconductor hub, and quality of life.</p>
+        <p>The investment case for Fukuoka is the yield story. At <strong>4.98%</strong>, Fukuoka's rental yield is the highest among Japan's major cities. The Tenjin Big Bang urban renewal project is transforming the city center with Grade-A office, retail, and mixed-use developments, further reinforcing Fukuoka's credentials as Japan's most dynamic secondary market. Combined with the strongest capital appreciation, Fukuoka offers total returns that no other Japanese city can match.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p>福岡已連續<strong>13年</strong>房價上漲，為日本最長連漲紀錄。2025年公寓均價達<strong>6,800萬日圓</strong>，年增<strong>+21.8%</strong>，超越東京和大阪。福岡人口持續成長——是日本少數維持淨遷入的主要城市之一——受益於蓬勃的新創生態圈、九州作為半導體製造中心的角色，以及優質的生活品質。</p>
+        <p>福岡的投資邏輯是收益率。<strong>4.98%</strong>的租金收益率是日本主要城市中最高。天神Big Bang都市更新計畫正以甲級辦公室、零售和複合用途開發改造市中心，進一步鞏固福岡作為日本最具活力的二線城市的地位。加上最強的資本增值，福岡提供的總回報是其他日本城市無法匹敵的。</p>
+      </div>
+
+      <div class="chart-inline">
+        <h4><span class="lang-en">Fukuoka Condo Price Trend (2013&ndash;2025)</span><span class="lang-zh" style="display:none">福岡公寓價格趨勢 (2013&ndash;2025)</span></h4>
+        <div class="chart-note green"><span class="lang-en">13 consecutive years of appreciation</span><span class="lang-zh" style="display:none">連續13年上漲</span></div>
+        <div id="chart-r-jp-fukuoka" style="height:240px;min-height:180px;"></div>
+      </div>
+
+      <!-- 8. OUTLOOK -->
+      <h2><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
+
+      <div class="lang-en">
+        <p><strong>Bull case:</strong> BOJ holds at 0.5% through 2026, yen stays weak (150+/USD), foreign inflows accelerate. National prices +8&ndash;12%, Fukuoka +15%+. Tokyo new-builds breach &yen;100M sustained average.</p>
+        <p><strong>Base case:</strong> BOJ hikes to 0.75% by year-end, yen drifts to 140&ndash;145. National prices +5&ndash;8%, continued resale strength. Yield spread narrows but remains above +3.0% &mdash; still attractive for income strategies.</p>
+        <p><strong>Bear case:</strong> BOJ accelerates to 1.0%+, yen recovers to 125&ndash;130, foreign demand retreats. National prices flat to +2%, Tokyo luxury corrects 5&ndash;10%. Even here, rental income provides a floor absent in speculative markets.</p>
+        <p>The primary wildcard is yen direction. A rapid yen recovery would simultaneously reduce foreign buying power and signal tighter BOJ policy &mdash; a double headwind. Conversely, continued yen weakness extends the most favorable conditions for cross-border investment in a generation.</p>
+      </div>
+
+      <div class="lang-zh" style="display:none">
+        <p><strong>樂觀情境：</strong>BOJ在2026年全年維持0.5%，日圓持續走弱（150+兌1美元），外資加速流入。全國房價+8到12%，福岡+15%以上。東京新建案均價持續突破1億日圓。</p>
+        <p><strong>基本情境：</strong>BOJ年底前升至0.75%，日圓緩步回升至140到145。全國房價+5到8%，中古屋市場持續強勁。利差收窄但仍維持+3.0%以上——對收租策略仍具吸引力。</p>
+        <p><strong>悲觀情境：</strong>BOJ加速升至1.0%以上，日圓回升至125到130，外資需求退潮。全國房價持平至+2%，東京豪宅修正5到10%。即便如此，租金收入仍提供了投機市場所缺乏的底部支撐。</p>
+        <p>最大的不確定因素是日圓走向。日圓若快速回升，將同時削弱外資購買力並暗示BOJ進一步緊縮——形成雙重逆風。反之，日圓持續走弱則延續了一個世代以來最有利的跨境投資條件。</p>
+      </div>
+
+      <div class="report-footer">
+        <p><span class="lang-en">Data sources: MLIT &middot; BOJ &middot; REINS &middot; Numbeo &middot; Global Property Guide (GPG)</span><span class="lang-zh" style="display:none">數據來源：國土交通省 (MLIT) &middot; 日本銀行 (BOJ) &middot; REINS &middot; Numbeo &middot; Global Property Guide (GPG)</span></p>
+        <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
+      </div>
     </div>
   </div>
-  <div class="report-body">
 
+  <footer class="footer">A project by <span>InvestMQuest</span></footer>
 
-  </div>
-</div>
+  <script>
+  var C = {
+    navy:'#1e3a5f', green:'#16a34a', orange:'#d97706',
+    red:'#dc2626', blue:'#2563eb', muted:'#5a7a9a',
+    grid:'#e8f0f9', text:'#1e3a5f'
+  };
+  function fmtJPY(v){if(v>=100000000)return '\u00a5'+(v/100000000).toFixed(1)+'B';if(v>=1000000)return '\u00a5'+(v/1000000).toFixed(1)+'M';if(v>=1000)return '\u00a5'+(v/1000).toFixed(0)+'K';return '\u00a5'+v;}
+  function fmtJPYShort(v){if(v>=100000000)return(v/100000000).toFixed(1)+'B';if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return(v/1000).toFixed(0)+'K';return ''+v;}
+  function fmtNum(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
+  var baseText = { color: C.muted, fontFamily: 'Inter, sans-serif', fontSize: 11 };
+  var baseTooltip = {
+    trigger: 'axis', backgroundColor: '#fff',
+    borderColor: '#ccd9e8', borderWidth: 1,
+    textStyle: { color: C.navy, fontSize: 11, fontFamily: 'Inter' }
+  };
+  var baseLegend = { top: 8, textStyle: baseText, icon: 'circle', itemWidth: 8, itemHeight: 8 };
 
-<footer class="footer">A project by <span>InvestMQuest</span></footer>
+  function mkAxis(opts) {
+    return Object.assign({
+      axisLine: { lineStyle: { color: C.grid } },
+      axisTick: { show: false },
+      axisLabel: baseText,
+      splitLine: { lineStyle: { color: C.grid } }
+    }, opts || {});
+  }
 
-<script>
-var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
-var baseText={color:C.muted,fontFamily:'Inter,sans-serif',fontSize:11};
-var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
-var baseLegend={bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
-var baseGrid={left:50,right:20,top:40,bottom:30,containLabel:true};
-function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
-function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
-document.addEventListener('click',function(e){if(!e.target.closest('.market-selector'))document.getElementById('marketDropdown').classList.remove('open');});
-function switchTab(cid,tab){var w=document.getElementById(cid);if(!w)return;w.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});w.querySelectorAll('.tab-bar button').forEach(function(b){b.classList.remove('active');});var p=w.querySelector('#tab-'+tab);if(p)p.classList.add('active');w.querySelectorAll('.tab-bar button').forEach(function(b){if(b.dataset.tab===tab)b.classList.add('active');});setTimeout(function(){allCharts.forEach(function(c){if(c)c.resize();});},100);}
-function setLang(lang){
-  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
-  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
-  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
-  localStorage.setItem('lang',lang);
-  if(typeof allCharts!=='undefined'){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];}
-  if(typeof initCharts==='function')initCharts(lang);
-}
-var allCharts=[];
-window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
-window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
-function fmtK(v){return v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':v;}
-function fmtRM(v){if(v>=1000000)return'RM '+(v/1000000).toFixed(1)+'M';if(v>=1000)return'RM '+(v/1000).toFixed(0)+'K';return'RM '+v;}
-function fmtNum(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}
+  function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+  document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){document.getElementById('marketDropdown').classList.remove('open');}});
 
-function initCharts(lang){
-  var DATA = {"dashboard": {"chart-jp-city-price": {"categories": ["Tokyo", "Osaka", "Fukuoka"], "container_id": "chart-jp-city-price", "series": [{"colors": ["#d97706", "#1e3a5f", "#16a34a"], "data": [9400, 5800, 6800], "name_en": "Avg Price", "name_zh": "\u5e73\u5747\u50f9\u683c", "type": "bar"}, {"color": "#dc2626", "data": [10.7, 16.0, 21.8], "name": "YoY %", "type": "line", "yAxisIndex": 1}], "subtitle_en": "Average Condo Price (\u4e07\u5186) + YoY%", "subtitle_zh": "\u5e73\u5747\u516c\u5bd3\u50f9\u683c\uff08\u4e07\u5186\uff09+ \u5e74\u589e\u7387", "title_en": "City Price Comparison", "title_zh": "\u57ce\u5e02\u50f9\u683c\u6bd4\u8f03", "type": "bar+line"}, "chart-jp-price-index": {"categories": ["2019", "2020", "2021", "2022", "2023", "2024", "2025Q3"], "container_id": "chart-jp-price-index", "series": [{"color": "green (positive) / red (negative)", "data": [1.2, 0.1, 3.8, 6.9, 5.6, 5.8, 3.74], "name": "YoY %", "type": "bar", "yAxisIndex": 1}, {"color": "#1e3a5f", "data": [100, 100, 104, 111, 117, 124, 128], "name": "Price Index", "type": "line"}], "subtitle_en": "Index (2019=100) + YoY% Change", "subtitle_zh": "\u6307\u6578\uff082019=100\uff09+ \u5e74\u589e\u7387", "title_en": "National Condo Price Index", "title_zh": "\u5168\u570b\u516c\u5bd3\u50f9\u683c\u6307\u6578", "type": "bar+line"}, "chart-jp-starts": {"categories": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"], "container_id": "chart-jp-starts", "series": [{"areaStyle": true, "color": "#1e3a5f", "data": [905000, 812000, 865000, 860000, 820000, 800000, 760000], "markPoints": ["max", "min"], "type": "line"}], "subtitle_en": "Annual housing starts", "subtitle_zh": "\u5e74\u5ea6\u4f4f\u5b85\u958b\u5de5\u6578", "title_en": "Housing Starts Trend", "title_zh": "\u4f4f\u5b85\u958b\u5de5\u8da8\u52e2", "type": "line"}, "chart-jp-transactions": {"categories": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"], "container_id": "chart-jp-transactions", "series": [{"areaStyle": true, "color": "#1e3a5f", "data": [35000, 28000, 38000, 36000, 33000, 38000, 40000], "markPoints": ["max", "min"], "type": "line"}], "subtitle_en": "Annual transactions", "subtitle_zh": "\u5e74\u5ea6\u6210\u4ea4\u91cf", "title_en": "Resale Condo Transaction Volume", "title_zh": "\u4e2d\u53e4\u516c\u5bd3\u6210\u4ea4\u91cf\u8da8\u52e2", "type": "line"}, "chart-jp-yen": {"categories": ["2020", "2021", "2022", "2023", "2024", "2025"], "container_id": "chart-jp-yen", "series": [{"color": "#d97706", "data": [106, 110, 131, 141, 152, 149], "name": "USD/JPY", "type": "line"}, {"color": "rgba(37,99,235,0.6)", "data": [0.8, 1.0, 1.2, 1.5, 2.1, 2.6], "name_en": "Foreign Inv (\u00a5T)", "name_zh": "\u5916\u570b\u6295\u8cc7 (\u5146\u5186)", "type": "bar", "yAxisIndex": 1}], "subtitle_en": "Exchange rate + investment inflow (\u00a5T)", "subtitle_zh": "\u532f\u7387 + \u6295\u8cc7\u6d41\u5165\uff08\u5146\u5186\uff09", "title_en": "USD/JPY \u0026 Foreign Investment", "title_zh": "\u7f8e\u5143/\u65e5\u5713\u532f\u7387\u8207\u5916\u570b\u6295\u8cc7", "type": "line+bar"}, "chart-jp-yield": {"categories": ["Tokyo Center", "Tokyo 23W", "Osaka", "National", "Fukuoka", "Sapporo"], "container_id": "chart-jp-yield", "markLine": {"label": "BOJ 0.5%", "xAxis": 0.5}, "series": [{"colorRule": "green if \u003e=4.0, orange if \u003e=3.0, red otherwise", "data": [2.8, 3.59, 4.47, 4.34, 4.98, 4.98], "type": "bar"}], "subtitle_en": "Gross yield % with BOJ rate reference", "subtitle_zh": "\u6bdb\u6536\u76ca\u7387% \u9644BOJ\u5229\u7387\u53c3\u8003\u7dda", "title_en": "Rental Yield by City", "title_zh": "\u5404\u57ce\u5e02\u79df\u91d1\u6536\u76ca\u7387", "type": "horizontal-bar"}}, "demand": {"chartJpContractRate": {"categories_en": ["Tokyo 23W", "Greater Osaka", "National"], "categories_zh": ["\u6771\u4eac23\u5340", "\u5927\u962a\u570f", "\u5168\u570b"], "container_id": "chartJpContractRate", "markLine": {"label_en": "Seller\u0027s market", "label_zh": "\u8ce3\u65b9\u5e02\u5834", "yAxis": 70}, "series": [{"colorRule": "green if \u003e70, navy if \u003e60, orange otherwise", "colors": ["#1e3a5f", "#16a34a", "#d97706"], "data": [68.8, 77.2, 66.0], "type": "bar"}], "title_en": "Initial Contract Rate", "title_zh": "\u521d\u6708\u5951\u7d04\u7387", "type": "bar", "yAxis": {"format": "{value}%", "max": 85, "min": 50}}, "chartJpForeign": {"categories": ["2020", "2021", "2022", "2023", "2024", "2025"], "container_id": "chartJpForeign", "series": [{"areaStyle": "gradient navy", "color": "#1e3a5f", "data": [12, 15, 18, 21, 24, 27], "markPoint": {"coord": ["2025", 27], "label": "27%"}, "smooth": true, "type": "line"}], "title_en": "Foreign Buyer Share Trend", "title_zh": "\u5916\u570b\u8cb7\u5bb6\u5360\u6bd4\u8da8\u52e2", "type": "line", "yAxis": {"format": "{value}%", "max": 35, "min": 0}}, "chartJpTxn": {"categories": ["2020", "2021", "2022", "2023", "2024", "2025H1"], "container_id": "chartJpTxn", "series": [{"color": "#1e3a5f", "data": [28000, 38000, 36000, 33000, 38000, 24659], "name_en": "Greater Tokyo", "name_zh": "\u9996\u90fd\u570f", "type": "line"}, {"color": "#d97706", "data": [6500, 7800, 7200, 6900, 8000, 8582], "name_en": "Greater Osaka", "name_zh": "\u8fd1\u757f\u570f", "type": "line"}], "title_en": "Resale Condo Transaction Volume", "title_zh": "\u4e2d\u53e4\u516c\u5bd3\u6210\u4ea4\u91cf", "type": "multi-line"}}, "report": {"chart-r-jp-apac": {"categories_en": ["HCM", "KL", "Bangkok", "Fukuoka", "Osaka", "Tokyo", "Singapore", "Taipei", "HK", "Shanghai"], "categories_zh": ["\u80e1\u5fd7\u660e", "\u5409\u9686\u5761", "\u66fc\u8c37", "\u798f\u5ca1", "\u5927\u962a", "\u6771\u4eac", "\u65b0\u52a0\u5761", "\u53f0\u5317", "\u9999\u6e2f", "\u4e0a\u6d77"], "container_id": "chart-r-jp-apac", "series": [{"colorRule": "green if \u003c=27, orange if \u003c=40, red otherwise", "data": [18, 21.7, 25, 26, 27, 37, 40, 47, 50, 59], "labelFormat": "{c}x", "type": "bar"}], "subtitle_en": "Japan offers widest yield spread in developed Asia", "subtitle_zh": "\u65e5\u672c\u64c1\u6709\u5df2\u958b\u767c\u4e9e\u6d32\u6700\u5927\u5229\u5dee", "title_en": "APAC Price-to-Rent Comparison", "title_zh": "\u4e9e\u592a\u623f\u50f9\u79df\u91d1\u6bd4\u6bd4\u8f03", "type": "horizontal-bar"}, "chart-r-jp-city": {"categories_en": ["Osaka", "Fukuoka", "Tokyo"], "categories_zh": ["\u5927\u962a", "\u798f\u5ca1", "\u6771\u4eac"], "container_id": "chart-r-jp-city", "series": [{"colors": ["#d97706", "#16a34a", "#1e3a5f"], "data": [5813, 6800, 9400], "name_en": "Avg Price (\u4e07\u5186)", "name_zh": "\u5747\u50f9(\u842c\u5186)", "type": "bar"}, {"color": "#dc2626", "data": [16.0, 21.8, 10.7], "lineType": "dashed", "name": "YoY%", "type": "line", "yAxisIndex": 1}], "subtitle_en": "Fukuoka leads with +21.8% YoY", "subtitle_zh": "\u798f\u5ca1\u5e74\u589e21.8%\u9818\u5148", "title_en": "3-City Condo Prices", "title_zh": "\u4e09\u5927\u57ce\u5e02\u516c\u5bd3\u50f9\u683c", "type": "bar+line"}, "chart-r-jp-foreign": {"categories": ["2020", "2021", "2022", "2023", "2024", "2025"], "container_id": "chart-r-jp-foreign", "series": [{"color": "#1e3a5f", "data": [12, 15, 18, 21, 24, 27], "name_en": "Foreign Share", "name_zh": "\u5916\u8cc7\u4f54\u6bd4", "type": "bar"}], "subtitle_en": "Record 27% in 2025", "subtitle_zh": "2025\u5e74\u521b27%\u65b0\u9ad8", "title_en": "Foreign Buyer Share in Tokyo Luxury", "title_zh": "\u6771\u4eac\u8c6a\u5b85\u5916\u8cc7\u8cb7\u5bb6\u4f54\u6bd4", "type": "bar"}, "chart-r-jp-fukuoka": {"categories": ["2013", "2015", "2017", "2019", "2021", "2023", "2025"], "container_id": "chart-r-jp-fukuoka", "series": [{"areaStyle": true, "color": "#16a34a", "data": [2000, 2300, 2700, 3200, 4000, 5000, 6800], "name_en": "Fukuoka Avg (\u4e07\u5186)", "name_zh": "\u798f\u5ca1\u5747\u50f9(\u842c\u5186)", "type": "line"}], "subtitle_en": "13 consecutive years of appreciation", "subtitle_zh": "\u9023\u7e8c13\u5e74\u4e0a\u6f32", "title_en": "Fukuoka Condo Price Trend (2013-2025)", "title_zh": "\u798f\u5ca1\u516c\u5bd3\u50f9\u683c\u8da8\u52e2 (2013-2025)", "type": "line"}, "chart-r-jp-starts": {"categories": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"], "container_id": "chart-r-jp-starts", "series": [{"areaStyle": true, "color": "#d97706", "data": [905, 812, 865, 860, 820, 800, 760], "name_en": "Starts (K)", "name_zh": "\u65b0\u5efa\u958b\u5de5(\u5343)", "note": "Values in thousands (K)", "type": "line"}], "subtitle_en": "2025: ~760K -- declining trend", "subtitle_zh": "2025\u5e74\uff1a\u7d0476\u842c\u6236\u2014\u2014\u6301\u7e8c\u4e0b\u964d", "title_en": "Housing Starts Trend", "title_zh": "\u65b0\u5efa\u958b\u5de5\u8da8\u52e2", "type": "line"}, "chart-r-jp-yield": {"categories": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"], "container_id": "chart-r-jp-yield", "series": [{"areaStyle": true, "color": "#16a34a", "data": [4.2, 4.1, 4.0, 4.0, 4.1, 4.2, 4.34], "name_en": "Rental Yield", "name_zh": "\u79df\u91d1\u6536\u76ca\u7387", "type": "line"}, {"color": "#dc2626", "data": [0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.5], "lineType": "dashed", "name_en": "BOJ Rate", "name_zh": "BOJ\u5229\u7387", "step": "end", "type": "line"}], "subtitle_en": "Current Spread: +3.84%", "subtitle_zh": "\u7576\u524d\u5229\u5dee\uff1a+3.84%", "title_en": "Yield vs BOJ Rate", "title_zh": "\u6536\u76ca\u7387 vs BOJ\u5229\u7387", "type": "multi-line"}}, "risk": {"chartJpRateSensitivity": {"categories": ["BOJ 0.5%", "BOJ 1.0%", "BOJ 1.5%", "BOJ 2.0%"], "container_id": "chartJpRateSensitivity", "markLine": {"label": "Current", "xAxis": "BOJ 0.5%"}, "series": [{"color": "#16a34a", "data": [3.84, 3.34, 2.84, 2.34], "name": "Yield Spread", "type": "line", "yAxisIndex": 0}, {"color": "#d97706", "data": [75, 70, 64, 58], "name": "Affordability", "type": "line", "yAxisIndex": 1}], "title_en": "Rate Sensitivity Analysis", "title_zh": "\u5229\u7387\u654f\u611f\u5ea6\u5206\u6790", "type": "dual-line"}, "chartJpRisk": {"container_id": "chartJpRisk", "indicators": [{"max": 10, "name": "Liquidity", "name_zh": "\u6d41\u52d5\u6027"}, {"max": 10, "name": "Credit", "name_zh": "\u4fe1\u8cb8"}, {"max": 10, "name": "Supply", "name_zh": "\u4f9b\u7d66"}, {"max": 10, "name": "Macro", "name_zh": "\u7e3d\u7d93"}, {"max": 10, "name": "Geopolitical", "name_zh": "\u5730\u7de3"}, {"max": 10, "name": "Demographics", "name_zh": "\u4eba\u53e3"}], "series": [{"color": "#dc2626", "name": "Current Risk", "values": [3, 4, 7, 5, 5, 9]}, {"color": "#5a7a9a", "lineType": "dashed", "name": "2020 Baseline", "values": [2, 2, 5, 3, 3, 7]}], "title_en": "Risk Radar", "title_zh": "\u98a8\u96aa\u96f7\u9054\u5716", "type": "radar"}}, "supply": {"chartJpAkiya": {"categories": ["1993", "1998", "2003", "2008", "2013", "2018", "2023"], "container_id": "chartJpAkiya", "series": [{"color": "#dc2626", "data": [9.8, 11.5, 12.2, 13.1, 13.5, 13.6, 13.8], "markLine": {"label": "13%", "yAxis": 13}, "smooth": true, "type": "line"}], "title_en": "Akiya Vacancy Rate", "title_zh": "\u7a7a\u5c4b\u7387\u8da8\u52e2", "type": "line", "yAxis": {"format": "{value}%", "max": 16, "min": 8}}, "chartJpCitySupply": {"categories": ["2020", "2021", "2022", "2023", "2024", "2025E"], "container_id": "chartJpCitySupply", "series": [{"color": "#1e3a5f", "data": [28000, 32000, 29000, 26000, 25000, 22000], "name_en": "Tokyo", "name_zh": "\u6771\u4eac", "type": "line"}, {"color": "#d97706", "data": [12000, 14000, 13000, 15000, 17000, 15000], "name_en": "Osaka", "name_zh": "\u5927\u962a", "type": "line"}, {"color": "#16a34a", "data": [5000, 6000, 6500, 7000, 7500, 7000], "name_en": "Fukuoka", "name_zh": "\u798f\u5ca1", "type": "line"}], "title_en": "3-City New Condo Supply", "title_zh": "\u4e09\u90fd\u5e02\u65b0\u5efa\u516c\u5bd3\u4f9b\u7d66", "type": "multi-line"}, "chartJpStarts": {"categories": ["2019", "2020", "2021", "2022", "2023", "2024", "2025E"], "container_id": "chartJpStarts", "series": [{"areaStyle": "gradient orange", "color": "#d97706", "data": [905000, 812000, 865000, 860000, 820000, 800000, 760000], "markPoint": "min", "smooth": true, "type": "line"}], "title_en": "Housing Starts Trend", "title_zh": "\u65b0\u5efa\u4f4f\u5b85\u958b\u5de5\u6578\u8da8\u52e2", "type": "line"}}, "valuation": {"chartJpAPAC": {"categories": ["Ho Chi Minh", "KL", "Bangkok", "Fukuoka", "Osaka", "Tokyo", "Singapore", "Taipei", "Hong Kong", "Shanghai"], "container_id": "chartJpAPAC", "series": [{"colors": ["#16a34a", "#16a34a", "#1e3a5f", "#1e3a5f", "#1e3a5f", "#d97706", "#1e3a5f", "#d97706", "#d97706", "#dc2626"], "data": [18, 21.7, 25, 26, 27, 37, 40, 47, 50, 59], "labelFormat": "{c}x", "type": "bar"}], "title_en": "APAC Price-to-Rent Comparison", "title_zh": "\u4e9e\u592a\u79df\u91d1\u6bd4\u6bd4\u8f03", "type": "horizontal-bar"}, "chartJpMedianMult": {"categories": ["Fukuoka", "Osaka", "Nagoya", "Tokyo", "Taipei", "Hong Kong"], "container_id": "chartJpMedianMult", "markLine": {"label": "Severely Unaffordable", "xAxis": 10}, "series": [{"colorRule": "red if \u003e15, orange if \u003e10, navy otherwise", "data": [8.5, 10.2, 11.0, 15.1, 15.4, 47], "labelFormat": "{c}x", "type": "bar"}], "title_en": "Price-to-Income Multiple", "title_zh": "\u623f\u50f9\u6240\u5f97\u6bd4", "type": "horizontal-bar"}, "chartJpYield": {"categories": ["2019", "2020", "2021", "2022", "2023", "2024", "2025Q3"], "container_id": "chartJpYield", "series": [{"areaStyle": "gradient green", "color": "#16a34a", "data": [4.2, 4.1, 4.0, 4.0, 4.1, 4.2, 4.34], "name": "Rental Yield", "smooth": 0.3, "type": "line"}, {"color": "#dc2626", "data": [0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.5], "lineType": "dashed", "name": "BOJ Rate", "step": "end", "type": "line"}], "title_en": "Yield vs BOJ Rate", "title_zh": "\u79df\u91d1\u56de\u5831\u7387 vs BOJ \u5229\u7387", "type": "multi-line"}}};
-  var en = lang !== 'zh';
+  var allCharts = [];
 
-  function initChart(id){
-    var el = document.getElementById(id);
-    if(!el) return null;
+  function initAllCharts(lang) {
+    allCharts.forEach(function(c){ if(c) c.dispose(); });
+    allCharts = [];
+    drawYield(lang);
+    drawCity(lang);
+    drawStarts(lang);
+    drawForeign(lang);
+    drawAPAC(lang);
+    drawFukuoka(lang);
+  }
+
+  function setLang(lang){
+    document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+    document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+    localStorage.setItem('lang',lang);
+    initAllCharts(lang);
+  }
+
+  function drawYield(lang){
+    var c = echarts.init(document.getElementById('chart-r-jp-yield'));
+    allCharts.push(c);
+    c.setOption({
+      tooltip: baseTooltip,
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
+      xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024','2025'], axisLabel:{ color:C.muted, fontSize:8 } }),
+      yAxis: mkAxis({ type:'value', min:0, max:6, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
+      series: [
+        { name:lang==='zh'?'租金收益率':'Rental Yield', type:'line', data:[4.2,4.1,4.0,4.0,4.1,4.2,4.34], lineStyle:{color:C.green,width:1.5}, itemStyle:{color:C.green}, smooth:0.3, areaStyle:{color:'rgba(22,163,74,0.08)'}, symbol:'circle', symbolSize:4 },
+        { name:lang==='zh'?'BOJ利率':'BOJ Rate', type:'line', data:[0.0,0.0,0.0,0.0,0.0,0.1,0.5], lineStyle:{color:C.red,width:1,type:'dashed'}, itemStyle:{color:C.red}, step:'end', symbol:'circle', symbolSize:3 }
+      ]
+    });
+  }
+
+  function drawForeign(lang){
+    var el = document.getElementById('chart-r-jp-foreign');
+    if(!el) return;
     var c = echarts.init(el);
     allCharts.push(c);
-    return c;
-  }
-
-  function dsColor(ds, idx){
-    var palette = [C.navy, C.green, C.orange, C.red, C.blue, C.muted];
-    return ds.color || palette[idx % palette.length];
-  }
-
-  function buildLineStyle(ds, idx){
-    var style = { color: dsColor(ds, idx), width: ds.width || 2 };
-    if(ds.lineType) style.type = ds.lineType;
-    return style;
-  }
-
-  function buildMarkLine(cfg){
-    if(!cfg) return undefined;
-    var ml = {
-      silent: true, symbol: 'none',
-      lineStyle: { color: C.red, type: 'dashed', width: 1 },
-      label: { formatter: cfg.label || '', fontSize: 10, color: C.red },
-      data: []
-    };
-    if(cfg.xAxis !== undefined) ml.data.push({ xAxis: cfg.xAxis });
-    if(cfg.yAxis !== undefined) ml.data.push({ yAxis: cfg.yAxis });
-    return ml;
-  }
-
-  function buildMarkPoint(cfg){
-    if(!cfg) return undefined;
-    var items = Array.isArray(cfg) ? cfg : [cfg];
-    var mpData = items.map(function(mp){
-      var d = {};
-      if(mp.type) d.type = mp.type;
-      if(mp.coord) d.coord = mp.coord;
-      if(mp.label) d.label = { formatter: mp.label, fontSize: 9, fontWeight: 'bold' };
-      d.symbolSize = mp.symbolSize || 50;
-      if(mp.color) d.itemStyle = { color: mp.color };
-      else if(mp.type === 'max') d.itemStyle = { color: C.green };
-      else if(mp.type === 'min') d.itemStyle = { color: C.red };
-      return d;
+    c.setOption({
+      tooltip: baseTooltip,
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
+      xAxis: mkAxis({ type:'category', data:['2020','2021','2022','2023','2024','2025'], axisLabel:{ color:C.muted, fontSize:8 } }),
+      yAxis: mkAxis({ type:'value', min:0, max:35, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
+      series: [{
+        name:lang==='zh'?'外資佔比':'Foreign Share',
+        type:'bar',
+        data:[12,15,18,21,24,27],
+        itemStyle:{ color:C.navy, borderRadius:[3,3,0,0] },
+        barMaxWidth:25,
+        label:{ show:true, position:'top', formatter:'{c}%', fontSize:8, color:C.navy }
+      }]
     });
-    return { data: mpData };
   }
 
-  /* Iterate over all charts belonging to page 'report' */
-  Object.keys(DATA).forEach(function(chartId){
-    var info = DATA[chartId];
-    if(info.page !== 'report') return;
-
-    var chart = initChart(chartId);
-    if(!chart) return;
-
-    var chartType = (info.type || '').toLowerCase();
-    var isHorizontal = chartType.indexOf('horizontal') >= 0;
-    var hasDualAxis = chartType.indexOf('dual') >= 0 ||
-                      (info.datasets && info.datasets.some(function(ds){ return ds.yAxisIndex === 1; }));
-
-    /* Use localized labels if available */
-    var labels = info.labels;
-    if(en && info.labels_en) labels = info.labels_en;
-    if(!en && info.labels_zh) labels = info.labels_zh;
-
-    var legendNames = (info.datasets || []).map(function(ds){
-      return en ? (ds.name_en || ds.name || '') : (ds.name_zh || ds.name || '');
+  function drawStarts(lang){
+    var c = echarts.init(document.getElementById('chart-r-jp-starts'));
+    allCharts.push(c);
+    c.setOption({
+      tooltip: baseTooltip,
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
+      xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024','2025'], axisLabel:{ color:C.muted, fontSize:8 } }),
+      yAxis: mkAxis({ type:'value', min:700, max:950, axisLabel:{ color:C.muted, fontSize:9, formatter:function(v){return fmtNum(v);} } }),
+      series: [{
+        name:lang==='zh'?'新建開工(千)':'Starts (K)',
+        type:'line',
+        data:[905,812,865,860,820,800,760],
+        lineStyle:{ color:C.orange, width:1.5 },
+        itemStyle:{ color:C.orange },
+        areaStyle:{ color:'rgba(217,119,6,0.08)' },
+        smooth:0.2,
+        symbol:'circle',
+        symbolSize:4
+      }]
     });
+  }
 
-    /* Build series */
-    var series = (info.datasets || []).map(function(ds, idx){
-      var name = en ? (ds.name_en || ds.name || '') : (ds.name_zh || ds.name || '');
-      var s = { name: name, type: ds.type || 'line' };
-      var clr = dsColor(ds, idx);
-
-      if(ds.colors && Array.isArray(ds.colors)){
-        s.data = ds.data.map(function(v, i){
-          return { value: v, itemStyle: { color: ds.colors[i], borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] } };
-        });
-      } else {
-        s.data = ds.data;
-      }
-
-      if(ds.type === 'bar'){
-        s.barMaxWidth = isHorizontal ? 22 : 55;
-        if(!ds.colors) s.itemStyle = { color: clr, borderRadius: isHorizontal ? [0,4,4,0] : [4,4,0,0] };
-        if(ds.color_positive){
-          s.itemStyle = {
-            color: function(p){ return p.value >= 0 ? ds.color_positive : (ds.color_negative || C.red); },
-            borderRadius: [3,3,0,0]
-          };
-          s.label = { show: true, position: 'top', fontFamily: 'JetBrains Mono, monospace', fontSize: 9, formatter: function(p){ return p.value + '%'; } };
-        }
-        if(isHorizontal){
-          s.label = { show: true, position: 'right', formatter: '{c}', fontSize: 10, fontFamily: 'Inter', fontWeight: 'bold', color: C.navy };
-        } else if(!ds.color_positive && idx === 0){
-          s.label = { show: true, position: 'top', fontFamily: 'JetBrains Mono, monospace', fontSize: 10,
-            formatter: function(p){ return typeof p.value === 'number' && p.value >= 1000 ? fmtNum(p.value) : p.value; } };
-        }
-      }
-
-      if(ds.type === 'line'){
-        s.lineStyle = buildLineStyle(ds, idx);
-        s.itemStyle = { color: clr };
-        s.symbol = 'circle';
-        s.symbolSize = ds.symbolSize || 4;
-        if(ds.step) s.step = ds.step;
-        if(ds.areaStyle) s.areaStyle = { color: 'rgba(' + hexToRgb(clr) + ',0.08)' };
-        if(ds.smooth !== undefined) s.smooth = ds.smooth;
-        else s.smooth = 0.2;
-        if(ds.yAxisIndex === 1) s.yAxisIndex = 1;
-      }
-
-      if(ds.markPoint) s.markPoint = buildMarkPoint(ds.markPoint);
-      if(ds.markLine) s.markLine = buildMarkLine(ds.markLine);
-      return s;
+  function drawCity(lang){
+    var el = document.getElementById('chart-r-jp-city');
+    if(!el) return;
+    var c = echarts.init(el);
+    allCharts.push(c);
+    var cities = lang==='zh' ? ['大阪','福岡','東京'] : ['Osaka','Fukuoka','Tokyo'];
+    var prices = [5813, 6800, 9400];
+    var yoy = [16.0, 21.8, 10.7];
+    var colors = [C.orange, C.green, C.navy];
+    c.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
+      xAxis: mkAxis({ type:'category', data:cities, axisLabel:{ color:C.muted, fontSize:9 } }),
+      yAxis: [
+        mkAxis({ type:'value', min:0, max:12000, axisLabel:{ color:C.muted, fontSize:8, formatter:function(v){return (v/10000*10000/10000).toFixed(0);} } }),
+        mkAxis({ type:'value', min:0, max:30, splitLine:{show:false}, axisLabel:{ color:C.muted, fontSize:8, formatter:'{value}%' } })
+      ],
+      series: [
+        { name:lang==='zh'?'均價(萬円)':'Avg Price (万円)', type:'bar', data:prices.map(function(v,i){ return { value:v, itemStyle:{color:colors[i],borderRadius:[3,3,0,0]} }; }), barMaxWidth:30, label:{ show:true, position:'top', formatter:function(p){return p.value;}, fontSize:8, color:C.navy } },
+        { name:'YoY%', type:'line', yAxisIndex:1, data:yoy, lineStyle:{color:C.red,width:1.5,type:'dashed'}, itemStyle:{color:C.red}, symbol:'circle', symbolSize:5, label:{ show:true, position:'top', formatter:function(p){return '+'+p.value+'%';}, fontSize:8, color:C.red } }
+      ]
     });
+  }
 
-    if(info.markLine && series.length > 0){
-      var lastS = series[series.length - 1];
-      if(!lastS.markLine) lastS.markLine = buildMarkLine(info.markLine);
-    }
+  function drawAPAC(lang){
+    var el = document.getElementById('chart-r-jp-apac');
+    if(!el) return;
+    var c = echarts.init(el);
+    allCharts.push(c);
+    var labels = lang==='zh'
+      ? ['胡志明','吉隆坡','曼谷','福岡','大阪','東京','新加坡','台北','香港','上海']
+      : ['HCM','KL','Bangkok','Fukuoka','Osaka','Tokyo','Singapore','Taipei','HK','Shanghai'];
+    var values = [18, 21.7, 25, 26, 27, 37, 40, 47, 50, 59];
+    var colors = values.map(function(v){ return v <= 27 ? C.green : v <= 40 ? C.orange : C.red; });
+    c.setOption({
+      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
+      grid: { left:110, right:50, top:10, bottom:15, containLabel:false },
+      xAxis: mkAxis({ type:'value', min:0, max:65 }),
+      yAxis: mkAxis({ type:'category', data:labels, axisLabel:{color:C.navy,fontSize:9,fontFamily:'Inter'} }),
+      series: [{
+        type:'bar',
+        data: values.map(function(v,i){ return { value:v, itemStyle:{color:colors[i],borderRadius:[0,4,4,0]} }; }),
+        barMaxWidth:16,
+        label:{ show:true, position:'right', formatter:'{c}x', fontSize:9, fontFamily:'Inter', fontWeight:'bold', color:C.navy }
+      }]
+    });
+  }
 
-    /* Build axes */
-    var xAxisCfg, yAxisCfg;
-    var compactLabel = { color: C.muted, fontSize: 9 };
+  function drawFukuoka(lang){
+    var el = document.getElementById('chart-r-jp-fukuoka');
+    if(!el) return;
+    var c = echarts.init(el);
+    allCharts.push(c);
+    c.setOption({
+      tooltip: baseTooltip,
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
+      xAxis: mkAxis({ type:'category', data:['2013','2015','2017','2019','2021','2023','2025'], axisLabel:{ color:C.muted, fontSize:9 } }),
+      yAxis: mkAxis({ type:'value', min:0, max:8000, axisLabel:{ color:C.muted, fontSize:9, formatter:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;} } }),
+      series: [{
+        name:lang==='zh'?'福岡均價(萬円)':'Fukuoka Avg (万円)',
+        type:'line',
+        data:[2000,2300,2700,3200,4000,5000,6800],
+        lineStyle:{ color:C.green, width:2 },
+        itemStyle:{ color:C.green },
+        areaStyle:{ color:'rgba(22,163,74,0.10)' },
+        smooth:0.3,
+        symbol:'circle',
+        symbolSize:5,
+        label:{ show:true, position:'top', formatter:function(p){return p.value;}, fontSize:8, color:C.navy }
+      }]
+    });
+  }
 
-    if(isHorizontal){
-      xAxisCfg = mkAxis({ type: 'value', min: 0 });
-      yAxisCfg = mkAxis({ type: 'category', data: (labels || []).slice().reverse(), axisLabel: { color: C.navy, fontSize: 10, fontFamily: 'Inter' } });
-      series.forEach(function(s){ if(Array.isArray(s.data)) s.data = s.data.slice().reverse(); });
-    } else {
-      xAxisCfg = mkAxis({ type: 'category', data: labels, axisLabel: compactLabel });
-      if(hasDualAxis){
-        yAxisCfg = [
-          mkAxis({ type: 'value', axisLabel: compactLabel }),
-          mkAxis({ type: 'value', splitLine: { show: false }, axisLabel: Object.assign({}, compactLabel, { formatter: '{value}%' }) })
-        ];
-      } else {
-        yAxisCfg = mkAxis({ type: 'value', axisLabel: compactLabel });
-      }
-    }
-
-    var grid = isHorizontal
-      ? { left: 90, right: 50, top: 10, bottom: 15, containLabel: false }
-      : { left: 12, right: 12, top: 28, bottom: 20, containLabel: true };
-
-    var option = {
-      tooltip: isHorizontal
-        ? Object.assign({}, baseTooltip, { trigger: 'axis', axisPointer: { type: 'shadow' } })
-        : baseTooltip,
-      grid: grid,
-      xAxis: xAxisCfg,
-      yAxis: yAxisCfg,
-      series: series
-    };
-
-    if(legendNames.length > 1){
-      option.legend = Object.assign({}, baseLegend, { top: 8, data: legendNames, textStyle: { fontSize: 8, color: C.muted } });
-    }
-
-    chart.setOption(option);
+  window.addEventListener('load', function(){
+    var lang = localStorage.getItem('lang') || 'en';
+    setLang(lang);
   });
-}
 
-/* Helper: hex color to rgb string */
-function hexToRgb(hex){
-  if(!hex || hex.charAt(0) !== '#') return '30,58,95';
-  var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  return r+','+g+','+b;
-}
-</script>
+  window.addEventListener('resize', function(){
+    allCharts.forEach(function(c){ if(c) c.resize(); });
+  });
+  </script>
 </body>
 </html>
