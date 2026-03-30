@@ -165,6 +165,33 @@
         </div>
       </div>
 
+      <!-- Overhang Severity: % of Completions -->
+      <div class="chart-inline">
+        <h4><span class="lang-en">Overhang Severity: % of Annual Completions</span><span class="lang-zh" style="display:none">餘屋嚴重度：佔當年完工量%</span></h4>
+        <div class="chart-note orange"><span class="lang-en">1-in-3 threshold = systemic concern · Source: NAPIC</span><span class="lang-zh" style="display:none">每3戶完工1戶賣不出=系統性警戒 · 來源：NAPIC</span></div>
+        <div id="chartOhSeverityR" style="height:220px;min-height:180px;"></div>
+        <div style="margin-top:14px;padding:12px 14px;background:#f8fafc;border-left:3px solid #d97706;border-radius:0 6px 6px 0;">
+          <p style="font-family:'Inter',sans-serif;font-size:11px;line-height:1.7;color:#1e3a5f;margin:0 0 8px 0;">
+            <span class="lang-en"><strong>Why this metric matters more than absolute units:</strong> Malaysia has 6.3 million existing residential units — expressing overhang as a share of total stock yields a misleadingly small number (~0.5%). The more meaningful lens is <strong>what fraction of newly-completed homes remain unsold</strong>. At the 2019 peak, nearly <strong>1 in 2</strong> completed units went unsold. The 2025Q3 reading of <strong>41%</strong> is back near peak territory, driven by a surge in completions rather than a collapse in demand.</span>
+            <span class="lang-zh" style="display:none"><strong>為何這個指標比絕對數量更重要：</strong>馬來西亞有630萬戶住宅存量——用餘屋佔總存量的比例衡量，會得出一個具誤導性的小數字（約0.5%）。更有意義的視角是<strong>每年新完工的房屋中有多少比例賣不出去</strong>。在2019年高峰期，接近<strong>每2戶完工就有1戶</strong>滯銷。2025年Q3的<strong>41%</strong>再度接近峰值，主因是完工量激增，而非需求崩潰。</span>
+          </p>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+            <div style="background:#fff;border:1px solid #e8f0f9;border-radius:6px;padding:8px;text-align:center;">
+              <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#16a34a;">11.9%</div>
+              <div style="font-family:'Inter',sans-serif;font-size:9px;color:#5a7a9a;margin-top:2px;"><span class="lang-en">2015 Low</span><span class="lang-zh" style="display:none">2015年最低</span></div>
+            </div>
+            <div style="background:#fff;border:1px solid #e8f0f9;border-radius:6px;padding:8px;text-align:center;">
+              <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#dc2626;">47.3%</div>
+              <div style="font-family:'Inter',sans-serif;font-size:9px;color:#5a7a9a;margin-top:2px;"><span class="lang-en">2019 Peak</span><span class="lang-zh" style="display:none">2019年峰值</span></div>
+            </div>
+            <div style="background:#fff;border:1px solid #e8f0f9;border-radius:6px;padding:8px;text-align:center;">
+              <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#d97706;">41.4%</div>
+              <div style="font-family:'Inter',sans-serif;font-size:9px;color:#5a7a9a;margin-top:2px;"><span class="lang-en">2025Q3 Now</span><span class="lang-zh" style="display:none">2025Q3現況</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <h2><span class="lang-en">DEMAND: INTENT WITHOUT ACCESS</span><span class="lang-zh" style="display:none">需求面：想買的人很多，能成交的不夠</span></h2>
 
       <div class="lang-en">
@@ -335,6 +362,7 @@
     drawCompletionWave(lang);
     drawSupplyPipeline(lang);
     drawOhForecast(lang);
+    drawOhSeverityR(lang);
     drawTakeup(lang);
     drawAPAC(lang);
     drawZonePSF(lang);
@@ -458,6 +486,27 @@
         { name:en?'Base':'\u57fa\u672c', type:'line', data:[null,null,null,null,null,null,null,null,null,null,28672,46000,47000,28000,14000], lineStyle:{color:C.orange,width:2,type:[6,3]}, itemStyle:{color:C.orange}, symbol:'circle', symbolSize:5 },
         { name:en?'Bear':'\u4fdd\u5b88', type:'line', data:[null,null,null,null,null,null,null,null,null,null,28672,51000,57000,42000,28000], lineStyle:{color:C.red,width:1.5,type:[8,4]}, itemStyle:{color:C.red}, symbol:'circle', symbolSize:4 }
       ]
+    });
+  }
+
+  function drawOhSeverityR(lang){
+    var en=lang==='en';
+    var c = echarts.init(document.getElementById('chartOhSeverityR'));
+    allCharts.push(c);
+    var sevLabels=['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024H1','2025Q3'];
+    var sevData=[11.9,16.0,24.6,41.4,47.3,43.2,34.6,38.5,34.5,27.6,41.4];
+    c.setOption({
+      tooltip:Object.assign({},baseTooltip,{formatter:function(p){return p[0].axisValue+'<br/>'+(en?'% of Completions':'佔完工量%')+': <b>'+p[0].data+'%</b>';}}),
+      grid:{left:12,right:12,top:28,bottom:30,containLabel:true},
+      xAxis:mkAxis({type:'category',data:sevLabels,axisLabel:{fontSize:8,color:C.muted,rotate:30,interval:0}}),
+      yAxis:mkAxis({type:'value',min:0,max:55,axisLabel:{fontSize:9,color:C.muted,formatter:function(v){return v+'%';}}}),
+      series:[{
+        type:'bar',
+        data:sevData.map(function(v){return{value:v,itemStyle:{color:v>=40?C.red:v>=33?C.orange:v>=20?C.navy:C.green,borderRadius:[3,3,0,0]}};}),
+        barMaxWidth:28,
+        label:{show:true,position:'top',formatter:function(p){return p.value+'%';},fontSize:8,fontFamily:'JetBrains Mono,monospace'},
+        markLine:{silent:true,lineStyle:{type:'dashed',color:C.orange,width:1.5},data:[{yAxis:33}],label:{formatter:en?'1-in-3 threshold':'每3戶完工1戶滯銷',color:C.orange,fontFamily:'Inter,sans-serif',fontSize:9}}
+      }]
     });
   }
 
