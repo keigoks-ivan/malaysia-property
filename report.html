@@ -21,13 +21,13 @@
     .chart-inline .chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:8px}
     .chart-note.green{color:#16a34a}
     .chart-note.orange{color:#d97706}
-    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+    .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}
     .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
     .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
     .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
-    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
@@ -110,19 +110,24 @@
       <!-- Exec Summary Charts -->
       <div class="report-chart-grid">
         <div class="report-chart-card">
-          <h4><span class="lang-en">Yield Spread Monitor</span><span class="lang-zh" style="display:none">利差監測</span></h4>
-          <div class="chart-meta green"><span class="lang-en">Current Spread: +2.44%</span><span class="lang-zh" style="display:none">當前利差：+2.44%</span></div>
-          <div id="chart-r-yield-spread" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">Malaysia House Price 10Y Trend + YoY%</span><span class="lang-zh" style="display:none">馬來西亞10年房價趨勢 + 年增率</span></h4>
+          <p style="font-size:10px;color:#5a7a9a;margin-bottom:8px;font-family:Inter,sans-serif"><span class="lang-en">RM K &middot; Source: NAPIC</span><span class="lang-zh" style="display:none">令吉千元 &middot; 來源：NAPIC</span></p>
+          <div id="rChartMyPrice" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
-          <h4><span class="lang-en">Demand vs Supply Mismatch</span><span class="lang-zh" style="display:none">需求 vs 供給錯配</span></h4>
-          <div class="chart-meta orange"><span class="lang-en">53% of buyers vs 18% of supply below RM300k</span><span class="lang-zh" style="display:none">53%買家需求 vs 僅18%供給低於30萬</span></div>
-          <div id="chart-r-mismatch" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">Yield Spread vs OPR</span><span class="lang-zh" style="display:none">收益率利差 vs OPR</span></h4>
+          <div class="chart-meta green"><span class="lang-en">National yield 4.8% vs OPR 3.0%</span><span class="lang-zh" style="display:none">全國收益率4.8% vs OPR 3.0%</span></div>
+          <div id="chart-r-yield-spread" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
-          <h4><span class="lang-en">Completion Wave vs Absorption</span><span class="lang-zh" style="display:none">完工交屋潮 vs 吸收量</span></h4>
-          <div class="chart-meta orange"><span class="lang-en">Supply peak 2026–2027</span><span class="lang-zh" style="display:none">供給高峰2026至2027年</span></div>
-          <div id="chart-r-wave" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">Demand vs Supply Mismatch</span><span class="lang-zh" style="display:none">供需錯配</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">Affordable segment undersupplied</span><span class="lang-zh" style="display:none">可負擔價位供給不足</span></div>
+          <div id="chart-r-mismatch" style="height:220px;min-height:220px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">Transaction Wave</span><span class="lang-zh" style="display:none">成交量趨勢</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">Completions vs absorption</span><span class="lang-zh" style="display:none">完工量 vs 吸納量</span></div>
+          <div id="chart-r-wave" style="height:220px;min-height:220px;"></div>
         </div>
       </div>
 
@@ -324,6 +329,7 @@
   function initAllCharts(lang) {
     allCharts.forEach(function(c){ if(c) c.dispose(); });
     allCharts = [];
+    drawMyPrice(lang);
     drawYieldSpread(lang);
     drawMismatch(lang);
     drawCompletionWave(lang);
@@ -344,6 +350,29 @@
   }
   function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
   document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){var d=document.getElementById('marketDropdown');if(d)d.classList.remove('open');}});
+
+  function drawMyPrice(lang){
+    var en=lang==='en';
+    var c = echarts.init(document.getElementById('rChartMyPrice'));
+    allCharts.push(c);
+    var yrs=['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+    var price=[289,295,308,316,322,316,328,340,385,398,408];
+    var yoy=[3.6,2.1,4.4,2.6,1.9,-1.9,3.8,3.7,13.2,3.4,2.5];
+    c.setOption({
+      tooltip:baseTooltip,
+      legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8,data:['YoY %',en?'Avg Price':'均價']},
+      grid:{left:12,right:12,top:16,bottom:36,containLabel:true},
+      xAxis:mkAxis({type:'category',data:yrs,axisLabel:{color:C.muted,fontSize:7,rotate:30}}),
+      yAxis:[
+        mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return 'RM'+v+'K';}}}),
+        mkAxis({type:'value',splitLine:{show:false},axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return v+'%';}}})
+      ],
+      series:[
+        {name:'YoY %',type:'bar',yAxisIndex:1,data:yoy.map(function(v){return{value:v,itemStyle:{color:v>=0?'rgba(22,163,74,0.7)':'rgba(220,38,38,0.7)'}}}),barMaxWidth:18,itemStyle:{borderRadius:[2,2,0,0]}},
+        {name:en?'Avg Price':'均價',type:'line',data:price,lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},areaStyle:{color:'rgba(30,58,95,0.08)'},symbol:'circle',symbolSize:4}
+      ]
+    });
+  }
 
   function drawYieldSpread(lang){
     var c = echarts.init(document.getElementById('chart-r-yield-spread'));

@@ -25,13 +25,13 @@
     .chart-note.green{color:#16a34a}
     .chart-note.orange{color:#d97706}
     .chart-note.red{color:#dc2626}
-    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+    .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}
     .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
     .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
     .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
-    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
@@ -109,19 +109,24 @@
       <!-- Exec Summary Mini Charts -->
       <div class="report-chart-grid">
         <div class="report-chart-card">
-          <h4><span class="lang-en">OCR Trajectory</span><span class="lang-zh" style="display:none">OCR利率走勢</span></h4>
-          <div class="chart-meta green"><span class="lang-en">3.25% &mdash; 225bps of cuts</span><span class="lang-zh" style="display:none">3.25%——累計降息225基點</span></div>
-          <div id="chart-r-nz-ocr" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">NZ National Median 10Y + YoY%</span><span class="lang-zh" style="display:none">紐西蘭10年全國中位價 + 年增率</span></h4>
+          <p style="font-size:10px;color:#5a7a9a;margin-bottom:8px;font-family:Inter,sans-serif"><span class="lang-en">NZ$ &middot; Source: REINZ</span><span class="lang-zh" style="display:none">紐幣 &middot; 來源：REINZ</span></p>
+          <div id="rChartNzPrice10y" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
-          <h4><span class="lang-en">National Median Price</span><span class="lang-zh" style="display:none">全國中位價</span></h4>
-          <div class="chart-meta orange"><span class="lang-en">NZ$786,977 &mdash; +1.4% YoY</span><span class="lang-zh" style="display:none">NZ$786,977——年增+1.4%</span></div>
-          <div id="chart-r-nz-price" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">OCR Rate Trajectory</span><span class="lang-zh" style="display:none">OCR利率走勢</span></h4>
+          <div class="chart-meta green"><span class="lang-en">Cutting cycle accelerating</span><span class="lang-zh" style="display:none">降息週期加速</span></div>
+          <div id="chart-r-nz-ocr" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
-          <h4><span class="lang-en">3-City Comparison</span><span class="lang-zh" style="display:none">三城比較</span></h4>
-          <div class="chart-meta orange"><span class="lang-en">Christchurch leads, Auckland lags</span><span class="lang-zh" style="display:none">基督城領漲，奧克蘭落後</span></div>
-          <div id="chart-r-nz-city" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">Rental Yield vs OCR</span><span class="lang-zh" style="display:none">租金報酬率 vs OCR</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">Yield spread widening</span><span class="lang-zh" style="display:none">利差擴大中</span></div>
+          <div id="chart-r-nz-yield" style="height:220px;min-height:220px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">City Price Comparison</span><span class="lang-zh" style="display:none">三城市均價比較</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">Auckland vs Wellington vs Christchurch</span><span class="lang-zh" style="display:none">奧克蘭 vs 威靈頓 vs 基督城</span></div>
+          <div id="chart-r-nz-city" style="height:220px;min-height:220px;"></div>
         </div>
       </div>
 
@@ -275,10 +280,10 @@
   function initAllCharts(lang) {
     allCharts.forEach(function(c){ if(c) c.dispose(); });
     allCharts = [];
+    drawNzPrice10y(lang);
     drawOCR(lang);
-    drawPrice(lang);
-    drawCity(lang);
     drawYield(lang);
+    drawCity(lang);
     drawRental(lang);
     drawChristchurch(lang);
   }
@@ -291,26 +296,46 @@
     initAllCharts(lang);
   }
 
-  /* 1. OCR Rate Cut Trajectory — mini + detail share same function, render into both containers */
+  /* 0. NZ National Median 10Y + YoY% */
+  function drawNzPrice10y(lang){
+    var en=lang==='en';
+    var c = echarts.init(document.getElementById('rChartNzPrice10y'));
+    allCharts.push(c);
+    var yrs=['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','Dec 2025'];
+    var price=[450000,490000,540000,570000,590000,650000,810000,870000,780000,775000,786977];
+    var yoy=[15.4,8.9,10.2,5.6,3.5,10.2,24.6,7.4,-10.3,-0.6,1.4];
+    c.setOption({
+      tooltip:baseTooltip,
+      legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8,data:['YoY %',en?'National Median':'全國中位價']},
+      grid:{left:12,right:12,top:16,bottom:36,containLabel:true},
+      xAxis:mkAxis({type:'category',data:yrs,axisLabel:{color:C.muted,fontSize:7,rotate:30}}),
+      yAxis:[
+        mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return fmtNZDShort(v);}}}),
+        mkAxis({type:'value',splitLine:{show:false},axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return v+'%';}}})
+      ],
+      series:[
+        {name:'YoY %',type:'bar',yAxisIndex:1,data:yoy.map(function(v){return{value:v,itemStyle:{color:v>=0?'rgba(22,163,74,0.7)':'rgba(220,38,38,0.7)'}}}),barMaxWidth:18,itemStyle:{borderRadius:[2,2,0,0]}},
+        {name:en?'National Median':'全國中位價',type:'line',data:price,lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},areaStyle:{color:'rgba(30,58,95,0.08)'},symbol:'circle',symbolSize:4}
+      ]
+    });
+  }
+
+  /* 1. OCR Rate Cut Trajectory */
   function drawOCR(lang){
-    var ids = ['chart-r-nz-ocr','chart-r-nz-ocr-detail'];
-    ids.forEach(function(id){
-      var el = document.getElementById(id);
-      if(!el) return;
-      var c = echarts.init(el);
-      allCharts.push(c);
-      var isDetail = id.indexOf('detail') !== -1;
-      c.setOption({
-        tooltip: baseTooltip,
-        grid:{left:isDetail?50:12,right:isDetail?30:12,top:isDetail?30:28,bottom:isDetail?30:20,containLabel:true},
-        xAxis: mkAxis({ type:'category', data:['Jan 2024','Aug 2024','Oct 2024','Nov 2024','Feb 2025','Apr 2025','May 2025'], axisLabel:{ color:C.muted, fontSize: isDetail?9:7, rotate: isDetail?30:0 } }),
-        yAxis: mkAxis({ type:'value', min:2.5, max:6, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
-        series: [
-          { name:'OCR', type:'line', data:[5.5,5.25,4.75,4.25,3.75,3.5,3.25], lineStyle:{color:C.green,width:2}, itemStyle:{color:C.green}, areaStyle:{color:'rgba(22,163,74,0.10)'}, symbol:'circle', symbolSize: isDetail?6:4,
-            markPoint:{data:[{coord:['May 2025',3.25],symbol:'pin',symbolSize: isDetail?50:35,label:{formatter:'3.25%\n-225bps',fontSize: isDetail?9:7},itemStyle:{color:C.green}}]}
-          }
-        ]
-      });
+    var el = document.getElementById('chart-r-nz-ocr');
+    if(!el) return;
+    var c = echarts.init(el);
+    allCharts.push(c);
+    c.setOption({
+      tooltip: baseTooltip,
+      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
+      xAxis: mkAxis({ type:'category', data:['Jan 2024','Aug 2024','Oct 2024','Nov 2024','Feb 2025','Apr 2025','May 2025'], axisLabel:{ color:C.muted, fontSize:7 } }),
+      yAxis: mkAxis({ type:'value', min:2.5, max:6, axisLabel:{ color:C.muted, fontSize:9, formatter:'{value}%' } }),
+      series: [
+        { name:'OCR', type:'line', data:[5.5,5.25,4.75,4.25,3.75,3.5,3.25], lineStyle:{color:C.green,width:2}, itemStyle:{color:C.green}, areaStyle:{color:'rgba(22,163,74,0.10)'}, symbol:'circle', symbolSize:4,
+          markPoint:{data:[{coord:['May 2025',3.25],symbol:'pin',symbolSize:35,label:{formatter:'3.25%\n-225bps',fontSize:7},itemStyle:{color:C.green}}]}
+        }
+      ]
     });
   }
 

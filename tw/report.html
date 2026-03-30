@@ -25,13 +25,13 @@
     .chart-note.green{color:#16a34a}
     .chart-note.orange{color:#d97706}
     .chart-note.red{color:#dc2626}
-    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+    .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}
     .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
     .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
     .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
-    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
@@ -110,22 +110,27 @@
         <p>市場的核心矛盾在於：台灣的租金收益率<strong>2.24%</strong>僅略高於央行基準利率<strong>2.0%</strong>，利差僅<strong>+0.24%</strong>——遠低於馬來西亞的<strong>+2.44%</strong>。對收租導向的投資人而言，台灣幾乎沒有正向現金流。投資邏輯只剩資本增值——但以台北<strong>15.41倍</strong>的房價所得比，增值空間已被可負擔性天花板嚴重壓縮。</p>
       </div>
 
-      <!-- Exec Summary Charts -->
+      <!-- Charts 2x2 Grid -->
       <div class="report-chart-grid">
         <div class="report-chart-card">
-          <h4><span class="lang-en">Yield vs CBS Rate</span><span class="lang-zh" style="display:none">收益率 vs 央行利率</span></h4>
-          <div class="chart-meta orange"><span class="lang-en">Current Spread: +0.24%</span><span class="lang-zh" style="display:none">當前利差：+0.24%</span></div>
-          <div id="chart-r-tw-yield" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">Taiwan House Price Index 10Y + YoY%</span><span class="lang-zh" style="display:none">台灣10年房價指數 + 年增率</span></h4>
+          <p style="font-size:10px;color:#5a7a9a;margin-bottom:8px;font-family:Inter,sans-serif"><span class="lang-en">Index (2015=100) &middot; Source: MOI</span><span class="lang-zh" style="display:none">指數（2015=100）&middot; 來源：內政部</span></p>
+          <div id="rChartTwPrice" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
-          <h4><span class="lang-en">Demand vs Supply Mismatch</span><span class="lang-zh" style="display:none">需求 vs 供給錯配</span></h4>
-          <div class="chart-meta orange"><span class="lang-en">42% first-time vs 15% supply &lt;NT$30M</span><span class="lang-zh" style="display:none">42%首購需求 vs 僅15%供給低於3000萬</span></div>
-          <div id="chart-r-tw-mismatch" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">Rental Yield vs CBS Rate</span><span class="lang-zh" style="display:none">租金報酬率 vs 央行利率</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">Spread remains thin</span><span class="lang-zh" style="display:none">利差仍然偏薄</span></div>
+          <div id="chart-r-tw-yield" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
           <h4><span class="lang-en">Transaction Volume Trend</span><span class="lang-zh" style="display:none">成交量趨勢</span></h4>
-          <div class="chart-meta red"><span class="lang-en">2025: 263K &mdash; 8-year low, -25% YoY</span><span class="lang-zh" style="display:none">2025年：26.3萬棟——近8年新低，年減25%</span></div>
-          <div id="chart-r-tw-wave" style="height:180px;min-height:180px;"></div>
+          <div class="chart-meta green"><span class="lang-en">Recovery from credit tightening</span><span class="lang-zh" style="display:none">信用管制後回升</span></div>
+          <div id="chart-r-tw-wave" style="height:220px;min-height:220px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">Six Metro Pre-sale Prices</span><span class="lang-zh" style="display:none">六都預售均價</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">Taipei leads at NT$90+/ping</span><span class="lang-zh" style="display:none">台北領先 90+萬/坪</span></div>
+          <div id="chart-r-tw-city6" style="height:220px;min-height:220px;"></div>
         </div>
       </div>
 
@@ -157,11 +162,6 @@
         <p>供給展望是先承壓、後舒緩。已在興建的案量仍會在2026年陸續進入市場，但新推案的急劇縮減意味著從2027年起管線將大幅收窄。對有耐心的投資人而言，這是一個供給收緊循環的起點，通常需要18到24個月才能反映在價格支撐上。</p>
       </div>
 
-      <div class="chart-inline">
-        <h4><span class="lang-en">Supply Pipeline</span><span class="lang-zh" style="display:none">供給管線趨勢</span></h4>
-        <div class="chart-note orange"><span class="lang-en">New launches -38% in 2025 &mdash; pipeline thinning from 2027</span><span class="lang-zh" style="display:none">2025年新推案減38%——2027年起管線收窄</span></div>
-        <div id="chart-r-tw-supply" style="height:200px;min-height:180px;"></div>
-      </div>
 
       <h2><span class="lang-en">PRESALE MARKET: VOLUME CRASH, PRICES HOLD</span><span class="lang-zh" style="display:none">預售屋市場：量縮價不跌</span></h2>
 
@@ -202,17 +202,6 @@
         <p>從租金收益率的角度看，估值圖景更為細緻。高雄以<strong>3.1%</strong>的最高收益率搭配<strong>10.1倍</strong>的房價所得比，是台灣風險回報最佳的城市。台北<strong>2.11%</strong>的收益率扣掉<strong>2.0%</strong>的央行利率，幾乎沒有正利差，純粹是賭資本增值。在亞太區域比較中，台灣全國<strong>2.24%</strong>的收益率是除香港外最低的，進一步印證台灣房產定價是「賭增值」而非「收租金」的邏輯。</p>
       </div>
 
-      <div class="chart-inline">
-        <h4><span class="lang-en">APAC Median Multiple Comparison</span><span class="lang-zh" style="display:none">亞太房價所得比比較</span></h4>
-        <div class="chart-note red"><span class="lang-en">Taipei 15.41x &mdash; globally unaffordable</span><span class="lang-zh" style="display:none">台北15.41倍——全球最難負擔之一</span></div>
-        <div id="chart-r-tw-apac" style="height:280px;min-height:180px;"></div>
-      </div>
-
-      <div class="chart-inline">
-        <h4><span class="lang-en">Six Metros Presale Price (NT$ Wan/Ping)</span><span class="lang-zh" style="display:none">六都預售屋均價（萬元/坪）</span></h4>
-        <div class="chart-note green"><span class="lang-en">All 6 metros up YoY despite volume crash</span><span class="lang-zh" style="display:none">成交量崩跌，六都預售屋價格仍全面上漲</span></div>
-        <div id="chart-r-tw-city6" style="height:220px;min-height:180px;"></div>
-      </div>
 
       <h2><span class="lang-en">TAIPEI</span><span class="lang-zh" style="display:none">台北</span></h2>
 
@@ -299,11 +288,9 @@
   function initAllCharts(lang) {
     allCharts.forEach(function(c){ if(c) c.dispose(); });
     allCharts = [];
+    drawTwPrice(lang);
     drawYieldVsCBS(lang);
-    drawMismatch(lang);
     drawTransactionTrend(lang);
-    drawSupplyPipeline(lang);
-    drawAPAC(lang);
     drawCity6(lang);
   }
 
@@ -313,6 +300,29 @@
     document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
     localStorage.setItem('lang',lang);
     initAllCharts(lang);
+  }
+
+  function drawTwPrice(lang){
+    var en=lang==='en';
+    var c = echarts.init(document.getElementById('rChartTwPrice'));
+    allCharts.push(c);
+    var yrs=['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025Q3'];
+    var idx=[100,102,104,106,108,110,116,128,138,160,161];
+    var yoy=[1.5,2.0,2.0,1.9,1.9,1.8,5.5,10.3,7.8,15.9,0.6];
+    c.setOption({
+      tooltip:baseTooltip,
+      legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8,data:['YoY %',en?'Price Index':'房價指數']},
+      grid:{left:12,right:12,top:16,bottom:36,containLabel:true},
+      xAxis:mkAxis({type:'category',data:yrs,axisLabel:{color:C.muted,fontSize:7,rotate:30}}),
+      yAxis:[
+        mkAxis({type:'value',min:90,axisLabel:{color:C.muted,fontSize:8}}),
+        mkAxis({type:'value',splitLine:{show:false},axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return v+'%';}}})
+      ],
+      series:[
+        {name:'YoY %',type:'bar',yAxisIndex:1,data:yoy.map(function(v){return{value:v,itemStyle:{color:v>=0?'rgba(22,163,74,0.7)':'rgba(220,38,38,0.7)'}}}),barMaxWidth:18,itemStyle:{borderRadius:[2,2,0,0]}},
+        {name:en?'Price Index':'房價指數',type:'line',data:idx,lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},areaStyle:{color:'rgba(30,58,95,0.08)'},symbol:'circle',symbolSize:4}
+      ]
+    });
   }
 
   function drawYieldVsCBS(lang){
@@ -330,22 +340,6 @@
     });
   }
 
-  function drawMismatch(lang){
-    var c = echarts.init(document.getElementById('chart-r-tw-mismatch'));
-    allCharts.push(c);
-    var labels = lang==='zh' ? ['<3000\u842c','3000-5000\u842c','5000\u842c-1\u5104','>1\u5104'] : ['<NT$30M','30-50M','50M-100M','>100M'];
-    c.setOption({
-      tooltip: baseTooltip,
-      legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u9700\u6c42%':'Demand %', lang==='zh'?'\u4f9b\u7d66%':'Supply %'], textStyle:{fontSize:8,color:C.muted} }),
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:labels, axisLabel:{fontSize:7,color:C.muted} }),
-      yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:'{value}%'} }),
-      series: [
-        { name:lang==='zh'?'\u9700\u6c42%':'Demand %', type:'bar', data:[42,33,17,8], itemStyle:{color:C.navy,borderRadius:[3,3,0,0]}, barMaxWidth:25 },
-        { name:lang==='zh'?'\u4f9b\u7d66%':'Supply %', type:'bar', data:[15,30,40,15], itemStyle:{color:C.orange,borderRadius:[3,3,0,0]}, barMaxWidth:25 }
-      ]
-    });
-  }
 
   function drawTransactionTrend(lang){
     var c = echarts.init(document.getElementById('chart-r-tw-wave'));
@@ -367,43 +361,6 @@
     });
   }
 
-  function drawSupplyPipeline(lang){
-    var c = echarts.init(document.getElementById('chart-r-tw-supply'));
-    allCharts.push(c);
-    c.setOption({
-      tooltip: baseTooltip,
-      legend: Object.assign({}, baseLegend, { data:[lang==='zh'?'\u65b0\u63a8\u6848':'New Launches', lang==='zh'?'\u6210\u4ea4\u91cf':'Transactions'] }),
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:['2021','2022','2023','2024','2025'], axisLabel:{fontSize:9,color:C.muted} }),
-      yAxis: mkAxis({ type:'value', axisLabel:{fontSize:9,color:C.muted, formatter:function(v){return fmtNum(v);}} }),
-      series: [
-        { name:lang==='zh'?'\u65b0\u63a8\u6848':'New Launches', type:'bar', data:[120000,130000,115000,145000,90000], itemStyle:{color:C.orange,borderRadius:[4,4,0,0]}, barMaxWidth:40 },
-        { name:lang==='zh'?'\u6210\u4ea4\u91cf':'Transactions', type:'bar', data:[340000,280000,300000,350000,263000], itemStyle:{color:C.navy,borderRadius:[4,4,0,0]}, barMaxWidth:40 }
-      ]
-    });
-  }
-
-  function drawAPAC(lang){
-    var c = echarts.init(document.getElementById('chart-r-tw-apac'));
-    allCharts.push(c);
-    var labels = lang==='zh'
-      ? ['吉隆坡 4.3x','曼谷 6.9x','福岡 8.5x','高雄 9.61x','全國 9.89x','台中 11.9x','新北 13.03x','台北 15.41x','東京 15.1x','香港 46.9x']
-      : ['KL 4.3x','Bangkok 6.9x','Fukuoka 8.5x','Kaohsiung 9.61x','National 9.89x','Taichung 11.9x','New Taipei 13.03x','Taipei 15.41x','Tokyo 15.1x','Hong Kong 46.9x'];
-    var values = [4.3, 6.9, 8.5, 9.61, 9.89, 11.9, 13.03, 15.41, 15.1, 46.9];
-    var colors = values.map(function(v){ return v <= 5 ? C.green : v <= 11 ? C.orange : C.red; });
-    c.setOption({
-      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
-      grid: { left:100, right:50, top:10, bottom:15, containLabel:false },
-      xAxis: mkAxis({ type:'value', min:0, max:50 }),
-      yAxis: mkAxis({ type:'category', data:labels, axisLabel:{color:C.navy,fontSize:9,fontFamily:'Inter'} }),
-      series: [{
-        type:'bar',
-        data: values.map(function(v,i){ return { value:v, itemStyle:{color:colors[i],borderRadius:[0,4,4,0]} }; }),
-        barMaxWidth:18,
-        label:{ show:true, position:'right', formatter:'{c}x', fontSize:9, fontFamily:'Inter', fontWeight:'bold', color:C.navy }
-      }]
-    });
-  }
 
   function drawCity6(lang){
     var c=echarts.init(document.getElementById('chart-r-tw-city6'));allCharts.push(c);

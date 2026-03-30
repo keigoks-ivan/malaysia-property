@@ -25,13 +25,13 @@
     .chart-note.green{color:#16a34a}
     .chart-note.orange{color:#d97706}
     .chart-note.red{color:#dc2626}
-    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+    .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}
     .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
     .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
     .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
-    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
@@ -109,22 +109,27 @@
         <p>核心風險在於日銀升息正常化：政策利率<strong>0.5%</strong>下，融資成本仍極度低廉，但若加速升至1.5到2.0%，將大幅壓縮過去十年驅動都市房價上漲的正利差。全國租金收益率<strong>4.34%</strong>與政策利率之間的利差達<strong>+3.84%</strong>——遠優於台灣的<strong>+0.24%</strong>甚至馬來西亞的<strong>+2.44%</strong>。對外國投資人而言，日本提供了機構級透明度、收益率支撐與匯率折價的稀有組合。</p>
       </div>
 
-      <!-- Exec Summary Mini Charts -->
+      <!-- Charts 2x2 Grid -->
       <div class="report-chart-grid">
         <div class="report-chart-card">
-          <h4><span class="lang-en">Yield vs BOJ Rate</span><span class="lang-zh" style="display:none">收益率 vs BOJ利率</span></h4>
-          <div class="chart-meta green"><span class="lang-en">Current Spread: +3.84%</span><span class="lang-zh" style="display:none">當前利差：+3.84%</span></div>
-          <div id="chart-r-jp-yield" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">Japan Condo Price 10Y + YoY%</span><span class="lang-zh" style="display:none">日本公寓10年房價 + 年增率</span></h4>
+          <p style="font-size:10px;color:#5a7a9a;margin-bottom:8px;font-family:Inter,sans-serif"><span class="lang-en">万円 &middot; Source: REINS</span><span class="lang-zh" style="display:none">萬日圓 &middot; 來源：REINS</span></p>
+          <div id="rChartJpPrice" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
-          <h4><span class="lang-en">3-City Condo Prices</span><span class="lang-zh" style="display:none">三大城市公寓價格</span></h4>
-          <div class="chart-meta green"><span class="lang-en">Fukuoka leads with +21.8% YoY</span><span class="lang-zh" style="display:none">福岡年增21.8%領先</span></div>
-          <div id="chart-r-jp-city" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">Tokyo vs Osaka vs Fukuoka</span><span class="lang-zh" style="display:none">東京 vs 大阪 vs 福岡</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">City price comparison + YoY%</span><span class="lang-zh" style="display:none">城市均價比較 + 年增率</span></div>
+          <div id="chart-r-jp-city" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
-          <h4><span class="lang-en">Housing Starts Trend</span><span class="lang-zh" style="display:none">新建開工趨勢</span></h4>
-          <div class="chart-meta orange"><span class="lang-en">2025: ~760K &mdash; declining trend</span><span class="lang-zh" style="display:none">2025年：約76萬戶——持續下降</span></div>
-          <div id="chart-r-jp-starts" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">Yield Spread vs BOJ Rate</span><span class="lang-zh" style="display:none">收益率利差 vs BOJ利率</span></h4>
+          <div class="chart-meta green"><span class="lang-en">Yield spread remains positive</span><span class="lang-zh" style="display:none">利差仍為正值</span></div>
+          <div id="chart-r-jp-yield" style="height:220px;min-height:220px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">Foreign Buyer Share (Tokyo)</span><span class="lang-zh" style="display:none">外國買家佔比（東京）</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">Luxury segment rising</span><span class="lang-zh" style="display:none">高端市場上升</span></div>
+          <div id="chart-r-jp-foreign" style="height:220px;min-height:220px;"></div>
         </div>
       </div>
 
@@ -167,11 +172,6 @@
         <p>國內中古屋市場同步蓬勃發展。首都圈中古公寓價格在2025年上半年飆升<strong>+27.17%</strong>，反映的是雙薪家庭在都會區換屋的真實自住需求。弱勢日圓形成雙重催化：既吸引外資，又因進口成本上升推動國內買家轉向現有房源，而非使用進口建材的新建案。</p>
       </div>
 
-      <div class="chart-inline">
-        <h4><span class="lang-en">Foreign Buyer Share in Tokyo Luxury</span><span class="lang-zh" style="display:none">東京豪宅外資買家佔比</span></h4>
-        <div class="chart-note green"><span class="lang-en">Record 27% in 2025</span><span class="lang-zh" style="display:none">2025年創27%新高</span></div>
-        <div id="chart-r-jp-foreign" style="height:220px;min-height:180px;"></div>
-      </div>
 
       <!-- 5. VALUATION -->
       <h2><span class="lang-en">VALUATION</span><span class="lang-zh" style="display:none">估值</span></h2>
@@ -186,11 +186,6 @@
         <p>在亞太區域房價租金比的比較中，東京<strong>37倍</strong>雖偏高，但在近零融資成本環境下仍屬合理。相較於台北<strong>47倍</strong>和香港<strong>50倍</strong>，東京的估值明顯更具價值。利差優勢使日本對槓桿收租策略格外具有吸引力，其中福岡和大阪是日本市場中最佳的價值進入點。</p>
       </div>
 
-      <div class="chart-inline">
-        <h4><span class="lang-en">APAC Price-to-Rent Comparison</span><span class="lang-zh" style="display:none">亞太房價租金比比較</span></h4>
-        <div class="chart-note green"><span class="lang-en">Japan offers widest yield spread in developed Asia</span><span class="lang-zh" style="display:none">日本擁有已開發亞洲最大利差</span></div>
-        <div id="chart-r-jp-apac" style="height:320px;min-height:180px;"></div>
-      </div>
 
       <!-- 6. TOKYO 23 WARDS -->
       <h2><span class="lang-en">TOKYO 23 WARDS</span><span class="lang-zh" style="display:none">東京23區</span></h2>
@@ -218,11 +213,6 @@
         <p>福岡的投資邏輯是收益率。<strong>4.98%</strong>的租金收益率是日本主要城市中最高。天神Big Bang都市更新計畫正以甲級辦公室、零售和複合用途開發改造市中心，進一步鞏固福岡作為日本最具活力的二線城市的地位。加上最強的資本增值，福岡提供的總回報是其他日本城市無法匹敵的。</p>
       </div>
 
-      <div class="chart-inline">
-        <h4><span class="lang-en">Fukuoka Condo Price Trend (2013&ndash;2025)</span><span class="lang-zh" style="display:none">福岡公寓價格趨勢 (2013&ndash;2025)</span></h4>
-        <div class="chart-note green"><span class="lang-en">13 consecutive years of appreciation</span><span class="lang-zh" style="display:none">連續13年上漲</span></div>
-        <div id="chart-r-jp-fukuoka" style="height:240px;min-height:180px;"></div>
-      </div>
 
       <!-- 8. OUTLOOK -->
       <h2><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
@@ -284,12 +274,10 @@
   function initAllCharts(lang) {
     allCharts.forEach(function(c){ if(c) c.dispose(); });
     allCharts = [];
-    drawYield(lang);
+    drawJpPrice(lang);
     drawCity(lang);
-    drawStarts(lang);
+    drawYield(lang);
     drawForeign(lang);
-    drawAPAC(lang);
-    drawFukuoka(lang);
   }
 
   function setLang(lang){
@@ -298,6 +286,29 @@
     document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
     localStorage.setItem('lang',lang);
     initAllCharts(lang);
+  }
+
+  function drawJpPrice(lang){
+    var en=lang==='en';
+    var c = echarts.init(document.getElementById('rChartJpPrice'));
+    allCharts.push(c);
+    var yrs=['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+    var price=[4750,4650,4700,4800,4940,5090,5320,5870,6720,7700,7940];
+    var yoy=[-0.5,-2.1,1.1,2.1,2.9,3.0,4.5,10.3,14.5,14.6,3.1];
+    c.setOption({
+      tooltip:baseTooltip,
+      legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8,data:['YoY %',en?'Condo Price':'公寓均價']},
+      grid:{left:12,right:12,top:16,bottom:36,containLabel:true},
+      xAxis:mkAxis({type:'category',data:yrs,axisLabel:{color:C.muted,fontSize:7,rotate:30}}),
+      yAxis:[
+        mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return v+'万';}}}),
+        mkAxis({type:'value',splitLine:{show:false},axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return v+'%';}}})
+      ],
+      series:[
+        {name:'YoY %',type:'bar',yAxisIndex:1,data:yoy.map(function(v){return{value:v,itemStyle:{color:v>=0?'rgba(22,163,74,0.7)':'rgba(220,38,38,0.7)'}}}),barMaxWidth:18,itemStyle:{borderRadius:[2,2,0,0]}},
+        {name:en?'Condo Price':'公寓均價',type:'line',data:price,lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},areaStyle:{color:'rgba(30,58,95,0.08)'},symbol:'circle',symbolSize:4}
+      ]
+    });
   }
 
   function drawYield(lang){
@@ -336,28 +347,6 @@
     });
   }
 
-  function drawStarts(lang){
-    var c = echarts.init(document.getElementById('chart-r-jp-starts'));
-    allCharts.push(c);
-    c.setOption({
-      tooltip: baseTooltip,
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:['2019','2020','2021','2022','2023','2024','2025'], axisLabel:{ color:C.muted, fontSize:8 } }),
-      yAxis: mkAxis({ type:'value', min:700, max:950, axisLabel:{ color:C.muted, fontSize:9, formatter:function(v){return fmtNum(v);} } }),
-      series: [{
-        name:lang==='zh'?'新建開工(千)':'Starts (K)',
-        type:'line',
-        data:[905,812,865,860,820,800,760],
-        lineStyle:{ color:C.orange, width:1.5 },
-        itemStyle:{ color:C.orange },
-        areaStyle:{ color:'rgba(217,119,6,0.08)' },
-        smooth:0.2,
-        symbol:'circle',
-        symbolSize:4
-      }]
-    });
-  }
-
   function drawCity(lang){
     var el = document.getElementById('chart-r-jp-city');
     if(!el) return;
@@ -379,55 +368,6 @@
         { name:lang==='zh'?'均價(萬円)':'Avg Price (万円)', type:'bar', data:prices.map(function(v,i){ return { value:v, itemStyle:{color:colors[i],borderRadius:[3,3,0,0]} }; }), barMaxWidth:30, label:{ show:true, position:'top', formatter:function(p){return p.value;}, fontSize:8, color:C.navy } },
         { name:'YoY%', type:'line', yAxisIndex:1, data:yoy, lineStyle:{color:C.red,width:1.5,type:'dashed'}, itemStyle:{color:C.red}, symbol:'circle', symbolSize:5, label:{ show:true, position:'top', formatter:function(p){return '+'+p.value+'%';}, fontSize:8, color:C.red } }
       ]
-    });
-  }
-
-  function drawAPAC(lang){
-    var el = document.getElementById('chart-r-jp-apac');
-    if(!el) return;
-    var c = echarts.init(el);
-    allCharts.push(c);
-    var labels = lang==='zh'
-      ? ['胡志明','吉隆坡','曼谷','福岡','大阪','東京','新加坡','台北','香港','上海']
-      : ['HCM','KL','Bangkok','Fukuoka','Osaka','Tokyo','Singapore','Taipei','HK','Shanghai'];
-    var values = [18, 21.7, 25, 26, 27, 37, 40, 47, 50, 59];
-    var colors = values.map(function(v){ return v <= 27 ? C.green : v <= 40 ? C.orange : C.red; });
-    c.setOption({
-      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
-      grid: { left:110, right:50, top:10, bottom:15, containLabel:false },
-      xAxis: mkAxis({ type:'value', min:0, max:65 }),
-      yAxis: mkAxis({ type:'category', data:labels, axisLabel:{color:C.navy,fontSize:9,fontFamily:'Inter'} }),
-      series: [{
-        type:'bar',
-        data: values.map(function(v,i){ return { value:v, itemStyle:{color:colors[i],borderRadius:[0,4,4,0]} }; }),
-        barMaxWidth:16,
-        label:{ show:true, position:'right', formatter:'{c}x', fontSize:9, fontFamily:'Inter', fontWeight:'bold', color:C.navy }
-      }]
-    });
-  }
-
-  function drawFukuoka(lang){
-    var el = document.getElementById('chart-r-jp-fukuoka');
-    if(!el) return;
-    var c = echarts.init(el);
-    allCharts.push(c);
-    c.setOption({
-      tooltip: baseTooltip,
-      grid:{left:12,right:12,top:28,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:['2013','2015','2017','2019','2021','2023','2025'], axisLabel:{ color:C.muted, fontSize:9 } }),
-      yAxis: mkAxis({ type:'value', min:0, max:8000, axisLabel:{ color:C.muted, fontSize:9, formatter:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;} } }),
-      series: [{
-        name:lang==='zh'?'福岡均價(萬円)':'Fukuoka Avg (万円)',
-        type:'line',
-        data:[2000,2300,2700,3200,4000,5000,6800],
-        lineStyle:{ color:C.green, width:2 },
-        itemStyle:{ color:C.green },
-        areaStyle:{ color:'rgba(22,163,74,0.10)' },
-        smooth:0.3,
-        symbol:'circle',
-        symbolSize:5,
-        label:{ show:true, position:'top', formatter:function(p){return p.value;}, fontSize:8, color:C.navy }
-      }]
     });
   }
 

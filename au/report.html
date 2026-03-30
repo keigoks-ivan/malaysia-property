@@ -25,14 +25,13 @@
     .chart-note.green{color:#16a34a}
     .chart-note.orange{color:#d97706}
     .chart-note.red{color:#dc2626}
-    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+    .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}
     .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
     .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
     .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
-    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
-  </style>
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}  </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
@@ -112,19 +111,24 @@
       <!-- Exec Summary Mini Charts -->
       <div class="report-chart-grid">
         <div class="report-chart-card">
-          <h4><span class="lang-en">National Median Price</span><span class="lang-zh" style="display:none">全國中位房價趨勢</span></h4>
-          <div class="chart-meta green"><span class="lang-en">A$922,838 &mdash; +9.9% YoY</span><span class="lang-zh" style="display:none">A$922,838——年增+9.9%</span></div>
-          <div id="chart-r-au-price" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">National Median 10Y + YoY%</span><span class="lang-zh" style="display:none">全國中位價10年趨勢 + 年增率</span></h4>
+          <p style="font-size:10px;color:#5a7a9a;margin-bottom:8px;font-family:Inter,sans-serif"><span class="lang-en">A$ &middot; Source: CoreLogic</span><span class="lang-zh" style="display:none">澳幣 &middot; 來源：CoreLogic</span></p>
+          <div id="rChartAuPrice10y" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
           <h4><span class="lang-en">City Median &amp; YoY</span><span class="lang-zh" style="display:none">各城市中位價與年增率</span></h4>
           <div class="chart-meta orange"><span class="lang-en">Brisbane/GC lead at +10-14%</span><span class="lang-zh" style="display:none">布里斯本/黃金海岸領漲+10-14%</span></div>
-          <div id="chart-r-au-city" style="height:180px;min-height:180px;"></div>
+          <div id="chart-r-au-city" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
-          <h4><span class="lang-en">Vacancy Rates</span><span class="lang-zh" style="display:none">空置率</span></h4>
-          <div class="chart-meta red"><span class="lang-en">All cities below 3% equilibrium</span><span class="lang-zh" style="display:none">所有城市低於3%均衡水準</span></div>
-          <div id="chart-r-au-vacancy" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">Rental Yield vs RBA Rate</span><span class="lang-zh" style="display:none">租金收益率 vs RBA利率</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">National spread +0.84%</span><span class="lang-zh" style="display:none">全國利差+0.84%</span></div>
+          <div id="chart-r-au-yield" style="height:220px;min-height:220px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">Weekly Rent by City</span><span class="lang-zh" style="display:none">各城市週租金趨勢</span></h4>
+          <div class="chart-meta orange"><span class="lang-en">5-year national rent surge: +42.9%</span><span class="lang-zh" style="display:none">五年全國租金飆升：+42.9%</span></div>
+          <div id="chart-r-au-rent" style="height:220px;min-height:220px;"></div>
         </div>
       </div>
 
@@ -172,12 +176,6 @@
         <p>澳洲全國租金收益率<strong>4.69%</strong>扣除RBA現金利率<strong>3.85%</strong>後，利差為<strong>+0.84%</strong>——為正但以歷史標準偏薄。雪梨獨立屋收益率僅<strong>2.9%</strong>，扣除融資成本後對槓桿投資者意味著負利差。全國住宅價值對收入比已達<strong>8.2倍</strong>，使澳洲躋身全球最難負擔的住宅市場之列。布里斯本獨立屋收益率<strong>3.6%</strong>較具吸引力，而黃金海岸跨獨立屋和公寓提供<strong>4.3&ndash;5.0%</strong>的收益率——為所有首府城市鄰近市場中最強利差。對收租導向投資者而言，東南昆士蘭走廊仍是最突出的機會，兼具正利差與高於趨勢的資本增長。</p>
       </div>
 
-      <div class="chart-inline">
-        <h4><span class="lang-en">Rental Yield vs RBA Rate</span><span class="lang-zh" style="display:none">租金收益率 vs RBA利率</span></h4>
-        <div class="chart-note orange"><span class="lang-en">National spread +0.84% &mdash; Sydney houses negative carry at 2.9%</span><span class="lang-zh" style="display:none">全國利差+0.84%——雪梨獨立屋2.9%為負利差</span></div>
-        <div id="chart-r-au-yield" style="height:280px;min-height:180px;"></div>
-      </div>
-
       <!-- SECTION 6: BRISBANE -->
       <h2><span class="lang-en">BRISBANE: OLYMPIC CITY MOMENTUM</span><span class="lang-zh" style="display:none">布里斯本：奧運城市動能</span></h2>
 
@@ -187,12 +185,6 @@
 
       <div class="lang-zh" style="display:none">
         <p>布里斯本是澳洲表現最突出的市場。過去五年住宅中位價值從<strong>A$700,000</strong>飆升至<strong>A$131萬</strong>——漲幅達<strong>+86.7%</strong>。2032年奧運會和殘奧會是一代人級別基建計畫的催化劑：跨河鐵路、布里斯本地鐵，以及超過<strong>70億澳元</strong>的體育和交通升級正在重塑城市面貌。昆士蘭錄得淨跨州遷入<strong>104,842</strong>人，遠程工作使從雪梨和墨爾本的生活方式套利成為可能。空置率已降至僅<strong>1.0%</strong>，推動租金年增<strong>+5.2%</strong>——而這是在此前數年雙位數租金增長已重新定價市場之後的漲幅。</p>
-      </div>
-
-      <div class="chart-inline">
-        <h4><span class="lang-en">Brisbane 5-Year Price Trend</span><span class="lang-zh" style="display:none">布里斯本五年房價趨勢</span></h4>
-        <div class="chart-note green"><span class="lang-en">A$700K &rarr; A$1.31M &mdash; +86.7% in 5 years</span><span class="lang-zh" style="display:none">A$70萬 &rarr; A$131萬——五年漲+86.7%</span></div>
-        <div id="chart-r-au-brisbane5y" style="height:220px;min-height:180px;"></div>
       </div>
 
       <!-- SECTION 7: GOLD COAST -->
@@ -221,12 +213,6 @@
         <p><strong>基本情境：</strong>RBA全年維持<strong>3.85%</strong>不變，全國溫和漲價<strong>+5&ndash;8%</strong>。布里斯本/黃金海岸以<strong>+10&ndash;14%</strong>領跑。雪梨放緩至<strong>+2&ndash;4%</strong>。租金在供給約束下持續上漲<strong>+4&ndash;6%</strong>。</p>
         <p><strong>悲觀情境：</strong>通膨重新加速，RBA升息至<strong>4.10&ndash;4.35%</strong>。利差轉負，投資者情緒逆轉。全國房價持平至<strong>-3%</strong>。布里斯本/黃金海岸因估值過度延伸而面臨<strong>-5&ndash;8%</strong>修正風險。</p>
         <p><strong>2032尾部風險：</strong>奧運主辦城市歷史上曾出現賽後修正。雪梨（2000年）在賽後兩年內經歷了<strong>-5&ndash;10%</strong>的調整。布里斯本當前的價格軌跡意味著顯著的賽前升值，在2033&ndash;2034年形成潛在修正窗口。</p>
-      </div>
-
-      <div class="chart-inline">
-        <h4><span class="lang-en">Weekly Rent by City</span><span class="lang-zh" style="display:none">各城市週租金趨勢</span></h4>
-        <div class="chart-note orange"><span class="lang-en">5-year national rent surge: +42.9%</span><span class="lang-zh" style="display:none">五年全國租金飆升：+42.9%</span></div>
-        <div id="chart-r-au-rent" style="height:280px;min-height:180px;"></div>
       </div>
 
       <div class="report-footer">
@@ -272,12 +258,10 @@
   function initAllCharts(lang) {
     allCharts.forEach(function(c){ if(c) c.dispose(); });
     allCharts = [];
-    drawPrice(lang);
+    drawAuPrice10y(lang);
     drawCity(lang);
     drawYield(lang);
     drawRent(lang);
-    drawBrisbane5Y(lang);
-    drawVacancy(lang);
   }
 
   function setLang(lang){
@@ -288,28 +272,26 @@
     initAllCharts(lang);
   }
 
-  function drawPrice(lang){
-    var c = echarts.init(document.getElementById('chart-r-au-price'));
+  function drawAuPrice10y(lang){
+    var en=lang==='en';
+    var c = echarts.init(document.getElementById('rChartAuPrice10y'));
     allCharts.push(c);
-    var yrs = ['2020','2021','2022','2023','2024','2025','2026'];
-    var data = [549000,570000,685000,735000,702000,793000,922838];
+    var yrs=['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','Feb 2026'];
+    var price=[535000,570000,620000,640000,610000,620000,750000,810000,750000,820000,922838];
+    var yoy=[8.5,6.5,8.8,3.2,-4.7,1.6,21.0,8.0,-7.4,9.3,12.6];
     c.setOption({
-      tooltip: Object.assign({}, baseTooltip, { formatter:function(p){return p[0].axisValue+'<br/>'+p[0].marker+(lang==='zh'?'中位價 ':'Median ')+fmtAUD(p[0].value);} }),
-      grid:{left:12,right:12,top:12,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:yrs, axisLabel:{ color:C.muted, fontSize:8 } }),
-      yAxis: mkAxis({ type:'value', min:400000, max:1000000, axisLabel:{ color:C.muted, fontSize:9, formatter:function(v){return fmtAUDShort(v);} } }),
-      series: [{
-        name:lang==='zh'?'全國中位價':'National Median',
-        type:'line',
-        data:data,
-        lineStyle:{color:C.navy,width:2},
-        itemStyle:{color:C.navy},
-        areaStyle:{color:'rgba(30,58,95,0.08)'},
-        smooth:0.3,
-        symbol:'circle',
-        symbolSize:5,
-        label:{ show:false }
-      }]
+      tooltip:baseTooltip,
+      legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8,data:['YoY %',en?'National Median':'全國中位價']},
+      grid:{left:12,right:12,top:16,bottom:36,containLabel:true},
+      xAxis:mkAxis({type:'category',data:yrs,axisLabel:{color:C.muted,fontSize:7,rotate:30}}),
+      yAxis:[
+        mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return fmtAUDShort(v);}}}),
+        mkAxis({type:'value',splitLine:{show:false},axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return v+'%';}}})
+      ],
+      series:[
+        {name:'YoY %',type:'bar',yAxisIndex:1,data:yoy.map(function(v){return{value:v,itemStyle:{color:v>=0?'rgba(22,163,74,0.7)':'rgba(220,38,38,0.7)'}}}),barMaxWidth:18,itemStyle:{borderRadius:[2,2,0,0]}},
+        {name:en?'National Median':'全國中位價',type:'line',data:price,lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},areaStyle:{color:'rgba(30,58,95,0.08)'},symbol:'circle',symbolSize:4}
+      ]
     });
   }
 
