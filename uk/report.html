@@ -25,14 +25,15 @@
     .chart-note.green{color:#16a34a}
     .chart-note.orange{color:#d97706}
     .chart-note.red{color:#dc2626}
-    .report-chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
-    .report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
+    .report-chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+    .report-chart-card{background:#fff;border:1px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}
     .report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}
+    .report-chart-card .chart-subtitle{font-family:'Inter',sans-serif;font-size:10px;color:#5a7a9a;margin-bottom:8px}
     .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
     .timeline{display:flex;flex-wrap:wrap;gap:0;margin:20px 0;position:relative}.timeline::before{content:'';position:absolute;top:18px;left:0;right:0;height:2px;background:#ccd9e8}.tl-item{flex:1;min-width:140px;text-align:center;position:relative;padding-top:36px}.tl-dot{width:12px;height:12px;border-radius:50%;background:#1e3a5f;position:absolute;top:12px;left:50%;transform:translateX(-50%);border:2px solid #fff;box-shadow:0 0 0 2px #ccd9e8}.tl-item.highlight .tl-dot{background:#dc2626;box-shadow:0 0 0 2px #dc2626}.tl-date{font-size:11px;font-weight:600;color:#1e3a5f;font-family:Inter,sans-serif}.tl-desc{font-size:10px;color:#5a7a9a;margin-top:4px;font-family:Inter,sans-serif;line-height:1.4}
-    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}@media(max-width:1024px) and (min-width:769px){.report-chart-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
@@ -116,22 +117,27 @@
         <p>主要風險來自法規面。2026年5月生效的租客權益法案廢除了第21條無過失驅逐，加速小型房東退出並進一步收緊租賃供給。EPC升級要求每套不合規房產增加約<strong>1萬至1.5萬英鎊</strong>的成本。對投資者而言，在這些結構性變化全面發酵之前，以合理價格收購資產的窗口可能在2026年即將關閉。</p>
       </div>
 
-      <!-- Exec Summary Mini Charts -->
+      <!-- Exec Summary Charts 2x2 -->
       <div class="report-chart-grid">
         <div class="report-chart-card">
-          <h4><span class="lang-en">UK Price Trend</span><span class="lang-zh" style="display:none">英國房價趨勢</span></h4>
-          <div class="chart-meta green"><span class="lang-en">&pound;292K avg &mdash; +3.3% YoY</span><span class="lang-zh" style="display:none">&pound;29.2萬均價——年增+3.3%</span></div>
-          <div id="chart-r-uk-price" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">UK Price Trend + YoY%</span><span class="lang-zh" style="display:none">全國房價趨勢 + 年增率</span></h4>
+          <p class="chart-subtitle"><span class="lang-en">&pound; avg &middot; Source: ONS UK HPI</span><span class="lang-zh" style="display:none">均價（英鎊）&middot; 來源：ONS</span></p>
+          <div id="rChartUkPrice" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
-          <h4><span class="lang-en">City Yield Comparison</span><span class="lang-zh" style="display:none">城市收益率比較</span></h4>
-          <div class="chart-meta orange"><span class="lang-en">Northern cities 6&ndash;8% vs London 3&ndash;4%</span><span class="lang-zh" style="display:none">北部城市6&ndash;8% vs 倫敦3&ndash;4%</span></div>
-          <div id="chart-r-uk-yield" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">City Yield Comparison</span><span class="lang-zh" style="display:none">各城市租金報酬率</span></h4>
+          <p class="chart-subtitle"><span class="lang-en">Gross yield &middot; BoE base rate 3.75%</span><span class="lang-zh" style="display:none">毛報酬率 &middot; 基準利率3.75%</span></p>
+          <div id="rChartUkYield" style="height:220px;min-height:220px;"></div>
         </div>
         <div class="report-chart-card">
-          <h4><span class="lang-en">North-South Divide</span><span class="lang-zh" style="display:none">南北分化</span></h4>
-          <div class="chart-meta red"><span class="lang-en">NE +6.8% vs London -1.2%</span><span class="lang-zh" style="display:none">東北+6.8% vs 倫敦-1.2%</span></div>
-          <div id="chart-r-uk-ns" style="height:180px;min-height:180px;"></div>
+          <h4><span class="lang-en">City Price Comparison + YoY%</span><span class="lang-zh" style="display:none">五城市均價比較</span></h4>
+          <p class="chart-subtitle"><span class="lang-en">&pound; &middot; 2025</span><span class="lang-zh" style="display:none">英鎊 &middot; 2025年</span></p>
+          <div id="rChartUkCityPrice" style="height:220px;min-height:220px;"></div>
+        </div>
+        <div class="report-chart-card">
+          <h4><span class="lang-en">North-South Divide</span><span class="lang-zh" style="display:none">南北房價漲幅分化</span></h4>
+          <p class="chart-subtitle"><span class="lang-en">YoY% &middot; Nov 2025 &middot; Source: ONS</span><span class="lang-zh" style="display:none">年增率 &middot; 2025年11月 &middot; 來源：ONS</span></p>
+          <div id="rChartUkNorthSouth" style="height:220px;min-height:220px;"></div>
         </div>
       </div>
 
@@ -304,6 +310,7 @@
     allCharts = [];
     drawPrice(lang);
     drawYield(lang);
+    drawCityPrice(lang);
     drawNorthSouth(lang);
   }
 
@@ -315,79 +322,97 @@
     initAllCharts(lang);
   }
 
+  /* Chart 1: Price Trend + YoY% dual axis */
   function drawPrice(lang){
-    var c = echarts.init(document.getElementById('chart-r-uk-price'));
+    var en=lang==='en';
+    var c = echarts.init(document.getElementById('rChartUkPrice'));
     allCharts.push(c);
     var yrs = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','Dec 2025'];
-    var data = [194000,204000,220000,228000,235000,250000,271000,295000,285000,265000,268000];
+    var price = [194000,204000,220000,228000,235000,250000,271000,295000,285000,265000,268000];
+    var yoy = [5.4,5.2,7.8,3.6,3.1,6.4,8.4,8.9,-3.4,-7.0,2.4];
     c.setOption({
-      tooltip: Object.assign({}, baseTooltip, { formatter:function(p){return p[0].axisValue+'<br/>'+p[0].marker+(lang==='zh'?'均價 ':'Avg ')+fmtGBP(p[0].value);} }),
-      grid:{left:12,right:12,top:12,bottom:20,containLabel:true},
-      xAxis: mkAxis({ type:'category', data:yrs, axisLabel:{ color:C.muted, fontSize:8 } }),
-      yAxis: mkAxis({ type:'value', min:150000, max:320000, axisLabel:{ color:C.muted, fontSize:9, formatter:function(v){return fmtGBPShort(v);} } }),
-      series: [{
-        name:lang==='zh'?'英國均價':'UK Average',
-        type:'line',
-        data:data,
-        lineStyle:{color:C.navy,width:2},
-        itemStyle:{color:C.navy},
-        areaStyle:{color:'rgba(30,58,95,0.08)'},
-        smooth:0.3,
-        symbol:'circle',
-        symbolSize:5,
-        label:{ show:false }
-      }]
+      tooltip:baseTooltip,
+      legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8,data:['YoY %',en?'Avg Price':'均價']},
+      grid:{left:12,right:12,top:16,bottom:36,containLabel:true},
+      xAxis: mkAxis({type:'category',data:yrs,axisLabel:{color:C.muted,fontSize:7,rotate:30}}),
+      yAxis:[
+        mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return '£'+(v/1000)+'K';}}}),
+        mkAxis({type:'value',splitLine:{show:false},axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return v+'%';}}})
+      ],
+      series:[
+        {name:'YoY %',type:'bar',yAxisIndex:1,data:yoy.map(function(v){return{value:v,itemStyle:{color:v>=0?'rgba(22,163,74,0.7)':'rgba(220,38,38,0.7)'}}}),barMaxWidth:18,itemStyle:{borderRadius:[2,2,0,0]}},
+        {name:en?'Avg Price':'均價',type:'line',data:price,lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},symbol:'circle',symbolSize:4}
+      ]
     });
   }
 
+  /* Chart 2: City Yield horizontal bar */
   function drawYield(lang){
-    var c = echarts.init(document.getElementById('chart-r-uk-yield'));
+    var c = echarts.init(document.getElementById('rChartUkYield'));
     allCharts.push(c);
     var labels = lang==='zh'
-      ? ['倫敦','愛丁堡','伯明翰','曼徹斯特','紐卡斯爾']
-      : ['London','Edinburgh','Birmingham','Manchester','Newcastle'];
-    var values = [3.5,5.5,6.0,6.5,7.0];
-    var colors = values.map(function(v){ return v < 3.75 ? C.red : v < 5.0 ? C.orange : C.green; });
+      ? ['倫敦','愛丁堡','全國均值','伯明翰','曼徹斯特','紐卡斯爾']
+      : ['London','Edinburgh','National','Birmingham','Manchester','Newcastle'];
+    var values = [3.5,5.5,5.37,6.5,6.5,7.0];
     c.setOption({
-      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
-      grid: { left:12, right:40, top:10, bottom:15, containLabel:true },
-      xAxis: mkAxis({ type:'value', min:0, max:9, axisLabel:{ fontSize:9, color:C.muted, formatter:'{value}%' } }),
-      yAxis: mkAxis({ type:'category', data:labels, axisLabel:{color:C.navy,fontSize:9,fontFamily:'Inter'} }),
-      series: [{
+      tooltip: Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'}}),
+      grid:{left:12,right:40,top:10,bottom:15,containLabel:true},
+      xAxis: mkAxis({type:'value',min:0,max:9,axisLabel:{fontSize:8,color:C.muted,formatter:'{value}%'}}),
+      yAxis: mkAxis({type:'category',data:labels,axisLabel:{color:C.navy,fontSize:9,fontFamily:'Inter'}}),
+      series:[{
         type:'bar',
-        data: values.map(function(v,i){ return { value:v, itemStyle:{color:colors[i],borderRadius:[0,4,4,0]} }; }),
+        data:values.map(function(v){return{value:v,itemStyle:{color:v<3.75?C.red:C.green,borderRadius:[0,4,4,0]}};}),
         barMaxWidth:16,
-        label:{ show:true, position:'right', formatter:function(p){return p.value+'%';}, fontSize:9, fontFamily:'Inter', fontWeight:'bold', color:C.navy },
-        markLine: {
-          silent:true,
-          data:[{ xAxis:3.75, lineStyle:{color:C.red,type:'dashed',width:1.5}, label:{show:true,formatter:'BoE 3.75%',fontSize:9,color:C.red,position:'insideEndTop'} }]
-        }
+        label:{show:true,position:'right',formatter:function(p){return p.value+'%';},fontSize:9,fontFamily:'Inter',fontWeight:'bold',color:C.navy},
+        markLine:{silent:true,data:[{xAxis:3.75,lineStyle:{color:C.red,type:'dashed',width:1.5},label:{show:true,formatter:'BoE 3.75%',fontSize:9,color:C.red,position:'insideEndTop'}}]}
       }]
     });
   }
 
+  /* Chart 3: City Price Comparison + YoY% dual axis */
+  function drawCityPrice(lang){
+    var en=lang==='en';
+    var c = echarts.init(document.getElementById('rChartUkCityPrice'));
+    allCharts.push(c);
+    var cities = en?['Newcastle','Birmingham','Manchester','Edinburgh','London']:['紐卡斯爾','伯明翰','曼徹斯特','愛丁堡','倫敦'];
+    var prices = [208000,265000,260000,340000,547000];
+    var yoy = [6.1,7.7,3.2,3.7,-4.4];
+    var barColors = [C.green,C.green,C.navy,C.navy,C.red];
+    c.setOption({
+      tooltip:baseTooltip,
+      legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8,data:[en?'Price':'均價','YoY%']},
+      grid:{left:12,right:12,top:16,bottom:36,containLabel:true},
+      xAxis: mkAxis({type:'category',data:cities,axisLabel:{color:C.muted,fontSize:8,rotate:20}}),
+      yAxis:[
+        mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return '£'+(v/1000)+'K';}}}),
+        mkAxis({type:'value',splitLine:{show:false},axisLabel:{color:C.muted,fontSize:8,formatter:function(v){return v+'%';}}})
+      ],
+      series:[
+        {name:en?'Price':'均價',type:'bar',data:prices.map(function(v,i){return{value:v,itemStyle:{color:barColors[i],borderRadius:[3,3,0,0]}};}),barMaxWidth:28,label:{show:true,position:'top',formatter:function(p){return fmtGBP(p.value);},fontSize:8,fontFamily:'JetBrains Mono'}},
+        {name:'YoY%',type:'line',yAxisIndex:1,data:yoy,lineStyle:{color:C.orange,width:1.5},itemStyle:{color:C.orange},symbol:'circle',symbolSize:5,label:{show:true,position:'bottom',formatter:function(p){return(p.value>=0?'+':'')+p.value+'%';},fontSize:8,color:C.orange}}
+      ]
+    });
+  }
+
+  /* Chart 4: North-South Divide horizontal bar */
   function drawNorthSouth(lang){
-    var c = echarts.init(document.getElementById('chart-r-uk-ns'));
+    var c = echarts.init(document.getElementById('rChartUkNorthSouth'));
     allCharts.push(c);
     var labels = lang==='zh'
-      ? ['倫敦','東南','西南','西密德蘭','西北','東北']
-      : ['London','South East','South West','West Midlands','North West','North East'];
-    var values = [-1.2,1.5,2.8,3.5,4.2,6.8];
-    var colors = values.map(function(v){ return v < 0 ? C.red : v < 3 ? C.orange : C.green; });
+      ? ['倫敦','東南','東部','西南','東中部','西中部','西北','東北']
+      : ['London','South East','East','South West','East Mids','West Mids','North West','North East'];
+    var values = [-1.2,1.5,1.5,1.9,2.8,3.5,4.2,6.8];
     c.setOption({
-      tooltip: Object.assign({}, baseTooltip, { trigger:'axis', axisPointer:{type:'shadow'} }),
-      grid: { left:12, right:40, top:10, bottom:15, containLabel:true },
-      xAxis: mkAxis({ type:'value', min:-2, max:8, axisLabel:{ fontSize:9, color:C.muted, formatter:'{value}%' } }),
-      yAxis: mkAxis({ type:'category', data:labels, axisLabel:{color:C.navy,fontSize:9,fontFamily:'Inter'} }),
-      series: [{
+      tooltip: Object.assign({},baseTooltip,{trigger:'axis',axisPointer:{type:'shadow'}}),
+      grid:{left:12,right:40,top:10,bottom:15,containLabel:true},
+      xAxis: mkAxis({type:'value',min:-2,max:8,axisLabel:{fontSize:8,color:C.muted,formatter:'{value}%'}}),
+      yAxis: mkAxis({type:'category',data:labels,axisLabel:{color:C.navy,fontSize:9,fontFamily:'Inter'}}),
+      series:[{
         type:'bar',
-        data: values.map(function(v,i){ return { value:v, itemStyle:{color:colors[i],borderRadius:v>=0?[0,4,4,0]:[4,0,0,4]} }; }),
-        barMaxWidth:16,
-        label:{ show:true, position:'right', formatter:function(p){return p.value+'%';}, fontSize:9, fontFamily:'Inter', fontWeight:'bold', color:C.navy },
-        markLine: {
-          silent:true,
-          data:[{ xAxis:0, lineStyle:{color:C.muted,type:'solid',width:1}, label:{show:false} }]
-        }
+        data:values.map(function(v){return{value:v,itemStyle:{color:v<0?C.red:v<3?C.navy:C.green,borderRadius:v>=0?[0,4,4,0]:[4,0,0,4]}};}),
+        barMaxWidth:14,
+        label:{show:true,position:'right',formatter:function(p){return(p.value>=0?'+':'')+p.value+'%';},fontSize:8,fontFamily:'Inter',fontWeight:'bold',color:C.navy},
+        markLine:{silent:true,data:[{xAxis:0,lineStyle:{color:C.muted,type:'solid',width:1},label:{show:false}}]}
       }]
     });
   }
