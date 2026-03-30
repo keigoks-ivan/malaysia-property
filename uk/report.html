@@ -318,13 +318,13 @@
   function drawPrice(lang){
     var c = echarts.init(document.getElementById('chart-r-uk-price'));
     allCharts.push(c);
-    var yrs = ['2020','2021','2022','2023','2024','2025'];
-    var data = [250000,265000,285000,282000,283000,292000];
+    var yrs = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','Dec 2025'];
+    var data = [194000,204000,220000,228000,235000,250000,271000,295000,285000,265000,268000];
     c.setOption({
       tooltip: Object.assign({}, baseTooltip, { formatter:function(p){return p[0].axisValue+'<br/>'+p[0].marker+(lang==='zh'?'均價 ':'Avg ')+fmtGBP(p[0].value);} }),
       grid:{left:12,right:12,top:12,bottom:20,containLabel:true},
       xAxis: mkAxis({ type:'category', data:yrs, axisLabel:{ color:C.muted, fontSize:8 } }),
-      yAxis: mkAxis({ type:'value', min:200000, max:320000, axisLabel:{ color:C.muted, fontSize:9, formatter:function(v){return fmtGBPShort(v);} } }),
+      yAxis: mkAxis({ type:'value', min:150000, max:320000, axisLabel:{ color:C.muted, fontSize:9, formatter:function(v){return fmtGBPShort(v);} } }),
       series: [{
         name:lang==='zh'?'英國均價':'UK Average',
         type:'line',

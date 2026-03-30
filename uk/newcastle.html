@@ -178,14 +178,14 @@ function initCharts(lang){
 
   /* chartNewcastlePrice — line with area, C.green highlight */
   var c1=echarts.init(document.getElementById('chartNewcastlePrice'));allCharts.push(c1);
-  var priceLabels=['2019','2020','2021','2022','2023','2024','Dec 2025'];
-  var priceData=[155000,162000,190000,210000,195000,196000,208000];
+  var priceLabels=['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','Dec 2025'];
+  var priceData=[120000,126000,133000,140000,148000,158000,188000,210000,198000,196000,208000];
   c1.setOption({
     tooltip:baseTooltip,grid:baseGrid,
     xAxis:mkAxis({type:'category',data:priceLabels}),
     yAxis:mkAxis({type:'value',axisLabel:Object.assign({},baseText,{formatter:function(v){return fmtGBPShort(v);}})}),
     series:[{type:'line',data:priceData,lineStyle:{color:C.green,width:2},itemStyle:{color:C.green},areaStyle:{color:'rgba(22,163,74,0.08)'},smooth:0.2,symbol:'circle',symbolSize:6,
-      markPoint:{data:[{coord:['Dec 2025',208000],symbol:'pin',symbolSize:50,label:{formatter:'+6.1% YoY',fontSize:9,lineHeight:13},itemStyle:{color:C.green}}]}
+      markPoint:{data:[{type:'max',symbol:'pin',symbolSize:50,label:{formatter:'Post-COVID peak',fontSize:9,lineHeight:13},itemStyle:{color:C.orange}},{coord:['Dec 2025',208000],symbol:'pin',symbolSize:50,label:{formatter:'+6.1% YoY',fontSize:9,lineHeight:13},itemStyle:{color:C.green}}]}
     }]
   });
 
