@@ -282,7 +282,7 @@
       grid: { left: 50, right: 50, top: 45, bottom: 30, containLabel: true },
       xAxis: mkAxis({
         type: 'category',
-        data: ['2019','2020','2021','2022','2023','2024','2025Q3']
+        data: ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025Q3']
       }),
       yAxis: [
         mkAxis({ type: 'value', name: 'Index', nameTextStyle: baseText }),
@@ -293,7 +293,7 @@
           name: 'YoY %',
           type: 'bar',
           yAxisIndex: 1,
-          data: [1.1, 0.5, 1.0, 1.5, 3.5, 8.2, 0.14],
+          data: [5.8,5.5,3.4,3.9,3.7,0.5,1.0,5.6,4.8,5.0,2.2],
           barMaxWidth: 35,
           itemStyle: {
             color: function(p){ return p.value >= 0 ? 'rgba(22,163,74,0.7)' : C.red; },
@@ -308,7 +308,7 @@
         {
           name: 'Nominal Index',
           type: 'line',
-          data: [194,195,197,200,207,224,229.1],
+          data: [165,174,180,187,194,195,197,208,218,229,234],
           lineStyle: { color: C.navy, width: 2 },
           itemStyle: { color: C.navy },
           symbol: 'circle', symbolSize: 6
@@ -316,7 +316,7 @@
         {
           name: 'Real Index',
           type: 'line',
-          data: [160,160,159,156,157,165,167],
+          data: [128,133,135,137,140,142,142,147,152,157,159],
           lineStyle: { color: C.muted, width: 2, type: 'dashed' },
           itemStyle: { color: C.muted },
           symbol: 'circle', symbolSize: 6
@@ -375,14 +375,14 @@
       grid: baseGrid,
       xAxis: mkAxis({
         type: 'category',
-        data: ['2019','2020','2021','2022','23Q1','23Q3','24Q1','24Q3','25Q1','25Q3']
+        data: ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025Q3']
       }),
       yAxis: mkAxis({ type: 'value', min: 1, max: 6, axisLabel: Object.assign({}, baseText, { formatter: '{value}%' }) }),
       series: [
         {
           name: 'Rental Yield %',
           type: 'line',
-          data: [4.80,4.60,4.70,4.90,5.16,5.20,5.16,5.24,5.10,5.19],
+          data: [5.1,5.0,4.9,4.9,4.8,4.6,4.7,4.9,5.16,5.24,5.19],
           lineStyle: { color: C.green, width: 2 },
           itemStyle: { color: C.green },
           smooth: 0.3,
@@ -392,7 +392,7 @@
         {
           name: 'OPR %',
           type: 'line',
-          data: [3.00,1.75,1.75,2.75,3.00,3.00,3.00,3.00,3.00,2.75],
+          data: [3.25,3.0,3.0,3.25,3.0,1.75,1.75,2.75,3.0,3.0,2.75],
           lineStyle: { color: C.red, width: 2, type: 'dashed' },
           itemStyle: { color: C.red },
           step: 'end',
@@ -493,7 +493,7 @@
       grid: baseGrid,
       xAxis: mkAxis({
         type: 'category',
-        data: ['2019','2020','2021','2022','2023','2024','2025 Q1-Q3']
+        data: ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025 Q1-Q3']
       }),
       yAxis: mkAxis({
         type: 'value',
@@ -501,15 +501,17 @@
       }),
       series: [{
         type: 'line',
-        data: [328000,295000,295000,390000,398000,420525,308000],
+        data: [307498,319988,313394,313199,328000,295000,295000,389770,398000,420525,308000],
         lineStyle: { color: C.navy, width: 2 },
         itemStyle: { color: C.navy },
         areaStyle: { color: 'rgba(30,58,95,0.08)' },
         smooth: 0.2,
         symbol: 'circle', symbolSize: 6,
         markPoint: {
-          data: [{ type: 'max', name: 'Max' }],
-          label: { formatter: 'Decade\nHigh', fontSize: 10, fontWeight: 'bold' },
+          data: [
+            { type: 'max', name: 'Max', label: { formatter: 'Decade\nHigh', fontSize: 10, fontWeight: 'bold' } },
+            { type: 'min', name: 'Min', label: { formatter: 'COVID\nLow', fontSize: 10, fontWeight: 'bold' } }
+          ],
           symbolSize: 50,
           itemStyle: { color: C.green }
         }
