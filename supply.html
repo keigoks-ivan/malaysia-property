@@ -148,8 +148,8 @@
           </div>
         </div>
         <div class="chart-card" style="margin-top:16px;">
-          <h3><span class="lang-en">Overhang Forecast 2025–2029</span><span class="lang-zh" style="display:none">待售餘屋預測 2025–2029年</span></h3>
-          <p class="chart-subtitle"><span class="lang-en">Model-based projection · Residential only</span><span class="lang-zh" style="display:none">模型推演 · 僅住宅類</span></p>
+          <h3><span class="lang-en">Overhang Forecast 2015–2029</span><span class="lang-zh" style="display:none">待售餘屋預測 2015–2029年</span></h3>
+          <p class="chart-subtitle"><span class="lang-en">Historical 2015–2025 + 3-scenario forecast 2026–2029</span><span class="lang-zh" style="display:none">歷史2015–2025 + 三情境預測2026–2029</span></p>
           <div style="position:relative;height:280px;"><div id="chartOhForecast" style="width:100%;height:100%"></div></div>
           <div class="insight-box" style="margin-top:12px;">
             <div class="lang-en">Base case (absorption 85,000/yr): overhang peaks at ~47,000 units in 2027, normalising to ~14,000 by 2029. Bull case (90,000/yr absorption, OPR stays low): peak ~42,000, clears faster to ~8,000. Bear case (75,000/yr, OPR reversal or economic slowdown): peak ~57,000 in 2027, still elevated at ~28,000 in 2029. All scenarios assume completions derived from lagged 2024–2025 starts data.</div>
@@ -409,8 +409,8 @@
       grid: baseGrid,
       xAxis: mkAxis({
         type: 'category',
-        data: ['2023','2024H1','25*','26E','27E','28E','29E'],
-        axisLabel: Object.assign({}, baseText, { rotate: 0, interval: 0 })
+        data: ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024H1','25*','26E','27E','28E','29E'],
+        axisLabel: Object.assign({}, baseText, { rotate: 30, interval: 0, fontSize: 9 })
       }),
       yAxis: mkAxis({
         type: 'value', min: 0,
@@ -419,29 +419,33 @@
       series: [
         {
           name: 'Historical', type: 'line',
-          data: [25816,22642,28672,null,null,null,null],
+          data: [11316,14762,20876,32313,36863,31092,26424,27746,25816,22642,28672,null,null,null,null],
           lineStyle: { color: C.navy, width: 2 },
           itemStyle: { color: C.navy },
           areaStyle: { color: 'rgba(30,58,95,0.08)' },
-          symbol: 'circle', symbolSize: 5
+          symbol: 'circle', symbolSize: 5,
+          markPoint: { data: [
+            { coord: ['2018',32313], symbol: 'pin', symbolSize: 40, label: { formatter: 'Peak 32K', fontSize: 9 }, itemStyle: { color: C.red } },
+            { coord: ['2024H1',22642], symbol: 'pin', symbolSize: 40, label: { formatter: 'Low 22.6K', fontSize: 9 }, itemStyle: { color: C.green } }
+          ]}
         },
         {
           name: 'Bull (90K)', type: 'line',
-          data: [null,null,28672,43000,42000,22000,8000],
+          data: [null,null,null,null,null,null,null,null,null,null,28672,43000,42000,22000,8000],
           lineStyle: { color: C.green, width: 1.5, type: [4,2] },
           itemStyle: { color: C.green },
           symbol: 'circle', symbolSize: 4
         },
         {
           name: 'Base (85K)', type: 'line',
-          data: [null,null,28672,46000,47000,28000,14000],
+          data: [null,null,null,null,null,null,null,null,null,null,28672,46000,47000,28000,14000],
           lineStyle: { color: C.orange, width: 2, type: [6,3] },
           itemStyle: { color: C.orange },
           symbol: 'circle', symbolSize: 5
         },
         {
           name: 'Bear (75K)', type: 'line',
-          data: [null,null,28672,51000,57000,42000,28000],
+          data: [null,null,null,null,null,null,null,null,null,null,28672,51000,57000,42000,28000],
           lineStyle: { color: C.red, width: 1.5, type: [8,4] },
           itemStyle: { color: C.red },
           symbol: 'circle', symbolSize: 4
