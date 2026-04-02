@@ -28,7 +28,15 @@
     .report-chart-card .chart-meta{font-family:'Inter',sans-serif;font-size:11px;color:#d97706;margin-bottom:8px}
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
-    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+    .toc-box{background:#fff;border:1px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;padding:0;margin:0 0 28px;font-family:'Inter',sans-serif;max-width:100%}
+    .toc-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:13px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none}
+    .toc-toggle{background:none;border:none;color:#5a7a9a;font-size:14px;cursor:pointer;padding:0 4px;line-height:1}
+    .toc-list{padding:4px 16px 14px;display:flex;flex-direction:column;gap:4px}
+    .toc-list a{font-size:13px;color:#1e3a5f;text-decoration:none;padding:5px 8px;border-radius:4px;display:block;border-left:2px solid transparent;transition:all .15s}
+    .toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;padding-left:12px}
+    .toc-collapsed #tocList{display:none}
+    .toc-collapsed .toc-toggle{transform:rotate(180deg)}
+    @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}.toc-box{margin-bottom:20px}}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
@@ -91,7 +99,27 @@
     </div>
     <div class="report-body">
 
-      <h2><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+      <div class="toc-box" id="tocBox">
+        <div class="toc-header" onclick="toggleToc()">
+          <span class="lang-en">In This Report</span>
+          <span class="lang-zh" style="display:none">本報告涵蓋</span>
+          <button class="toc-toggle" id="tocToggleBtn">&#9650;</button>
+        </div>
+        <div class="toc-list" id="tocList">
+          <a href="#sec-exec" onclick="closeTocOnMobile()"><span class="lang-en">1. Executive Summary</span><span class="lang-zh" style="display:none">1. 執行摘要</span></a>
+          <a href="#sec-supply" onclick="closeTocOnMobile()"><span class="lang-en">2. Supply: The Delivery Wave</span><span class="lang-zh" style="display:none">2. 供給面：完工交屋潮</span></a>
+          <a href="#sec-demand" onclick="closeTocOnMobile()"><span class="lang-en">3. Demand: Intent Without Access</span><span class="lang-zh" style="display:none">3. 需求面：想買的人很多</span></a>
+          <a href="#sec-valuation" onclick="closeTocOnMobile()"><span class="lang-en">4. Valuation: Two Frameworks</span><span class="lang-zh" style="display:none">4. 估值：兩個框架</span></a>
+          <a href="#sec-kl" onclick="closeTocOnMobile()"><span class="lang-en">5. Kuala Lumpur</span><span class="lang-zh" style="display:none">5. 吉隆坡</span></a>
+          <a href="#sec-penang" onclick="closeTocOnMobile()"><span class="lang-en">6. Penang</span><span class="lang-zh" style="display:none">6. 檳城</span></a>
+          <a href="#sec-jb" onclick="closeTocOnMobile()"><span class="lang-en">7. Johor Bahru</span><span class="lang-zh" style="display:none">7. 新山</span></a>
+          <a href="#sec-national" onclick="closeTocOnMobile()"><span class="lang-en">8. Malaysia: National Picture</span><span class="lang-zh" style="display:none">8. 全馬：全國圖景</span></a>
+          <a href="#sec-infra" onclick="closeTocOnMobile()"><span class="lang-en">9. Infrastructure Catalysts</span><span class="lang-zh" style="display:none">9. 基礎建設催化劑</span></a>
+          <a href="#sec-outlook" onclick="closeTocOnMobile()"><span class="lang-en">10. Outlook &amp; Key Risks</span><span class="lang-zh" style="display:none">10. 展望與主要風險</span></a>
+        </div>
+      </div>
+
+      <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
 
       <div class="lang-en">
         <p>Malaysia's residential property market entered 2026 carrying the most complex supply overhang since the 2016&ndash;2019 peak cycle. The headline numbers tell a bifurcated story: gross rental yields of <strong>5.19%</strong> on residential property continue to produce a positive carry spread of <strong>+2.19%</strong> above the OPR of 3.0%, making Malaysia one of the few Asian markets where property still generates positive real income. Yet the same quarter &mdash; Q3 2025 &mdash; saw national residential Overhang surge <strong>30.5%</strong> year-on-year to <strong>28,672 units</strong>, reversing three consecutive years of improvement. When Malaysia's commercial-classified serviced apartment Overhang of <strong>17,892 units</strong> is added, the wide-definition national completed-unsold inventory reaches <strong>46,564 units</strong> &mdash; a level that has no modern precedent.</p>
@@ -129,7 +157,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">SUPPLY: THE DELIVERY WAVE</span><span class="lang-zh" style="display:none">供給面：完工交屋潮尚未退去</span></h2>
+      <h2 id="sec-supply"><span class="lang-en">SUPPLY: THE DELIVERY WAVE</span><span class="lang-zh" style="display:none">供給面：完工交屋潮尚未退去</span></h2>
 
       <div class="lang-en">
         <p>The supply challenge facing Malaysia's residential market is best understood through the lens of a time-lagged system with locked-in consequences. A residential project commenced in 2024 cannot be un-built. The <strong>106,236 units</strong> started that year — a 20.6% increase over 2023 — will arrive in the market between 2026 and 2028 regardless of what happens to demand in the interim. This is the completion wave, and it is the single most important supply-side variable for the next two years.</p>
@@ -203,7 +231,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">DEMAND: INTENT WITHOUT ACCESS</span><span class="lang-zh" style="display:none">需求面：想買的人很多，能成交的不夠</span></h2>
+      <h2 id="sec-demand"><span class="lang-en">DEMAND: INTENT WITHOUT ACCESS</span><span class="lang-zh" style="display:none">需求面：想買的人很多，能成交的不夠</span></h2>
 
       <div class="lang-en">
         <p>The demand picture for Malaysian residential property is more nuanced than either the headline transaction figures or the overhang statistics suggest. The <strong>420,525</strong> transactions recorded in 2024 represent the highest annual volume in a decade, demonstrating that underlying purchase intent is real and persistent. The cooling in Q3 2025 to <strong>108,250 transactions</strong> does not represent demand destruction — it represents the progressive exhaustion of the most financially capable segment of latent demand, as the remaining buyers increasingly fail the financing filter.</p>
@@ -247,7 +275,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">VALUATION: TWO FRAMEWORKS, TWO CONCLUSIONS</span><span class="lang-zh" style="display:none">估值：兩個框架，兩個結論</span></h2>
+      <h2 id="sec-valuation"><span class="lang-en">VALUATION: TWO FRAMEWORKS, TWO CONCLUSIONS</span><span class="lang-zh" style="display:none">估值：兩個框架，兩個結論</span></h2>
 
       <div class="lang-en">
         <p>Malaysian residential property presents a bifurcated valuation picture that produces diametrically opposed conclusions depending on the analytical framework applied — and both conclusions are simultaneously correct for different buyer populations.</p>
@@ -291,7 +319,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">KUALA LUMPUR: CORRECTION AND OPPORTUNITY</span><span class="lang-zh" style="display:none">吉隆坡：修正即機會</span></h2>
+      <h2 id="sec-kl"><span class="lang-en">KUALA LUMPUR: CORRECTION AND OPPORTUNITY</span><span class="lang-zh" style="display:none">吉隆坡：修正即機會</span></h2>
 
       <div class="lang-en">
         <p>Kuala Lumpur's residential market in 2025–2026 is defined by a structural bifurcation that aggregate data consistently obscures. The headline Overhang figure of <strong>2,287 units</strong> as of Q3 2025 — down <strong>37.2%</strong> from H1 2025's 3,643 units — appears to signal recovery. It does not. The official Overhang number counts only freehold residential-titled completed units unsold for over nine months. It excludes the estimated <strong>8,000–9,000 units</strong> of serviced apartment inventory under commercial title — a product category that accounts for the majority of KL's actual unsold high-rise stock. The true wide-definition Overhang across KL is estimated at <strong>10,300–11,300 units</strong>, a figure that tells a very different story.</p>
@@ -406,7 +434,7 @@
         <p>基本情境（概率55%）預計KL官方Overhang將在2027年底升至<strong>3,500至4,500戶</strong>，因在建管道餘下的5,356戶陸續完工，以35至45%的轉化率計入Overhang。這不構成危機——在此數字下，馬來西亞全國Overhang佔年度完工量的比例，仍低於2018至2019年的峰值。復甦催化劑已內嵌於供給端：2025年前三季新開工量下降<strong>14.9%</strong>，這將在機制上減少2027年後的完工量。若MM2H的2,637名預核准買家在2026至2027年按計劃完成購置，超額吸收可能將Overhang控制在<strong>2,500至3,500戶</strong>附近。樂觀情境（概率25%）需要MM2H吸收加速以及來自中國的地緣政治避險資金流入，後者無法可靠預測但具有合理可能性。悲觀情境（概率20%）的觸發條件是MM2H管道停滯疊加全球風險規避事件，可能將官方Overhang在2027年推升至<strong>6,000至7,000戶</strong>，廣義Overhang突破15,000戶。最值得監測的關鍵變數是MM2H每月購置完成宗數——這是判斷KL優質住宅市場是在吸收還是在積累的最佳領先指標。</p>
       </div>
 
-      <h2><span class="lang-en">PENANG: THE INDUSTRIAL THESIS</span><span class="lang-zh" style="display:none">檳城：工業驅動的房市論點</span></h2>
+      <h2 id="sec-penang"><span class="lang-en">PENANG: THE INDUSTRIAL THESIS</span><span class="lang-zh" style="display:none">檳城：工業驅動的房市論點</span></h2>
 
       <div class="lang-en">
         <p>Penang's residential market presents a more complex supply risk profile than its headline Overhang figure of <strong>2,730 units</strong> (Q3 2025) suggests. The official number is manageable in isolation. The problem lies in the pipeline: under-construction unsold inventory stands at <strong>7,804 units</strong> &mdash; larger than Kuala Lumpur's equivalent figure despite Penang's substantially smaller market. Annual condo transactions in Penang run at approximately <strong>3,252 units</strong> on an annualised basis (Q3 2025: 813 units &times; 4). The under-construction pipeline alone represents <strong>2.4 years</strong> of condo absorption capacity. The conversion risk is concentrated in a single price band: the RM400K&ndash;500K segment accounts for <strong>3,169 units</strong> of under-construction inventory &mdash; 40.6% of the total &mdash; and is the segment most likely to convert to Overhang as completions accelerate through 2026&ndash;2027.</p>
@@ -498,7 +526,7 @@
         <p>基本情境（概率55%）預測檳城官方Overhang將在2026年底見頂約<strong>4,070戶</strong>，隨著在建管道陸續完工；然後隨施工管道收窄，在2028至2029年降回2,500戶以下。這條軌跡假設年度吸收2,000戶。RM40至50萬段是關鍵的擺動因素：若此價格帶的工地到訪率和分期付款進度惡化，在建轉Overhang的轉化率可能超過基本情境的80%假設，將2026年高峰推至5,000戶以上。樂觀情境（概率25%）需要LRT施工里程碑觸發Jelutong至Gelugor走廊的投機性換屋需求，疊加MM2H加速部署。悲觀情境（概率20%）是MM2H管道停滯、馬來西亞經濟整體放緩、以及馬幣貶值提高外籍買家實際融資成本的同步壓力——在此情況下，2027年Overhang可能觸及<strong>6,000至7,000戶</strong>。需每季追蹤的三個指標：（1）西南區和東北區的Condo成交量；（2）RM40至50萬段的分期付款進度；（3）LRT土木工程里程碑。</p>
       </div>
 
-      <h2><span class="lang-en">JOHOR BAHRU</span><span class="lang-zh" style="display:none">新山</span></h2>
+      <h2 id="sec-jb"><span class="lang-en">JOHOR BAHRU</span><span class="lang-zh" style="display:none">新山</span></h2>
 
       <div class="lang-en">
         <p>Johor Bahru occupies a structurally unique position in Southeast Asian real estate: it is the only city in the world with pedestrian and short-form land access to one of the most expensive residential markets on earth. Singapore's median private residential price exceeds SGD2,000 per square foot; Johor Bahru's high-rise residential market averages RM450&ndash;500 per square foot &mdash; approximately SGD150&ndash;165 &mdash; a gap of over <strong>12 times</strong>. Singapore's median employee income exceeds RM20,000 per month equivalent; JB's median is approximately RM3,000&ndash;4,000. This wage and price arbitrage, combined with the impending RTS Link that will compress the cross-border commute from 60&ndash;90 minutes to <strong>5&ndash;6 minutes</strong>, is the single structural force that distinguishes JB from every other Malaysian market and justifies the premium now being paid in the Zone 1 RTS corridor.</p>
@@ -584,7 +612,7 @@
         <p>進場框架按產品和地區劃分。Zone 1 RTS毗鄰高層住宅，每平方呎RM1,000以上：<strong>等待更好的進場點</strong>。Zone 1和Zone 2有地住宅（排屋RM40至70萬）：<strong>積極進場</strong>——Overhang壓力極低，本地自住需求真實，毛收益率5至6.5%可實現。外圍高層和森城服務式公寓：<strong>迴避</strong>。三個監測指標：（1）NAPIC柔佛市區季度Overhang數據；（2）RTS施工里程碑確認；以及（3）JS-SEZ企業登記數據。</p>
       </div>
 
-      <h2><span class="lang-en">MALAYSIA OVERHANG: NATIONAL PICTURE</span><span class="lang-zh" style="display:none">全馬OVERHANG：全國圖景</span></h2>
+      <h2 id="sec-national"><span class="lang-en">MALAYSIA OVERHANG: NATIONAL PICTURE</span><span class="lang-zh" style="display:none">全馬OVERHANG：全國圖景</span></h2>
 
       <div class="lang-en">
         <p>Viewed at the national level, Malaysia's property Overhang problem has three distinct structural layers that require separate analysis. The first layer is the headline residential Overhang of 28,672 units, which is meaningfully concentrated in five states: Perak (3,300), Johor (3,293), Sabah (2,771), Selangor (2,757), and Penang (2,730). Perak's Overhang is predominantly low-to-mid cost housing in a market with limited new demand catalysts &mdash; it is structural rather than cyclical and will clear slowly. Sabah's Overhang reflects the persistent mismatch between developer ambitions and local purchasing power in a frontier market. Selangor presents the paradox of simultaneously having the largest residential under-construction pipeline of any state (13,448 units) and a healthy transaction market anchored by Klang Valley tech employment &mdash; a state where the Overhang risk is real but the demand floor is structural.</p>
@@ -611,7 +639,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">INFRASTRUCTURE CATALYSTS</span><span class="lang-zh" style="display:none">基礎建設催化劑</span></h2>
+      <h2 id="sec-infra"><span class="lang-en">INFRASTRUCTURE CATALYSTS</span><span class="lang-zh" style="display:none">基礎建設催化劑</span></h2>
 
       <div class="lang-en">
         <p>Three infrastructure projects have moved from speculative to confirmed timelines over the past 12 months, with demand effects already measurable in transaction and rental data.</p>
@@ -627,7 +655,7 @@
         <p><strong>資料中心投資潮（Data Center Wave）</strong>——微軟（Microsoft）22億美元、谷歌（Google）20億美元，加上多家雲端大廠在柔佛和雪蘭莪的大規模進駐——正在帶動周邊地區的租屋需求。2025年工業地產（Industrial Property）的成交總值年增<strong>21.3%</strong>。這個需求跟住宅景氣週期無關，持續性更有保障。</p>
       </div>
 
-      <h2><span class="lang-en">OUTLOOK AND KEY RISKS</span><span class="lang-zh" style="display:none">展望與主要風險</span></h2>
+      <h2 id="sec-outlook"><span class="lang-en">OUTLOOK AND KEY RISKS</span><span class="lang-zh" style="display:none">展望與主要風險</span></h2>
 
       <div class="lang-en">
         <p>The national Overhang trajectory through 2029 is determined by three structural variables operating on different timelines. The RTS Link (2026&ndash;2027 expected commissioning) is the fastest-acting catalyst: each month of delay removes approximately 1,000&ndash;2,000 units of latent Johor absorption capacity, while commissioning would trigger the release of pent-up Singapore buyer demand. The JS-SEZ employment ramp (18&ndash;36 month lag) will define whether the 2027&ndash;2028 supply peak in Johor is met by genuine demand or accumulates further into Overhang. And the KL SA planned pipeline decision (9,415 NC units) is the longest-dated but potentially largest single risk: if approved, it would extend KL's SA Overhang problem from the current 4,687 units toward 15,000+ units by 2030.</p>
@@ -1520,6 +1548,9 @@
       ]
     });
   }
+
+  function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+  function closeTocOnMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
 
   window.addEventListener('load', function(){
     var lang = localStorage.getItem('lang') || 'en';
