@@ -15,6 +15,16 @@
     .toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;color:#1e3a5f}
     .toc-collapsed .toc-list{display:none}
     .toc-collapsed .toc-toggle{transform:rotate(180deg)}
+    /* -- Side Progress Nav -- */
+    .side-nav{position:fixed;top:50%;left:calc(50% - 490px);transform:translateY(-50%);width:140px;z-index:200;display:flex;flex-direction:column;gap:4px}
+    .side-nav a{display:flex;align-items:center;gap:8px;text-decoration:none;padding:4px 0;cursor:pointer}
+    .side-nav-dot{width:8px;height:8px;border-radius:50%;background:#ccd9e8;flex-shrink:0;transition:all .25s}
+    .side-nav-label{font-family:'Inter',sans-serif;font-size:11px;color:#94a3b8;line-height:1.3;transition:all .25s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px}
+    .side-nav a.active .side-nav-dot{background:#1e3a5f;width:10px;height:10px}
+    .side-nav a.active .side-nav-label{color:#1e3a5f;font-weight:600}
+    .side-nav a:hover .side-nav-dot{background:#5a7a9a}
+    .side-nav a:hover .side-nav-label{color:#1e3a5f}
+    @media(max-width:1100px){.side-nav{display:none}}
   </style>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../tw/tw.css">
@@ -102,6 +112,53 @@
 </div>
 
   <div class="report-container">
+    <nav class="side-nav" id="sideNav">
+      <a href="#sec-exec" class="side-nav-item">
+        <span class="side-nav-dot"></span>
+        <span class="side-nav-label lang-en">Exec Summary</span>
+        <span class="side-nav-label lang-zh" style="display:none">執行摘要</span>
+      </a>
+      <a href="#sec-policy" class="side-nav-item">
+        <span class="side-nav-dot"></span>
+        <span class="side-nav-label lang-en">BoE Policy</span>
+        <span class="side-nav-label lang-zh" style="display:none">英格蘭銀行</span>
+      </a>
+      <a href="#sec-supply" class="side-nav-item">
+        <span class="side-nav-dot"></span>
+        <span class="side-nav-label lang-en">Supply</span>
+        <span class="side-nav-label lang-zh" style="display:none">供給面</span>
+      </a>
+      <a href="#sec-demand" class="side-nav-item">
+        <span class="side-nav-dot"></span>
+        <span class="side-nav-label lang-en">Demand</span>
+        <span class="side-nav-label lang-zh" style="display:none">需求面</span>
+      </a>
+      <a href="#sec-valuation" class="side-nav-item">
+        <span class="side-nav-dot"></span>
+        <span class="side-nav-label lang-en">Valuation</span>
+        <span class="side-nav-label lang-zh" style="display:none">估值</span>
+      </a>
+      <a href="#sec-london" class="side-nav-item">
+        <span class="side-nav-dot"></span>
+        <span class="side-nav-label lang-en">London</span>
+        <span class="side-nav-label lang-zh" style="display:none">倫敦</span>
+      </a>
+      <a href="#sec-northern" class="side-nav-item">
+        <span class="side-nav-dot"></span>
+        <span class="side-nav-label lang-en">Northern Cities</span>
+        <span class="side-nav-label lang-zh" style="display:none">北部城市</span>
+      </a>
+      <a href="#sec-outlook" class="side-nav-item">
+        <span class="side-nav-dot"></span>
+        <span class="side-nav-label lang-en">Outlook</span>
+        <span class="side-nav-label lang-zh" style="display:none">展望</span>
+      </a>
+      <a href="#sec-timeline" class="side-nav-item">
+        <span class="side-nav-dot"></span>
+        <span class="side-nav-label lang-en">Timeline</span>
+        <span class="side-nav-label lang-zh" style="display:none">政策時間線</span>
+      </a>
+    </nav>
     <div class="report-header">
       <div class="lang-en">
         <h1>UK PROPERTY MARKET REPORT</h1>
@@ -455,6 +512,35 @@
   window.addEventListener('resize', function(){
     allCharts.forEach(function(c){ if(c) c.resize(); });
   });
+    // -- Side Nav ScrollSpy --
+  (function(){
+    function initScrollSpy(){
+      var items = document.querySelectorAll('.side-nav-item');
+      if(!items.length) return;
+      var sections = [];
+      items.forEach(function(a){
+        var id = a.getAttribute('href').replace('#','');
+        var el = document.getElementById(id);
+        if(el) sections.push({el:el, a:a});
+      });
+      function onScroll(){
+        var scrollY = window.scrollY + window.innerHeight * 0.25;
+        var current = sections[0];
+        sections.forEach(function(s){
+          if(s.el.getBoundingClientRect().top + window.scrollY <= scrollY) current = s;
+        });
+        items.forEach(function(a){ a.classList.remove('active'); });
+        if(current) current.a.classList.add('active');
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+    }
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', initScrollSpy);
+    } else {
+      initScrollSpy();
+    }
+  })();
   </script>
 </body>
 </html>
