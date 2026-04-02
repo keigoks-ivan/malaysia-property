@@ -7,6 +7,14 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}
   .market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+    .toc-box{background:#fff;border:0.5px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;margin:0 0 24px;font-family:'Inter',sans-serif;overflow:hidden}
+    .toc-header{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;font-size:12px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none;background:#f4f7fc}
+    .toc-toggle{background:none;border:none;color:#5a7a9a;font-size:13px;cursor:pointer;padding:0;line-height:1;transition:transform .2s}
+    .toc-list{padding:8px 16px 12px;display:flex;flex-direction:column;gap:2px}
+    .toc-list a{font-size:12px;color:#2c3e50;text-decoration:none;padding:5px 8px 5px 10px;border-radius:4px;border-left:2px solid transparent;display:block;transition:all .15s;font-family:Georgia,serif}
+    .toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;color:#1e3a5f}
+    .toc-collapsed .toc-list{display:none}
+    .toc-collapsed .toc-toggle{transform:rotate(180deg)}
   </style>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../tw/tw.css">
@@ -33,7 +41,9 @@
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
     @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js">  function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+  function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+  </script>
 </head>
 <body>
   <header class="navbar">
@@ -96,7 +106,7 @@
     <div class="report-body">
 
       <!-- 1. EXECUTIVE SUMMARY -->
-      <h2><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+      <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
 
       <div class="lang-en">
         <p>New Zealand's housing market sits at a <strong>cyclical trough</strong> in early 2026. REINZ recorded <strong>80,655</strong> annual sales, up <strong>10.3%</strong> year-on-year, confirming a volume recovery even as prices remain subdued. The RBNZ has delivered <strong>225 basis points</strong> of cumulative OCR cuts since August 2024, bringing the rate to <strong>3.25%</strong>. The national median house price edged up to <strong>NZ$786,977</strong>, a modest <strong>+1.4%</strong> gain. A stark two-speed dynamic persists: Christchurch leads the recovery at <strong>+4.03%</strong> and sits within <strong>$4,000</strong> of its all-time peak, while Auckland has slipped <strong>-1.09%</strong> and carries <strong>31 weeks</strong> of inventory. The rental market is softening &mdash; national median rent fell <strong>-1.6%</strong> to <strong>NZ$610/week</strong>, and rental listing stock surged <strong>+21.2%</strong>, giving tenants unprecedented choice and compressing investor yields.</p>
@@ -131,7 +141,7 @@
       </div>
 
       <!-- 2. RBNZ RATE CUTS -->
-      <h2><span class="lang-en">RBNZ RATE CUTS: 225BPS IN 9 MONTHS</span><span class="lang-zh" style="display:none">RBNZ降息：9個月降225基點</span></h2>
+      <h2 id="sec-policy"><span class="lang-en">RBNZ RATE CUTS: 225BPS IN 9 MONTHS</span><span class="lang-zh" style="display:none">RBNZ降息：9個月降225基點</span></h2>
 
       <div class="lang-en">
         <p>The RBNZ slashed the OCR from <strong>5.50%</strong> to <strong>3.25%</strong> between August 2024 and May 2025 &mdash; <strong>225 basis points</strong> of easing in just nine months. Mortgage rates have followed: the average two-year fixed rate fell from <strong>7.0%</strong> to <strong>4.43%</strong>. For a <strong>NZ$700,000</strong> loan, monthly repayments dropped from approximately <strong>$5,200</strong> to <strong>$3,650</strong>, a saving of roughly <strong>$1,550/month</strong>. Despite this stimulus, ANZ forecasts the RBNZ may begin hiking by <strong>December 2026</strong> if inflation surprises to the upside, creating an asymmetric risk window for borrowers who lock in at current lows.</p>
@@ -148,7 +158,7 @@
       </div>
 
       <!-- 3. SUPPLY -->
-      <h2><span class="lang-en">SUPPLY: LISTINGS UP, RENTAL GLUT</span><span class="lang-zh" style="display:none">供給：掛牌增加，租賃過剩</span></h2>
+      <h2 id="sec-supply"><span class="lang-en">SUPPLY: LISTINGS UP, RENTAL GLUT</span><span class="lang-zh" style="display:none">供給：掛牌增加，租賃過剩</span></h2>
 
       <div class="lang-en">
         <p>New listings rose <strong>+5.5%</strong> year-on-year nationally, adding to an already elevated stock of homes for sale. Auckland's inventory has ballooned to <strong>31 weeks</strong> of supply &mdash; firmly in buyer's market territory. The rental market is experiencing a structural oversupply: rental listing stock surged <strong>+21.2%</strong>, with new rental listings up <strong>+11.4%</strong>. On the construction side, September building consents jumped <strong>+27%</strong> month-on-month to <strong>3,747</strong> units, suggesting the development pipeline is re-accelerating even as existing inventory remains high.</p>
@@ -159,7 +169,7 @@
       </div>
 
       <!-- 4. DEMAND -->
-      <h2><span class="lang-en">DEMAND: SALES RECOVER, RENTS FALL</span><span class="lang-zh" style="display:none">需求：成交回升，租金下滑</span></h2>
+      <h2 id="sec-demand"><span class="lang-en">DEMAND: SALES RECOVER, RENTS FALL</span><span class="lang-zh" style="display:none">需求：成交回升，租金下滑</span></h2>
 
       <div class="lang-en">
         <p>REINZ data confirms the volume recovery: <strong>80,655</strong> sales over the past year, up <strong>+10.3%</strong>. Mortgage rates at <strong>4.43%</strong> remain above the pre-COVID norm of <strong>~3%</strong>, constraining full price recovery. Buyer uncertainty is most acute in Auckland, where elevated inventory discourages aggressive bidding. The political landscape adds a layer of risk: the capital gains tax (CGT) debate resurfaced ahead of the election, potentially dampening investor sentiment. On the positive side, the RBNZ eased LVR restrictions in <strong>December 2025</strong>, reducing deposit requirements and broadening access for first-home buyers.</p>
@@ -176,7 +186,7 @@
       </div>
 
       <!-- 5. VALUATION -->
-      <h2><span class="lang-en">VALUATION: CITY DIVERGENCE</span><span class="lang-zh" style="display:none">估值：城市分化</span></h2>
+      <h2 id="sec-valuation"><span class="lang-en">VALUATION: CITY DIVERGENCE</span><span class="lang-zh" style="display:none">估值：城市分化</span></h2>
 
       <div class="lang-en">
         <p>The national median of <strong>NZ$786,977</strong> produces a gross yield of <strong>4.12%</strong> against the OCR of <strong>3.25%</strong>, a positive spread of <strong>+0.87%</strong>. However, city-level analysis reveals sharp divergence. Auckland at <strong>NZ$1.014M</strong> yields just <strong>3.96%</strong>, below the prevailing mortgage rate of <strong>4.43%</strong> &mdash; meaning leveraged investors face negative carry. Auckland remains <strong>-18%</strong> from its 2021 peak. Christchurch at <strong>NZ$697,000</strong> delivers <strong>4.8%</strong> gross, with select suburbs reaching <strong>5.5&ndash;6%</strong>, offering the best risk-adjusted carry in the country.</p>
@@ -193,7 +203,7 @@
       </div>
 
       <!-- 6. AUCKLAND -->
-      <h2><span class="lang-en">AUCKLAND: HIGH INVENTORY SUPPRESSION</span><span class="lang-zh" style="display:none">奧克蘭：高庫存壓制</span></h2>
+      <h2 id="sec-auckland"><span class="lang-en">AUCKLAND: HIGH INVENTORY SUPPRESSION</span><span class="lang-zh" style="display:none">奧克蘭：高庫存壓制</span></h2>
 
       <div class="lang-en">
         <p>Auckland's median peaked at <strong>NZ$1.35M</strong> in late 2021 and has since corrected <strong>-24.9%</strong> to <strong>NZ$1.014M</strong>. Inventory sits at <strong>31 weeks</strong> of supply, the highest among major cities and well into buyer's market territory. South Auckland offers entry-level opportunities, but the apartment segment faces acute oversupply with new builds competing against existing stock. Net migration, which surged to <strong>30%</strong> of Auckland's population growth, is moderating &mdash; removing a key demand pillar. Recovery depends on inventory normalizing below <strong>20 weeks</strong>, which is unlikely before late 2026 at current absorption rates.</p>
@@ -204,7 +214,7 @@
       </div>
 
       <!-- 7. CHRISTCHURCH -->
-      <h2><span class="lang-en">CHRISTCHURCH: STRONGEST RESILIENCE</span><span class="lang-zh" style="display:none">基督城：最強韌性</span></h2>
+      <h2 id="sec-christchurch"><span class="lang-en">CHRISTCHURCH: STRONGEST RESILIENCE</span><span class="lang-zh" style="display:none">基督城：最強韌性</span></h2>
 
       <div class="lang-en">
         <p>Christchurch stands apart as New Zealand's most resilient market, underpinned by the post-2011 earthquake rebuild that created one of the youngest housing stocks in the country. The median of <strong>NZ$697,000</strong> is <strong>31%</strong> cheaper than Auckland and has risen <strong>+4.03%</strong> year-on-year, sitting just <strong>$4,000</strong> below its all-time peak. Six suburbs &mdash; Shirley, Addington, Sydenham, Riccarton, Papanui, and Halswell &mdash; deliver gross yields of <strong>4.3&ndash;6%</strong>, the best in the country. The key risk is earthquake insurance cost, which remains elevated and can erode net returns by <strong>0.5&ndash;1%</strong> annually.</p>
@@ -221,7 +231,7 @@
       </div>
 
       <!-- 8. OUTLOOK -->
-      <h2><span class="lang-en">OUTLOOK AND KEY RISKS</span><span class="lang-zh" style="display:none">展望與主要風險</span></h2>
+      <h2 id="sec-outlook"><span class="lang-en">OUTLOOK AND KEY RISKS</span><span class="lang-zh" style="display:none">展望與主要風險</span></h2>
 
       <div class="lang-en">
         <p><strong>Bull case (+5&ndash;8%):</strong> OCR falls to 2.75%, mortgage rates drop below 4%, inventory normalizes, and migration holds. Christchurch breaks to new highs; Auckland recovers 5&ndash;8%.</p>

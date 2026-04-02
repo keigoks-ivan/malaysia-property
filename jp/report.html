@@ -7,6 +7,14 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}
   .market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+    .toc-box{background:#fff;border:0.5px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;margin:0 0 24px;font-family:'Inter',sans-serif;overflow:hidden}
+    .toc-header{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;font-size:12px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none;background:#f4f7fc}
+    .toc-toggle{background:none;border:none;color:#5a7a9a;font-size:13px;cursor:pointer;padding:0;line-height:1;transition:transform .2s}
+    .toc-list{padding:8px 16px 12px;display:flex;flex-direction:column;gap:2px}
+    .toc-list a{font-size:12px;color:#2c3e50;text-decoration:none;padding:5px 8px 5px 10px;border-radius:4px;border-left:2px solid transparent;display:block;transition:all .15s;font-family:Georgia,serif}
+    .toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;color:#1e3a5f}
+    .toc-collapsed .toc-list{display:none}
+    .toc-collapsed .toc-toggle{transform:rotate(180deg)}
   </style>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../tw/tw.css">
@@ -33,7 +41,9 @@
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
     @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js">  function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+  function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+  </script>
 </head>
 <body>
   <header class="navbar">
@@ -97,7 +107,7 @@
     <div class="report-body">
 
       <!-- 1. EXECUTIVE SUMMARY -->
-      <h2><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+      <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
 
       <div class="lang-en">
         <p>Japan's residential property market in 2025 presents one of the most compelling investment narratives in Asia Pacific: a structurally undersupplied urban market, the world's most accommodative monetary policy turning gradually tighter, and a weaker yen attracting record foreign capital. The national condominium price index rose <strong>8.28%</strong> year-on-year, while Tokyo's new-build prices surged 20%+ in peak months. Fukuoka has emerged as the standout performer with <strong>21.8%</strong> YoY growth and rental yields of <strong>4.98%</strong> &mdash; the best combination of income and appreciation in Japan.</p>
@@ -134,7 +144,7 @@
       </div>
 
       <!-- 2. BOJ RATE NORMALIZATION -->
-      <h2><span class="lang-en">BOJ RATE NORMALIZATION</span><span class="lang-zh" style="display:none">BOJ升息正常化</span></h2>
+      <h2 id="sec-policy"><span class="lang-en">BOJ RATE NORMALIZATION</span><span class="lang-zh" style="display:none">BOJ升息正常化</span></h2>
 
       <div class="lang-en">
         <p>The Bank of Japan has moved from <strong>-0.1%</strong> to <strong>0.5%</strong> in three hikes, ending the world's last negative-rate regime. The path has been deliberate: exiting negative rates in March 2024, lifting to 0.25% in July 2024, and reaching 0.5% in January 2025. This normalization fundamentally alters the financing calculus for Japanese real estate, though the impact remains modest in absolute terms.</p>
@@ -147,7 +157,7 @@
       </div>
 
       <!-- 3. SUPPLY -->
-      <h2><span class="lang-en">SUPPLY: SHRINKING STARTS AND THE AKIYA PARADOX</span><span class="lang-zh" style="display:none">供給：開工萎縮與空屋悖論</span></h2>
+      <h2 id="sec-supply"><span class="lang-en">SUPPLY: SHRINKING STARTS AND THE AKIYA PARADOX</span><span class="lang-zh" style="display:none">供給：開工萎縮與空屋悖論</span></h2>
 
       <div class="lang-en">
         <p>Japan's housing starts have been in secular decline, falling from <strong>905,000 units</strong> in 2019 to an estimated <strong>760,000</strong> in 2025 &mdash; a drop of <strong>-4.6%</strong> year-on-year. The decline is driven by demographics and rising construction costs, which have surged <strong>25&ndash;29%</strong> since 2021 due to materials inflation and a chronic labor shortage in the building trades. Developers are prioritizing margin over volume across all three major metros.</p>
@@ -160,7 +170,7 @@
       </div>
 
       <!-- 4. DEMAND -->
-      <h2><span class="lang-en">DEMAND: FOREIGN CAPITAL AND RESALE BOOM</span><span class="lang-zh" style="display:none">需求：外資湧入與中古屋榮景</span></h2>
+      <h2 id="sec-demand"><span class="lang-en">DEMAND: FOREIGN CAPITAL AND RESALE BOOM</span><span class="lang-zh" style="display:none">需求：外資湧入與中古屋榮景</span></h2>
 
       <div class="lang-en">
         <p>Foreign capital has become the single most important marginal demand driver in Japan's urban property markets. The weak yen has made Japanese real estate extraordinarily cheap in foreign currency terms. Foreign buyer share in Tokyo's luxury segment has reached an estimated <strong>27%</strong>, up from just <strong>12%</strong> in 2020. Taiwanese, Mainland Chinese, Hong Kong, and Singaporean buyers dominate the cross-border flow, drawn by yield spreads unavailable in their home markets.</p>
@@ -174,7 +184,7 @@
 
 
       <!-- 5. VALUATION -->
-      <h2><span class="lang-en">VALUATION</span><span class="lang-zh" style="display:none">估值</span></h2>
+      <h2 id="sec-valuation"><span class="lang-en">VALUATION</span><span class="lang-zh" style="display:none">估值</span></h2>
 
       <div class="lang-en">
         <p>Japan's national rental yield of <strong>4.34%</strong> against a BOJ policy rate of <strong>0.5%</strong> produces a yield spread of <strong>+3.84%</strong> &mdash; the widest positive carry in developed Asia. This spread is the fundamental valuation anchor: as long as it remains above +2.0%, the income case for Japanese property holds regardless of capital appreciation trends. By comparison, Taiwan's spread is a razor-thin <strong>+0.24%</strong> and Malaysia's is <strong>+2.44%</strong>.</p>
@@ -188,7 +198,7 @@
 
 
       <!-- 6. TOKYO 23 WARDS -->
-      <h2><span class="lang-en">TOKYO 23 WARDS</span><span class="lang-zh" style="display:none">東京23區</span></h2>
+      <h2 id="sec-tokyo"><span class="lang-en">TOKYO 23 WARDS</span><span class="lang-zh" style="display:none">東京23區</span></h2>
 
       <div class="lang-en">
         <p>Tokyo's 23-ward area continues to set records. The average new-build condominium price reached <strong>&yen;94 million</strong> in 2025, with a peak month breaching the psychological <strong>&yen;100 million</strong> threshold. Land prices rose <strong>+7.9%</strong> year-on-year, the highest appreciation among Japan's major markets, reflecting persistent demand for central urban sites.</p>
@@ -201,7 +211,7 @@
       </div>
 
       <!-- 7. FUKUOKA -->
-      <h2><span class="lang-en">FUKUOKA</span><span class="lang-zh" style="display:none">福岡</span></h2>
+      <h2 id="sec-fukuoka"><span class="lang-en">FUKUOKA</span><span class="lang-zh" style="display:none">福岡</span></h2>
 
       <div class="lang-en">
         <p>Fukuoka has delivered <strong>13 consecutive years</strong> of price appreciation, the longest winning streak in Japan. The average condominium price reached <strong>&yen;68 million</strong> in 2025, up <strong>+21.8%</strong> year-on-year, outpacing both Tokyo and Osaka. The city's population continues to grow &mdash; one of the few major Japanese cities with positive net migration &mdash; driven by a thriving startup ecosystem, Kyushu's role as a semiconductor hub, and quality of life.</p>
@@ -215,7 +225,7 @@
 
 
       <!-- 8. OUTLOOK -->
-      <h2><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
+      <h2 id="sec-outlook"><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
 
       <div class="lang-en">
         <p><strong>Bull case:</strong> BOJ holds at 0.5% through 2026, yen stays weak (150+/USD), foreign inflows accelerate. National prices +8&ndash;12%, Fukuoka +15%+. Tokyo new-builds breach &yen;100M sustained average.</p>

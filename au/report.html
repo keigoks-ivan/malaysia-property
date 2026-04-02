@@ -7,6 +7,14 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}
   .market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+    .toc-box{background:#fff;border:0.5px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;margin:0 0 24px;font-family:'Inter',sans-serif;overflow:hidden}
+    .toc-header{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;font-size:12px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none;background:#f4f7fc}
+    .toc-toggle{background:none;border:none;color:#5a7a9a;font-size:13px;cursor:pointer;padding:0;line-height:1;transition:transform .2s}
+    .toc-list{padding:8px 16px 12px;display:flex;flex-direction:column;gap:2px}
+    .toc-list a{font-size:12px;color:#2c3e50;text-decoration:none;padding:5px 8px 5px 10px;border-radius:4px;border-left:2px solid transparent;display:block;transition:all .15s;font-family:Georgia,serif}
+    .toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;color:#1e3a5f}
+    .toc-collapsed .toc-list{display:none}
+    .toc-collapsed .toc-toggle{transform:rotate(180deg)}
   </style>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../tw/tw.css">
@@ -32,7 +40,9 @@
     .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
     @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}  </style>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js">  function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+  function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+  </script>
 </head>
 <body>
   <header class="navbar">
@@ -100,7 +110,7 @@
     <div class="report-body">
 
       <!-- SECTION 1: EXECUTIVE SUMMARY -->
-      <h2><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+      <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
       <div class="lang-en"><p>Australia's residential property market entered 2026 in a state of extreme structural tension. Total dwelling value hit a record <strong>A$12.307 trillion</strong> in December 2025, with the national average price reaching <strong>A$1,074,700</strong>. The RBA raised the cash rate to <strong>4.10%</strong> on 17 March 2026 — the second consecutive hike — driven by sticky inflation and Middle East energy shocks, with ASX futures pricing rates as high as <strong>4.75%</strong> by early 2027. Yet despite this aggressive monetary tightening, structural undersupply is proving immune to rate signals. National completions fell <strong>12.5% YoY</strong> in Q2 2025. The National Housing Accord's 1.2M target is tracking at just <strong>78% achievable</strong>. Vacancy rates sit at just <strong>1.1%</strong> nationally — Perth 0.6%, Brisbane 1.0%, Sydney 1.5%. The market is running a pronounced two-speed dynamic: Brisbane (+17.3% YoY), Perth (+22.0%), and Gold Coast (+12.8%) continue delivering double-digit growth; while Sydney (+6.0%) and Melbourne (+4.7%) have moderated as affordability hits hard ceilings. Resale profitability reached a 20-year high — 95.5% of sellers made a nominal gain in Q3 2025, with a median profit of <strong>A$335,000</strong>. The crisis is structural, not cyclical.</p></div>
       <div class="lang-zh" style="display:none"><p>澳洲住宅房市在2026年的高度結構性張力中啟動。2025年12月全國住宅總值創下<strong>A$12.307兆</strong>的歷史紀錄，全國平均價格達到<strong>A$1,074,700</strong>。RBA在2026年3月17日將現金利率升至<strong>4.10%</strong>——連續第二次升息，主因為通膨黏性與中東能源衝擊，ASX期貨定價顯示2027年初可能升至<strong>4.75%</strong>。然而，儘管貨幣緊縮積極，結構性供給短缺已對利率信號形成免疫。2025年Q2全國完工量年減<strong>12.5%</strong>。《國家住房協議》120萬套目標預計僅能達成<strong>78%</strong>。全國空置率僅<strong>1.1%</strong>——伯斯0.6%、布里斯本1.0%、雪梨1.5%。市場呈現顯著的雙速格局：布里斯本（年增+17.3%）、伯斯（+22.0%）和黃金海岸（+12.8%）持續交出雙位數增長；雪梨（+6.0%）和墨爾本（+4.7%）因可負擔性觸頂而放緩。轉售獲利率達20年新高——2025年Q3有95.5%的賣家錄得名目利潤，中位獲利<strong>A$335,000</strong>。這是一場結構性危機，而非週期性波動。</p></div>
       <div class="report-chart-grid">
@@ -127,7 +137,7 @@
       </div>
 
       <!-- SECTION 2: RBA & MACRO -->
-      <h2><span class="lang-en">RBA &amp; MACRO: MARCH 2026 RATE HIKE</span><span class="lang-zh" style="display:none">RBA與總體環境：2026年3月升息</span></h2>
+      <h2 id="sec-policy"><span class="lang-en">RBA &amp; MACRO: MARCH 2026 RATE HIKE</span><span class="lang-zh" style="display:none">RBA與總體環境：2026年3月升息</span></h2>
       <div class="lang-en"><p>The Reserve Bank of Australia raised the cash rate by <strong>25 bps to 4.10%</strong> on 17 March 2026, following the February hike to 3.85%. This was triggered by a February trimmed-mean CPI of <strong>4.1%</strong>, well above the 2-3% target band. ASX 30-day interbank futures now price a terminal rate of <strong>4.75%</strong> by Q1 2027. The average new variable mortgage rate has risen to <strong>6.75%</strong>, with some lenders above 7%. Mortgage stress — defined as households spending over 30% of income on repayments — now affects <strong>47.5%</strong> of mortgage holders nationally, reaching 56.8% in NSW. Despite this, distressed listings remain suppressed at <strong>29.2% below</strong> pre-COVID levels, as equity buffers and employment resilience (unemployment at 4.3%) prevent forced selling.</p></div>
       <div class="lang-zh" style="display:none"><p>澳洲儲備銀行在2026年3月17日將現金利率上調<strong>25個基點至4.10%</strong>，緊隨2月份升至3.85%。此次升息由2月份截尾均值CPI達<strong>4.1%</strong>所觸發，遠高於2-3%的目標區間。ASX 30天銀行間期貨目前定價終端利率在2027年第一季達到<strong>4.75%</strong>。新增浮動房貸平均利率已升至<strong>6.75%</strong>，部分銀行超過7%。房貸壓力——定義為家庭將超過30%收入用於還款——目前影響全國<strong>47.5%</strong>的房貸持有者，在新南威爾斯州達到56.8%。儘管如此，困境房源仍被壓制在<strong>低於疫情前29.2%</strong>的水平，因為權益緩衝和就業韌性（失業率4.3%）防止了強制拋售。</p></div>
       <div class="report-chart-grid">
@@ -154,7 +164,7 @@
       </div>
 
       <!-- SECTION 3: SUPPLY -->
-      <h2><span class="lang-en">SUPPLY: STRUCTURAL DEFICIT</span><span class="lang-zh" style="display:none">供給：結構性赤字</span></h2>
+      <h2 id="sec-supply"><span class="lang-en">SUPPLY: STRUCTURAL DEFICIT</span><span class="lang-zh" style="display:none">供給：結構性赤字</span></h2>
       <div class="lang-en"><p>Australia's housing construction pipeline is in crisis. Total dwelling completions in the year to June 2025 fell to <strong>174,271</strong> — well below the National Housing Accord target of <strong>240,000 per annum</strong>. The annualised completion rate in Q2 2025 dropped to just <strong>162,096</strong>, a 12.5% YoY decline. Building approvals plunged in January 2026, with total approvals at <strong>14,564</strong> (down from a November peak of 18,406) and apartment approvals collapsing <strong>24.5%</strong> month-on-month to 4,393. Construction timelines have blown out dramatically: WA now averages <strong>15.45 months</strong> to complete a house, up 71% from 9.06 months in 2020. The NHSAC projects a cumulative supply-demand gap of <strong>-165,000 dwellings</strong> over the Accord period (2024-2029), making the 1.2M target virtually unachievable.</p></div>
       <div class="lang-zh" style="display:none"><p>澳洲住宅建設管道正陷入危機。截至2025年6月的年度住宅完工量降至<strong>174,271套</strong>——遠低於《國家住房協議》每年<strong>240,000套</strong>的目標。2025年Q2年化完工率僅<strong>162,096套</strong>，年減12.5%。2026年1月建築批准大幅下滑，總批准數為<strong>14,564套</strong>（低於11月峰值18,406套），公寓批准月減<strong>24.5%</strong>至4,393套。施工時間大幅延長：西澳目前平均完工一棟住宅需<strong>15.45個月</strong>，較2020年的9.06個月增長71%。NHSAC預計協議期間（2024-2029）累計供需缺口達<strong>-165,000套</strong>，使120萬套目標幾乎無法實現。</p></div>
       <div class="report-chart-grid">
@@ -181,7 +191,7 @@
       </div>
 
       <!-- SECTION 4: DEMAND -->
-      <h2><span class="lang-en">DEMAND: MIGRATION, CREDIT &amp; WEALTH EFFECTS</span><span class="lang-zh" style="display:none">需求：移民、信貸與財富效應</span></h2>
+      <h2 id="sec-demand"><span class="lang-en">DEMAND: MIGRATION, CREDIT &amp; WEALTH EFFECTS</span><span class="lang-zh" style="display:none">需求：移民、信貸與財富效應</span></h2>
       <div class="lang-en"><p>Net overseas migration (NOM) peaked at <strong>556,000</strong> in FY2023, the highest on record, before moderating to <strong>446,000</strong> in FY2024 and an estimated <strong>306,000</strong> in FY2025. Even at moderated levels, NOM continues to far exceed annual housing supply. FIRB-approved foreign purchases fell to <strong>3,922</strong> in FY2025, with Chinese investment dropping to <strong>A$1.4 billion</strong>. Credit flows are increasingly dominated by existing property — <strong>56.7%</strong> of new lending is for owner-occupied existing dwellings, while new construction attracts only 15.7%. Debt-to-income ratios have hit alarming levels: Gold Coast leads at <strong>11.2x</strong>, followed by Sydney at <strong>10.8x</strong>, both well above APRA's benchmark of 6x.</p></div>
       <div class="lang-zh" style="display:none"><p>淨海外移民（NOM）在2023財政年度達到創紀錄的<strong>556,000人</strong>，隨後降至2024年的<strong>446,000人</strong>和2025年估計的<strong>306,000人</strong>。即使在放緩水平，NOM仍遠超年度住房供應。FIRB批准的外國購買降至2025年的<strong>3,922宗</strong>，中國投資降至<strong>A$14億</strong>。信貸流向日益集中於存量物業——<strong>56.7%</strong>的新增貸款用於自住型現有住宅，而新建僅佔15.7%。債務收入比已達驚人水平：黃金海岸以<strong>11.2倍</strong>領先，雪梨<strong>10.8倍</strong>緊隨其後，均遠超APRA的6倍基準。</p></div>
       <div class="report-chart-grid">
@@ -208,7 +218,7 @@
       </div>
 
       <!-- SECTION 5: VALUATION & AFFORDABILITY -->
-      <h2><span class="lang-en">VALUATION &amp; AFFORDABILITY</span><span class="lang-zh" style="display:none">估值與可負擔性</span></h2>
+      <h2 id="sec-valuation"><span class="lang-en">VALUATION &amp; AFFORDABILITY</span><span class="lang-zh" style="display:none">估值與可負擔性</span></h2>
       <div class="lang-en"><p>Gross rental yields remain deeply compressed relative to financing costs, with the national average at <strong>3.7%</strong> versus a mortgage rate of <strong>6.75%</strong>. Sydney houses yield just <strong>3.1%</strong>, while Darwin leads at <strong>6.6%</strong>. The market is bifurcating by price quartile: lower-quartile properties delivered <strong>+2.5%</strong> growth, while upper-quartile properties fell <strong>-2.0%</strong> — a clear affordability gravity effect. Build-to-rent (BTR) is emerging as the institutional answer to the rental crisis, with the pipeline growing from 800 units in 2021 to <strong>5,500 in 2025</strong> and projected to reach <strong>18,000 by 2030</strong>. Rent inflation continues to outpace CPI, with actual rents rising <strong>6.6%</strong> in 2025 versus CPI of 4.2%.</p></div>
       <div class="lang-zh" style="display:none"><p>毛租金收益率相對融資成本仍深度壓縮，全國平均為<strong>3.7%</strong>，而房貸利率為<strong>6.75%</strong>。雪梨獨立屋僅<strong>3.1%</strong>，而達爾文以<strong>6.6%</strong>領先。市場正按價格四分位數分化：低四分位物業實現<strong>+2.5%</strong>增長，而高四分位物業下跌<strong>-2.0%</strong>——明顯的可負擔性引力效應。建後出租（BTR）正成為機構應對租賃危機的方案，管道從2021年的800套增長至2025年的<strong>5,500套</strong>，預計2030年達到<strong>18,000套</strong>。租金通膨持續超越CPI，2025年實際租金上漲<strong>6.6%</strong>，而CPI為4.2%。</p></div>
       <div class="report-chart-grid">
@@ -235,7 +245,7 @@
       </div>
 
       <!-- SECTION 6: SYDNEY -->
-      <h2><span class="lang-en">SYDNEY: AFFORDABILITY CEILING</span><span class="lang-zh" style="display:none">雪梨：可負擔性天花板</span></h2>
+      <h2 id="sec-sydney"><span class="lang-en">SYDNEY: AFFORDABILITY CEILING</span><span class="lang-zh" style="display:none">雪梨：可負擔性天花板</span></h2>
       <div class="lang-en"><p>Sydney remains the nation's most expensive market, with the median house price reaching <strong>A$1,607,046</strong> in Q1 2026 and units hitting <strong>A$903,080</strong>. Annual growth has moderated to <strong>+6.0%</strong> as affordability constraints intensify. Auction clearance rates have been volatile — surging to <strong>79.6%</strong> in January 2026 before collapsing to <strong>55%</strong> in March post-rate hike. The market is increasingly two-speed within Sydney itself: the lower quartile continues to find buyers, while prestige properties face longer days on market and deeper vendor discounting.</p></div>
       <div class="lang-zh" style="display:none"><p>雪梨仍是全國最昂貴的市場，2026年Q1中位獨立屋價格達<strong>A$1,607,046</strong>，公寓達<strong>A$903,080</strong>。年增率放緩至<strong>+6.0%</strong>，因可負擔性限制加劇。拍賣清算率波動劇烈——2026年1月飆升至<strong>79.6%</strong>，然後在升息後3月暴跌至<strong>55%</strong>。雪梨內部市場也日益雙速化：低價位段持續有買家，而高端物業面臨更長的上市天數和更深的賣方折讓。</p></div>
       <div class="report-chart-grid">
@@ -252,7 +262,7 @@
       </div>
 
       <!-- SECTION 7: BRISBANE -->
-      <h2><span class="lang-en">BRISBANE: OLYMPIC CITY MOMENTUM</span><span class="lang-zh" style="display:none">布里斯本：奧運城市動能</span></h2>
+      <h2 id="sec-brisbane"><span class="lang-en">BRISBANE: OLYMPIC CITY MOMENTUM</span><span class="lang-zh" style="display:none">布里斯本：奧運城市動能</span></h2>
       <div class="lang-en"><p>Brisbane is the standout performer of the cycle, with house prices reaching <strong>A$1,080,000</strong> (up 17.3% YoY) and units at <strong>A$680,000</strong>. The 2032 Olympics continues to drive infrastructure and investor sentiment. Key Olympic precincts are commanding significant premiums: Bowen Hills leads at <strong>+28%</strong> above pre-announcement levels, followed by Herston/Kelvin Grove at +25%. The city's vacancy rate of <strong>1.0%</strong> is among the tightest nationally, with median rents up 8.0% YoY. Interstate migration from Sydney and Melbourne continues to underpin demand.</p></div>
       <div class="lang-zh" style="display:none"><p>布里斯本是本輪週期中表現最突出的城市，獨立屋價格達<strong>A$1,080,000</strong>（年增17.3%），公寓達<strong>A$680,000</strong>。2032年奧運會持續推動基礎設施和投資者信心。主要奧運區域溢價顯著：Bowen Hills以高於公布前水平<strong>+28%</strong>領先，其次是Herston/Kelvin Grove的+25%。該市空置率<strong>1.0%</strong>為全國最緊張之一，中位租金年增8.0%。來自雪梨和墨爾本的州際移民持續支撐需求。</p></div>
       <div class="report-chart-grid">
@@ -269,7 +279,7 @@
       </div>
 
       <!-- SECTION 8: GOLD COAST -->
-      <h2><span class="lang-en">GOLD COAST: LIFESTYLE PREMIUM LOGIC</span><span class="lang-zh" style="display:none">黃金海岸：生活方式溢價邏輯</span></h2>
+      <h2 id="sec-goldcoast"><span class="lang-en">GOLD COAST: LIFESTYLE PREMIUM LOGIC</span><span class="lang-zh" style="display:none">黃金海岸：生活方式溢價邏輯</span></h2>
       <div class="lang-en"><p>The Gold Coast has undergone a structural repricing, with median unit prices reaching <strong>A$956,000</strong> in October 2025 — overtaking Sydney units at A$927,000 for the first time in history. This convergence reflects the lifestyle premium that post-COVID migration patterns have crystallised. Annual growth of <strong>+12.8%</strong> is supported by a vacancy rate of just <strong>0.8%</strong> and a debt-to-income ratio of <strong>11.2x</strong> — the highest in Australia. However, the apartment supply pipeline is heading for a cliff: completions drop from 1,870 in 2025 to just <strong>95 in 2027</strong>, which will intensify the supply crisis further.</p></div>
       <div class="lang-zh" style="display:none"><p>黃金海岸經歷了結構性重定價，2025年10月中位公寓價格達<strong>A$956,000</strong>——歷史上首次超越雪梨公寓的A$927,000。此收斂反映了疫情後遷移模式所固化的生活方式溢價。年增<strong>+12.8%</strong>由僅<strong>0.8%</strong>的空置率和<strong>11.2倍</strong>的債務收入比（全澳最高）所支撐。然而公寓供應管道正走向斷崖：完工量從2025年的1,870套降至2027年僅<strong>95套</strong>，將進一步加劇供應危機。</p></div>
       <div class="report-chart-grid">
@@ -286,7 +296,7 @@
       </div>
 
       <!-- SECTION 9: OUTLOOK -->
-      <h2><span class="lang-en">OUTLOOK: THREE SCENARIOS FOR 2026-2027</span><span class="lang-zh" style="display:none">展望：2026-2027年三大情境</span></h2>
+      <h2 id="sec-outlook"><span class="lang-en">OUTLOOK: THREE SCENARIOS FOR 2026-2027</span><span class="lang-zh" style="display:none">展望：2026-2027年三大情境</span></h2>
       <div class="lang-en"><p>We model three scenarios for the next 12-18 months. <strong>Bull case</strong> (25% probability): RBA cuts to 3.50% by mid-2027, migration stays above 300K, completions remain below 170K — national prices +12%. <strong>Base case</strong> (50% probability): RBA holds at 4.10-4.35%, migration normalises to 260K, construction slowly recovers — national prices +6%. <strong>Bear case</strong> (25% probability): RBA hikes to 4.75%, global recession triggers migration pullback, distressed listings rise — national prices -3%. In all scenarios, Perth, Brisbane, and Gold Coast outperform due to structural undersupply and demographic tailwinds. Melbourne and Sydney underperform on affordability constraints. Rents continue rising 5-12% in all scenarios.</p></div>
       <div class="lang-zh" style="display:none"><p>我們為未來12-18個月建立三種情境模型。<strong>牛市情境</strong>（25%概率）：RBA在2027年中降至3.50%，移民維持30萬以上，完工量低於17萬——全國房價+12%。<strong>基本情境</strong>（50%概率）：RBA維持在4.10-4.35%，移民正常化至26萬，建設緩慢恢復——全國房價+6%。<strong>熊市情境</strong>（25%概率）：RBA升至4.75%，全球衰退觸發移民回撤，困境房源上升——全國房價-3%。在所有情境中，伯斯、布里斯本和黃金海岸因結構性供不應求和人口順風而跑贏。墨爾本和雪梨因可負擔性限制而表現不佳。租金在所有情境中持續上漲5-12%。</p></div>
       <div class="report-chart-grid">

@@ -7,6 +7,14 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}
   .market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+    .toc-box{background:#fff;border:0.5px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;margin:0 0 24px;font-family:'Inter',sans-serif;overflow:hidden}
+    .toc-header{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;font-size:12px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none;background:#f4f7fc}
+    .toc-toggle{background:none;border:none;color:#5a7a9a;font-size:13px;cursor:pointer;padding:0;line-height:1;transition:transform .2s}
+    .toc-list{padding:8px 16px 12px;display:flex;flex-direction:column;gap:2px}
+    .toc-list a{font-size:12px;color:#2c3e50;text-decoration:none;padding:5px 8px 5px 10px;border-radius:4px;border-left:2px solid transparent;display:block;transition:all .15s;font-family:Georgia,serif}
+    .toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;color:#1e3a5f}
+    .toc-collapsed .toc-list{display:none}
+    .toc-collapsed .toc-toggle{transform:rotate(180deg)}
   </style>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="tw.css">
@@ -33,7 +41,9 @@
     .report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
     @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js">  function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+  function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+  </script>
 </head>
 <body>
   <header class="navbar">
@@ -98,7 +108,7 @@
     </div>
     <div class="report-body">
 
-      <h2><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+      <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
 
       <div class="lang-en">
         <p>Taiwan's residential property market is navigating a cyclical delivery peak layered on top of a credit-driven demand freeze. In 2025, national residential completions are estimated at <strong>143,000&ndash;170,000 units</strong> &mdash; the highest level since 1997 &mdash; while presale transaction volumes collapsed <strong>74.7%</strong> year-on-year across seven major cities. Yet the headline supply surge is structurally overstated: once urban renewal replacements, natural obsolescence write-offs, and pre-sold units are deducted, net effective new free-market supply is estimated at just <strong>30,000&ndash;50,000 units</strong> &mdash; far below the gross completion figure.</p>
@@ -134,7 +144,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">POLICY IMPACT: THE 7TH CREDIT CONTROL</span><span class="lang-zh" style="display:none">政策衝擊：第七波信用管制</span></h2>
+      <h2 id="sec-policy"><span class="lang-en">POLICY IMPACT: THE 7TH CREDIT CONTROL</span><span class="lang-zh" style="display:none">政策衝擊：第七波信用管制</span></h2>
 
       <div class="lang-en">
         <p>The Central Bank of the Republic of China implemented its seventh round of selective credit controls in September 2024 &mdash; the most aggressive tightening in modern Taiwan housing policy history. Core measures: second-home LTV capped at <strong>60%</strong> with <strong>zero grace period</strong>; third-home and above LTV compressed further; corporate and legal-entity purchases capped at <strong>30% LTV</strong>; and the geographic scope extended nationwide across all six special municipalities. While the CBC subsequently adjusted the second-home LTV to 60% in response to genuine upgrader demand, the overall tightening stance remained unchanged.</p>
@@ -163,7 +173,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">SUPPLY</span><span class="lang-zh" style="display:none">供給面</span></h2>
+      <h2 id="sec-supply"><span class="lang-en">SUPPLY</span><span class="lang-zh" style="display:none">供給面</span></h2>
 
       <div class="lang-en">
         <p>Taiwan is approaching a once-in-a-generation supply peak. Residential use certificates issued in 2024 reached <strong>138,180 units</strong> &mdash; up <strong>16.8%</strong> year-on-year and the highest in a decade. Estimated 2025 completions of <strong>143,000&ndash;170,000 units</strong> represent the highest level since 1997. The six major cities account for <strong>76.5%</strong> of national completions: Taichung leads with 3.99 million m&sup2; (<strong>+21.4%</strong>), followed by Taoyuan at 3.48 million m&sup2; (<strong>+24.7%</strong>) and New Taipei at 2.43 million m&sup2;.</p>
@@ -192,7 +202,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">AGING STOCK: REDEFINING EFFECTIVE SUPPLY</span><span class="lang-zh" style="display:none">老屋結構：重新定義有效淨增供給</span></h2>
+      <h2 id="sec-aging"><span class="lang-en">AGING STOCK: REDEFINING EFFECTIVE SUPPLY</span><span class="lang-zh" style="display:none">老屋結構：重新定義有效淨增供給</span></h2>
 
       <div class="lang-en">
         <p>Taiwan's housing stock is structurally aged. Of the national total of <strong>9.255 million</strong> residential tax-registered units, <strong>5.155 million (55.7%)</strong> are over 30 years old as of Q2 2024, with the national average age reaching a record <strong>33 years</strong>. This is the critical structural lens through which Taiwan's supply surge must be evaluated: most new completions are not net additions &mdash; they fill demand gaps left by an aging and functionally obsolescent stock. At the current urban renewal and dangerous building reconstruction rate of <strong>30,000&ndash;40,000 units per year</strong>, clearing the 5.155 million aged units would take <strong>130&ndash;170 years</strong>.</p>
@@ -219,7 +229,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">DEMAND</span><span class="lang-zh" style="display:none">需求面</span></h2>
+      <h2 id="sec-demand"><span class="lang-en">DEMAND</span><span class="lang-zh" style="display:none">需求面</span></h2>
 
       <div class="lang-en">
         <p>Taiwan's 2025 transaction volumes reflect credit constraint, not demand destruction. Total 2024 transactions across the six major cities reached approximately <strong>340,000&ndash;360,000 units</strong>, a decade high. By product type, secondary market (resale) units accounted for <strong>64.43%</strong> of transactions in a 12-month average across seven cities, presale <strong>28.73%</strong>, and new completed units approximately <strong>6.84%</strong>. The presale collapse of <strong>74.7%</strong> year-on-year represents policy-driven suppression of the most speculative segment, while the resale market &mdash; comprising the majority of all transactions &mdash; has contracted far less severely.</p>
@@ -248,7 +258,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">VALUATION</span><span class="lang-zh" style="display:none">估值</span></h2>
+      <h2 id="sec-valuation"><span class="lang-en">VALUATION</span><span class="lang-zh" style="display:none">估值</span></h2>
 
       <div class="lang-en">
         <p>Taiwan's valuation picture is defined by extreme city-level divergence. At the top, Taipei's price-to-income ratio of <strong>16.43x</strong> and mortgage burden rate of <strong>68.82%</strong> place it in the globally unaffordable tier alongside Hong Kong. At the bottom, Taoyuan at <strong>8.65x</strong> and approximately <strong>37%</strong> burden rate represents the most accessible major market in Taiwan. The national average of <strong>10.76x</strong> &mdash; a Q4 2024 record &mdash; masks this bifurcation. Both metrics hit all-time highs simultaneously in Q4 2024, signalling that affordability is now the primary binding constraint on demand across the entire market, not just premium segments.</p>
@@ -275,7 +285,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">TAIPEI</span><span class="lang-zh" style="display:none">台北</span></h2>
+      <h2 id="sec-taipei"><span class="lang-en">TAIPEI</span><span class="lang-zh" style="display:none">台北</span></h2>
 
       <div class="lang-en">
         <p>Taipei is structurally the most supply-constrained market in Taiwan. Despite a <strong>+79.3%</strong> surge in 2024 completion floorspace &mdash; the highest among the six cities &mdash; virtually all of this represents urban renewal and dangerous building reconstruction, not net new supply. Unsold inventory stands at just <strong>4,000 units</strong>, the lowest among all six cities. With <strong>72.79%</strong> of housing stock over 30 years old and building permits for genuine new development at historically low levels, Taipei's supply constraint is structural and durable. The 2024 transaction volume grew <strong>+12%</strong> year-on-year, with presale contraction at <strong>-55.9%</strong> &mdash; the most resilient of any major city.</p>
@@ -304,7 +314,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">HSINCHU</span><span class="lang-zh" style="display:none">新竹</span></h2>
+      <h2 id="sec-hsinchu"><span class="lang-en">HSINCHU</span><span class="lang-zh" style="display:none">新竹</span></h2>
 
       <div class="lang-en">
         <p>Hsinchu is Taiwan's structural outlier &mdash; a market driven almost entirely by a single industry thesis: semiconductors. The TSMC effect has produced cumulative price appreciation of <strong>+58.4%</strong> over five years (2020&ndash;2025), the highest of any major Taiwanese city. Average prices reached approximately <strong>NT$42 wan per ping</strong> in Q3 2025, a level that would have been unthinkable for a non-metropolitan area five years ago.</p>
@@ -333,7 +343,7 @@
         </div>
       </div>
 
-      <h2><span class="lang-en">OUTLOOK &amp; RISK SCENARIOS</span><span class="lang-zh" style="display:none">展望與風險情境</span></h2>
+      <h2 id="sec-outlook"><span class="lang-en">OUTLOOK &amp; RISK SCENARIOS</span><span class="lang-zh" style="display:none">展望與風險情境</span></h2>
 
       <div class="lang-en">
         <p>The 2025&ndash;2027 period represents a cyclical delivery peak, not a structural oversupply. The base case: completions of <strong>143,000&ndash;170,000</strong> in 2025 and <strong>100,000&ndash;120,000</strong> in 2026 remain elevated, but the pipeline self-correction is already underway &mdash; building permits have contracted materially and the under-construction stock shrank <strong>33%</strong> in the year to Q3 2025. Post-2029 completions are expected to naturalise below the historical average of 100,000 units. The market will not repeat the 2025 peak because the launch cycle that created it has already ended.</p>

@@ -7,6 +7,14 @@
   <meta name="color-scheme" content="light">
   <style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}
   .market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:140px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+    .toc-box{background:#fff;border:0.5px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;margin:0 0 24px;font-family:'Inter',sans-serif;overflow:hidden}
+    .toc-header{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;font-size:12px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none;background:#f4f7fc}
+    .toc-toggle{background:none;border:none;color:#5a7a9a;font-size:13px;cursor:pointer;padding:0;line-height:1;transition:transform .2s}
+    .toc-list{padding:8px 16px 12px;display:flex;flex-direction:column;gap:2px}
+    .toc-list a{font-size:12px;color:#2c3e50;text-decoration:none;padding:5px 8px 5px 10px;border-radius:4px;border-left:2px solid transparent;display:block;transition:all .15s;font-family:Georgia,serif}
+    .toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;color:#1e3a5f}
+    .toc-collapsed .toc-list{display:none}
+    .toc-collapsed .toc-toggle{transform:rotate(180deg)}
   </style>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../tw/tw.css">
@@ -35,7 +43,9 @@
     .timeline{display:flex;flex-wrap:wrap;gap:0;margin:20px 0;position:relative}.timeline::before{content:'';position:absolute;top:18px;left:0;right:0;height:2px;background:#ccd9e8}.tl-item{flex:1;min-width:140px;text-align:center;position:relative;padding-top:36px}.tl-dot{width:12px;height:12px;border-radius:50%;background:#1e3a5f;position:absolute;top:12px;left:50%;transform:translateX(-50%);border:2px solid #fff;box-shadow:0 0 0 2px #ccd9e8}.tl-item.highlight .tl-dot{background:#dc2626;box-shadow:0 0 0 2px #dc2626}.tl-date{font-size:11px;font-weight:600;color:#1e3a5f;font-family:Inter,sans-serif}.tl-desc{font-size:10px;color:#5a7a9a;margin-top:4px;font-family:Inter,sans-serif;line-height:1.4}
     @media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js">  function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+  function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+  </script>
 </head>
 <body>
   <header class="navbar">
@@ -103,7 +113,7 @@
     <div class="report-body">
 
       <!-- SECTION 1: EXECUTIVE SUMMARY -->
-      <h2><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+      <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
 
       <div class="lang-en">
         <p>The UK residential property market in 2025 is defined by a stark north-south divide. While London prices fell <strong>1.2%</strong> year-on-year, the North East delivered <strong>6.8%</strong> growth &mdash; the strongest of any English region. The Bank of England's cutting cycle, which brought the base rate from a peak of <strong>5.25%</strong> to <strong>3.75%</strong> by December 2025, is gradually restoring affordability and transaction volumes, with monthly transactions averaging <strong>~101,000</strong> &mdash; 3% above the five-year mean.</p>
@@ -142,7 +152,7 @@
       </div>
 
       <!-- SECTION 2: BOE RATE CYCLE -->
-      <h2><span class="lang-en">BOE RATE CYCLE</span><span class="lang-zh" style="display:none">利率週期</span></h2>
+      <h2 id="sec-policy"><span class="lang-en">BOE RATE CYCLE</span><span class="lang-zh" style="display:none">利率週期</span></h2>
 
       <div class="lang-en">
         <p>The Bank of England began its hiking cycle in February 2022 from a historic low of <strong>0.25%</strong>, reaching a peak of <strong>5.25%</strong> in August 2023. The September 2022 mini-budget crisis under Liz Truss triggered a gilt market panic, temporarily pushing mortgage rates above <strong>6%</strong> and crystallizing the rate sensitivity of the UK housing market. After holding at 5.25% for a year, the BoE commenced its cutting cycle in August 2024, delivering a series of <strong>25bps</strong> reductions to reach <strong>3.75%</strong> by December 2025.</p>
@@ -155,7 +165,7 @@
       </div>
 
       <!-- SECTION 3: SUPPLY -->
-      <h2><span class="lang-en">SUPPLY</span><span class="lang-zh" style="display:none">供給面</span></h2>
+      <h2 id="sec-supply"><span class="lang-en">SUPPLY</span><span class="lang-zh" style="display:none">供給面</span></h2>
 
       <div class="lang-en">
         <p>The UK's housing supply deficit remains one of the market's defining structural features. Annual completions of approximately <strong>220,000</strong> homes consistently fall short of the government's <strong>300,000</strong> target, creating a cumulative shortfall that supports prices even in weaker economic conditions. Planning delays, labour shortages, and elevated construction costs &mdash; up approximately <strong>25%</strong> since 2020 &mdash; continue to constrain the development pipeline. On the rental side, the impending Renters Rights Act is already driving small landlord disposals, reducing the private rental stock and pushing advertised rents higher. New rental supply from build-to-rent (BTR) institutions is growing but remains a fraction of total stock.</p>
@@ -166,7 +176,7 @@
       </div>
 
       <!-- SECTION 4: DEMAND -->
-      <h2><span class="lang-en">DEMAND</span><span class="lang-zh" style="display:none">需求面</span></h2>
+      <h2 id="sec-demand"><span class="lang-en">DEMAND</span><span class="lang-zh" style="display:none">需求面</span></h2>
 
       <div class="lang-en">
         <p>Transaction volumes have recovered to approximately <strong>101,000</strong> per month, 3% above the five-year average, supported by the BoE's cutting cycle and improved mortgage availability. First-time buyers remain the largest buyer segment, although stamp duty relief ending in April 2025 created a pull-forward of demand into Q1 2025 followed by a temporary dip. Investor demand is increasingly concentrated in northern cities offering positive yield spreads &mdash; Manchester, Birmingham, and Newcastle have emerged as institutional favourites. Net migration of approximately <strong>700,000</strong> per annum continues to drive underlying housing demand well above the construction run rate.</p>
@@ -177,7 +187,7 @@
       </div>
 
       <!-- SECTION 5: VALUATION -->
-      <h2><span class="lang-en">VALUATION</span><span class="lang-zh" style="display:none">估值</span></h2>
+      <h2 id="sec-valuation"><span class="lang-en">VALUATION</span><span class="lang-zh" style="display:none">估值</span></h2>
 
       <div class="lang-en">
         <p>Valuation across the UK is bifurcated. London's price-to-income ratio of <strong>8.6x</strong> and gross rental yields of <strong>3&ndash;4%</strong> against a <strong>3.75%</strong> base rate make it one of Europe's most expensive and lowest-yielding markets. The national average price-to-income of <strong>6.5x</strong> masks significant regional variation: northern England and Scotland offer ratios of <strong>4&ndash;5x</strong> with yields of <strong>6&ndash;8%</strong>, providing genuine positive carry even at current interest rates. Manchester's <strong>6.5%</strong> yield, Birmingham's <strong>5&ndash;7%</strong> range, and Newcastle's <strong>6&ndash;8%</strong> represent the strongest risk-adjusted income returns in the UK residential sector.</p>
@@ -188,7 +198,7 @@
       </div>
 
       <!-- SECTION 6: LONDON -->
-      <h2><span class="lang-en">LONDON</span><span class="lang-zh" style="display:none">倫敦</span></h2>
+      <h2 id="sec-london"><span class="lang-en">LONDON</span><span class="lang-zh" style="display:none">倫敦</span></h2>
 
       <div class="lang-en">
         <p>London remains the UK's most liquid but also most challenged market for income investors. Average house prices hover around <strong>&pound;530,000</strong>, with prime central London at multiples of that. Prices fell <strong>1.2%</strong> year-on-year in 2025, underperforming every other English region. Gross rental yields of <strong>3&ndash;4%</strong> offer negative carry against the <strong>3.75%</strong> base rate for leveraged investors. The capital's investment case now rests primarily on long-term capital preservation, global safe-haven demand, and the expectation that further BoE cuts will compress yields and restore modest capital growth. For yield-seeking investors, London is a hold rather than a buy at current pricing.</p>
@@ -199,7 +209,7 @@
       </div>
 
       <!-- SECTION 7: NORTHERN CITIES -->
-      <h2><span class="lang-en">NORTHERN CITIES</span><span class="lang-zh" style="display:none">北部城市</span></h2>
+      <h2 id="sec-northern"><span class="lang-en">NORTHERN CITIES</span><span class="lang-zh" style="display:none">北部城市</span></h2>
 
       <div class="lang-en">
         <p>The northern cities of Manchester, Birmingham, Newcastle, and Edinburgh represent the UK's strongest risk-adjusted investment opportunity. Manchester offers <strong>6.5%</strong> yields with robust rental demand from a young professional population and a thriving tech sector. Birmingham, rated the #1 UK investment city by JLL, benefits from HS2 connectivity (Phase 1), a growing financial services cluster, and yields of <strong>5&ndash;7%</strong>. Newcastle stands out for affordability: a median price of just <strong>&pound;208,000</strong> paired with <strong>6&ndash;8%</strong> yields and the North East's <strong>6.8%</strong> annual price growth &mdash; the strongest in England. Edinburgh combines cultural capital status with yields of <strong>5&ndash;6%</strong> and consistent demand from students, festivals, and the financial sector.</p>
@@ -212,7 +222,7 @@
       </div>
 
       <!-- SECTION 8: OUTLOOK -->
-      <h2><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
+      <h2 id="sec-outlook"><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
 
       <div class="lang-en">
         <p><strong>Bull case:</strong> BoE cuts to 3.0% by end-2026, mortgage rates fall below 4%, transaction volumes surge. National prices <strong>+5&ndash;7%</strong>, northern cities <strong>+8&ndash;10%</strong>. Rental growth remains strong at <strong>+4&ndash;6%</strong> as landlord supply shrinks under the Renters Rights Act.</p>
@@ -227,7 +237,7 @@
       </div>
 
       <!-- POLICY TIMELINE -->
-      <h2><span class="lang-en">POLICY TIMELINE</span><span class="lang-zh" style="display:none">政策時間線</span></h2>
+      <h2 id="sec-timeline"><span class="lang-en">POLICY TIMELINE</span><span class="lang-zh" style="display:none">政策時間線</span></h2>
       <div class="timeline">
         <div class="tl-item">
           <div class="tl-dot"></div>
