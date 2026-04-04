@@ -54,7 +54,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
 
 .compare-wrap{background:#fff;border:1px solid #dce8f5;border-radius:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .compare-tbl{width:100%;border-collapse:collapse;min-width:920px}
-.compare-tbl th{background:#f0f6ff;font-size:10px;letter-spacing:.08em;color:#5a7a9a;font-weight:600;padding:10px 14px;text-align:right;border-bottom:1px solid #dce8f5;white-space:nowrap}
+.compare-tbl th{background:#f0f6ff;font-size:10px;letter-spacing:.08em;color:#5a7a9a;font-weight:600;padding:10px 14px;text-align:right;border-bottom:1px solid #dce8f5;white-space:nowrap;transition:background .15s}
+.compare-tbl th[data-key]:hover{background:#e4eefb;color:#1e3a5f}
 .compare-tbl th:first-child{text-align:left;position:sticky;left:0;background:#f0f6ff;z-index:2;min-width:130px;border-right:1px solid #dce8f5}
 .compare-tbl td{padding:9px 14px;font-size:12px;border-bottom:1px solid #f0f5fb;text-align:right;font-variant-numeric:tabular-nums;color:#1e3a5f;white-space:nowrap}
 .compare-tbl td:first-child{text-align:left;font-weight:600}
@@ -159,15 +160,15 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
     <div class="compare-wrap">
       <table class="compare-tbl">
         <thead><tr>
-          <th style="text-align:left"><span class="lang-en">City</span><span class="lang-zh">城市</span></th>
-          <th><span class="lang-en">Price (USD)</span><span class="lang-zh">房價（美元）</span></th>
-          <th><span class="lang-en">YoY</span><span class="lang-zh">年增率</span></th>
-          <th><span class="lang-en">Yield</span><span class="lang-zh">租金收益率</span></th>
-          <th><span class="lang-en">PTI</span><span class="lang-zh">房價收入比</span></th>
-          <th style="text-align:center"><span class="lang-en">Supply</span><span class="lang-zh">供需</span></th>
-          <th><span class="lang-en">Mortgage</span><span class="lang-zh">按揭利率</span></th>
+          <th style="text-align:left;cursor:pointer;user-select:none" data-key="name" onclick="sortBy('name')"><span class="lang-en">City</span><span class="lang-zh">城市</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="cursor:pointer;user-select:none" data-key="priceUSD" onclick="sortBy('priceUSD')"><span class="lang-en">Price (USD)</span><span class="lang-zh">房價（美元）</span><span class="sort-arrow" style="font-size:9px;color:#1e3a5f"> ↓</span></th>
+          <th style="cursor:pointer;user-select:none" data-key="yoy" onclick="sortBy('yoy')"><span class="lang-en">YoY</span><span class="lang-zh">年增率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="cursor:pointer;user-select:none" data-key="yield" onclick="sortBy('yield')"><span class="lang-en">Yield</span><span class="lang-zh">租金收益率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="cursor:pointer;user-select:none" data-key="pti" onclick="sortBy('pti')"><span class="lang-en">PTI</span><span class="lang-zh">房價收入比</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="text-align:center;cursor:pointer;user-select:none" data-key="supply" onclick="sortBy('supply')"><span class="lang-en">Supply</span><span class="lang-zh">供需</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="cursor:pointer;user-select:none" data-key="mortgage" onclick="sortBy('mortgage')"><span class="lang-en">Mortgage</span><span class="lang-zh">按揭利率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="text-align:center"><span class="lang-en">Foreign Buy</span><span class="lang-zh">外國人可買</span></th>
-          <th><span class="lang-en">Market</span><span class="lang-zh">市場</span></th>
+          <th style="cursor:pointer;user-select:none" data-key="mkt" onclick="sortBy('mkt')"><span class="lang-en">Market</span><span class="lang-zh">市場</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
         </tr></thead>
         <tbody id="city-tbody"></tbody>
       </table>
@@ -251,8 +252,33 @@ function foreignBadge(c,lang){
   var cl=isYes?'#166534':isRestrict?'#991b1b':'#92400e';
   return '<span style="display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;background:'+bg+';color:'+cl+'">'+val+'</span>';
 }
+function sortBy(key){
+  if(sortKey===key){sortDir*=-1;}else{sortKey=key;sortDir=1;}
+  renderTable(currentLang);
+  document.querySelectorAll('.compare-tbl th[data-key]').forEach(function(th){
+    var arrow=th.querySelector('.sort-arrow');
+    if(!arrow)return;
+    if(th.dataset.key===sortKey){
+      arrow.textContent=sortDir===1?' ↓':' ↑';
+      th.style.color='#1e3a5f';
+    }else{
+      arrow.textContent=' ↕';
+      th.style.color='#5a7a9a';
+    }
+  });
+}
 function renderTable(lang){
-  var sorted=CITIES.slice().sort(function(a,b){return(b.priceUSD||0)-(a.priceUSD||0);});
+  var sorted=CITIES.slice().sort(function(a,b){
+    var av=a[sortKey],bv=b[sortKey];
+    if(av===null||av===undefined)av=-Infinity;
+    if(bv===null||bv===undefined)bv=-Infinity;
+    if(sortKey==='supply'){
+      av=SUPPLY_ORDER[av]!==undefined?SUPPLY_ORDER[av]:1;
+      bv=SUPPLY_ORDER[bv]!==undefined?SUPPLY_ORDER[bv]:1;
+    }
+    if(typeof av==='string')return sortDir*(av.localeCompare(bv));
+    return sortDir*(bv-av);
+  });
   var tbody=document.getElementById('city-tbody');
   tbody.innerHTML=sorted.map(function(c){
     var nm=lang==='zh'?c.nameZh:c.name;
@@ -273,6 +299,9 @@ function renderTable(lang){
       '<td style="color:#7fa3c4;font-size:11px;min-width:60px">'+c.mkt+'</td></tr>';
   }).join('');
 }
+var sortKey='priceUSD';
+var sortDir=1; // 1=desc, -1=asc
+var SUPPLY_ORDER={tight:0,balanced:1,loose:2};
 var currentLang=localStorage.getItem('pm-lang')||'en';
 function setLang(lang){
   currentLang=lang;localStorage.setItem('pm-lang',lang);
