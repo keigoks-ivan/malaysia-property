@@ -153,8 +153,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
     <div class="section-hdr">
       <span class="section-title lang-en">CITY COMPARISON</span>
       <span class="section-title lang-zh">城市比較</span>
-      <span class="section-desc lang-en">17 cities &middot; Price &middot; YoY &middot; Yield &middot; PTI &middot; Supply &middot; Mortgage &middot; Foreign Ownership</span>
-      <span class="section-desc lang-zh">17 城市 &middot; 房價 &middot; 年增率 &middot; 收益率 &middot; 房價收入比 &middot; 供給月數 &middot; 按揭利率 &middot; 外國人可否購買</span>
+      <span class="section-desc lang-en">17 cities &middot; Price &middot; YoY &middot; Yield &middot; PTI &middot; DOM &middot; Mortgage &middot; Foreign Ownership</span>
+      <span class="section-desc lang-zh">17 城市 &middot; 房價 &middot; 年增率 &middot; 收益率 &middot; 房價收入比 &middot; 在市天數 &middot; 按揭利率 &middot; 外國人可否購買</span>
     </div>
     <div class="compare-wrap">
       <table class="compare-tbl">
@@ -164,7 +164,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
           <th><span class="lang-en">YoY</span><span class="lang-zh">年增率</span></th>
           <th><span class="lang-en">Yield</span><span class="lang-zh">租金收益率</span></th>
           <th><span class="lang-en">PTI</span><span class="lang-zh">房價收入比</span></th>
-          <th><span class="lang-en">Supply</span><span class="lang-zh">供給月數</span></th>
+          <th><span class="lang-en">DOM (days)</span><span class="lang-zh">在市天數</span></th>
           <th><span class="lang-en">Mortgage</span><span class="lang-zh">按揭利率</span></th>
           <th style="text-align:center"><span class="lang-en">Foreign Buy</span><span class="lang-zh">外國人可買</span></th>
           <th><span class="lang-en">Market</span><span class="lang-zh">市場</span></th>
@@ -173,8 +173,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
       </table>
     </div>
     <p class="note">
-      <span class="lang-en">Price: USD equivalent &middot; Bangkok shown as THB/sqm (CBD condo, not total unit price) &middot; Yield: gross, before tax/fees &middot; PTI: median price &divide; annual household income &middot; Supply: months of inventory &middot; Mortgage: prevailing market rate (2026) &middot; Data: CS / CBRE / CAR / BOT / REIC / Land Registry &middot; Updated Apr 2026</span>
-      <span class="lang-zh">房價：美元等值 &middot; 曼谷顯示為泰銖/平方米（CBD公寓，非整套單位總價）&middot; 收益率：毛收益率，未扣稅費 &middot; PTI：中位數房價&divide;年家庭收入 &middot; 供給：庫存月數 &middot; 按揭：現行市場利率（2026年）&middot; 數據：CS / CBRE / CAR / BOT / REIC / 土地登記處 &middot; 2026年4月更新</span>
+      <span class="lang-en">Price: USD equivalent &middot; Bangkok shown as THB/sqm (CBD condo, not total unit price) &middot; Yield: gross, before tax/fees &middot; PTI: median price &divide; annual household income &middot; DOM: median days on market before contract &middot; &le;14d = extreme seller&rsquo;s market &middot; &le;30d = hot &middot; &le;45d = normal &middot; &gt;45d = buyer has negotiating room &middot; Mortgage: prevailing market rate (2026) &middot; Data: CS / CBRE / CAR / BOT / REIC / Land Registry &middot; Updated Apr 2026</span>
+      <span class="lang-zh">房價：美元等值 &middot; 曼谷顯示為泰銖/平方米（CBD公寓，非整套單位總價）&middot; 收益率：毛收益率，未扣稅費 &middot; PTI：中位數房價&divide;年家庭收入 &middot; 在市天數：從掛牌到簽約的中位數天數 &middot; &le;14天=極度賣方市場 &middot; &le;30天=熱絡 &middot; &le;45天=正常 &middot; &gt;45天=買方有議價空間 &middot; 按揭：現行市��利率（2026年）&middot; 數據：CS / CBRE / CAR / BOT / REIC / 土地登記處 &middot; 2026年4��更新</span>
     </p>
   </div>
 </section>
@@ -191,24 +191,24 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
 
 <script>
 var CITIES=[
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Silicon Valley',nameZh:'矽谷',priceUSD:1640000,priceDisp:'$1.64M',yoy:1.2,yield:2.8,pti:19.5,supply:0.8,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/sv.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'San Francisco',nameZh:'舊金山',priceUSD:1650000,priceDisp:'$1.65M',yoy:2.2,yield:3.5,pti:18.0,supply:0.8,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/sf.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Los Angeles',nameZh:'洛杉磯',priceUSD:975000,priceDisp:'$975K',yoy:2.1,yield:3.2,pti:12.0,supply:2.8,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/la.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'San Diego',nameZh:'聖地牙哥',priceUSD:1000000,priceDisp:'$1.0M',yoy:3.2,yield:3.8,pti:11.5,supply:2.5,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/sandiego.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1EC}\u{1F1E7}',name:'London',nameZh:'倫敦',priceUSD:950000,priceDisp:'$950K',yoy:3.2,yield:3.5,pti:14.0,supply:2.8,mortgage:4.50,foreign:'Yes',foreignZh:'可',mkt:'UK',link:'uk/report.html',mktClr:'#7c3aed'},
-  {flag:'\u{1F1E6}\u{1F1FA}',name:'Sydney',nameZh:'雪梨',priceUSD:880000,priceDisp:'$880K',yoy:4.1,yield:3.0,pti:13.5,supply:2.2,mortgage:6.10,foreign:'FIRB',foreignZh:'限制',mkt:'AU',link:'au/report.html',mktClr:'#16a34a'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'NYC',nameZh:'紐約',priceUSD:880000,priceDisp:'$880K',yoy:4.9,yield:3.2,pti:14.75,supply:2.5,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/nyc.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Boston',nameZh:'波士頓',priceUSD:857000,priceDisp:'$857K',yoy:2.4,yield:3.8,pti:10.0,supply:1.8,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/boston.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Seattle',nameZh:'西雅圖',priceUSD:848000,priceDisp:'$848K',yoy:4.3,yield:3.5,pti:10.5,supply:2.8,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/seattle.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1EF}\u{1F1F5}',name:'Tokyo',nameZh:'東京',priceUSD:720000,priceDisp:'$720K',yoy:8.2,yield:3.8,pti:12.0,supply:2.0,mortgage:0.90,foreign:'Yes',foreignZh:'可',mkt:'JP',link:'jp/report.html',mktClr:'#dc2626'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Miami',nameZh:'邁阿密',priceUSD:600000,priceDisp:'$600K',yoy:-1.0,yield:4.2,pti:7.0,supply:14.0,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/miami.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1F9}\u{1F1FC}',name:'Taipei',nameZh:'台北',priceUSD:580000,priceDisp:'$580K',yoy:5.1,yield:2.0,pti:16.0,supply:2.5,mortgage:2.40,foreign:'Limited',foreignZh:'有限制',mkt:'TW',link:'tw/report.html',mktClr:'#1e3a5f'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Denver',nameZh:'丹佛',priceUSD:539000,priceDisp:'$539K',yoy:1.6,yield:4.5,pti:6.8,supply:1.63,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/denver.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Phoenix',nameZh:'鳳凰城',priceUSD:444000,priceDisp:'$444K',yoy:2.5,yield:4.8,pti:5.2,supply:4.4,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/phoenix.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Austin',nameZh:'奧斯丁',priceUSD:412000,priceDisp:'$412K',yoy:-2.7,yield:4.8,pti:3.5,supply:6.1,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/austin.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Chicago',nameZh:'芝加哥',priceUSD:365000,priceDisp:'$365K',yoy:4.6,yield:5.8,pti:4.5,supply:0.72,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/chicago.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1F2}\u{1F1FE}',name:'Kuala Lumpur',nameZh:'吉隆坡',priceUSD:120000,priceDisp:'~$120K',yoy:2.1,yield:4.5,pti:6.2,supply:4.0,mortgage:4.20,foreign:'RM 1M+',foreignZh:'門檻限制',mkt:'MY',link:'report.html',mktClr:'#e65100'},
-  {flag:'\u{1F1F9}\u{1F1ED}',name:'Bangkok CBD',nameZh:'曼谷CBD',priceUSD:null,priceDisp:'THB 315K/m\u00B2',yoy:1.6,yield:5.0,pti:8.5,supply:8.0,mortgage:6.50,foreign:'49% Quota',foreignZh:'49%配額',mkt:'TH',link:'th/bangkok.html',mktClr:'#d97706'}
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Silicon Valley',nameZh:'矽谷',priceUSD:1640000,priceDisp:'$1.64M',yoy:1.2,yield:2.8,pti:19.5,dom:9,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/sv.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'San Francisco',nameZh:'舊金山',priceUSD:1650000,priceDisp:'$1.65M',yoy:2.2,yield:3.5,pti:18.0,dom:14,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/sf.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Los Angeles',nameZh:'洛杉磯',priceUSD:975000,priceDisp:'$975K',yoy:2.1,yield:3.2,pti:12.0,dom:35,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/la.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'San Diego',nameZh:'聖地牙哥',priceUSD:1000000,priceDisp:'$1.0M',yoy:3.2,yield:3.8,pti:11.5,dom:27,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/sandiego.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1EC}\u{1F1E7}',name:'London',nameZh:'倫敦',priceUSD:950000,priceDisp:'$950K',yoy:3.2,yield:3.5,pti:14.0,dom:45,mortgage:4.50,foreign:'Yes',foreignZh:'可',mkt:'UK',link:'uk/report.html',mktClr:'#7c3aed'},
+  {flag:'\u{1F1E6}\u{1F1FA}',name:'Sydney',nameZh:'雪梨',priceUSD:880000,priceDisp:'$880K',yoy:4.1,yield:3.0,pti:13.5,dom:28,mortgage:6.10,foreign:'FIRB',foreignZh:'限制',mkt:'AU',link:'au/report.html',mktClr:'#16a34a'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'NYC',nameZh:'紐約',priceUSD:880000,priceDisp:'$880K',yoy:4.9,yield:3.2,pti:14.75,dom:60,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/nyc.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Boston',nameZh:'波士頓',priceUSD:857000,priceDisp:'$857K',yoy:2.4,yield:3.8,pti:10.0,dom:12,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/boston.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Seattle',nameZh:'西雅圖',priceUSD:848000,priceDisp:'$848K',yoy:4.3,yield:3.5,pti:10.5,dom:18,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/seattle.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1EF}\u{1F1F5}',name:'Tokyo',nameZh:'東京',priceUSD:720000,priceDisp:'$720K',yoy:8.2,yield:3.8,pti:12.0,dom:30,mortgage:0.90,foreign:'Yes',foreignZh:'可',mkt:'JP',link:'jp/report.html',mktClr:'#dc2626'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Miami',nameZh:'邁阿密',priceUSD:600000,priceDisp:'$600K',yoy:-1.0,yield:4.2,pti:7.0,dom:61,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/miami.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1F9}\u{1F1FC}',name:'Taipei',nameZh:'台北',priceUSD:580000,priceDisp:'$580K',yoy:5.1,yield:2.0,pti:16.0,dom:35,mortgage:2.40,foreign:'Limited',foreignZh:'有限制',mkt:'TW',link:'tw/report.html',mktClr:'#1e3a5f'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Denver',nameZh:'丹佛',priceUSD:539000,priceDisp:'$539K',yoy:1.6,yield:4.5,pti:6.8,dom:38,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/denver.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Phoenix',nameZh:'鳳凰城',priceUSD:444000,priceDisp:'$444K',yoy:2.5,yield:4.8,pti:5.2,dom:52,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/phoenix.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Austin',nameZh:'奧斯丁',priceUSD:412000,priceDisp:'$412K',yoy:-2.7,yield:4.8,pti:3.5,dom:52,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/austin.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Chicago',nameZh:'芝加哥',priceUSD:365000,priceDisp:'$365K',yoy:4.6,yield:5.8,pti:4.5,dom:22,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/chicago.html',mktClr:'#2563eb'},
+  {flag:'\u{1F1F2}\u{1F1FE}',name:'Kuala Lumpur',nameZh:'吉隆坡',priceUSD:120000,priceDisp:'~$120K',yoy:2.1,yield:4.5,pti:6.2,dom:90,mortgage:4.20,foreign:'RM 1M+',foreignZh:'門檻限制',mkt:'MY',link:'report.html',mktClr:'#e65100'},
+  {flag:'\u{1F1F9}\u{1F1ED}',name:'Bangkok CBD',nameZh:'曼谷CBD',priceUSD:null,priceDisp:'THB 315K/m\u00B2',yoy:1.6,yield:5.0,pti:8.5,dom:120,mortgage:6.50,foreign:'49% Quota',foreignZh:'49%配額',mkt:'TH',link:'th/bangkok.html',mktClr:'#d97706'}
 ];
 function foreignBadge(c,lang){
   var val=lang==='zh'?c.foreignZh:c.foreign;
@@ -227,7 +227,7 @@ function renderTable(lang){
     var yClr=c.yield>=5?'#16a34a':c.yield>=3.5?'#1e3a5f':'#94a3b8';
     var yW=c.yield>=5?700:600;
     var pClr=c.pti<=5?'#16a34a':c.pti<=10?'#d97706':'#dc2626';
-    var sClr=c.supply<=2?'#dc2626':c.supply<=4?'#d97706':c.supply<=6?'#1e3a5f':'#16a34a';
+    var dClr=c.dom<=14?'#dc2626':c.dom<=30?'#d97706':c.dom<=45?'#1e3a5f':'#16a34a';var dW=c.dom<=30?700:600;
     var mClr=c.mortgage<=1.5?'#16a34a':c.mortgage<=3.5?'#1e3a5f':c.mortgage>5?'#dc2626':'#1e3a5f';
     return '<tr onclick="location.href=\''+c.link+'\'" style="cursor:pointer">'+
       '<td style="position:sticky;left:0;background:#fff;z-index:1;border-right:1px solid #f0f5fb;font-weight:600;min-width:130px"><span style="font-size:13px;margin-right:6px">'+c.flag+'</span>'+nm+'</td>'+
@@ -235,7 +235,7 @@ function renderTable(lang){
       '<td style="min-width:70px">'+yoyH+'</td>'+
       '<td style="color:'+yClr+';font-weight:'+yW+';min-width:90px">'+c.yield.toFixed(1)+'%</td>'+
       '<td style="color:'+pClr+';font-weight:600;min-width:70px">'+c.pti+'\u00D7</td>'+
-      '<td style="color:'+sClr+';font-weight:600;min-width:90px">'+c.supply+' mo</td>'+
+      '<td style="color:'+dClr+';font-weight:'+dW+';min-width:90px">'+c.dom+'d</td>'+
       '<td style="color:'+mClr+';font-weight:600;min-width:110px">'+c.mortgage.toFixed(2)+'%</td>'+
       '<td style="text-align:center;min-width:100px">'+foreignBadge(c,lang)+'</td>'+
       '<td style="color:#7fa3c4;font-size:11px;min-width:60px">'+c.mkt+'</td></tr>';
