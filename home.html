@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Property Monitor | InvestMQuest</title>
+<meta name="color-scheme" content="light">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e3a5f}
+
+.navbar{background:#fff;border-bottom:1px solid #dce8f5;height:52px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-brand{font-size:12px;font-weight:700;letter-spacing:.12em;color:#1e3a5f}
+.nav-sub{font-size:11px;color:#94a3b8;margin-left:8px}
+.lang-btns{display:flex;gap:4px}
+.lang-btn{padding:4px 10px;border:1px solid #dce8f5;border-radius:4px;font-size:11px;cursor:pointer;background:#fff;color:#5a7a9a;font-family:inherit}
+.lang-btn.active{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
+
+.hero{background:#fff;border-bottom:1px solid #dce8f5;padding:44px 32px 36px}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 300px;gap:48px;align-items:start}
+.hero-eyebrow{font-size:10px;letter-spacing:.18em;color:#3b82f6;font-weight:600;margin-bottom:14px}
+.hero-h1{font-size:34px;font-weight:600;color:#0f2a45;line-height:1.2;margin-bottom:10px}
+.hero-sub{font-size:14px;color:#5a7a9a;line-height:1.65;margin-bottom:28px;max-width:480px}
+.stats-row{display:flex;gap:28px}
+.stat-num{font-size:24px;font-weight:700;color:#1e3a5f;font-variant-numeric:tabular-nums}
+.stat-lbl{font-size:10px;color:#7fa3c4;letter-spacing:.08em;margin-top:3px}
+
+.ticker{background:#0f1e33;border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:0}
+.ticker-hdr{font-size:9px;letter-spacing:.18em;color:#3b82f6;font-weight:600;margin-bottom:12px}
+.ticker-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1e3050}
+.ticker-row:last-child{border-bottom:none}
+.t-lbl{font-size:10px;color:#5a8ab5;letter-spacing:.04em}
+.t-right{display:flex;align-items:baseline;gap:6px}
+.t-val{font-size:13px;color:#e2ecf8;font-weight:600;font-variant-numeric:tabular-nums}
+.t-up{font-size:10px;color:#22c55e;font-weight:600}
+.t-dn{font-size:10px;color:#ef4444;font-weight:600}
+.t-flat{font-size:10px;color:#64748b}
+
+.section{max-width:1100px;margin:0 auto;padding:36px 32px}
+.section-hdr{display:flex;align-items:baseline;gap:12px;margin-bottom:20px}
+.section-title{font-size:10px;letter-spacing:.16em;color:#3b82f6;font-weight:600}
+.section-desc{font-size:12px;color:#94a3b8}
+
+.markets-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.mcard{background:#fff;border:1px solid #dce8f5;border-radius:10px;padding:16px 18px;cursor:pointer;text-decoration:none;display:block;position:relative;overflow:hidden;transition:border-color .18s,transform .18s,box-shadow .18s;color:#1e3a5f}
+.mcard:hover{border-color:#3b82f6;transform:translateY(-2px);box-shadow:0 4px 16px rgba(59,130,246,.1)}
+.mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+.new-badge{position:absolute;top:10px;right:10px;background:#22c55e;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.06em}
+.mcard-flag{font-size:22px;margin-bottom:10px;display:block}
+.mcard-name{font-size:13px;font-weight:700;color:#1e3a5f}
+.mcard-cities{font-size:10px;color:#94a3b8;margin-top:4px;margin-bottom:10px}
+.mcard-kpi-lbl{font-size:9px;color:#94a3b8;letter-spacing:.06em;margin-bottom:2px}
+.mcard-kpi{font-size:13px;font-weight:700;color:#0f2a45;font-variant-numeric:tabular-nums}
+
+.compare-wrap{background:#fff;border:1px solid #dce8f5;border-radius:12px;overflow:hidden}
+.compare-tbl{width:100%;border-collapse:collapse}
+.compare-tbl th{background:#f0f6ff;font-size:10px;letter-spacing:.08em;color:#5a7a9a;font-weight:600;padding:10px 14px;text-align:right;border-bottom:1px solid #dce8f5}
+.compare-tbl th:first-child{text-align:left}
+.compare-tbl td{padding:9px 14px;font-size:12px;border-bottom:1px solid #f0f5fb;text-align:right;font-variant-numeric:tabular-nums;color:#1e3a5f}
+.compare-tbl td:first-child{text-align:left;font-weight:600}
+.compare-tbl tr:last-child td{border-bottom:none}
+.compare-tbl tr:hover td{background:#f8fbff}
+.bar-wrap{background:#f0f5fb;border-radius:3px;height:6px;width:120px;display:inline-block;vertical-align:middle}
+.bar-fill{height:6px;border-radius:3px;display:block}
+.chg-pos{color:#16a34a;font-weight:600}
+.chg-neg{color:#dc2626;font-weight:600}
+.chg-flat{color:#94a3b8}
+.unit-note{font-size:9px;color:#b0c8e0;font-weight:400;margin-left:3px}
+
+.footer{border-top:1px solid #dce8f5;padding:18px 32px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.footer-l{font-size:11px;font-weight:700;letter-spacing:.08em;color:#1e3a5f}
+.footer-r{font-size:10px;color:#94a3b8}
+
+.en{}.zh{display:none}
+
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:24px}
+  .markets-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-h1{font-size:26px}
+  .stats-row{flex-wrap:wrap;gap:16px}
+  .navbar{padding:0 16px}
+  .section{padding:24px 16px}
+  .hero{padding:28px 16px 24px}
+  .footer{flex-direction:column;gap:8px;text-align:center}
+}
+@media(max-width:500px){
+  .markets-grid{grid-template-columns:1fr}
+  .bar-wrap{width:80px}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div style="display:flex;align-items:center">
+    <span class="nav-brand">PROPERTY MONITOR</span>
+    <span class="nav-sub">investmquest.com</span>
+  </div>
+  <div class="lang-btns">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('zh')">中文</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow en">SYSTEMATIC INVESTMENT RESEARCH</div>
+      <div class="hero-eyebrow zh">系統化投資研究平台</div>
+      <h1 class="hero-h1 en">Global Real Estate<br>Intelligence Platform</h1>
+      <h1 class="hero-h1 zh">全球房地產<br>智能監測平台</h1>
+      <p class="hero-sub en">Deep-dive market analysis across 9 countries and 14+ cities.<br>Supply, demand, valuation, and risk &mdash; all in one place.</p>
+      <p class="hero-sub zh">跨越 9 個國家、14+ 城市的深度市場分析。<br>供給、需求、估值與風險，一站掌握。</p>
+      <div class="stats-row">
+        <div><div class="stat-num">9</div><div class="stat-lbl en">MARKETS</div><div class="stat-lbl zh">市場</div></div>
+        <div><div class="stat-num">14+</div><div class="stat-lbl en">CITIES</div><div class="stat-lbl zh">城市</div></div>
+        <div><div class="stat-num">12</div><div class="stat-lbl en">US CITIES</div><div class="stat-lbl zh">美國城市</div></div>
+        <div><div class="stat-num">Apr 2026</div><div class="stat-lbl en">UPDATED</div><div class="stat-lbl zh">資料更新</div></div>
+      </div>
+    </div>
+    <div class="ticker">
+      <div class="ticker-hdr en">MARKET PULSE</div>
+      <div class="ticker-hdr zh">市場指標</div>
+      <div class="ticker-row"><span class="t-lbl">US 30Y MORTGAGE</span><div class="t-right"><span class="t-val">6.38%</span><span class="t-dn">&#x25BC; -0.12%</span></div></div>
+      <div class="ticker-row"><span class="t-lbl">CS NATIONAL HPI</span><div class="t-right"><span class="t-val">329</span><span class="t-up">&#x25B2; +4.7% YoY</span></div></div>
+      <div class="ticker-row"><span class="t-lbl">CS SAN DIEGO ATH</span><div class="t-right"><span class="t-val">447</span><span class="t-up">&#x25B2; +3.2% YoY</span></div></div>
+      <div class="ticker-row"><span class="t-lbl">USD / THB</span><div class="t-right"><span class="t-val">34.2</span><span class="t-dn">&#x25BC; -0.3%</span></div></div>
+      <div class="ticker-row"><span class="t-lbl">USD / MYR</span><div class="t-right"><span class="t-val">4.47</span><span class="t-up">&#x25B2; +0.8%</span></div></div>
+      <div class="ticker-row"><span class="t-lbl">MY OPR</span><div class="t-right"><span class="t-val">3.00%</span><span class="t-flat">&mdash; unchanged</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff;border-bottom:1px solid #dce8f5">
+  <div class="section">
+    <div class="section-hdr">
+      <span class="section-title en">MARKET COVERAGE</span>
+      <span class="section-title zh">市場覆蓋</span>
+      <span class="section-desc en">Click to enter any market</span>
+      <span class="section-desc zh">點擊進入各市場</span>
+    </div>
+    <div class="markets-grid">
+      <a class="mcard" style="--accent:#e65100" href="report.html"><span class="mcard-flag">&#x1F1F2;&#x1F1FE;</span><div class="mcard-name en">Malaysia</div><div class="mcard-name zh">馬來西亞</div><div class="mcard-cities en">KL &middot; Penang</div><div class="mcard-cities zh">吉隆坡 &middot; 檳城</div><div class="mcard-kpi-lbl en">KL OVERHANG Q3 2025</div><div class="mcard-kpi-lbl zh">KL 積壓量 Q3 2025</div><div class="mcard-kpi">2,287 units</div></a>
+      <a class="mcard" style="--accent:#1e3a5f" href="tw/report.html"><span class="mcard-flag">&#x1F1F9;&#x1F1FC;</span><div class="mcard-name en">Taiwan</div><div class="mcard-name zh">台灣</div><div class="mcard-cities en">Taipei &middot; Hsinchu &middot; Taichung &middot; Kaohsiung</div><div class="mcard-cities zh">台北 &middot; 新竹 &middot; 台中 &middot; 高雄</div><div class="mcard-kpi-lbl en">TAIPEI SF MEDIAN</div><div class="mcard-kpi-lbl zh">台北獨棟中位數</div><div class="mcard-kpi">TWD 65M+</div></a>
+      <a class="mcard" style="--accent:#dc2626" href="jp/report.html"><span class="mcard-flag">&#x1F1EF;&#x1F1F5;</span><div class="mcard-name en">Japan</div><div class="mcard-name zh">日本</div><div class="mcard-cities en">Tokyo &middot; Osaka &middot; Fukuoka</div><div class="mcard-cities zh">東京 &middot; 大阪 &middot; 福岡</div><div class="mcard-kpi-lbl en">TOKYO CONDO YoY</div><div class="mcard-kpi-lbl zh">東京公寓年增率</div><div class="mcard-kpi">+8.2%</div></a>
+      <a class="mcard" style="--accent:#16a34a" href="au/report.html"><span class="mcard-flag">&#x1F1E6;&#x1F1FA;</span><div class="mcard-name en">Australia</div><div class="mcard-name zh">澳洲</div><div class="mcard-cities en">Sydney &middot; Melbourne &middot; Brisbane</div><div class="mcard-cities zh">雪梨 &middot; 墨爾本 &middot; 布里斯本</div><div class="mcard-kpi-lbl en">SYDNEY MEDIAN</div><div class="mcard-kpi-lbl zh">雪梨中位數</div><div class="mcard-kpi">AUD 1.41M</div></a>
+      <a class="mcard" style="--accent:#0891b2" href="nz/report.html"><span class="mcard-flag">&#x1F1F3;&#x1F1FF;</span><div class="mcard-name en">New Zealand</div><div class="mcard-name zh">紐西蘭</div><div class="mcard-cities en">Auckland &middot; Christchurch</div><div class="mcard-cities zh">奧克蘭 &middot; 基督城</div><div class="mcard-kpi-lbl en">AUCKLAND HPI YoY</div><div class="mcard-kpi-lbl zh">奧克蘭 HPI 年增率</div><div class="mcard-kpi">-2.1%</div></a>
+      <a class="mcard" style="--accent:#7c3aed" href="uk/report.html"><span class="mcard-flag">&#x1F1EC;&#x1F1E7;</span><div class="mcard-name en">United Kingdom</div><div class="mcard-name zh">英國</div><div class="mcard-cities en">London &middot; Manchester &middot; Edinburgh</div><div class="mcard-cities zh">倫敦 &middot; 曼徹斯特 &middot; 愛丁堡</div><div class="mcard-kpi-lbl en">UK HPI YoY</div><div class="mcard-kpi-lbl zh">英國 HPI 年增率</div><div class="mcard-kpi">+3.9%</div></a>
+      <a class="mcard" style="--accent:#2563eb" href="us/index.html"><span class="mcard-flag">&#x1F1FA;&#x1F1F8;</span><div class="mcard-name en">United States</div><div class="mcard-name zh">美國</div><div class="mcard-cities en">12 cities &middot; NYC LA SF SV SD MIA AUS SEA CHI BOS PHX DEN</div><div class="mcard-cities zh">12 城市 &middot; 紐約 洛杉磯 舊金山 矽谷 聖地牙哥 邁阿密等</div><div class="mcard-kpi-lbl en">CS NATIONAL</div><div class="mcard-kpi-lbl zh">CS 全國指數</div><div class="mcard-kpi">329 (+4.7%)</div></a>
+      <a class="mcard" style="--accent:#d97706" href="th/report.html"><div class="new-badge">NEW</div><span class="mcard-flag">&#x1F1F9;&#x1F1ED;</span><div class="mcard-name en">Thailand</div><div class="mcard-name zh">泰國</div><div class="mcard-cities en">Bangkok &middot; Chiang Mai</div><div class="mcard-cities zh">曼谷 &middot; 清邁</div><div class="mcard-kpi-lbl en">BKK CBD /sqm</div><div class="mcard-kpi-lbl zh">曼谷CBD每平方米</div><div class="mcard-kpi">THB 315K</div></a>
+    </div>
+  </div>
+</section>
+
+<section style="background:#f8f9fc">
+  <div class="section">
+    <div class="section-hdr">
+      <span class="section-title en">CITY PRICE COMPARISON</span>
+      <span class="section-title zh">城市房價比較</span>
+      <span class="section-desc en">Median home price &middot; 2025&ndash;2026 data &middot; sorted high &rarr; low</span>
+      <span class="section-desc zh">中位數房價 &middot; 2025至2026年 &middot; 由高至低排序</span>
+    </div>
+    <div class="compare-wrap">
+      <table class="compare-tbl">
+        <thead><tr>
+          <th style="text-align:left"><span class="en">City</span><span class="zh">城市</span></th>
+          <th><span class="en">Price</span><span class="zh">房價</span></th>
+          <th><span class="en">Relative</span><span class="zh">相對水平</span></th>
+          <th><span class="en">YoY</span><span class="zh">年增率</span></th>
+          <th><span class="en">Market</span><span class="zh">市場</span></th>
+        </tr></thead>
+        <tbody id="city-tbody"></tbody>
+      </table>
+    </div>
+    <p style="font-size:10px;color:#94a3b8;margin-top:10px;line-height:1.5">
+      <span class="en">* Bangkok shown as THB/sqm (condo, CBD). KL shown as USD (approx median unit). All other cities: USD total home price.</span>
+      <span class="zh">* 曼谷以泰銖/平方米顯示（CBD公寓）。吉隆坡以美元顯示（估算中位數單位）。其他城市均為美元全套房價。</span>
+    </p>
+  </div>
+</section>
+
+<footer style="background:#fff;border-top:1px solid #dce8f5">
+  <div class="footer">
+    <span class="footer-l">INVESTMQUEST &middot; PROPERTY MONITOR</span>
+    <span class="footer-r">
+      <span class="en">Data: CS / BOT / REIC / CAR / REINZ / Land Registry &middot; Updated Apr 2026</span>
+      <span class="zh">數據來源：CS / BOT / REIC / CAR / REINZ / 土地登記處 &middot; 2026年4月更新</span>
+    </span>
+  </div>
+</footer>
+
+<script>
+var CITIES=[
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'Silicon Valley',nameZh:'矽谷',display:'$1.64M',sortVal:1640000,yoy:1.2,mkt:'US',link:'us/sv.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'San Francisco',nameZh:'舊金山',display:'$1.65M',sortVal:1650000,yoy:2.2,mkt:'US',link:'us/sf.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'San Diego',nameZh:'聖地牙哥',display:'$1.0M',sortVal:1000000,yoy:3.2,mkt:'US',link:'us/sandiego.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'LA',nameZh:'洛杉磯',display:'$975K',sortVal:975000,yoy:2.1,mkt:'US',link:'us/la.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1EC;&#x1F1E7;',name:'London',nameZh:'倫敦',display:'$950K',sortVal:950000,yoy:3.2,mkt:'UK',link:'uk/report.html',barColor:'#7c3aed',note:''},
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'NYC',nameZh:'紐約',display:'$880K',sortVal:880000,yoy:4.9,mkt:'US',link:'us/nyc.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1E6;&#x1F1FA;',name:'Sydney',nameZh:'雪梨',display:'AUD 1.41M',sortVal:880000,yoy:4.1,mkt:'AU',link:'au/report.html',barColor:'#16a34a',note:''},
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'Boston',nameZh:'波士頓',display:'$857K',sortVal:857000,yoy:2.4,mkt:'US',link:'us/boston.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'Seattle',nameZh:'西雅圖',display:'$848K',sortVal:848000,yoy:4.3,mkt:'US',link:'us/seattle.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1EF;&#x1F1F5;',name:'Tokyo',nameZh:'東京',display:'$720K',sortVal:720000,yoy:8.2,mkt:'JP',link:'jp/report.html',barColor:'#dc2626',note:''},
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'Miami',nameZh:'邁阿密',display:'$600K',sortVal:600000,yoy:-1.0,mkt:'US',link:'us/miami.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1F9;&#x1F1FC;',name:'Taipei',nameZh:'台北',display:'TWD 65M+',sortVal:580000,yoy:5.1,mkt:'TW',link:'tw/report.html',barColor:'#1e3a5f',note:''},
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'Denver',nameZh:'丹佛',display:'$539K',sortVal:539000,yoy:1.6,mkt:'US',link:'us/denver.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'Austin',nameZh:'奧斯丁',display:'$412K MSA',sortVal:412000,yoy:-2.7,mkt:'US',link:'us/austin.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'Phoenix',nameZh:'鳳凰城',display:'$444K',sortVal:444000,yoy:2.5,mkt:'US',link:'us/phoenix.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1FA;&#x1F1F8;',name:'Chicago',nameZh:'芝加哥',display:'$365K',sortVal:365000,yoy:4.6,mkt:'US',link:'us/chicago.html',barColor:'#2563eb',note:''},
+  {flag:'&#x1F1F2;&#x1F1FE;',name:'Kuala Lumpur',nameZh:'吉隆坡',display:'~$120K',sortVal:120000,yoy:2.1,mkt:'MY',link:'report.html',barColor:'#e65100',note:'*'},
+  {flag:'&#x1F1F9;&#x1F1ED;',name:'Bangkok CBD',nameZh:'曼谷CBD',display:'THB 315K/m²',sortVal:9200,yoy:1.6,mkt:'TH',link:'th/bangkok.html',barColor:'#d97706',note:'*'}
+];
+var MAX_VAL=Math.max.apply(null,CITIES.map(function(c){return c.sortVal;}));
+function renderTable(lang){
+  var sorted=CITIES.slice().sort(function(a,b){return b.sortVal-a.sortVal;});
+  var tbody=document.getElementById('city-tbody');
+  tbody.innerHTML=sorted.map(function(c){
+    var barW=Math.round(c.sortVal/MAX_VAL*120);
+    var cls=c.yoy>0?'chg-pos':c.yoy<0?'chg-neg':'chg-flat';
+    var str=c.yoy>0?'+'+c.yoy+'%':c.yoy<0?c.yoy+'%':'—';
+    var nm=lang==='zh'?c.nameZh:c.name;
+    var nt=c.note?'<span class="unit-note">'+c.note+'</span>':'';
+    return '<tr onclick="location.href=\''+c.link+'\'" style="cursor:pointer"><td><span style="font-size:13px;margin-right:6px">'+c.flag+'</span>'+nm+nt+'</td><td>'+c.display+'</td><td style="text-align:right"><span class="bar-wrap"><span class="bar-fill" style="width:'+barW+'px;background:'+c.barColor+'"></span></span></td><td class="'+cls+'">'+str+'</td><td style="color:#7fa3c4;font-size:11px">'+c.mkt+'</td></tr>';
+  }).join('');
+}
+var currentLang=localStorage.getItem('pm-lang')||'en';
+function setLang(lang){
+  currentLang=lang;localStorage.setItem('pm-lang',lang);
+  document.querySelectorAll('.en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.textContent.trim()===(lang==='en'?'EN':'中文'));});
+  renderTable(lang);
+}
+window.addEventListener('load',function(){setLang(currentLang);});
+</script>
+</body>
+</html>
