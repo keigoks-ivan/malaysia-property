@@ -154,8 +154,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
     <div class="section-hdr">
       <span class="section-title lang-en">CITY COMPARISON</span>
       <span class="section-title lang-zh">城市比較</span>
-      <span class="section-desc lang-en">34 cities &middot; Price &middot; YoY &middot; Yield &middot; PTI &middot; Supply &middot; Mortgage &middot; Foreign Ownership</span>
-      <span class="section-desc lang-zh">34 城市 &middot; 房價 &middot; 年增率 &middot; 收益率 &middot; 房價收入比 &middot; 供需狀況 &middot; 按揭利率 &middot; 外國人可否購買</span>
+      <span class="section-desc lang-en">34 cities &middot; Price &middot; YoY &middot; Yield &middot; PTI &middot; Supply &middot; P/R Ratio &middot; Pipeline &middot; Mortgage &middot; All columns sortable</span>
+      <span class="section-desc lang-zh">34 城市 &middot; 房價 &middot; 年增率 &middot; 收益率 &middot; 房價收入比 &middot; 供需 &middot; 房租比 &middot; 在建供給 &middot; 按揭利率 &middot; 所有欄位可排序</span>
     </div>
     <div class="compare-wrap">
       <table class="compare-tbl">
@@ -166,16 +166,16 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
           <th style="cursor:pointer;user-select:none" data-key="yield" onclick="sortBy('yield')"><span class="lang-en">Yield</span><span class="lang-zh">租金收益率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="cursor:pointer;user-select:none" data-key="pti" onclick="sortBy('pti')"><span class="lang-en">PTI</span><span class="lang-zh">房價收入比</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="text-align:center;cursor:pointer;user-select:none" data-key="supply" onclick="sortBy('supply')"><span class="lang-en">Supply</span><span class="lang-zh">供需</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="cursor:pointer;user-select:none" data-key="pr" onclick="sortBy('pr')"><span class="lang-en">P/R</span><span class="lang-zh">房租比</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="text-align:center;cursor:pointer;user-select:none" data-key="pipeline" onclick="sortBy('pipeline')"><span class="lang-en">Pipeline</span><span class="lang-zh">在建供給</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="cursor:pointer;user-select:none" data-key="mortgage" onclick="sortBy('mortgage')"><span class="lang-en">Mortgage</span><span class="lang-zh">按揭利率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
-          <th style="text-align:center"><span class="lang-en">Foreign Buy</span><span class="lang-zh">外國人可買</span></th>
-          <th style="cursor:pointer;user-select:none" data-key="mkt" onclick="sortBy('mkt')"><span class="lang-en">Market</span><span class="lang-zh">市場</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
         </tr></thead>
         <tbody id="city-tbody"></tbody>
       </table>
     </div>
     <p class="note">
-      <span class="lang-en">Price: USD equivalent &middot; Bangkok shown as THB/sqm (CBD condo, not total unit price) &middot; Yield: gross, before tax/fees &middot; PTI: median price &divide; annual household income &middot; Supply: 🔴 Tight = low inventory, fast sales, rising prices &middot; 🟡 Balanced = supply meets demand &middot; 🟢 Loose = high inventory, buyer leverage, price pressure &middot; Mortgage: prevailing market rate (2026) &middot; Data: CS / CBRE / CAR / BOT / REIC / Land Registry &middot; Updated Apr 2026</span>
-      <span class="lang-zh">房價：美元等值 &middot; 曼谷顯示為泰銖/平方米（CBD公寓，非整套單位總價）&middot; 收益率：毛收益率，未扣稅費 &middot; PTI：中位數房價&divide;年家庭收入 &middot; 供需：🔴 緊張=庫存低、成交快、價格上漲 &middot; 🟡 平衡=供需對等 &middot; 🟢 寬鬆=庫存高、買方有議價空間 &middot; 按揭：現行市��利率（2026年）&middot; 數據：CS / CBRE / CAR / BOT / REIC / 土地登記處 &middot; 2026年4��更新</span>
+      <span class="lang-en">Price: USD equivalent &middot; Bangkok/CM shown as THB/sqm (CBD condo) &middot; Yield: gross, before tax/fees &middot; PTI: median price &divide; annual household income &middot; Supply: 🔴 Tight = low inventory &middot; 🟡 Balanced &middot; 🟢 Loose = buyer leverage &middot; P/R: price &divide; annual rent &mdash; &lt;20&times; buy favored &middot; 20&ndash;30&times; neutral &middot; &gt;30&times; rent favored &middot; Pipeline: units under construction as % of existing stock &mdash; Low &lt;1% &middot; Mod 1&ndash;2.5% &middot; High &gt;2.5% &middot; Mortgage: prevailing rate 2026 &middot; Sources: Numbeo / CS / CBRE / CAR / REINZ / Land Registry &middot; Updated Apr 2026</span>
+      <span class="lang-zh">房價：美元等值 &middot; 曼谷/清邁顯示泰銖/平方米（CBD公寓）&middot; 收益率：毛收益率，未扣稅費 &middot; PTI：中位數房價&divide;年家庭收入 &middot; 供需：🔴 緊張=庫存低 &middot; 🟡 平衡 &middot; 🟢 寬鬆=買方有議價空間 &middot; 房租比：房價&divide;年租金 &mdash; &lt;20&times;買入有利 &middot; 20&ndash;30&times;中性 &middot; &gt;30&times;租賃有利 &middot; 在建供給：在建單位佔現有存量% &mdash; 低&lt;1% &middot; 中1&ndash;2.5% &middot; 高&gt;2.5% &middot; 按揭：2026年現行利率 &middot; 來源：Numbeo / CS / CBRE / CAR / REINZ / 土地登記處 &middot; 2026年4月更新</span>
     </p>
   </div>
 </section>
@@ -192,48 +192,40 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
 
 <script>
 var CITIES=[
-  // US - 12 cities
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Silicon Valley',nameZh:'矽谷',priceUSD:1640000,priceDisp:'$1.64M',yoy:1.2,yield:2.8,pti:19.5,supply:'tight',dom:9,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/sv.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'San Francisco',nameZh:'舊金山',priceUSD:1650000,priceDisp:'$1.65M',yoy:1.8,yield:3.5,pti:18.0,supply:'tight',dom:13,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/sf.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Los Angeles',nameZh:'洛杉磯',priceUSD:1070000,priceDisp:'$1.07M',yoy:2.3,yield:3.2,pti:12.0,supply:'balanced',dom:35,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/la.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'San Diego',nameZh:'聖地牙哥',priceUSD:1000000,priceDisp:'$1.0M',yoy:2.6,yield:3.8,pti:11.5,supply:'balanced',dom:27,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/sandiego.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'NYC',nameZh:'紐約',priceUSD:880000,priceDisp:'$880K',yoy:4.9,yield:3.2,pti:14.75,supply:'balanced',dom:60,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/nyc.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Boston',nameZh:'波士頓',priceUSD:857000,priceDisp:'$857K',yoy:2.4,yield:3.8,pti:10.0,supply:'tight',dom:12,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/boston.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Seattle',nameZh:'西雅圖',priceUSD:848000,priceDisp:'$848K',yoy:4.3,yield:3.5,pti:10.5,supply:'tight',dom:18,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/seattle.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Miami',nameZh:'邁阿密',priceUSD:600000,priceDisp:'$600K',yoy:-1.0,yield:4.2,pti:7.0,supply:'loose',dom:61,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/miami.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Denver',nameZh:'丹佛',priceUSD:539000,priceDisp:'$539K',yoy:1.6,yield:4.5,pti:6.8,supply:'balanced',dom:38,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/denver.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Phoenix',nameZh:'鳳凰城',priceUSD:444000,priceDisp:'$444K',yoy:2.5,yield:4.8,pti:5.2,supply:'balanced',dom:45,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/phoenix.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Austin',nameZh:'奧斯丁',priceUSD:412000,priceDisp:'$412K',yoy:-2.7,yield:4.8,pti:3.5,supply:'loose',dom:52,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/austin.html',mktClr:'#2563eb'},
-  {flag:'\u{1F1FA}\u{1F1F8}',name:'Chicago',nameZh:'芝加哥',priceUSD:365000,priceDisp:'$365K',yoy:4.6,yield:5.8,pti:4.5,supply:'tight',dom:22,mortgage:6.38,foreign:'Yes',foreignZh:'可',mkt:'US',link:'us/chicago.html',mktClr:'#2563eb'},
-  // UK - 5 cities
-  {flag:'\u{1F1EC}\u{1F1E7}',name:'London',nameZh:'倫敦',priceUSD:689000,priceDisp:'£547K',yoy:3.2,yield:3.5,pti:8.6,supply:'balanced',dom:45,mortgage:4.50,foreign:'Yes',foreignZh:'可',mkt:'UK',link:'uk/london.html',mktClr:'#7c3aed'},
-  {flag:'\u{1F1EC}\u{1F1E7}',name:'Edinburgh',nameZh:'愛丁堡',priceUSD:428000,priceDisp:'£340K',yoy:6.4,yield:5.5,pti:8.0,supply:'tight',dom:22,mortgage:4.50,foreign:'Yes',foreignZh:'可',mkt:'UK',link:'uk/edinburgh.html',mktClr:'#7c3aed'},
-  {flag:'\u{1F1EC}\u{1F1E7}',name:'Birmingham',nameZh:'伯明翰',priceUSD:334000,priceDisp:'£265K',yoy:4.5,yield:6.5,pti:5.5,supply:'tight',dom:32,mortgage:4.50,foreign:'Yes',foreignZh:'可',mkt:'UK',link:'uk/birmingham.html',mktClr:'#7c3aed'},
-  {flag:'\u{1F1EC}\u{1F1E7}',name:'Manchester',nameZh:'曼徹斯特',priceUSD:328000,priceDisp:'£260K',yoy:5.0,yield:6.5,pti:6.8,supply:'tight',dom:28,mortgage:4.50,foreign:'Yes',foreignZh:'可',mkt:'UK',link:'uk/manchester.html',mktClr:'#7c3aed'},
-  {flag:'\u{1F1EC}\u{1F1E7}',name:'Newcastle',nameZh:'紐卡斯爾',priceUSD:262000,priceDisp:'£208K',yoy:5.1,yield:7.0,pti:5.0,supply:'balanced',dom:35,mortgage:4.50,foreign:'Yes',foreignZh:'可',mkt:'UK',link:'uk/newcastle.html',mktClr:'#7c3aed'},
-  // AU - 4 cities
-  {flag:'\u{1F1E6}\u{1F1FA}',name:'Sydney',nameZh:'雪梨',priceUSD:1012000,priceDisp:'A$1.61M',yoy:6.0,yield:3.0,pti:13.5,supply:'tight',dom:28,mortgage:6.10,foreign:'FIRB',foreignZh:'限制',mkt:'AU',link:'au/sydney.html',mktClr:'#16a34a'},
-  {flag:'\u{1F1E6}\u{1F1FA}',name:'Gold Coast',nameZh:'黃金海岸',priceUSD:832000,priceDisp:'A$1.32M',yoy:18.0,yield:3.2,pti:11.2,supply:'tight',dom:28,mortgage:6.10,foreign:'FIRB',foreignZh:'限制',mkt:'AU',link:'au/goldcoast.html',mktClr:'#16a34a'},
-  {flag:'\u{1F1E6}\u{1F1FA}',name:'Brisbane',nameZh:'布里斯本',priceUSD:680000,priceDisp:'A$1.08M',yoy:17.3,yield:3.8,pti:9.5,supply:'tight',dom:22,mortgage:6.10,foreign:'FIRB',foreignZh:'限制',mkt:'AU',link:'au/brisbane.html',mktClr:'#16a34a'},
-  {flag:'\u{1F1E6}\u{1F1FA}',name:'Melbourne',nameZh:'墨爾本',priceUSD:580000,priceDisp:'A$920K',yoy:1.5,yield:3.5,pti:10.2,supply:'balanced',dom:35,mortgage:6.10,foreign:'FIRB',foreignZh:'限制',mkt:'AU',link:'au/melbourne.html',mktClr:'#16a34a'},
-  // JP - 3 cities
-  {flag:'\u{1F1EF}\u{1F1F5}',name:'Tokyo',nameZh:'東京',priceUSD:606000,priceDisp:'¥94M',yoy:8.2,yield:3.6,pti:12.0,supply:'tight',dom:30,mortgage:0.90,foreign:'Yes',foreignZh:'可',mkt:'JP',link:'jp/tokyo.html',mktClr:'#dc2626'},
-  {flag:'\u{1F1EF}\u{1F1F5}',name:'Fukuoka',nameZh:'福岡',priceUSD:439000,priceDisp:'¥68M',yoy:21.8,yield:5.0,pti:11.0,supply:'tight',dom:25,mortgage:0.90,foreign:'Yes',foreignZh:'可',mkt:'JP',link:'jp/fukuoka.html',mktClr:'#dc2626'},
-  {flag:'\u{1F1EF}\u{1F1F5}',name:'Osaka',nameZh:'大阪',priceUSD:375000,priceDisp:'¥58.1M',yoy:9.4,yield:4.5,pti:12.0,supply:'tight',dom:35,mortgage:0.90,foreign:'Yes',foreignZh:'可',mkt:'JP',link:'jp/osaka.html',mktClr:'#dc2626'},
-  // TW - 4 cities
-  {flag:'\u{1F1F9}\u{1F1FC}',name:'Taipei',nameZh:'台北',priceUSD:580000,priceDisp:'NT$65M+',yoy:5.1,yield:2.0,pti:15.4,supply:'tight',dom:35,mortgage:2.40,foreign:'Limited',foreignZh:'有限制',mkt:'TW',link:'tw/taipei.html',mktClr:'#1e3a5f'},
-  {flag:'\u{1F1F9}\u{1F1FC}',name:'Hsinchu',nameZh:'新竹',priceUSD:422000,priceDisp:'NT$13.5M',yoy:-2.3,yield:1.8,pti:12.5,supply:'balanced',dom:35,mortgage:2.40,foreign:'Limited',foreignZh:'有限制',mkt:'TW',link:'tw/hsinchu.html',mktClr:'#1e3a5f'},
-  {flag:'\u{1F1F9}\u{1F1FC}',name:'Taichung',nameZh:'台中',priceUSD:405000,priceDisp:'NT$13M',yoy:-5.4,yield:2.2,pti:11.9,supply:'balanced',dom:40,mortgage:2.40,foreign:'Limited',foreignZh:'有限制',mkt:'TW',link:'tw/taichung.html',mktClr:'#1e3a5f'},
-  {flag:'\u{1F1F9}\u{1F1FC}',name:'Kaohsiung',nameZh:'高雄',priceUSD:310000,priceDisp:'NT$10M',yoy:-5.7,yield:3.1,pti:10.1,supply:'loose',dom:40,mortgage:2.40,foreign:'Limited',foreignZh:'有限制',mkt:'TW',link:'tw/kaohsiung.html',mktClr:'#1e3a5f'},
-  // NZ - 2 cities
-  {flag:'\u{1F1F3}\u{1F1FF}',name:'Auckland',nameZh:'奧克蘭',priceUSD:578000,priceDisp:'NZ$1.01M',yoy:-2.1,yield:3.96,pti:9.8,supply:'loose',dom:55,mortgage:6.25,foreign:'OIO',foreignZh:'限制',mkt:'NZ',link:'nz/auckland.html',mktClr:'#0891b2'},
-  {flag:'\u{1F1F3}\u{1F1FF}',name:'Christchurch',nameZh:'基督城',priceUSD:397000,priceDisp:'NZ$697K',yoy:3.0,yield:4.8,pti:6.5,supply:'balanced',dom:38,mortgage:6.25,foreign:'OIO',foreignZh:'限制',mkt:'NZ',link:'nz/christchurch.html',mktClr:'#0891b2'},
-  // MY - 2 cities
-  {flag:'\u{1F1F2}\u{1F1FE}',name:'Kuala Lumpur',nameZh:'吉隆坡',priceUSD:180000,priceDisp:'RM 805K',yoy:2.1,yield:4.5,pti:6.2,supply:'loose',dom:90,mortgage:4.20,foreign:'RM 1M+',foreignZh:'門檻限制',mkt:'MY',link:'kl.html',mktClr:'#e65100'},
-  {flag:'\u{1F1F2}\u{1F1FE}',name:'Penang',nameZh:'檳城',priceUSD:113000,priceDisp:'RM 505K',yoy:5.4,yield:4.0,pti:5.8,supply:'balanced',dom:75,mortgage:4.20,foreign:'RM 1M+',foreignZh:'門檻限制',mkt:'MY',link:'penang.html',mktClr:'#e65100'},
-  // TH - 2 cities
-  {flag:'\u{1F1F9}\u{1F1ED}',name:'Bangkok CBD',nameZh:'曼谷CBD',priceUSD:null,priceDisp:'THB 315K/m²',yoy:1.6,yield:5.0,pti:8.5,supply:'loose',dom:120,mortgage:6.50,foreign:'49% Quota',foreignZh:'49%配額',mkt:'TH',link:'th/bangkok.html',mktClr:'#d97706'},
-  {flag:'\u{1F1F9}\u{1F1ED}',name:'Chiang Mai',nameZh:'清邁',priceUSD:null,priceDisp:'THB 92K/m²',yoy:5.0,yield:6.5,pti:6.0,supply:'balanced',dom:90,mortgage:6.50,foreign:'49% Quota',foreignZh:'49%配額',mkt:'TH',link:'th/chiangmai.html',mktClr:'#d97706'}
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Silicon Valley',nameZh:'矽谷',priceUSD:1640000,priceDisp:'$1.64M',yoy:1.2,yield:2.8,pti:19.5,supply:'tight',pr:30,pipeline:0.4,dom:9,mortgage:6.38,link:'us/sv.html'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'San Francisco',nameZh:'舊金山',priceUSD:1650000,priceDisp:'$1.65M',yoy:1.8,yield:3.5,pti:18.0,supply:'tight',pr:37,pipeline:0.6,dom:13,mortgage:6.38,link:'us/sf.html'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Los Angeles',nameZh:'洛杉磯',priceUSD:1070000,priceDisp:'$1.07M',yoy:2.3,yield:3.2,pti:12.0,supply:'balanced',pr:40,pipeline:0.8,dom:35,mortgage:6.38,link:'us/la.html'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'San Diego',nameZh:'聖地牙哥',priceUSD:1000000,priceDisp:'$1.0M',yoy:2.6,yield:3.8,pti:11.5,supply:'balanced',pr:30,pipeline:1.0,dom:27,mortgage:6.38,link:'us/sandiego.html'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'NYC',nameZh:'紐約',priceUSD:880000,priceDisp:'$880K',yoy:4.9,yield:3.2,pti:14.75,supply:'balanced',pr:20,pipeline:0.9,dom:60,mortgage:6.38,link:'us/nyc.html'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Boston',nameZh:'波士頓',priceUSD:857000,priceDisp:'$857K',yoy:2.4,yield:3.8,pti:10.0,supply:'tight',pr:28,pipeline:0.5,dom:12,mortgage:6.38,link:'us/boston.html'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Seattle',nameZh:'西雅圖',priceUSD:848000,priceDisp:'$848K',yoy:4.3,yield:3.5,pti:10.5,supply:'tight',pr:34,pipeline:1.2,dom:18,mortgage:6.38,link:'us/seattle.html'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Miami',nameZh:'邁阿密',priceUSD:600000,priceDisp:'$600K',yoy:-1.0,yield:4.2,pti:7.0,supply:'loose',pr:29,pipeline:3.5,dom:61,mortgage:6.38,link:'us/miami.html'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Denver',nameZh:'丹佛',priceUSD:539000,priceDisp:'$539K',yoy:1.6,yield:4.5,pti:6.8,supply:'balanced',pr:24,pipeline:2.1,dom:38,mortgage:6.38,link:'us/denver.html'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Phoenix',nameZh:'鳳凰城',priceUSD:444000,priceDisp:'$444K',yoy:2.5,yield:4.8,pti:5.2,supply:'balanced',pr:31,pipeline:2.8,dom:45,mortgage:6.38,link:'us/phoenix.html'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Austin',nameZh:'奧斯丁',priceUSD:412000,priceDisp:'$412K',yoy:-2.7,yield:4.8,pti:3.5,supply:'loose',pr:23,pipeline:4.2,dom:52,mortgage:6.38,link:'us/austin.html'},
+  {flag:'\u{1F1FA}\u{1F1F8}',name:'Chicago',nameZh:'芝加哥',priceUSD:365000,priceDisp:'$365K',yoy:4.6,yield:5.8,pti:4.5,supply:'tight',pr:19,pipeline:0.7,dom:22,mortgage:6.38,link:'us/chicago.html'},
+  {flag:'\u{1F1EC}\u{1F1E7}',name:'London',nameZh:'倫敦',priceUSD:689000,priceDisp:'£547K',yoy:3.2,yield:3.5,pti:8.6,supply:'balanced',pr:31,pipeline:0.6,dom:45,mortgage:4.50,link:'uk/london.html'},
+  {flag:'\u{1F1EC}\u{1F1E7}',name:'Edinburgh',nameZh:'愛丁堡',priceUSD:428000,priceDisp:'£340K',yoy:6.4,yield:5.5,pti:8.0,supply:'tight',pr:16,pipeline:0.4,dom:22,mortgage:4.50,link:'uk/edinburgh.html'},
+  {flag:'\u{1F1EC}\u{1F1E7}',name:'Birmingham',nameZh:'伯明翰',priceUSD:334000,priceDisp:'£265K',yoy:4.5,yield:6.5,pti:5.5,supply:'tight',pr:21,pipeline:1.1,dom:32,mortgage:4.50,link:'uk/birmingham.html'},
+  {flag:'\u{1F1EC}\u{1F1E7}',name:'Manchester',nameZh:'曼徹斯特',priceUSD:328000,priceDisp:'£260K',yoy:5.0,yield:6.5,pti:6.8,supply:'tight',pr:18,pipeline:0.8,dom:28,mortgage:4.50,link:'uk/manchester.html'},
+  {flag:'\u{1F1EC}\u{1F1E7}',name:'Newcastle',nameZh:'紐卡斯爾',priceUSD:262000,priceDisp:'£208K',yoy:5.1,yield:7.0,pti:5.0,supply:'balanced',pr:15,pipeline:0.5,dom:35,mortgage:4.50,link:'uk/newcastle.html'},
+  {flag:'\u{1F1E6}\u{1F1FA}',name:'Sydney',nameZh:'雪梨',priceUSD:1012000,priceDisp:'A$1.61M',yoy:6.0,yield:3.0,pti:13.5,supply:'tight',pr:21,pipeline:0.8,dom:28,mortgage:6.10,link:'au/sydney.html'},
+  {flag:'\u{1F1E6}\u{1F1FA}',name:'Gold Coast',nameZh:'黃金海岸',priceUSD:832000,priceDisp:'A$1.32M',yoy:18.0,yield:3.2,pti:11.2,supply:'tight',pr:33,pipeline:0.5,dom:28,mortgage:6.10,link:'au/goldcoast.html'},
+  {flag:'\u{1F1E6}\u{1F1FA}',name:'Brisbane',nameZh:'布里斯本',priceUSD:680000,priceDisp:'A$1.08M',yoy:17.3,yield:3.8,pti:9.5,supply:'tight',pr:30,pipeline:0.9,dom:22,mortgage:6.10,link:'au/brisbane.html'},
+  {flag:'\u{1F1E6}\u{1F1FA}',name:'Melbourne',nameZh:'墨爾本',priceUSD:580000,priceDisp:'A$920K',yoy:1.5,yield:3.5,pti:10.2,supply:'balanced',pr:30,pipeline:1.5,dom:35,mortgage:6.10,link:'au/melbourne.html'},
+  {flag:'\u{1F1EF}\u{1F1F5}',name:'Tokyo',nameZh:'東京',priceUSD:606000,priceDisp:'¥94M',yoy:8.2,yield:3.6,pti:12.0,supply:'tight',pr:43,pipeline:0.3,dom:30,mortgage:0.90,link:'jp/tokyo.html'},
+  {flag:'\u{1F1EF}\u{1F1F5}',name:'Fukuoka',nameZh:'福岡',priceUSD:439000,priceDisp:'¥68M',yoy:21.8,yield:5.0,pti:11.0,supply:'tight',pr:71,pipeline:0.4,dom:25,mortgage:0.90,link:'jp/fukuoka.html'},
+  {flag:'\u{1F1EF}\u{1F1F5}',name:'Osaka',nameZh:'大阪',priceUSD:375000,priceDisp:'¥58.1M',yoy:9.4,yield:4.5,pti:12.0,supply:'tight',pr:35,pipeline:0.5,dom:35,mortgage:0.90,link:'jp/osaka.html'},
+  {flag:'\u{1F1F9}\u{1F1FC}',name:'Taipei',nameZh:'台北',priceUSD:580000,priceDisp:'NT$65M+',yoy:5.1,yield:2.0,pti:15.4,supply:'tight',pr:75,pipeline:0.3,dom:35,mortgage:2.40,link:'tw/taipei.html'},
+  {flag:'\u{1F1F9}\u{1F1FC}',name:'Hsinchu',nameZh:'新竹',priceUSD:422000,priceDisp:'NT$13.5M',yoy:-2.3,yield:1.8,pti:12.5,supply:'balanced',pr:51,pipeline:0.8,dom:35,mortgage:2.40,link:'tw/hsinchu.html'},
+  {flag:'\u{1F1F9}\u{1F1FC}',name:'Taichung',nameZh:'台中',priceUSD:405000,priceDisp:'NT$13M',yoy:-5.4,yield:2.2,pti:11.9,supply:'balanced',pr:60,pipeline:1.2,dom:40,mortgage:2.40,link:'tw/taichung.html'},
+  {flag:'\u{1F1F9}\u{1F1FC}',name:'Kaohsiung',nameZh:'高雄',priceUSD:310000,priceDisp:'NT$10M',yoy:-5.7,yield:3.1,pti:10.1,supply:'loose',pr:45,pipeline:1.5,dom:40,mortgage:2.40,link:'tw/kaohsiung.html'},
+  {flag:'\u{1F1F3}\u{1F1FF}',name:'Auckland',nameZh:'奧克蘭',priceUSD:578000,priceDisp:'NZ$1.01M',yoy:-2.1,yield:3.96,pti:9.8,supply:'loose',pr:28,pipeline:2.8,dom:55,mortgage:6.25,link:'nz/auckland.html'},
+  {flag:'\u{1F1F3}\u{1F1FF}',name:'Christchurch',nameZh:'基督城',priceUSD:397000,priceDisp:'NZ$697K',yoy:3.0,yield:4.8,pti:6.5,supply:'balanced',pr:25,pipeline:2.0,dom:38,mortgage:6.25,link:'nz/christchurch.html'},
+  {flag:'\u{1F1F2}\u{1F1FE}',name:'Kuala Lumpur',nameZh:'吉隆坡',priceUSD:180000,priceDisp:'RM 805K',yoy:2.1,yield:4.5,pti:6.2,supply:'loose',pr:27,pipeline:3.2,dom:90,mortgage:4.20,link:'kl.html'},
+  {flag:'\u{1F1F2}\u{1F1FE}',name:'Penang',nameZh:'檳城',priceUSD:113000,priceDisp:'RM 505K',yoy:5.4,yield:4.0,pti:5.8,supply:'balanced',pr:23,pipeline:1.8,dom:75,mortgage:4.20,link:'penang.html'},
+  {flag:'\u{1F1F9}\u{1F1ED}',name:'Bangkok CBD',nameZh:'曼谷CBD',priceUSD:null,priceDisp:'THB 315K/m²',yoy:1.6,yield:5.0,pti:8.5,supply:'loose',pr:31,pipeline:4.5,dom:120,mortgage:6.50,link:'th/bangkok.html'},
+  {flag:'\u{1F1F9}\u{1F1ED}',name:'Chiang Mai',nameZh:'清邁',priceUSD:null,priceDisp:'THB 92K/m²',yoy:5.0,yield:6.5,pti:6.0,supply:'balanced',pr:21,pipeline:2.0,dom:90,mortgage:6.50,link:'th/chiangmai.html'}
 ];
 function supplyBadge(supply,lang){
   var cfg={
@@ -244,13 +236,12 @@ function supplyBadge(supply,lang){
   var s=cfg[supply]||cfg['balanced'];
   return '<span style="display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;background:'+s.bg+';color:'+s.cl+';border:1px solid '+s.bdr+';white-space:nowrap">'+(lang==='zh'?s.zh:s.en)+'</span>';
 }
-function foreignBadge(c,lang){
-  var val=lang==='zh'?c.foreignZh:c.foreign;
-  var isYes=['Yes','可'].indexOf(val)>=0;
-  var isRestrict=['49% Quota','49%配額','RM 1M+','門檻限制'].indexOf(val)>=0;
-  var bg=isYes?'#dcfce7':isRestrict?'#fee2e2':'#fef3c7';
-  var cl=isYes?'#166534':isRestrict?'#991b1b':'#92400e';
-  return '<span style="display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;background:'+bg+';color:'+cl+'">'+val+'</span>';
+function pipelineBadge(v,lang){
+  var cl,bg,bdr,enL,zhL;
+  if(v<1.0){cl='#166534';bg='#f0fdf4';bdr='#86efac';enL='Low';zhL='低';}
+  else if(v<2.5){cl='#1e3a5f';bg='#eff6ff';bdr='#93c5fd';enL='Mod';zhL='中';}
+  else{cl='#92400e';bg='#fffbeb';bdr='#fcd34d';enL='High';zhL='高';}
+  return '<span style="display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;background:'+bg+';color:'+cl+';border:1px solid '+bdr+';white-space:nowrap">'+(lang==='zh'?zhL:enL)+' '+v.toFixed(1)+'%</span>';
 }
 function sortBy(key){
   if(sortKey===key){sortDir*=-1;}else{sortKey=key;sortDir=1;}
@@ -258,24 +249,16 @@ function sortBy(key){
   document.querySelectorAll('.compare-tbl th[data-key]').forEach(function(th){
     var arrow=th.querySelector('.sort-arrow');
     if(!arrow)return;
-    if(th.dataset.key===sortKey){
-      arrow.textContent=sortDir===1?' ↓':' ↑';
-      th.style.color='#1e3a5f';
-    }else{
-      arrow.textContent=' ↕';
-      th.style.color='#5a7a9a';
-    }
+    if(th.dataset.key===sortKey){arrow.textContent=sortDir===1?' \u2193':' \u2191';th.style.color='#1e3a5f';}
+    else{arrow.textContent=' \u21F5';th.style.color='#5a7a9a';}
   });
 }
 function renderTable(lang){
   var sorted=CITIES.slice().sort(function(a,b){
     var av=a[sortKey],bv=b[sortKey];
-    if(av===null||av===undefined)av=-Infinity;
-    if(bv===null||bv===undefined)bv=-Infinity;
-    if(sortKey==='supply'){
-      av=SUPPLY_ORDER[av]!==undefined?SUPPLY_ORDER[av]:1;
-      bv=SUPPLY_ORDER[bv]!==undefined?SUPPLY_ORDER[bv]:1;
-    }
+    if(av===null||av===undefined)av=sortDir===1?-Infinity:Infinity;
+    if(bv===null||bv===undefined)bv=sortDir===1?-Infinity:Infinity;
+    if(sortKey==='supply'){av=SUPPLY_ORDER[av]!==undefined?SUPPLY_ORDER[av]:1;bv=SUPPLY_ORDER[bv]!==undefined?SUPPLY_ORDER[bv]:1;}
     if(typeof av==='string')return sortDir*(av.localeCompare(bv));
     return sortDir*(bv-av);
   });
@@ -286,17 +269,20 @@ function renderTable(lang){
     var yClr=c.yield>=5?'#16a34a':c.yield>=3.5?'#1e3a5f':'#94a3b8';
     var yW=c.yield>=5?700:600;
     var pClr=c.pti<=5?'#16a34a':c.pti<=10?'#d97706':'#dc2626';
+    var prClr=c.pr<20?'#16a34a':c.pr<=30?'#1e3a5f':'#dc2626';
+    var prW=c.pr<20||c.pr>30?700:600;
     var mClr=c.mortgage<=1.5?'#16a34a':c.mortgage<=3.5?'#1e3a5f':c.mortgage>5?'#dc2626':'#1e3a5f';
     return '<tr onclick="location.href=\''+c.link+'\'" style="cursor:pointer">'+
       '<td style="position:sticky;left:0;background:#fff;z-index:1;border-right:1px solid #f0f5fb;font-weight:600;min-width:130px"><span style="font-size:13px;margin-right:6px">'+c.flag+'</span>'+nm+'</td>'+
       '<td style="font-weight:600;color:#0f2a45;min-width:110px">'+c.priceDisp+'</td>'+
       '<td style="min-width:70px">'+yoyH+'</td>'+
-      '<td style="color:'+yClr+';font-weight:'+yW+';min-width:90px">'+c.yield.toFixed(1)+'%</td>'+
-      '<td style="color:'+pClr+';font-weight:600;min-width:70px">'+c.pti+'\u00D7</td>'+
-      '<td style="text-align:center;min-width:110px">'+supplyBadge(c.supply,lang)+'</td>'+
-      '<td style="color:'+mClr+';font-weight:600;min-width:110px">'+c.mortgage.toFixed(2)+'%</td>'+
-      '<td style="text-align:center;min-width:100px">'+foreignBadge(c,lang)+'</td>'+
-      '<td style="color:#7fa3c4;font-size:11px;min-width:60px">'+c.mkt+'</td></tr>';
+      '<td style="color:'+yClr+';font-weight:'+yW+';min-width:70px">'+c.yield.toFixed(1)+'%</td>'+
+      '<td style="color:'+pClr+';font-weight:600;min-width:60px">'+c.pti+'\u00D7</td>'+
+      '<td style="text-align:center;min-width:100px">'+supplyBadge(c.supply,lang)+'</td>'+
+      '<td style="color:'+prClr+';font-weight:'+prW+';min-width:55px">'+c.pr+'\u00D7</td>'+
+      '<td style="text-align:center;min-width:110px">'+pipelineBadge(c.pipeline,lang)+'</td>'+
+      '<td style="color:'+mClr+';font-weight:600;min-width:90px">'+c.mortgage.toFixed(2)+'%</td>'+
+      '</tr>';
   }).join('');
 }
 var sortKey='priceUSD';
