@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bangkok Deep Dive | Thailand Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:160px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../tw/tw.css">
+<style>
+  .report-container{max-width:860px;margin:0 auto;padding:32px 20px}.report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}.report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}.report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}.report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}.report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}.report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}.report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+  .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}.chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}.chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:6px}.chart-note.green{color:#16a34a}.chart-note.orange{color:#d97706}.chart-note.red{color:#dc2626}.chart-note.navy{color:#1e3a5f}
+  .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}.report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}.report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}.report-chart-card p{font-size:10px!important;color:#5a7a9a!important;line-height:1.5!important;margin-bottom:8px!important;font-family:Inter,sans-serif!important}
+  .toc-box{background:#fff;border:1px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;padding:0;margin:0 0 28px;font-family:'Inter',sans-serif}.toc-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:13px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none}.toc-toggle{background:none;border:none;color:#5a7a9a;font-size:14px;cursor:pointer;padding:0 4px;line-height:1}.toc-list{padding:4px 16px 14px;display:flex;flex-direction:column;gap:4px}.toc-list a{font-size:13px;color:#1e3a5f;text-decoration:none;padding:5px 8px;border-radius:4px;display:block;border-left:2px solid transparent;transition:all .15s}.toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;padding-left:12px}.toc-collapsed .toc-list{display:none}.toc-collapsed .toc-toggle{transform:rotate(180deg)}
+  .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}.report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
+  .side-nav{position:fixed;top:50%;right:max(16px,calc(50% - 860px/2 - 160px));transform:translateY(-50%);width:136px;z-index:200;display:flex;flex-direction:column;padding:16px 12px;background:#fff;border:0.5px solid #dde8f2;border-radius:10px;box-shadow:0 2px 12px rgba(30,58,95,0.08);gap:0}.side-nav::before{content:'';position:absolute;left:22px;top:28px;bottom:28px;width:1.5px;background:#eef3f9;z-index:0}.side-nav a{display:flex;align-items:center;gap:10px;text-decoration:none;padding:5px 0;position:relative;z-index:1;cursor:pointer}.side-nav-dot{width:7px;height:7px;border-radius:50%;background:#dde8f2;border:1.5px solid #ccd9e8;flex-shrink:0;transition:all .2s;position:relative;z-index:2}.side-nav-label{font-family:'Inter',sans-serif;font-size:10.5px;color:#94a3b8;line-height:1.3;transition:color .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:82px;letter-spacing:.01em}.side-nav a.active .side-nav-dot{background:#1e3a5f;border-color:#1e3a5f;width:9px;height:9px;box-shadow:0 0 0 3px rgba(30,58,95,0.12)}.side-nav a.active .side-nav-label{color:#1e3a5f;font-weight:600}.side-nav a:hover .side-nav-dot{background:#5a7a9a;border-color:#5a7a9a}.side-nav a:hover .side-nav-label{color:#1e3a5f}
+  @media(max-width:1100px){.side-nav{display:none}}@media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+<header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector"><button class="market-btn" onclick="toggleMarketMenu()">&#x1F1F9;&#x1F1ED; <span class="lang-en">Thailand</span><span class="lang-zh" style="display:none">泰國</span> &#x25BE;</button><div class="market-dropdown" id="marketDropdown"><a href="../report.html">&#x1F1F2;&#x1F1FE; <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a><a href="../tw/report.html">&#x1F1F9;&#x1F1FC; <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a><a href="../jp/report.html">&#x1F1EF;&#x1F1F5; <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a><a href="../au/report.html">&#x1F1E6;&#x1F1FA; <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a><a href="../nz/report.html">&#x1F1F3;&#x1F1FF; <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a><a href="../uk/report.html">&#x1F1EC;&#x1F1E7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a><a href="report.html" class="active">&#x1F1F9;&#x1F1ED; <span class="lang-en">Thailand</span><span class="lang-zh" style="display:none">泰國</span></a><a href="../us/report.html">&#x1F1FA;&#x1F1F8; <span class="lang-en">United States</span><span class="lang-zh" style="display:none">美國</span></a></div></div>
+  <nav><a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="bangkok.html" class="active"><span class="lang-en">Bangkok</span><span class="lang-zh" style="display:none">曼谷</span></a><a href="chiangmai.html"><span class="lang-en">Chiang Mai</span><span class="lang-zh" style="display:none">清邁</span></a></nav>
+  <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  <span class="opr-badge">BoT: 2.25%</span><button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="bangkok.html" class="active"><span class="lang-en">Bangkok</span><span class="lang-zh" style="display:none">曼谷</span></a><a href="chiangmai.html"><span class="lang-en">Chiang Mai</span><span class="lang-zh" style="display:none">清邁</span></a>
+  <div class="mobile-meta"><span class="opr-badge">BoT: 2.25%</span><div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div></div>
+</div>
+
+<div class="report-container">
+  <nav class="side-nav" id="sideNav">
+    <a href="#sec-exec" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Exec Summary</span><span class="side-nav-label lang-zh" style="display:none">執行摘要</span></a>
+    <a href="#sec-price" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Price Trend</span><span class="side-nav-label lang-zh" style="display:none">房價走勢</span></a>
+    <a href="#sec-districts" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Key Districts</span><span class="side-nav-label lang-zh" style="display:none">重點地區</span></a>
+    <a href="#sec-transit" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Mass Transit</span><span class="side-nav-label lang-zh" style="display:none">大眾捷運效應</span></a>
+    <a href="#sec-inventory" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Inventory</span><span class="side-nav-label lang-zh" style="display:none">庫存積壓</span></a>
+    <a href="#sec-rental" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Rental Market</span><span class="side-nav-label lang-zh" style="display:none">租賃市場</span></a>
+    <a href="#sec-outlook" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Outlook</span><span class="side-nav-label lang-zh" style="display:none">展望</span></a>
+  </nav>
+  <div class="report-header">
+    <div class="lang-en"><h1>BANGKOK &mdash; DEEP DIVE</h1><div class="report-meta">April 2026 &middot; Data: CBRE Thailand / Knight Frank / REIC / BOT</div></div>
+    <div class="lang-zh" style="display:none"><h1>曼谷——深度分析</h1><div class="report-meta">2026年4月 &middot; 數據：世邦魏理仕泰國 / 萊坊 / REIC / 泰國銀行</div></div>
+  </div>
+  <div class="report-body">
+    <div class="toc-box" id="tocBox"><div class="toc-header" onclick="toggleToc()"><span class="lang-en">&#x1F4CB; In This Report</span><span class="lang-zh" style="display:none">&#x1F4CB; 本報告涵蓋</span><button class="toc-toggle" id="tocToggle">&#x25B2;</button></div>
+      <div class="toc-list" id="tocList">
+        <a href="#sec-exec" onclick="closeTocMobile()"><span class="lang-en">1. Executive Summary</span><span class="lang-zh" style="display:none">1. 執行摘要</span></a>
+        <a href="#sec-price" onclick="closeTocMobile()"><span class="lang-en">2. Price Trend</span><span class="lang-zh" style="display:none">2. 房價走勢</span></a>
+        <a href="#sec-districts" onclick="closeTocMobile()"><span class="lang-en">3. Key Districts</span><span class="lang-zh" style="display:none">3. 重點地區</span></a>
+        <a href="#sec-transit" onclick="closeTocMobile()"><span class="lang-en">4. Mass Transit Effect</span><span class="lang-zh" style="display:none">4. 大眾捷運效應</span></a>
+        <a href="#sec-inventory" onclick="closeTocMobile()"><span class="lang-en">5. Inventory</span><span class="lang-zh" style="display:none">5. 庫存積壓</span></a>
+        <a href="#sec-rental" onclick="closeTocMobile()"><span class="lang-en">6. Rental Market</span><span class="lang-zh" style="display:none">6. 租賃市場</span></a>
+        <a href="#sec-outlook" onclick="closeTocMobile()"><span class="lang-en">7. Outlook</span><span class="lang-zh" style="display:none">7. 展望</span></a>
+      </div></div>
+
+    <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+    <div class="lang-en">
+      <p>Bangkok's condo market in 2026 operates on two distinct speeds. The CBD luxury segment, anchored by the BTS/MRT transit network and 103,000+ foreign residents, continues to appreciate at <strong>+1.6% YoY</strong> with prime units at THB 315,000/sqm. Meanwhile, the suburban mass market is weighed down by 235,000 unsold units and mortgage rejection rates exceeding 70% for sub-THB 3M properties. Foreign investors face a compelling risk-return proposition in transit-adjacent CBD condos: 4&ndash;6% gross yields, capital appreciation of 1&ndash;3% annually, and the structural tailwind of the LTR visa program (7,000+ issued) and One Bangkok mega-project completion.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>曼谷2026年的公寓市場以兩種截然不同的速度運作。CBD豪宅板塊以BTS/MRT捷運網絡和103,000多名外籍居民為支撐，繼續以<strong>年增1.6%</strong>的速度升值，優質單位達泰銖315,000/平方米。然而，郊區大眾市場受到235,000套未售單位和300萬泰銖以下房產超過70%按揭拒貸率的拖累。外國投資者在捷運毗鄰CBD公寓面臨具吸引力的風險回報：4至6%毛租金收益率、年1至3%資本增值，以及LTR簽證計劃（已發放7,000多張）和One Bangkok超大型項目完工的結構性順風。</p>
+    </div>
+
+    <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin-top:24px;">
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">CBD CONDO PRICE</span><span class="lang-zh" style="display:none">CBD公寓價格</span></div><div class="kpi-value">THB 315K/sqm</div><span class="kpi-badge badge-blue"><span class="lang-en">+1.61% YoY &middot; CBRE Q3 2025</span><span class="lang-zh" style="display:none">年增+1.61% &middot; CBRE 2025年Q3</span></span></div>
+      <div class="kpi-card red"><div class="kpi-label"><span class="lang-en">UNSOLD INVENTORY</span><span class="lang-zh" style="display:none">未售庫存</span></div><div class="kpi-value">235K units</div><span class="kpi-badge badge-red"><span class="lang-en">Bangkok condos &middot; New launches -40%</span><span class="lang-zh" style="display:none">曼谷公寓 &middot; 新推盤-40%</span></span></div>
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">FOREIGN RESIDENTS</span><span class="lang-zh" style="display:none">外籍居民</span></div><div class="kpi-value">103K+</div><span class="kpi-badge badge-blue"><span class="lang-en">Registered expats &middot; LTR + work permit</span><span class="lang-zh" style="display:none">註冊外籍人士 &middot; LTR+工作許可</span></span></div>
+      <div class="kpi-card green"><div class="kpi-label"><span class="lang-en">TRANSIT PREMIUM</span><span class="lang-zh" style="display:none">捷運溢價</span></div><div class="kpi-value">+6&ndash;7%</div><span class="kpi-badge badge-green"><span class="lang-en">Within 300m of BTS/MRT station</span><span class="lang-zh" style="display:none">BTS/MRT站點300米範圍內</span></span></div>
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">CBD GROSS YIELD</span><span class="lang-zh" style="display:none">CBD毛租金收益率</span></div><div class="kpi-value">~5%</div><span class="kpi-badge badge-blue"><span class="lang-en">Transit-adjacent &middot; Net ~3.5%</span><span class="lang-zh" style="display:none">捷運毗鄰 &middot; 淨約3.5%</span></span></div>
+      <div class="kpi-card green"><div class="kpi-label"><span class="lang-en">LTR VISAS ISSUED</span><span class="lang-zh" style="display:none">LTR簽證發放</span></div><div class="kpi-value">7,000+</div><span class="kpi-badge badge-green"><span class="lang-en">Long-Term Resident &middot; USD 657M inflow</span><span class="lang-zh" style="display:none">長期居民簽證 &middot; 6.57億美元流入</span></span></div>
+    </div>
+
+    <h2 id="sec-price"><span class="lang-en">PRICE TREND</span><span class="lang-zh" style="display:none">房價走勢</span></h2>
+    <div class="lang-en">
+      <p>Bangkok CBD condo prices have risen approximately <strong>+40%</strong> since 2018, driven by foreign demand concentration, branded residence premiums, and transit infrastructure expansion. In contrast, suburban prices have appreciated only <strong>+10%</strong> over the same period. This divergence reflects the two-speed nature of the market: international capital flows into CBD freehold condos within the 49% foreign quota, while domestic buyers &mdash; constrained by 90.6% household debt-to-GDP &mdash; cannot absorb suburban supply. Midtown corridors along newer MRT extensions occupy the middle ground, tracking approximately +17% since 2018.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>曼谷CBD公寓價格自2018年以來上漲約<strong>+40%</strong>，受外國需求集中、品牌住宅溢價和捷運基礎設施擴張推動。相比之下，郊區價格同期僅升值<strong>+10%</strong>。這種分化反映了市場的雙速本質：國際資本流入49%外國配額內的CBD永久產權公寓，而國內買家因家庭負債佔GDP 90.6%而無力吸收郊區供給。沿較新MRT延伸線的中城走廊居中，自2018年以來約上漲+17%。</p>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">Bangkok Condo Price Index 2018&ndash;2025 (2018=100)</span><span class="lang-zh" style="display:none">曼谷公寓價格指數 2018&ndash;2025（2018=100）</span></h4><div id="chartBKKPrice" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">CBD +40% vs suburban +10% since 2018. Foreign capital drives the divergence</span><span class="lang-zh" style="display:none">CBD自2018年+40% vs 郊區+10%。外國資本驅動分化</span></p></div>
+
+    <h2 id="sec-districts"><span class="lang-en">KEY DISTRICTS</span><span class="lang-zh" style="display:none">重點地區</span></h2>
+    <div class="lang-en">
+      <p><strong>Watthana/Sukhumvit</strong> remains Bangkok's prime expat corridor at THB 320K/sqm, anchored by Phrom Phong and Thong Lo BTS stations. <strong>Bangrak/Silom</strong> is the financial district hub at THB 300K/sqm, benefiting from both corporate tenant demand and the One Bangkok mega-project halo. <strong>Chatuchak</strong> has emerged as the breakout performer, rising <strong>+16.4%</strong> since the MRT Blue Line extension completion, with prices at THB 180K/sqm offering a significant discount to core CBD.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p><strong>Watthana/素坤逸</strong>仍是曼谷主要外籍走廊，泰銖320K/平方米，以Phrom Phong和Thong Lo BTS站為錨。<strong>Bangrak/是隆</strong>是金融區核心，泰銖300K/平方米，受益於企業租戶需求和One Bangkok超大型項目光環。<strong>恰圖恰</strong>成為突破性表現者，自MRT藍線延伸完工以來上漲<strong>+16.4%</strong>，泰銖180K/平方米的價格相對核心CBD有顯著折讓。</p>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">Bangkok District Condo Prices (THB K/sqm)</span><span class="lang-zh" style="display:none">曼谷各區公寓價格（THB K/sqm）</span></h4><div id="chartBKKDistricts" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">Pathum Wan leads at THB 350K. Chatuchak +16.4% breakout from transit extension</span><span class="lang-zh" style="display:none">巴吞旺以泰銖350K領先。恰圖恰因捷運延伸突破+16.4%</span></p></div>
+
+    <h2 id="sec-transit"><span class="lang-en">MASS TRANSIT EFFECT</span><span class="lang-zh" style="display:none">大眾捷運效應</span></h2>
+    <div class="lang-en">
+      <p>The <strong>Orange Line</strong> corridor has delivered the strongest transit uplift at <strong>+18%</strong>, followed by the Blue Line Extension at +15%. The Gold Line monorail connecting ICON Siam recorded +12%. Properties within 300 metres of stations command a structural 6&ndash;7% premium. The <strong>One Bangkok</strong> mega-project (THB 120 billion, 16 buildings on Wireless Road) is the single largest catalyst for the Lumphini&ndash;Pathum Wan corridor, expected to add 5,000+ residential units and reshape premium pricing benchmarks through 2028.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p><strong>橙線</strong>走廊帶來最強捷運提升效應達<strong>+18%</strong>，其次是藍線延伸+15%。連接ICON Siam的金線單軌錄得+12%。站點300米範圍內房產有結構性6至7%溢價。<strong>One Bangkok</strong>超大型項目（1,200億泰銖，Wireless Road上16棟建築）是倫披尼-巴吞旺走廊最大單一催化劑，預計增加5,000多個住宅單位，並在2028年前重塑優質定價基準。</p>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">Transit Corridor Price Uplift &amp; Average Price</span><span class="lang-zh" style="display:none">捷運走廊價格提升與均價</span></h4><div id="chartBKKTransit" style="height:220px"></div><p class="chart-note green"><span class="lang-en">Orange Line +18% uplift leads. One Bangkok = THB 120B catalyst for Wireless/Lumphini</span><span class="lang-zh" style="display:none">橙線+18%提升領先。One Bangkok = 1200億泰銖Wireless/倫披尼催化劑</span></p></div>
+
+    <h2 id="sec-inventory"><span class="lang-en">INVENTORY</span><span class="lang-zh" style="display:none">庫存積壓</span></h2>
+    <div class="lang-en">
+      <p>Bangkok's unsold condo inventory peaked at <strong>235,000 units</strong> in 2025, a direct consequence of the domestic demand collapse. Developers have responded by cutting new launches by approximately <strong>40%</strong> from 2022 peaks, with 2025E new supply at only 18,000 units versus 60,000 in 2022. This supply discipline is the primary reason CBD prices have held: the luxury segment is not oversupplied. The overhang is concentrated in suburban mass-market projects priced below THB 3 million, where mortgage rejections make absorption structurally difficult.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>曼谷未售公寓庫存在2025年達到<strong>235,000套</strong>的峰值，這是國內需求崩潰的直接結果。開發商已從2022年高峰削減約<strong>40%</strong>的新推盤，2025年預計新供給僅18,000套，而2022年為60,000套。這種供給紀律是CBD價格維持的主要原因：豪宅板塊並未供過於求。積壓集中在定價低於300萬泰銖的郊區大眾市場項目，按揭拒貸使消化在結構上困難。</p>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">Bangkok Unsold Inventory vs New Launches (K units)</span><span class="lang-zh" style="display:none">曼谷未售庫存 vs 新推盤（千套）</span></h4><div id="chartBKKInventory" style="height:220px"></div><p class="chart-note red"><span class="lang-en">235K unsold peak. New launches cut 70% from 2022 peak (60K &rarr; 18K)</span><span class="lang-zh" style="display:none">23.5萬套未售峰值。新推盤從2022年高峰削減70%（6萬→1.8萬）</span></p></div>
+
+    <h2 id="sec-rental"><span class="lang-en">RENTAL MARKET</span><span class="lang-zh" style="display:none">租賃市場</span></h2>
+    <div class="lang-en">
+      <p>Bangkok's CBD rental market delivers <strong>4&ndash;6% gross yields</strong> for transit-adjacent condos, with net yields of 3&ndash;4% after management fees, vacancy, and withholding tax. Airbnb-eligible units in tourist corridors can achieve <strong>7.5% gross</strong> during high season, though regulatory tightening on short-term rentals is an ongoing risk. Branded residences (Ritz-Carlton, Four Seasons, Mandarin Oriental) command 25&ndash;35% price premiums and attract long-term corporate tenants with higher occupancy stability.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>曼谷CBD租賃市場為捷運毗鄰公寓提供<strong>4至6%毛租金收益率</strong>，扣除管理費、空置率和預扣稅後淨收益率3至4%。旅遊走廊的Airbnb合規單位在旺季可達<strong>7.5%毛收益</strong>，但短期租賃監管收緊是持續風險。品牌住宅（麗思卡爾頓、四季、文華東方）溢價25至35%，吸引長期企業租戶，入住率更穩定。</p>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">Bangkok Gross vs Net Rental Yield by Type</span><span class="lang-zh" style="display:none">曼谷各類型毛/淨租金收益率</span></h4><div id="chartBKKRental" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">Airbnb-eligible 7.5% gross leads. CBD standard 5.2%. Branded residence premium = occupancy stability</span><span class="lang-zh" style="display:none">Airbnb合規7.5%毛收益領先。CBD標準5.2%。品牌住宅溢價=入住率穩定</span></p></div>
+
+    <h2 id="sec-outlook"><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
+    <div class="lang-en">
+      <p><strong>Base case:</strong> CBD prime condos appreciate <strong>+1&ndash;3%/yr</strong> through 2028, supported by transit expansion and LTR visa inflows but constrained by global rate environment and 49% quota limitations. <strong>Bull case:</strong> One Bangkok completion (2025&ndash;2027) and accelerated LTR visa uptake drive CBD to THB 385K/sqm by 2029, with Chatuchak and Sukhumvit extensions as secondary beneficiaries. <strong>Bear case:</strong> Chinese capital retreat (geopolitical/domestic property crisis spillover) reduces foreign demand by 20&ndash;30%, pushing CBD prices down to THB 305&ndash;310K/sqm before stabilizing.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p><strong>基本情景：</strong>CBD優質公寓在2028年前每年升值<strong>+1至3%</strong>，受捷運擴張和LTR簽證流入支撐，但受全球利率環境和49%配額限制約束。<strong>牛市情景：</strong>One Bangkok完工（2025至2027年）和LTR簽證加速推動CBD至2029年泰銖385K/平方米，恰圖恰和素坤逸延伸線為次要受益者。<strong>熊市情景：</strong>中國資本撤退（地緣政治/國內房地產危機溢出）減少外國需求20至30%，推動CBD價格下跌至泰銖305至310K/平方米後企穩。</p>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">Bangkok CBD Price Forecast 2025&ndash;2028 (THB K/sqm)</span><span class="lang-zh" style="display:none">曼谷CBD價格預測 2025&ndash;2028（THB K/sqm）</span></h4><div id="chartBKKForecast" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">Bull: One Bangkok + LTR momentum &rarr; THB 385K. Bear: Chinese retreat &rarr; THB 308K floor</span><span class="lang-zh" style="display:none">牛市：One Bangkok + LTR動力→泰銖385K。熊市：中國撤退→泰銖308K底部</span></p></div>
+
+    <div class="report-footer">
+      <p><span class="lang-en">Data sources: CBRE Thailand Q3 2025 &middot; Knight Frank Bangkok H2 2025 &middot; REIC Thailand &middot; Bank of Thailand (BOT) &middot; Savills Thailand 2026 &middot; Global Property Guide. All data as of March&ndash;April 2026.</span><span class="lang-zh" style="display:none">數據來源：世邦魏理仕泰國2025年Q3 &middot; 萊坊曼谷2025年H2 &middot; 泰國REIC &middot; 泰國銀行（BOT） &middot; 第一太平戴維斯泰國2026年 &middot; 全球房地產指南。所有數據截至2026年3月至4月。</span></p>
+      <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+var allCharts=[];
+function initAllCharts(lang){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];
+  drawBKKPrice(lang);drawBKKDistricts(lang);drawBKKTransit(lang);drawBKKInventory(lang);drawBKKRental(lang);drawBKKForecast(lang);}
+
+function drawBKKPrice(lang){var dom=document.getElementById('chartBKKPrice');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var labels=['2018','2019','2020','2021','2022','2023','2024','2025E'];
+  var cbd=[100,105,108,112,122,130,138,140];var mid=[100,103,105,107,110,114,116,117];var sub=[100,101,102,103,105,108,109,110];
+  c.setOption({tooltip:baseTooltip,legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},grid:{left:12,right:12,top:24,bottom:36,containLabel:true},xAxis:mkAxis({type:'category',data:labels,axisLabel:{color:C.muted,fontSize:10}}),yAxis:mkAxis({type:'value',min:90,axisLabel:{color:C.muted,fontSize:9}}),
+    series:[{name:'CBD',type:'line',data:cbd,lineStyle:{color:C.red,width:2},itemStyle:{color:C.red},symbol:'circle',symbolSize:5},{name:en?'Midtown':'中城',type:'line',data:mid,lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5},{name:en?'Suburban':'郊區',type:'line',data:sub,lineStyle:{color:C.blue,width:2,type:'dashed'},itemStyle:{color:C.blue},symbol:'circle',symbolSize:5}]});}
+
+function drawBKKDistricts(lang){var dom=document.getElementById('chartBKKDistricts');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var districts=en?['Lat Phrao','Bang Na','Huai Khwang','Chatuchak','Yannawa','Bangrak','Watthana','Pathum Wan']:['叻拋','邦那','匯權','恰圖恰','然那瓦','挽叻','瓦他那','巴吞旺'];
+  var values=[95,110,170,180,250,300,320,350];
+  var colors=[C.muted,C.muted,C.blue,C.green,C.navy,C.navy,C.red,C.red];
+  c.setOption({tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11}},grid:{left:12,right:60,top:8,bottom:8,containLabel:true},yAxis:mkAxis({type:'category',data:districts,axisLabel:{color:C.muted,fontSize:9}}),xAxis:mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:9,formatter:function(v){return v+'K';}}}),
+    series:[{type:'bar',data:values.map(function(v,i){return{value:v,itemStyle:{color:colors[i]}};}),barMaxWidth:18,itemStyle:{borderRadius:[0,3,3,0]},label:{show:true,position:'right',formatter:function(p){return p.value+'K';},fontSize:9,color:C.muted}}]});}
+
+function drawBKKTransit(lang){var dom=document.getElementById('chartBKKTransit');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var corridors=en?['Purple','Red West','Green South','Gold','Blue Ext','Orange']:['紫線','紅線西','綠線南','金線','藍線延伸','橙線'];
+  var uplift=[11,8,10,12,15,18];var avgPrice=[130,120,145,165,175,160];
+  c.setOption({tooltip:baseTooltip,legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},grid:{left:12,right:12,top:24,bottom:36,containLabel:true},xAxis:mkAxis({type:'category',data:corridors,axisLabel:{color:C.muted,fontSize:9}}),yAxis:[mkAxis({type:'value',min:0,max:20,axisLabel:{color:C.muted,fontSize:9,formatter:'{value}%'}}),mkAxis({type:'value',min:100,max:200,axisLabel:{color:C.muted,fontSize:9,formatter:function(v){return v+'K';}},splitLine:{show:false}})],
+    series:[{name:en?'Uplift %':'提升%',type:'bar',data:uplift.map(function(v){return{value:v,itemStyle:{color:v>=15?C.green:v>=10?C.navy:C.muted}};}),barMaxWidth:28,itemStyle:{borderRadius:[3,3,0,0]},yAxisIndex:0},{name:en?'Avg Price (K)':'均價(K)',type:'line',data:avgPrice,lineStyle:{color:C.orange,width:2},itemStyle:{color:C.orange},symbol:'circle',symbolSize:5,yAxisIndex:1}]});}
+
+function drawBKKInventory(lang){var dom=document.getElementById('chartBKKInventory');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var labels=['2020','2021','2022','2023','2024','2025E'];
+  var inventory=[180,165,190,220,235,225];var newLaunch=[45,55,60,35,28,18];
+  c.setOption({tooltip:baseTooltip,legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},grid:{left:12,right:12,top:24,bottom:36,containLabel:true},xAxis:mkAxis({type:'category',data:labels,axisLabel:{color:C.muted,fontSize:10}}),yAxis:mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:9,formatter:function(v){return v+'K';}}}),
+    series:[{name:en?'Unsold Inventory (K)':'未售庫存(K)',type:'line',data:inventory,lineStyle:{color:C.red,width:2},itemStyle:{color:C.red},symbol:'circle',symbolSize:5,areaStyle:{color:'rgba(220,38,38,0.08)'}},{name:en?'New Launches (K)':'新推盤(K)',type:'bar',data:newLaunch,barMaxWidth:28,itemStyle:{color:C.navy,borderRadius:[3,3,0,0]}}]});}
+
+function drawBKKRental(lang){var dom=document.getElementById('chartBKKRental');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var types=en?['CBD\nStandard','CBD\nBranded','Midtown\nStandard','Sukhumvit\nPrime','Suburban','Airbnb\nEligible']:['CBD\n標準','CBD\n品牌','中城\n標準','素坤逸\n優質','郊區','Airbnb\n合規'];
+  var gross=[5.2,4.8,4.2,5.0,4.5,7.5];var net=[3.8,3.5,3.0,3.7,3.3,5.5];
+  c.setOption({tooltip:baseTooltip,legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},grid:{left:12,right:12,top:24,bottom:36,containLabel:true},xAxis:mkAxis({type:'category',data:types,axisLabel:{color:C.muted,fontSize:9}}),yAxis:mkAxis({type:'value',min:0,max:9,axisLabel:{color:C.muted,fontSize:9,formatter:'{value}%'}}),
+    series:[{name:en?'Gross Yield %':'毛收益率%',type:'bar',data:gross,barMaxWidth:22,itemStyle:{color:C.navy,borderRadius:[3,3,0,0]},barGap:'20%'},{name:en?'Net Yield %':'淨收益率%',type:'bar',data:net,barMaxWidth:22,itemStyle:{color:'rgba(37,99,235,0.6)',borderRadius:[3,3,0,0]}}]});}
+
+function drawBKKForecast(lang){var dom=document.getElementById('chartBKKForecast');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var labels=['2025','2026E','2027E','2028E'];
+  var bull=[315,335,360,385];var base=[315,320,330,340];var bear=[315,310,305,308];
+  c.setOption({tooltip:baseTooltip,legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},grid:{left:12,right:12,top:24,bottom:36,containLabel:true},xAxis:mkAxis({type:'category',data:labels,axisLabel:{color:C.muted,fontSize:10}}),yAxis:mkAxis({type:'value',min:290,max:400,axisLabel:{color:C.muted,fontSize:9,formatter:function(v){return v+'K';}}}),
+    series:[{name:en?'Bull Case':'牛市',type:'line',data:bull,lineStyle:{color:C.green,width:2},itemStyle:{color:C.green},symbol:'circle',symbolSize:5,areaStyle:{color:'rgba(22,163,74,0.08)'}},{name:en?'Base Case':'基本',type:'line',data:base,lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5},{name:en?'Bear Case':'熊市',type:'line',data:bear,lineStyle:{color:C.red,width:2,type:'dashed'},itemStyle:{color:C.red},symbol:'circle',symbolSize:5,areaStyle:{color:'rgba(220,38,38,0.05)'}}]});}
+
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);initAllCharts(lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){var d=document.getElementById('marketDropdown');if(d)d.classList.remove('open');}});
+function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+(function(){function initScrollSpy(){var items=document.querySelectorAll('.side-nav-item');if(!items.length)return;var sections=[];items.forEach(function(a){var id=a.getAttribute('href').replace('#','');var el=document.getElementById(id);if(el)sections.push({el:el,a:a});});function onScroll(){var scrollY=window.scrollY+window.innerHeight*0.25;var current=sections[0];sections.forEach(function(s){if(s.el.getBoundingClientRect().top+window.scrollY<=scrollY)current=s;});items.forEach(function(a){a.classList.remove('active');});if(current)current.a.classList.add('active');}window.addEventListener('scroll',onScroll,{passive:true});onScroll();}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initScrollSpy);}else{initScrollSpy();}})();
+</script>
+</body>
+</html>
