@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ho Chi Minh City Deep Dive | Vietnam Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:160px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../tw/tw.css">
+<style>
+  .report-container{max-width:860px;margin:0 auto;padding:32px 20px}.report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}.report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}.report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}.report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}.report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}.report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}.report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+  .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}.chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}.chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:6px}.chart-note.green{color:#16a34a}.chart-note.orange{color:#d97706}.chart-note.red{color:#dc2626}.chart-note.navy{color:#1e3a5f}
+  .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}.report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}.report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}.report-chart-card p{font-size:10px!important;color:#5a7a9a!important;line-height:1.5!important;margin-bottom:8px!important;font-family:Inter,sans-serif!important}
+  .toc-box{background:#fff;border:1px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;padding:0;margin:0 0 28px;font-family:'Inter',sans-serif}.toc-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:13px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none}.toc-toggle{background:none;border:none;color:#5a7a9a;font-size:14px;cursor:pointer;padding:0 4px;line-height:1}.toc-list{padding:4px 16px 14px;display:flex;flex-direction:column;gap:4px}.toc-list a{font-size:13px;color:#1e3a5f;text-decoration:none;padding:5px 8px;border-radius:4px;display:block;border-left:2px solid transparent;transition:all .15s}.toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;padding-left:12px}.toc-collapsed .toc-list{display:none}.toc-collapsed .toc-toggle{transform:rotate(180deg)}
+  .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}.report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
+  .side-nav{position:fixed;top:50%;right:max(16px,calc(50% - 860px/2 - 160px));transform:translateY(-50%);width:136px;z-index:200;display:flex;flex-direction:column;padding:16px 12px;background:#fff;border:0.5px solid #dde8f2;border-radius:10px;box-shadow:0 2px 12px rgba(30,58,95,0.08);gap:0}.side-nav::before{content:'';position:absolute;left:22px;top:28px;bottom:28px;width:1.5px;background:#eef3f9;z-index:0}.side-nav a{display:flex;align-items:center;gap:10px;text-decoration:none;padding:5px 0;position:relative;z-index:1;cursor:pointer}.side-nav-dot{width:7px;height:7px;border-radius:50%;background:#dde8f2;border:1.5px solid #ccd9e8;flex-shrink:0;transition:all .2s;position:relative;z-index:2}.side-nav-label{font-family:'Inter',sans-serif;font-size:10.5px;color:#94a3b8;line-height:1.3;transition:color .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:82px;letter-spacing:.01em}.side-nav a.active .side-nav-dot{background:#1e3a5f;border-color:#1e3a5f;width:9px;height:9px;box-shadow:0 0 0 3px rgba(30,58,95,0.12)}.side-nav a.active .side-nav-label{color:#1e3a5f;font-weight:600}.side-nav a:hover .side-nav-dot{background:#5a7a9a;border-color:#5a7a9a}.side-nav a:hover .side-nav-label{color:#1e3a5f}
+  .city-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}.city-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:18px 20px;border-left:3px solid #1e3a5f}.city-card h4{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1e3a5f;margin:0 0 8px}.city-card p{font-family:'Inter',sans-serif;font-size:12px;color:#5a7a9a;line-height:1.6;margin:0}
+  @media(max-width:1100px){.side-nav{display:none}}@media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.city-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+<header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector"><button class="market-btn" onclick="toggleMarketMenu()">&#x1F1FB;&#x1F1F3; <span class="lang-en">Vietnam</span><span class="lang-zh" style="display:none">越南</span> &#x25BE;</button><div class="market-dropdown" id="marketDropdown"><a href="../report.html">&#x1F1F2;&#x1F1FE; <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a><a href="../tw/report.html">&#x1F1F9;&#x1F1FC; <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a><a href="../jp/report.html">&#x1F1EF;&#x1F1F5; <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a><a href="../au/report.html">&#x1F1E6;&#x1F1FA; <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a><a href="../nz/report.html">&#x1F1F3;&#x1F1FF; <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a><a href="../uk/report.html">&#x1F1EC;&#x1F1E7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a><a href="../th/report.html">&#x1F1F9;&#x1F1ED; <span class="lang-en">Thailand</span><span class="lang-zh" style="display:none">泰國</span></a><a href="report.html" class="active">&#x1F1FB;&#x1F1F3; <span class="lang-en">Vietnam</span><span class="lang-zh" style="display:none">越南</span></a><a href="../us/report.html">&#x1F1FA;&#x1F1F8; <span class="lang-en">United States</span><span class="lang-zh" style="display:none">美國</span></a></div></div>
+  <nav><a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="hochiminh.html" class="active"><span class="lang-en">Ho Chi Minh City</span><span class="lang-zh" style="display:none">胡志明市</span></a><a href="hanoi.html"><span class="lang-en">Hanoi</span><span class="lang-zh" style="display:none">河內</span></a></nav>
+  <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  <span class="opr-badge">SBV: 4.50%</span><button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="hochiminh.html" class="active"><span class="lang-en">Ho Chi Minh City</span><span class="lang-zh" style="display:none">胡志明市</span></a><a href="hanoi.html"><span class="lang-en">Hanoi</span><span class="lang-zh" style="display:none">河內</span></a>
+  <div class="mobile-meta"><span class="opr-badge">SBV: 4.50%</span><div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div></div>
+</div>
+
+<div class="report-container">
+  <nav class="side-nav" id="sideNav">
+    <a href="#sec-exec" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Exec Summary</span><span class="side-nav-label lang-zh" style="display:none">執行摘要</span></a>
+    <a href="#sec-price" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Price Trend</span><span class="side-nav-label lang-zh" style="display:none">房價走勢</span></a>
+    <a href="#sec-districts" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Key Districts</span><span class="side-nav-label lang-zh" style="display:none">重點地區</span></a>
+    <a href="#sec-metro" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Metro Impact</span><span class="side-nav-label lang-zh" style="display:none">地鐵影響</span></a>
+    <a href="#sec-inventory" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Inventory</span><span class="side-nav-label lang-zh" style="display:none">庫存</span></a>
+    <a href="#sec-rental" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Rental Market</span><span class="side-nav-label lang-zh" style="display:none">租賃市場</span></a>
+    <a href="#sec-outlook" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Outlook</span><span class="side-nav-label lang-zh" style="display:none">展望</span></a>
+  </nav>
+  <div class="report-header">
+    <div class="lang-en"><h1>HO CHI MINH CITY &mdash; DEEP DIVE</h1><div class="report-meta">April 2026 &middot; Data: Savills Vietnam / CBRE Vietnam / HCMC DPI / SBV</div></div>
+    <div class="lang-zh" style="display:none"><h1>胡志明市——深度分析</h1><div class="report-meta">2026年4月 &middot; 數據：第一太平戴維斯越南 / 世邦魏理仕越南 / 胡志明市計劃投資廳 / 越南國家銀行</div></div>
+  </div>
+  <div class="report-body">
+    <div class="toc-box" id="tocBox"><div class="toc-header" onclick="toggleToc()"><span class="lang-en">&#x1F4CB; In This Report</span><span class="lang-zh" style="display:none">&#x1F4CB; 本報告涵蓋</span><button class="toc-toggle" id="tocToggle">&#x25B2;</button></div>
+      <div class="toc-list" id="tocList">
+        <a href="#sec-exec" onclick="closeTocMobile()"><span class="lang-en">1. Executive Summary</span><span class="lang-zh" style="display:none">1. 執行摘要</span></a>
+        <a href="#sec-price" onclick="closeTocMobile()"><span class="lang-en">2. Price Trend</span><span class="lang-zh" style="display:none">2. 房價走勢</span></a>
+        <a href="#sec-districts" onclick="closeTocMobile()"><span class="lang-en">3. Key Districts</span><span class="lang-zh" style="display:none">3. 重點地區</span></a>
+        <a href="#sec-metro" onclick="closeTocMobile()"><span class="lang-en">4. Metro Impact</span><span class="lang-zh" style="display:none">4. 地鐵影響</span></a>
+        <a href="#sec-inventory" onclick="closeTocMobile()"><span class="lang-en">5. Inventory</span><span class="lang-zh" style="display:none">5. 庫存</span></a>
+        <a href="#sec-rental" onclick="closeTocMobile()"><span class="lang-en">6. Rental Market</span><span class="lang-zh" style="display:none">6. 租賃市場</span></a>
+        <a href="#sec-outlook" onclick="closeTocMobile()"><span class="lang-en">7. Outlook</span><span class="lang-zh" style="display:none">7. 展望</span></a>
+      </div></div>
+
+    <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+    <div class="lang-en">
+      <p>Ho Chi Minh City is Vietnam's commercial capital and largest property market, accounting for ~60% of the country's real estate transaction value. In 2025, average apartment prices reached <strong>$3,800/m&sup2;</strong> (+8% YoY), with District 1 luxury commanding <strong>$5,800/m&sup2;</strong>. The opening of Metro Line 1 in December 2024 has been transformative, boosting corridor property values by <strong>15&ndash;20%</strong>. New supply recovered to ~15,000 units after severe legal bottlenecks in 2021&ndash;2023. Foreign buyers represent ~15% of new condo purchases, with Korean and Taiwanese investors dominating. The 30% foreign quota is near capacity in several CBD projects.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>胡志明市是越南的商業首都和最大的房地產市場，佔全國房地產交易額的約60%。2025年，公寓均價達<strong>$3,800/平方米</strong>（年增8%），第一郡豪華公寓高達<strong>$5,800/平方米</strong>。2024年12月地鐵1號線開通具有變革性意義，使沿線物業價值提升<strong>15-20%</strong>。新供應在2021-2023年嚴重法律障礙後恢復至約15,000套。外國買家佔新公寓購買的約15%，韓國和台灣投資者主導。多個CBD項目的30%外國配額已接近上限。</p>
+    </div>
+
+    <h2 id="sec-price"><span class="lang-en">PRICE TREND</span><span class="lang-zh" style="display:none">房價走勢</span></h2>
+    <div class="lang-en">
+      <p>HCMC condo prices have doubled over the past decade, from ~<strong>$1,900/m&sup2;</strong> in 2015 to <strong>$3,800/m&sup2;</strong> in 2025. The luxury segment (D1, Binh Thanh waterfront) has outperformed, reaching $5,000&ndash;8,000/m&sup2;. Mid-range condos in Thu Duc and District 7 offer $2,500&ndash;3,500/m&sup2; &mdash; the sweet spot for foreign investors seeking yield. Price growth moderated from <strong>12%</strong> (2022) to <strong>8%</strong> (2025) as supply recovered. Secondary market premiums of 10&ndash;15% exist in buildings near the 30% foreign cap.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>胡志明市公寓價格在過去十年翻了一番，從2015年的約<strong>$1,900/平方米</strong>到2025年的<strong>$3,800/平方米</strong>。豪華板塊（第一郡、平盛濱水區）表現最佳，達$5,000-8,000/平方米。守德和第七郡的中檔公寓提供$2,500-3,500/平方米——外國投資者尋求收益的最佳區間。隨供應恢復，價格增長從<strong>12%</strong>（2022年）放緩至<strong>8%</strong>（2025年）。接近30%外國上限的建築存在10-15%的二手市場溢價。</p>
+    </div>
+
+    <div class="report-chart-grid">
+      <div class="report-chart-card">
+        <h4><span class="lang-en">Price by District ($/m&sup2;)</span><span class="lang-zh" style="display:none">各區價格（$/平方米）</span></h4>
+        <p><span class="lang-en">2025 average condo price per square metre</span><span class="lang-zh" style="display:none">2025年公寓每平方米均價</span></p>
+        <div id="chartHCMDistrict" style="height:220px"></div>
+      </div>
+      <div class="report-chart-card">
+        <h4><span class="lang-en">New Supply vs Absorption</span><span class="lang-zh" style="display:none">新供應 vs 吸收量</span></h4>
+        <p><span class="lang-en">Annual units launched and absorbed, 2021&ndash;2025</span><span class="lang-zh" style="display:none">年度推案與吸收量，2021&ndash;2025</span></p>
+        <div id="chartHCMSupply" style="height:220px"></div>
+      </div>
+    </div>
+
+    <h2 id="sec-districts"><span class="lang-en">KEY DISTRICTS</span><span class="lang-zh" style="display:none">重點地區</span></h2>
+    <div class="lang-en">
+      <p>HCMC's property market is defined by four key districts, each offering distinct risk-return profiles for investors. District 1 remains the undisputed luxury core, while Thu Duc has emerged as the primary growth corridor thanks to Metro Line 1 and the tech sector presence.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>胡志明市的房地產市場由四個核心區域定義，每個區域為投資者提供不同的風險回報特徵。第一郡仍是無可爭議的豪華核心，而守德則因地鐵1號線和科技產業進駐成為主要增長走廊。</p>
+    </div>
+    <div class="city-grid">
+      <div class="city-card" style="border-left-color:#dc2626">
+        <h4><span class="lang-en">District 1</span><span class="lang-zh" style="display:none">第一郡</span></h4>
+        <p><span class="lang-en">Luxury core &middot; $5,800/m&sup2; &middot; Yield 4.5% &middot; Foreign quota near full</span><span class="lang-zh" style="display:none">豪華核心 &middot; $5,800/平方米 &middot; 收益率4.5% &middot; 外國配額接近上限</span></p>
+      </div>
+      <div class="city-card" style="border-left-color:#16a34a">
+        <h4><span class="lang-en">Thu Duc (D2/D9)</span><span class="lang-zh" style="display:none">守德（第二郡/第九郡）</span></h4>
+        <p><span class="lang-en">Tech hub &middot; $3,800/m&sup2; &middot; Yield 5.5% &middot; Metro Line 1</span><span class="lang-zh" style="display:none">科技中心 &middot; $3,800/平方米 &middot; 收益率5.5% &middot; 地鐵1號線</span></p>
+      </div>
+      <div class="city-card" style="border-left-color:#2563eb">
+        <h4><span class="lang-en">District 7 (Phu My Hung)</span><span class="lang-zh" style="display:none">第七郡（富美興）</span></h4>
+        <p><span class="lang-en">Expat area &middot; $3,200/m&sup2; &middot; Yield 5.0% &middot; Established</span><span class="lang-zh" style="display:none">外籍人士區 &middot; $3,200/平方米 &middot; 收益率5.0% &middot; 成熟區域</span></p>
+      </div>
+      <div class="city-card" style="border-left-color:#d97706">
+        <h4><span class="lang-en">Binh Thanh</span><span class="lang-zh" style="display:none">平盛</span></h4>
+        <p><span class="lang-en">Waterfront &middot; $4,500/m&sup2; &middot; Yield 4.8% &middot; Gentrifying</span><span class="lang-zh" style="display:none">濱水區 &middot; $4,500/平方米 &middot; 收益率4.8% &middot; 紳士化中</span></p>
+      </div>
+    </div>
+
+    <h2 id="sec-metro"><span class="lang-en">METRO IMPACT</span><span class="lang-zh" style="display:none">地鐵影響</span></h2>
+    <div class="lang-en">
+      <p>Metro Line 1 (Ben Thanh &ndash; Suoi Tien, 20km, 14 stations) opened December 2024, connecting D1 CBD to Thu Duc. Properties within 500m of stations have seen <strong>15&ndash;20%</strong> appreciation since announcement. Line 2 (Ben Thanh &ndash; Tham Luong) is under construction with <strong>2028 target</strong>. The metro system is expected to reshape the city's property premium map, making Thu Duc the primary growth corridor for the next decade.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>地鐵1號線（濱城-仙泉，20公里，14站）2024年12月開通，連接第一郡CBD至守德。車站500米範圍內的物業自公佈以來升值<strong>15-20%</strong>。2號線（濱城-潭陵）正在施工，目標<strong>2028年</strong>完工。地鐵系統預計將重塑城市物業溢價版圖，使守德成為未來十年的主要增長走廊。</p>
+    </div>
+
+    <h2 id="sec-inventory"><span class="lang-en">INVENTORY</span><span class="lang-zh" style="display:none">庫存</span></h2>
+    <div class="lang-en">
+      <p>After severe supply constraints in 2021&ndash;2023 (only 12,000&ndash;18,000 units launched annually due to legal bottlenecks), HCMC has seen gradual recovery. 2025 saw ~<strong>15,000 new units</strong>, primarily in Thu Duc and District 7. Unsold inventory has declined to ~<strong>10,000 units</strong> from a peak of 25,000 in 2020. The legal framework reforms of 2024 are expected to unlock ~20,000 delayed units by 2027. Absorption rates are healthy at <strong>85&ndash;90%</strong> for well-located projects.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>在2021-2023年嚴重供應受限（因法律障礙年推案僅12,000-18,000套）後，胡志明市逐步恢復。2025年推出約<strong>15,000套</strong>新單位，主要在守德和第七郡。未售庫存從2020年峰值25,000套降至約<strong>10,000套</strong>。2024年法律框架改革預計到2027年釋放約20,000套延遲項目。區位良好的項目吸收率健康在<strong>85-90%</strong>。</p>
+    </div>
+
+    <h2 id="sec-rental"><span class="lang-en">RENTAL MARKET</span><span class="lang-zh" style="display:none">租賃市場</span></h2>
+    <div class="lang-en">
+      <p>HCMC rental market is buoyant, driven by expat demand and young professionals. Gross yields average <strong>5.5%</strong> for mid-range condos, <strong>4.5%</strong> for luxury D1 units, and up to <strong>7%</strong> for serviced apartments. A 2-bedroom in Thu Duc rents for $800&ndash;1,200/month; in D1, $1,500&ndash;2,500/month. Occupancy rates remain above 90% in expat-popular areas. The growing tech sector (Samsung, Intel) in Thu Duc is driving premium rental demand.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>胡志明市租賃市場活躍，受外籍人士需求和年輕專業人士推動。中檔公寓毛收益率平均<strong>5.5%</strong>，第一郡豪華單位<strong>4.5%</strong>，服務式公寓高達<strong>7%</strong>。守德兩房月租$800-1,200；第一郡$1,500-2,500。外籍人士熱門區域入住率維持90%以上。守德不斷壯大的科技產業（三星、英特爾）推動高端租賃需求。</p>
+    </div>
+
+    <h2 id="sec-outlook"><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
+    <div class="lang-en">
+      <p>HCMC's property market outlook is positive for 2026&ndash;2028. Catalysts include: Metro Line 1 ridership driving corridor demand, Long Thanh airport (<strong>2026 opening</strong>) creating a new growth axis, continued FDI inflows, and legal reforms unlocking supply. Risks include high mortgage rates limiting domestic participation and potential oversupply if all delayed projects launch simultaneously. Price growth forecast: <strong>5&ndash;6% annually</strong>. Foreign demand expected to grow 15&ndash;20%/year as Vietnam's investment profile strengthens.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>胡志明市房產市場2026-2028年前景積極。催化劑包括：地鐵1號線客流推動沿線需求、龍城機場（<strong>2026年開放</strong>）創造新增長軸線、持續FDI流入和法律改革釋放供應。風險包括高按揭利率限制國內參與度，以及延遲項目同時推出導致潛在供過於求。房價增長預測：<strong>年增5-6%</strong>。隨越南投資形象增強，外國需求預計年增15-20%。</p>
+    </div>
+
+    <div class="report-footer">
+      <p><span class="lang-en">Data sources: Savills Vietnam 2025 &middot; CBRE Vietnam H2 2025 &middot; HCMC Department of Planning and Investment &middot; State Bank of Vietnam (SBV) &middot; Global Property Guide. All data as of March&ndash;April 2026.</span><span class="lang-zh" style="display:none">數據來源：第一太平戴維斯越南2025年 &middot; 世邦魏理仕越南2025年H2 &middot; 胡志明市計劃投資廳 &middot; 越南國家銀行（SBV） &middot; 全球房地產指南。所有數據截至2026年3月至4月。</span></p>
+      <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+var allCharts=[];
+function initAllCharts(lang){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];
+  drawHCMDistrict(lang);drawHCMSupply(lang);}
+
+function drawHCMDistrict(lang){var dom=document.getElementById('chartHCMDistrict');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var districts=en?['Binh Duong','D9','D7','Thu Duc','Binh Thanh','D1']:['平陽','第九郡','第七郡','守德','平盛','第一郡'];
+  var values=[1800,2800,3200,3800,4500,5800];
+  var colors=[C.muted,C.muted,C.blue,C.green,C.orange,C.red];
+  c.setOption({tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11}},grid:{left:12,right:60,top:8,bottom:8,containLabel:true},yAxis:mkAxis({type:'category',data:districts,axisLabel:{color:C.muted,fontSize:9}}),xAxis:mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:9,formatter:function(v){return '$'+v/1000+'K';}}}),
+    series:[{type:'bar',data:values.map(function(v,i){return{value:v,itemStyle:{color:colors[i]}};}),barMaxWidth:18,itemStyle:{borderRadius:[0,3,3,0]},label:{show:true,position:'right',formatter:function(p){return '$'+p.value.toLocaleString();},fontSize:9,color:C.muted}}]});}
+
+function drawHCMSupply(lang){var dom=document.getElementById('chartHCMSupply');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var labels=['2021','2022','2023','2024','2025'];
+  var supply=[12000,15000,13000,14000,15000];var absorption=[10000,13000,11000,12500,13500];
+  c.setOption({tooltip:baseTooltip,legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},grid:{left:12,right:12,top:24,bottom:36,containLabel:true},xAxis:mkAxis({type:'category',data:labels,axisLabel:{color:C.muted,fontSize:10}}),yAxis:mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:9,formatter:function(v){if(v>=1000)return(v/1000).toFixed(0)+'K';return v;}}}),
+    series:[{name:en?'New Supply':'新供應',type:'bar',data:supply,barMaxWidth:22,itemStyle:{color:C.navy,borderRadius:[3,3,0,0]},barGap:'20%'},{name:en?'Absorption':'吸收量',type:'bar',data:absorption,barMaxWidth:22,itemStyle:{color:C.green,borderRadius:[3,3,0,0]}}]});}
+
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);initAllCharts(lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){var d=document.getElementById('marketDropdown');if(d)d.classList.remove('open');}});
+function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+(function(){function initScrollSpy(){var items=document.querySelectorAll('.side-nav-item');if(!items.length)return;var sections=[];items.forEach(function(a){var id=a.getAttribute('href').replace('#','');var el=document.getElementById(id);if(el)sections.push({el:el,a:a});});function onScroll(){var scrollY=window.scrollY+window.innerHeight*0.25;var current=sections[0];sections.forEach(function(s){if(s.el.getBoundingClientRect().top+window.scrollY<=scrollY)current=s;});items.forEach(function(a){a.classList.remove('active');});if(current)current.a.classList.add('active');}window.addEventListener('scroll',onScroll,{passive:true});onScroll();}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initScrollSpy);}else{initScrollSpy();}})();
+</script>
+</body>
+</html>

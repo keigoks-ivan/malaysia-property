@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Hanoi Deep Dive | Vietnam Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:160px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../tw/tw.css">
+<style>
+  .report-container{max-width:860px;margin:0 auto;padding:32px 20px}.report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}.report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}.report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}.report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}.report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}.report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}.report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+  .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}.chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}.chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:6px}.chart-note.green{color:#16a34a}.chart-note.orange{color:#d97706}.chart-note.red{color:#dc2626}.chart-note.navy{color:#1e3a5f}
+  .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}.report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}.report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}.report-chart-card p{font-size:10px!important;color:#5a7a9a!important;line-height:1.5!important;margin-bottom:8px!important;font-family:Inter,sans-serif!important}
+  .toc-box{background:#fff;border:1px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;padding:0;margin:0 0 28px;font-family:'Inter',sans-serif}.toc-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:13px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none}.toc-toggle{background:none;border:none;color:#5a7a9a;font-size:14px;cursor:pointer;padding:0 4px;line-height:1}.toc-list{padding:4px 16px 14px;display:flex;flex-direction:column;gap:4px}.toc-list a{font-size:13px;color:#1e3a5f;text-decoration:none;padding:5px 8px;border-radius:4px;display:block;border-left:2px solid transparent;transition:all .15s}.toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;padding-left:12px}.toc-collapsed .toc-list{display:none}.toc-collapsed .toc-toggle{transform:rotate(180deg)}
+  .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}.report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
+  .side-nav{position:fixed;top:50%;right:max(16px,calc(50% - 860px/2 - 160px));transform:translateY(-50%);width:136px;z-index:200;display:flex;flex-direction:column;padding:16px 12px;background:#fff;border:0.5px solid #dde8f2;border-radius:10px;box-shadow:0 2px 12px rgba(30,58,95,0.08);gap:0}.side-nav::before{content:'';position:absolute;left:22px;top:28px;bottom:28px;width:1.5px;background:#eef3f9;z-index:0}.side-nav a{display:flex;align-items:center;gap:10px;text-decoration:none;padding:5px 0;position:relative;z-index:1;cursor:pointer}.side-nav-dot{width:7px;height:7px;border-radius:50%;background:#dde8f2;border:1.5px solid #ccd9e8;flex-shrink:0;transition:all .2s;position:relative;z-index:2}.side-nav-label{font-family:'Inter',sans-serif;font-size:10.5px;color:#94a3b8;line-height:1.3;transition:color .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:82px;letter-spacing:.01em}.side-nav a.active .side-nav-dot{background:#1e3a5f;border-color:#1e3a5f;width:9px;height:9px;box-shadow:0 0 0 3px rgba(30,58,95,0.12)}.side-nav a.active .side-nav-label{color:#1e3a5f;font-weight:600}.side-nav a:hover .side-nav-dot{background:#5a7a9a;border-color:#5a7a9a}.side-nav a:hover .side-nav-label{color:#1e3a5f}
+  .city-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}.city-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}.city-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}.city-card p{font-size:12px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:0!important;font-family:Inter,sans-serif!important}
+  @media(max-width:1100px){.side-nav{display:none}}@media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.city-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+<header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector"><button class="market-btn" onclick="toggleMarketMenu()">&#x1F1FB;&#x1F1F3; <span class="lang-en">Vietnam</span><span class="lang-zh" style="display:none">越南</span> &#x25BE;</button><div class="market-dropdown" id="marketDropdown"><a href="../report.html">&#x1F1F2;&#x1F1FE; <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a><a href="../tw/report.html">&#x1F1F9;&#x1F1FC; <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a><a href="../jp/report.html">&#x1F1EF;&#x1F1F5; <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a><a href="../au/report.html">&#x1F1E6;&#x1F1FA; <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a><a href="../nz/report.html">&#x1F1F3;&#x1F1FF; <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a><a href="../uk/report.html">&#x1F1EC;&#x1F1E7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a><a href="../th/report.html">&#x1F1F9;&#x1F1ED; <span class="lang-en">Thailand</span><span class="lang-zh" style="display:none">泰國</span></a><a href="report.html" class="active">&#x1F1FB;&#x1F1F3; <span class="lang-en">Vietnam</span><span class="lang-zh" style="display:none">越南</span></a><a href="../us/report.html">&#x1F1FA;&#x1F1F8; <span class="lang-en">United States</span><span class="lang-zh" style="display:none">美國</span></a></div></div>
+  <nav><a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="hcmc.html"><span class="lang-en">Ho Chi Minh City</span><span class="lang-zh" style="display:none">胡志明市</span></a><a href="hanoi.html" class="active"><span class="lang-en">Hanoi</span><span class="lang-zh" style="display:none">河內</span></a></nav>
+  <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  <span class="opr-badge">SBV: 4.50%</span><button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="hcmc.html"><span class="lang-en">Ho Chi Minh City</span><span class="lang-zh" style="display:none">胡志明市</span></a><a href="hanoi.html" class="active"><span class="lang-en">Hanoi</span><span class="lang-zh" style="display:none">河內</span></a>
+  <div class="mobile-meta"><span class="opr-badge">SBV: 4.50%</span><div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div></div>
+</div>
+
+<div class="report-container">
+  <nav class="side-nav" id="sideNav">
+    <a href="#sec-exec" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Exec Summary</span><span class="side-nav-label lang-zh" style="display:none">執行摘要</span></a>
+    <a href="#sec-price" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Price Surge</span><span class="side-nav-label lang-zh" style="display:none">價格飆升</span></a>
+    <a href="#sec-districts" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Key Districts</span><span class="side-nav-label lang-zh" style="display:none">重點地區</span></a>
+    <a href="#sec-infra" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Infrastructure</span><span class="side-nav-label lang-zh" style="display:none">基礎設施</span></a>
+    <a href="#sec-supply" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Supply Crisis</span><span class="side-nav-label lang-zh" style="display:none">供應危機</span></a>
+    <a href="#sec-rental" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Rental Market</span><span class="side-nav-label lang-zh" style="display:none">租賃市場</span></a>
+    <a href="#sec-outlook" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Outlook</span><span class="side-nav-label lang-zh" style="display:none">展望</span></a>
+  </nav>
+  <div class="report-header">
+    <div class="lang-en"><h1>HANOI &mdash; DEEP DIVE</h1><div class="report-meta">April 2026 &middot; Data: Savills Vietnam / CBRE Vietnam / Hanoi DPI / SBV</div></div>
+    <div class="lang-zh" style="display:none"><h1>河內——深度分析</h1><div class="report-meta">2026年4月 &middot; 數據：第一太平戴維斯越南 / 世邦魏理仕越南 / 河內計劃投資局 / 越南國家銀行</div></div>
+  </div>
+  <div class="report-body">
+    <div class="toc-box" id="tocBox"><div class="toc-header" onclick="toggleToc()"><span class="lang-en">&#x1F4CB; In This Report</span><span class="lang-zh" style="display:none">&#x1F4CB; 本報告涵蓋</span><button class="toc-toggle" id="tocToggle">&#x25B2;</button></div>
+      <div class="toc-list" id="tocList">
+        <a href="#sec-exec" onclick="closeTocMobile()"><span class="lang-en">1. Executive Summary</span><span class="lang-zh" style="display:none">1. 執行摘要</span></a>
+        <a href="#sec-price" onclick="closeTocMobile()"><span class="lang-en">2. Price Surge</span><span class="lang-zh" style="display:none">2. 價格飆升</span></a>
+        <a href="#sec-districts" onclick="closeTocMobile()"><span class="lang-en">3. Key Districts</span><span class="lang-zh" style="display:none">3. 重點地區</span></a>
+        <a href="#sec-infra" onclick="closeTocMobile()"><span class="lang-en">4. Infrastructure</span><span class="lang-zh" style="display:none">4. 基礎設施</span></a>
+        <a href="#sec-supply" onclick="closeTocMobile()"><span class="lang-en">5. Supply Crisis</span><span class="lang-zh" style="display:none">5. 供應危機</span></a>
+        <a href="#sec-rental" onclick="closeTocMobile()"><span class="lang-en">6. Rental Market</span><span class="lang-zh" style="display:none">6. 租賃市場</span></a>
+        <a href="#sec-outlook" onclick="closeTocMobile()"><span class="lang-en">7. Outlook</span><span class="lang-zh" style="display:none">7. 展望</span></a>
+      </div></div>
+
+    <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+    <div class="lang-en">
+      <p>Hanoi's property market has been the standout performer in Vietnam in 2025, with average apartment prices surging to <strong>$2,900/m&sup2;</strong> (<strong>+12% YoY</strong>) &mdash; the fastest growth rate among major Vietnamese cities. Chronic supply shortage is the primary driver: new launches dropped 40% since 2022 due to prolonged permit approvals. Only ~8,000 units were launched in 2025. The northern industrial corridors housing Samsung, LG, and Foxconn facilities generate steady demand from Korean and Taiwanese workers. Unlike HCMC, Hanoi's market is primarily domestic-driven, with foreign buyers accounting for ~8% of transactions.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>河內房產市場是2025年越南表現最突出的，公寓均價飆升至<strong>$2,900/平方米</strong>（<strong>年增12%</strong>）——越南主要城市中增速最快。慢性供應短缺是主要驅動力：由於許可審批延長，2022年以來新推案量下降40%。2025年僅推出約8,000套。北部工業走廊的三星、LG和富士康工廠為韓國和台灣工人產生穩定住房需求。與胡志明市不同，河內市場主要由國內需求驅動，外國買家僅佔交易的約8%。</p>
+    </div>
+
+    <h2 id="sec-price"><span class="lang-en">PRICE SURGE</span><span class="lang-zh" style="display:none">價格飆升</span></h2>
+    <div class="lang-en">
+      <p>Hanoi apartment prices have risen <strong>45%</strong> over 3 years (2022&ndash;2025), accelerating in 2024&ndash;2025. The CBD (Hoan Kiem, Ba Dinh) commands <strong>$4,200/m&sup2;</strong> for new projects. Western districts (Nam Tu Liem, Cau Giay) average <strong>$2,900/m&sup2;</strong> and are the primary supply zone. The price surge is supply-driven rather than speculative &mdash; vacancy rates are below 5% and rental demand remains strong. Secondary market transactions now dominate as new supply is insufficient.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>河內公寓價格在3年內上漲<strong>45%</strong>（2022-2025），2024-2025年加速。CBD（還劍、巴亭）新項目均價<strong>$4,200/平方米</strong>。西部區域（南慈廉、紙橋）平均<strong>$2,900/平方米</strong>，為主要供應區。價格飆升是供應驅動而非投機——空置率低於5%，租賃需求仍然強勁。隨新供應不足，二手市場交易現已主導。</p>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">Price by District ($/m&sup2;)</span><span class="lang-zh" style="display:none">各區價格（$/平方米）</span></h4><div id="chartHNDistrict" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">CBD (Hoan Kiem) leads at $4,200/m&sup2;. Western districts $2,600&ndash;$3,200 primary supply zone</span><span class="lang-zh" style="display:none">CBD（還劍）以$4,200/平方米領先。西部區域$2,600-$3,200為主要供應區</span></p></div>
+
+    <h2 id="sec-districts"><span class="lang-en">KEY DISTRICTS</span><span class="lang-zh" style="display:none">重點地區</span></h2>
+    <div class="lang-en">
+      <p>Hanoi's property market is shaped by four distinct district clusters, each with different investment profiles and growth trajectories. The CBD core commands premium pricing anchored by heritage and government presence, while emerging eastern districts offer higher yields and infrastructure-driven upside.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>河內房產市場由四個不同的區域集群塑造，各有不同的投資特徵和增長軌跡。CBD核心區以歷史遺產和政府所在地為支撐享有溢價定價，而新興東部區域則提供更高收益率和基礎設施驅動的上行空間。</p>
+    </div>
+    <div class="city-grid">
+      <div class="city-card">
+        <h4><span class="lang-en">Hoan Kiem / Ba Dinh</span><span class="lang-zh" style="display:none">還劍 / 巴亭</span></h4>
+        <p><span class="lang-en">CBD core &middot; $4,200/m&sup2; &middot; Yield 4.5% &middot; Heritage premium, government district, limited new supply</span><span class="lang-zh" style="display:none">CBD核心 &middot; $4,200/平方米 &middot; 收益率4.5% &middot; 歷史遺產溢價，政府區域，新供應有限</span></p>
+      </div>
+      <div class="city-card">
+        <h4><span class="lang-en">Cau Giay</span><span class="lang-zh" style="display:none">紙橋</span></h4>
+        <p><span class="lang-en">Tech &amp; education hub &middot; $3,200/m&sup2; &middot; Yield 5.0% &middot; Near universities, young professional demand</span><span class="lang-zh" style="display:none">科技教育中心 &middot; $3,200/平方米 &middot; 收益率5.0% &middot; 鄰近大學，年輕專業人士需求</span></p>
+      </div>
+      <div class="city-card">
+        <h4><span class="lang-en">Nam Tu Liem</span><span class="lang-zh" style="display:none">南慈廉</span></h4>
+        <p><span class="lang-en">New CBD &middot; $2,900/m&sup2; &middot; Yield 5.2% &middot; Modern infrastructure, new commercial centers</span><span class="lang-zh" style="display:none">新CBD &middot; $2,900/平方米 &middot; 收益率5.2% &middot; 現代基礎設施，新商業中心</span></p>
+      </div>
+      <div class="city-card">
+        <h4><span class="lang-en">Long Bien / Gia Lam</span><span class="lang-zh" style="display:none">龍編 / 嘉林</span></h4>
+        <p><span class="lang-en">Emerging east &middot; $2,200/m&sup2; &middot; Yield 5.5% &middot; Bridge connectivity, industrial spillover demand</span><span class="lang-zh" style="display:none">新興東部 &middot; $2,200/平方米 &middot; 收益率5.5% &middot; 橋樑連接，工業溢出需求</span></p>
+      </div>
+    </div>
+
+    <h2 id="sec-infra"><span class="lang-en">INFRASTRUCTURE</span><span class="lang-zh" style="display:none">基礎設施</span></h2>
+    <div class="lang-en">
+      <p>Hanoi's infrastructure buildout is reshaping property dynamics. The <strong>Ring Road 4</strong> project ($3.5B, 2024&ndash;2027) will open up eastern and southern districts. <strong>Metro Line 3</strong> (Nhon&ndash;Hanoi Station) is testing with 2025 commercial operation target. The industrial zones north of Hanoi (Bac Ninh, Thai Nguyen) housing Samsung and Foxconn create spillover demand. Noi Bai Airport expansion and the Hanoi&ndash;Hai Phong expressway link strengthen the northern economic corridor.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>河內基礎設施建設正在重塑房產格局。<strong>四環路</strong>項目（35億美元，2024-2027）將開發東部和南部區域。<strong>地鐵3號線</strong>（日新-河內站）正在測試，目標2025年商業運營。河內以北的工業區（北寧、太原）的三星和富士康工廠產生溢出需求。內排機場擴建和河內-海防高速公路連接強化北部經濟走廊。</p>
+    </div>
+
+    <h2 id="sec-supply"><span class="lang-en">SUPPLY CRISIS</span><span class="lang-zh" style="display:none">供應危機</span></h2>
+    <div class="lang-en">
+      <p>Hanoi's supply crisis is structural. Only <strong>8,000 units</strong> were launched in 2025, down from 20,000+ annually pre-2022. The bottleneck is legal &mdash; land use planning conflicts, environmental assessments, and fire safety approvals average <strong>3&ndash;5 years</strong>. Developers have shifted focus to HCMC and resort markets. The 2024 Housing Law reforms are expected to gradually unlock delayed projects, but meaningful supply recovery is not expected before 2027&ndash;2028. This supply shortage is the primary price support.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>河內的供應危機是結構性的。2025年僅推出<strong>8,000套</strong>，低於2022年前每年20,000+套。障礙在法律面——土地使用規劃衝突、環評和消防安全審批平均需<strong>3-5年</strong>。開發商已將重心轉向胡志明市和度假市場。2024年住房法改革預計逐步釋放延遲項目，但有意義的供應恢復預計在2027-2028年之前不會出現。供應短缺是價格支撐的主要因素。</p>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">New Supply Trend (Units) &amp; Average Price ($/m&sup2;)</span><span class="lang-zh" style="display:none">新供應趨勢（套數）與均價（$/平方米）</span></h4><div id="chartHNSupply" style="height:220px"></div><p class="chart-note red"><span class="lang-en">Supply collapsed 56% from 2020 peak. Prices inversely surged +45% as shortage intensified</span><span class="lang-zh" style="display:none">供應從2020年高峰暴跌56%。隨短缺加劇，價格反向飆升+45%</span></p></div>
+
+    <h2 id="sec-rental"><span class="lang-en">RENTAL MARKET</span><span class="lang-zh" style="display:none">租賃市場</span></h2>
+    <div class="lang-en">
+      <p>Hanoi's rental market yields ~<strong>5.0% gross</strong> for mid-range condos. A 2-bedroom in Cau Giay rents for <strong>$600&ndash;900/month</strong>; in CBD, <strong>$1,000&ndash;1,800/month</strong>. Demand is driven by domestic migration, Korean/Japanese corporate tenants near industrial zones, and the growing middle class. Occupancy rates exceed <strong>95%</strong> in well-located buildings. Unlike HCMC, Hanoi rents have risen 8&ndash;10% annually, partially catching up to price growth.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>河內租賃市場中檔公寓毛收益率約<strong>5.0%</strong>。紙橋兩房月租<strong>$600-900</strong>；CBD <strong>$1,000-1,800</strong>。需求受國內遷移、工業區附近的韓日企業租戶和不斷壯大的中產階級推動。區位良好的建築入住率超過<strong>95%</strong>。與胡志明市不同，河內租金年增8-10%，部分追趕房價增長。</p>
+    </div>
+
+    <h2 id="sec-outlook"><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
+    <div class="lang-en">
+      <p>Hanoi's price growth is expected to moderate to <strong>8&ndash;10%</strong> in 2026 as base effects kick in, but remain above HCMC due to persistent supply constraints. The supply crisis will take 2&ndash;3 years to resolve. Ring Road 4 and Metro Line 3 will create new growth districts. Key risk: if all delayed projects launch simultaneously in 2027&ndash;2028, prices could see a temporary correction. Long-term fundamentals remain strong &mdash; Hanoi's population growth, industrial corridor expansion, and government as political capital ensure sustained demand.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>隨基數效應顯現，河內2026年價格增長預計放緩至<strong>8-10%</strong>，但由於持續供應限制仍高於胡志明市。供應危機需2-3年解決。四環路和地鐵3號線將創造新增長區域。主要風險：若延遲項目在2027-2028年同時推出，價格可能出現暫時調整。長期基本面仍強——河內人口增長、工業走廊擴張和作為政治首都的地位確保持續需求。</p>
+    </div>
+
+    <div class="report-footer">
+      <p><span class="lang-en">Data sources: Savills Vietnam Q4 2025 &middot; CBRE Vietnam H2 2025 &middot; Hanoi Department of Planning and Investment &middot; State Bank of Vietnam (SBV) &middot; Global Property Guide. All data as of March&ndash;April 2026.</span><span class="lang-zh" style="display:none">數據來源：第一太平戴維斯越南2025年Q4 &middot; 世邦魏理仕越南2025年H2 &middot; 河內計劃投資局 &middot; 越南國家銀行（SBV） &middot; 全球房地產指南。所有數據截至2026年3月至4月。</span></p>
+      <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+var allCharts=[];
+function initAllCharts(lang){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];
+  drawHNDistrict(lang);drawHNSupply(lang);}
+
+function drawHNDistrict(lang){var dom=document.getElementById('chartHNDistrict');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var districts=en?['Long Bien','Thanh Xuan','Nam Tu Liem','Cau Giay','Ba Dinh','Hoan Kiem']:['龍編','清春','南慈廉','紙橋','巴亭','還劍'];
+  var values=[2200,2600,2900,3200,3800,4200];
+  var colors=[C.muted,C.muted,C.blue,C.blue,C.navy,C.red];
+  c.setOption({tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11}},grid:{left:12,right:60,top:8,bottom:8,containLabel:true},yAxis:mkAxis({type:'category',data:districts,axisLabel:{color:C.muted,fontSize:9}}),xAxis:mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:9,formatter:function(v){return '$'+v;}}}),
+    series:[{type:'bar',data:values.map(function(v,i){return{value:v,itemStyle:{color:colors[i]}};}),barMaxWidth:18,itemStyle:{borderRadius:[0,3,3,0]},label:{show:true,position:'right',formatter:function(p){return '$'+p.value;},fontSize:9,color:C.muted}}]});}
+
+function drawHNSupply(lang){var dom=document.getElementById('chartHNSupply');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var labels=['2020','2021','2022','2023','2024','2025'];
+  var supply=[18000,15000,12000,10000,8500,8000];
+  var price=[2000,2100,2300,2550,2700,2900];
+  c.setOption({tooltip:baseTooltip,legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},grid:{left:12,right:12,top:24,bottom:36,containLabel:true},xAxis:mkAxis({type:'category',data:labels,axisLabel:{color:C.muted,fontSize:10}}),yAxis:[mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:9,formatter:function(v){if(v>=1000)return(v/1000).toFixed(0)+'K';return v;}}}),mkAxis({type:'value',min:1500,max:3500,axisLabel:{color:C.muted,fontSize:9,formatter:function(v){return '$'+v;}},splitLine:{show:false}})],
+    series:[{name:en?'New Supply (units)':'新供應（套）',type:'bar',data:supply,barMaxWidth:28,itemStyle:{color:C.navy,borderRadius:[3,3,0,0]},yAxisIndex:0},{name:en?'Avg Price ($/m²)':'均價（$/平方米）',type:'line',data:price,lineStyle:{color:C.orange,width:2},itemStyle:{color:C.orange},symbol:'circle',symbolSize:5,yAxisIndex:1}]});}
+
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);initAllCharts(lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){var d=document.getElementById('marketDropdown');if(d)d.classList.remove('open');}});
+function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+(function(){function initScrollSpy(){var items=document.querySelectorAll('.side-nav-item');if(!items.length)return;var sections=[];items.forEach(function(a){var id=a.getAttribute('href').replace('#','');var el=document.getElementById(id);if(el)sections.push({el:el,a:a});});function onScroll(){var scrollY=window.scrollY+window.innerHeight*0.25;var current=sections[0];sections.forEach(function(s){if(s.el.getBoundingClientRect().top+window.scrollY<=scrollY)current=s;});items.forEach(function(a){a.classList.remove('active');});if(current)current.a.classList.add('active');}window.addEventListener('scroll',onScroll,{passive:true});onScroll();}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initScrollSpy);}else{initScrollSpy();}})();
+</script>
+</body>
+</html>

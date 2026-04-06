@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Market Report | Vietnam Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:160px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../tw/tw.css">
+<style>
+  .report-container{max-width:860px;margin:0 auto;padding:32px 20px}.report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}.report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}.report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}.report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}.report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}.report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}.report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+  .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}.chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}.chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:6px}.chart-note.green{color:#16a34a}.chart-note.orange{color:#d97706}.chart-note.red{color:#dc2626}.chart-note.navy{color:#1e3a5f}
+  .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}.report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}.report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}.report-chart-card p{font-size:10px!important;color:#5a7a9a!important;line-height:1.5!important;margin-bottom:8px!important;font-family:Inter,sans-serif!important}
+  .toc-box{background:#fff;border:1px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;padding:0;margin:0 0 28px;font-family:'Inter',sans-serif}.toc-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:13px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none}.toc-toggle{background:none;border:none;color:#5a7a9a;font-size:14px;cursor:pointer;padding:0 4px;line-height:1}.toc-list{padding:4px 16px 14px;display:flex;flex-direction:column;gap:4px}.toc-list a{font-size:13px;color:#1e3a5f;text-decoration:none;padding:5px 8px;border-radius:4px;display:block;border-left:2px solid transparent;transition:all .15s}.toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;padding-left:12px}.toc-collapsed .toc-list{display:none}.toc-collapsed .toc-toggle{transform:rotate(180deg)}
+  .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}.report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
+  .city-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0}.city-card{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:8px;padding:16px}.city-card h3{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1e3a5f;margin:0 0 8px}.city-card .city-stat{font-family:'JetBrains Mono',monospace;font-size:12px;color:#2c3e50;margin:3px 0}
+  .side-nav{position:fixed;top:50%;right:max(16px,calc(50% - 860px/2 - 160px));transform:translateY(-50%);width:136px;z-index:200;display:flex;flex-direction:column;padding:16px 12px;background:#fff;border:0.5px solid #dde8f2;border-radius:10px;box-shadow:0 2px 12px rgba(30,58,95,0.08);gap:0}.side-nav::before{content:'';position:absolute;left:22px;top:28px;bottom:28px;width:1.5px;background:#eef3f9;z-index:0}.side-nav a{display:flex;align-items:center;gap:10px;text-decoration:none;padding:5px 0;position:relative;z-index:1;cursor:pointer}.side-nav-dot{width:7px;height:7px;border-radius:50%;background:#dde8f2;border:1.5px solid #ccd9e8;flex-shrink:0;transition:all .2s;position:relative;z-index:2}.side-nav-label{font-family:'Inter',sans-serif;font-size:10.5px;color:#94a3b8;line-height:1.3;transition:color .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:82px;letter-spacing:.01em}.side-nav a.active .side-nav-dot{background:#1e3a5f;border-color:#1e3a5f;width:9px;height:9px;box-shadow:0 0 0 3px rgba(30,58,95,0.12)}.side-nav a.active .side-nav-label{color:#1e3a5f;font-weight:600}.side-nav a:hover .side-nav-dot{background:#5a7a9a;border-color:#5a7a9a}.side-nav a:hover .side-nav-label{color:#1e3a5f}
+  @media(max-width:1100px){.side-nav{display:none}}@media(max-width:768px){.report-chart-grid,.city-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+<header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector"><button class="market-btn" onclick="toggleMarketMenu()">&#x1F1FB;&#x1F1F3; <span class="lang-en">Vietnam</span><span class="lang-zh" style="display:none">越南</span> &#x25BE;</button><div class="market-dropdown" id="marketDropdown"><a href="../report.html">&#x1F1F2;&#x1F1FE; <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a><a href="../tw/report.html">&#x1F1F9;&#x1F1FC; <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a><a href="../jp/report.html">&#x1F1EF;&#x1F1F5; <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a><a href="../au/report.html">&#x1F1E6;&#x1F1FA; <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a><a href="../nz/report.html">&#x1F1F3;&#x1F1FF; <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a><a href="../uk/report.html">&#x1F1EC;&#x1F1E7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a><a href="../th/report.html">&#x1F1F9;&#x1F1ED; <span class="lang-en">Thailand</span><span class="lang-zh" style="display:none">泰國</span></a><a href="report.html" class="active">&#x1F1FB;&#x1F1F3; <span class="lang-en">Vietnam</span><span class="lang-zh" style="display:none">越南</span></a><a href="../us/report.html">&#x1F1FA;&#x1F1F8; <span class="lang-en">United States</span><span class="lang-zh" style="display:none">美國</span></a></div></div>
+  <nav><a href="report.html" class="active"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="hochiminh.html"><span class="lang-en">Ho Chi Minh City</span><span class="lang-zh" style="display:none">胡志明市</span></a><a href="hanoi.html"><span class="lang-en">Hanoi</span><span class="lang-zh" style="display:none">河內</span></a></nav>
+  <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  <span class="opr-badge">SBV: 4.50%</span><button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html" class="active"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="hochiminh.html"><span class="lang-en">Ho Chi Minh City</span><span class="lang-zh" style="display:none">胡志明市</span></a><a href="hanoi.html"><span class="lang-en">Hanoi</span><span class="lang-zh" style="display:none">河內</span></a>
+  <div class="mobile-meta"><span class="opr-badge">SBV: 4.50%</span><div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div></div>
+</div>
+
+<div class="report-container">
+  <nav class="side-nav" id="sideNav">
+    <a href="#sec-exec" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Exec Summary</span><span class="side-nav-label lang-zh" style="display:none">執行摘要</span></a>
+    <a href="#sec-macro" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Macro Context</span><span class="side-nav-label lang-zh" style="display:none">宏觀背景</span></a>
+    <a href="#sec-foreign" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Foreign Ownership</span><span class="side-nav-label lang-zh" style="display:none">外國所有權</span></a>
+    <a href="#sec-hcmc" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Ho Chi Minh City</span><span class="side-nav-label lang-zh" style="display:none">胡志明市</span></a>
+    <a href="#sec-hanoi" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Hanoi</span><span class="side-nav-label lang-zh" style="display:none">河內</span></a>
+    <a href="#sec-outlook" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Outlook</span><span class="side-nav-label lang-zh" style="display:none">展望</span></a>
+  </nav>
+  <div class="report-header">
+    <div class="lang-en"><h1>VIETNAM &mdash; MARKET REPORT</h1><div class="report-meta">April 2026 &middot; Data: Savills / CBRE Vietnam / SBV / GSO / MPI</div></div>
+    <div class="lang-zh" style="display:none"><h1>越南——市場報告</h1><div class="report-meta">2026年4月 &middot; 數據：第一太平戴維斯 / 世邦魏理仕越南 / 越南國家銀行 / 統計總局 / 計劃投資部</div></div>
+  </div>
+  <div class="report-body">
+    <div class="toc-box" id="tocBox"><div class="toc-header" onclick="toggleToc()"><span class="lang-en">&#x1F4CB; In This Report</span><span class="lang-zh" style="display:none">&#x1F4CB; 本報告涵蓋</span><button class="toc-toggle" id="tocToggle">&#x25B2;</button></div>
+      <div class="toc-list" id="tocList">
+        <a href="#sec-exec" onclick="closeTocMobile()"><span class="lang-en">1. Executive Summary</span><span class="lang-zh" style="display:none">1. 執行摘要</span></a>
+        <a href="#sec-macro" onclick="closeTocMobile()"><span class="lang-en">2. Macro Context &amp; Growth Drivers</span><span class="lang-zh" style="display:none">2. 宏觀背景與增長驅動力</span></a>
+        <a href="#sec-foreign" onclick="closeTocMobile()"><span class="lang-en">3. Foreign Ownership Framework</span><span class="lang-zh" style="display:none">3. 外國所有權框架</span></a>
+        <a href="#sec-hcmc" onclick="closeTocMobile()"><span class="lang-en">4. Ho Chi Minh City Overview</span><span class="lang-zh" style="display:none">4. 胡志明市概覽</span></a>
+        <a href="#sec-hanoi" onclick="closeTocMobile()"><span class="lang-en">5. Hanoi Overview</span><span class="lang-zh" style="display:none">5. 河內概覽</span></a>
+        <a href="#sec-outlook" onclick="closeTocMobile()"><span class="lang-en">6. Outlook 2026&ndash;2028</span><span class="lang-zh" style="display:none">6. 展望 2026&ndash;2028</span></a>
+      </div></div>
+
+    <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+    <div class="lang-en">
+      <p>Vietnam's residential property market in 2026 is characterized by strong recovery momentum driven by economic fundamentals. GDP growth of <strong>7.1%</strong>, FDI inflows of <strong>$23.7B</strong>, and a young population of <strong>100M+</strong> create robust demand. The 2024 Housing Law amendments extended foreign ownership leases to 50+50 years and expanded eligible property types. However, mortgage rates remain high at <strong>9%</strong>, limiting domestic affordability. HCMC apartment prices averaged <strong>$3,800/m&sup2;</strong> (+8% YoY) while Hanoi surged to <strong>$2,900/m&sup2;</strong> (+12%). Foreign buyers, particularly from South Korea, China, and Taiwan, are increasingly active. The <strong>30%</strong> foreign ownership quota per building remains the key structural constraint.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>越南2026年住宅房地產市場以強勁的復甦動能為特徵，受經濟基本面推動。GDP增長<strong>7.1%</strong>、外國直接投資流入<strong>237億美元</strong>、<strong>1億+</strong>年輕人口創造強勁需求。2024年住房法修正案將外國人所有權租賃期延長至50+50年，並擴大合格房產類型。然而，按揭利率維持在<strong>9%</strong>的高位，限制國內負擔能力。胡志明市公寓均價達<strong>$3,800/平方米</strong>（年增8%），河內飆升至<strong>$2,900/平方米</strong>（年增12%）。韓國、中國和台灣買家日益活躍。每棟建築<strong>30%</strong>的外國人持有上限仍是關鍵結構性限制。</p>
+    </div>
+
+    <h2 id="sec-macro"><span class="lang-en">MACRO CONTEXT &amp; GROWTH DRIVERS</span><span class="lang-zh" style="display:none">宏觀背景與增長驅動力</span></h2>
+    <div class="lang-en">
+      <p>Vietnam stands out among ASEAN economies with consistent <strong>6&ndash;7%</strong> GDP growth. The manufacturing boom driven by supply chain diversification from China has brought waves of Korean, Japanese, and Taiwanese workers, creating organic housing demand. FDI reached <strong>$23.7B</strong> in 2025 (+12% YoY). Urbanization rate at <strong>38%</strong> is still low vs regional peers, implying decades of rural-to-urban migration ahead. The government's infrastructure push &mdash; including HCMC metro Line 1 (opened 2024), Long Thanh International Airport (2026), and North-South expressway &mdash; is reshaping property premiums.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>越南在東盟經濟體中脫穎而出，GDP持續增長<strong>6&ndash;7%</strong>。由中國供應鏈多元化驅動的製造業繁榮帶來韓國、日本和台灣工人潮，創造有機住房需求。2025年FDI達<strong>237億美元</strong>（年增12%）。城市化率<strong>38%</strong>仍低於區域同行，意味著數十年的農村向城市遷移仍在前方。政府的基礎設施推動——包括胡志明市地鐵1號線（2024年開通）、龍城國際機場（2026年）和南北高速公路——正在重塑房產溢價。</p>
+    </div>
+
+    <div class="report-chart-grid">
+      <div class="report-chart-card"><h4><span class="lang-en">Price Growth by City (YoY%)</span><span class="lang-zh" style="display:none">各城市價格增長（年增率%）</span></h4><p><span class="lang-en">Source: Savills / CBRE Vietnam</span><span class="lang-zh" style="display:none">來源：第一太平戴維斯 / 世邦魏理仕越南</span></p><div id="rChartVNPriceGrowth" style="height:220px"></div><p class="chart-note green"><span class="lang-en">Hanoi West leads at +12%. HCMC D2 and Nha Trang also strong. Da Nang lags at +5%</span><span class="lang-zh" style="display:none">河內西部領漲+12%。胡志明市D2和芽莊也表現強勁。峴港滯後+5%</span></p></div>
+      <div class="report-chart-card"><h4><span class="lang-en">FDI Inflow Trend ($B)</span><span class="lang-zh" style="display:none">外國直接投資流入趨勢（十億美元）</span></h4><p><span class="lang-en">Source: MPI / GSO</span><span class="lang-zh" style="display:none">來源：計劃投資部 / 統計總局</span></p><div id="rChartVNFDI" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">FDI $23.7B in 2025 (+12% YoY). Supply chain shift from China driving sustained inflows</span><span class="lang-zh" style="display:none">2025年FDI 237億美元（年增12%）。中國供應鏈轉移驅動持續流入</span></p></div>
+    </div>
+
+    <h2 id="sec-foreign"><span class="lang-en">FOREIGN OWNERSHIP FRAMEWORK</span><span class="lang-zh" style="display:none">外國所有權框架</span></h2>
+    <div class="lang-en">
+      <p>Foreigners may own apartments (not landed property) within a <strong>30%</strong> quota per building, with <strong>50-year</strong> leasehold renewable once (total 100 years). The 2024 Housing Law expanded eligible buyers and property types. Key restrictions: cannot sub-lease to other foreigners, must remit purchase funds from abroad. Transfer to Vietnamese nationals is unrestricted. The 30% cap creates scarcity premiums in popular projects &mdash; some CBD buildings are already at quota, forcing foreign buyers to secondary markets.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>外國人可持有公寓（非土地產權），每棟建築<strong>30%</strong>配額，<strong>50年</strong>租賃期可續約一次（共100年）。2024年住房法擴大了合格買家和房產類型。主要限制：不能轉租給其他外國人，購買資金須從海外匯入。轉讓給越南國民不受限制。30%上限在熱門項目中創造稀缺溢價——部分CBD大樓已達配額上限，迫使外國買家轉向二手市場。</p>
+    </div>
+
+    <h2 id="sec-hcmc"><span class="lang-en">HO CHI MINH CITY OVERVIEW</span><span class="lang-zh" style="display:none">胡志明市概覽</span></h2>
+    <div class="lang-en">
+      <p>HCMC remains the primary market for foreign investors. District 1 luxury condos average <strong>$5,800/m&sup2;</strong>, while Thu Duc (formerly D2) offers <strong>$3,800/m&sup2;</strong> with metro connectivity. New supply has recovered to ~15,000 units/year after COVID lows. Rental yields average <strong>5.5%</strong> gross for mid-range condos, with serviced apartments reaching 7%+. The metro Line 1 opening in 2024 has boosted prices along the corridor by <strong>15&ndash;20%</strong>.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>胡志明市仍是外國投資者的主要市場。第一郡豪華公寓均價<strong>$5,800/平方米</strong>，守德（原第二郡）提供<strong>$3,800/平方米</strong>配以地鐵連接。新供應在COVID低點後恢復至每年約15,000套。中檔公寓毛租金收益率平均<strong>5.5%</strong>，服務式公寓達7%+。2024年地鐵1號線開通使沿線房價上漲<strong>15&ndash;20%</strong>。</p>
+    </div>
+    <div class="city-grid">
+      <div class="city-card"><h3>&#x1F3D9;&#xFE0F; <span class="lang-en">Ho Chi Minh City</span><span class="lang-zh" style="display:none">胡志明市</span></h3><div class="city-stat"><span class="lang-en">Avg: $3,800/m&sup2; &middot; Yield: 5.5% &middot; PTI: 10.0x &middot; YoY: +8%</span><span class="lang-zh" style="display:none">均價：$3,800/平方米 &middot; 收益率：5.5% &middot; 房價收入比：10.0倍 &middot; 年增：+8%</span></div><a href="hochiminh.html" style="font-family:Inter,sans-serif;font-size:11px;color:#1e3a5f;text-decoration:none;display:inline-block;margin-top:8px;padding:4px 10px;background:#eef3f9;border-radius:4px"><span class="lang-en">Full Report &rarr;</span><span class="lang-zh" style="display:none">完整報告 &rarr;</span></a></div>
+    </div>
+
+    <h2 id="sec-hanoi"><span class="lang-en">HANOI OVERVIEW</span><span class="lang-zh" style="display:none">河內概覽</span></h2>
+    <div class="lang-en">
+      <p>Hanoi has seen the sharpest price growth in 2025, with average apartment prices reaching <strong>$2,900/m&sup2;</strong> (+12% YoY). Supply shortage is acute &mdash; new launches dropped <strong>40%</strong> since 2022 due to legal bottlenecks. Western districts (Nam Tu Liem, Cau Giay) dominate new supply. Rental yields are lower at ~<strong>5.0%</strong> due to faster price appreciation outpacing rents. The government's northern industrial corridors (Samsung, LG facilities) drive peripheral demand.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>河內在2025年價格漲幅最為劇烈，公寓均價達<strong>$2,900/平方米</strong>（年增12%）。供應短缺嚴重——由於法律障礙，2022年以來新推案量下降<strong>40%</strong>。西部區域（南慈廉、紙橋）主導新供應。租金收益率較低約<strong>5.0%</strong>，因價格漲幅快於租金。政府的北部工業走廊（三星、LG工廠）推動外圍需求。</p>
+    </div>
+    <div class="city-grid">
+      <div class="city-card"><h3>&#x1F3DB;&#xFE0F; <span class="lang-en">Hanoi</span><span class="lang-zh" style="display:none">河內</span></h3><div class="city-stat"><span class="lang-en">Avg: $2,900/m&sup2; &middot; Yield: 5.0% &middot; PTI: 8.5x &middot; YoY: +12%</span><span class="lang-zh" style="display:none">均價：$2,900/平方米 &middot; 收益率：5.0% &middot; 房價收入比：8.5倍 &middot; 年增：+12%</span></div><a href="hanoi.html" style="font-family:Inter,sans-serif;font-size:11px;color:#1e3a5f;text-decoration:none;display:inline-block;margin-top:8px;padding:4px 10px;background:#eef3f9;border-radius:4px"><span class="lang-en">Full Report &rarr;</span><span class="lang-zh" style="display:none">完整報告 &rarr;</span></a></div>
+    </div>
+
+    <h2 id="sec-outlook"><span class="lang-en">OUTLOOK 2026&ndash;2028</span><span class="lang-zh" style="display:none">展望 2026&ndash;2028</span></h2>
+    <div class="lang-en">
+      <p>Vietnam's property market outlook is cautiously optimistic. Positives: strong GDP growth, young demographics, infrastructure buildout, and liberalized foreign ownership rules. Risks: high mortgage rates (<strong>9%</strong>), potential oversupply in resort markets (Da Nang, Nha Trang), and regulatory uncertainty. Price growth is expected to moderate to <strong>5&ndash;6%</strong> annually in HCMC and <strong>8&ndash;10%</strong> in Hanoi as supply catches up. The Long Thanh airport opening in 2026 could create a new growth corridor. Foreign demand is projected to increase <strong>15&ndash;20%</strong> annually as Vietnam's profile rises among APAC investors.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>越南房產市場前景審慎樂觀。正面因素：強勁GDP增長、年輕人口結構、基礎設施建設和放寬的外國人所有權規則。風險：高按揭利率（<strong>9%</strong>）、度假市場潛在供過於求（峴港、芽莊）及監管不確定性。預計胡志明市價格年增放緩至<strong>5&ndash;6%</strong>，河內<strong>8&ndash;10%</strong>，隨供應追趕。2026年龍城機場開放可能創造新增長走廊。隨越南在亞太投資者中知名度提升，外國需求預計每年增長<strong>15&ndash;20%</strong>。</p>
+    </div>
+
+    <div class="report-footer">
+      <p><span class="lang-en">Data sources: Savills Vietnam &middot; CBRE Vietnam &middot; State Bank of Vietnam (SBV) &middot; General Statistics Office (GSO) &middot; Ministry of Planning and Investment (MPI). All data as of March&ndash;April 2026.</span><span class="lang-zh" style="display:none">數據來源：第一太平戴維斯越南 &middot; 世邦魏理仕越南 &middot; 越南國家銀行（SBV）&middot; 統計總局（GSO）&middot; 計劃投資部（MPI）。所有數據截至2026年3月至4月。</span></p>
+      <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+var allCharts=[];
+function initAllCharts(lang){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];
+  drawVNPriceGrowth(lang);drawVNFDI(lang);}
+
+function drawVNPriceGrowth(lang){var dom=document.getElementById('rChartVNPriceGrowth');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var labels=en?['HCMC D1','HCMC D2','Hanoi CBD','Hanoi West','Da Nang','Nha Trang']:['胡志明D1','胡志明D2','河內CBD','河內西部','峴港','芽莊'];
+  var vals=[6,8,10,12,5,7];
+  var colors=[C.navy,C.blue,C.orange,C.red,C.muted,C.green];
+  c.setOption({tooltip:baseTooltip,grid:{left:12,right:12,top:24,bottom:8,containLabel:true},xAxis:mkAxis({type:'category',data:labels,axisLabel:{color:C.muted,fontSize:9}}),yAxis:mkAxis({type:'value',min:0,max:14,axisLabel:{color:C.muted,fontSize:9,formatter:'{value}%'}}),
+    series:[{type:'bar',data:vals.map(function(v,i){return{value:v,itemStyle:{color:colors[i]}};}),barMaxWidth:35,itemStyle:{borderRadius:[3,3,0,0]},label:{show:true,position:'top',formatter:'{c}%',fontSize:10,color:C.muted}}]});}
+
+function drawVNFDI(lang){var dom=document.getElementById('rChartVNFDI');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var labels=['2019','2020','2021','2022','2023','2024','2025'];var vals=[16.1,15.5,15.7,18.0,20.6,21.2,23.7];
+  c.setOption({tooltip:baseTooltip,grid:{left:12,right:12,top:24,bottom:8,containLabel:true},xAxis:mkAxis({type:'category',data:labels,axisLabel:{color:C.muted,fontSize:10}}),yAxis:mkAxis({type:'value',min:14,max:25,axisLabel:{color:C.muted,fontSize:9,formatter:function(v){return '$'+v+'B';}}}),
+    series:[{name:en?'FDI ($B)':'FDI（十億美元）',type:'line',data:vals,lineStyle:{color:C.green,width:2.5},itemStyle:{color:C.green},symbol:'circle',symbolSize:6,areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(22,163,74,0.15)'},{offset:1,color:'rgba(22,163,74,0.02)'}]}},label:{show:true,position:'top',formatter:function(p){return '$'+p.value+'B';},fontSize:9,color:C.muted}}]});}
+
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);initAllCharts(lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){var d=document.getElementById('marketDropdown');if(d)d.classList.remove('open');}});
+function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+(function(){function initScrollSpy(){var items=document.querySelectorAll('.side-nav-item');if(!items.length)return;var sections=[];items.forEach(function(a){var id=a.getAttribute('href').replace('#','');var el=document.getElementById(id);if(el)sections.push({el:el,a:a});});function onScroll(){var scrollY=window.scrollY+window.innerHeight*0.25;var current=sections[0];sections.forEach(function(s){if(s.el.getBoundingClientRect().top+window.scrollY<=scrollY)current=s;});items.forEach(function(a){a.classList.remove('active');});if(current)current.a.classList.add('active');}window.addEventListener('scroll',onScroll,{passive:true});onScroll();}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initScrollSpy);}else{initScrollSpy();}})();
+</script>
+</body>
+</html>
