@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Vancouver Deep Dive | Canada Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:160px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../tw/tw.css">
+<style>
+  .report-container{max-width:860px;margin:0 auto;padding:32px 20px}.report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}.report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}.report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}.report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}.report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}.report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}.report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+  .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}.chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}.chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:6px}.chart-note.green{color:#16a34a}.chart-note.orange{color:#d97706}.chart-note.red{color:#dc2626}.chart-note.navy{color:#1e3a5f}
+  .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}.report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}.report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}.report-chart-card p{font-size:10px!important;color:#5a7a9a!important;line-height:1.5!important;margin-bottom:8px!important;font-family:Inter,sans-serif!important}
+  .toc-box{background:#fff;border:1px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;padding:0;margin:0 0 28px;font-family:'Inter',sans-serif}.toc-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:13px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none}.toc-toggle{background:none;border:none;color:#5a7a9a;font-size:14px;cursor:pointer;padding:0 4px;line-height:1}.toc-list{padding:4px 16px 14px;display:flex;flex-direction:column;gap:4px}.toc-list a{font-size:13px;color:#1e3a5f;text-decoration:none;padding:5px 8px;border-radius:4px;display:block;border-left:2px solid transparent;transition:all .15s}.toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;padding-left:12px}.toc-collapsed .toc-list{display:none}.toc-collapsed .toc-toggle{transform:rotate(180deg)}
+  .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}.report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
+  .side-nav{position:fixed;top:50%;right:max(16px,calc(50% - 860px/2 - 160px));transform:translateY(-50%);width:136px;z-index:200;display:flex;flex-direction:column;padding:16px 12px;background:#fff;border:0.5px solid #dde8f2;border-radius:10px;box-shadow:0 2px 12px rgba(30,58,95,0.08);gap:0}.side-nav::before{content:'';position:absolute;left:22px;top:28px;bottom:28px;width:1.5px;background:#eef3f9;z-index:0}.side-nav a{display:flex;align-items:center;gap:10px;text-decoration:none;padding:5px 0;position:relative;z-index:1;cursor:pointer}.side-nav-dot{width:7px;height:7px;border-radius:50%;background:#dde8f2;border:1.5px solid #ccd9e8;flex-shrink:0;transition:all .2s;position:relative;z-index:2}.side-nav-label{font-family:'Inter',sans-serif;font-size:10.5px;color:#94a3b8;line-height:1.3;transition:color .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:82px;letter-spacing:.01em}.side-nav a.active .side-nav-dot{background:#1e3a5f;border-color:#1e3a5f;width:9px;height:9px;box-shadow:0 0 0 3px rgba(30,58,95,0.12)}.side-nav a.active .side-nav-label{color:#1e3a5f;font-weight:600}.side-nav a:hover .side-nav-dot{background:#5a7a9a;border-color:#5a7a9a}.side-nav a:hover .side-nav-label{color:#1e3a5f}
+  @media(max-width:1100px){.side-nav{display:none}}@media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+<header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector"><button class="market-btn" onclick="toggleMarketMenu()">&#x1F1E8;&#x1F1E6; <span class="lang-en">Canada</span><span class="lang-zh" style="display:none">加拿大</span> &#x25BE;</button><div class="market-dropdown" id="marketDropdown"><a href="../report.html">&#x1F1F2;&#x1F1FE; <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a><a href="../tw/report.html">&#x1F1F9;&#x1F1FC; <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a><a href="../jp/report.html">&#x1F1EF;&#x1F1F5; <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a><a href="../au/report.html">&#x1F1E6;&#x1F1FA; <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a><a href="../nz/report.html">&#x1F1F3;&#x1F1FF; <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a><a href="../uk/report.html">&#x1F1EC;&#x1F1E7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a><a href="../th/report.html">&#x1F1F9;&#x1F1ED; <span class="lang-en">Thailand</span><span class="lang-zh" style="display:none">泰國</span></a><a href="report.html" class="active">&#x1F1E8;&#x1F1E6; <span class="lang-en">Canada</span><span class="lang-zh" style="display:none">加拿大</span></a><a href="../us/report.html">&#x1F1FA;&#x1F1F8; <span class="lang-en">United States</span><span class="lang-zh" style="display:none">美國</span></a></div></div>
+  <nav><a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="toronto.html"><span class="lang-en">Toronto</span><span class="lang-zh" style="display:none">多倫多</span></a><a href="vancouver.html" class="active"><span class="lang-en">Vancouver</span><span class="lang-zh" style="display:none">溫哥華</span></a></nav>
+  <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  <span class="opr-badge">BOC: 3.25%</span><button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="toronto.html"><span class="lang-en">Toronto</span><span class="lang-zh" style="display:none">多倫多</span></a><a href="vancouver.html" class="active"><span class="lang-en">Vancouver</span><span class="lang-zh" style="display:none">溫哥華</span></a>
+  <div class="mobile-meta"><span class="opr-badge">BOC: 3.25%</span><div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div></div>
+</div>
+
+<div class="report-container">
+  <nav class="side-nav" id="sideNav">
+    <a href="#sec-exec" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Exec Summary</span><span class="side-nav-label lang-zh" style="display:none">執行摘要</span></a>
+    <a href="#sec-price" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Price Trend</span><span class="side-nav-label lang-zh" style="display:none">房價走勢</span></a>
+    <a href="#sec-neighbourhoods" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Key Neighbourhoods</span><span class="side-nav-label lang-zh" style="display:none">重點社區</span></a>
+    <a href="#sec-foreign" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Foreign Buyer Impact</span><span class="side-nav-label lang-zh" style="display:none">外國買家影響</span></a>
+    <a href="#sec-transit" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Transit & Dev</span><span class="side-nav-label lang-zh" style="display:none">交通與開發</span></a>
+    <a href="#sec-rental" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Rental Market</span><span class="side-nav-label lang-zh" style="display:none">租賃市場</span></a>
+    <a href="#sec-outlook" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Outlook</span><span class="side-nav-label lang-zh" style="display:none">展望</span></a>
+  </nav>
+  <div class="report-header">
+    <div class="lang-en"><h1>VANCOUVER &mdash; DEEP DIVE</h1><div class="report-meta">April 2026 &middot; Data: CREA / REBGV / CMHC / BOC</div></div>
+    <div class="lang-zh" style="display:none"><h1>溫哥華——深度分析</h1><div class="report-meta">2026年4月 &middot; 數據：CREA / REBGV / CMHC / BOC</div></div>
+  </div>
+  <div class="report-body">
+    <div class="toc-box" id="tocBox"><div class="toc-header" onclick="toggleToc()"><span class="lang-en">&#x1F4CB; In This Report</span><span class="lang-zh" style="display:none">&#x1F4CB; 本報告涵蓋</span><button class="toc-toggle" id="tocToggle">&#x25B2;</button></div>
+      <div class="toc-list" id="tocList">
+        <a href="#sec-exec" onclick="closeTocMobile()"><span class="lang-en">1. Executive Summary</span><span class="lang-zh" style="display:none">1. 執行摘要</span></a>
+        <a href="#sec-price" onclick="closeTocMobile()"><span class="lang-en">2. Price Trend</span><span class="lang-zh" style="display:none">2. 房價走勢</span></a>
+        <a href="#sec-neighbourhoods" onclick="closeTocMobile()"><span class="lang-en">3. Key Neighbourhoods</span><span class="lang-zh" style="display:none">3. 重點社區</span></a>
+        <a href="#sec-foreign" onclick="closeTocMobile()"><span class="lang-en">4. Foreign Buyer Impact</span><span class="lang-zh" style="display:none">4. 外國買家影響</span></a>
+        <a href="#sec-transit" onclick="closeTocMobile()"><span class="lang-en">5. Transit &amp; Development</span><span class="lang-zh" style="display:none">5. 交通與開發</span></a>
+        <a href="#sec-rental" onclick="closeTocMobile()"><span class="lang-en">6. Rental Market</span><span class="lang-zh" style="display:none">6. 租賃市場</span></a>
+        <a href="#sec-outlook" onclick="closeTocMobile()"><span class="lang-en">7. Outlook</span><span class="lang-zh" style="display:none">7. 展望</span></a>
+      </div></div>
+
+    <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+    <div class="lang-en">
+      <p>Metro Vancouver, with a population of <strong>2.6 million</strong>, is Canada's most expensive housing market at an average price of <strong>C$1.28 million</strong>. The city is geography-constrained &mdash; bounded by mountains to the north, the US border to the south, and the Pacific Ocean to the west &mdash; creating permanent supply limitations that underpin long-term price support. The market faces a layered regulatory environment: the federal foreign buyer ban (until 2027), British Columbia's speculation and vacancy tax, and the additional property transfer tax on foreign purchases. Vancouver's large <strong>Asian diaspora community</strong> has historically been a key demand driver, and the foreign ban's impact has been moderated by permanent resident pathways. PTI of 12.5x makes Vancouver the least affordable city in Canada.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>大溫哥華地區人口<strong>260萬</strong>，是加拿大最昂貴的住房市場，平均價格<strong>C$128萬</strong>。城市受地理限制 &mdash; 北面環山、南接美國邊境、西臨太平洋 &mdash; 形成永久性供給限制，支撐長期價格。市場面臨多層監管環境：聯邦外國買家禁令（至2027年）、卑詩省投機和空置稅，以及外國人購買的額外物業轉讓稅。溫哥華龐大的<strong>亞裔移民社區</strong>歷來是關鍵需求驅動力，外國買家禁令的影響因永久居民途徑而得到緩解。房價所得比12.5倍使溫哥華成為加拿大最不可負擔的城市。</p>
+    </div>
+
+    <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin-top:24px;">
+      <div class="kpi-card red"><div class="kpi-label"><span class="lang-en">AVG HOME PRICE</span><span class="lang-zh" style="display:none">平均房價</span></div><div class="kpi-value">C$1.28M</div><span class="kpi-badge badge-red"><span class="lang-en">Most expensive in Canada</span><span class="lang-zh" style="display:none">加拿大最貴</span></span></div>
+      <div class="kpi-card red"><div class="kpi-label"><span class="lang-en">PTI RATIO</span><span class="lang-zh" style="display:none">房價所得比</span></div><div class="kpi-value">12.5x</div><span class="kpi-badge badge-red"><span class="lang-en">Canada's worst affordability</span><span class="lang-zh" style="display:none">加拿大最差負擔能力</span></span></div>
+      <div class="kpi-card red"><div class="kpi-label"><span class="lang-en">FOREIGN BAN</span><span class="lang-zh" style="display:none">外國買家禁令</span></div><div class="kpi-value" style="font-size:18px">Until 2027</div><span class="kpi-badge badge-red"><span class="lang-en">Federal + BC provincial taxes</span><span class="lang-zh" style="display:none">聯邦禁令+卑詩省稅</span></span></div>
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">METRO POPULATION</span><span class="lang-zh" style="display:none">都會區人口</span></div><div class="kpi-value">2.6M</div><span class="kpi-badge badge-blue"><span class="lang-en">Geography-constrained supply</span><span class="lang-zh" style="display:none">地理限制供給</span></span></div>
+      <div class="kpi-card orange"><div class="kpi-label"><span class="lang-en">P/R RATIO</span><span class="lang-zh" style="display:none">租金比</span></div><div class="kpi-value">32x</div><span class="kpi-badge badge-orange"><span class="lang-en">Overvalued on rental basis</span><span class="lang-zh" style="display:none">租金角度高估</span></span></div>
+      <div class="kpi-card orange"><div class="kpi-label"><span class="lang-en">GROSS YIELD</span><span class="lang-zh" style="display:none">毛租金收益率</span></div><div class="kpi-value">3.1%</div><span class="kpi-badge badge-orange"><span class="lang-en">Below BOC rate</span><span class="lang-zh" style="display:none">低於央行利率</span></span></div>
+    </div>
+
+    <h2 id="sec-price"><span class="lang-en">PRICE TREND</span><span class="lang-zh" style="display:none">房價走勢</span></h2>
+    <div class="lang-en">
+      <p>Vancouver prices surged <strong>+27%</strong> during the 2020&ndash;2021 boom before correcting. The market has tracked closely with Toronto in percentage terms but remains approximately <strong>C$200K higher</strong> in absolute terms due to the geography constraint premium. Notably, Vancouver's correction has been slightly deeper than Toronto's, reflecting the additional impact of provincial foreign buyer taxes layered on top of the federal ban. Prices remain approximately <strong>11% below</strong> the 2022 peak.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>溫哥華價格在2020至2021年狂潮期間飆升<strong>+27%</strong>後修正。市場在百分比表現上與多倫多密切跟蹤，但因地理限制溢價在絕對值上高出約<strong>C$20萬</strong>。值得注意的是，溫哥華的修正略深於多倫多，反映了省級外國買家稅疊加聯邦禁令的額外影響。價格仍比2022年高峰低約<strong>11%</strong>。</p>
+    </div>
+
+    <h2 id="sec-neighbourhoods"><span class="lang-en">KEY NEIGHBOURHOODS</span><span class="lang-zh" style="display:none">重點社區</span></h2>
+    <div class="lang-en">
+      <p><strong>West Side</strong> is Vancouver's ultra-premium enclave at C$3.5M, historically favoured by affluent Asian buyers, with yields of only 2.0%. <strong>Downtown/Yaletown</strong> offers the urban condo experience at C$850K with 3.2% yields. <strong>Burnaby/Metrotown</strong> is the emerging suburban hub at C$780K with 3.5% yields, benefiting from SkyTrain connectivity and the Metrotown redevelopment. <strong>Surrey</strong> provides the best value at C$950K with 3.8% yields, driven by the Surrey-Langley SkyTrain extension.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p><strong>西區</strong>是溫哥華的超級豪宅區，C$350萬，歷來受富裕亞裔買家青睞，收益率僅2.0%。<strong>市中心/耶魯鎮</strong>以C$85萬提供都市公寓體驗，收益率3.2%。<strong>本拿比/鐵道鎮</strong>是新興郊區中心，C$78萬，收益率3.5%，受惠於天車連接和鐵道鎮重建。<strong>素里</strong>以C$95萬提供最佳價值，收益率3.8%，受素里-蘭里天車延伸推動。</p>
+    </div>
+
+    <div class="kpi-grid" style="grid-template-columns:repeat(2,1fr);margin-top:16px;">
+      <div class="kpi-card red"><div class="kpi-label"><span class="lang-en">WEST SIDE</span><span class="lang-zh" style="display:none">西區</span></div><div class="kpi-value">C$3.5M</div><span class="kpi-badge badge-red"><span class="lang-en">Yield 2.0% &middot; Ultra-premium</span><span class="lang-zh" style="display:none">收益率 2.0% &middot; 超級豪宅</span></span></div>
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">DOWNTOWN / YALETOWN</span><span class="lang-zh" style="display:none">市中心/耶魯鎮</span></div><div class="kpi-value">C$850K</div><span class="kpi-badge badge-blue"><span class="lang-en">Yield 3.2%</span><span class="lang-zh" style="display:none">收益率 3.2%</span></span></div>
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">BURNABY / METROTOWN</span><span class="lang-zh" style="display:none">本拿比/鐵道鎮</span></div><div class="kpi-value">C$780K</div><span class="kpi-badge badge-blue"><span class="lang-en">Yield 3.5%</span><span class="lang-zh" style="display:none">收益率 3.5%</span></span></div>
+      <div class="kpi-card green"><div class="kpi-label"><span class="lang-en">SURREY</span><span class="lang-zh" style="display:none">素里</span></div><div class="kpi-value">C$950K</div><span class="kpi-badge badge-green"><span class="lang-en">Yield 3.8% &middot; Best value</span><span class="lang-zh" style="display:none">收益率 3.8% &middot; 最佳價值</span></span></div>
+    </div>
+
+    <div class="chart-inline"><h4><span class="lang-en">Price by Area (C$K)</span><span class="lang-zh" style="display:none">各區域價格（C$K）</span></h4><div id="chartVANAreas" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">West Side at C$3.5M dominates. Surrey and Burnaby offer best risk-adjusted value</span><span class="lang-zh" style="display:none">西區C$350萬主導。素里和本拿比提供最佳風險調整價值</span></p></div>
+
+    <h2 id="sec-foreign"><span class="lang-en">FOREIGN BUYER IMPACT</span><span class="lang-zh" style="display:none">外國買家影響</span></h2>
+    <div class="lang-en">
+      <p>Vancouver has been Canada's ground zero for foreign buyer policy intervention. The BC government introduced a <strong>20% foreign buyer tax</strong> in 2016, followed by the federal ban in 2023, extended to 2027. The layered approach has significantly reduced foreign transaction volumes, particularly from mainland China. However, the impact has been partially offset by buyers obtaining permanent residency before purchasing, and by the continued flow of capital through the investor immigration program. West Side detached homes saw the most significant price impact from these policies, declining <strong>15&ndash;20%</strong> from 2017&ndash;2019 before the pandemic boom erased those losses.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>溫哥華一直是加拿大外國買家政策干預的核心。卑詩省政府2016年推出<strong>20%外國買家稅</strong>，隨後2023年聯邦禁令生效，延長至2027年。多層政策顯著減少了外國交易量，尤其是來自中國大陸的買家。然而，買家在購買前取得永久居民身份，以及投資移民項目的持續資金流入，部分抵消了影響。西區獨棟住宅受這些政策影響最大，2017至2019年下跌<strong>15至20%</strong>，後因疫情狂潮而抹去跌幅。</p>
+    </div>
+
+    <h2 id="sec-transit"><span class="lang-en">TRANSIT &amp; DEVELOPMENT</span><span class="lang-zh" style="display:none">交通與開發</span></h2>
+    <div class="lang-en">
+      <p>The <strong>Surrey-Langley SkyTrain Extension</strong> (16 km, 8 stations) is the most significant transit project, extending the Expo Line to Langley City Centre. Construction is underway with completion expected by 2028. The <strong>Broadway Subway</strong> (UBC extension under planning) would be transformative for the West Side. The <strong>Metrotown redevelopment</strong> in Burnaby is creating a second downtown with major mixed-use projects around the SkyTrain station, driving the area's price appreciation and densification.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p><strong>素里-蘭里天車延伸</strong>（16公里，8個站點）是最重要的交通項目，將世博線延伸至蘭里市中心。施工進行中，預計2028年完工。<strong>百老匯地鐵</strong>（UBC延伸規劃中）將對西區產生變革性影響。本拿比的<strong>鐵道鎮重建</strong>正在天車站周圍打造第二個市中心，大型混合用途項目推動該區域價格升值和高密度化。</p>
+    </div>
+
+    <h2 id="sec-rental"><span class="lang-en">RENTAL MARKET</span><span class="lang-zh" style="display:none">租賃市場</span></h2>
+    <div class="lang-en">
+      <p>Vancouver's rental market is among the most expensive in Canada, with average one-bedroom rents at approximately <strong>C$2,600/month</strong>. Despite high rents, gross yields of <strong>3.1%</strong> are below the BOC rate, reflecting the extreme price levels. The rental market benefits from strong demand driven by immigration, international students, and tech sector employment. BC's rent control framework (maximum annual increases tied to inflation) provides stability for tenants but limits income growth for landlords.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>溫哥華租賃市場是加拿大最昂貴之一，一房平均租金約<strong>C$2,600/月</strong>。儘管租金高企，<strong>3.1%</strong>的毛租金收益率低於BOC利率，反映極端價格水平。租賃市場受惠於移民、國際學生和科技業就業帶來的強勁需求。卑詩省的租金管控框架（年度最高漲幅與通膨掛鉤）為租戶提供穩定性，但限制了房東的收入增長。</p>
+    </div>
+
+    <div class="chart-inline"><h4><span class="lang-en">Vancouver vs Toronto vs National Index (2019=100)</span><span class="lang-zh" style="display:none">溫哥華 vs 多倫多 vs 全國指數（2019=100）</span></h4><div id="chartVANComparison" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">Vancouver tracks closely with Toronto but slightly deeper correction. Both remain below 2021 peak</span><span class="lang-zh" style="display:none">溫哥華與多倫多走勢密切但修正略深。兩者均低於2021年高峰</span></p></div>
+
+    <h2 id="sec-outlook"><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
+    <div class="lang-en">
+      <p><strong>Base case:</strong> Vancouver prices stabilize with <strong>+1&ndash;3%</strong> annual appreciation through 2028, supported by geography constraints and immigration but weighed down by affordability limits and the foreign ban. <strong>Bull case:</strong> Foreign ban expiry in 2027 plus aggressive BOC cuts release pent-up demand from Asian investors, driving a <strong>+10&ndash;15%</strong> surge in West Side and Downtown. <strong>Bear case:</strong> Immigration cuts, extended foreign ban, and a tech sector downturn push prices down <strong>-5&ndash;8%</strong> further, with the West Side most exposed due to its historical reliance on foreign capital.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p><strong>基本情景：</strong>溫哥華價格穩定，2028年前年升值<strong>+1至3%</strong>，受地理限制和移民支撐但受負擔能力和外國買家禁令制約。<strong>牛市情景：</strong>2027年外國買家禁令到期加上BOC激進降息釋放亞裔投資者的積壓需求，推動西區和市中心<strong>+10至15%</strong>急漲。<strong>熊市情景：</strong>移民削減、禁令延長和科技業低迷推動價格再跌<strong>-5至8%</strong>，西區因歷史上依賴外國資本而風險最大。</p>
+    </div>
+
+    <div class="report-footer">
+      <p><span class="lang-en">Data sources: CREA 2025 &middot; REBGV Market Stats &middot; CMHC Housing Market Assessment &middot; Bank of Canada &middot; Statistics Canada &middot; BC Assessment. All data as of March&ndash;April 2026.</span><span class="lang-zh" style="display:none">數據來源：CREA 2025 &middot; REBGV市場統計 &middot; CMHC住房市場評估 &middot; 加拿大央行 &middot; 加拿大統計局 &middot; BC Assessment。所有數據截至2026年3月至4月。</span></p>
+      <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+var baseLegend={top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+var allCharts=[];
+function initAllCharts(lang){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];
+  drawVANAreas(lang);drawVANComparison(lang);}
+
+function drawVANAreas(lang){var dom=document.getElementById('chartVANAreas');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var areas=en?['Surrey','Burnaby','Downtown','East Van','Kitsilano','West Side']:['素里','本拿比','市中心','東溫','基斯蘭奴','西區'];
+  var values=[950,780,850,1100,1500,3500];
+  var colors=[C.green,C.blue,C.blue,C.navy,C.navy,C.red];
+  c.setOption({tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11}},grid:{left:12,right:70,top:8,bottom:8,containLabel:true},yAxis:mkAxis({type:'category',data:areas,axisLabel:{color:C.muted,fontSize:9}}),xAxis:mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:9,formatter:function(v){return v+'K';}}}),
+    series:[{type:'bar',data:values.map(function(v,i){return{value:v,itemStyle:{color:colors[i]}};}),barMaxWidth:18,itemStyle:{borderRadius:[0,3,3,0]},label:{show:true,position:'right',formatter:function(p){return 'C$'+p.value+'K';},fontSize:9,color:C.muted}}]});}
+
+function drawVANComparison(lang){var dom=document.getElementById('chartVANComparison');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var labels=['2019','2020','2021','2022','2023','2024','2025'];
+  var van=[100,106,127,118,113,114,111];var tor=[100,108,131,121,116,118,116];var national=[100,108,131,121,116,118,116];
+  c.setOption({tooltip:baseTooltip,legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},grid:{left:12,right:12,top:24,bottom:36,containLabel:true},xAxis:mkAxis({type:'category',data:labels,axisLabel:{color:C.muted,fontSize:10}}),yAxis:mkAxis({type:'value',min:90,axisLabel:{color:C.muted,fontSize:9}}),
+    series:[{name:'Vancouver',type:'line',data:van,lineStyle:{color:C.red,width:2},itemStyle:{color:C.red},symbol:'circle',symbolSize:5},{name:'Toronto',type:'line',data:tor,lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5},{name:en?'National':'全國',type:'line',data:national,lineStyle:{color:C.muted,width:2,type:'dashed'},itemStyle:{color:C.muted},symbol:'circle',symbolSize:5}]});}
+
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);initAllCharts(lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){var d=document.getElementById('marketDropdown');if(d)d.classList.remove('open');}});
+function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+(function(){function initScrollSpy(){var items=document.querySelectorAll('.side-nav-item');if(!items.length)return;var sections=[];items.forEach(function(a){var id=a.getAttribute('href').replace('#','');var el=document.getElementById(id);if(el)sections.push({el:el,a:a});});function onScroll(){var scrollY=window.scrollY+window.innerHeight*0.25;var current=sections[0];sections.forEach(function(s){if(s.el.getBoundingClientRect().top+window.scrollY<=scrollY)current=s;});items.forEach(function(a){a.classList.remove('active');});if(current)current.a.classList.add('active');}window.addEventListener('scroll',onScroll,{passive:true});onScroll();}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initScrollSpy);}else{initScrollSpy();}})();
+</script>
+</body>
+</html>
