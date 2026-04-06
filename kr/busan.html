@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Busan Deep Dive | South Korea Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:160px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../tw/tw.css">
+<style>
+  .report-container{max-width:860px;margin:0 auto;padding:32px 20px}.report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}.report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}.report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}.report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}.report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}.report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}.report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+  .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}.chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}.chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:6px}.chart-note.green{color:#16a34a}.chart-note.orange{color:#d97706}.chart-note.red{color:#dc2626}.chart-note.navy{color:#1e3a5f}
+  .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}.report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}.report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}.report-chart-card p{font-size:10px!important;color:#5a7a9a!important;line-height:1.5!important;margin-bottom:8px!important;font-family:Inter,sans-serif!important}
+  .toc-box{background:#fff;border:1px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;padding:0;margin:0 0 28px;font-family:'Inter',sans-serif}.toc-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:13px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none}.toc-toggle{background:none;border:none;color:#5a7a9a;font-size:14px;cursor:pointer;padding:0 4px;line-height:1}.toc-list{padding:4px 16px 14px;display:flex;flex-direction:column;gap:4px}.toc-list a{font-size:13px;color:#1e3a5f;text-decoration:none;padding:5px 8px;border-radius:4px;display:block;border-left:2px solid transparent;transition:all .15s}.toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;padding-left:12px}.toc-collapsed .toc-list{display:none}.toc-collapsed .toc-toggle{transform:rotate(180deg)}
+  .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}.report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
+  .side-nav{position:fixed;top:50%;right:max(16px,calc(50% - 860px/2 - 160px));transform:translateY(-50%);width:136px;z-index:200;display:flex;flex-direction:column;padding:16px 12px;background:#fff;border:0.5px solid #dde8f2;border-radius:10px;box-shadow:0 2px 12px rgba(30,58,95,0.08);gap:0}.side-nav::before{content:'';position:absolute;left:22px;top:28px;bottom:28px;width:1.5px;background:#eef3f9;z-index:0}.side-nav a{display:flex;align-items:center;gap:10px;text-decoration:none;padding:5px 0;position:relative;z-index:1;cursor:pointer}.side-nav-dot{width:7px;height:7px;border-radius:50%;background:#dde8f2;border:1.5px solid #ccd9e8;flex-shrink:0;transition:all .2s;position:relative;z-index:2}.side-nav-label{font-family:'Inter',sans-serif;font-size:10.5px;color:#94a3b8;line-height:1.3;transition:color .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:82px;letter-spacing:.01em}.side-nav a.active .side-nav-dot{background:#1e3a5f;border-color:#1e3a5f;width:9px;height:9px;box-shadow:0 0 0 3px rgba(30,58,95,0.12)}.side-nav a.active .side-nav-label{color:#1e3a5f;font-weight:600}.side-nav a:hover .side-nav-dot{background:#5a7a9a;border-color:#5a7a9a}.side-nav a:hover .side-nav-label{color:#1e3a5f}
+  .city-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}.city-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;border-left:3px solid #1e3a5f}.city-card h4{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1e3a5f;margin:0 0 6px}.city-card .city-meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:#5a7a9a;margin-bottom:6px}.city-card p{font-family:Georgia,serif;font-size:13px;line-height:1.7;color:#2c3e50;margin:0}
+  @media(max-width:1100px){.side-nav{display:none}}@media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}.city-grid{grid-template-columns:1fr}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+<header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector"><button class="market-btn" onclick="toggleMarketMenu()">&#x1F1F0;&#x1F1F7; <span class="lang-en">South Korea</span><span class="lang-zh" style="display:none">韓國</span> &#x25BE;</button><div class="market-dropdown" id="marketDropdown"><a href="../report.html">&#x1F1F2;&#x1F1FE; <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a><a href="../tw/report.html">&#x1F1F9;&#x1F1FC; <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a><a href="../jp/report.html">&#x1F1EF;&#x1F1F5; <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a><a href="../au/report.html">&#x1F1E6;&#x1F1FA; <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a><a href="../nz/report.html">&#x1F1F3;&#x1F1FF; <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a><a href="../uk/report.html">&#x1F1EC;&#x1F1E7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a><a href="../th/report.html">&#x1F1F9;&#x1F1ED; <span class="lang-en">Thailand</span><span class="lang-zh" style="display:none">泰國</span></a><a href="report.html" class="active">&#x1F1F0;&#x1F1F7; <span class="lang-en">South Korea</span><span class="lang-zh" style="display:none">韓國</span></a><a href="../us/report.html">&#x1F1FA;&#x1F1F8; <span class="lang-en">United States</span><span class="lang-zh" style="display:none">美國</span></a></div></div>
+  <nav><a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="seoul.html"><span class="lang-en">Seoul</span><span class="lang-zh" style="display:none">首爾</span></a><a href="busan.html" class="active"><span class="lang-en">Busan</span><span class="lang-zh" style="display:none">釜山</span></a></nav>
+  <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  <span class="opr-badge">BOK: 3.00%</span><button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="seoul.html"><span class="lang-en">Seoul</span><span class="lang-zh" style="display:none">首爾</span></a><a href="busan.html" class="active"><span class="lang-en">Busan</span><span class="lang-zh" style="display:none">釜山</span></a>
+  <div class="mobile-meta"><span class="opr-badge">BOK: 3.00%</span><div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div></div>
+</div>
+
+<div class="report-container">
+  <nav class="side-nav" id="sideNav">
+    <a href="#sec-exec" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Exec Summary</span><span class="side-nav-label lang-zh" style="display:none">執行摘要</span></a>
+    <a href="#sec-price" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Price Trend</span><span class="side-nav-label lang-zh" style="display:none">房價走勢</span></a>
+    <a href="#sec-districts" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Key Districts</span><span class="side-nav-label lang-zh" style="display:none">重點地區</span></a>
+    <a href="#sec-port" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Port Redev.</span><span class="side-nav-label lang-zh" style="display:none">港口再開發</span></a>
+    <a href="#sec-tourism" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Tourism & MICE</span><span class="side-nav-label lang-zh" style="display:none">觀光與會展</span></a>
+    <a href="#sec-rental" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Rental Market</span><span class="side-nav-label lang-zh" style="display:none">租賃市場</span></a>
+    <a href="#sec-outlook" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Outlook</span><span class="side-nav-label lang-zh" style="display:none">展望</span></a>
+  </nav>
+  <div class="report-header">
+    <div class="lang-en"><h1>BUSAN &mdash; DEEP DIVE</h1><div class="report-meta">April 2026 &middot; Data: KREB / Busan Metro Gov / BIFF / BOK</div></div>
+    <div class="lang-zh" style="display:none"><h1>釜山——深度分析</h1><div class="report-meta">2026年4月 &middot; 數據：韓國不動產院 / 釜山廣域市政府 / BIFF / 韓國銀行</div></div>
+  </div>
+  <div class="report-body">
+    <div class="toc-box" id="tocBox"><div class="toc-header" onclick="toggleToc()"><span class="lang-en">&#x1F4CB; In This Report</span><span class="lang-zh" style="display:none">&#x1F4CB; 本報告涵蓋</span><button class="toc-toggle" id="tocToggle">&#x25B2;</button></div>
+      <div class="toc-list" id="tocList">
+        <a href="#sec-exec" onclick="closeTocMobile()"><span class="lang-en">1. Executive Summary</span><span class="lang-zh" style="display:none">1. 執行摘要</span></a>
+        <a href="#sec-price" onclick="closeTocMobile()"><span class="lang-en">2. Price Trend</span><span class="lang-zh" style="display:none">2. 房價走勢</span></a>
+        <a href="#sec-districts" onclick="closeTocMobile()"><span class="lang-en">3. Key Districts</span><span class="lang-zh" style="display:none">3. 重點地區</span></a>
+        <a href="#sec-port" onclick="closeTocMobile()"><span class="lang-en">4. Port Redevelopment</span><span class="lang-zh" style="display:none">4. 港口再開發</span></a>
+        <a href="#sec-tourism" onclick="closeTocMobile()"><span class="lang-en">5. Tourism & MICE</span><span class="lang-zh" style="display:none">5. 觀光與會展</span></a>
+        <a href="#sec-rental" onclick="closeTocMobile()"><span class="lang-en">6. Rental Market</span><span class="lang-zh" style="display:none">6. 租賃市場</span></a>
+        <a href="#sec-outlook" onclick="closeTocMobile()"><span class="lang-en">7. Outlook</span><span class="lang-zh" style="display:none">7. 展望</span></a>
+      </div></div>
+
+    <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+    <div class="lang-en">
+      <p>Busan is South Korea's second-largest city and principal port, home to <strong>3.4 million</strong> residents. The average apartment price sits at approximately <strong>&#8361;350M ($250K)</strong>, up +3% YoY &mdash; offering a significantly more affordable entry point versus Seoul, where comparable units cost roughly 3x more. Gross rental yields average <strong>4.5%</strong>, above the BOK policy rate of 3.00%, providing positive carry for leveraged investors. The Haeundae waterfront commands premium pricing driven by Marine City tower demand. The North Port redevelopment project ($8B, 2025&ndash;2035) represents a multi-decade catalyst for the city's transformation. Growing interest from Japanese and Taiwanese investors, combined with BIFF and MICE infrastructure positioning, is driving incremental tourism and residential demand.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>釜山是韓國第二大城市及主要港口，人口約<strong>340萬</strong>。公寓均價約<strong>3.5億韓元（約25萬美元）</strong>，年增+3% &mdash; 相較首爾，同類單位價格約為3倍，釜山提供更可負擔的入場點。毛租金收益率平均<strong>4.5%</strong>，高於韓國銀行3.00%政策利率，為槓桿投資者提供正利差。海雲台濱海區因Marine City塔樓需求而享有溢價定位。北港再開發計劃（80億美元，2025至2035年）是城市轉型的長期催化劑。來自日本及台灣投資者的日益增長興趣，加上BIFF和MICE基礎設施定位，正推動旅遊及住宅需求增長。</p>
+    </div>
+
+    <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin-top:24px;">
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">AVG APT PRICE</span><span class="lang-zh" style="display:none">公寓均價</span></div><div class="kpi-value">&#8361;350M</div><span class="kpi-badge badge-blue"><span class="lang-en">~$250K &middot; +3% YoY</span><span class="lang-zh" style="display:none">約25萬美元 &middot; 年增+3%</span></span></div>
+      <div class="kpi-card green"><div class="kpi-label"><span class="lang-en">GROSS YIELD</span><span class="lang-zh" style="display:none">毛收益率</span></div><div class="kpi-value">4.5%</div><span class="kpi-badge badge-green"><span class="lang-en">Above BOK 3.00% &middot; +carry</span><span class="lang-zh" style="display:none">高於BOK 3.00% &middot; 正利差</span></span></div>
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">POPULATION</span><span class="lang-zh" style="display:none">人口</span></div><div class="kpi-value">3.4M</div><span class="kpi-badge badge-blue"><span class="lang-en">Korea's 2nd city &middot; Port hub</span><span class="lang-zh" style="display:none">韓國第二大城 &middot; 港口樞紐</span></span></div>
+      <div class="kpi-card orange"><div class="kpi-label"><span class="lang-en">SEOUL GAP</span><span class="lang-zh" style="display:none">首爾差距</span></div><div class="kpi-value">3.4x</div><span class="kpi-badge badge-orange"><span class="lang-en">Seoul/Busan ratio &middot; was 2.8x in 2019</span><span class="lang-zh" style="display:none">首爾/釜山比 &middot; 2019年為2.8倍</span></span></div>
+      <div class="kpi-card green"><div class="kpi-label"><span class="lang-en">NORTH PORT</span><span class="lang-zh" style="display:none">北港計劃</span></div><div class="kpi-value">$8B</div><span class="kpi-badge badge-green"><span class="lang-en">2025&ndash;2035 &middot; 15K units planned</span><span class="lang-zh" style="display:none">2025至2035年 &middot; 規劃1.5萬套</span></span></div>
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">HAEUNDAE OCC.</span><span class="lang-zh" style="display:none">海雲台入住率</span></div><div class="kpi-value">92%+</div><span class="kpi-badge badge-blue"><span class="lang-en">Premium waterfront &middot; Strong demand</span><span class="lang-zh" style="display:none">優質濱海 &middot; 需求強勁</span></span></div>
+    </div>
+
+    <h2 id="sec-price"><span class="lang-en">PRICE TREND</span><span class="lang-zh" style="display:none">房價走勢</span></h2>
+    <div class="lang-en">
+      <p>Busan's apartment market has exhibited moderate growth compared to Seoul's dramatic volatility. Prices rose <strong>+8%</strong> in 2021, driven by spillover demand and low interest rates, before correcting <strong>-4%</strong> in 2022 as the BOK tightened aggressively. The market has since stabilized, with 2025 showing a gradual recovery. The price gap with Seoul has been widening &mdash; Seoul is now <strong>3.4x</strong> Busan, up from 2.8x in 2019, reflecting disproportionate capital concentration in the capital. Peripheral satellite cities such as Gimhae and Yangsan offer more affordable alternatives at 60&ndash;70% of Busan core prices.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>與首爾劇烈波動相比，釜山公寓市場呈現溫和增長。2021年受外溢需求和低利率推動，價格上漲<strong>+8%</strong>，隨後2022年韓國銀行積極升息導致修正<strong>-4%</strong>。此後市場趨於穩定，2025年顯示逐步復甦。與首爾的價差持續擴大——首爾現為釜山的<strong>3.4倍</strong>，高於2019年的2.8倍，反映資本過度集中於首都。衛星城市如金海和梁山提供更可負擔的替代選擇，價格約為釜山核心區的60至70%。</p>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">Busan Price Index + Tourist Arrivals (2019&ndash;2025)</span><span class="lang-zh" style="display:none">釜山房價指數 + 觀光客人次（2019&ndash;2025）</span></h4><div id="chartBusanDual" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">Price index stabilizing post-correction. Tourist arrivals surpassed pre-COVID levels by 2024</span><span class="lang-zh" style="display:none">價格指數修正後趨穩。觀光客人次2024年已超越疫前水平</span></p></div>
+
+    <h2 id="sec-districts"><span class="lang-en">KEY DISTRICTS</span><span class="lang-zh" style="display:none">重點地區</span></h2>
+    <div class="lang-en">
+      <p><strong>Haeundae</strong> is Busan's premier waterfront district, home to Marine City's luxury towers and commanding the highest prices at &#8361;680M. <strong>Centum City</strong> is the tech and commerce hub anchored by BEXCO convention center, with strong corporate tenant demand at &#8361;520M. <strong>Nampo/Jung-gu</strong>, the historic old downtown, is undergoing gentrification with attractive yields at &#8361;320M. <strong>Gimhae</strong> offers the most affordable entry at &#8361;250M with airport proximity and growing commuter infrastructure.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p><strong>海雲台</strong>是釜山首屈一指的濱海區，擁有Marine City豪華塔樓，以6.8億韓元的最高價格領先。<strong>Centum City</strong>是以BEXCO會展中心為核心的科技商業樞紐，企業租戶需求強勁，均價5.2億韓元。<strong>南浦/中區</strong>為歷史舊城區，正經歷都市更新，均價3.2億韓元，收益率具吸引力。<strong>金海</strong>以2.5億韓元提供最可負擔的入場點，鄰近機場且通勤基礎設施日益完善。</p>
+    </div>
+    <div class="city-grid">
+      <div class="city-card" style="border-left-color:#dc2626;">
+        <h4><span class="lang-en">Haeundae</span><span class="lang-zh" style="display:none">海雲台</span></h4>
+        <div class="city-meta"><span class="lang-en">Premium Waterfront &middot; &#8361;680M &middot; Yield 4.0%</span><span class="lang-zh" style="display:none">優質濱海 &middot; 6.8億&#8361; &middot; 收益率 4.0%</span></div>
+        <p><span class="lang-en">Marine City luxury towers, Haeundae Beach frontage. Top-tier demand from domestic and foreign buyers. BIFF venue nearby.</span><span class="lang-zh" style="display:none">Marine City豪華塔樓，海雲台海灘正面。國內外買家頂級需求。BIFF場地鄰近。</span></p>
+      </div>
+      <div class="city-card" style="border-left-color:#2563eb;">
+        <h4><span class="lang-en">Centum City</span><span class="lang-zh" style="display:none">Centum City</span></h4>
+        <div class="city-meta"><span class="lang-en">Tech/Commerce Hub &middot; &#8361;520M &middot; Yield 4.2%</span><span class="lang-zh" style="display:none">科技商業樞紐 &middot; 5.2億&#8361; &middot; 收益率 4.2%</span></div>
+        <p><span class="lang-en">BEXCO area, Shinsegae Centum City mall. Strong corporate tenant base, tech company offices expanding.</span><span class="lang-zh" style="display:none">BEXCO地區，新世界Centum City百貨。企業租戶基礎穩固，科技公司辦公室持續擴張。</span></p>
+      </div>
+      <div class="city-card" style="border-left-color:#d97706;">
+        <h4><span class="lang-en">Nampo / Jung-gu</span><span class="lang-zh" style="display:none">南浦 / 中區</span></h4>
+        <div class="city-meta"><span class="lang-en">Old Downtown &middot; &#8361;320M &middot; Yield 4.8%</span><span class="lang-zh" style="display:none">舊城區 &middot; 3.2億&#8361; &middot; 收益率 4.8%</span></div>
+        <p><span class="lang-en">Historic Jagalchi Market area, gentrifying rapidly. North Port redevelopment will reshape this district over the next decade.</span><span class="lang-zh" style="display:none">歷史扎嘎其市場地區，都市更新快速。北港再開發將在未來十年重塑此區。</span></p>
+      </div>
+      <div class="city-card" style="border-left-color:#16a34a;">
+        <h4><span class="lang-en">Gimhae</span><span class="lang-zh" style="display:none">金海</span></h4>
+        <div class="city-meta"><span class="lang-en">Affordable Suburb &middot; &#8361;250M &middot; Yield 5.0%</span><span class="lang-zh" style="display:none">可負擔郊區 &middot; 2.5億&#8361; &middot; 收益率 5.0%</span></div>
+        <p><span class="lang-en">Airport proximity, light rail connection to Busan. Highest yield in metro area. Growing young family demand.</span><span class="lang-zh" style="display:none">鄰近機場，輕軌連接釜山。都會區最高收益率。年輕家庭需求增長。</span></p>
+      </div>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">Price by District (&#8361;M)</span><span class="lang-zh" style="display:none">各區房價（億韓元）</span></h4><div id="chartBusanDistricts" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">Marine City leads at &#8361;850M. Haeundae premium 2.7x Gimhae entry level</span><span class="lang-zh" style="display:none">Marine City以8.5億韓元領先。海雲台溢價為金海入門價的2.7倍</span></p></div>
+
+    <h2 id="sec-port"><span class="lang-en">PORT REDEVELOPMENT</span><span class="lang-zh" style="display:none">港口再開發</span></h2>
+    <div class="lang-en">
+      <p>The North Port redevelopment project is Busan's most transformative urban initiative, with a total investment of <strong>$8 billion</strong> spanning 2025 to 2035. The plan transforms the aging port facility into a waterfront mixed-use district with <strong>15,000 residential units</strong>, commercial space, cultural amenities, and a new cruise terminal. The project is comparable in scope to London's Docklands or Sydney's Darling Harbour redevelopment. It will fundamentally shift Busan's center of gravity, connecting the old downtown of Jung-gu with the modern Haeundae corridor. Early-stage land parcels adjacent to the redevelopment zone have already seen 8&ndash;12% price appreciation in anticipation.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>北港再開發計劃是釜山最具變革性的城市計劃，總投資<strong>80億美元</strong>，橫跨2025至2035年。該計劃將老化港口設施改造為濱海複合開發區，包含<strong>15,000套住宅單位</strong>、商業空間、文化設施和新郵輪碼頭。其規模可與倫敦碼頭區或雪梨達令港再開發相比。這將從根本上改變釜山的重心，連接中區舊城區與現代海雲台走廊。鄰近再開發區的早期土地地塊已因預期而出現8至12%的價格升值。</p>
+    </div>
+
+    <h2 id="sec-tourism"><span class="lang-en">TOURISM &amp; MICE</span><span class="lang-zh" style="display:none">觀光與會展</span></h2>
+    <div class="lang-en">
+      <p>The Busan International Film Festival (BIFF) drives global visibility and positions the city as a cultural destination. <strong>BEXCO</strong> convention center anchors the MICE sector, hosting 200+ events annually. While the 2030 World Expo bid was lost to Riyadh, the infrastructure investment remains &mdash; upgraded transit, hotels, and convention capacity. Busan attracts <strong>12M+ tourists annually</strong>, with numbers recovering past pre-COVID levels. Short-term rental demand is particularly strong in Haeundae during summer and festival seasons, with premium units achieving 70%+ annual occupancy at rates 30&ndash;40% above standard long-term rents.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>釜山國際電影節（BIFF）驅動全球知名度，將城市定位為文化目的地。<strong>BEXCO</strong>會展中心是MICE產業核心，每年舉辦200多場活動。雖然2030世博申辦敗給利雅德，但基礎設施投資仍在——升級的交通、酒店和會展容量。釜山每年吸引<strong>超過1,200萬遊客</strong>，人次已恢復超越疫前水平。短期租賃需求在夏季和影展季節的海雲台尤為強勁，優質單位年入住率超過70%，租金比標準長租高出30至40%。</p>
+    </div>
+
+    <h2 id="sec-rental"><span class="lang-en">RENTAL MARKET</span><span class="lang-zh" style="display:none">租賃市場</span></h2>
+    <div class="lang-en">
+      <p>Busan offers a gross yield of <strong>4.5% on average</strong>, among the best in South Korea. Haeundae 2-bedroom apartments rent for <strong>&#8361;1.2&ndash;1.8M/month ($900&ndash;$1,350)</strong>, with Marine City premium units commanding the top end. The jeonse (lump-sum deposit) ratio remains higher than Seoul at <strong>62%</strong>, but the monthly rental market is growing steadily as younger tenants and foreign workers shift preferences. Occupancy rates in Haeundae exceed <strong>92%</strong>. Foreign tenant demand is driven primarily by Japanese professionals working in Busan's port and manufacturing sectors, creating a reliable non-Korean rental base.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>釜山平均毛收益率<strong>4.5%</strong>，為韓國最佳之一。海雲台兩房公寓月租<strong>120至180萬韓元（900至1,350美元）</strong>，Marine City優質單位居最高。全租（一次性保證金）比率仍高於首爾，達<strong>62%</strong>，但月租市場隨年輕租戶和外國勞工偏好轉變而穩定增長。海雲台入住率超過<strong>92%</strong>。外國租戶需求主要來自在釜山港口和製造業工作的日本專業人士，形成可靠的非韓國租戶基礎。</p>
+    </div>
+
+    <h2 id="sec-outlook"><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
+    <div class="lang-en">
+      <p><strong>Base case:</strong> Steady <strong>+2&ndash;3% price growth</strong> in 2026&ndash;2027, supported by North Port redevelopment momentum and yield advantage over Seoul. Income-focused investors benefit from positive carry above the BOK rate. <strong>Upside:</strong> Improved KTX connectivity (Seoul&ndash;Busan target under 2 hours), continued tourism growth, and North Port Phase 1 completions could push Haeundae above &#8361;750M. <strong>Risk:</strong> Population outflow to Seoul and aging demographics (Busan median age 45+) constrain organic demand. If net migration remains negative, suburban districts like Sasang may underperform.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p><strong>基本情景：</strong>2026至2027年穩定<strong>+2至3%價格增長</strong>，受北港再開發動力和相對首爾的收益優勢支撐。以收益為導向的投資者受益於高於BOK利率的正利差。<strong>上行空間：</strong>KTX連通性改善（首爾-釜山目標2小時以內）、旅遊持續增長和北港第一期完工可推動海雲台超過7.5億韓元。<strong>風險：</strong>人口外流至首爾和老齡化人口結構（釜山中位年齡45歲以上）限制有機需求。若淨遷移持續為負，沙上等郊區可能表現不佳。</p>
+    </div>
+
+    <div class="report-footer">
+      <p><span class="lang-en">Data sources: Korea Real Estate Board (KREB) &middot; Busan Metropolitan Government &middot; Bank of Korea (BOK) &middot; BIFF &middot; BEXCO &middot; KB Kookmin Bank Real Estate. All data as of March&ndash;April 2026.</span><span class="lang-zh" style="display:none">數據來源：韓國不動產院（KREB） &middot; 釜山廣域市政府 &middot; 韓國銀行（BOK） &middot; BIFF &middot; BEXCO &middot; KB國民銀行不動產。所有數據截至2026年3月至4月。</span></p>
+      <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+var allCharts=[];
+function initAllCharts(lang){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];
+  drawBusanDistricts(lang);drawBusanDual(lang);}
+
+function drawBusanDistricts(lang){var dom=document.getElementById('chartBusanDistricts');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var districts=en?['Gimhae','Sasang','Nampo','Centum City','Haeundae','Marine City']:['金海','沙上','南浦','Centum City','海雲台','Marine City'];
+  var values=[250,300,320,520,680,850];
+  var colors=[C.green,C.muted,C.orange,C.blue,C.red,C.red];
+  c.setOption({tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11}},grid:{left:12,right:60,top:8,bottom:8,containLabel:true},yAxis:mkAxis({type:'category',data:districts,axisLabel:{color:C.muted,fontSize:9}}),xAxis:mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:9,formatter:function(v){return v+'M';}}}),
+    series:[{type:'bar',data:values.map(function(v,i){return{value:v,itemStyle:{color:colors[i]}};}),barMaxWidth:18,itemStyle:{borderRadius:[0,3,3,0]},label:{show:true,position:'right',formatter:function(p){return'\u20A9'+p.value+'M';},fontSize:9,color:C.muted}}]});}
+
+function drawBusanDual(lang){var dom=document.getElementById('chartBusanDual');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var years=['2019','2020','2021','2022','2023','2024','2025'];
+  var priceIdx=[100,103,108,104,103,105,108];
+  var tourists=[11,5,7,10,11,12,13];
+  c.setOption({tooltip:baseTooltip,legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},grid:{left:12,right:12,top:24,bottom:36,containLabel:true},xAxis:mkAxis({type:'category',data:years,axisLabel:{color:C.muted,fontSize:10}}),yAxis:[mkAxis({type:'value',min:90,max:115,axisLabel:{color:C.muted,fontSize:9}}),mkAxis({type:'value',min:0,max:16,axisLabel:{color:C.muted,fontSize:9,formatter:'{value}M'},splitLine:{show:false}})],
+    series:[{name:en?'Price Index (2019=100)':'房價指數（2019=100）',type:'line',data:priceIdx,lineStyle:{color:C.navy,width:2},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5,yAxisIndex:0},{name:en?'Tourist Arrivals (M)':'觀光客（百萬）',type:'bar',data:tourists,barMaxWidth:28,itemStyle:{color:'rgba(37,99,235,0.5)',borderRadius:[3,3,0,0]},yAxisIndex:1}]});}
+
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);initAllCharts(lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){var d=document.getElementById('marketDropdown');if(d)d.classList.remove('open');}});
+function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+(function(){function initScrollSpy(){var items=document.querySelectorAll('.side-nav-item');if(!items.length)return;var sections=[];items.forEach(function(a){var id=a.getAttribute('href').replace('#','');var el=document.getElementById(id);if(el)sections.push({el:el,a:a});});function onScroll(){var scrollY=window.scrollY+window.innerHeight*0.25;var current=sections[0];sections.forEach(function(s){if(s.el.getBoundingClientRect().top+window.scrollY<=scrollY)current=s;});items.forEach(function(a){a.classList.remove('active');});if(current)current.a.classList.add('active');}window.addEventListener('scroll',onScroll,{passive:true});onScroll();}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initScrollSpy);}else{initScrollSpy();}})();
+</script>
+</body>
+</html>

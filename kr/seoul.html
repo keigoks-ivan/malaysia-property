@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Seoul Deep Dive | South Korea Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}
+.market-selector{position:relative;margin-left:16px}.market-btn{background:#eef3f9;border:1px solid #ccd9e8;border-radius:6px;padding:5px 10px;font-family:Inter,sans-serif;font-size:12px;color:#1e3a5f;cursor:pointer;display:flex;align-items:center;gap:6px}.market-btn:hover{background:#dde8f2}.market-dropdown{display:none;position:absolute;top:110%;left:0;background:#fff;border:1px solid #ccd9e8;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.1);min-width:160px;z-index:100}.market-dropdown.open{display:block}.market-dropdown a{display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;text-decoration:none;font-family:Inter,sans-serif}.market-dropdown a:hover{background:#f4f7fc}.market-dropdown a.active{font-weight:600}
+</style>
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../tw/tw.css">
+<style>
+  .report-container{max-width:860px;margin:0 auto;padding:32px 20px}.report-header{background:#fff;border:0.5px solid #ccd9e8;border-bottom:2px solid #1e3a5f;border-radius:4px 4px 0 0;padding:28px 40px}.report-header h1{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#1e3a5f;letter-spacing:.05em;margin:0 0 4px}.report-header .report-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a7a9a;margin-bottom:8px}.report-body{background:#fff;border:0.5px solid #ccd9e8;border-top:none;border-radius:0 0 4px 4px;padding:32px 40px}.report-body h2{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#1e3a5f;border-bottom:1px solid #ccd9e8;padding-bottom:8px;margin-top:36px;margin-bottom:16px}.report-body p{font-family:Georgia,serif;font-size:15px;line-height:1.9;color:#2c3e50;margin-bottom:16px}.report-body strong{font-family:'JetBrains Mono',monospace;font-size:13px;color:#1e3a5f;background:#eef3f9;padding:1px 4px;border-radius:3px}
+  .chart-inline{background:#f4f7fc;border:0.5px solid #dde8f2;border-radius:6px;padding:14px 16px;margin:20px 0}.chart-inline h4{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:#1e3a5f;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}.chart-note{font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:6px}.chart-note.green{color:#16a34a}.chart-note.orange{color:#d97706}.chart-note.red{color:#dc2626}.chart-note.navy{color:#1e3a5f}
+  .report-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}.report-chart-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;min-width:0}.report-chart-card h4{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#1e3a5f;margin-bottom:4px}.report-chart-card p{font-size:10px!important;color:#5a7a9a!important;line-height:1.5!important;margin-bottom:8px!important;font-family:Inter,sans-serif!important}
+  .toc-box{background:#fff;border:1px solid #ccd9e8;border-left:3px solid #1e3a5f;border-radius:6px;padding:0;margin:0 0 28px;font-family:'Inter',sans-serif}.toc-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:13px;font-weight:600;color:#1e3a5f;cursor:pointer;user-select:none}.toc-toggle{background:none;border:none;color:#5a7a9a;font-size:14px;cursor:pointer;padding:0 4px;line-height:1}.toc-list{padding:4px 16px 14px;display:flex;flex-direction:column;gap:4px}.toc-list a{font-size:13px;color:#1e3a5f;text-decoration:none;padding:5px 8px;border-radius:4px;display:block;border-left:2px solid transparent;transition:all .15s}.toc-list a:hover{background:#eef3f9;border-left-color:#1e3a5f;padding-left:12px}.toc-collapsed .toc-list{display:none}.toc-collapsed .toc-toggle{transform:rotate(180deg)}
+  .report-footer{border-top:1px solid #ccd9e8;padding-top:16px;margin-top:32px}.report-footer p{font-family:'Inter',sans-serif!important;font-size:11px!important;color:#5a7a9a!important;line-height:1.6!important;margin-bottom:3px!important}
+  .side-nav{position:fixed;top:50%;right:max(16px,calc(50% - 860px/2 - 160px));transform:translateY(-50%);width:136px;z-index:200;display:flex;flex-direction:column;padding:16px 12px;background:#fff;border:0.5px solid #dde8f2;border-radius:10px;box-shadow:0 2px 12px rgba(30,58,95,0.08);gap:0}.side-nav::before{content:'';position:absolute;left:22px;top:28px;bottom:28px;width:1.5px;background:#eef3f9;z-index:0}.side-nav a{display:flex;align-items:center;gap:10px;text-decoration:none;padding:5px 0;position:relative;z-index:1;cursor:pointer}.side-nav-dot{width:7px;height:7px;border-radius:50%;background:#dde8f2;border:1.5px solid #ccd9e8;flex-shrink:0;transition:all .2s;position:relative;z-index:2}.side-nav-label{font-family:'Inter',sans-serif;font-size:10.5px;color:#94a3b8;line-height:1.3;transition:color .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:82px;letter-spacing:.01em}.side-nav a.active .side-nav-dot{background:#1e3a5f;border-color:#1e3a5f;width:9px;height:9px;box-shadow:0 0 0 3px rgba(30,58,95,0.12)}.side-nav a.active .side-nav-label{color:#1e3a5f;font-weight:600}.side-nav a:hover .side-nav-dot{background:#5a7a9a;border-color:#5a7a9a}.side-nav a:hover .side-nav-label{color:#1e3a5f}
+  .city-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:20px 0}.city-card{background:#fff;border:0.5px solid #ccd9e8;border-radius:8px;padding:16px;border-top:3px solid #1e3a5f}.city-card h4{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1e3a5f;margin:0 0 6px}.city-card p{font-family:Georgia,serif;font-size:13px;line-height:1.7;color:#2c3e50;margin:0}
+  @media(max-width:1100px){.side-nav{display:none}}@media(max-width:768px){.report-chart-grid{grid-template-columns:1fr}.city-grid{grid-template-columns:1fr}.report-header,.report-body{padding:20px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+<header class="navbar">
+  <a href="../index.html" class="logo">PROPERTY MONITOR</a>
+  <div class="market-selector"><button class="market-btn" onclick="toggleMarketMenu()">&#x1F1F0;&#x1F1F7; <span class="lang-en">South Korea</span><span class="lang-zh" style="display:none">韓國</span> &#x25BE;</button><div class="market-dropdown" id="marketDropdown"><a href="../report.html">&#x1F1F2;&#x1F1FE; <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">馬來西亞</span></a><a href="../tw/report.html">&#x1F1F9;&#x1F1FC; <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span></a><a href="../jp/report.html">&#x1F1EF;&#x1F1F5; <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">日本</span></a><a href="../au/report.html">&#x1F1E6;&#x1F1FA; <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">澳洲</span></a><a href="../nz/report.html">&#x1F1F3;&#x1F1FF; <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a><a href="../uk/report.html">&#x1F1EC;&#x1F1E7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a><a href="../th/report.html">&#x1F1F9;&#x1F1ED; <span class="lang-en">Thailand</span><span class="lang-zh" style="display:none">泰國</span></a><a href="report.html" class="active">&#x1F1F0;&#x1F1F7; <span class="lang-en">South Korea</span><span class="lang-zh" style="display:none">韓國</span></a><a href="../us/report.html">&#x1F1FA;&#x1F1F8; <span class="lang-en">United States</span><span class="lang-zh" style="display:none">美國</span></a></div></div>
+  <nav><a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="seoul.html" class="active"><span class="lang-en">Seoul</span><span class="lang-zh" style="display:none">首爾</span></a><a href="busan.html"><span class="lang-en">Busan</span><span class="lang-zh" style="display:none">釜山</span></a></nav>
+  <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
+  <span class="opr-badge">BOK: 3.00%</span><button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
+</header>
+<div class="mobile-menu">
+  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a><a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">市場總覽</span></a><a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a><a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a><a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a><a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a><a href="seoul.html" class="active"><span class="lang-en">Seoul</span><span class="lang-zh" style="display:none">首爾</span></a><a href="busan.html"><span class="lang-en">Busan</span><span class="lang-zh" style="display:none">釜山</span></a>
+  <div class="mobile-meta"><span class="opr-badge">BOK: 3.00%</span><div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div></div>
+</div>
+
+<div class="report-container">
+  <nav class="side-nav" id="sideNav">
+    <a href="#sec-exec" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Exec Summary</span><span class="side-nav-label lang-zh" style="display:none">執行摘要</span></a>
+    <a href="#sec-price" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Price Trend</span><span class="side-nav-label lang-zh" style="display:none">房價走勢</span></a>
+    <a href="#sec-districts" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Key Districts</span><span class="side-nav-label lang-zh" style="display:none">重點地區</span></a>
+    <a href="#sec-reconstruction" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Reconstruction</span><span class="side-nav-label lang-zh" style="display:none">重建計畫</span></a>
+    <a href="#sec-jeonse" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Jeonse Market</span><span class="side-nav-label lang-zh" style="display:none">全租市場</span></a>
+    <a href="#sec-rental" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Rental Yield</span><span class="side-nav-label lang-zh" style="display:none">租金收益</span></a>
+    <a href="#sec-outlook" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Outlook</span><span class="side-nav-label lang-zh" style="display:none">展望</span></a>
+  </nav>
+  <div class="report-header">
+    <div class="lang-en"><h1>SEOUL &mdash; DEEP DIVE</h1><div class="report-meta">April 2026 &middot; Data: KREB / KB Kookmin / Seoul Metro Gov / BOK</div></div>
+    <div class="lang-zh" style="display:none"><h1>首爾——深度分析</h1><div class="report-meta">2026年4月 &middot; 數據：韓國房地產委員會 / KB國民銀行 / 首爾市政府 / 韓國銀行</div></div>
+  </div>
+  <div class="report-body">
+    <div class="toc-box" id="tocBox"><div class="toc-header" onclick="toggleToc()"><span class="lang-en">&#x1F4CB; In This Report</span><span class="lang-zh" style="display:none">&#x1F4CB; 本報告涵蓋</span><button class="toc-toggle" id="tocToggle">&#x25B2;</button></div>
+      <div class="toc-list" id="tocList">
+        <a href="#sec-exec" onclick="closeTocMobile()"><span class="lang-en">1. Executive Summary</span><span class="lang-zh" style="display:none">1. 執行摘要</span></a>
+        <a href="#sec-price" onclick="closeTocMobile()"><span class="lang-en">2. Price Trend</span><span class="lang-zh" style="display:none">2. 房價走勢</span></a>
+        <a href="#sec-districts" onclick="closeTocMobile()"><span class="lang-en">3. Key Districts</span><span class="lang-zh" style="display:none">3. 重點地區</span></a>
+        <a href="#sec-reconstruction" onclick="closeTocMobile()"><span class="lang-en">4. Reconstruction</span><span class="lang-zh" style="display:none">4. 重建計畫</span></a>
+        <a href="#sec-jeonse" onclick="closeTocMobile()"><span class="lang-en">5. Jeonse Market</span><span class="lang-zh" style="display:none">5. 全租市場</span></a>
+        <a href="#sec-rental" onclick="closeTocMobile()"><span class="lang-en">6. Rental Yield</span><span class="lang-zh" style="display:none">6. 租金收益</span></a>
+        <a href="#sec-outlook" onclick="closeTocMobile()"><span class="lang-en">7. Outlook</span><span class="lang-zh" style="display:none">7. 展望</span></a>
+      </div></div>
+
+    <h2 id="sec-exec"><span class="lang-en">EXECUTIVE SUMMARY</span><span class="lang-zh" style="display:none">執行摘要</span></h2>
+    <div class="lang-en">
+      <p>Seoul is the world's 5th most expensive city by price-to-income ratio at <strong>15x</strong>, with average apartment prices at <strong>&#x20A9;1.18 billion</strong> (+5.5% YoY). Gangnam district commands premiums above &#x20A9;2.8 billion. The market is recovering from the 2022 correction, driven primarily by supply scarcity &mdash; only <strong>25,000 new units</strong> were delivered in 2025. The Seoul metropolitan area houses 26 million people, approximately 50% of the nation's population, underpinning structural demand. Foreign buyers account for roughly <strong>8%</strong> of transactions. The reconstruction pipeline of <strong>120,000+ units</strong> is the key supply catalyst over the next decade.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>首爾以<strong>15倍</strong>房價收入比位列全球第五昂貴城市，平均公寓價格<strong>11.8億韓元</strong>（年增+5.5%）。江南區售價高達28億韓元以上。市場正從2022年調整中復甦，主要受供給稀缺驅動——2025年僅交付<strong>25,000套</strong>新單位。首爾都會區擁有2,600萬人口，約佔全國50%，支撐結構性需求。外國買家約佔交易量的<strong>8%</strong>。<strong>12萬套以上</strong>的重建管線是未來十年的關鍵供給催化劑。</p>
+    </div>
+
+    <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin-top:24px;">
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">AVG APT PRICE</span><span class="lang-zh" style="display:none">平均公寓價格</span></div><div class="kpi-value">&#x20A9;1.18B</div><span class="kpi-badge badge-blue"><span class="lang-en">+5.5% YoY &middot; KB Kookmin 2025</span><span class="lang-zh" style="display:none">年增+5.5% &middot; KB國民銀行 2025</span></span></div>
+      <div class="kpi-card red"><div class="kpi-label"><span class="lang-en">GANGNAM PREMIUM</span><span class="lang-zh" style="display:none">江南溢價</span></div><div class="kpi-value">&#x20A9;2.8B+</div><span class="kpi-badge badge-red"><span class="lang-en">2.5x Seoul average</span><span class="lang-zh" style="display:none">首爾平均值2.5倍</span></span></div>
+      <div class="kpi-card orange"><div class="kpi-label"><span class="lang-en">PRICE-TO-INCOME</span><span class="lang-zh" style="display:none">房價收入比</span></div><div class="kpi-value">15x</div><span class="kpi-badge badge-orange"><span class="lang-en">World's 5th most expensive</span><span class="lang-zh" style="display:none">全球第五昂貴</span></span></div>
+      <div class="kpi-card green"><div class="kpi-label"><span class="lang-en">NEW SUPPLY 2025</span><span class="lang-zh" style="display:none">2025新增供給</span></div><div class="kpi-value">25K units</div><span class="kpi-badge badge-green"><span class="lang-en">Scarcity driving recovery</span><span class="lang-zh" style="display:none">稀缺驅動復甦</span></span></div>
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">METRO POPULATION</span><span class="lang-zh" style="display:none">都會區人口</span></div><div class="kpi-value">26M</div><span class="kpi-badge badge-blue"><span class="lang-en">50% of national population</span><span class="lang-zh" style="display:none">佔全國人口50%</span></span></div>
+      <div class="kpi-card blue"><div class="kpi-label"><span class="lang-en">RECONSTRUCTION</span><span class="lang-zh" style="display:none">重建管線</span></div><div class="kpi-value">120K+ units</div><span class="kpi-badge badge-blue"><span class="lang-en">Key supply catalyst 2026&ndash;2032</span><span class="lang-zh" style="display:none">2026-2032關鍵供給催化劑</span></span></div>
+    </div>
+
+    <h2 id="sec-price"><span class="lang-en">PRICE TREND</span><span class="lang-zh" style="display:none">房價走勢</span></h2>
+    <div class="lang-en">
+      <p>Seoul apartment prices doubled between 2015 and 2021, fuelled by ultra-low interest rates, speculative demand, and chronic undersupply. The market corrected <strong>~8%</strong> in 2022&ndash;2023 as the Bank of Korea hiked rates aggressively. Recovery began in late 2024, with prices now trending upward again. Gangnam consistently trades at <strong>2.5x the Seoul average</strong>, while non-Gangnam districts such as Mapo and Yongsan are catching up, driven by urban redevelopment and subway connectivity. The jeonse-to-sale conversion trend has been a secondary driver in the resale market.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>首爾公寓價格在2015至2021年間翻倍，受超低利率、投機需求和長期供給不足推動。2022至2023年市場調整約<strong>8%</strong>，因韓國銀行大幅加息。2024年底開始復甦，價格目前再次上行。江南區持續以<strong>首爾平均值2.5倍</strong>交易，而麻浦、龍山等非江南區受城市再開發和地鐵連接推動正在追趕。全租轉售趨勢成為二手市場的次要驅動力。</p>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">Seoul Price Index + YoY% (2019&ndash;2025)</span><span class="lang-zh" style="display:none">首爾房價指數 + 年增率（2019&ndash;2025）</span></h4><div id="chartSeoulIndex" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">Doubled 2015&ndash;2021, corrected 8% in 2022&ndash;2023, now recovering at +5.5% YoY</span><span class="lang-zh" style="display:none">2015-2021翻倍，2022-2023調整8%，目前以年增+5.5%復甦</span></p></div>
+
+    <h2 id="sec-districts"><span class="lang-en">KEY DISTRICTS</span><span class="lang-zh" style="display:none">重點地區</span></h2>
+    <div class="lang-en">
+      <p>Seoul's property market is sharply stratified by district. <strong>Gangnam/Seocho</strong> remains the ultra-premium benchmark, commanding &#x20A9;2.8 billion+ per apartment with yields of just 1.8%. <strong>Yongsan</strong> is emerging as the new CBD, with the International Business District redevelopment pushing average prices to &#x20A9;1.8 billion. <strong>Mapo/Yeongdeungpo</strong> offers mid-premium value at &#x20A9;1.3 billion with better yields at 2.8%, benefiting from excellent subway access. <strong>Nowon/Dobong</strong> in the northern suburbs provides the most affordable entry at &#x20A9;650 million with yields of 3.5%.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>首爾房地產市場按行政區明顯分層。<strong>江南/瑞草</strong>仍是超高端基準，每套公寓28億韓元以上，收益率僅1.8%。<strong>龍山</strong>正崛起為新CBD，國際商務區再開發將均價推至18億韓元。<strong>麻浦/永登浦</strong>以13億韓元提供中高端價值，收益率2.8%較優，受益於優質地鐵網絡。<strong>蘆原/道峰</strong>北部郊區提供最實惠入場價6.5億韓元，收益率3.5%。</p>
+    </div>
+    <div class="city-grid">
+      <div class="city-card" style="border-top-color:#dc2626;">
+        <h4><span class="lang-en">Gangnam / Seocho</span><span class="lang-zh" style="display:none">江南 / 瑞草</span></h4>
+        <p><span class="lang-en">Ultra-premium &middot; &#x20A9;2.8B+ &middot; Yield 1.8% &middot; Reconstruction hub with major redevelopment projects driving long-term premium</span><span class="lang-zh" style="display:none">超高端 &middot; 28億韓元+ &middot; 收益率1.8% &middot; 重建核心區，大型再開發項目支撐長期溢價</span></p>
+      </div>
+      <div class="city-card" style="border-top-color:#2563eb;">
+        <h4><span class="lang-en">Yongsan</span><span class="lang-zh" style="display:none">龍山</span></h4>
+        <p><span class="lang-en">Emerging CBD &middot; &#x20A9;1.8B &middot; Yield 2.2% &middot; IBD redevelopment transforming into Seoul's new business center</span><span class="lang-zh" style="display:none">新興CBD &middot; 18億韓元 &middot; 收益率2.2% &middot; 國際商務區再開發，轉型為首爾新商業中心</span></p>
+      </div>
+      <div class="city-card" style="border-top-color:#1e3a5f;">
+        <h4><span class="lang-en">Mapo / Yeongdeungpo</span><span class="lang-zh" style="display:none">麻浦 / 永登浦</span></h4>
+        <p><span class="lang-en">Mid-premium &middot; &#x20A9;1.3B &middot; Yield 2.8% &middot; Excellent subway access, popular with young professionals and families</span><span class="lang-zh" style="display:none">中高端 &middot; 13億韓元 &middot; 收益率2.8% &middot; 地鐵便捷，受年輕專業人士和家庭歡迎</span></p>
+      </div>
+      <div class="city-card" style="border-top-color:#16a34a;">
+        <h4><span class="lang-en">Nowon / Dobong</span><span class="lang-zh" style="display:none">蘆原 / 道峰</span></h4>
+        <p><span class="lang-en">Affordable &middot; &#x20A9;650M &middot; Yield 3.5% &middot; Northern suburbs with budget-friendly entry and highest rental returns</span><span class="lang-zh" style="display:none">實惠 &middot; 6.5億韓元 &middot; 收益率3.5% &middot; 北部郊區，入場門檻低且租金回報最高</span></p>
+      </div>
+    </div>
+    <div class="chart-inline"><h4><span class="lang-en">Price by District (&#x20A9;M)</span><span class="lang-zh" style="display:none">各區房價（百萬韓元）</span></h4><div id="chartSeoulDistricts" style="height:220px"></div><p class="chart-note navy"><span class="lang-en">Gangnam &#x20A9;2.8B leads. 4.3x gap between Gangnam and Nowon</span><span class="lang-zh" style="display:none">江南28億韓元領先。江南與蘆原差距4.3倍</span></p></div>
+
+    <h2 id="sec-reconstruction"><span class="lang-en">RECONSTRUCTION</span><span class="lang-zh" style="display:none">重建計畫</span></h2>
+    <div class="lang-en">
+      <p>Seoul's reconstruction pipeline totals <strong>120,000+ units</strong> across major projects, representing the single largest supply catalyst through 2032. Key projects include <strong>Banpo Xi</strong> (35,000 units), <strong>Jamsil Jugong</strong> (25,000 units), <strong>Dunchon</strong> (20,000 units), and <strong>Apgujeong Hyundai</strong> (18,000 units). The timeline spans 2026&ndash;2032. Critically, reconstruction creates a temporary supply squeeze: old units are demolished years before new completions are delivered, reducing available inventory in already supply-constrained districts. This dynamic has historically supported prices in reconstruction zones during the transition period.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>首爾重建管線合計超過<strong>12萬套</strong>，橫跨多個大型項目，是2032年前最大的單一供給催化劑。主要項目包括<strong>盤浦Xi</strong>（35,000套）、<strong>蠶室住公</strong>（25,000套）、<strong>遁村</strong>（20,000套）和<strong>狎鷗亭現代</strong>（18,000套）。時間跨度為2026至2032年。關鍵的是，重建過程造成臨時供給擠壓：舊單位在新建完工前數年即被拆除，減少了本已供給緊張地區的可用庫存。這種動態在過渡期間歷來支撐重建區域的價格。</p>
+    </div>
+
+    <h2 id="sec-jeonse"><span class="lang-en">JEONSE MARKET</span><span class="lang-zh" style="display:none">全租市場</span></h2>
+    <div class="lang-en">
+      <p>The jeonse (lump-sum deposit lease) system has over <strong>&#x20A9;1,000 trillion</strong> in outstanding deposits, making it one of the world's most unique housing finance mechanisms. The jeonse-to-sale price ratio has declined from <strong>72% in 2019 to 58% in 2025</strong>, reflecting structural changes in the market. The 2022 jeonse fraud crisis exposed systemic risks when landlords defaulted on deposit returns, leading to expanded insurance requirements. The ongoing shift from jeonse toward monthly rent (wolse) is gradually improving yield metrics for investors, as monthly rental income becomes a more reliable cash flow stream.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>全租（一次性保證金租賃）制度有超過<strong>1,000兆韓元</strong>的未償保證金，是全球最獨特的住房金融機制之一。全租與售價比率從<strong>2019年的72%降至2025年的58%</strong>，反映市場結構性變化。2022年全租詐騙危機暴露了系統性風險——房東無法歸還保證金，促使保險要求擴大。從全租向月租（月貰）的持續轉型正逐步改善投資者的收益指標，月租金收入成為更可靠的現金流來源。</p>
+    </div>
+
+    <h2 id="sec-rental"><span class="lang-en">RENTAL YIELD</span><span class="lang-zh" style="display:none">租金收益</span></h2>
+    <div class="lang-en">
+      <p>Seoul's average gross rental yield stands at <strong>2.5%</strong>, with significant variation across districts. Gangnam yields just <strong>1.8%</strong> due to extreme price premiums, while northern districts like Nowon and Dobong achieve <strong>3.5%</strong>. All yields remain below the BOK base rate of <strong>3.0%</strong>, implying negative carry for leveraged investors in prime areas. Monthly rent (wolse) is growing at <strong>5&ndash;8% per year</strong> as the jeonse system gradually declines, providing a tailwind for yield-focused investors in the mid-to-affordable tier.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>首爾平均毛租金收益率為<strong>2.5%</strong>，各區差異顯著。江南因極端價格溢價僅為<strong>1.8%</strong>，而蘆原、道峰等北部區域可達<strong>3.5%</strong>。所有收益率均低於韓國銀行基準利率<strong>3.0%</strong>，意味著槓桿投資者在核心區域面臨負利差。月租金以每年<strong>5至8%</strong>增長，隨全租制度逐漸減少，為中等及實惠區域的收益導向投資者提供順風。</p>
+    </div>
+
+    <h2 id="sec-outlook"><span class="lang-en">OUTLOOK</span><span class="lang-zh" style="display:none">展望</span></h2>
+    <div class="lang-en">
+      <p>Seoul apartment prices are expected to grow <strong>3&ndash;5% in 2026&ndash;2027</strong>, supported by BOK rate cuts and persistent supply scarcity. Reconstruction project launches from 2027 onward may moderate price growth as new supply enters the market. Long-term demographic headwinds &mdash; South Korea's fertility rate of 0.72, the world's lowest &mdash; pose structural risks, though Seoul's concentration of economic activity partially offsets national population decline. The Gangnam premium is likely to persist due to school district demand, corporate headquarters proximity, and reconstruction-driven quality upgrades.</p>
+    </div>
+    <div class="lang-zh" style="display:none">
+      <p>首爾公寓價格預計在<strong>2026至2027年增長3至5%</strong>，受韓國銀行降息和持續供給稀缺支撐。2027年起重建項目推出可能隨新供給入市而緩和價格漲幅。長期人口逆風——韓國生育率0.72為全球最低——構成結構性風險，但首爾經濟活動的集中度部分抵消了全國人口下降。江南溢價可能持續，因學區需求、企業總部鄰近和重建驅動的品質升級。</p>
+    </div>
+
+    <div class="report-footer">
+      <p><span class="lang-en">Data sources: KREB (Korea Real Estate Board) &middot; KB Kookmin Bank Housing Price Index &middot; Seoul Metropolitan Government &middot; Bank of Korea (BOK) &middot; Korea Appraisal Board. All data as of March&ndash;April 2026.</span><span class="lang-zh" style="display:none">數據來源：韓國房地產委員會（KREB） &middot; KB國民銀行住宅價格指數 &middot; 首爾市政府 &middot; 韓國銀行（BOK） &middot; 韓國鑑定院。所有數據截至2026年3月至4月。</span></p>
+      <p><span class="lang-en">For informational purposes only. Not investment advice.</span><span class="lang-zh" style="display:none">本報告僅供參考，不構成投資建議。</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
+var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
+function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+var allCharts=[];
+function initAllCharts(lang){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];
+  drawSeoulIndex(lang);drawSeoulDistricts(lang);}
+
+function drawSeoulIndex(lang){var dom=document.getElementById('chartSeoulIndex');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var labels=['2019','2020','2021','2022','2023','2024','2025'];
+  var idx=[100,108,121,116,113,116,123];
+  var yoy=[3.5,8.0,12.5,-4.2,-2.5,3.0,5.5];
+  c.setOption({tooltip:baseTooltip,legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},grid:{left:12,right:12,top:24,bottom:36,containLabel:true},
+    xAxis:mkAxis({type:'category',data:labels,axisLabel:{color:C.muted,fontSize:10}}),
+    yAxis:[mkAxis({type:'value',min:90,max:130,axisLabel:{color:C.muted,fontSize:9}}),mkAxis({type:'value',min:-6,max:14,axisLabel:{color:C.muted,fontSize:9,formatter:'{value}%'},splitLine:{show:false}})],
+    series:[{name:en?'Price Index':'房價指數',type:'bar',data:idx.map(function(v){return{value:v,itemStyle:{color:v>=120?C.red:v>=110?C.navy:C.blue}};}),barMaxWidth:28,itemStyle:{borderRadius:[3,3,0,0]},yAxisIndex:0},
+      {name:en?'YoY %':'年增率%',type:'line',data:yoy,lineStyle:{color:C.orange,width:2},itemStyle:{color:C.orange},symbol:'circle',symbolSize:5,yAxisIndex:1}]});}
+
+function drawSeoulDistricts(lang){var dom=document.getElementById('chartSeoulDistricts');if(!dom)return;var c=echarts.init(dom);allCharts.push(c);var en=lang==='en';
+  var districts=en?['Nowon','Mapo','Songpa','Yongsan','Seocho','Gangnam']:['蘆原','麻浦','松坡','龍山','瑞草','江南'];
+  var values=[650,1300,1500,1800,2200,2800];
+  var colors=[C.green,C.blue,C.navy,C.blue,C.red,C.red];
+  c.setOption({tooltip:{trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11}},grid:{left:12,right:60,top:8,bottom:8,containLabel:true},
+    yAxis:mkAxis({type:'category',data:districts,axisLabel:{color:C.muted,fontSize:9}}),
+    xAxis:mkAxis({type:'value',axisLabel:{color:C.muted,fontSize:9,formatter:function(v){return(v/1000).toFixed(1)+'B';}}}),
+    series:[{type:'bar',data:values.map(function(v,i){return{value:v,itemStyle:{color:colors[i]}};}),barMaxWidth:18,itemStyle:{borderRadius:[0,3,3,0]},label:{show:true,position:'right',formatter:function(p){if(p.value>=1000)return'\u20A9'+(p.value/1000).toFixed(1)+'B';return'\u20A9'+p.value+'M';},fontSize:9,color:C.muted}}]});}
+
+function setLang(lang){document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});localStorage.setItem('lang',lang);initAllCharts(lang);}
+function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
+document.addEventListener('click',function(e){if(!e.target.closest('.market-selector')){var d=document.getElementById('marketDropdown');if(d)d.classList.remove('open');}});
+function toggleToc(){document.getElementById('tocBox').classList.toggle('toc-collapsed');}
+function closeTocMobile(){if(window.innerWidth<=768){document.getElementById('tocBox').classList.add('toc-collapsed');}}
+window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+(function(){function initScrollSpy(){var items=document.querySelectorAll('.side-nav-item');if(!items.length)return;var sections=[];items.forEach(function(a){var id=a.getAttribute('href').replace('#','');var el=document.getElementById(id);if(el)sections.push({el:el,a:a});});function onScroll(){var scrollY=window.scrollY+window.innerHeight*0.25;var current=sections[0];sections.forEach(function(s){if(s.el.getBoundingClientRect().top+window.scrollY<=scrollY)current=s;});items.forEach(function(a){a.classList.remove('active');});if(current)current.a.classList.add('active');}window.addEventListener('scroll',onScroll,{passive:true});onScroll();}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initScrollSpy);}else{initScrollSpy();}})();
+</script>
+</body>
+</html>
