@@ -53,11 +53,13 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
 .mcard-kpi{font-size:13px;font-weight:700;color:#0f2a45;font-variant-numeric:tabular-nums}
 
 .compare-wrap{background:#fff;border:1px solid #dce8f5;border-radius:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.compare-tbl{width:100%;border-collapse:collapse;min-width:920px}
-.compare-tbl th{background:#f0f6ff;font-size:10px;letter-spacing:.08em;color:#5a7a9a;font-weight:600;padding:10px 14px;text-align:right;border-bottom:1px solid #dce8f5;white-space:nowrap;transition:background .15s}
+.compare-tbl{width:100%;border-collapse:collapse;min-width:920px;table-layout:fixed}
+.compare-tbl th{background:#f0f6ff;font-size:10px;letter-spacing:.08em;color:#5a7a9a;font-weight:600;padding:10px 14px;text-align:right;border-bottom:1px solid #dce8f5;white-space:nowrap;transition:background .15s;overflow:hidden;resize:horizontal;position:relative}
 .compare-tbl th[data-key]:hover{background:#e4eefb;color:#1e3a5f}
 .compare-tbl th:first-child{text-align:left;position:sticky;left:0;background:#f0f6ff;z-index:2;min-width:130px;border-right:1px solid #dce8f5}
-.compare-tbl td{padding:9px 14px;font-size:12px;border-bottom:1px solid #f0f5fb;text-align:right;font-variant-numeric:tabular-nums;color:#1e3a5f;white-space:nowrap}
+.compare-tbl td{padding:9px 14px;font-size:12px;border-bottom:1px solid #f0f5fb;text-align:right;font-variant-numeric:tabular-nums;color:#1e3a5f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.compare-tbl th::after{content:'';position:absolute;right:0;top:25%;height:50%;width:3px;cursor:col-resize;background:transparent;transition:background .15s}
+.compare-tbl th:hover::after{background:#ccd9e8}
 .compare-tbl td:first-child{text-align:left;font-weight:600}
 .compare-tbl tr:last-child td{border-bottom:none}
 .compare-tbl tr:hover td{background:#f8fbff;cursor:pointer}
@@ -165,16 +167,16 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
     <div class="compare-wrap">
       <table class="compare-tbl">
         <thead><tr>
-          <th style="text-align:left;cursor:pointer;user-select:none" data-key="name" onclick="sortBy('name')"><span class="lang-en">City</span><span class="lang-zh">城市</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
-          <th style="cursor:pointer;user-select:none" data-key="priceUSD" onclick="sortBy('priceUSD')"><span class="lang-en">Price (USD)</span><span class="lang-zh">房價（美元）</span><span class="sort-arrow" style="font-size:9px;color:#1e3a5f"> ↓</span></th>
-          <th style="cursor:pointer;user-select:none" data-key="yoy" onclick="sortBy('yoy')"><span class="lang-en">YoY</span><span class="lang-zh">年增率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
-          <th style="cursor:pointer;user-select:none" data-key="yield" onclick="sortBy('yield')"><span class="lang-en">Yield</span><span class="lang-zh">租金收益率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
-          <th style="cursor:pointer;user-select:none" data-key="pti" onclick="sortBy('pti')"><span class="lang-en">PTI</span><span class="lang-zh">房價收入比</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
-          <th style="cursor:pointer;user-select:none" data-key="pr" onclick="sortBy('pr')"><span class="lang-en">P/R</span><span class="lang-zh">房租比</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
-          <th style="text-align:center;cursor:pointer;user-select:none" data-key="supply" onclick="sortBy('supply')"><span class="lang-en">Supply</span><span class="lang-zh">供需</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
-          <th style="text-align:center;cursor:pointer;user-select:none" data-key="pipeline" onclick="sortBy('pipeline')"><span class="lang-en">Pipeline</span><span class="lang-zh">在建供給</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
-          <th style="text-align:left;min-width:160px"><span class="lang-en">3yr Outlook</span><span class="lang-zh">3年展望</span></th>
-          <th style="cursor:pointer;user-select:none" data-key="mortgage" onclick="sortBy('mortgage')"><span class="lang-en">Mortgage</span><span class="lang-zh">按揭利率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="text-align:left;cursor:pointer;user-select:none;width:140px" data-key="name" onclick="sortBy('name')"><span class="lang-en">City</span><span class="lang-zh">城市</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="cursor:pointer;user-select:none;width:110px" data-key="priceUSD" onclick="sortBy('priceUSD')"><span class="lang-en">Price (USD)</span><span class="lang-zh">房價（美元）</span><span class="sort-arrow" style="font-size:9px;color:#1e3a5f"> ↓</span></th>
+          <th style="cursor:pointer;user-select:none;width:72px" data-key="yoy" onclick="sortBy('yoy')"><span class="lang-en">YoY</span><span class="lang-zh">年增率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="cursor:pointer;user-select:none;width:72px" data-key="yield" onclick="sortBy('yield')"><span class="lang-en">Yield</span><span class="lang-zh">收益率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="cursor:pointer;user-select:none;width:62px" data-key="pti" onclick="sortBy('pti')"><span class="lang-en">PTI</span><span class="lang-zh">房價收入比</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="cursor:pointer;user-select:none;width:58px" data-key="pr" onclick="sortBy('pr')"><span class="lang-en">P/R</span><span class="lang-zh">房租比</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="text-align:center;cursor:pointer;user-select:none;width:105px" data-key="supply" onclick="sortBy('supply')"><span class="lang-en">Supply</span><span class="lang-zh">供需</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="text-align:center;cursor:pointer;user-select:none;width:105px" data-key="pipeline" onclick="sortBy('pipeline')"><span class="lang-en">Pipeline</span><span class="lang-zh">在建供給</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="text-align:left;width:200px"><span class="lang-en">3yr Outlook</span><span class="lang-zh">3年展望</span></th>
+          <th style="cursor:pointer;user-select:none;width:88px" data-key="mortgage" onclick="sortBy('mortgage')"><span class="lang-en">Mortgage</span><span class="lang-zh">按揭利率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
         </tr></thead>
         <tbody id="city-tbody"></tbody>
       </table>
@@ -322,7 +324,7 @@ function renderTable(lang){
       '<td style="color:'+prClr+';font-weight:'+prW+';min-width:55px">'+c.pr+'\u00D7</td>'+
       '<td style="text-align:center;min-width:100px">'+supplyBadge(c.supply,lang)+'</td>'+
       '<td style="text-align:center;min-width:110px">'+pipelineBadge(c.pipeline,lang)+'</td>'+
-      '<td style="font-size:10.5px;color:#475569;min-width:160px;line-height:1.4;font-family:Inter,sans-serif">'+(c.outlook?(lang==='zh'?c.outlook.zh:c.outlook.en):'')+'</td>'+
+      '<td style="font-size:10.5px;color:#475569;line-height:1.4;font-family:Inter,sans-serif;white-space:normal;text-align:left">'+(c.outlook?(lang==='zh'?c.outlook.zh:c.outlook.en):'')+'</td>'+
       '<td style="color:'+mClr+';font-weight:600;min-width:90px">'+c.mortgage.toFixed(2)+'%</td>'+
       '</tr>';
   }).join('');
