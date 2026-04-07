@@ -178,7 +178,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
           <th style="text-align:center;cursor:pointer;user-select:none;width:105px" data-key="supply" onclick="sortBy('supply')"><span class="lang-en">Now</span><span class="lang-zh">現在供需</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="text-align:center;cursor:pointer;user-select:none;width:105px" data-key="pipeline" onclick="sortBy('pipeline')"><span class="lang-en">Pipeline</span><span class="lang-zh">未來供給</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="text-align:left;width:200px"><span class="lang-en">3yr Outlook</span><span class="lang-zh">3年展望</span></th>
-          <th style="cursor:pointer;user-select:none;width:88px" data-key="mortgage" onclick="sortBy('mortgage')"><span class="lang-en">Mortgage</span><span class="lang-zh">按揭利率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="cursor:pointer;user-select:none;width:55px" data-key="mortgage" onclick="sortBy('mortgage')"><span class="lang-en">Rate</span><span class="lang-zh">利率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
         </tr></thead>
         <tbody id="city-tbody"></tbody>
       </table>
@@ -438,7 +438,7 @@ function renderTable(lang){
       '<td style="text-align:center">'+supplyBadge(c.supply,lang)+'</td>'+
       '<td style="text-align:center">'+pipelineBadge(c.pipeline,lang)+'</td>'+
       '<td style="font-size:9.5px;color:#475569;line-height:1.35;font-family:Inter,sans-serif;white-space:normal;text-align:left">'+(c.outlook?(lang==='zh'?c.outlook.zh:c.outlook.en):'')+'</td>'+
-      '<td style="color:'+mClr+';font-weight:600">'+c.mortgage.toFixed(2)+'%</td>'+
+      '<td style="color:'+mClr+';font-weight:600;font-size:10px">'+c.mortgage.toFixed(1)+'%</td>'+
       '</tr>';
   }).join('');
 }
