@@ -23,15 +23,32 @@ CONTEXT.md     ← 本文件（自動生成）
 MAINTENANCE.md ← 維護手冊（自動生成）
 ```
 
-## 現有市場
+## 現有市場（13 個，122 頁）
 | ID | 市場 | 目錄 | 利率標籤 | 利率值 | 城市頁 |
 |----|------|------|----------|--------|--------|
-| au | Australia | /au | RBA | 3.85% | sydney, melbourne, brisbane, goldcoast |
-| jp | Japan | /jp | BOJ | 0.5% | tokyo, osaka, fukuoka |
 | my | Malaysia | / | OPR | 2.75% | kl, penang |
+| tw | Taiwan | /tw | CBC | 2.0% | taipei, hsinchu, taichung, kaohsiung |
+| jp | Japan | /jp | BOJ | 0.5% | tokyo, osaka, fukuoka |
+| au | Australia | /au | RBA | 4.10% | sydney, melbourne, brisbane, goldcoast |
 | nz | New Zealand | /nz | OCR | 3.25% | auckland, christchurch |
-| tw | Taiwan | /tw | CBS | 2.0% | taipei, hsinchu, taichung, kaohsiung |
-| uk | United Kingdom | /uk | BoE | 3.75% | london, manchester, birmingham, edinburgh, newcastle |
+| uk | United Kingdom | /uk | BoE | 4.50% | london, manchester, birmingham, edinburgh, newcastle |
+| us | United States | /us | FED | 4.50% | nyc, la, sf, sv, miami, chicago, austin, seattle, boston, denver, phoenix, sandiego |
+| ca | Canada | /ca | BOC | 2.75% | toronto, vancouver |
+| kr | South Korea | /kr | BOK | 2.75% | seoul, busan |
+| th | Thailand | /th | BOT | 2.00% | bangkok, chiangmai |
+| vn | Vietnam | /vn | SBV | 4.50% | hochiminh, hanoi |
+| sg | Singapore | — | MAS | 3.50% | 僅 home.html 城市表格 |
+| hk | Hong Kong | — | HKMA | 4.00% | 僅 home.html 城市表格 |
+
+## 首頁結構
+- `index.html` → redirect 到 `home.html`
+- `home.html` → 57 城市比較表（手寫，含 3yr Outlook 欄）
+- `index_dashboard.html` → 原始 MY dashboard 備份
+
+## 頁面類型
+- **A 類（build.py 生成）**：supply, demand, valuation, risk, index dashboard — 改 JSON 再跑 build.py
+- **B 類（手寫深度頁）**：report.html, 城市深度頁, home.html — 直接改 HTML 或給 Claude 指令
+- 詳見 `UPDATE_GUIDE.md`
 
 ## 核心工作流程
 ```bash
