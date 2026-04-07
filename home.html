@@ -171,6 +171,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
           <th style="cursor:pointer;user-select:none;width:110px" data-key="priceUSD" onclick="sortBy('priceUSD')"><span class="lang-en">Price (USD)</span><span class="lang-zh">房價（美元）</span><span class="sort-arrow" style="font-size:9px;color:#1e3a5f"> ↓</span></th>
           <th style="cursor:pointer;user-select:none;width:72px" data-key="yoy" onclick="sortBy('yoy')"><span class="lang-en">YoY</span><span class="lang-zh">年增率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="cursor:pointer;user-select:none;width:72px" data-key="yield" onclick="sortBy('yield')"><span class="lang-en">Yield</span><span class="lang-zh">收益率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="cursor:pointer;user-select:none;width:72px" data-key="carry" onclick="sortBy('carry')"><span class="lang-en">Carry</span><span class="lang-zh">利差</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="cursor:pointer;user-select:none;width:62px" data-key="pti" onclick="sortBy('pti')"><span class="lang-en">PTI</span><span class="lang-zh">房價收入比</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="cursor:pointer;user-select:none;width:58px" data-key="pr" onclick="sortBy('pr')"><span class="lang-en">P/R</span><span class="lang-zh">房租比</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="text-align:center;cursor:pointer;user-select:none;width:105px" data-key="supply" onclick="sortBy('supply')"><span class="lang-en">Now</span><span class="lang-zh">現在供需</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
@@ -182,8 +183,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
       </table>
     </div>
     <p class="note">
-      <span class="lang-en">Price: USD equivalent &middot; Bangkok/CM shown as THB/sqm (CBD condo) &middot; Yield: gross, before tax/fees &middot; PTI: median price &divide; annual household income &middot; Now: 🔴 Tight = low current inventory &middot; 🟡 Balanced &middot; 🟢 Loose = buyer leverage &middot; P/R: price &divide; annual rent &mdash; &lt;20&times; buy favored &middot; 20&ndash;30&times; neutral &middot; &gt;30&times; rent favored &middot; Pipeline: units under construction as % of existing stock &middot; 3yr Outlook: qualitative forward supply assessment &mdash; Low &lt;1% &middot; Mod 1&ndash;2.5% &middot; High &gt;2.5% &middot; Mortgage: prevailing rate 2026 &middot; Sources: Numbeo / CS / CBRE / CAR / REINZ / Land Registry &middot; Updated Apr 2026</span>
-      <span class="lang-zh">房價：美元等值 &middot; 曼谷/清邁顯示泰銖/平方米（CBD公寓）&middot; 收益率：毛收益率，未扣稅費 &middot; PTI：中位數房價&divide;年家庭收入 &middot; 現在供需：🔴 緊張=當前庫存低 &middot; 🟡 平衡 &middot; 🟢 寬鬆=買方有議價空間 &middot; 房租比：房價&divide;年租金 &mdash; &lt;20&times;買入有利 &middot; 20&ndash;30&times;中性 &middot; &gt;30&times;租賃有利 &middot; 未來供給：在建單位佔現有存量% &middot; 3年展望：定性前瞻供給評估 &mdash; 低&lt;1% &middot; 中1&ndash;2.5% &middot; 高&gt;2.5% &middot; 按揭：2026年現行利率 &middot; 來源：Numbeo / CS / CBRE / CAR / REINZ / 土地登記處 &middot; 2026年4月更新</span>
+      <span class="lang-en">Price: USD equivalent &middot; Bangkok/CM shown as THB/sqm (CBD condo) &middot; Yield: gross, before tax/fees &middot; Carry: yield minus mortgage rate &mdash; positive = rental income covers debt &middot; PTI: median price &divide; annual household income &middot; Now: 🔴 Tight = low current inventory &middot; 🟡 Balanced &middot; 🟢 Loose = buyer leverage &middot; P/R: price &divide; annual rent &mdash; &lt;20&times; buy favored &middot; 20&ndash;30&times; neutral &middot; &gt;30&times; rent favored &middot; Pipeline: units under construction as % of existing stock &middot; 3yr Outlook: qualitative forward supply assessment &mdash; Low &lt;1% &middot; Mod 1&ndash;2.5% &middot; High &gt;2.5% &middot; Mortgage: prevailing rate 2026 &middot; Sources: Numbeo / CS / CBRE / CAR / REINZ / Land Registry &middot; Updated Apr 2026</span>
+      <span class="lang-zh">房價：美元等值 &middot; 曼谷/清邁顯示泰銖/平方米（CBD公寓）&middot; 收益率：毛收益率，未扣稅費 &middot; 利差：收益率減房貸利率——正數=租金養得起房貸 &middot; PTI：中位數房價&divide;年家庭收入 &middot; 現在供需：🔴 緊張=當前庫存低 &middot; 🟡 平衡 &middot; 🟢 寬鬆=買方有議價空間 &middot; 房租比：房價&divide;年租金 &mdash; &lt;20&times;買入有利 &middot; 20&ndash;30&times;中性 &middot; &gt;30&times;租賃有利 &middot; 未來供給：在建單位佔現有存量% &middot; 3年展望：定性前瞻供給評估 &mdash; 低&lt;1% &middot; 中1&ndash;2.5% &middot; 高&gt;2.5% &middot; 按揭：2026年現行利率 &middot; 來源：Numbeo / CS / CBRE / CAR / REINZ / 土地登記處 &middot; 2026年4月更新</span>
     </p>
   </div>
 </section>
@@ -335,6 +336,7 @@ function renderTable(lang){
     var av=a[sortKey],bv=b[sortKey];
     if(av===null||av===undefined)av=sortDir===1?-Infinity:Infinity;
     if(bv===null||bv===undefined)bv=sortDir===1?-Infinity:Infinity;
+    if(sortKey==='carry'){av=a.yield-a.mortgage;bv=b.yield-b.mortgage;}
     if(sortKey==='supply'){av=SUPPLY_ORDER[av]!==undefined?SUPPLY_ORDER[av]:1;bv=SUPPLY_ORDER[bv]!==undefined?SUPPLY_ORDER[bv]:1;}
     if(typeof av==='string')return sortDir*(av.localeCompare(bv));
     return sortDir*(bv-av);
@@ -354,6 +356,7 @@ function renderTable(lang){
       '<td style="font-weight:600;color:#0f2a45;min-width:110px">'+c.priceDisp+'</td>'+
       '<td style="min-width:70px">'+yoyH+'</td>'+
       '<td style="color:'+yClr+';font-weight:'+yW+';min-width:70px">'+c.yield.toFixed(1)+'%</td>'+
+      (function(){var cv=+(c.yield-c.mortgage).toFixed(2);var cc=cv>=1?'#16a34a':cv>=0?'#1e3a5f':'#dc2626';return '<td style="color:'+cc+';font-weight:700;min-width:70px">'+(cv>0?'+':'')+cv.toFixed(1)+'%</td>';})()+
       '<td style="color:'+pClr+';font-weight:600;min-width:60px">'+c.pti+'\u00D7</td>'+
       '<td style="color:'+prClr+';font-weight:'+prW+';min-width:55px">'+c.pr+'\u00D7</td>'+
       '<td style="text-align:center;min-width:100px">'+supplyBadge(c.supply,lang)+'</td>'+
