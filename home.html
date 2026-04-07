@@ -41,16 +41,16 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
 .section-title{font-size:10px;letter-spacing:.16em;color:#3b82f6;font-weight:600}
 .section-desc{font-size:12px;color:#94a3b8}
 
-.markets-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.mcard{background:#fff;border:1px solid #dce8f5;border-radius:10px;padding:16px 18px;cursor:pointer;text-decoration:none;display:block;position:relative;overflow:hidden;transition:border-color .18s,transform .18s,box-shadow .18s;color:#1e3a5f}
-.mcard:hover{border-color:#3b82f6;transform:translateY(-2px);box-shadow:0 4px 16px rgba(59,130,246,.1)}
-.mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
-.new-badge{position:absolute;top:10px;right:10px;background:#22c55e;color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.06em}
-.mcard-flag{font-size:22px;margin-bottom:10px;display:block}
-.mcard-name{font-size:13px;font-weight:700;color:#1e3a5f}
-.mcard-cities{font-size:10px;color:#94a3b8;margin-top:4px;margin-bottom:10px}
-.mcard-kpi-lbl{font-size:9px;color:#94a3b8;letter-spacing:.06em;margin-bottom:2px}
-.mcard-kpi{font-size:13px;font-weight:700;color:#0f2a45;font-variant-numeric:tabular-nums}
+.markets-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.mcard{background:#fff;border:1px solid #dce8f5;border-radius:8px;padding:10px 12px;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:10px;position:relative;overflow:hidden;transition:border-color .18s,box-shadow .18s;color:#1e3a5f}
+.mcard:hover{border-color:#3b82f6;box-shadow:0 2px 8px rgba(59,130,246,.08)}
+.mcard::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--accent)}
+.new-badge{position:absolute;top:6px;right:6px;background:#22c55e;color:#fff;font-size:7px;font-weight:700;padding:1px 5px;border-radius:3px;letter-spacing:.06em}
+.mcard-flag{font-size:18px;flex-shrink:0;line-height:1}
+.mcard-info{min-width:0}
+.mcard-name{font-size:12px;font-weight:700;color:#1e3a5f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard-cities{font-size:9px;color:#94a3b8;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard-kpi-lbl,.mcard-kpi{display:none}
 
 .compare-wrap{background:#fff;border:1px solid #dce8f5;border-radius:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .compare-tbl{width:100%;border-collapse:collapse;min-width:920px;table-layout:fixed}
@@ -74,7 +74,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
 
 @media(max-width:900px){
   .hero-inner{grid-template-columns:1fr;gap:24px}
-  .markets-grid{grid-template-columns:repeat(2,1fr)}
+  .markets-grid{grid-template-columns:repeat(3,1fr)}
   .hero-h1{font-size:26px}
   .stats-row{flex-wrap:wrap;gap:16px}
   .navbar{padding:0 16px}
@@ -83,7 +83,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
   .footer{flex-direction:column;gap:8px;text-align:center}
 }
 @media(max-width:500px){
-  .markets-grid{grid-template-columns:1fr}
+  .markets-grid{grid-template-columns:repeat(2,1fr)}
   .bar-wrap{width:80px}
 }
 </style>
@@ -141,18 +141,18 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
       <span class="section-desc lang-zh">點擊進入各市場</span>
     </div>
     <div class="markets-grid">
-      <a class="mcard" style="--accent:#e65100" href="report.html"><span class="mcard-flag">&#x1F1F2;&#x1F1FE;</span><div class="mcard-name lang-en">Malaysia</div><div class="mcard-name lang-zh">馬來西亞</div><div class="mcard-cities lang-en">KL &middot; Penang</div><div class="mcard-cities lang-zh">吉隆坡 &middot; 檳城</div><div class="mcard-kpi-lbl lang-en">KL OVERHANG Q3 2025</div><div class="mcard-kpi-lbl lang-zh">KL 積壓量 Q3 2025</div><div class="mcard-kpi">2,287 units</div></a>
-      <a class="mcard" style="--accent:#1e3a5f" href="tw/report.html"><span class="mcard-flag">&#x1F1F9;&#x1F1FC;</span><div class="mcard-name lang-en">Taiwan</div><div class="mcard-name lang-zh">台灣</div><div class="mcard-cities lang-en">Taipei &middot; Hsinchu &middot; Taichung &middot; Kaohsiung</div><div class="mcard-cities lang-zh">台北 &middot; 新竹 &middot; 台中 &middot; 高雄</div><div class="mcard-kpi-lbl lang-en">TAIPEI SF MEDIAN</div><div class="mcard-kpi-lbl lang-zh">台北獨棟中位數</div><div class="mcard-kpi">TWD 65M+</div></a>
-      <a class="mcard" style="--accent:#dc2626" href="jp/report.html"><span class="mcard-flag">&#x1F1EF;&#x1F1F5;</span><div class="mcard-name lang-en">Japan</div><div class="mcard-name lang-zh">日本</div><div class="mcard-cities lang-en">Tokyo &middot; Osaka &middot; Fukuoka</div><div class="mcard-cities lang-zh">東京 &middot; 大阪 &middot; 福岡</div><div class="mcard-kpi-lbl lang-en">TOKYO CONDO YoY</div><div class="mcard-kpi-lbl lang-zh">東京公寓年增率</div><div class="mcard-kpi">+8.2%</div></a>
-      <a class="mcard" style="--accent:#16a34a" href="au/report.html"><span class="mcard-flag">&#x1F1E6;&#x1F1FA;</span><div class="mcard-name lang-en">Australia</div><div class="mcard-name lang-zh">澳洲</div><div class="mcard-cities lang-en">Sydney &middot; Melbourne &middot; Brisbane</div><div class="mcard-cities lang-zh">雪梨 &middot; 墨爾本 &middot; 布里斯本</div><div class="mcard-kpi-lbl lang-en">SYDNEY MEDIAN</div><div class="mcard-kpi-lbl lang-zh">雪梨中位數</div><div class="mcard-kpi">AUD 1.41M</div></a>
-      <a class="mcard" style="--accent:#0891b2" href="nz/report.html"><span class="mcard-flag">&#x1F1F3;&#x1F1FF;</span><div class="mcard-name lang-en">New Zealand</div><div class="mcard-name lang-zh">紐西蘭</div><div class="mcard-cities lang-en">Auckland &middot; Christchurch</div><div class="mcard-cities lang-zh">奧克蘭 &middot; 基督城</div><div class="mcard-kpi-lbl lang-en">AUCKLAND HPI YoY</div><div class="mcard-kpi-lbl lang-zh">奧克蘭 HPI 年增率</div><div class="mcard-kpi">-2.1%</div></a>
-      <a class="mcard" style="--accent:#7c3aed" href="uk/report.html"><span class="mcard-flag">&#x1F1EC;&#x1F1E7;</span><div class="mcard-name lang-en">United Kingdom</div><div class="mcard-name lang-zh">英國</div><div class="mcard-cities lang-en">London &middot; Manchester &middot; Edinburgh</div><div class="mcard-cities lang-zh">倫敦 &middot; 曼徹斯特 &middot; 愛丁堡</div><div class="mcard-kpi-lbl lang-en">UK HPI YoY</div><div class="mcard-kpi-lbl lang-zh">英國 HPI 年增率</div><div class="mcard-kpi">+3.9%</div></a>
-      <a class="mcard" style="--accent:#2563eb" href="us/index.html"><span class="mcard-flag">&#x1F1FA;&#x1F1F8;</span><div class="mcard-name lang-en">United States</div><div class="mcard-name lang-zh">美國</div><div class="mcard-cities lang-en">12 cities &middot; NYC LA SF SV SD MIA AUS SEA CHI BOS PHX DEN</div><div class="mcard-cities lang-zh">12 城市 &middot; 紐約 洛杉磯 舊金山 矽谷 聖地牙哥 邁阿密等</div><div class="mcard-kpi-lbl lang-en">CS NATIONAL</div><div class="mcard-kpi-lbl lang-zh">CS 全國指數</div><div class="mcard-kpi">329 (+4.7%)</div></a>
-      <a class="mcard" style="--accent:#d97706" href="th/report.html"><span class="mcard-flag">&#x1F1F9;&#x1F1ED;</span><div class="mcard-name lang-en">Thailand</div><div class="mcard-name lang-zh">泰國</div><div class="mcard-cities lang-en">Bangkok &middot; Chiang Mai</div><div class="mcard-cities lang-zh">曼谷 &middot; 清邁</div><div class="mcard-kpi-lbl lang-en">BKK CBD /sqm</div><div class="mcard-kpi-lbl lang-zh">曼谷CBD每平方米</div><div class="mcard-kpi">THB 315K</div></a>
-      <a class="mcard" style="--accent:#ef4444" href="vn/report.html"><span class="mcard-flag">&#x1F1FB;&#x1F1F3;</span><div class="mcard-name lang-en">Vietnam</div><div class="mcard-name lang-zh">越南</div><div class="mcard-cities lang-en">Ho Chi Minh City &middot; Hanoi</div><div class="mcard-cities lang-zh">胡志明市 &middot; 河內</div><div class="mcard-kpi-lbl lang-en">HCMC APT AVG /sqm</div><div class="mcard-kpi-lbl lang-zh">胡志明市公寓均價/平方米</div><div class="mcard-kpi">$3,800</div></a>
-      <a class="mcard" style="--accent:#1d4ed8" href="kr/report.html"><span class="mcard-flag">&#x1F1F0;&#x1F1F7;</span><div class="mcard-name lang-en">South Korea</div><div class="mcard-name lang-zh">韓國</div><div class="mcard-cities lang-en">Seoul &middot; Busan</div><div class="mcard-cities lang-zh">首爾 &middot; 釜山</div><div class="mcard-kpi-lbl lang-en">SEOUL APT AVG</div><div class="mcard-kpi-lbl lang-zh">首爾公寓均價</div><div class="mcard-kpi">₩1.18B (+5.5%)</div></a>
-      <a class="mcard" style="--accent:#b91c1c" href="ca/report.html"><span class="mcard-flag">&#x1F1E8;&#x1F1E6;</span><div class="mcard-name lang-en">Canada</div><div class="mcard-name lang-zh">加拿大</div><div class="mcard-cities lang-en">Toronto &middot; Vancouver</div><div class="mcard-cities lang-zh">多倫多 &middot; 溫哥華</div><div class="mcard-kpi-lbl lang-en">FOREIGN BUYER BAN</div><div class="mcard-kpi-lbl lang-zh">外國買家禁令</div><div class="mcard-kpi">Until 2027</div></a>
-      <a class="mcard" style="--accent:#16a34a" href="ie/report.html"><div class="new-badge">NEW</div><span class="mcard-flag">&#x1F1EE;&#x1F1EA;</span><div class="mcard-name lang-en">Ireland</div><div class="mcard-name lang-zh">愛爾蘭</div><div class="mcard-cities lang-en">Dublin &middot; Cork</div><div class="mcard-cities lang-zh">都柏林 &middot; 科克</div><div class="mcard-kpi-lbl lang-en">VACANCY RATE</div><div class="mcard-kpi-lbl lang-zh">空置率</div><div class="mcard-kpi">0.7% (EU lowest)</div></a>
+      <a class="mcard" style="--accent:#e65100" href="report.html"><span class="mcard-flag">&#x1F1F2;&#x1F1FE;</span><div class="mcard-info"><div class="mcard-name lang-en">Malaysia</div><div class="mcard-name lang-zh">馬來西亞</div><div class="mcard-cities lang-en">KL &middot; Penang</div><div class="mcard-cities lang-zh">吉隆坡 &middot; 檳城</div></div></a>
+      <a class="mcard" style="--accent:#1e3a5f" href="tw/report.html"><span class="mcard-flag">&#x1F1F9;&#x1F1FC;</span><div class="mcard-info"><div class="mcard-name lang-en">Taiwan</div><div class="mcard-name lang-zh">台灣</div><div class="mcard-cities lang-en">Taipei &middot; Hsinchu &middot; Taichung &middot; Kaohsiung</div><div class="mcard-cities lang-zh">台北 &middot; 新竹 &middot; 台中 &middot; 高雄</div></div></a>
+      <a class="mcard" style="--accent:#dc2626" href="jp/report.html"><span class="mcard-flag">&#x1F1EF;&#x1F1F5;</span><div class="mcard-info"><div class="mcard-name lang-en">Japan</div><div class="mcard-name lang-zh">日本</div><div class="mcard-cities lang-en">Tokyo &middot; Osaka &middot; Fukuoka</div><div class="mcard-cities lang-zh">東京 &middot; 大阪 &middot; 福岡</div></div></a>
+      <a class="mcard" style="--accent:#16a34a" href="au/report.html"><span class="mcard-flag">&#x1F1E6;&#x1F1FA;</span><div class="mcard-info"><div class="mcard-name lang-en">Australia</div><div class="mcard-name lang-zh">澳洲</div><div class="mcard-cities lang-en">Sydney &middot; Melbourne &middot; Brisbane</div><div class="mcard-cities lang-zh">雪梨 &middot; 墨爾本 &middot; 布里斯本</div></div></a>
+      <a class="mcard" style="--accent:#0891b2" href="nz/report.html"><span class="mcard-flag">&#x1F1F3;&#x1F1FF;</span><div class="mcard-info"><div class="mcard-name lang-en">New Zealand</div><div class="mcard-name lang-zh">紐西蘭</div><div class="mcard-cities lang-en">Auckland &middot; Christchurch</div><div class="mcard-cities lang-zh">奧克蘭 &middot; 基督城</div></div></a>
+      <a class="mcard" style="--accent:#7c3aed" href="uk/report.html"><span class="mcard-flag">&#x1F1EC;&#x1F1E7;</span><div class="mcard-info"><div class="mcard-name lang-en">United Kingdom</div><div class="mcard-name lang-zh">英國</div><div class="mcard-cities lang-en">London &middot; Manchester &middot; Edinburgh</div><div class="mcard-cities lang-zh">倫敦 &middot; 曼徹斯特 &middot; 愛丁堡</div></div></a>
+      <a class="mcard" style="--accent:#2563eb" href="us/index.html"><span class="mcard-flag">&#x1F1FA;&#x1F1F8;</span><div class="mcard-info"><div class="mcard-name lang-en">United States</div><div class="mcard-name lang-zh">美國</div><div class="mcard-cities lang-en">12 cities &middot; NYC LA SF SV SD MIA AUS SEA CHI BOS PHX DEN</div><div class="mcard-cities lang-zh">12 城市 &middot; 紐約 洛杉磯 舊金山 矽谷 聖地牙哥 邁阿密等</div></div></a>
+      <a class="mcard" style="--accent:#d97706" href="th/report.html"><span class="mcard-flag">&#x1F1F9;&#x1F1ED;</span><div class="mcard-info"><div class="mcard-name lang-en">Thailand</div><div class="mcard-name lang-zh">泰國</div><div class="mcard-cities lang-en">Bangkok &middot; Chiang Mai</div><div class="mcard-cities lang-zh">曼谷 &middot; 清邁</div></div></a>
+      <a class="mcard" style="--accent:#ef4444" href="vn/report.html"><span class="mcard-flag">&#x1F1FB;&#x1F1F3;</span><div class="mcard-info"><div class="mcard-name lang-en">Vietnam</div><div class="mcard-name lang-zh">越南</div><div class="mcard-cities lang-en">Ho Chi Minh City &middot; Hanoi</div><div class="mcard-cities lang-zh">胡志明市 &middot; 河內</div></div></a>
+      <a class="mcard" style="--accent:#1d4ed8" href="kr/report.html"><span class="mcard-flag">&#x1F1F0;&#x1F1F7;</span><div class="mcard-info"><div class="mcard-name lang-en">South Korea</div><div class="mcard-name lang-zh">韓國</div><div class="mcard-cities lang-en">Seoul &middot; Busan</div><div class="mcard-cities lang-zh">首爾 &middot; 釜山</div></div></a>
+      <a class="mcard" style="--accent:#b91c1c" href="ca/report.html"><span class="mcard-flag">&#x1F1E8;&#x1F1E6;</span><div class="mcard-info"><div class="mcard-name lang-en">Canada</div><div class="mcard-name lang-zh">加拿大</div><div class="mcard-cities lang-en">Toronto &middot; Vancouver</div><div class="mcard-cities lang-zh">多倫多 &middot; 溫哥華</div></div></a>
+      <a class="mcard" style="--accent:#16a34a" href="ie/report.html"><div class="new-badge">NEW</div><span class="mcard-flag">&#x1F1EE;&#x1F1EA;</span><div class="mcard-info"><div class="mcard-name lang-en">Ireland</div><div class="mcard-name lang-zh">愛爾蘭</div><div class="mcard-cities lang-en">Dublin &middot; Cork</div><div class="mcard-cities lang-zh">都柏林 &middot; 科克</div></div></a>
     </div>
   </div>
 </section>
