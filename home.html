@@ -56,7 +56,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
 .compare-tbl thead{position:sticky;top:0;z-index:3}
 .compare-tbl th{background:#f0f6ff;font-size:9px;letter-spacing:.08em;color:#5a7a9a;font-weight:600;padding:7px 10px;text-align:right;border-bottom:1px solid #dce8f5;white-space:nowrap;transition:background .15s;overflow:hidden;resize:horizontal;position:relative}
 .compare-tbl th[data-key]:hover{background:#e4eefb;color:#1e3a5f}
-.compare-tbl th:first-child{text-align:left;position:sticky;left:0;background:#f0f6ff;z-index:4;min-width:130px;border-right:1px solid #dce8f5}
+.compare-tbl th:first-child{text-align:left;position:sticky;left:0;background:#f0f6ff;z-index:4;min-width:100px;border-right:1px solid #dce8f5}
 .compare-tbl td{padding:6px 10px;font-size:11px;border-bottom:1px solid #f0f5fb;text-align:right;font-variant-numeric:tabular-nums;color:#1e3a5f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .compare-tbl th::after{content:'';position:absolute;right:0;top:25%;height:50%;width:3px;cursor:col-resize;background:transparent;transition:background .15s}
 .compare-tbl th:hover::after{background:#ccd9e8}
@@ -169,7 +169,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
     <div class="compare-wrap">
       <table class="compare-tbl">
         <thead><tr>
-          <th style="text-align:left;cursor:pointer;user-select:none;width:140px" data-key="name" onclick="sortBy('name')"><span class="lang-en">City</span><span class="lang-zh">城市</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
+          <th style="text-align:left;cursor:pointer;user-select:none;width:105px" data-key="name" onclick="sortBy('name')"><span class="lang-en">City</span><span class="lang-zh">城市</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="cursor:pointer;user-select:none;width:72px" data-key="d10y" onclick="sortBy('d10y')"><span class="lang-en">10yr</span><span class="lang-zh">10年漲幅</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="cursor:pointer;user-select:none;width:72px" data-key="yoy" onclick="sortBy('yoy')"><span class="lang-en">YoY</span><span class="lang-zh">年增率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
           <th style="cursor:pointer;user-select:none;width:72px" data-key="yield" onclick="sortBy('yield')"><span class="lang-en">Yield</span><span class="lang-zh">收益率</span><span class="sort-arrow" style="font-size:9px;color:#94a3b8"> ↕</span></th>
@@ -519,7 +519,7 @@ function renderTable(lang){
     var prW=c.pr<20||c.pr>30?700:600;
     var mClr=c.mortgage<=1.5?'#16a34a':c.mortgage<=3.5?'#1e3a5f':c.mortgage>5?'#dc2626':'#1e3a5f';
     return '<tr onclick="location.href=\''+c.link+'\'" style="cursor:pointer">'+
-      '<td style="position:sticky;left:0;background:#fff;z-index:1;border-right:1px solid #f0f5fb;font-weight:600;min-width:110px"><span style="font-size:12px;margin-right:5px">'+c.flag+'</span>'+nm+'</td>'+
+      '<td style="position:sticky;left:0;background:#fff;z-index:1;border-right:1px solid #f0f5fb;font-weight:600;min-width:90px"><span style="font-size:11px;margin-right:4px">'+c.flag+'</span><span style="font-size:10.5px">'+nm+'</span></td>'+
       (function(){var d=c.d10y;var dc=d>=80?'#16a34a':d>=40?'#1e3a5f':d>=0?'#94a3b8':'#dc2626';return '<td style="color:'+dc+';font-weight:600">'+(d>0?'+':'')+d+'%</td>';})()+
       '<td>'+yoyH+'</td>'+
       '<td style="color:'+yClr+';font-weight:'+yW+'">'+c.yield.toFixed(1)+'%</td>'+
