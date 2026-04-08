@@ -19,6 +19,12 @@ def calc_cagr(old_val, new_val, years=2):
         return None
     return (new_val / old_val) ** (1 / years) - 1
 
+def calc_growth(old_val, new_val, years=2):
+    """Growth rate that handles negative values. Annualized simple growth."""
+    if old_val is None or new_val is None or old_val == 0:
+        return None
+    return ((new_val - old_val) / abs(old_val)) / years
+
 def safe_get(df, labels, col=0):
     if df is None or len(df.columns) == 0 or col >= len(df.columns):
         return None
@@ -65,9 +71,11 @@ def fetch_one(ticker_str, retry=2):
             rev_new, rev_old, yrs = find_valid_pair(fins, "Total Revenue", 2)
             result["rev_cagr"] = calc_cagr(rev_old, rev_new, yrs)
 
-            # --- EPS CAGR 2Y ---
+            # --- EPS CAGR 2Y (fallback to growth rate if negative) ---
             eps_new, eps_old, yrs = find_valid_pair(fins, ["Diluted EPS", "Basic EPS"], 2)
             result["eps_cagr"] = calc_cagr(eps_old, eps_new, yrs)
+            if result["eps_cagr"] is None and eps_new is not None and eps_old is not None:
+                result["eps_cagr"] = calc_growth(eps_old, eps_new, yrs)
 
             # --- FCF Margin (use most recent valid year) ---
             result["fcf_margin"] = None
@@ -94,12 +102,18 @@ def fetch_one(ticker_str, retry=2):
             col = rev_col if rev_col is not None else 0
             if has_fins and has_bs:
                 ebit = safe_get(fins, ["EBIT", "Operating Income"], col)
-                tax_prov = safe_get(fins, "Tax Provision", col)
-                pretax = safe_get(fins, "Pretax Income", col)
+                use_net_income = False
+                if ebit is None:
+                    ebit = safe_get(fins, "Net Income", col)
+                    use_net_income = True
+
                 tax_rate = 0.21
-                if tax_prov is not None and pretax and pretax != 0:
-                    tr = tax_prov / pretax
-                    tax_rate = tr if 0 <= tr <= 0.5 else 0.21
+                if not use_net_income:
+                    tax_prov = safe_get(fins, "Tax Provision", col)
+                    pretax = safe_get(fins, "Pretax Income", col)
+                    if tax_prov is not None and pretax and pretax != 0:
+                        tr = tax_prov / pretax
+                        tax_rate = tr if 0 <= tr <= 0.5 else 0.21
 
                 equity = safe_get(bs, ["Stockholders Equity", "Total Stockholders Equity", "Common Stock Equity"], col)
                 lt_debt = safe_get(bs, ["Long Term Debt", "Long Term Debt And Capital Lease Obligation"], col) or 0
@@ -107,7 +121,8 @@ def fetch_one(ticker_str, retry=2):
                 if ebit is not None and equity is not None:
                     invested = equity + lt_debt
                     if invested > 0:
-                        result["roic"] = ebit * (1 - tax_rate) / invested
+                        nopat = ebit if use_net_income else ebit * (1 - tax_rate)
+                        result["roic"] = nopat / invested
 
             return result
 
