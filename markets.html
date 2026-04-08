@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Stock Markets Comparison | Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e3a5f}
+
+.navbar{background:#fff;border-bottom:1px solid #dce8f5;height:52px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-left{display:flex;align-items:center;gap:12px}
+.nav-brand{font-size:12px;font-weight:700;letter-spacing:.12em;color:#1e3a5f;text-decoration:none}
+.nav-brand:hover{color:#3b82f6}
+.nav-sep{color:#dce8f5;font-size:14px}
+.nav-page{font-size:11px;font-weight:600;letter-spacing:.08em;color:#3b82f6}
+.lang-btns{display:flex;gap:4px}
+.lang-btn{padding:4px 10px;border:1px solid #dce8f5;border-radius:4px;font-size:11px;cursor:pointer;background:#fff;color:#5a7a9a;font-family:inherit}
+.lang-btn.active{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
+
+.hero{background:#fff;border-bottom:1px solid #dce8f5;padding:28px 32px 22px}
+.hero-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.hero-h1{font-size:24px;font-weight:600;color:#0f2a45;line-height:1.2;margin-bottom:6px}
+.hero-sub{font-size:14px;color:#5a7a9a;line-height:1.65;margin-bottom:0;max-width:640px}
+
+.section{max-width:1100px;margin:0 auto;padding:36px 32px}
+.section-hdr{display:flex;align-items:baseline;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.section-title{font-size:10px;letter-spacing:.16em;color:#3b82f6;font-weight:600}
+.section-desc{font-size:12px;color:#94a3b8}
+
+.compare-wrap{background:#fff;border:1px solid #dce8f5;border-radius:12px;overflow:auto;max-height:75vh;-webkit-overflow-scrolling:touch}
+.compare-tbl{width:100%;border-collapse:collapse;min-width:1200px;table-layout:fixed}
+.compare-tbl thead{position:sticky;top:0;z-index:3}
+.compare-tbl th{background:#f0f6ff;font-size:9px;letter-spacing:.08em;color:#5a7a9a;font-weight:600;padding:7px 8px;text-align:right;border-bottom:1px solid #dce8f5;white-space:nowrap;cursor:pointer;user-select:none}
+.compare-tbl th:hover{background:#e4eefb;color:#1e3a5f}
+.compare-tbl th:first-child{text-align:left;position:sticky;left:0;background:#f0f6ff;z-index:4;min-width:160px;width:160px;border-right:1px solid #dce8f5;cursor:pointer}
+.compare-tbl td{padding:6px 8px;font-size:11px;border-bottom:1px solid #f0f5fb;text-align:right;font-variant-numeric:tabular-nums;color:#1e3a5f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.compare-tbl td:first-child{text-align:left;font-weight:600;position:sticky;left:0;background:#fff;z-index:2;border-right:1px solid #f0f5fb}
+.compare-tbl tr:last-child td{border-bottom:none}
+.compare-tbl tr:hover td{background:#f8fbff}
+
+.sort-arrow{font-size:9px;color:#94a3b8;margin-left:2px}
+.badge{display:inline-block;font-size:9px;font-weight:600;padding:2px 6px;border-radius:3px;letter-spacing:.02em}
+.note{font-size:10px;color:#94a3b8;margin-top:10px;line-height:1.5}
+
+.lang-en{}.lang-zh{display:none}
+
+.footer{max-width:1100px;margin:0 auto;padding:24px 32px;display:flex;justify-content:space-between;font-size:10px;color:#94a3b8}
+
+@media(max-width:768px){
+  .navbar{padding:0 16px}
+  .section{padding:20px 16px}
+  .hero{padding:20px 16px 16px}
+  .hero-h1{font-size:20px}
+  .footer{flex-direction:column;gap:6px;padding:16px}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="home.html" class="nav-brand">PROPERTY MONITOR</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-page"><span class="lang-en">GLOBAL MARKETS</span><span class="lang-zh">全球股市</span></span>
+  </div>
+  <div class="lang-btns">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('zh')">&#x4E2D;&#x6587;</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1 class="hero-h1"><span class="lang-en">Global Stock Markets Comparison</span><span class="lang-zh">全球股市比較</span></h1>
+      <p class="hero-sub"><span class="lang-en">28 indices &middot; 22 markets &middot; GDP, PE, PB, PEG, EPS growth, ERP &middot; All columns sortable &middot; Q1 2026</span><span class="lang-zh">28 個指數 &middot; 22 個市場 &middot; GDP、本益比、股淨比、PEG、獲利成長率、風險溢酬 &middot; 所有欄位可排序 &middot; Q1 2026</span></p>
+    </div>
+  </div>
+</section>
+
+<section style="background:#f0f5fb">
+  <div class="section">
+    <div class="section-hdr">
+      <span class="section-title lang-en">MARKET COMPARISON TABLE</span>
+      <span class="section-title lang-zh">股市比較表</span>
+      <span class="section-desc lang-en">Click any column header to sort</span>
+      <span class="section-desc lang-zh">點擊欄位標題排序</span>
+    </div>
+    <div class="compare-wrap">
+      <table class="compare-tbl" id="marketTable">
+        <thead id="marketHead"></thead>
+        <tbody id="marketBody"></tbody>
+      </table>
+    </div>
+
+    <!-- Footnotes -->
+    <div style="margin-top:14px;font-size:9px;color:#94a3b8;line-height:1.6">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px 20px">
+        <span class="lang-en"><strong>Cap</strong> &mdash; Total market cap in USD trillions.</span>
+        <span class="lang-zh"><strong>市值</strong> &mdash; 總市值（美元兆）。</span>
+        <span class="lang-en"><strong>YTD</strong> &mdash; Year-to-date total return in local currency.</span>
+        <span class="lang-zh"><strong>YTD</strong> &mdash; 年初至今本幣總報酬。</span>
+        <span class="lang-en"><strong>GDP</strong> &mdash; 2026 estimated real GDP growth (IMF WEO).</span>
+        <span class="lang-zh"><strong>GDP</strong> &mdash; 2026年實質GDP成長率預估（IMF WEO）。</span>
+        <span class="lang-en"><strong>PE</strong> &mdash; Forward 12-month price-to-earnings ratio (Bloomberg consensus).</span>
+        <span class="lang-zh"><strong>PE</strong> &mdash; 前瞻12個月本益比（Bloomberg共識）。</span>
+        <span class="lang-en"><strong>PB</strong> &mdash; Price-to-book ratio (trailing).</span>
+        <span class="lang-zh"><strong>PB</strong> &mdash; 股價淨值比（歷史）。</span>
+        <span class="lang-en"><strong>EPS&#x2191;</strong> &mdash; 2026 consensus earnings growth forecast.</span>
+        <span class="lang-zh"><strong>EPS&#x2191;</strong> &mdash; 2026年共識獲利成長率預估。</span>
+        <span class="lang-en"><strong>PEG</strong> &mdash; PE &divide; EPS growth. &lt;1.0 = cheap growth, 1.0-1.5 = fair, &gt;2.0 = expensive.</span>
+        <span class="lang-zh"><strong>PEG</strong> &mdash; PE &divide; 獲利成長率。&lt;1.0=便宜成長、1.0-1.5=合理、&gt;2.0=昂貴。</span>
+        <span class="lang-en"><strong>Yld</strong> &mdash; Trailing 12-month dividend yield.</span>
+        <span class="lang-zh"><strong>Yld</strong> &mdash; 過去12個月股息殖利率。</span>
+        <span class="lang-en"><strong>Bond</strong> &mdash; 10-year government bond yield.</span>
+        <span class="lang-zh"><strong>Bond</strong> &mdash; 10年期公債殖利率。</span>
+        <span class="lang-en"><strong>ERP</strong> &mdash; Equity risk premium = earnings yield (1/PE) &minus; 10yr bond yield. Higher = stocks cheaper vs bonds.</span>
+        <span class="lang-zh"><strong>ERP</strong> &mdash; 股權風險溢酬 = 益本比(1/PE) &minus; 10年期公債殖利率。越高=股票相對債券越便宜。</span>
+        <span class="lang-en" style="grid-column:span 2;font-weight:600;color:#5a7a9a;margin-top:4px">PEG and ERP are calculated dynamically from the table data. All data are consensus estimates as of Q1 2026. Verify before investment decisions.</span>
+        <span class="lang-zh" style="grid-column:span 2;font-weight:600;color:#5a7a9a;margin-top:4px">PEG和ERP由表格數據動態計算。所有數據為Q1 2026共識預估值。投資決策前請自行驗證。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Knowledge Cards -->
+<section style="background:#f0f5fb">
+  <div class="section" style="padding-top:0">
+    <div class="section-hdr">
+      <span class="section-title lang-en">GLOBAL MARKET INVESTMENT KNOWLEDGE</span>
+      <span class="section-title lang-zh">全球股市投資知識</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:10px">
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;line-height:1.65">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:6px"><span class="lang-en">How to Read PE Ratio</span><span class="lang-zh">如何解讀本益比（PE）</span></div>
+        <span class="lang-en">PE = how many years of earnings you're paying for. <strong>&lt;12:</strong> cheap or troubled. <strong>12-18:</strong> fair value. <strong>&gt;20:</strong> growth premium or overpriced. Compare within the same market's historical range, not across countries — EM markets structurally trade at lower PE than DM.</span>
+        <span class="lang-zh">PE = 你正在為幾年的獲利付費。<strong>&lt;12：</strong>便宜或有問題。<strong>12-18：</strong>合理估值。<strong>&gt;20：</strong>成長溢價或過貴。應與同市場歷史區間比較，而非跨國比較——新興市場結構性地比成熟市場PE低。</span>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;line-height:1.65">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:6px"><span class="lang-en">PEG: The Growth-Adjusted PE</span><span class="lang-zh">PEG：成長調整後的本益比</span></div>
+        <span class="lang-en">PEG = PE &divide; EPS growth rate. Normalizes PE for growth speed. <strong>&lt;1.0:</strong> undervalued growth (Taiwan, Korea, Vietnam). <strong>1.0-1.5:</strong> fairly valued. <strong>&gt;2.0:</strong> overpaying for growth (NZ, AU, Saudi). Peter Lynch's rule: never buy PEG &gt;2 unless it's a compounding monopoly.</span>
+        <span class="lang-zh">PEG = PE &divide; 獲利成長率。用成長速度校正PE。<strong>&lt;1.0：</strong>成長被低估（台灣、韓國、越南）。<strong>1.0-1.5：</strong>合理定價。<strong>&gt;2.0：</strong>為成長付過多溢價（紐西蘭、澳洲、沙烏地）。彼得林區的規則：除非是壟斷型複利機器，否則不買PEG &gt;2。</span>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;line-height:1.65">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:6px"><span class="lang-en">ERP: Are Stocks Worth the Risk?</span><span class="lang-zh">ERP：股票值得冒險嗎？</span></div>
+        <span class="lang-en">Equity Risk Premium = earnings yield &minus; bond yield. If ERP &lt;1%, bonds offer similar return with less risk — stocks are expensive. <strong>&gt;4%:</strong> stocks very attractive (Japan, Korea, HK). <strong>2-4%:</strong> normal. <strong>&lt;1%:</strong> caution (US, India, NZ). Negative ERP = bonds beat stocks on yield.</span>
+        <span class="lang-zh">股權風險溢酬 = 益本比 &minus; 債券利率。若ERP &lt;1%，債券以更低風險提供類似報酬——股票偏貴。<strong>&gt;4%：</strong>股票非常有吸引力（日本、韓國、香港）。<strong>2-4%：</strong>正常。<strong>&lt;1%：</strong>謹慎（美國、印度、紐西蘭）。ERP為負=債券收益率勝過股票。</span>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;line-height:1.65">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:6px"><span class="lang-en">GDP Growth ≠ Stock Returns</span><span class="lang-zh">GDP成長 ≠ 股市報酬</span></div>
+        <span class="lang-en">Common trap: buying fast-GDP countries. China has 5% GDP growth but CSI 300's 5yr return underperformed the US. Why? Growth is already priced in, diluted by new share issuance, or captured by SOEs not listed minority shareholders. Focus on <strong>earnings growth + valuation</strong>, not headline GDP.</span>
+        <span class="lang-zh">常見陷阱：買GDP高成長的國家。中國GDP成長5%但CSI 300五年報酬落後美國。為何？成長已被定價、被增發股份稀釋、或被國企而非上市小股東捕獲。專注於<strong>獲利成長+估值</strong>，而非GDP標題數字。</span>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;line-height:1.65">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:6px"><span class="lang-en">PB Ratio: Asset-Heavy Markets</span><span class="lang-zh">PB：資產密集型市場</span></div>
+        <span class="lang-en">PB = price relative to net assets. Most useful for <strong>banks, REITs, commodities</strong>. PB &lt;1 = market says assets are worth less than book (Korea, HK). PB &gt;3 = paying premium for intangibles (US tech). For tech-heavy indices (NASDAQ), PB is less meaningful — use PE/PEG instead.</span>
+        <span class="lang-zh">PB = 股價相對淨資產。最適用於<strong>銀行、REIT、大宗商品</strong>。PB &lt;1 = 市場認為資產低於帳面價值（韓國、香港）。PB &gt;3 = 為無形資產付溢價（美國科技）。科技權重高的指數（NASDAQ），PB參考價值低——改用PE/PEG。</span>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;line-height:1.65">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:6px"><span class="lang-en">Currency Risk in Global Investing</span><span class="lang-zh">全球投資的匯率風險</span></div>
+        <span class="lang-en">A market returning +10% in local currency but whose currency falls 8% vs USD = only +2% in USD terms. <strong>High-yield EM currencies</strong> (BRL, MXN, IDR) tend to depreciate over time. <strong>JPY</strong> is structurally weak under BOJ policy. <strong>CHF, SGD</strong> are safe-haven currencies. Factor FX into total return calculations.</span>
+        <span class="lang-zh">一個市場本幣報酬+10%但貨幣兌美元貶值8%=美元計價僅+2%。<strong>高利率新興市場貨幣</strong>（巴西雷亞爾、墨西哥披索、印尼盾）長期趨向貶值。<strong>日圓</strong>在BOJ政策下結構性偏弱。<strong>瑞士法郎、新加坡幣</strong>是避險貨幣。計算總報酬時須納入匯率因素。</span>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;line-height:1.65">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:6px"><span class="lang-en">Value vs Growth Markets</span><span class="lang-zh">價值型 vs 成長型市場</span></div>
+        <span class="lang-en"><strong>Value markets</strong> (low PE, high yield): UK, Korea, HK, Brazil, Spain — cheap but often for good reason (governance, growth, structure). <strong>Growth markets</strong> (high PE, low yield): US, India, Taiwan — expensive but earnings growth justifies premium. The sweet spot: <strong>growth at reasonable price (GARP)</strong> = PEG &lt;1.5 + positive EPS momentum.</span>
+        <span class="lang-zh"><strong>價值型市場</strong>（低PE、高殖利率）：英國、韓國、香港、巴西、西班牙——便宜但通常有原因（治理、成長、結構）。<strong>成長型市場</strong>（高PE、低殖利率）：美國、印度、台灣——貴但獲利成長支撐溢價。最佳區域：<strong>合理價格的成長 (GARP)</strong> = PEG &lt;1.5 + EPS動能為正。</span>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;line-height:1.65">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:6px"><span class="lang-en">Dividend Yield: Income Floor</span><span class="lang-zh">股息殖利率：收入底線</span></div>
+        <span class="lang-en">High-dividend markets (SG 4.5%, UK 3.8%, AU 3.8%) act as income floor. But: dividends can be cut. Check <strong>payout ratio</strong> (earnings coverage) and <strong>free cash flow</strong>. A 5% yield from a declining earnings base is a value trap. Prefer markets where dividends are growing, not just high.</span>
+        <span class="lang-zh">高配息市場（新加坡4.5%、英國3.8%、澳洲3.8%）充當收入底部。但：股息可能被砍。檢查<strong>配息比率</strong>（獲利覆蓋率）和<strong>自由現金流</strong>。獲利下滑基礎上的5%殖利率是價值陷阱。偏好股息正在成長的市場，而非僅僅殖利率高的市場。</span>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;line-height:1.65">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:6px"><span class="lang-en">Market Cap = Liquidity + Access</span><span class="lang-zh">市值 = 流動性 + 可及性</span></div>
+        <span class="lang-en"><strong>&gt;$5T:</strong> deep liquidity, ETF-accessible (US, CN, JP). <strong>$1-5T:</strong> good liquidity (EU, IN, TW, KR, AU, CA). <strong>&lt;$1T:</strong> thinner markets, wider spreads, harder to exit (MY, TH, VN, NZ, PH). Smaller markets can offer alpha but position sizing and exit strategy matter more.</span>
+        <span class="lang-zh"><strong>&gt;$5T：</strong>深度流動性、ETF可投（美、中、日）。<strong>$1-5T：</strong>良好流動性（歐洲、印度、台灣、韓國、澳洲、加拿大）。<strong>&lt;$1T：</strong>較淺的市場、較寬的價差、較難退出（馬、泰、越、紐、菲）。小市場可能提供超額報酬但部位大小和退出策略更重要。</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer">
+    <div class="footer-l">PROPERTY MONITOR</div>
+    <div class="footer-r"><span class="lang-en">Data for reference only &middot; Not investment advice &middot; &copy; 2026 InvestMQuest</span><span class="lang-zh">資料僅供參考 &middot; 非投資建議 &middot; &copy; 2026 InvestMQuest</span></div>
+  </div>
+</footer>
+
+<script>
+var C = {navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a'};
+
+var MARKETS = [
+  // US
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'S&P 500',nameZh:'標普500',index:'SPX',level:5800,ytd:8.0,gdp:2.1,per:21.0,pbr:4.5,epsGr:12,divYld:1.3,bond10y:4.25,mktCapT:52.0,currency:'USD',outlook:{en:'AI capex + rate cuts; expensive but earnings deliver',zh:'AI資本支出+降息；昂貴但獲利兌現'}},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'NASDAQ 100',nameZh:'那斯達克100',index:'NDX',level:18500,ytd:10.0,gdp:2.1,per:28.0,pbr:7.5,epsGr:18,divYld:0.7,bond10y:4.25,mktCapT:28.0,currency:'USD',outlook:{en:'Mag7 AI spending cycle; high PE but high growth',zh:'Mag7 AI投資週期；高PE但高成長'}},
+
+  // Japan
+  {flag:'\uD83C\uDDEF\uD83C\uDDF5',name:'TOPIX',nameZh:'東證指數',index:'TPX',level:2700,ytd:12.0,gdp:1.2,per:15.0,pbr:1.4,epsGr:9,divYld:2.2,bond10y:1.05,mktCapT:6.5,currency:'JPY',outlook:{en:'Corporate governance reform + weak JPY exports',zh:'企業治理改革+日圓弱勢利出口'}},
+  {flag:'\uD83C\uDDEF\uD83C\uDDF5',name:'Nikkei 225',nameZh:'日經225',index:'NKY',level:40000,ytd:14.0,gdp:1.2,per:17.0,pbr:1.8,epsGr:10,divYld:1.8,bond10y:1.05,mktCapT:6.5,currency:'JPY',outlook:{en:'Tech + auto exporters benefit from weak yen',zh:'科技+汽車出口商受惠日圓弱勢'}},
+
+  // Europe
+  {flag:'\uD83C\uDDEC\uD83C\uDDE7',name:'FTSE 100',nameZh:'富時100',index:'UKX',level:8200,ytd:5.0,gdp:1.3,per:12.0,pbr:1.8,epsGr:6,divYld:3.8,bond10y:4.20,mktCapT:3.2,currency:'GBP',outlook:{en:'Value + yield; BoE cuts supportive',zh:'價值+殖利率；BoE降息利多'}},
+  {flag:'\uD83C\uDDE9\uD83C\uDDEA',name:'DAX',nameZh:'德國DAX',index:'DAX',level:19000,ytd:14.0,gdp:0.8,per:14.0,pbr:1.7,epsGr:8,divYld:2.8,bond10y:2.50,mktCapT:2.3,currency:'EUR',outlook:{en:'Defense + industrial capex; weak domestic demand',zh:'國防+工業資本支出；國內需求疲弱'}},
+  {flag:'\uD83C\uDDEB\uD83C\uDDF7',name:'CAC 40',nameZh:'法國CAC',index:'CAC',level:7800,ytd:6.0,gdp:1.0,per:14.0,pbr:1.8,epsGr:7,divYld:2.9,bond10y:3.00,mktCapT:3.0,currency:'EUR',outlook:{en:'Luxury + defense; political risk premium',zh:'精品+國防；政治風險溢價'}},
+  {flag:'\uD83C\uDDEA\uD83C\uDDF8',name:'IBEX 35',nameZh:'西班牙IBEX',index:'IBEX',level:11500,ytd:8.0,gdp:2.2,per:11.0,pbr:1.3,epsGr:8,divYld:3.5,bond10y:3.20,mktCapT:0.8,currency:'EUR',outlook:{en:'Banks + tourism; best GDP growth in EU',zh:'銀行+觀光；歐盟GDP成長最佳'}},
+  {flag:'\uD83C\uDDF3\uD83C\uDDF1',name:'AEX',nameZh:'荷蘭AEX',index:'AEX',level:880,ytd:8.0,gdp:1.2,per:16.0,pbr:2.5,epsGr:9,divYld:2.5,bond10y:2.60,mktCapT:1.0,currency:'EUR',outlook:{en:'ASML chip monopoly; semi cycle recovery',zh:'ASML晶片壟斷；半導體週期復甦'}},
+  {flag:'\uD83C\uDDE8\uD83C\uDDED',name:'SMI',nameZh:'瑞士SMI',index:'SMI',level:12500,ytd:6.0,gdp:1.5,per:18.0,pbr:3.0,epsGr:7,divYld:3.0,bond10y:0.80,mktCapT:1.8,currency:'CHF',outlook:{en:'Defensive pharma + safe haven CHF',zh:'防禦型製藥+避險瑞士法郎'}},
+  {flag:'\uD83C\uDDEE\uD83C\uDDF9',name:'FTSE MIB',nameZh:'義大利MIB',index:'MIB',level:35000,ytd:10.0,gdp:0.9,per:9.0,pbr:1.1,epsGr:6,divYld:4.2,bond10y:3.60,mktCapT:0.8,currency:'EUR',outlook:{en:'Banks cheap; BTP spread tightening',zh:'銀行便宜；公債利差收窄'}},
+
+  // Asia-Pacific
+  {flag:'\uD83C\uDDE6\uD83C\uDDFA',name:'ASX 200',nameZh:'澳洲ASX',index:'AS51',level:8200,ytd:4.0,gdp:2.0,per:17.0,pbr:2.2,epsGr:6,divYld:3.8,bond10y:4.35,mktCapT:1.8,currency:'AUD',outlook:{en:'Mining + banks; RBA cut cycle supports',zh:'礦業+銀行；RBA降息支撐'}},
+  {flag:'\uD83C\uDDF9\uD83C\uDDFC',name:'TAIEX',nameZh:'台灣加權',index:'TWSE',level:22000,ytd:5.0,gdp:3.2,per:16.0,pbr:2.5,epsGr:20,divYld:3.5,bond10y:1.60,mktCapT:2.1,currency:'TWD',outlook:{en:'TSMC AI chip demand; best PEG globally',zh:'台積電AI晶片需求；全球最佳PEG'}},
+  {flag:'\uD83C\uDDF0\uD83C\uDDF7',name:'KOSPI',nameZh:'韓國KOSPI',index:'KOSPI',level:2600,ytd:3.0,gdp:2.0,per:11.0,pbr:1.0,epsGr:15,divYld:2.0,bond10y:3.20,mktCapT:1.7,currency:'KRW',outlook:{en:'Memory chip upcycle; Korea Discount narrowing',zh:'記憶體晶片上行週期；韓國折價收窄'}},
+  {flag:'\uD83C\uDDF8\uD83C\uDDEC',name:'STI',nameZh:'新加坡海峽',index:'STI',level:3500,ytd:4.0,gdp:2.5,per:12.0,pbr:1.2,epsGr:6,divYld:4.5,bond10y:3.10,mktCapT:0.5,currency:'SGD',outlook:{en:'Highest div yield in DM; banking sector solid',zh:'成熟市場最高殖利率；銀行業穩健'}},
+  {flag:'\uD83C\uDDED\uD83C\uDDF0',name:'Hang Seng',nameZh:'恒生指數',index:'HSI',level:18000,ytd:5.0,gdp:3.0,per:9.0,pbr:1.0,epsGr:8,divYld:3.5,bond10y:4.00,mktCapT:4.5,currency:'HKD',outlook:{en:'Deep value; China policy stimulus uncertainty',zh:'深度價值；中國政策刺激不確定性'}},
+  {flag:'\uD83C\uDDE8\uD83C\uDDF3',name:'CSI 300',nameZh:'滬深300',index:'CSI300',level:3800,ytd:3.0,gdp:4.8,per:12.0,pbr:1.4,epsGr:10,divYld:2.8,bond10y:2.30,mktCapT:8.5,currency:'CNY',outlook:{en:'Policy stimulus; property drag easing slowly',zh:'政策刺激；房地產拖累緩慢減輕'}},
+  {flag:'\uD83C\uDDEE\uD83C\uDDF3',name:'Nifty 50',nameZh:'印度Nifty',index:'NIFTY',level:23000,ytd:2.0,gdp:6.5,per:22.0,pbr:3.5,epsGr:14,divYld:1.3,bond10y:7.00,mktCapT:4.2,currency:'INR',outlook:{en:'Fastest GDP; but PE premium and negative ERP',zh:'GDP成長最快；但PE溢價且ERP為負'}},
+  {flag:'\uD83C\uDDF2\uD83C\uDDFE',name:'KLCI',nameZh:'馬來西亞KLCI',index:'KLCI',level:1550,ytd:2.0,gdp:4.5,per:15.0,pbr:1.5,epsGr:8,divYld:3.8,bond10y:3.85,mktCapT:0.4,currency:'MYR',outlook:{en:'Data center FDI + Johor growth corridor',zh:'資料中心FDI+柔佛成長走廊'}},
+  {flag:'\uD83C\uDDF9\uD83C\uDDED',name:'SET',nameZh:'泰國SET',index:'SET',level:1400,ytd:-2.0,gdp:3.0,per:16.0,pbr:1.5,epsGr:8,divYld:3.0,bond10y:2.80,mktCapT:0.5,currency:'THB',outlook:{en:'Tourism recovery offset by political uncertainty',zh:'觀光復甦被政治不確定性抵消'}},
+  {flag:'\uD83C\uDDFB\uD83C\uDDF3',name:'VN-Index',nameZh:'越南VN指數',index:'VNI',level:1250,ytd:5.0,gdp:6.0,per:13.0,pbr:1.8,epsGr:18,divYld:2.5,bond10y:3.50,mktCapT:0.2,currency:'VND',outlook:{en:'FDI + manufacturing shift; FTSE upgrade potential',zh:'FDI+製造業轉移；FTSE升級潛力'}},
+  {flag:'\uD83C\uDDEE\uD83C\uDDE9',name:'JCI',nameZh:'印尼JCI',index:'JCI',level:7200,ytd:1.0,gdp:5.0,per:14.0,pbr:2.0,epsGr:9,divYld:2.5,bond10y:6.80,mktCapT:0.6,currency:'IDR',outlook:{en:'Nickel/commodities + domestic consumption',zh:'鎳礦/大宗商品+內需消費'}},
+  {flag:'\uD83C\uDDF5\uD83C\uDDED',name:'PSEi',nameZh:'菲律賓PSEi',index:'PSEI',level:6800,ytd:3.0,gdp:5.8,per:13.0,pbr:1.5,epsGr:12,divYld:2.0,bond10y:5.80,mktCapT:0.2,currency:'PHP',outlook:{en:'Remittance + BPO; rate cut tailwind',zh:'僑匯+BPO外包；降息順風'}},
+  {flag:'\uD83C\uDDF3\uD83C\uDDFF',name:'NZX 50',nameZh:'紐西蘭NZX',index:'NZX50',level:12500,ytd:2.0,gdp:1.8,per:22.0,pbr:2.0,epsGr:5,divYld:3.5,bond10y:4.50,mktCapT:0.1,currency:'NZD',outlook:{en:'Defensive utilities; thin market, low growth',zh:'防禦型公用事業；淺碟市場、低成長'}},
+
+  // Americas
+  {flag:'\uD83C\uDDE8\uD83C\uDDE6',name:'TSX',nameZh:'加拿大TSX',index:'TSX',level:22000,ytd:4.0,gdp:1.5,per:16.0,pbr:2.0,epsGr:8,divYld:3.0,bond10y:3.30,mktCapT:3.0,currency:'CAD',outlook:{en:'Banks + energy; BOC cuts supportive',zh:'銀行+能源；BOC降息利多'}},
+  {flag:'\uD83C\uDDE7\uD83C\uDDF7',name:'Bovespa',nameZh:'巴西Bovespa',index:'IBOV',level:130000,ytd:5.0,gdp:2.0,per:8.0,pbr:1.5,epsGr:12,divYld:5.0,bond10y:12.50,mktCapT:0.9,currency:'BRL',outlook:{en:'Deep value + 5% yield; but 12.5% bond rate and BRL risk',zh:'深度價值+5%殖利率；但12.5%債券利率和雷亞爾風險'}},
+  {flag:'\uD83C\uDDF2\uD83C\uDDFD',name:'IPC',nameZh:'墨西哥IPC',index:'MEXBOL',level:55000,ytd:3.0,gdp:1.8,per:13.0,pbr:2.2,epsGr:8,divYld:2.5,bond10y:9.50,mktCapT:0.5,currency:'MXN',outlook:{en:'Nearshoring + US trade; peso volatility',zh:'近岸外包+美國貿易；披索波動'}},
+
+  // Middle East
+  {flag:'\uD83C\uDDF8\uD83C\uDDE6',name:'Tadawul',nameZh:'沙烏地Tadawul',index:'TASI',level:12000,ytd:2.0,gdp:3.5,per:18.0,pbr:2.5,epsGr:6,divYld:2.5,bond10y:4.80,mktCapT:2.8,currency:'SAR',outlook:{en:'Vision 2030 diversification; oil price dependency',zh:'2030願景多元化；石油價格依賴'}}
+];
+
+var COLS = [
+  {key:'name',    en:'Market',    zh:'市場',     align:'left', w:'160px'},
+  {key:'mktCapT', en:'Cap($T)',   zh:'市值($T)', align:'right',w:'60px'},
+  {key:'ytd',     en:'YTD',       zh:'YTD',      align:'right',w:'50px'},
+  {key:'gdp',     en:'GDP',       zh:'GDP',      align:'right',w:'50px'},
+  {key:'per',     en:'PE',        zh:'PE',       align:'right',w:'46px'},
+  {key:'pbr',     en:'PB',        zh:'PB',       align:'right',w:'46px'},
+  {key:'epsGr',   en:'EPS\u2191', zh:'EPS\u2191',align:'right',w:'52px'},
+  {key:'peg',     en:'PEG',       zh:'PEG',      align:'right',w:'48px'},
+  {key:'divYld',  en:'Yld',       zh:'殖利',     align:'right',w:'46px'},
+  {key:'bond10y', en:'Bond',      zh:'公債',     align:'right',w:'46px'},
+  {key:'erp',     en:'ERP',       zh:'ERP',      align:'right',w:'50px'},
+  {key:'currency',en:'Ccy',       zh:'幣',       align:'right',w:'36px'},
+  {key:'outlook', en:'2026 Outlook',zh:'2026展望',align:'left', w:'120px'}
+];
+
+var currentLang = localStorage.getItem('lang') || 'en';
+var sortKey = 'mktCapT';
+var sortAsc = false;
+
+function pegColor(v) {
+  if (v <= 0) return C.muted;
+  if (v < 1.0) return C.green;
+  if (v <= 1.5) return C.navy;
+  if (v <= 2.0) return C.orange;
+  return C.red;
+}
+
+function erpColor(v) {
+  if (v >= 4) return C.green;
+  if (v >= 2) return C.navy;
+  if (v >= 0) return C.orange;
+  return C.red;
+}
+
+function yoyColor(v) { return v > 0 ? C.green : v < 0 ? C.red : C.muted; }
+
+function renderHeader() {
+  var html = '<tr>';
+  COLS.forEach(function(col) {
+    var label = currentLang === 'zh' ? col.zh : col.en;
+    var arrow = sortKey === col.key ? (sortAsc ? ' \u25B2' : ' \u25BC') : '';
+    var al = col.align === 'left' ? 'text-align:left' : 'text-align:right';
+    html += '<th style="width:'+col.w+';'+al+'" onclick="doSort(\''+col.key+'\')">' + label + '<span class="sort-arrow">' + arrow + '</span></th>';
+  });
+  html += '</tr>';
+  document.getElementById('marketHead').innerHTML = html;
+}
+
+function renderTable() {
+  // compute derived fields
+  MARKETS.forEach(function(m) {
+    m.peg = (m.epsGr > 0) ? +(m.per / m.epsGr).toFixed(2) : 99;
+    m.erp = +((1/m.per*100) - m.bond10y).toFixed(2);
+  });
+
+  var sorted = MARKETS.slice().sort(function(a, b) {
+    var va = a[sortKey], vb = b[sortKey];
+    if (sortKey === 'name') { va = a.name.toLowerCase(); vb = b.name.toLowerCase(); }
+    if (sortKey === 'outlook') { va = currentLang==='zh'?(a.outlook.zh||''):(a.outlook.en||''); vb = currentLang==='zh'?(b.outlook.zh||''):(b.outlook.en||''); }
+    if (sortKey === 'currency') { va = a.currency; vb = b.currency; }
+    if (va < vb) return sortAsc ? -1 : 1;
+    if (va > vb) return sortAsc ? 1 : -1;
+    return 0;
+  });
+
+  var html = '';
+  sorted.forEach(function(r) {
+    html += '<tr>';
+    COLS.forEach(function(col) {
+      var val = '', style = 'padding:6px 8px;';
+      switch(col.key) {
+        case 'name':
+          var disp = currentLang === 'zh' ? r.nameZh : r.name;
+          val = r.flag + ' ' + disp + '<br><span style="font-size:8px;color:#94a3b8">' + r.index + ' &middot; ' + r.level.toLocaleString() + '</span>';
+          style += 'text-align:left;white-space:normal;line-height:1.4;';
+          break;
+        case 'mktCapT':
+          val = '$' + r.mktCapT.toFixed(1) + 'T';
+          break;
+        case 'ytd':
+          val = (r.ytd >= 0 ? '+' : '') + r.ytd.toFixed(1) + '%';
+          style += 'color:' + yoyColor(r.ytd) + ';font-weight:600;';
+          break;
+        case 'gdp':
+          val = r.gdp.toFixed(1) + '%';
+          style += 'color:' + (r.gdp >= 3 ? C.green : r.gdp >= 1.5 ? C.navy : C.orange) + ';';
+          break;
+        case 'per':
+          val = r.per.toFixed(1);
+          style += 'color:' + (r.per < 12 ? C.green : r.per <= 18 ? C.navy : C.red) + ';';
+          break;
+        case 'pbr':
+          val = r.pbr.toFixed(1);
+          break;
+        case 'epsGr':
+          val = '+' + r.epsGr + '%';
+          style += 'color:' + (r.epsGr >= 15 ? C.green : r.epsGr >= 8 ? C.navy : C.orange) + ';font-weight:600;';
+          break;
+        case 'peg':
+          val = r.peg >= 99 ? 'n/a' : r.peg.toFixed(2);
+          style += 'color:' + pegColor(r.peg) + ';font-weight:600;';
+          break;
+        case 'divYld':
+          val = r.divYld.toFixed(1) + '%';
+          style += 'color:' + (r.divYld >= 3.5 ? C.green : C.muted) + ';';
+          break;
+        case 'bond10y':
+          val = r.bond10y.toFixed(2) + '%';
+          break;
+        case 'erp':
+          val = (r.erp >= 0 ? '+' : '') + r.erp.toFixed(1) + '%';
+          style += 'color:' + erpColor(r.erp) + ';font-weight:600;';
+          break;
+        case 'currency':
+          val = r.currency;
+          style += 'font-size:9px;';
+          break;
+        case 'outlook':
+          val = r.outlook ? (currentLang==='zh' ? r.outlook.zh : r.outlook.en) : '';
+          style += 'font-size:9px;color:#475569;white-space:normal;text-align:left;';
+          break;
+      }
+      html += '<td style="'+style+'">' + val + '</td>';
+    });
+    html += '</tr>';
+  });
+  document.getElementById('marketBody').innerHTML = html;
+}
+
+function doSort(key) {
+  if (sortKey === key) sortAsc = !sortAsc;
+  else { sortKey = key; sortAsc = (key === 'name' || key === 'currency'); }
+  renderHeader();
+  renderTable();
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.querySelectorAll('.lang-en').forEach(function(el) { el.style.display = lang === 'en' ? 'inline' : 'none'; });
+  document.querySelectorAll('.lang-zh').forEach(function(el) { el.style.display = lang === 'zh' ? 'inline' : 'none'; });
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', (btn.textContent === 'EN' && lang === 'en') || (btn.textContent !== 'EN' && lang === 'zh'));
+  });
+  renderHeader();
+  renderTable();
+}
+
+// Init
+setLang(currentLang);
+</script>
+</body>
+</html>
