@@ -224,6 +224,51 @@ def main():
     else:
         print("\n– reits.html: no changes")
 
+    # ── Update sectors.html ──────────────────────────────────────────────
+    sectors_path = ROOT / 'sectors.html'
+    if sectors_path.exists():
+        sectors_html = sectors_path.read_text(encoding='utf-8')
+        original_sectors = sectors_html
+
+        SECTOR_TICKERS = [
+            'XLK','XLF','XLE','XLV','XLY','XLP','XLI','XLC','XLU','XLRE','XLB',
+            'VNQ','SMH','GDX','SOXX','ITA','IGV','XBI','ARKK','XOP','KRE','HACK','XHB'
+        ]
+
+        print("\n── Fetching sector ETF data ──")
+        for sticker in SECTOR_TICKERS:
+            print(f"  Fetching {sticker}...")
+            info = fetch_quote(sticker)
+            if not info:
+                continue
+
+            # Update price
+            price = info.get('regularMarketPrice') or info.get('previousClose')
+            if price:
+                sectors_html = update_reit_field(sectors_html, sticker, 'price', round(price, 2))
+
+            # Update YTD
+            ytd = get_ytd_return(sticker)
+            if ytd is not None:
+                sectors_html = update_reit_field(sectors_html, sticker, 'ytd', ytd)
+
+            # Update PE
+            pe = info.get('trailingPE')
+            if pe and pe > 0 and pe < 200:
+                sectors_html = update_reit_field(sectors_html, sticker, 'pe', round(pe, 1))
+
+            # Update AUM
+            aum = info.get('totalAssets')
+            if aum and aum > 0:
+                sectors_html = update_reit_field(sectors_html, sticker, 'aum', round(aum / 1e9, 1))
+
+        if sectors_html != original_sectors:
+            sectors_path.write_text(sectors_html, encoding='utf-8')
+            changes = True
+            print("\n✓ sectors.html updated")
+        else:
+            print("\n– sectors.html: no changes")
+
     # ── Output for GitHub Actions ───────────────────────────────────────
     if changes:
         print(f"\n{'='*50}")
