@@ -20,8 +20,7 @@ def calc_cagr(old_val, new_val, years=2):
     return (new_val / old_val) ** (1 / years) - 1
 
 def safe_get(df, labels, col=0):
-    """Try multiple row labels, return first match or None."""
-    if df is None or len(df.columns) == 0:
+    if df is None or len(df.columns) == 0 or col >= len(df.columns):
         return None
     for lbl in (labels if isinstance(labels, list) else [labels]):
         if lbl in df.index:
@@ -30,8 +29,21 @@ def safe_get(df, labels, col=0):
                 return float(v)
     return None
 
+def find_valid_pair(df, labels, span=2):
+    """Find newest non-nan value and the one `span` years before it."""
+    if df is None or len(df.columns) < span + 1:
+        return None, None, span
+    for lbl in (labels if isinstance(labels, list) else [labels]):
+        if lbl in df.index:
+            row = df.loc[lbl]
+            for i in range(len(row) - span):
+                new_v = row.iloc[i]
+                old_v = row.iloc[i + span]
+                if str(new_v) != 'nan' and str(old_v) != 'nan' and new_v is not None and old_v is not None:
+                    return float(new_v), float(old_v), span
+    return None, None, span
+
 def fetch_one(ticker_str, retry=2):
-    """Fetch fundamentals for one ticker with retries."""
     for attempt in range(retry + 1):
         try:
             tk = yf.Ticker(ticker_str)
@@ -39,7 +51,6 @@ def fetch_one(ticker_str, retry=2):
             bs = tk.balance_sheet
             cf = tk.cashflow
 
-            # Check if we got real data
             has_fins = fins is not None and len(fins.columns) >= 3 and len(fins.index) > 5
             has_bs = bs is not None and len(bs.columns) >= 1 and len(bs.index) > 3
             has_cf = cf is not None and len(cf.columns) >= 1 and len(cf.index) > 3
@@ -51,40 +62,47 @@ def fetch_one(ticker_str, retry=2):
             result = {"ticker": ticker_str}
 
             # --- Revenue CAGR 2Y ---
-            rev_new = safe_get(fins, "Total Revenue", 0)
-            rev_old = safe_get(fins, "Total Revenue", 2) if has_fins else None
-            result["rev_cagr"] = calc_cagr(rev_old, rev_new)
+            rev_new, rev_old, yrs = find_valid_pair(fins, "Total Revenue", 2)
+            result["rev_cagr"] = calc_cagr(rev_old, rev_new, yrs)
 
             # --- EPS CAGR 2Y ---
-            eps_new = safe_get(fins, ["Diluted EPS", "Basic EPS"], 0)
-            eps_old = safe_get(fins, ["Diluted EPS", "Basic EPS"], 2) if has_fins else None
-            result["eps_cagr"] = calc_cagr(eps_old, eps_new)
+            eps_new, eps_old, yrs = find_valid_pair(fins, ["Diluted EPS", "Basic EPS"], 2)
+            result["eps_cagr"] = calc_cagr(eps_old, eps_new, yrs)
 
-            # --- FCF Margin ---
+            # --- FCF Margin (use most recent valid year) ---
             result["fcf_margin"] = None
-            if has_cf and rev_new and rev_new != 0:
-                fcf = safe_get(cf, "Free Cash Flow", 0)
-                if fcf is None:
-                    ocf = safe_get(cf, "Operating Cash Flow", 0)
-                    capex = safe_get(cf, ["Capital Expenditure"], 0)
+            rev_col = None
+            if has_fins:
+                for i in range(len(fins.columns)):
+                    v = safe_get(fins, "Total Revenue", i)
+                    if v and v != 0:
+                        rev_col = i
+                        break
+            if has_cf and rev_col is not None:
+                rev = safe_get(fins, "Total Revenue", rev_col)
+                fcf = safe_get(cf, "Free Cash Flow", rev_col)
+                if fcf is None and rev_col < (len(cf.columns) if cf is not None else 0):
+                    ocf = safe_get(cf, "Operating Cash Flow", rev_col)
+                    capex = safe_get(cf, ["Capital Expenditure"], rev_col)
                     if ocf is not None and capex is not None:
-                        fcf = ocf + capex  # capex is negative in yfinance
-                if fcf is not None:
-                    result["fcf_margin"] = fcf / rev_new
+                        fcf = ocf + capex
+                if fcf is not None and rev and rev != 0:
+                    result["fcf_margin"] = fcf / rev
 
-            # --- ROIC ---
+            # --- ROIC (use same valid column as revenue) ---
             result["roic"] = None
+            col = rev_col if rev_col is not None else 0
             if has_fins and has_bs:
-                ebit = safe_get(fins, ["EBIT", "Operating Income"], 0)
-                tax_prov = safe_get(fins, "Tax Provision", 0)
-                pretax = safe_get(fins, "Pretax Income", 0)
+                ebit = safe_get(fins, ["EBIT", "Operating Income"], col)
+                tax_prov = safe_get(fins, "Tax Provision", col)
+                pretax = safe_get(fins, "Pretax Income", col)
                 tax_rate = 0.21
                 if tax_prov is not None and pretax and pretax != 0:
                     tr = tax_prov / pretax
                     tax_rate = tr if 0 <= tr <= 0.5 else 0.21
 
-                equity = safe_get(bs, ["Stockholders Equity", "Total Stockholders Equity", "Common Stock Equity"], 0)
-                lt_debt = safe_get(bs, ["Long Term Debt", "Long Term Debt And Capital Lease Obligation"], 0) or 0
+                equity = safe_get(bs, ["Stockholders Equity", "Total Stockholders Equity", "Common Stock Equity"], col)
+                lt_debt = safe_get(bs, ["Long Term Debt", "Long Term Debt And Capital Lease Obligation"], col) or 0
 
                 if ebit is not None and equity is not None:
                     invested = equity + lt_debt
@@ -120,7 +138,6 @@ def main():
             if done % 50 == 0 or done == total:
                 print(f"  {done}/{total} done")
 
-    # Round values
     for tk, r in results.items():
         for k in ["rev_cagr", "eps_cagr", "fcf_margin", "roic"]:
             if r[k] is not None:
