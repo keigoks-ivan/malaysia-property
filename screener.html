@@ -81,7 +81,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
   <!-- Top Picks -->
   <div id="picksSection" style="display:none">
     <div style="font-size:10px;letter-spacing:.16em;color:#3b82f6;font-weight:600;margin-bottom:12px"><span class="lang-en">TODAY'S TOP PICKS</span><span class="lang-zh">今日精選</span></div>
-    <div class="picks-grid" id="picksGrid"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px" id="picksRow1"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px" id="picksRow2"></div>
   </div>
 
   <!-- Sector Filter -->
@@ -107,7 +108,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
 <script>
 var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a'};
 var currentLang=localStorage.getItem('lang')||'en';
-var sortKey='combined',sortAsc=false,filterSector='ALL',allData=[],pickData={};
+var sortKey='combined',sortAsc=false,filterSector='ALL',allData=[],pickData={},topSectorData={};
 
 var COLS=[
   {key:'rank',en:'#',zh:'#',align:'left',w:'28px'},
@@ -185,27 +186,47 @@ function renderTable(){
 }
 
 function renderPicks(){
-  var grid=document.getElementById('picksGrid');
-  var labels={minervini:{en:'Minervini Best',zh:'Minervini 最佳',cls:''},momentum:{en:'Momentum Rising',zh:'動能上升',cls:'momentum'},vcp_best:{en:'VCP Best Shape',zh:'VCP 最佳形態',cls:'vcp'}};
-  var h='';
-  ['minervini','momentum','vcp_best'].forEach(function(key){
+  var labels={
+    minervini_1:{en:'Minervini #1',zh:'Minervini #1',color:'#3b82f6',cls:''},
+    minervini_2:{en:'Minervini #2',zh:'Minervini #2',color:'#3b82f6',cls:''},
+    momentum:{en:'Momentum Rising',zh:'動能上升',color:'#16a34a',cls:'momentum'},
+    vcp_1:{en:'VCP Best #1',zh:'VCP最佳 #1',color:'#d97706',cls:'vcp'},
+    vcp_2:{en:'VCP Best #2',zh:'VCP最佳 #2',color:'#d97706',cls:'vcp'}
+  };
+
+  function cardHtml(key){
     var ticker=pickData[key];
-    if(!ticker)return;
+    if(!ticker)return '';
     var r=allData.find(function(d){return d.ticker===ticker;});
-    if(!r)return;
+    if(!r)return '';
     var l=labels[key];
     var t=TREND_MAP[r.rs_trend]||TREND_MAP.choppy;
-    h+='<div class="pick-card '+l.cls+'">';
-    h+='<div class="pick-label" style="color:'+(key==='minervini'?'#3b82f6':key==='momentum'?'#16a34a':'#d97706')+'">'+(currentLang==='zh'?l.zh:l.en)+'</div>';
+    var h='<div class="pick-card '+l.cls+'">';
+    h+='<div class="pick-label" style="color:'+l.color+'">'+(currentLang==='zh'?l.zh:l.en)+'</div>';
     h+='<div class="pick-ticker">'+r.ticker+'</div>';
     h+='<div class="pick-meta">'+r.sector+' &middot; $'+r.price.toFixed(0)+' &middot; RS '+r.rs_score.toFixed(0)+' &middot; VCP '+r.vcp_score+' &middot; Score '+r.combined.toFixed(1)+'</div>';
     h+='<div class="pick-meta"><span class="badge '+t.cls+'">'+(currentLang==='zh'?t.zh:t.en)+'</span>';
     h+=' &middot; '+(currentLang==='zh'?'距高點':'fm High')+' -'+r.dist_from_high_pct.toFixed(1)+'%';
     h+=' &middot; vs200MA '+(r.vs_200ma_pct>=0?'+':'')+r.vs_200ma_pct.toFixed(1)+'%</div>';
-    h+='</div>';
-  });
-  grid.innerHTML=h;
-  if(h)document.getElementById('picksSection').style.display='block';
+    return h+'</div>';
+  }
+
+  // Top sector card
+  var ts=topSectorData||{};
+  var sectorCard='<div class="pick-card" style="border-top-color:#1e3a5f">';
+  sectorCard+='<div class="pick-label" style="color:#1e3a5f">'+(currentLang==='zh'?'Top Sector':'Top Sector')+'</div>';
+  sectorCard+='<div class="pick-ticker" style="font-size:18px">'+(ts.sector||'—')+'</div>';
+  sectorCard+='<div class="pick-meta">'+(currentLang==='zh'?'平均RS：':'Avg RS: ')+(ts.avg_rs||0)+' &middot; '+(ts.count||0)+(currentLang==='zh'?' 支':' stocks')+'</div>';
+  sectorCard+='</div>';
+
+  // Row 1: Minervini #1, Minervini #2, Momentum
+  var r1=cardHtml('minervini_1')+cardHtml('minervini_2')+cardHtml('momentum');
+  // Row 2: VCP #1, VCP #2, Top Sector
+  var r2=cardHtml('vcp_1')+cardHtml('vcp_2')+sectorCard;
+
+  document.getElementById('picksRow1').innerHTML=r1;
+  document.getElementById('picksRow2').innerHTML=r2;
+  if(r1||r2)document.getElementById('picksSection').style.display='block';
 }
 
 function renderSectorBar(){
@@ -236,6 +257,7 @@ fetch('docs/screener/latest.json')
   .then(function(d){
     allData=d.rankings||[];
     pickData=d.top_picks||{};
+    topSectorData=d.top_sector||{};
     document.getElementById('loading').style.display='none';
     document.getElementById('updateDate').textContent=(currentLang==='zh'?'最後更新：':'Last updated: ')+d.date;
     renderHeader();renderTable();renderPicks();renderSectorBar();

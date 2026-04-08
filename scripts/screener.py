@@ -424,37 +424,45 @@ def main():
 
     # ── Top Picks ───────────────────────────────────────────────────────
     print("  Selecting top picks...")
-    picks = {}
+    picks = {}  # key → ticker
+    used = set()
 
-    # Minervini best
-    for cond in [
-        lambda r: r['rs_score']>=80 and r['vcp_score']>=75 and r['rs_trend']=='accelerating' and r['dist_from_high_pct']<5 and r['vol_ratio']<0.8,
-        lambda r: r['rs_score']>=80 and r['vcp_score']>=75 and r['rs_trend']=='accelerating' and r['dist_from_high_pct']<8,
-        lambda r: r['rs_score']>=78 and r['vcp_score']>=70 and r['rs_trend'] in ('accelerating','steady'),
-        lambda r: r['rs_score']>=75 and r['vcp_score']>=65,
-    ]:
-        for r in results:
-            if r['ticker'] not in picks.values() and cond(r):
-                picks['minervini'] = r['ticker']
+    def pick(key, candidates):
+        for r in candidates:
+            if r['ticker'] not in used:
+                picks[key] = r['ticker']
+                used.add(r['ticker'])
+                return True
+        return False
+
+    # Minervini best × 2 (progressively relaxed)
+    for label in ['minervini_1', 'minervini_2']:
+        for cond in [
+            lambda r: r['rs_score']>=80 and r['vcp_score']>=75 and r['rs_trend']=='accelerating' and r['dist_from_high_pct']<5 and r['vol_ratio']<0.8,
+            lambda r: r['rs_score']>=80 and r['vcp_score']>=75 and r['rs_trend']=='accelerating' and r['dist_from_high_pct']<8,
+            lambda r: r['rs_score']>=78 and r['vcp_score']>=70 and r['rs_trend'] in ('accelerating','steady'),
+            lambda r: r['rs_score']>=75 and r['vcp_score']>=65,
+            lambda r: r['rs_score']>=70 and r['vcp_score']>=55,
+        ]:
+            found = [r for r in results if r['ticker'] not in used and cond(r)]
+            if found:
+                pick(label, found)
                 break
-        if 'minervini' in picks:
-            break
 
-    # Momentum (biggest rank improvement)
-    momentum_candidates = [r for r in results if r['rs_score'] >= 65 and r['rank_change'] not in ('—', 'NEW') and int(r['rank_change'].replace('+','')) > 0]
-    momentum_candidates.sort(key=lambda r: int(r['rank_change'].replace('+','')), reverse=True)
-    for r in momentum_candidates:
-        if r['ticker'] not in picks.values():
-            picks['momentum'] = r['ticker']
-            break
+    # Momentum × 1 (biggest rank improvement)
+    try:
+        momentum_candidates = [r for r in results if r['rs_score'] >= 65 and r['rank_change'] not in ('—', 'NEW') and int(r['rank_change'].replace('+','')) > 0]
+        momentum_candidates.sort(key=lambda r: int(r['rank_change'].replace('+','')), reverse=True)
+        pick('momentum', momentum_candidates)
+    except:
+        pass
 
-    # VCP best
-    vcp_candidates = [r for r in results if r['vcp_score'] >= 75 and r['rs_score'] >= 70]
+    # VCP best × 2
+    vcp_candidates = [r for r in results if r['vcp_score'] >= 70 and r['rs_score'] >= 65]
     vcp_candidates.sort(key=lambda r: r['vcp_score'] * 0.7 + r['rs_score'] * 0.3, reverse=True)
-    for r in vcp_candidates:
-        if r['ticker'] not in picks.values():
-            picks['vcp_best'] = r['ticker']
-            break
+    pick('vcp_1', vcp_candidates)
+    vcp_candidates2 = [r for r in vcp_candidates if r['ticker'] not in used]
+    pick('vcp_2', vcp_candidates2)
 
     # ── Fundamentals for top 30 ─────────────────────────────────────────
     if not quick:
@@ -481,6 +489,7 @@ def main():
         'total_stocks': len(results),
         'benchmark': BENCHMARK,
         'top_picks': picks,
+        'top_sector': sector_ranking[0] if sector_ranking else {},
         'sector_ranking': sector_ranking,
         'rankings': results,
     }
