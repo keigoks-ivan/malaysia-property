@@ -269,8 +269,7 @@ var REITS = [
 ];
 
 var COLS = [
-  {key:'name',    en:'REIT',       zh:'REITs',     align:'left', w:'180px'},
-  {key:'sector',  en:'Sector',     zh:'\u7522\u696D',     align:'left', w:'100px'},
+  {key:'name',    en:'REIT',       zh:'REITs',     align:'left', w:'140px'},
   {key:'mktCapUSD',en:'Mkt Cap',   zh:'\u5E02\u503C',     align:'right',w:'80px'},
   {key:'divYield',en:'Div Yield',  zh:'\u6B96\u5229\u7387',   align:'right',w:'72px'},
   {key:'pnav',    en:'P/NAV',      zh:'P/NAV',     align:'right',w:'68px'},
@@ -322,7 +321,7 @@ function renderHeader() {
     th.style.textAlign = col.align;
     th.style.width = col.w;
     if (col.key === 'name') {
-      th.style.minWidth = '180px';
+      th.style.minWidth = '140px';
     }
     th.onclick = function() { sortBy(col.key); };
     var label = currentLang === 'zh' ? col.zh : col.en;
@@ -356,8 +355,7 @@ function renderTable() {
     var ret5yStr = (r.ret5y >= 0 ? '+' : '') + r.ret5y + '%';
 
     tr.innerHTML =
-      '<td>' + nameDisplay + '</td>' +
-      '<td style="text-align:left">' + sectorBadge(r.sector) + '</td>' +
+      '<td>' + nameDisplay + '<br>' + sectorBadge(r.sector) + '</td>' +
       '<td>' + r.mktCapDisp + '<br><span style="font-size:8px;color:#94a3b8">$' + r.mktCapUSD.toFixed(0) + 'B</span></td>' +
       '<td style="font-weight:600;color:' + (r.divYield >= 5 ? C.green : r.divYield >= 3 ? C.navy : C.muted) + '">' + r.divYield.toFixed(1) + '%</td>' +
       '<td style="font-weight:600;color:' + pnavColor(r.pnav) + '">' + r.pnav.toFixed(2) + 'x</td>' +
