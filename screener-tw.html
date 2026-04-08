@@ -129,7 +129,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
       <b>fm High</b> — Distance from 52-week high<br>
       <b>Pullback / #PB</b> — Last pullback depth &amp; number of contractions<br>
       <b>ATR%</b> — Average True Range ratio (lower = tighter)<br>
-      <b>Q ✓</b> — Quality check: EPS 2Y &gt;15% AND ROIC &gt;15% AND FCF% &gt;10%<br>
+      <b>Q ✓</b> — Quality check: EPS 2Y &gt;20% AND ROIC &gt;15%<br>
       <b>Rev 2Y↗</b> — Forward 2-year revenue CAGR (analyst consensus estimates)<br>
       <b>EPS 2Y↗</b> — Forward 2-year EPS CAGR (analyst consensus estimates)<br>
       <b>ROIC</b> — Return on Invested Capital, TTM (NOPAT / Invested Capital)<br>
@@ -145,7 +145,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
       <b>距高點</b> — 距離52週高點<br>
       <b>回撤 / 收縮</b> — 最近一次回撤深度 &amp; 收縮次數<br>
       <b>ATR%</b> — 平均真實波幅比率（越低越緊）<br>
-      <b>Q ✓</b> — 品質篩選：EPS 2Y &gt;15% 且 ROIC &gt;15% 且 FCF% &gt;10%<br>
+      <b>Q ✓</b> — 品質篩選：EPS 2Y &gt;20% 且 ROIC &gt;15%<br>
       <b>營收2Y↗</b> — 未來兩年營收 CAGR（分析師共識預估）<br>
       <b>EPS 2Y↗</b> — 未來兩年 EPS CAGR（分析師共識預估）<br>
       <b>ROIC</b> — 投入資本回報率，TTM（稅後營業利潤 / 投入資本）<br>
@@ -232,7 +232,7 @@ function renderTable(){
         case 'last_pullback_pct': v=r.last_pullback_pct?r.last_pullback_pct.toFixed(0)+'%':'—'; break;
         case 'pullback_count': v=r.pullback_count||'—'; break;
         case 'atr_ratio': v=r.atr_ratio?r.atr_ratio.toFixed(2):'—'; s+='color:'+(r.atr_ratio<0.5?C.green:r.atr_ratio<0.7?C.navy:C.muted)+';'; break;
-        case 'quality': v=(r.eps_cagr!=null&&r.roic!=null&&r.fcf_margin!=null&&r.eps_cagr>0.15&&r.roic>0.15&&r.fcf_margin>0.10)?'<span style="color:#16a34a;font-size:13px">✓</span>':''; break;
+        case 'quality': v=(r.eps_cagr!=null&&r.roic!=null&&r.eps_cagr>0.20&&r.roic>0.15)?'<span style="color:#16a34a;font-size:13px">✓</span>':''; break;
         case 'rev_cagr': v=r.rev_cagr!=null?(r.rev_cagr>0?'+':'')+(r.rev_cagr*100).toFixed(0)+'%':'—'; s+='font-size:10px;color:'+(r.rev_cagr>0.15?C.green:r.rev_cagr>0?C.navy:r.rev_cagr!=null?C.red:C.muted)+';'; break;
         case 'eps_cagr': v=r.eps_cagr!=null?(r.eps_cagr>0?'+':'')+(r.eps_cagr*100).toFixed(0)+'%':'—'; s+='font-size:10px;color:'+(r.eps_cagr>0.15?C.green:r.eps_cagr>0?C.navy:r.eps_cagr!=null?C.red:C.muted)+';'; break;
         case 'roic': v=r.roic!=null?(r.roic*100).toFixed(0)+'%':'—'; s+='font-size:10px;color:'+(r.roic>0.15?C.green:r.roic>0?C.navy:r.roic!=null?C.red:C.muted)+';'; break;
