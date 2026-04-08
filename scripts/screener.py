@@ -30,59 +30,83 @@ SCREENER_DIR = ROOT / 'docs' / 'screener'
 HISTORY_DIR = SCREENER_DIR / 'history'
 HISTORY_DIR.mkdir(parents=True, exist_ok=True)
 
-# ── Watchlist ────────────────────────────────────────────────────────────
-# ~200 liquid US stocks across sectors
-WATCHLIST = {
-    # Technology
+# ── Watchlist: S&P 500 + NQ100 extras ────────────────────────────────────
+
+# NQ100 tickers NOT in S&P 500 (added to ensure full NQ100 coverage)
+NQ100_EXTRAS = {
+    'ARM':'Technology','MSTR':'Technology','SMCI':'Technology','APP':'Technology',
+    'COIN':'Financials','DASH':'Consumer Disc','DDOG':'Technology','MNDY':'Technology',
+    'TEAM':'Technology','TTD':'Technology','ZS':'Technology','RIVN':'Consumer Disc',
+    'MELI':'Consumer Disc','GFS':'Technology','GEHC':'Health Care','WBD':'Communication',
+    'LULU':'Consumer Disc','MRNA':'Health Care','CPRT':'Industrials','TTWO':'Communication',
+    'WDAY':'Technology','ABNB':'Consumer Disc','PYPL':'Financials','PCAR':'Industrials',
+}
+
+def fetch_sp500_tickers():
+    """Fetch S&P 500 components from GitHub CSV."""
+    url = 'https://raw.githubusercontent.com/datasets/s-and-p-500-companies/main/data/constituents.csv'
+    try:
+        import requests
+        r = requests.get(url, timeout=15)
+        if r.status_code != 200:
+            raise Exception(f"HTTP {r.status_code}")
+        tickers = {}
+        for line in r.text.strip().split('\n')[1:]:
+            parts = line.split(',')
+            if len(parts) >= 3:
+                sym = parts[0].replace('.', '-')  # BRK.B → BRK-B
+                sector = parts[2]
+                # Normalize sector names
+                sector = sector.replace('Information Technology', 'Technology')
+                sector = sector.replace('Consumer Discretionary', 'Consumer Disc')
+                sector = sector.replace('Consumer Staples', 'Consumer Staples')
+                sector = sector.replace('Communication Services', 'Communication')
+                tickers[sym] = sector
+        print(f"  Fetched {len(tickers)} S&P 500 tickers from GitHub")
+        return tickers
+    except Exception as e:
+        print(f"  ⚠ Failed to fetch S&P 500: {e}, using fallback")
+        return None
+
+def build_watchlist():
+    """Build watchlist: S&P 500 + NQ100 extras."""
+    sp500 = fetch_sp500_tickers()
+    if sp500 is None:
+        # Fallback: use a hardcoded subset
+        print("  Using hardcoded fallback (~200 stocks)")
+        return _FALLBACK_WATCHLIST
+    # Merge with NQ100 extras
+    watchlist = dict(sp500)
+    for t, s in NQ100_EXTRAS.items():
+        if t not in watchlist:
+            watchlist[t] = s
+    print(f"  Total watchlist: {len(watchlist)} stocks (SP500 + NQ100 extras)")
+    return watchlist
+
+# Hardcoded fallback if GitHub CSV is unavailable
+_FALLBACK_WATCHLIST = {
     'AAPL':'Technology','MSFT':'Technology','NVDA':'Technology','GOOG':'Technology',
     'META':'Technology','AVGO':'Technology','ORCL':'Technology','CRM':'Technology',
     'AMD':'Technology','ADBE':'Technology','NOW':'Technology','INTU':'Technology',
     'AMAT':'Technology','KLAC':'Technology','LRCX':'Technology','MRVL':'Technology',
     'SNPS':'Technology','CDNS':'Technology','PANW':'Technology','CRWD':'Technology',
     'FTNT':'Technology','PLTR':'Technology','APP':'Technology','MSTR':'Technology',
-    'DELL':'Technology','HPE':'Technology','MU':'Technology','QCOM':'Technology',
-    'TXN':'Technology','NXPI':'Technology','ON':'Technology','ARM':'Technology',
-    # Financials
-    'JPM':'Financials','V':'Financials','MA':'Financials','BAC':'Financials',
-    'GS':'Financials','MS':'Financials','BLK':'Financials','SCHW':'Financials',
-    'AXP':'Financials','SPGI':'Financials','ICE':'Financials','MCO':'Financials',
-    'PGR':'Financials','TRV':'Financials','AIG':'Financials','COIN':'Financials',
-    # Health Care
-    'LLY':'Health Care','UNH':'Health Care','JNJ':'Health Care','ABBV':'Health Care',
-    'MRK':'Health Care','TMO':'Health Care','ABT':'Health Care','ISRG':'Health Care',
-    'DHR':'Health Care','BSX':'Health Care','SYK':'Health Care','VRTX':'Health Care',
-    'REGN':'Health Care','GILD':'Health Care','ELV':'Health Care','HCA':'Health Care',
-    # Consumer Discretionary
-    'AMZN':'Consumer Disc','TSLA':'Consumer Disc','HD':'Consumer Disc','MCD':'Consumer Disc',
-    'NKE':'Consumer Disc','LOW':'Consumer Disc','SBUX':'Consumer Disc','TJX':'Consumer Disc',
-    'BKNG':'Consumer Disc','CMG':'Consumer Disc','ORLY':'Consumer Disc','AZO':'Consumer Disc',
-    'ROST':'Consumer Disc','DHI':'Consumer Disc','LEN':'Consumer Disc','DECK':'Consumer Disc',
-    # Industrials
-    'GE':'Industrials','CAT':'Industrials','RTX':'Industrials','HON':'Industrials',
-    'UNP':'Industrials','DE':'Industrials','LMT':'Industrials','NOC':'Industrials',
-    'GD':'Industrials','BA':'Industrials','MMM':'Industrials','EMR':'Industrials',
-    'ETN':'Industrials','ITW':'Industrials','PH':'Industrials','UBER':'Industrials',
-    'AXON':'Industrials','TT':'Industrials','CARR':'Industrials','PWR':'Industrials',
-    # Energy
-    'XOM':'Energy','CVX':'Energy','COP':'Energy','SLB':'Energy',
-    'EOG':'Energy','MPC':'Energy','PSX':'Energy','VLO':'Energy',
-    'OXY':'Energy','HES':'Energy','DVN':'Energy','FANG':'Energy',
-    # Communication
-    'GOOGL':'Communication','NFLX':'Communication','DIS':'Communication','CMCSA':'Communication',
-    'TMUS':'Communication','VZ':'Communication','T':'Communication','SPOT':'Communication',
-    # Consumer Staples
-    'PG':'Consumer Staples','KO':'Consumer Staples','PEP':'Consumer Staples','COST':'Consumer Staples',
-    'WMT':'Consumer Staples','PM':'Consumer Staples','MO':'Consumer Staples','CL':'Consumer Staples',
-    'MDLZ':'Consumer Staples','STZ':'Consumer Staples','KHC':'Consumer Staples','GIS':'Consumer Staples',
-    # Utilities
-    'NEE':'Utilities','SO':'Utilities','DUK':'Utilities','CEG':'Utilities',
-    'VST':'Utilities','AEP':'Utilities','D':'Utilities','SRE':'Utilities',
-    # Real Estate
-    'PLD':'Real Estate','AMT':'Real Estate','EQIX':'Real Estate','CCI':'Real Estate',
-    'DLR':'Real Estate','WELL':'Real Estate','SPG':'Real Estate','O':'Real Estate',
-    # Materials
-    'LIN':'Materials','APD':'Materials','SHW':'Materials','ECL':'Materials',
-    'FCX':'Materials','NEM':'Materials','NUE':'Materials','DOW':'Materials',
+    'DELL':'Technology','MU':'Technology','QCOM':'Technology','TXN':'Technology',
+    'ARM':'Technology','JPM':'Financials','V':'Financials','MA':'Financials',
+    'BAC':'Financials','GS':'Financials','BLK':'Financials','SPGI':'Financials',
+    'PGR':'Financials','COIN':'Financials','LLY':'Health Care','UNH':'Health Care',
+    'JNJ':'Health Care','ABBV':'Health Care','MRK':'Health Care','TMO':'Health Care',
+    'ISRG':'Health Care','VRTX':'Health Care','AMZN':'Consumer Disc','TSLA':'Consumer Disc',
+    'HD':'Consumer Disc','MCD':'Consumer Disc','LOW':'Consumer Disc','BKNG':'Consumer Disc',
+    'CMG':'Consumer Disc','GE':'Industrials','CAT':'Industrials','RTX':'Industrials',
+    'HON':'Industrials','UNP':'Industrials','LMT':'Industrials','ETN':'Industrials',
+    'UBER':'Industrials','AXON':'Industrials','XOM':'Energy','CVX':'Energy',
+    'COP':'Energy','SLB':'Energy','EOG':'Energy','MPC':'Energy',
+    'NFLX':'Communication','DIS':'Communication','TMUS':'Communication','SPOT':'Communication',
+    'PG':'Consumer Staples','KO':'Consumer Staples','COST':'Consumer Staples','WMT':'Consumer Staples',
+    'NEE':'Utilities','CEG':'Utilities','VST':'Utilities','PLD':'Real Estate',
+    'EQIX':'Real Estate','WELL':'Real Estate','LIN':'Materials','SHW':'Materials',
+    'FCX':'Materials','NEM':'Materials',
 }
 
 BENCHMARK = 'SPY'
@@ -274,6 +298,9 @@ def main():
     now = datetime.now(timezone.utc)
     today = now.strftime('%Y-%m-%d')
     print(f"=== RS+VCP Screener: {today} ===\n")
+
+    # ── Build watchlist ────────────────────────────────────────────────
+    WATCHLIST = build_watchlist()
 
     # ── Fetch data ──────────────────────────────────────────────────────
     data = fetch_all_data(WATCHLIST.keys())
