@@ -91,6 +91,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
         <span class="lang-zh"><strong>PE</strong> &mdash; 過去12個月本益比。</span>
         <span class="lang-en"><strong>Yld</strong> &mdash; Trailing 12-month distribution yield.</span>
         <span class="lang-zh"><strong>Yld</strong> &mdash; 過去12個月配息殖利率。</span>
+        <span class="lang-en"><strong>RS</strong> &mdash; Relative Strength (0-100). Percentile rank of 1w/4w/13w returns, weighted 20/30/50 + trend bonus. Same logic as Screener.</span>
+        <span class="lang-zh"><strong>RS</strong> &mdash; 相對強度（0-100）。1週/4週/13週漲幅百分位排名，加權20/30/50+趨勢加分。與選股器相同邏輯。</span>
         <span class="lang-en"><strong>Beta</strong> &mdash; 3-year beta vs S&amp;P 500. &lt;1.0 = defensive (green), 1.0-1.3 = market-like, &gt;1.3 = aggressive (red).</span>
         <span class="lang-zh"><strong>Beta</strong> &mdash; 3年期相對S&amp;P 500的Beta。&lt;1.0=防禦型（綠色）、1.0-1.3=類市場、&gt;1.3=進攻型（紅色）。</span>
         <span class="lang-en" style="grid-column:span 2;font-weight:600;color:#5a7a9a;margin-top:4px">Data from Yahoo Finance via yfinance. Auto-updated weekly. Outlook is editorial assessment. PB/PEG not available for ETFs (no consensus EPS forecast for fund-level).</span>
@@ -114,32 +116,32 @@ var C = {navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#25
 // group: 'sector' = GICS 11 sectors, 'sub' = sub-sector/thematic
 var SECTORS = [
   // 11 GICS Sectors (SPDR Select Sector)
-  {ticker:'XLK',name:'Technology',nameZh:'科技',group:'sector',price:137.43,aum:84.2,ytd:-4.6,pe:32.7,divYld:0.6,beta:1.11,outlook:{en:'AI hardware strong; software under pressure (-21% IGV); tariff risk on supply chains',zh:'AI硬體強勁；軟體承壓（IGV -21%）；供應鏈關稅風險'}},
-  {ticker:'XLF',name:'Financials',nameZh:'金融',group:'sector',price:49.88,aum:47.8,ytd:-8.7,pe:16.8,divYld:1.6,beta:0.92,outlook:{en:'Banks profitable but tariff uncertainty weighs; rate cut delayed',zh:'銀行獲利但關稅不確定性壓制；降息延遲'}},
-  {ticker:'XLE',name:'Energy',nameZh:'能源',group:'sector',price:60.16,aum:43.6,ytd:32.6,pe:23.2,divYld:2.4,beta:0.23,outlook:{en:'Best performer YTD; oil prices up on geopolitical risk; tariff beneficiary',zh:'YTD最佳表現；地緣風險推升油價；關稅受惠者'}},
-  {ticker:'XLV',name:'Health Care',nameZh:'醫療',group:'sector',price:146.57,aum:38.6,ytd:-5.4,pe:25.8,divYld:1.7,beta:0.71,outlook:{en:'Eli Lilly dominance; GLP-1 drugs secular trend; defensive in downturn',zh:'禮來主導；GLP-1藥物長期趨勢；下行防禦型'}},
-  {ticker:'XLI',name:'Industrials',nameZh:'工業',group:'sector',price:164.28,aum:28.3,ytd:4.3,pe:29.6,divYld:1.3,beta:1.24,outlook:{en:'Reshoring + defense spending; tariff mixed (domestic beneficiary but input costs up)',zh:'回流+國防支出；關稅影響分化（國內受惠但進口成本上升）'}},
-  {ticker:'XLC',name:'Communication',nameZh:'通訊',group:'sector',price:111.82,aum:24.1,ytd:-4.0,pe:18.1,divYld:1.3,beta:0.92,outlook:{en:'META + GOOG AI capex; lowest PE among growth sectors; ad revenue resilient',zh:'META+GOOG AI資本支出；成長類股中最低PE；廣告收入有韌性'}},
-  {ticker:'XLU',name:'Utilities',nameZh:'公用事業',group:'sector',price:46.27,aum:24.4,ytd:7.9,pe:22.7,divYld:2.6,beta:0.67,outlook:{en:'AI data center power demand; rate cut beneficiary; defensive yield',zh:'AI資料中心用電需求；降息受惠；防禦型殖利率'}},
-  {ticker:'XLY',name:'Consumer Disc.',nameZh:'非必需消費',group:'sector',price:107.77,aum:21.4,ytd:-8.8,pe:29.1,divYld:0.8,beta:1.25,outlook:{en:'Amazon + Tesla heavy; consumer spending slowing; tariff headwind on imports',zh:'亞馬遜+特斯拉權重大；消費支出放緩；進口關稅逆風'}},
-  {ticker:'XLP',name:'Consumer Staples',nameZh:'必需消費',group:'sector',price:81.26,aum:15.5,ytd:5.2,pe:25.6,divYld:2.7,beta:0.66,outlook:{en:'Defensive; Costco + PG pricing power; recession hedge',zh:'防禦型；Costco+PG定價權；衰退避險'}},
-  {ticker:'XLRE',name:'Real Estate',nameZh:'房地產',group:'sector',price:41.72,aum:7.3,ytd:4.0,pe:31.9,divYld:3.4,beta:1.09,outlook:{en:'Rate sensitive; data center REITs offset office drag; wait for rate cuts',zh:'利率敏感；資料中心REIT抵消辦公拖累；等待降息'}},
-  {ticker:'XLB',name:'Materials',nameZh:'原物料',group:'sector',price:50.08,aum:6.5,ytd:9.1,pe:26.2,divYld:1.8,beta:1.09,outlook:{en:'Gold miners surge; commodity inflation hedge; tariff-driven reshoring demand',zh:'金礦股飆升；大宗商品通膨避險；關稅驅動回流需求'}},
+  {ticker:'XLK',name:'Technology',nameZh:'科技',group:'sector',price:137.43,aum:84.2,ytd:-4.6,pe:32.7,divYld:0.6,beta:1.11,rs:50.0,outlook:{en:'AI hardware strong; software under pressure (-21% IGV); tariff risk on supply chains',zh:'AI硬體強勁；軟體承壓（IGV -21%）；供應鏈關稅風險'}},
+  {ticker:'XLF',name:'Financials',nameZh:'金融',group:'sector',price:49.88,aum:47.8,ytd:-8.7,pe:16.8,divYld:1.6,beta:0.92,rs:35.8,outlook:{en:'Banks profitable but tariff uncertainty weighs; rate cut delayed',zh:'銀行獲利但關稅不確定性壓制；降息延遲'}},
+  {ticker:'XLE',name:'Energy',nameZh:'能源',group:'sector',price:60.16,aum:43.6,ytd:32.6,pe:23.2,divYld:2.4,beta:0.23,rs:78.3,outlook:{en:'Best performer YTD; oil prices up on geopolitical risk; tariff beneficiary',zh:'YTD最佳表現；地緣風險推升油價；關稅受惠者'}},
+  {ticker:'XLV',name:'Health Care',nameZh:'醫療',group:'sector',price:146.57,aum:38.6,ytd:-5.4,pe:25.8,divYld:1.7,beta:0.71,rs:24.6,outlook:{en:'Eli Lilly dominance; GLP-1 drugs secular trend; defensive in downturn',zh:'禮來主導；GLP-1藥物長期趨勢；下行防禦型'}},
+  {ticker:'XLI',name:'Industrials',nameZh:'工業',group:'sector',price:164.28,aum:28.3,ytd:4.3,pe:29.6,divYld:1.3,beta:1.24,rs:50.0,outlook:{en:'Reshoring + defense spending; tariff mixed (domestic beneficiary but input costs up)',zh:'回流+國防支出；關稅影響分化（國內受惠但進口成本上升）'}},
+  {ticker:'XLC',name:'Communication',nameZh:'通訊',group:'sector',price:111.82,aum:24.1,ytd:-4.0,pe:18.1,divYld:1.3,beta:0.92,rs:37.9,outlook:{en:'META + GOOG AI capex; lowest PE among growth sectors; ad revenue resilient',zh:'META+GOOG AI資本支出；成長類股中最低PE；廣告收入有韌性'}},
+  {ticker:'XLU',name:'Utilities',nameZh:'公用事業',group:'sector',price:46.27,aum:24.4,ytd:7.9,pe:22.7,divYld:2.6,beta:0.67,rs:57.9,outlook:{en:'AI data center power demand; rate cut beneficiary; defensive yield',zh:'AI資料中心用電需求；降息受惠；防禦型殖利率'}},
+  {ticker:'XLY',name:'Consumer Disc.',nameZh:'非必需消費',group:'sector',price:107.77,aum:21.4,ytd:-8.8,pe:29.1,divYld:0.8,beta:1.25,rs:26.2,outlook:{en:'Amazon + Tesla heavy; consumer spending slowing; tariff headwind on imports',zh:'亞馬遜+特斯拉權重大；消費支出放緩；進口關稅逆風'}},
+  {ticker:'XLP',name:'Consumer Staples',nameZh:'必需消費',group:'sector',price:81.26,aum:15.5,ytd:5.2,pe:25.6,divYld:2.7,beta:0.66,rs:51.2,outlook:{en:'Defensive; Costco + PG pricing power; recession hedge',zh:'防禦型；Costco+PG定價權；衰退避險'}},
+  {ticker:'XLRE',name:'Real Estate',nameZh:'房地產',group:'sector',price:41.72,aum:7.3,ytd:4.0,pe:31.9,divYld:3.4,beta:1.09,rs:55.8,outlook:{en:'Rate sensitive; data center REITs offset office drag; wait for rate cuts',zh:'利率敏感；資料中心REIT抵消辦公拖累；等待降息'}},
+  {ticker:'XLB',name:'Materials',nameZh:'原物料',group:'sector',price:50.08,aum:6.5,ytd:9.1,pe:26.2,divYld:1.8,beta:1.09,rs:62.9,outlook:{en:'Gold miners surge; commodity inflation hedge; tariff-driven reshoring demand',zh:'金礦股飆升；大宗商品通膨避險；關稅驅動回流需求'}},
 
   // Sub-sector / Thematic ETFs
-  {ticker:'VNQ',name:'REITs',nameZh:'REITs',group:'sub',price:90.49,aum:66.8,ytd:3.3,pe:30.4,divYld:3.9,beta:1.10,outlook:{en:'Broadest REIT exposure; rate cut = catalyst; DC REITs carry index',zh:'最廣REIT曝險；降息=催化劑；資料中心REIT撐指數'}},
-  {ticker:'XLE',name:'Oil & Gas (E&P)',nameZh:'油氣探勘',group:'skip',price:0,aum:0,ytd:0,pe:0,divYld:0,outlook:{en:'',zh:''}},
-  {ticker:'SMH',name:'Semiconductors',nameZh:'半導體',group:'sub',price:399.90,aum:41.0,ytd:7.1,pe:39.2,divYld:0.5,beta:1.54,outlook:{en:'NVDA 20%+ weight; AI chip demand multi-year; HBM + CoWoS capacity constraints',zh:'NVDA權重20%+；AI晶片需求多年期；HBM+CoWoS產能受限'}},
-  {ticker:'GDX',name:'Gold Miners',nameZh:'金礦',group:'sub',price:94.97,aum:28.2,ytd:10.8,pe:19.6,divYld:1.5,beta:1.03,outlook:{en:'Gold $3000+; central bank buying; tariff/geopolitical hedge',zh:'黃金$3000+；央行購金；關稅/地緣避險'}},
-  {ticker:'SOXX',name:'Semiconductors (Broad)',nameZh:'半導體(廣)',group:'sub',price:347.76,aum:20.6,ytd:10.9,pe:39.1,divYld:0.7,beta:1.65,outlook:{en:'Broader chip exposure vs SMH; memory + analog + equipment beneficiaries',zh:'比SMH更廣的晶片曝險；記憶體+類比+設備受惠'}},
-  {ticker:'ITA',name:'Aero & Defense',nameZh:'航太國防',group:'sub',price:223.30,aum:13.5,ytd:0.6,pe:38.3,divYld:0.5,beta:1.26,outlook:{en:'Global defense spending surge; NATO + US budget; long backlog visibility',zh:'全球國防支出激增；NATO+美國預算；長期訂單可見度'}},
-  {ticker:'IGV',name:'Software',nameZh:'軟體',group:'sub',price:80.50,aum:10.4,ytd:-21.6,pe:32.0,divYld:0.0,beta:1.02,outlook:{en:'Worst sector YTD; AI disruption fear; but cloud + cybersecurity resilient',zh:'YTD最差類股；AI顛覆恐懼；但雲端+資安有韌性'}},
-  {ticker:'XBI',name:'Biotech',nameZh:'生技',group:'sub',price:128.85,aum:7.4,ytd:6.0,pe:0,divYld:0.2,beta:1.28,outlook:{en:'M&A wave (patent cliffs); AI drug discovery; rate cuts improve funding',zh:'M&A浪潮（專利懸崖）；AI藥物研發；降息改善融資'}},
-  {ticker:'ARKK',name:'Innovation',nameZh:'創新',group:'sub',price:68.76,aum:6.0,ytd:-12.2,pe:45.3,divYld:0.0,beta:2.64,outlook:{en:'Speculative growth; TSLA heavy; underperforming since 2021 peak',zh:'投機型成長；特斯拉權重大；自2021高點持續落後'}},
-  {ticker:'XOP',name:'Oil & Gas E&P',nameZh:'油氣探勘',group:'sub',price:180.34,aum:3.5,ytd:40.4,pe:16.6,divYld:1.8,beta:0.13,outlook:{en:'Best YTD sub-sector; oil $85+; equal-weight = mid-cap E&P exposure',zh:'YTD最佳子類股；油價$85+；等權重=中型探勘公司曝險'}},
-  {ticker:'KRE',name:'Regional Banks',nameZh:'區域銀行',group:'sub',price:66.75,aum:3.7,ytd:2.9,pe:12.8,divYld:2.4,beta:1.44,outlook:{en:'Cheapest PE in table; NIM expanding; CRE risk fading; rate cut = boost',zh:'表中最低PE；淨利差擴大；商業地產風險消退；降息=利多'}},
-  {ticker:'HACK',name:'Cybersecurity',nameZh:'資安',group:'sub',price:78.55,aum:1.9,ytd:-0.9,pe:29.8,divYld:0.1,beta:0.62,outlook:{en:'AI-driven threat landscape; structural demand; enterprise spend resilient',zh:'AI驅動的威脅環境；結構性需求；企業支出有韌性'}},
-  {ticker:'XHB',name:'Homebuilders',nameZh:'營建',group:'sub',price:96.98,aum:1.5,ytd:-7.0,pe:16.1,divYld:0.5,beta:1.84,outlook:{en:'Housing shortage structural; but mortgage rates 7%+ = affordability crisis',zh:'住房短缺結構性；但房貸利率7%+=負擔危機'}}
+  {ticker:'VNQ',name:'REITs',nameZh:'REITs',group:'sub',price:90.49,aum:66.8,ytd:3.3,pe:30.4,divYld:3.9,beta:1.10,rs:47.9,outlook:{en:'Broadest REIT exposure; rate cut = catalyst; DC REITs carry index',zh:'最廣REIT曝險；降息=催化劑；資料中心REIT撐指數'}},
+  {ticker:'XLE',name:'Oil & Gas (E&P)',nameZh:'油氣探勘',group:'skip',price:0,aum:0,ytd:0,pe:0,divYld:0,rs:78.3,outlook:{en:'',zh:''}},
+  {ticker:'SMH',name:'Semiconductors',nameZh:'半導體',group:'sub',price:399.90,aum:41.0,ytd:7.1,pe:39.2,divYld:0.5,beta:1.54,rs:77.0,outlook:{en:'NVDA 20%+ weight; AI chip demand multi-year; HBM + CoWoS capacity constraints',zh:'NVDA權重20%+；AI晶片需求多年期；HBM+CoWoS產能受限'}},
+  {ticker:'GDX',name:'Gold Miners',nameZh:'金礦',group:'sub',price:94.97,aum:28.2,ytd:10.8,pe:19.6,divYld:1.5,beta:1.03,rs:67.5,outlook:{en:'Gold $3000+; central bank buying; tariff/geopolitical hedge',zh:'黃金$3000+；央行購金；關稅/地緣避險'}},
+  {ticker:'SOXX',name:'Semiconductors (Broad)',nameZh:'半導體(廣)',group:'sub',price:347.76,aum:20.6,ytd:10.9,pe:39.1,divYld:0.7,beta:1.65,rs:83.8,outlook:{en:'Broader chip exposure vs SMH; memory + analog + equipment beneficiaries',zh:'比SMH更廣的晶片曝險；記憶體+類比+設備受惠'}},
+  {ticker:'ITA',name:'Aero & Defense',nameZh:'航太國防',group:'sub',price:223.30,aum:13.5,ytd:0.6,pe:38.3,divYld:0.5,beta:1.26,rs:40.4,outlook:{en:'Global defense spending surge; NATO + US budget; long backlog visibility',zh:'全球國防支出激增；NATO+美國預算；長期訂單可見度'}},
+  {ticker:'IGV',name:'Software',nameZh:'軟體',group:'sub',price:80.50,aum:10.4,ytd:-21.6,pe:32.0,divYld:0.0,beta:1.02,rs:18.7,outlook:{en:'Worst sector YTD; AI disruption fear; but cloud + cybersecurity resilient',zh:'YTD最差類股；AI顛覆恐懼；但雲端+資安有韌性'}},
+  {ticker:'XBI',name:'Biotech',nameZh:'生技',group:'sub',price:128.85,aum:7.4,ytd:6.0,pe:0,divYld:0.2,beta:1.28,rs:85.0,outlook:{en:'M&A wave (patent cliffs); AI drug discovery; rate cuts improve funding',zh:'M&A浪潮（專利懸崖）；AI藥物研發；降息改善融資'}},
+  {ticker:'ARKK',name:'Innovation',nameZh:'創新',group:'sub',price:68.76,aum:6.0,ytd:-12.2,pe:45.3,divYld:0.0,beta:2.64,rs:31.7,outlook:{en:'Speculative growth; TSLA heavy; underperforming since 2021 peak',zh:'投機型成長；特斯拉權重大；自2021高點持續落後'}},
+  {ticker:'XOP',name:'Oil & Gas E&P',nameZh:'油氣探勘',group:'sub',price:180.34,aum:3.5,ytd:40.4,pe:16.6,divYld:1.8,beta:0.13,rs:80.8,outlook:{en:'Best YTD sub-sector; oil $85+; equal-weight = mid-cap E&P exposure',zh:'YTD最佳子類股；油價$85+；等權重=中型探勘公司曝險'}},
+  {ticker:'KRE',name:'Regional Banks',nameZh:'區域銀行',group:'sub',price:66.75,aum:3.7,ytd:2.9,pe:12.8,divYld:2.4,beta:1.44,rs:64.2,outlook:{en:'Cheapest PE in table; NIM expanding; CRE risk fading; rate cut = boost',zh:'表中最低PE；淨利差擴大；商業地產風險消退；降息=利多'}},
+  {ticker:'HACK',name:'Cybersecurity',nameZh:'資安',group:'sub',price:78.55,aum:1.9,ytd:-0.9,pe:29.8,divYld:0.1,beta:0.62,rs:66.7,outlook:{en:'AI-driven threat landscape; structural demand; enterprise spend resilient',zh:'AI驅動的威脅環境；結構性需求；企業支出有韌性'}},
+  {ticker:'XHB',name:'Homebuilders',nameZh:'營建',group:'sub',price:96.98,aum:1.5,ytd:-7.0,pe:16.1,divYld:0.5,beta:1.84,rs:22.9,outlook:{en:'Housing shortage structural; but mortgage rates 7%+ = affordability crisis',zh:'住房短缺結構性；但房貸利率7%+=負擔危機'}}
 ];
 
 // Remove skip entries
@@ -153,6 +155,7 @@ var COLS = [
   {key:'ytd',    en:'YTD',       zh:'YTD',     align:'right',w:'38px'},
   {key:'pe',     en:'PE',        zh:'PE',      align:'right',w:'32px'},
   {key:'divYld', en:'Yld',       zh:'殖利',    align:'right',w:'32px'},
+  {key:'rs',     en:'RS',        zh:'RS',      align:'right',w:'32px'},
   {key:'beta',   en:'Beta',      zh:'Beta',    align:'right',w:'34px'},
   {key:'outlook',en:'2026 Outlook',zh:'2026展望',align:'left',w:'150px'}
 ];
@@ -218,6 +221,10 @@ function renderTable(){
         case 'divYld':
           val=r.divYld.toFixed(1)+'%';
           style+='color:'+(r.divYld>=2.5?C.green:C.muted)+';';
+          break;
+        case 'rs':
+          val=r.rs?r.rs.toFixed(0):'—';
+          style+='font-weight:600;color:'+(r.rs>=70?C.green:r.rs>=50?C.navy:r.rs>=30?C.orange:C.red)+';';
           break;
         case 'beta':
           val=r.beta?r.beta.toFixed(2):'n/a';
