@@ -34,7 +34,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
 .compare-tbl thead{position:sticky;top:0;z-index:3}
 .compare-tbl th{background:#f0f6ff;font-size:9px;letter-spacing:.08em;color:#5a7a9a;font-weight:600;padding:7px 8px;text-align:right;border-bottom:1px solid #dce8f5;white-space:nowrap;cursor:pointer;user-select:none}
 .compare-tbl th:hover{background:#e4eefb;color:#1e3a5f}
-.compare-tbl th:first-child{text-align:left;position:sticky;left:0;background:#f0f6ff;z-index:4;min-width:95px;width:95px;border-right:1px solid #dce8f5;cursor:pointer}
+.compare-tbl th:first-child{text-align:left;position:sticky;left:0;background:#f0f6ff;z-index:4;min-width:80px;width:80px;border-right:1px solid #dce8f5;cursor:pointer}
 .compare-tbl td{padding:6px 8px;font-size:11px;border-bottom:1px solid #f0f5fb;text-align:right;font-variant-numeric:tabular-nums;color:#1e3a5f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .compare-tbl td:first-child{text-align:left;font-weight:600;position:sticky;left:0;background:#fff;z-index:2;border-right:1px solid #f0f5fb}
 .compare-tbl tr:last-child td{border-bottom:none}
@@ -615,7 +615,7 @@ var MARKETS = [
 ];
 
 var COLS = [
-  {key:'name',    en:'Market',    zh:'市場',     align:'left', w:'95px'},
+  {key:'name',    en:'Market',    zh:'市場',     align:'left', w:'80px'},
   {key:'mktCapT', en:'Cap($T)',   zh:'市值($T)', align:'right',w:'55px'},
   {key:'ytd',     en:'YTD',       zh:'YTD',      align:'right',w:'48px'},
   {key:'gdp',     en:'GDP',       zh:'GDP',      align:'right',w:'44px'},
@@ -688,8 +688,8 @@ function renderTable() {
       switch(col.key) {
         case 'name':
           var disp = currentLang === 'zh' ? r.nameZh : r.name;
-          val = r.flag + ' ' + disp + '<br><span style="font-size:8px;color:#94a3b8">' + r.index + ' &middot; ' + r.level.toLocaleString() + '</span>';
-          style += 'text-align:left;white-space:normal;line-height:1.4;';
+          val = r.flag + ' ' + disp;
+          style += 'text-align:left;';
           break;
         case 'mktCapT':
           val = '$' + r.mktCapT.toFixed(1) + 'T';
