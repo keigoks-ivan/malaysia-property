@@ -25,6 +25,14 @@ except ImportError:
     import pandas as pd
     import yfinance as yf
 
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (np.integer,)): return int(obj)
+        if isinstance(obj, (np.floating,)): return float(obj)
+        if isinstance(obj, (np.bool_,)): return bool(obj)
+        if isinstance(obj, np.ndarray): return obj.tolist()
+        return super().default(obj)
+
 ROOT = Path(__file__).resolve().parent.parent
 SCREENER_DIR = ROOT / 'docs' / 'screener'
 HISTORY_DIR = SCREENER_DIR / 'history'
@@ -493,14 +501,6 @@ def main():
         'sector_ranking': sector_ranking,
         'rankings': results,
     }
-
-    class NpEncoder(json.JSONEncoder):
-        def default(self, obj):
-            if isinstance(obj, (np.integer,)): return int(obj)
-            if isinstance(obj, (np.floating,)): return float(obj)
-            if isinstance(obj, (np.bool_,)): return bool(obj)
-            if isinstance(obj, np.ndarray): return obj.tolist()
-            return super().default(obj)
 
     latest_path = SCREENER_DIR / 'latest.json'
     with open(latest_path, 'w') as f:
