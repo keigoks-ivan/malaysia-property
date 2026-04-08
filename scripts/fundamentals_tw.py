@@ -24,6 +24,16 @@ def safe_get(df, labels, col=0):
                 return float(v)
     return None
 
+def sum_ttm(df, labels, quarters=4):
+    if df is None or len(df.columns) < quarters:
+        return None
+    for lbl in (labels if isinstance(labels, list) else [labels]):
+        if lbl in df.index:
+            vals = [df.loc[lbl].iloc[i] for i in range(quarters)]
+            if all(v is not None and str(v) != 'nan' for v in vals):
+                return sum(float(v) for v in vals)
+    return None
+
 def find_valid_col(df, labels):
     if df is None:
         return None
@@ -69,59 +79,56 @@ def fetch_one(ticker_str, retry=2):
                 except:
                     pass
 
-            # === Historical financials for ROIC + FCF ===
-            fins = tk.financials
-            bs = tk.balance_sheet
-            cf = tk.cashflow
+            # === TTM data from quarterly financials for ROIC + FCF ===
+            qfins = tk.quarterly_financials
+            qbs = tk.quarterly_balance_sheet
+            qcf = tk.quarterly_cashflow
 
-            has_fins = fins is not None and len(fins.columns) >= 1 and len(fins.index) > 5
-            has_bs = bs is not None and len(bs.columns) >= 1 and len(bs.index) > 3
-            has_cf = cf is not None and len(cf.columns) >= 1 and len(cf.index) > 3
+            has_qfins = qfins is not None and len(qfins.columns) >= 4 and len(qfins.index) > 5
+            has_qbs = qbs is not None and len(qbs.columns) >= 1 and len(qbs.index) > 3
+            has_qcf = qcf is not None and len(qcf.columns) >= 4 and len(qcf.index) > 3
 
-            if not has_fins and attempt < retry:
+            if not has_qfins and attempt < retry:
                 time.sleep(1)
                 continue
 
-            rev_col = find_valid_col(fins, "Total Revenue") if has_fins else None
-
-            # --- FCF Margin ---
+            # --- FCF Margin (TTM) ---
             result["fcf_margin"] = None
-            if has_cf and rev_col is not None:
-                rev = safe_get(fins, "Total Revenue", rev_col)
-                fcf = safe_get(cf, "Free Cash Flow", rev_col)
-                if fcf is None and rev_col < (len(cf.columns) if cf is not None else 0):
-                    ocf = safe_get(cf, "Operating Cash Flow", rev_col)
-                    capex = safe_get(cf, ["Capital Expenditure"], rev_col)
-                    if ocf is not None and capex is not None:
-                        fcf = ocf + capex
-                if fcf is not None and rev and rev != 0:
-                    result["fcf_margin"] = fcf / rev
+            if has_qfins and has_qcf:
+                rev_ttm = sum_ttm(qfins, "Total Revenue")
+                fcf_ttm = sum_ttm(qcf, "Free Cash Flow")
+                if fcf_ttm is None:
+                    ocf_ttm = sum_ttm(qcf, "Operating Cash Flow")
+                    capex_ttm = sum_ttm(qcf, "Capital Expenditure")
+                    if ocf_ttm is not None and capex_ttm is not None:
+                        fcf_ttm = ocf_ttm + capex_ttm
+                if fcf_ttm is not None and rev_ttm and rev_ttm != 0:
+                    result["fcf_margin"] = fcf_ttm / rev_ttm
 
-            # --- ROIC ---
+            # --- ROIC (TTM) ---
             result["roic"] = None
-            col = rev_col if rev_col is not None else 0
-            if has_fins and has_bs:
-                ebit = safe_get(fins, ["EBIT", "Operating Income"], col)
+            if has_qfins and has_qbs:
+                ebit_ttm = sum_ttm(qfins, ["EBIT", "Operating Income"])
                 use_net_income = False
-                if ebit is None:
-                    ebit = safe_get(fins, "Net Income", col)
+                if ebit_ttm is None:
+                    ebit_ttm = sum_ttm(qfins, "Net Income")
                     use_net_income = True
 
                 tax_rate = 0.20
                 if not use_net_income:
-                    tax_prov = safe_get(fins, "Tax Provision", col)
-                    pretax = safe_get(fins, "Pretax Income", col)
-                    if tax_prov is not None and pretax and pretax != 0:
-                        tr = tax_prov / pretax
+                    tax_ttm = sum_ttm(qfins, "Tax Provision")
+                    pretax_ttm = sum_ttm(qfins, "Pretax Income")
+                    if tax_ttm is not None and pretax_ttm and pretax_ttm != 0:
+                        tr = tax_ttm / pretax_ttm
                         tax_rate = tr if 0 <= tr <= 0.5 else 0.20
 
-                equity = safe_get(bs, ["Stockholders Equity", "Total Stockholders Equity", "Common Stock Equity"], col)
-                lt_debt = safe_get(bs, ["Long Term Debt", "Long Term Debt And Capital Lease Obligation"], col) or 0
+                equity = safe_get(qbs, ["Stockholders Equity", "Total Stockholders Equity", "Common Stock Equity"], 0)
+                lt_debt = safe_get(qbs, ["Long Term Debt", "Long Term Debt And Capital Lease Obligation"], 0) or 0
 
-                if ebit is not None and equity is not None:
+                if ebit_ttm is not None and equity is not None:
                     invested = equity + lt_debt
                     if invested > 0:
-                        nopat = ebit if use_net_income else ebit * (1 - tax_rate)
+                        nopat = ebit_ttm if use_net_income else ebit_ttm * (1 - tax_rate)
                         result["roic"] = nopat / invested
 
             return result

@@ -117,6 +117,44 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
   <div id="loading"><span class="lang-en">Loading screener data...</span><span class="lang-zh">載入選股數據中...</span></div>
 </div>
 
+<div class="section" style="padding-top:8px">
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;font-size:10px;color:#5a7a9a;line-height:1.8">
+    <div style="font-weight:600;color:#1e3a5f;margin-bottom:6px"><span class="lang-en">Column Definitions</span><span class="lang-zh">欄位說明</span></div>
+    <span class="lang-en">
+      <b>Score</b> — RS (60%) + VCP (40%) composite score<br>
+      <b>RS</b> — Relative Strength percentile vs TAIEX (1W/4W/13W weighted)<br>
+      <b>Trend</b> — RS momentum: Accel (rising), Steady, Fading (declining), Choppy<br>
+      <b>VCP</b> — Volatility Contraction Pattern score (tightening + support)<br>
+      <b>vs200MA</b> — Current price vs 200-day moving average<br>
+      <b>fm High</b> — Distance from 52-week high<br>
+      <b>Pullback / #PB</b> — Last pullback depth &amp; number of contractions<br>
+      <b>ATR%</b> — Average True Range ratio (lower = tighter)<br>
+      <b>Q ✓</b> — Quality check: EPS 2Y &gt;15% AND ROIC &gt;15% AND FCF% &gt;10%<br>
+      <b>Rev 2Y↗</b> — Forward 2-year revenue CAGR (analyst consensus estimates)<br>
+      <b>EPS 2Y↗</b> — Forward 2-year EPS CAGR (analyst consensus estimates)<br>
+      <b>ROIC</b> — Return on Invested Capital, TTM (NOPAT / Invested Capital)<br>
+      <b>FCF%</b> — Free Cash Flow Margin, TTM (FCF / Revenue)<br>
+      <b>Chg</b> — Rank change vs previous day
+    </span>
+    <span class="lang-zh">
+      <b>總分</b> — RS (60%) + VCP (40%) 綜合評分<br>
+      <b>RS</b> — 相對強度百分位（對比加權指數，1週/4週/13週加權）<br>
+      <b>趨勢</b> — RS 動能：加速（上升）、穩定、衰退（下降）、震盪<br>
+      <b>VCP</b> — 波動收斂型態評分（收縮 + 支撐）<br>
+      <b>vs200MA</b> — 現價 vs 200日均線<br>
+      <b>距高點</b> — 距離52週高點<br>
+      <b>回撤 / 收縮</b> — 最近一次回撤深度 &amp; 收縮次數<br>
+      <b>ATR%</b> — 平均真實波幅比率（越低越緊）<br>
+      <b>Q ✓</b> — 品質篩選：EPS 2Y &gt;15% 且 ROIC &gt;15% 且 FCF% &gt;10%<br>
+      <b>營收2Y↗</b> — 未來兩年營收 CAGR（分析師共識預估）<br>
+      <b>EPS 2Y↗</b> — 未來兩年 EPS CAGR（分析師共識預估）<br>
+      <b>ROIC</b> — 投入資本回報率，TTM（稅後營業利潤 / 投入資本）<br>
+      <b>FCF%</b> — 自由現金流利潤率，TTM（自由現金流 / 營收）<br>
+      <b>變動</b> — 排名較前一日變動
+    </span>
+  </div>
+</div>
+
 <footer>
   <div class="footer">
     <div>PROPERTY MONITOR</div>
@@ -143,6 +181,7 @@ var COLS=[
   {key:'last_pullback_pct',en:'Pullback',zh:'回撤',align:'right',w:'40px'},
   {key:'pullback_count',en:'#PB',zh:'收縮',align:'right',w:'26px'},
   {key:'atr_ratio',en:'ATR%',zh:'ATR%',align:'right',w:'34px'},
+  {key:'quality',en:'Q',zh:'Q',align:'center',w:'22px'},
   {key:'rev_cagr',en:'Rev 2Y↗',zh:'營收2Y↗',align:'right',w:'46px'},
   {key:'eps_cagr',en:'EPS 2Y↗',zh:'EPS 2Y↗',align:'right',w:'46px'},
   {key:'roic',en:'ROIC',zh:'ROIC',align:'right',w:'40px'},
@@ -193,6 +232,7 @@ function renderTable(){
         case 'last_pullback_pct': v=r.last_pullback_pct?r.last_pullback_pct.toFixed(0)+'%':'—'; break;
         case 'pullback_count': v=r.pullback_count||'—'; break;
         case 'atr_ratio': v=r.atr_ratio?r.atr_ratio.toFixed(2):'—'; s+='color:'+(r.atr_ratio<0.5?C.green:r.atr_ratio<0.7?C.navy:C.muted)+';'; break;
+        case 'quality': v=(r.eps_cagr!=null&&r.roic!=null&&r.fcf_margin!=null&&r.eps_cagr>0.15&&r.roic>0.15&&r.fcf_margin>0.10)?'<span style="color:#16a34a;font-size:13px">✓</span>':''; break;
         case 'rev_cagr': v=r.rev_cagr!=null?(r.rev_cagr>0?'+':'')+(r.rev_cagr*100).toFixed(0)+'%':'—'; s+='font-size:10px;color:'+(r.rev_cagr>0.15?C.green:r.rev_cagr>0?C.navy:r.rev_cagr!=null?C.red:C.muted)+';'; break;
         case 'eps_cagr': v=r.eps_cagr!=null?(r.eps_cagr>0?'+':'')+(r.eps_cagr*100).toFixed(0)+'%':'—'; s+='font-size:10px;color:'+(r.eps_cagr>0.15?C.green:r.eps_cagr>0?C.navy:r.eps_cagr!=null?C.red:C.muted)+';'; break;
         case 'roic': v=r.roic!=null?(r.roic*100).toFixed(0)+'%':'—'; s+='font-size:10px;color:'+(r.roic>0.15?C.green:r.roic>0?C.navy:r.roic!=null?C.red:C.muted)+';'; break;
