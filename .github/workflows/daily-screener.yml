@@ -2,7 +2,8 @@ name: Daily RS+VCP Screener
 
 on:
   schedule:
-    # Every weekday (Mon-Fri) at 22:00 UTC = 06:00 Taiwan next day (after US market close)
+    # Mon-Fri 22:00 UTC = Tue-Sat 06:00 Taiwan time (after US Mon-Fri close)
+    # If US market holiday, yfinance returns last trading day's data automatically
     - cron: "0 22 * * 1-5"
   workflow_dispatch:  # Manual trigger
 
