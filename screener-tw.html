@@ -35,7 +35,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
 .sector-chip{font-size:9px;padding:3px 8px;border-radius:12px;font-weight:600;cursor:pointer;border:1px solid #dce8f5;background:#fff;color:#5a7a9a}
 .sector-chip.active{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
 .compare-wrap{background:#fff;border:1px solid #dce8f5;border-radius:12px;overflow:auto;max-height:70vh;-webkit-overflow-scrolling:touch}
-.tbl{width:100%;border-collapse:collapse;min-width:1000px;table-layout:fixed}
+.tbl{width:100%;border-collapse:collapse;min-width:1180px;table-layout:fixed}
 .tbl thead{position:sticky;top:0;z-index:3}
 .tbl th{background:#f0f6ff;font-size:9px;letter-spacing:.06em;color:#5a7a9a;font-weight:600;padding:7px 5px;text-align:right;border-bottom:1px solid #dce8f5;white-space:nowrap;cursor:pointer;user-select:none}
 .tbl th:hover{background:#e4eefb}
@@ -143,6 +143,10 @@ var COLS=[
   {key:'last_pullback_pct',en:'Pullback',zh:'回撤',align:'right',w:'40px'},
   {key:'pullback_count',en:'#PB',zh:'收縮',align:'right',w:'26px'},
   {key:'atr_ratio',en:'ATR%',zh:'ATR%',align:'right',w:'34px'},
+  {key:'rev_cagr',en:'Rev 2Y',zh:'營收2Y',align:'right',w:'44px'},
+  {key:'eps_cagr',en:'EPS 2Y',zh:'EPS 2Y',align:'right',w:'44px'},
+  {key:'roic',en:'ROIC',zh:'ROIC',align:'right',w:'40px'},
+  {key:'fcf_margin',en:'FCF%',zh:'FCF%',align:'right',w:'40px'},
   {key:'rank_change',en:'Chg',zh:'變動',align:'right',w:'32px'}
 ];
 
@@ -189,6 +193,10 @@ function renderTable(){
         case 'last_pullback_pct': v=r.last_pullback_pct?r.last_pullback_pct.toFixed(0)+'%':'—'; break;
         case 'pullback_count': v=r.pullback_count||'—'; break;
         case 'atr_ratio': v=r.atr_ratio?r.atr_ratio.toFixed(2):'—'; s+='color:'+(r.atr_ratio<0.5?C.green:r.atr_ratio<0.7?C.navy:C.muted)+';'; break;
+        case 'rev_cagr': v=r.rev_cagr!=null?(r.rev_cagr>0?'+':'')+(r.rev_cagr*100).toFixed(0)+'%':'—'; s+='font-size:10px;color:'+(r.rev_cagr>0.15?C.green:r.rev_cagr>0?C.navy:r.rev_cagr!=null?C.red:C.muted)+';'; break;
+        case 'eps_cagr': v=r.eps_cagr!=null?(r.eps_cagr>0?'+':'')+(r.eps_cagr*100).toFixed(0)+'%':'—'; s+='font-size:10px;color:'+(r.eps_cagr>0.15?C.green:r.eps_cagr>0?C.navy:r.eps_cagr!=null?C.red:C.muted)+';'; break;
+        case 'roic': v=r.roic!=null?(r.roic*100).toFixed(0)+'%':'—'; s+='font-size:10px;color:'+(r.roic>0.15?C.green:r.roic>0?C.navy:r.roic!=null?C.red:C.muted)+';'; break;
+        case 'fcf_margin': v=r.fcf_margin!=null?(r.fcf_margin*100).toFixed(0)+'%':'—'; s+='font-size:10px;color:'+(r.fcf_margin>0.15?C.green:r.fcf_margin>0?C.navy:r.fcf_margin!=null?C.red:C.muted)+';'; break;
         case 'rank_change':
           v=r.rank_change;
           if(v==='NEW')s+='color:#3b82f6;font-weight:600;';
@@ -276,19 +284,27 @@ function setLang(lang){
 }
 
 // Load data
-fetch('docs/screener/tw_latest.json')
-  .then(function(r){return r.json();})
-  .then(function(d){
-    allData=d.rankings||[];
-    pickData=d.top_picks||{};
-    topSectorData=d.top_sector||{};
-    document.getElementById('loading').style.display='none';
-    document.getElementById('updateDate').textContent=(currentLang==='zh'?'最後更新：':'Last updated: ')+d.date;
-    renderHeader();renderTable();renderPicks();renderSectorBar();
-  })
-  .catch(function(e){
-    document.getElementById('loading').innerHTML='<span style="color:#dc2626">'+(currentLang==='zh'?'無法載入數據。請先執行 python scripts/screener.py':'Failed to load data. Run python scripts/screener.py first')+'</span>';
+Promise.all([
+  fetch('docs/screener/tw_latest.json').then(function(r){return r.json();}),
+  fetch('docs/screener/tw_fundamentals.json').then(function(r){return r.json();}).catch(function(){return {data:{}};})
+]).then(function(arr){
+  var d=arr[0], fund=arr[1].data||{};
+  allData=d.rankings||[];
+  pickData=d.top_picks||{};
+  topSectorData=d.top_sector||{};
+  allData.forEach(function(r){
+    var f=fund[r.ticker];
+    r.rev_cagr=f?f.rev_cagr:null;
+    r.eps_cagr=f?f.eps_cagr:null;
+    r.roic=f?f.roic:null;
+    r.fcf_margin=f?f.fcf_margin:null;
   });
+  document.getElementById('loading').style.display='none';
+  document.getElementById('updateDate').textContent=(currentLang==='zh'?'最後更新：':'Last updated: ')+d.date;
+  renderHeader();renderTable();renderPicks();renderSectorBar();
+}).catch(function(e){
+  document.getElementById('loading').innerHTML='<span style="color:#dc2626">'+(currentLang==='zh'?'無法載入數據。請先執行 python scripts/screener_tw.py':'Failed to load data. Run python scripts/screener_tw.py first')+'</span>';
+});
 
 setLang(currentLang);
 </script>
