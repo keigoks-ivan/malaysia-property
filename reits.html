@@ -354,7 +354,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
     <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">
       <div style="background:#1e3a5f;padding:14px 20px">
         <div style="font-size:14px;font-weight:700;color:#fff"><span class="lang-en">Direct Property vs REITs: Which Delivers Better Returns?</span><span class="lang-zh">實體房產 vs REITs：哪個報酬率更好？</span></div>
-        <div style="font-size:10px;color:#94a3b8;margin-top:3px"><span class="lang-en">10-year annualized returns across major markets &mdash; total return = income yield + capital appreciation per year</span><span class="lang-zh">主要市場10年年化報酬率——總報酬=每年收入殖利率+每年資本增值</span></div>
+        <div style="font-size:10px;color:#94a3b8;margin-top:3px"><span class="lang-en">10-year annualized returns &mdash; direct property net of holding costs; REITs net of management fees; both pre-income-tax</span><span class="lang-zh">10年年化報酬——實體房產已扣持有成本；REIT已扣管理費；均為所得稅前</span></div>
       </div>
       <div style="padding:20px;font-family:Inter,sans-serif">
         <!-- Scenario tabs -->
@@ -398,39 +398,44 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
         </div>
 
         <div style="margin-top:12px;font-size:8.5px;color:#94a3b8;line-height:1.5">
-          <span class="lang-en"><em>All figures are 10-year annualized, nominal, pre-tax. &ldquo;All Cash&rdquo; = no leverage. Leveraged income = (gross rent &minus; mortgage interest) &divide; equity. Leveraged total = income + (capital gain &divide; equity). Gap = Direct total &minus; REIT total. REIT returns = total shareholder return (price + dividends). Leverage amplifies both gains and losses.</em></span>
-          <span class="lang-zh"><em>所有數據為10年年化、名義、稅前。「全現金」=無槓桿。槓桿收入=（租金總額&minus;房貸利息）&divide;自有資金。槓桿總報酬=收入+（資本利得&divide;自有資金）。差距=實體總報酬&minus;REIT總報酬。REIT報酬=股東總報酬（股價+配息）。槓桿同時放大收益與虧損。</em></span>
+          <span class="lang-en"><em>All figures are 10-year annualized, nominal, pre-income-tax. <strong>Direct property: net of holding costs</strong> (property tax, maintenance, insurance, management fee, transaction costs amortized over 10yr). Cost drag varies by market: US ~2.8%, JP ~2.9%, AU ~2.5%, UK ~2.3%, EU ~2.0%, MY ~1.7%, SG ~1.7%. <strong>REITs: already net of management expenses</strong> (reflected in NAV/price); returns = total shareholder return (price + dividends). Leveraged income = (gross rent &minus; holding costs &minus; mortgage interest) &divide; equity. Leverage amplifies both gains and losses. Income tax excluded as it varies widely by resident status.</em></span>
+          <span class="lang-zh"><em>所有數據為10年年化、名義、稅前（所得稅前）。<strong>實體房產：已扣除持有成本</strong>（房屋稅、維護費、保險、管理費、交易成本攤10年）。各市場成本拖累：美~2.8%、日~2.9%、澳~2.5%、英~2.3%、歐~2.0%、馬~1.7%、新~1.7%。<strong>REIT：已內含管理費用</strong>（反映在NAV/股價中）；報酬=股東總報酬（股價+配息）。槓桿收入=（租金&minus;持有成本&minus;房貸利息）&divide;自有資金。槓桿同時放大收益與虧損。所得稅因居民身份差異太大故未計入。</em></span>
         </div>
       </div>
 
       <script>
+      // Direct property: net of holding costs (property tax, maintenance, insurance, mgmt fee)
+      // Cost drag: US ~2.8%, SG ~1.7%, JP ~2.9%, AU ~2.5%, MY ~1.7%, UK ~2.3%, EU ~2.0%
+      // Transaction costs (stamp duty + sell commission) amortized over 10yr: ~0.5-1% p.a.
+      // REIT returns already net of management expenses (reflected in NAV/price)
+      // All figures pre-income-tax (varies too much by resident status)
       var SCENARIOS={
         cash:[
-          {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:'3.5-4.5%',dTot:'8-10%',rInc:'3.5-4.0%',rTot:'10-12%'},
-          {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:'2.5-3.5%',dTot:'6-9%',rInc:'5.0-5.5%',rTot:'6-8%'},
-          {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:'3.0-4.0%',dTot:'5-8%',rInc:'3.5-4.5%',rTot:'7-10%'},
-          {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:'3.0-4.5%',dTot:'7-9%',rInc:'4.0-5.0%',rTot:'7-9%'},
-          {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:'4.5-5.5%',dTot:'6-8%',rInc:'5.0-6.0%',rTot:'6-8%'},
-          {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:'3.5-5.0%',dTot:'6-8%',rInc:'4.5-6.0%',rTot:'8-10%'},
-          {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:'2.5-4.0%',dTot:'5-7%',rInc:'4.0-5.5%',rTot:'7-9%'}
+          {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:'1.0-2.0%',dTot:'5-7%',rInc:'3.5-4.0%',rTot:'10-12%'},
+          {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:'1.0-2.0%',dTot:'4-7%',rInc:'5.0-5.5%',rTot:'6-8%'},
+          {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:'0.5-1.5%',dTot:'3-5%',rInc:'3.5-4.5%',rTot:'7-10%'},
+          {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:'1.0-2.5%',dTot:'5-7%',rInc:'4.0-5.0%',rTot:'7-9%'},
+          {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:'3.0-4.0%',dTot:'5-7%',rInc:'5.0-6.0%',rTot:'6-8%'},
+          {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:'1.5-3.0%',dTot:'4-6%',rInc:'4.5-6.0%',rTot:'8-10%'},
+          {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:'1.0-2.5%',dTot:'3-5%',rInc:'4.0-5.5%',rTot:'7-9%'}
         ],
         ltv70:[
-          {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:'4-7%',dTot:'18-25%',rInc:'3.5-4.0%',rTot:'10-12%'},
-          {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:'1-4%',dTot:'14-23%',rInc:'5.0-5.5%',rTot:'6-8%'},
-          {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:'5-9%',dTot:'12-20%',rInc:'3.5-4.5%',rTot:'7-10%'},
-          {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:'2-6%',dTot:'16-27%',rInc:'4.0-5.0%',rTot:'7-9%'},
-          {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:'8-12%',dTot:'13-20%',rInc:'5.0-6.0%',rTot:'6-8%'},
-          {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:'3-7%',dTot:'13-20%',rInc:'4.5-6.0%',rTot:'8-10%'},
-          {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:'1-5%',dTot:'10-17%',rInc:'4.0-5.5%',rTot:'7-9%'}
+          {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:'0-3%',dTot:'12-18%',rInc:'3.5-4.0%',rTot:'10-12%'},
+          {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:'-1-2%',dTot:'8-17%',rInc:'5.0-5.5%',rTot:'6-8%'},
+          {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:'0-3%',dTot:'6-12%',rInc:'3.5-4.5%',rTot:'7-10%'},
+          {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:'-1-2%',dTot:'10-18%',rInc:'4.0-5.0%',rTot:'7-9%'},
+          {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:'4-8%',dTot:'9-15%',rInc:'5.0-6.0%',rTot:'6-8%'},
+          {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:'0-3%',dTot:'7-13%',rInc:'4.5-6.0%',rTot:'8-10%'},
+          {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:'-1-2%',dTot:'5-10%',rInc:'4.0-5.5%',rTot:'7-9%'}
         ],
         ltv50:[
-          {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:'3-6%',dTot:'13-17%',rInc:'3.5-4.0%',rTot:'10-12%'},
-          {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:'2-4%',dTot:'10-16%',rInc:'5.0-5.5%',rTot:'6-8%'},
-          {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:'4-7%',dTot:'9-14%',rInc:'3.5-4.5%',rTot:'7-10%'},
-          {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:'2-5%',dTot:'12-18%',rInc:'4.0-5.0%',rTot:'7-9%'},
-          {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:'6-9%',dTot:'10-14%',rInc:'5.0-6.0%',rTot:'6-8%'},
-          {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:'3-6%',dTot:'10-14%',rInc:'4.5-6.0%',rTot:'8-10%'},
-          {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:'1-4%',dTot:'8-12%',rInc:'4.0-5.5%',rTot:'7-9%'}
+          {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:'0-2%',dTot:'8-12%',rInc:'3.5-4.0%',rTot:'10-12%'},
+          {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:'0-2%',dTot:'6-12%',rInc:'5.0-5.5%',rTot:'6-8%'},
+          {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:'0-2%',dTot:'4-8%',rInc:'3.5-4.5%',rTot:'7-10%'},
+          {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:'0-2%',dTot:'7-12%',rInc:'4.0-5.0%',rTot:'7-9%'},
+          {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:'3-6%',dTot:'7-10%',rInc:'5.0-6.0%',rTot:'6-8%'},
+          {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:'1-3%',dTot:'6-10%',rInc:'4.5-6.0%',rTot:'8-10%'},
+          {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:'0-2%',dTot:'4-8%',rInc:'4.0-5.5%',rTot:'7-9%'}
         ]
       };
       function midVal(s){var p=s.replace(/%/g,'').split('-');return p.length===2?(parseFloat(p[0])+parseFloat(p[1]))/2:parseFloat(p[0]);}
