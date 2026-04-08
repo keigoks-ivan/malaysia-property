@@ -181,6 +181,50 @@ def main():
         if div_yield_raw and div_yield_raw > 0:
             markets_html = update_market_field(markets_html, index_key, 'divYld', round(div_yield_raw * 100, 1))
 
+    # ── Calculate RS for market indices (benchmark: VT) ──────────────
+    print("\n── Calculating RS for market indices ──")
+    try:
+        all_idx_tickers = list(MARKET_TICKERS.values()) + ['VT']
+        idx_data = yf.download(all_idx_tickers, period='100d', interval='1d',
+                               group_by='ticker', progress=False, threads=True)
+
+        def calc_ret(closes, days):
+            if len(closes) < days + 1: return None
+            return (closes.iloc[-1] / closes.iloc[-(days+1)] - 1) * 100
+
+        idx_returns = {}
+        for idx_key, yf_ticker in MARKET_TICKERS.items():
+            try:
+                c = idx_data[yf_ticker]['Close'].dropna()
+                r1 = calc_ret(c, 5); r4 = calc_ret(c, 21); r13 = calc_ret(c, 63)
+                if r1 is not None and r4 is not None and r13 is not None:
+                    idx_returns[idx_key] = (r1, r4, r13)
+            except: pass
+
+        valid_keys = list(idx_returns.keys())
+        if valid_keys:
+            v1 = [idx_returns[k][0] for k in valid_keys]
+            v4 = [idx_returns[k][1] for k in valid_keys]
+            v13 = [idx_returns[k][2] for k in valid_keys]
+            for k in valid_keys:
+                r1, r4, r13 = idx_returns[k]
+                pr1 = sum(1 for x in v1 if x <= r1) / len(v1) * 100
+                pr4 = sum(1 for x in v4 if x <= r4) / len(v4) * 100
+                pr13 = sum(1 for x in v13 if x <= r13) / len(v13) * 100
+                rs = pr1 * 0.2 + pr4 * 0.3 + pr13 * 0.5
+                if pr1 > pr4 > pr13: trend = 'accelerating'; rs = min(100, rs + 5)
+                elif pr1 >= pr4 >= pr13: trend = 'steady'; rs = min(100, rs + 2)
+                elif pr1 < pr4 < pr13: trend = 'fading'; rs = max(0, rs - 5)
+                else: trend = 'choppy'
+                markets_html = update_market_field(markets_html, k, 'rs', round(rs, 1))
+                # Update rs_trend via regex
+                import re as _re
+                pat = rf"(index:'{_re.escape(k)}'[^}}]*?rs_trend:')([a-z]+)(')"
+                markets_html = _re.sub(pat, rf"\g<1>{trend}\3", markets_html)
+            print(f"  ✓ RS updated for {len(valid_keys)} indices")
+    except Exception as e:
+        print(f"  ⚠ RS calculation failed: {e}")
+
     if markets_html != original_markets:
         markets_path.write_text(markets_html, encoding='utf-8')
         changes = True
