@@ -83,11 +83,10 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
   <div id="picksSection" style="display:none">
     <div style="font-size:10px;letter-spacing:.16em;color:#3b82f6;font-weight:600;margin-bottom:12px"><span class="lang-en">TODAY'S TOP PICKS</span><span class="lang-zh">今日精選</span></div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px" id="picksRow1"></div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px" id="picksRow2"></div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px" id="picksRow2"></div>
   </div>
 
-  <!-- Sector Filter -->
-  <div class="sector-bar" id="sectorBar"></div>
+  <!-- No filter bar for TW -->
 
   <!-- Main Table -->
   <div class="compare-wrap">
@@ -115,7 +114,6 @@ var COLS=[
   {key:'rank',en:'#',zh:'#',align:'left',w:'26px'},
   {key:'ticker',en:'Ticker',zh:'代號',align:'left',w:'52px'},
   {key:'name',en:'Name',zh:'名稱',align:'left',w:'55px'},
-  {key:'etf',en:'ETF',zh:'ETF',align:'left',w:'34px'},
   {key:'combined',en:'Score',zh:'總分',align:'right',w:'38px'},
   {key:'rs_score',en:'RS',zh:'RS',align:'right',w:'32px'},
   {key:'rs_trend',en:'Trend',zh:'趨勢',align:'left',w:'52px'},
@@ -147,7 +145,7 @@ function renderHeader(){
 }
 
 function renderTable(){
-  var filtered=filterSector==='ALL'?allData:allData.filter(function(r){return r.etf===filterSector;});
+  var filtered=allData;
   var sorted=filtered.slice().sort(function(a,b){
     var va=a[sortKey],vb=b[sortKey];
     if(sortKey==='ticker'||sortKey==='sector'||sortKey==='rs_trend'||sortKey==='rank_change'){va=String(va);vb=String(vb);}
@@ -162,7 +160,6 @@ function renderTable(){
         case 'rank': v=r.rank; s+='color:#94a3b8;font-size:10px;'; break;
         case 'ticker': v='<strong>'+r.ticker.replace('.TW','').replace('.TWO','')+'</strong>'; break;
         case 'name': v='<span style="font-size:9px;color:#475569">'+r.name+'</span>'; break;
-        case 'etf': v='<span style="font-size:9px;color:#5a7a9a">'+r.etf+'</span>'; break;
         case 'combined': v=r.combined.toFixed(1); s+='font-weight:700;color:'+(r.combined>=70?C.green:r.combined>=50?C.navy:C.red)+';'; break;
         case 'rs_score': v=r.rs_score.toFixed(0); s+='color:'+(r.rs_score>=80?C.green:r.rs_score>=60?C.navy:C.red)+';'; break;
         case 'rs_trend': var t=TREND_MAP[r.rs_trend]||TREND_MAP.choppy; v='<span class="badge '+t.cls+'">'+(currentLang==='zh'?t.zh:t.en)+'</span>'; break;
@@ -224,8 +221,8 @@ function renderPicks(){
 
   // Row 1: Minervini #1, Minervini #2, Momentum
   var r1=cardHtml('minervini_1')+cardHtml('minervini_2')+cardHtml('momentum');
-  // Row 2: VCP #1, VCP #2, Top Sector
-  var r2=cardHtml('vcp_1')+cardHtml('vcp_2')+sectorCard;
+  // Row 2: VCP #1, VCP #2
+  var r2=cardHtml('vcp_1')+cardHtml('vcp_2');
 
   document.getElementById('picksRow1').innerHTML=r1;
   document.getElementById('picksRow2').innerHTML=r2;
