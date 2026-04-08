@@ -117,8 +117,30 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
         <tbody id="reit-tbody"></tbody>
       </table>
     </div>
-    <div class="note lang-en">Sources: Bloomberg, SGX, TSE, ASX, Bursa Malaysia, Euronext, LSE &middot; Data as of Q1 2026 &middot; Not investment advice. Past performance does not guarantee future results.</div>
-    <div class="note lang-zh">&#x4F86;&#x6E90;&#xFF1A;Bloomberg, SGX, TSE, ASX, Bursa Malaysia, Euronext, LSE &middot; &#x8CC7;&#x6599;&#x622A;&#x81F3;2026&#x5E74;Q1 &middot; &#x975E;&#x6295;&#x8CC7;&#x5EFA;&#x8B70;&#x3002;&#x904E;&#x53BB;&#x8868;&#x73FE;&#x4E0D;&#x4EE3;&#x8868;&#x672A;&#x4F86;&#x7D50;&#x679C;&#x3002;</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px 20px;font-size:9px;line-height:1.55;color:#94a3b8;margin-top:8px">
+      <span class="lang-en" style="grid-column:span 2;font-weight:600;color:#5a7a9a;margin-bottom:2px">Column Definitions</span>
+      <span class="lang-zh" style="display:none;grid-column:span 2;font-weight:600;color:#5a7a9a;margin-bottom:2px">欄位定義</span>
+      <span class="lang-en"><strong>Cap</strong> &mdash; Market capitalisation. Displayed in local currency; sorted by USD equivalent.</span>
+      <span class="lang-zh" style="display:none"><strong>市值</strong> &mdash; 市場資本額。顯示當地貨幣；按美元等值排序。</span>
+      <span class="lang-en"><strong>Yield</strong> &mdash; Trailing 12-month dividend yield (annual distributions &divide; current price).</span>
+      <span class="lang-zh" style="display:none"><strong>殖利</strong> &mdash; 過去12個月殖利率（年度配息 &divide; 現價）。</span>
+      <span class="lang-en"><strong>Spread</strong> &mdash; Yield minus 10-year government bond of listing country. Positive = REIT pays more than risk-free.</span>
+      <span class="lang-zh" style="display:none"><strong>利差</strong> &mdash; 殖利率減去上市國10年期公債殖利率。正值=REIT派息高於無風險利率。</span>
+      <span class="lang-en"><strong>P/NAV</strong> &mdash; Price &divide; Net Asset Value. &lt;1.0 = discount to assets; &gt;1.0 = premium.</span>
+      <span class="lang-zh" style="display:none"><strong>P/NAV</strong> &mdash; 市價 &divide; 淨資產價值。&lt;1.0=折價；&gt;1.0=溢價。</span>
+      <span class="lang-en"><strong>YoY</strong> &mdash; 1-year price return (capital gain/loss only, excludes dividends).</span>
+      <span class="lang-zh" style="display:none"><strong>年漲</strong> &mdash; 一年價格報酬（僅資本利得/損失，不含配息）。</span>
+      <span class="lang-en"><strong>5yr</strong> &mdash; 5-year total return (price change + reinvested dividends).</span>
+      <span class="lang-zh" style="display:none"><strong>5年</strong> &mdash; 五年總報酬（價格變動+股息再投入）。</span>
+      <span class="lang-en"><strong>Gear</strong> &mdash; Gearing ratio (total debt &divide; total assets). SG REITs capped at 50% by MAS.</span>
+      <span class="lang-zh" style="display:none"><strong>槓桿</strong> &mdash; 槓桿率（總負債 &divide; 總資產）。新加坡REIT受MAS規定上限50%。</span>
+      <span class="lang-en"><strong>Pay%</strong> &mdash; Payout ratio (dividends &divide; distributable income). Most REITs must distribute 90%+.</span>
+      <span class="lang-zh" style="display:none"><strong>派息</strong> &mdash; 配息率（股息 &divide; 可分配收入）。多數REIT須分配90%以上。</span>
+      <span class="lang-en"><strong>Bond rates</strong> &mdash; US 4.25% &middot; SG 3.10% &middot; JP 1.05% &middot; AU 4.35% &middot; MY 3.85% &middot; UK 4.20% &middot; EU 2.65% (German Bund)</span>
+      <span class="lang-zh" style="display:none"><strong>公債利率</strong> &mdash; 美國4.25% &middot; 新加坡3.10% &middot; 日本1.05% &middot; 澳洲4.35% &middot; 馬來西亞3.85% &middot; 英國4.20% &middot; 歐元區2.65%（德國Bund）</span>
+      <span class="lang-en" style="grid-column:span 2;margin-top:4px">Sources: Bloomberg, SGX, TSE, ASX, Bursa, Euronext, LSE &middot; Q1 2026 &middot; Not investment advice. Past performance &ne; future results.</span>
+      <span class="lang-zh" style="display:none;grid-column:span 2;margin-top:4px">來源：Bloomberg, SGX, TSE, ASX, Bursa, Euronext, LSE &middot; 2026年Q1 &middot; 非投資建議。過去表現不代表未來結果。</span>
+    </div>
   </div>
 </section>
 
@@ -432,8 +454,8 @@ function sortBy(key) {
 function setLang(lang) {
   currentLang = lang;
   localStorage.setItem('lang', lang);
-  document.querySelectorAll('.lang-en').forEach(function(el) { el.style.display = lang === 'en' ? '' : 'none'; });
-  document.querySelectorAll('.lang-zh').forEach(function(el) { el.style.display = lang === 'zh' ? '' : 'none'; });
+  document.querySelectorAll('.lang-en').forEach(function(el) { el.style.display = lang === 'en' ? 'inline' : 'none'; });
+  document.querySelectorAll('.lang-zh').forEach(function(el) { el.style.display = lang === 'zh' ? 'inline' : 'none'; });
   document.querySelectorAll('.lang-btn').forEach(function(btn) {
     btn.classList.toggle('active', (btn.textContent === 'EN' && lang === 'en') || (btn.textContent !== 'EN' && lang === 'zh'));
   });
