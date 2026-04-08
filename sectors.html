@@ -181,19 +181,9 @@ function renderTable(){
     return 0;
   });
 
-  // Group headers only when sorted by AUM (default)
-  var showGroups = (sortKey==='aum');
-  var lastGroup='';
   var html='';
 
   sorted.forEach(function(r){
-    if(showGroups && r.group!==lastGroup){
-      var gLabel=r.group==='sector'?
-        (currentLang==='zh'?'GICS 11 大類股（SPDR Select Sector）':'GICS 11 SECTORS (SPDR Select Sector)'):
-        (currentLang==='zh'?'子類股 / 主題型 ETF':'SUB-SECTOR / THEMATIC ETFs');
-      html+='<tr class="grp-hdr"><td colspan="'+COLS.length+'">'+gLabel+'</td></tr>';
-      lastGroup=r.group;
-    }
     html+='<tr>';
     COLS.forEach(function(col){
       var val='',style='padding:5px 6px;';
