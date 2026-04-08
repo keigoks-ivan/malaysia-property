@@ -61,7 +61,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
     <a href="reits.html" class="nav-link">REITs</a>
     <a href="markets.html" class="nav-link"><span class="lang-en">Markets</span><span class="lang-zh">股市</span></a>
     <a href="sectors.html" class="nav-link"><span class="lang-en">Sectors</span><span class="lang-zh">類股</span></a>
-    <a href="screener.html" class="nav-link active"><span class="lang-en">Screener</span><span class="lang-zh">美股選股</span></a>
+    <a href="screener.html" class="nav-link active"><span class="lang-en">US Screener</span><span class="lang-zh">美股選股</span></a>
     <a href="screener-tw.html" class="nav-link"><span class="lang-en">TW Screener</span><span class="lang-zh">台股選股</span></a>
   </div>
   <div class="lang-btns">
@@ -83,7 +83,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
   <div id="picksSection" style="display:none">
     <div style="font-size:10px;letter-spacing:.16em;color:#3b82f6;font-weight:600;margin-bottom:12px"><span class="lang-en">TODAY'S TOP PICKS</span><span class="lang-zh">今日精選</span></div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px" id="picksRow1"></div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px" id="picksRow2"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px" id="picksRow2"></div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px" id="picksRow3"></div>
   </div>
 
   <!-- Sector Filter -->
@@ -190,9 +191,11 @@ function renderPicks(){
   var labels={
     minervini_1:{en:'Minervini #1',zh:'Minervini #1',color:'#3b82f6',cls:''},
     minervini_2:{en:'Minervini #2',zh:'Minervini #2',color:'#3b82f6',cls:''},
+    minervini_3:{en:'Minervini #3',zh:'Minervini #3',color:'#3b82f6',cls:''},
     momentum:{en:'Momentum Rising',zh:'動能上升',color:'#16a34a',cls:'momentum'},
     vcp_1:{en:'VCP Best #1',zh:'VCP最佳 #1',color:'#d97706',cls:'vcp'},
-    vcp_2:{en:'VCP Best #2',zh:'VCP最佳 #2',color:'#d97706',cls:'vcp'}
+    vcp_2:{en:'VCP Best #2',zh:'VCP最佳 #2',color:'#d97706',cls:'vcp'},
+    vcp_3:{en:'VCP Best #3',zh:'VCP最佳 #3',color:'#d97706',cls:'vcp'}
   };
 
   function cardHtml(key){
@@ -220,14 +223,17 @@ function renderPicks(){
   sectorCard+='<div class="pick-meta">'+(currentLang==='zh'?'平均RS：':'Avg RS: ')+(ts.avg_rs||0)+' &middot; '+(ts.count||0)+(currentLang==='zh'?' 支':' stocks')+'</div>';
   sectorCard+='</div>';
 
-  // Row 1: Minervini #1, Minervini #2, Momentum
-  var r1=cardHtml('minervini_1')+cardHtml('minervini_2')+cardHtml('momentum');
-  // Row 2: VCP #1, VCP #2, Top Sector
-  var r2=cardHtml('vcp_1')+cardHtml('vcp_2')+sectorCard;
+  // Row 1: Minervini #1, #2, #3
+  var r1=cardHtml('minervini_1')+cardHtml('minervini_2')+cardHtml('minervini_3');
+  // Row 2: VCP #1, #2, #3
+  var r2=cardHtml('vcp_1')+cardHtml('vcp_2')+cardHtml('vcp_3');
+  // Row 3: Momentum + Top Sector
+  var r3=cardHtml('momentum')+sectorCard;
 
   document.getElementById('picksRow1').innerHTML=r1;
   document.getElementById('picksRow2').innerHTML=r2;
-  if(r1||r2)document.getElementById('picksSection').style.display='block';
+  document.getElementById('picksRow3').innerHTML=r3;
+  if(r1||r2||r3)document.getElementById('picksSection').style.display='block';
 }
 
 function renderSectorBar(){

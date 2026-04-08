@@ -242,7 +242,7 @@ def main():
                 picks[key] = r['ticker']
                 used.add(r['ticker'])
                 return
-    for label in ['minervini_1', 'minervini_2']:
+    for label in ['minervini_1', 'minervini_2', 'minervini_3']:
         for cond in [
             lambda r: r['rs_score']>=80 and r['vcp_score']>=75 and r['rs_trend']=='accelerating',
             lambda r: r['rs_score']>=78 and r['vcp_score']>=70 and r['rs_trend'] in ('accelerating','steady'),
@@ -258,10 +258,11 @@ def main():
         mom.sort(key=lambda r: int(r['rank_change'].replace('+','')), reverse=True)
         pick('momentum', mom)
     except: pass
-    vcp_c = [r for r in results if r['vcp_score']>=65 and r['rs_score']>=60 and r['ticker'] not in used]
+    vcp_c = [r for r in results if r['vcp_score']>=60 and r['rs_score']>=55 and r['ticker'] not in used]
     vcp_c.sort(key=lambda r: r['vcp_score']*0.7+r['rs_score']*0.3, reverse=True)
     pick('vcp_1', vcp_c)
     pick('vcp_2', [r for r in vcp_c if r['ticker'] not in used])
+    pick('vcp_3', [r for r in vcp_c if r['ticker'] not in used])
 
     # ETF ranking
     etf_scores = {}

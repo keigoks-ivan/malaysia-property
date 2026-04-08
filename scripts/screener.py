@@ -443,8 +443,8 @@ def main():
                 return True
         return False
 
-    # Minervini best × 2 (progressively relaxed)
-    for label in ['minervini_1', 'minervini_2']:
+    # Minervini best × 3 (progressively relaxed)
+    for label in ['minervini_1', 'minervini_2', 'minervini_3']:
         for cond in [
             lambda r: r['rs_score']>=80 and r['vcp_score']>=75 and r['rs_trend']=='accelerating' and r['dist_from_high_pct']<5 and r['vol_ratio']<0.8,
             lambda r: r['rs_score']>=80 and r['vcp_score']>=75 and r['rs_trend']=='accelerating' and r['dist_from_high_pct']<8,
@@ -465,12 +465,12 @@ def main():
     except:
         pass
 
-    # VCP best × 2
-    vcp_candidates = [r for r in results if r['vcp_score'] >= 70 and r['rs_score'] >= 65]
+    # VCP best × 3
+    vcp_candidates = [r for r in results if r['vcp_score'] >= 65 and r['rs_score'] >= 60]
     vcp_candidates.sort(key=lambda r: r['vcp_score'] * 0.7 + r['rs_score'] * 0.3, reverse=True)
     pick('vcp_1', vcp_candidates)
-    vcp_candidates2 = [r for r in vcp_candidates if r['ticker'] not in used]
-    pick('vcp_2', vcp_candidates2)
+    pick('vcp_2', [r for r in vcp_candidates if r['ticker'] not in used])
+    pick('vcp_3', [r for r in vcp_candidates if r['ticker'] not in used])
 
     # ── Fundamentals for top 30 ─────────────────────────────────────────
     if not quick:
