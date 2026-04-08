@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global REITs Comparison | Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e3a5f}
+
+.navbar{background:#fff;border-bottom:1px solid #dce8f5;height:52px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-left{display:flex;align-items:center;gap:12px}
+.nav-brand{font-size:12px;font-weight:700;letter-spacing:.12em;color:#1e3a5f;text-decoration:none}
+.nav-brand:hover{color:#3b82f6}
+.nav-sep{color:#dce8f5;font-size:14px}
+.nav-page{font-size:11px;font-weight:600;letter-spacing:.08em;color:#3b82f6}
+.lang-btns{display:flex;gap:4px}
+.lang-btn{padding:4px 10px;border:1px solid #dce8f5;border-radius:4px;font-size:11px;cursor:pointer;background:#fff;color:#5a7a9a;font-family:inherit}
+.lang-btn.active{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
+
+.hero{background:#fff;border-bottom:1px solid #dce8f5;padding:44px 32px 36px}
+.hero-inner{max-width:1100px;margin:0 auto}
+.hero-eyebrow{font-size:10px;letter-spacing:.18em;color:#3b82f6;font-weight:600;margin-bottom:14px}
+.hero-h1{font-size:34px;font-weight:600;color:#0f2a45;line-height:1.2;margin-bottom:10px}
+.hero-sub{font-size:14px;color:#5a7a9a;line-height:1.65;margin-bottom:28px;max-width:640px}
+.stats-row{display:flex;gap:28px}
+.stat-num{font-size:24px;font-weight:700;color:#1e3a5f;font-variant-numeric:tabular-nums}
+.stat-lbl{font-size:10px;color:#7fa3c4;letter-spacing:.08em;margin-top:3px}
+
+.section{max-width:1100px;margin:0 auto;padding:36px 32px}
+.section-hdr{display:flex;align-items:baseline;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.section-title{font-size:10px;letter-spacing:.16em;color:#3b82f6;font-weight:600}
+.section-desc{font-size:12px;color:#94a3b8}
+
+.compare-wrap{background:#fff;border:1px solid #dce8f5;border-radius:12px;overflow:auto;max-height:75vh;-webkit-overflow-scrolling:touch}
+.compare-tbl{width:100%;border-collapse:collapse;min-width:1100px;table-layout:fixed}
+.compare-tbl thead{position:sticky;top:0;z-index:3}
+.compare-tbl th{background:#f0f6ff;font-size:9px;letter-spacing:.08em;color:#5a7a9a;font-weight:600;padding:7px 10px;text-align:right;border-bottom:1px solid #dce8f5;white-space:nowrap;cursor:pointer;user-select:none}
+.compare-tbl th:hover{background:#e4eefb;color:#1e3a5f}
+.compare-tbl th:first-child{text-align:left;position:sticky;left:0;background:#f0f6ff;z-index:4;min-width:180px;width:180px;border-right:1px solid #dce8f5;cursor:pointer}
+.compare-tbl td{padding:6px 10px;font-size:11px;border-bottom:1px solid #f0f5fb;text-align:right;font-variant-numeric:tabular-nums;color:#1e3a5f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.compare-tbl td:first-child{text-align:left;font-weight:600;position:sticky;left:0;background:#fff;z-index:2;border-right:1px solid #f0f5fb}
+.compare-tbl tr:last-child td{border-bottom:none}
+.compare-tbl tr:hover td{background:#f8fbff}
+
+.sort-arrow{font-size:9px;color:#94a3b8;margin-left:2px}
+.badge{display:inline-block;font-size:9px;font-weight:600;padding:2px 6px;border-radius:3px;letter-spacing:.02em}
+.note{font-size:10px;color:#94a3b8;margin-top:10px;line-height:1.5}
+
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:20px}
+.card-title{font-size:13px;font-weight:700;color:#1e3a5f;margin-bottom:12px}
+.card p,.card li{font-size:11px;color:#475569;line-height:1.7;margin-bottom:6px}
+.card ul{padding-left:16px}
+.card strong{color:#1e3a5f}
+
+.footer{border-top:1px solid #dce8f5;padding:18px 32px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.footer-l{font-size:11px;font-weight:700;letter-spacing:.08em;color:#1e3a5f}
+.footer-r{font-size:10px;color:#94a3b8}
+
+.lang-en{}.lang-zh{display:none}
+
+@media(max-width:900px){
+  .hero-h1{font-size:26px}
+  .stats-row{flex-wrap:wrap;gap:16px}
+  .navbar{padding:0 16px}
+  .section{padding:24px 16px}
+  .hero{padding:28px 16px 24px}
+  .cards-grid{grid-template-columns:1fr}
+  .footer{flex-direction:column;gap:8px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a class="nav-brand" href="home.html">PROPERTY MONITOR</a>
+    <span class="nav-sep">|</span>
+    <span class="nav-page lang-en">REITs</span>
+    <span class="nav-page lang-zh">REITs</span>
+  </div>
+  <div class="lang-btns">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('zh')">&#x4E2D;&#x6587;</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow lang-en">GLOBAL REITS COMPARISON</div>
+    <div class="hero-eyebrow lang-zh">&#x5168;&#x7403;REITs&#x6BD4;&#x8F03;</div>
+    <h1 class="hero-h1 lang-en">Global REITs<br>Comparison</h1>
+    <h1 class="hero-h1 lang-zh">&#x5168;&#x7403;REITs<br>&#x6BD4;&#x8F03;&#x5E73;&#x53F0;</h1>
+    <p class="hero-sub lang-en">50+ REITs across 6 markets &middot; Yield, P/NAV, Leverage, Sector &middot; All columns sortable</p>
+    <p class="hero-sub lang-zh">6&#x5927;&#x5E02;&#x5834;50+&#x6A94;REITs &middot; &#x6B96;&#x5229;&#x7387;&#x3001;&#x6298;&#x6EA2;&#x50F9;&#x3001;&#x69D3;&#x687F;&#x3001;&#x7522;&#x696D; &middot; &#x6240;&#x6709;&#x6B04;&#x4F4D;&#x53EF;&#x6392;&#x5E8F;</p>
+    <div class="stats-row">
+      <div><div class="stat-num">52</div><div class="stat-lbl lang-en">REITs</div><div class="stat-lbl lang-zh">&#x6A94;REITs</div></div>
+      <div><div class="stat-num">6</div><div class="stat-lbl lang-en">MARKETS</div><div class="stat-lbl lang-zh">&#x5E02;&#x5834;</div></div>
+      <div><div class="stat-num">Q1 2026</div><div class="stat-lbl lang-en">UPDATED</div><div class="stat-lbl lang-zh">&#x8CC7;&#x6599;&#x66F4;&#x65B0;</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#f0f5fb">
+  <div class="section">
+    <div class="section-hdr">
+      <span class="section-title lang-en">REIT COMPARISON TABLE</span>
+      <span class="section-title lang-zh">REITs&#x6BD4;&#x8F03;&#x8868;</span>
+      <span class="section-desc lang-en">Click any column header to sort</span>
+      <span class="section-desc lang-zh">&#x9EDE;&#x64CA;&#x6B04;&#x4F4D;&#x6A19;&#x984C;&#x5373;&#x53EF;&#x6392;&#x5E8F;</span>
+    </div>
+    <div class="compare-wrap">
+      <table class="compare-tbl">
+        <thead><tr id="thead-row"></tr></thead>
+        <tbody id="reit-tbody"></tbody>
+      </table>
+    </div>
+    <div class="note lang-en">Sources: Bloomberg, SGX, TSE, ASX, Bursa Malaysia, Euronext, LSE &middot; Data as of Q1 2026 &middot; Not investment advice. Past performance does not guarantee future results.</div>
+    <div class="note lang-zh">&#x4F86;&#x6E90;&#xFF1A;Bloomberg, SGX, TSE, ASX, Bursa Malaysia, Euronext, LSE &middot; &#x8CC7;&#x6599;&#x622A;&#x81F3;2026&#x5E74;Q1 &middot; &#x975E;&#x6295;&#x8CC7;&#x5EFA;&#x8B70;&#x3002;&#x904E;&#x53BB;&#x8868;&#x73FE;&#x4E0D;&#x4EE3;&#x8868;&#x672A;&#x4F86;&#x7D50;&#x679C;&#x3002;</div>
+  </div>
+</section>
+
+<!-- Knowledge Section -->
+<section style="background:#fff">
+  <div class="section">
+    <div class="section-hdr">
+      <span class="section-title lang-en">REIT INVESTMENT FUNDAMENTALS</span>
+      <span class="section-title lang-zh">REITs&#x6295;&#x8CC7;&#x57FA;&#x672C;&#x77E5;&#x8B58;</span>
+      <span class="section-desc lang-en">How to read the numbers above</span>
+      <span class="section-desc lang-zh">&#x5982;&#x4F55;&#x89E3;&#x8B80;&#x4E0A;&#x65B9;&#x6578;&#x64DA;</span>
+    </div>
+    <div class="cards-grid">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-title"><span class="lang-en">How to Read REIT Metrics</span><span class="lang-zh">&#x5982;&#x4F55;&#x89E3;&#x8B80;REIT&#x6307;&#x6A19;</span></div>
+        <ul>
+          <li><span class="lang-en"><strong>P/NAV</strong> &mdash; Price to Net Asset Value. Below 1.0 means the market prices the REIT at a discount to its property holdings. Deep discounts (&lt;0.7) may signal value or distress. Premiums (&gt;1.5) reflect growth expectations.</span><span class="lang-zh"><strong>P/NAV</strong> &mdash; &#x5E02;&#x50F9;&#x6DE8;&#x503C;&#x6BD4;&#x3002;&#x4F4E;&#x65BC;1.0&#x8868;&#x793A;&#x5E02;&#x5834;&#x4EE5;&#x6298;&#x50F9;&#x5B9A;&#x50F9;REIT&#x7684;&#x4E0D;&#x52D5;&#x7522;&#x8CC7;&#x7522;&#x3002;&#x6DF1;&#x5EA6;&#x6298;&#x50F9;(&lt;0.7)&#x53EF;&#x80FD;&#x662F;&#x50F9;&#x503C;&#x6216;&#x56F0;&#x5883;&#x4FE1;&#x865F;&#x3002;&#x6EA2;&#x50F9;(&gt;1.5)&#x53CD;&#x6620;&#x6210;&#x9577;&#x9810;&#x671F;&#x3002;</span></li>
+          <li><span class="lang-en"><strong>Yield vs Growth</strong> &mdash; High-yield REITs (5%+) typically have lower growth. Growth REITs like data centers may yield only 1-3% but deliver capital gains. Total return = yield + price appreciation.</span><span class="lang-zh"><strong>&#x6B96;&#x5229;&#x7387; vs &#x6210;&#x9577;</strong> &mdash; &#x9AD8;&#x6B96;&#x5229;&#x7387;REITs(5%+)&#x901A;&#x5E38;&#x6210;&#x9577;&#x8F03;&#x4F4E;&#x3002;&#x8CC7;&#x6599;&#x4E2D;&#x5FC3;&#x7B49;&#x6210;&#x9577;&#x578B;REIT&#x53EF;&#x80FD;&#x50C5;&#x6B96;&#x5229;1-3%&#x4F46;&#x5E36;&#x4F86;&#x8CC7;&#x672C;&#x5229;&#x5F97;&#x3002;&#x7E3D;&#x5831;&#x916C;=&#x6B96;&#x5229;+&#x50F9;&#x683C;&#x589E;&#x503C;&#x3002;</span></li>
+          <li><span class="lang-en"><strong>Gearing</strong> &mdash; Debt-to-assets ratio. Below 25% is conservative. Above 45% is elevated risk, especially in rising rate environments. SG REITs are capped at 50% by regulation.</span><span class="lang-zh"><strong>&#x69D3;&#x687F;&#x6BD4;&#x7387;</strong> &mdash; &#x50B5;&#x52D9;&#x8CC7;&#x7522;&#x6BD4;&#x3002;&#x4F4E;&#x65BC;25%&#x70BA;&#x4FDD;&#x5B88;&#x3002;&#x8D85;&#x904E;45%&#x98A8;&#x96AA;&#x8F03;&#x9AD8;&#xFF0C;&#x5C24;&#x5176;&#x5728;&#x5347;&#x606F;&#x74B0;&#x5883;&#x3002;&#x65B0;&#x52A0;&#x5761;REIT&#x6CD5;&#x898F;&#x4E0A;&#x9650;50%&#x3002;</span></li>
+        </ul>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card-title"><span class="lang-en">Sector Outlook 2026</span><span class="lang-zh">2026&#x5E74;&#x7522;&#x696D;&#x5C55;&#x671B;</span></div>
+        <ul>
+          <li><span class="lang-en"><strong>Industrial / Data Center</strong> &mdash; Strong demand from AI infrastructure buildout and e-commerce logistics. Prologis and Equinix remain sector leaders. Expect 5-8% rental growth.</span><span class="lang-zh"><strong>&#x5DE5;&#x696D;/&#x8CC7;&#x6599;&#x4E2D;&#x5FC3;</strong> &mdash; AI&#x57FA;&#x790E;&#x5EFA;&#x8A2D;&#x548C;&#x96FB;&#x5546;&#x7269;&#x6D41;&#x9700;&#x6C42;&#x5F37;&#x52C1;&#x3002;Prologis&#x548C;Equinix&#x4ECD;&#x70BA;&#x7522;&#x696D;&#x9818;&#x5C0E;&#x8005;&#x3002;&#x9810;&#x671F;&#x79DF;&#x91D1;&#x6210;&#x9577;5-8%&#x3002;</span></li>
+          <li><span class="lang-en"><strong>Office</strong> &mdash; Under pressure from hybrid work. CBD Grade-A recovering slowly. Japan and SG offices more resilient than US/EU. Deep discounts on some office REITs.</span><span class="lang-zh"><strong>&#x8FA6;&#x516C;</strong> &mdash; &#x6DF7;&#x5408;&#x8FA6;&#x516C;&#x6A21;&#x5F0F;&#x6301;&#x7E8C;&#x58D3;&#x529B;&#x3002;CBD&#x7532;&#x7D1A;&#x5BEB;&#x5B57;&#x6A13;&#x7DE9;&#x6162;&#x5FA9;&#x7526;&#x3002;&#x65E5;&#x672C;&#x548C;&#x65B0;&#x52A0;&#x5761;&#x8FA6;&#x516C;&#x6BD4;&#x7F8E;&#x6B50;&#x66F4;&#x6709;&#x97CC;&#x6027;&#x3002;</span></li>
+          <li><span class="lang-en"><strong>Retail</strong> &mdash; Mixed recovery. Prime malls with experiential tenants doing well. Suburban and secondary malls still struggling. Grocery-anchored stable.</span><span class="lang-zh"><strong>&#x96F6;&#x552E;</strong> &mdash; &#x8907;&#x7526;&#x4E0D;&#x4E00;&#x3002;&#x9AD8;&#x7AEF;&#x9AD4;&#x9A57;&#x578B;&#x5546;&#x5834;&#x8868;&#x73FE;&#x826F;&#x597D;&#x3002;&#x90CA;&#x5340;&#x548C;&#x6B21;&#x7D1A;&#x5546;&#x5834;&#x4ECD;&#x5728;&#x6399;&#x624E;&#x3002;&#x751F;&#x9BAE;&#x8D85;&#x5E02;&#x70BA;&#x4E3B;&#x7684;&#x7A69;&#x5B9A;&#x3002;</span></li>
+          <li><span class="lang-en"><strong>Residential</strong> &mdash; Steady demand in supply-constrained markets. SFR REITs benefit from housing unaffordability. Multifamily faces oversupply in some US Sun Belt cities.</span><span class="lang-zh"><strong>&#x4F4F;&#x5B85;</strong> &mdash; &#x4F9B;&#x7D66;&#x53D7;&#x9650;&#x5E02;&#x5834;&#x9700;&#x6C42;&#x7A69;&#x5B9A;&#x3002;&#x55AE;&#x6236;&#x51FA;&#x79DF;REIT&#x53D7;&#x76CA;&#x65BC;&#x8CFC;&#x623F;&#x96E3;&#x3002;&#x90E8;&#x5206;&#x7F8E;&#x570B;&#x967D;&#x5149;&#x5E36;&#x57CE;&#x5E02;&#x591A;&#x6236;&#x4F4F;&#x5B85;&#x9762;&#x81E8;&#x904E;&#x5269;&#x4F9B;&#x7D66;&#x3002;</span></li>
+        </ul>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card-title"><span class="lang-en">Country Tax Treatment</span><span class="lang-zh">&#x5404;&#x570B;&#x7A05;&#x52D9;&#x8655;&#x7406;</span></div>
+        <ul>
+          <li><span class="lang-en"><strong>Singapore</strong> &mdash; 0% tax on distributions if REIT distributes 90%+ of taxable income. No capital gains tax. Foreigners same treatment.</span><span class="lang-zh"><strong>&#x65B0;&#x52A0;&#x5761;</strong> &mdash; &#x82E5;REIT&#x5206;&#x914D;90%+&#x61C9;&#x7A05;&#x6240;&#x5F97;&#xFF0C;&#x5206;&#x914D;&#x514D;&#x7A05;&#x3002;&#x7121;&#x8CC7;&#x672C;&#x5229;&#x5F97;&#x7A05;&#x3002;&#x5916;&#x570B;&#x4EBA;&#x540C;&#x7B49;&#x5F85;&#x9047;&#x3002;</span></li>
+          <li><span class="lang-en"><strong>United States</strong> &mdash; 30% withholding tax for foreign investors on REIT dividends (reducible via tax treaty). US residents taxed at ordinary income rates.</span><span class="lang-zh"><strong>&#x7F8E;&#x570B;</strong> &mdash; &#x5916;&#x570B;&#x6295;&#x8CC7;&#x8005;REIT&#x80A1;&#x606F;&#x9810;&#x6263;&#x7A05;30%(&#x53EF;&#x900F;&#x904E;&#x7A05;&#x52D9;&#x5354;&#x5B9A;&#x964D;&#x4F4E;)&#x3002;&#x7F8E;&#x570B;&#x5C45;&#x6C11;&#x6309;&#x4E00;&#x822C;&#x6240;&#x5F97;&#x7A05;&#x7387;&#x8AB2;&#x7A05;&#x3002;</span></li>
+          <li><span class="lang-en"><strong>Japan</strong> &mdash; 15.315% withholding on dividends for non-residents. J-REITs must distribute 90%+ for corporate tax exemption.</span><span class="lang-zh"><strong>&#x65E5;&#x672C;</strong> &mdash; &#x975E;&#x5C45;&#x6C11;&#x80A1;&#x606F;&#x9810;&#x6263;&#x7A05;15.315%&#x3002;J-REIT&#x9808;&#x5206;&#x914D;90%+&#x4EE5;&#x514D;&#x516C;&#x53F8;&#x7A05;&#x3002;</span></li>
+          <li><span class="lang-en"><strong>Australia</strong> &mdash; Distributions taxed as income. Fund payments may include tax-deferred components. Non-residents face managed investment trust withholding of 15%.</span><span class="lang-zh"><strong>&#x6FB3;&#x6D32;</strong> &mdash; &#x5206;&#x914D;&#x6309;&#x6240;&#x5F97;&#x8AB2;&#x7A05;&#x3002;&#x57FA;&#x91D1;&#x652F;&#x4ED8;&#x53EF;&#x80FD;&#x5305;&#x542B;&#x7A05;&#x52D9;&#x905E;&#x5EF6;&#x90E8;&#x5206;&#x3002;&#x975E;&#x5C45;&#x6C11;&#x9762;&#x81E8;&#x7BA1;&#x7406;&#x6295;&#x8CC7;&#x4FE1;&#x8A17;&#x9810;&#x6263;&#x7A05;15%&#x3002;</span></li>
+          <li><span class="lang-en"><strong>Malaysia</strong> &mdash; 10% withholding on distributions to individuals. REITs must distribute 90%+ of income. Tax-transparent vehicle.</span><span class="lang-zh"><strong>&#x99AC;&#x4F86;&#x897F;&#x4E9E;</strong> &mdash; &#x500B;&#x4EBA;&#x5206;&#x914D;&#x9810;&#x6263;&#x7A05;10%&#x3002;REIT&#x9808;&#x5206;&#x914D;90%+&#x6240;&#x5F97;&#x3002;&#x7A05;&#x52D9;&#x900F;&#x660E;&#x5DE5;&#x5177;&#x3002;</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer">
+    <div class="footer-l">PROPERTY MONITOR</div>
+    <div class="footer-r"><span class="lang-en">Data for reference only &middot; Not investment advice &middot; &copy; 2026 InvestMQuest</span><span class="lang-zh">&#x8CC7;&#x6599;&#x50C5;&#x4F9B;&#x53C3;&#x8003; &middot; &#x975E;&#x6295;&#x8CC7;&#x5EFA;&#x8B70; &middot; &copy; 2026 InvestMQuest</span></div>
+  </div>
+</footer>
+
+<script>
+var C = {navy:'#1e3a5f', green:'#16a34a', orange:'#d97706', red:'#dc2626', muted:'#64748b'};
+
+var SECTOR_COLORS = {
+  'Industrial': C.navy, 'Data Center': '#7c3aed', 'Office': C.muted, 'Retail': C.orange,
+  'Residential': C.green, 'Healthcare': '#0891b2', 'Hospitality': '#d97706',
+  'Infrastructure': '#1d4ed8', 'Diversified': '#475569', 'Self-Storage': '#16a34a',
+  'Life Science': '#059669', 'Gaming': '#d97706', 'Net Lease': C.orange,
+  'Industrial/DC': '#7c3aed', 'Fund Manager': '#475569', 'SFR Residential': C.green,
+  'Hotel/Resi': '#d97706', 'Office/Retail': C.muted, 'Retail/Office': C.orange,
+  'Office/Resi': C.muted, 'Logistics': C.navy, 'Data Center/Storage': '#7c3aed'
+};
+
+var SECTOR_ZH = {
+  'Industrial':'\u5DE5\u696D','Data Center':'\u8CC7\u6599\u4E2D\u5FC3','Office':'\u8FA6\u516C',
+  'Retail':'\u96F6\u552E','Residential':'\u4F4F\u5B85','Healthcare':'\u91AB\u7642',
+  'Hospitality':'\u9152\u5E97','Infrastructure':'\u57FA\u7840\u8A2D\u65BD',
+  'Diversified':'\u591A\u5143\u5316','Self-Storage':'\u5009\u5132','Life Science':'\u751F\u547D\u79D1\u5B78',
+  'Gaming':'\u535A\u5F69','Net Lease':'\u6DE8\u79DF\u8CC3','Industrial/DC':'\u5DE5\u696D/\u8CC7\u6599\u4E2D\u5FC3',
+  'Fund Manager':'\u57FA\u91D1\u7BA1\u7406','SFR Residential':'\u55AE\u6236\u51FA\u79DF',
+  'Hotel/Resi':'\u9152\u5E97/\u4F4F\u5B85','Office/Retail':'\u8FA6\u516C/\u96F6\u552E',
+  'Retail/Office':'\u96F6\u552E/\u8FA6\u516C','Office/Resi':'\u8FA6\u516C/\u4F4F\u5B85',
+  'Logistics':'\u7269\u6D41','Data Center/Storage':'\u8CC7\u6599\u4E2D\u5FC3/\u5009\u5132'
+};
+
+var REITS = [
+  // US
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Prologis',nameZh:'Prologis',ticker:'PLD',sector:'Industrial',mktCap:115,mktCapDisp:'$115B',divYield:3.3,pnav:1.25,yoy:8.2,ret5y:62,gearing:28,payout:72,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Equinix',nameZh:'Equinix',ticker:'EQIX',sector:'Data Center',mktCap:78,mktCapDisp:'$78B',divYield:2.1,pnav:2.1,yoy:15.5,ret5y:85,gearing:35,payout:55,currency:'USD',exchange:'NASDAQ'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'American Tower',nameZh:'American Tower',ticker:'AMT',sector:'Infrastructure',mktCap:95,mktCapDisp:'$95B',divYield:3.0,pnav:1.8,yoy:5.1,ret5y:35,gearing:55,payout:65,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Realty Income',nameZh:'Realty Income',ticker:'O',sector:'Net Lease',mktCap:48,mktCapDisp:'$48B',divYield:5.5,pnav:0.95,yoy:-2.3,ret5y:22,gearing:32,payout:82,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Simon Property',nameZh:'Simon Property',ticker:'SPG',sector:'Retail',mktCap:52,mktCapDisp:'$52B',divYield:5.0,pnav:1.05,yoy:6.8,ret5y:45,gearing:38,payout:75,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Public Storage',nameZh:'Public Storage',ticker:'PSA',sector:'Self-Storage',mktCap:55,mktCapDisp:'$55B',divYield:4.0,pnav:1.3,yoy:3.5,ret5y:48,gearing:18,payout:78,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Digital Realty',nameZh:'Digital Realty',ticker:'DLR',sector:'Data Center',mktCap:42,mktCapDisp:'$42B',divYield:3.2,pnav:1.15,yoy:12.4,ret5y:55,gearing:32,payout:68,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Welltower',nameZh:'Welltower',ticker:'WELL',sector:'Healthcare',mktCap:45,mktCapDisp:'$45B',divYield:2.8,pnav:1.4,yoy:18.2,ret5y:58,gearing:28,payout:62,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'VICI Properties',nameZh:'VICI Properties',ticker:'VICI',sector:'Gaming',mktCap:33,mktCapDisp:'$33B',divYield:5.2,pnav:1.0,yoy:4.2,ret5y:68,gearing:35,payout:80,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'AvalonBay',nameZh:'AvalonBay',ticker:'AVB',sector:'Residential',mktCap:30,mktCapDisp:'$30B',divYield:3.3,pnav:1.1,yoy:7.5,ret5y:30,gearing:25,payout:70,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Iron Mountain',nameZh:'Iron Mountain',ticker:'IRM',sector:'Data Center/Storage',mktCap:28,mktCapDisp:'$28B',divYield:2.5,pnav:2.5,yoy:25.0,ret5y:120,gearing:48,payout:60,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Crown Castle',nameZh:'Crown Castle',ticker:'CCI',sector:'Infrastructure',mktCap:40,mktCapDisp:'$40B',divYield:5.8,pnav:0.85,yoy:-8.5,ret5y:5,gearing:58,payout:90,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Extra Space',nameZh:'Extra Space',ticker:'EXR',sector:'Self-Storage',mktCap:35,mktCapDisp:'$35B',divYield:4.2,pnav:1.2,yoy:2.8,ret5y:52,gearing:30,payout:76,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Alexandria RE',nameZh:'Alexandria RE',ticker:'ARE',sector:'Life Science',mktCap:20,mktCapDisp:'$20B',divYield:4.5,pnav:0.8,yoy:-12.0,ret5y:-5,gearing:30,payout:72,currency:'USD',exchange:'NYSE'},
+  {flag:'\uD83C\uDDFA\uD83C\uDDF8',name:'Invitation Homes',nameZh:'Invitation Homes',ticker:'INVH',sector:'SFR Residential',mktCap:22,mktCapDisp:'$22B',divYield:3.5,pnav:1.15,yoy:5.8,ret5y:42,gearing:28,payout:68,currency:'USD',exchange:'NYSE'},
+
+  // Singapore
+  {flag:'\uD83C\uDDF8\uD83C\uDDEC',name:'CapitaLand Integrated',nameZh:'\u51F1\u5FB7\u7D9C\u5408',ticker:'CICT',sector:'Diversified',mktCap:14,mktCapDisp:'S$14B',divYield:5.3,pnav:0.95,yoy:3.2,ret5y:18,gearing:39,payout:95,currency:'SGD',exchange:'SGX'},
+  {flag:'\uD83C\uDDF8\uD83C\uDDEC',name:'Mapletree Logistics',nameZh:'\u8C50\u6A39\u7269\u6D41',ticker:'MLT',sector:'Logistics',mktCap:7,mktCapDisp:'S$7B',divYield:5.8,pnav:0.88,yoy:-4.5,ret5y:8,gearing:38,payout:96,currency:'SGD',exchange:'SGX'},
+  {flag:'\uD83C\uDDF8\uD83C\uDDEC',name:'Mapletree Industrial',nameZh:'\u8C50\u6A39\u5DE5\u696D',ticker:'MINT',sector:'Industrial/DC',mktCap:6.5,mktCapDisp:'S$6.5B',divYield:5.5,pnav:1.05,yoy:2.0,ret5y:25,gearing:37,payout:92,currency:'SGD',exchange:'SGX'},
+  {flag:'\uD83C\uDDF8\uD83C\uDDEC',name:'Ascendas REIT',nameZh:'\u9A30\u98DB REIT',ticker:'CLAR',sector:'Industrial',mktCap:11,mktCapDisp:'S$11B',divYield:5.2,pnav:1.0,yoy:1.5,ret5y:20,gearing:36,payout:94,currency:'SGD',exchange:'SGX'},
+  {flag:'\uD83C\uDDF8\uD83C\uDDEC',name:'Keppel REIT',nameZh:'\u5409\u5BF6 REIT',ticker:'KREIT',sector:'Office',mktCap:3.5,mktCapDisp:'S$3.5B',divYield:6.2,pnav:0.72,yoy:-2.8,ret5y:2,gearing:40,payout:98,currency:'SGD',exchange:'SGX'},
+  {flag:'\uD83C\uDDF8\uD83C\uDDEC',name:'Frasers Logistics',nameZh:'\u8F1D\u76DB\u7269\u6D41',ticker:'FLT',sector:'Logistics',mktCap:4,mktCapDisp:'S$4B',divYield:6.0,pnav:0.82,yoy:-3.5,ret5y:12,gearing:32,payout:96,currency:'SGD',exchange:'SGX'},
+  {flag:'\uD83C\uDDF8\uD83C\uDDEC',name:'Parkway Life',nameZh:'\u767E\u6C47\u751F\u547D',ticker:'PREIT',sector:'Healthcare',mktCap:2.5,mktCapDisp:'S$2.5B',divYield:3.5,pnav:1.6,yoy:8.0,ret5y:45,gearing:35,payout:90,currency:'SGD',exchange:'SGX'},
+  {flag:'\uD83C\uDDF8\uD83C\uDDEC',name:'Mapletree Pan Asia',nameZh:'\u8C50\u6A39\u6CF0\u4E9E',ticker:'MPACT',sector:'Diversified',mktCap:8,mktCapDisp:'S$8B',divYield:5.8,pnav:0.78,yoy:-5.2,ret5y:5,gearing:40,payout:95,currency:'SGD',exchange:'SGX'},
+
+  // Japan
+  {flag:'\uD83C\uDDEF\uD83C\uDDF5',name:'Nippon Building Fund',nameZh:'\u65E5\u672C\u5927\u5EC8\u57FA\u91D1',ticker:'NBF',sector:'Office',mktCap:1100,mktCapDisp:'\u00A51.1T',divYield:3.8,pnav:0.85,yoy:2.0,ret5y:15,gearing:42,payout:98,currency:'JPY',exchange:'TSE'},
+  {flag:'\uD83C\uDDEF\uD83C\uDDF5',name:'Japan Real Estate',nameZh:'\u65E5\u672C\u4E0D\u52D5\u7522',ticker:'JRE',sector:'Office',mktCap:850,mktCapDisp:'\u00A5850B',divYield:3.5,pnav:0.88,yoy:1.5,ret5y:12,gearing:40,payout:97,currency:'JPY',exchange:'TSE'},
+  {flag:'\uD83C\uDDEF\uD83C\uDDF5',name:'GLP J-REIT',nameZh:'GLP\u65E5\u672C',ticker:'GLP',sector:'Logistics',mktCap:950,mktCapDisp:'\u00A5950B',divYield:4.0,pnav:0.92,yoy:3.5,ret5y:28,gearing:38,payout:95,currency:'JPY',exchange:'TSE'},
+  {flag:'\uD83C\uDDEF\uD83C\uDDF5',name:'Nippon Prologis',nameZh:'\u65E5\u672C\u666E\u6D1B\u65AF',ticker:'NPR',sector:'Logistics',mktCap:650,mktCapDisp:'\u00A5650B',divYield:3.5,pnav:1.05,yoy:4.0,ret5y:32,gearing:35,payout:96,currency:'JPY',exchange:'TSE'},
+  {flag:'\uD83C\uDDEF\uD83C\uDDF5',name:'Japan Hotel REIT',nameZh:'\u65E5\u672C\u9152\u5E97REIT',ticker:'JHR',sector:'Hospitality',mktCap:350,mktCapDisp:'\u00A5350B',divYield:4.5,pnav:1.1,yoy:12.0,ret5y:35,gearing:42,payout:92,currency:'JPY',exchange:'TSE'},
+  {flag:'\uD83C\uDDEF\uD83C\uDDF5',name:'Advance Residence',nameZh:'\u524D\u9032\u4F4F\u5B85',ticker:'ADR',sector:'Residential',mktCap:400,mktCapDisp:'\u00A5400B',divYield:3.2,pnav:1.15,yoy:5.5,ret5y:22,gearing:30,payout:94,currency:'JPY',exchange:'TSE'},
+  {flag:'\uD83C\uDDEF\uD83C\uDDF5',name:'Industrial & Infra',nameZh:'\u7522\u696D\u57FA\u76E4',ticker:'IIF',sector:'Industrial',mktCap:280,mktCapDisp:'\u00A5280B',divYield:4.8,pnav:0.95,yoy:2.2,ret5y:18,gearing:38,payout:96,currency:'JPY',exchange:'TSE'},
+  {flag:'\uD83C\uDDEF\uD83C\uDDF5',name:'Invincible Investment',nameZh:'\u7121\u6575\u6295\u8CC7',ticker:'INV',sector:'Hotel/Resi',mktCap:200,mktCapDisp:'\u00A5200B',divYield:5.0,pnav:1.0,yoy:8.0,ret5y:30,gearing:45,payout:95,currency:'JPY',exchange:'TSE'},
+
+  // Australia
+  {flag:'\uD83C\uDDE6\uD83C\uDDFA',name:'Goodman Group',nameZh:'Goodman',ticker:'GMG',sector:'Industrial',mktCap:65,mktCapDisp:'A$65B',divYield:1.0,pnav:2.8,yoy:22.0,ret5y:180,gearing:10,payout:40,currency:'AUD',exchange:'ASX'},
+  {flag:'\uD83C\uDDE6\uD83C\uDDFA',name:'Scentre Group',nameZh:'Scentre',ticker:'SCG',sector:'Retail',mktCap:18,mktCapDisp:'A$18B',divYield:5.0,pnav:0.85,yoy:5.5,ret5y:20,gearing:28,payout:85,currency:'AUD',exchange:'ASX'},
+  {flag:'\uD83C\uDDE6\uD83C\uDDFA',name:'Stockland',nameZh:'Stockland',ticker:'SGP',sector:'Diversified',mktCap:12,mktCapDisp:'A$12B',divYield:4.5,pnav:0.9,yoy:8.0,ret5y:25,gearing:25,payout:82,currency:'AUD',exchange:'ASX'},
+  {flag:'\uD83C\uDDE6\uD83C\uDDFA',name:'Dexus',nameZh:'Dexus',ticker:'DXS',sector:'Office',mktCap:8,mktCapDisp:'A$8B',divYield:6.5,pnav:0.7,yoy:-8.0,ret5y:-10,gearing:30,payout:90,currency:'AUD',exchange:'ASX'},
+  {flag:'\uD83C\uDDE6\uD83C\uDDFA',name:'Mirvac',nameZh:'Mirvac',ticker:'MGR',sector:'Diversified',mktCap:9,mktCapDisp:'A$9B',divYield:4.8,pnav:0.75,yoy:3.0,ret5y:10,gearing:22,payout:80,currency:'AUD',exchange:'ASX'},
+  {flag:'\uD83C\uDDE6\uD83C\uDDFA',name:'Charter Hall',nameZh:'Charter Hall',ticker:'CHC',sector:'Fund Manager',mktCap:7,mktCapDisp:'A$7B',divYield:3.5,pnav:1.1,yoy:10.0,ret5y:40,gearing:15,payout:65,currency:'AUD',exchange:'ASX'},
+  {flag:'\uD83C\uDDE6\uD83C\uDDFA',name:'GPT Group',nameZh:'GPT',ticker:'GPT',sector:'Diversified',mktCap:9,mktCapDisp:'A$9B',divYield:5.2,pnav:0.78,yoy:2.5,ret5y:8,gearing:28,payout:88,currency:'AUD',exchange:'ASX'},
+
+  // Malaysia
+  {flag:'\uD83C\uDDF2\uD83C\uDDFE',name:'KLCC Stapled',nameZh:'KLCC',ticker:'KLCCSS',sector:'Office/Retail',mktCap:15,mktCapDisp:'RM15B',divYield:5.8,pnav:0.9,yoy:4.0,ret5y:15,gearing:20,payout:92,currency:'MYR',exchange:'Bursa'},
+  {flag:'\uD83C\uDDF2\uD83C\uDDFE',name:'IGB REIT',nameZh:'IGB REIT',ticker:'IGBREIT',sector:'Retail',mktCap:6,mktCapDisp:'RM6B',divYield:5.0,pnav:1.1,yoy:6.5,ret5y:22,gearing:22,payout:90,currency:'MYR',exchange:'Bursa'},
+  {flag:'\uD83C\uDDF2\uD83C\uDDFE',name:'Pavilion REIT',nameZh:'\u67CF\u5A01\u5E74;REIT',ticker:'PAVREIT',sector:'Retail/Office',mktCap:5,mktCapDisp:'RM5B',divYield:5.5,pnav:0.85,yoy:3.0,ret5y:10,gearing:35,payout:95,currency:'MYR',exchange:'Bursa'},
+  {flag:'\uD83C\uDDF2\uD83C\uDDFE',name:'Sunway REIT',nameZh:'\u96D9\u5A01 REIT',ticker:'SUNREIT',sector:'Diversified',mktCap:8,mktCapDisp:'RM8B',divYield:5.2,pnav:0.95,yoy:5.0,ret5y:18,gearing:32,payout:92,currency:'MYR',exchange:'Bursa'},
+  {flag:'\uD83C\uDDF2\uD83C\uDDFE',name:'Axis REIT',nameZh:'Axis REIT',ticker:'AXREIT',sector:'Industrial',mktCap:3,mktCapDisp:'RM3B',divYield:5.5,pnav:1.05,yoy:4.5,ret5y:28,gearing:28,payout:94,currency:'MYR',exchange:'Bursa'},
+  {flag:'\uD83C\uDDF2\uD83C\uDDFE',name:'YTL Hospitality',nameZh:'YTL\u9152\u5E97',ticker:'YTLREIT',sector:'Hospitality',mktCap:4,mktCapDisp:'RM4B',divYield:6.0,pnav:0.8,yoy:8.5,ret5y:20,gearing:30,payout:90,currency:'MYR',exchange:'Bursa'},
+
+  // Europe
+  {flag:'\uD83C\uDDE9\uD83C\uDDEA',name:'Vonovia',nameZh:'Vonovia',ticker:'VNA.DE',sector:'Residential',mktCap:22,mktCapDisp:'\u20AC22B',divYield:3.5,pnav:0.55,yoy:12.0,ret5y:-25,gearing:45,payout:70,currency:'EUR',exchange:'XETRA'},
+  {flag:'\uD83C\uDDEC\uD83C\uDDE7',name:'Segro',nameZh:'Segro',ticker:'SGRO.L',sector:'Industrial',mktCap:12,mktCapDisp:'\u00A312B',divYield:3.8,pnav:0.9,yoy:6.0,ret5y:55,gearing:25,payout:72,currency:'GBP',exchange:'LSE'},
+  {flag:'\uD83C\uDDEB\uD83C\uDDF7',name:'Unibail-Rodamco',nameZh:'Unibail-Rodamco',ticker:'URW.AS',sector:'Retail',mktCap:12,mktCapDisp:'\u20AC12B',divYield:7.5,pnav:0.5,yoy:15.0,ret5y:-40,gearing:42,payout:85,currency:'EUR',exchange:'Euronext'},
+  {flag:'\uD83C\uDDEC\uD83C\uDDE7',name:'Land Securities',nameZh:'Land Securities',ticker:'LAND.L',sector:'Diversified',mktCap:5,mktCapDisp:'\u00A35B',divYield:5.5,pnav:0.7,yoy:4.0,ret5y:-8,gearing:30,payout:88,currency:'GBP',exchange:'LSE'},
+  {flag:'\uD83C\uDDEC\uD83C\uDDE7',name:'British Land',nameZh:'British Land',ticker:'BLND.L',sector:'Diversified',mktCap:4,mktCapDisp:'\u00A34B',divYield:5.8,pnav:0.65,yoy:3.5,ret5y:-12,gearing:32,payout:86,currency:'GBP',exchange:'LSE'},
+  {flag:'\uD83C\uDDEB\uD83C\uDDF7',name:'Gecina',nameZh:'Gecina',ticker:'GFC.PA',sector:'Office/Resi',mktCap:8,mktCapDisp:'\u20AC8B',divYield:4.5,pnav:0.75,yoy:5.0,ret5y:-5,gearing:35,payout:82,currency:'EUR',exchange:'Euronext'},
+  {flag:'\uD83C\uDDE9\uD83C\uDDEA',name:'LEG Immobilien',nameZh:'LEG Immobilien',ticker:'LEG.DE',sector:'Residential',mktCap:6,mktCapDisp:'\u20AC6B',divYield:3.2,pnav:0.5,yoy:18.0,ret5y:-30,gearing:48,payout:65,currency:'EUR',exchange:'XETRA'},
+  {flag:'\uD83C\uDDF3\uD83C\uDDF1',name:'CTP',nameZh:'CTP',ticker:'CTPNV.AS',sector:'Industrial',mktCap:7,mktCapDisp:'\u20AC7B',divYield:2.8,pnav:0.85,yoy:8.0,ret5y:15,gearing:40,payout:58,currency:'EUR',exchange:'Euronext'}
+];
+
+var COLS = [
+  {key:'name',    en:'REIT',       zh:'REITs',     align:'left', w:'180px'},
+  {key:'sector',  en:'Sector',     zh:'\u7522\u696D',     align:'left', w:'100px'},
+  {key:'mktCap',  en:'Mkt Cap',    zh:'\u5E02\u503C',     align:'right',w:'80px'},
+  {key:'divYield',en:'Div Yield',  zh:'\u6B96\u5229\u7387',   align:'right',w:'72px'},
+  {key:'pnav',    en:'P/NAV',      zh:'P/NAV',     align:'right',w:'68px'},
+  {key:'yoy',     en:'YoY',        zh:'\u5E74\u6F32\u8DCC',     align:'right',w:'68px'},
+  {key:'ret5y',   en:'5yr Return', zh:'5\u5E74\u5831\u916C', align:'right',w:'78px'},
+  {key:'gearing', en:'Gearing',    zh:'\u69D3\u687F',     align:'right',w:'68px'},
+  {key:'payout',  en:'Payout',     zh:'\u6D3E\u606F\u7387',   align:'right',w:'68px'},
+  {key:'currency',en:'Ccy',        zh:'\u5E63\u5225',     align:'right',w:'52px'}
+];
+
+var currentLang = localStorage.getItem('lang') || 'en';
+var sortKey = 'mktCap';
+var sortAsc = false;
+
+function pnavColor(v) {
+  if (v < 0.7) return C.green;
+  if (v < 0.95) return C.navy;
+  if (v <= 1.05) return C.muted;
+  if (v <= 1.5) return C.orange;
+  return C.red;
+}
+
+function gearingColor(v) {
+  if (v < 25) return C.green;
+  if (v <= 40) return C.navy;
+  if (v <= 50) return C.orange;
+  return C.red;
+}
+
+function yoyColor(v) {
+  if (v > 0) return C.green;
+  if (v < 0) return C.red;
+  return C.muted;
+}
+
+function sectorBadge(sector) {
+  var c = SECTOR_COLORS[sector] || C.muted;
+  var label = currentLang === 'zh' ? (SECTOR_ZH[sector] || sector) : sector;
+  return '<span class="badge" style="background:'+c+'15;color:'+c+';border:1px solid '+c+'30">'+label+'</span>';
+}
+
+function renderHeader() {
+  var tr = document.getElementById('thead-row');
+  tr.innerHTML = '';
+  COLS.forEach(function(col) {
+    var th = document.createElement('th');
+    th.setAttribute('data-key', col.key);
+    th.style.textAlign = col.align;
+    th.style.width = col.w;
+    if (col.key === 'name') {
+      th.style.minWidth = '180px';
+    }
+    th.onclick = function() { sortBy(col.key); };
+    var label = currentLang === 'zh' ? col.zh : col.en;
+    var arrow = sortKey === col.key ? (sortAsc ? ' \u2191' : ' \u2193') : ' \u2195';
+    th.innerHTML = label + '<span class="sort-arrow">' + arrow + '</span>';
+    tr.appendChild(th);
+  });
+}
+
+function renderTable() {
+  var data = REITS.slice().sort(function(a, b) {
+    var va = a[sortKey], vb = b[sortKey];
+    if (sortKey === 'name' || sortKey === 'sector' || sortKey === 'currency') {
+      va = String(va).toLowerCase();
+      vb = String(vb).toLowerCase();
+      if (va < vb) return sortAsc ? -1 : 1;
+      if (va > vb) return sortAsc ? 1 : -1;
+      return 0;
+    }
+    return sortAsc ? (va - vb) : (vb - va);
+  });
+
+  var tbody = document.getElementById('reit-tbody');
+  tbody.innerHTML = '';
+
+  data.forEach(function(r) {
+    var tr = document.createElement('tr');
+    var nameDisplay = r.flag + ' ' + r.name + ' <span style="font-weight:400;color:#94a3b8;font-size:10px">' + r.ticker + '</span>';
+
+    var yoyStr = (r.yoy >= 0 ? '+' : '') + r.yoy.toFixed(1) + '%';
+    var ret5yStr = (r.ret5y >= 0 ? '+' : '') + r.ret5y + '%';
+
+    tr.innerHTML =
+      '<td>' + nameDisplay + '</td>' +
+      '<td style="text-align:left">' + sectorBadge(r.sector) + '</td>' +
+      '<td>' + r.mktCapDisp + '</td>' +
+      '<td style="font-weight:600;color:' + (r.divYield >= 5 ? C.green : r.divYield >= 3 ? C.navy : C.muted) + '">' + r.divYield.toFixed(1) + '%</td>' +
+      '<td style="font-weight:600;color:' + pnavColor(r.pnav) + '">' + r.pnav.toFixed(2) + 'x</td>' +
+      '<td style="color:' + yoyColor(r.yoy) + '">' + yoyStr + '</td>' +
+      '<td style="color:' + yoyColor(r.ret5y) + '">' + ret5yStr + '</td>' +
+      '<td style="font-weight:600;color:' + gearingColor(r.gearing) + '">' + r.gearing + '%</td>' +
+      '<td>' + r.payout + '%</td>' +
+      '<td style="color:#94a3b8;font-size:10px">' + r.currency + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function sortBy(key) {
+  if (sortKey === key) {
+    sortAsc = !sortAsc;
+  } else {
+    sortKey = key;
+    sortAsc = (key === 'name' || key === 'sector' || key === 'currency');
+  }
+  renderHeader();
+  renderTable();
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  document.querySelectorAll('.lang-en').forEach(function(el) { el.style.display = lang === 'en' ? '' : 'none'; });
+  document.querySelectorAll('.lang-zh').forEach(function(el) { el.style.display = lang === 'zh' ? '' : 'none'; });
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', (btn.textContent === 'EN' && lang === 'en') || (btn.textContent !== 'EN' && lang === 'zh'));
+  });
+  renderHeader();
+  renderTable();
+}
+
+// Init
+setLang(currentLang);
+</script>
+</body>
+</html>
