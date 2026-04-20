@@ -1,6 +1,8 @@
-/* Property Monitor — shared navbar (dark gradient, option B)
+/* Property Monitor — shared navbar (dark gradient, two-row with market dropdowns)
    Drop a <div id="nav-root"></div> on any page and load this script.
-   Auto-detects active market / tool from location.pathname. */
+   Auto-detects active market / tool from location.pathname.
+   Row 1: logo + tools (Home, REITs, Markets, Sectors, Screeners) + language.
+   Row 2: market flags with hover dropdowns (Overview/Supply/Demand/Valuation/Risk/Report + cities). */
 (function(){
 'use strict';
 
@@ -77,6 +79,27 @@ var toolsHtml = TOOLS.map(function(t){
   return '<a class="'+cls+'" href="'+t.href+'">'+spanBL(t.en,t.zh)+'</a>';
 }).join('');
 
+/* Row 2: market flags with hover dropdowns */
+var flagsHtml = MARKETS.map(function(m){
+  var cls = 'imq-flag'+(m.k===activeMarket?' on':'');
+  var sectionsHtml = SECTIONS.map(function(s){
+    return '<a class="imq-dd-link" href="'+m.base+s.f+'">'+spanBL(s.en,s.zh)+'</a>';
+  }).join('');
+  var citiesHtml = m.cities.map(function(ct){
+    return '<a class="imq-dd-link imq-dd-city" href="'+m.base+ct.f+'">'+spanBL(ct.en,ct.zh)+'</a>';
+  }).join('');
+  return '<div class="imq-flag-wrap">'+
+    '<a class="'+cls+'" href="'+m.base+'report.html">'+
+      '<span class="imq-flag-emoji">'+m.flag+'</span>'+
+      '<span class="imq-flag-name">'+spanBL(m.en,m.zh)+'</span>'+
+    '</a>'+
+    '<div class="imq-dd">'+
+      '<div class="imq-dd-section"><div class="imq-dd-title">'+spanBL('Sections','頁面')+'</div>'+sectionsHtml+'</div>'+
+      '<div class="imq-dd-section"><div class="imq-dd-title">'+spanBL('Cities','城市')+'</div>'+citiesHtml+'</div>'+
+    '</div>'+
+  '</div>';
+}).join('');
+
 var html = ''+
 '<nav class="imq-nav">'+
   '<div class="imq-row1">'+
@@ -92,6 +115,9 @@ var html = ''+
       '<button class="imq-burger" aria-label="menu">☰</button>'+
     '</div>'+
   '</div>'+
+  '<div class="imq-row2">'+
+    '<div class="imq-flags">'+flagsHtml+'</div>'+
+  '</div>'+
 '</nav>';
 
 /* ---------- CSS ---------- */
@@ -99,6 +125,7 @@ var css = ''+
 '.imq-nav{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);box-shadow:0 1px 3px rgba(0,0,0,.12);position:sticky;top:0;z-index:100;font-family:\'Inter\',\'Noto Sans TC\',-apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif;font-size:15px;line-height:1.4}'+
 '.imq-nav *{box-sizing:border-box}'+
 '.imq-row1{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:56px;gap:14px}'+
+'.imq-row2{border-top:1px solid rgba(255,255,255,.08);padding:0 28px;overflow:visible}'+
 '.imq-left{display:flex;align-items:center;gap:24px;min-width:0}'+
 '.imq-right{display:flex;align-items:center;gap:12px}'+
 '.imq-logo{font-size:17px;font-weight:700;color:#fff!important;letter-spacing:-.02em;text-decoration:none!important;white-space:nowrap;display:inline-flex;align-items:baseline}'+
@@ -115,16 +142,44 @@ var css = ''+
 '.imq-lbtn:hover{color:#fff;border-color:rgba(255,255,255,.3)}'+
 '.imq-lbtn.on{background:#3b82f6;color:#fff;border-color:#3b82f6}'+
 '.imq-burger{display:none;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:5px;color:#fff;font-size:18px;padding:5px 12px;cursor:pointer}'+
+/* Row 2 flags */
+'.imq-flags{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:0;min-height:40px;align-items:center}'+
+'.imq-flags::-webkit-scrollbar{display:none}'+
+'.imq-flag-wrap{position:relative;flex-shrink:0}'+
+'.imq-flag{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;font-size:12.5px;font-weight:500;color:rgba(255,255,255,.7)!important;text-decoration:none!important;border-radius:5px;transition:all .15s;white-space:nowrap;border-bottom:2px solid transparent}'+
+'.imq-flag:hover{color:#fff!important;background:rgba(255,255,255,.06);text-decoration:none!important}'+
+'.imq-flag.on{color:#fff!important;background:rgba(59,130,246,.18);font-weight:600;border-bottom-color:#3b82f6}'+
+'.imq-flag-emoji{font-size:15px;line-height:1}'+
+'.imq-flag-name{letter-spacing:.01em}'+
+/* Dropdown */
+'.imq-dd{display:none;position:absolute;top:100%;left:0;min-width:280px;background:#0f172a;border:1px solid rgba(255,255,255,.08);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.4);padding:10px;z-index:200;margin-top:4px;grid-template-columns:1fr 1fr;gap:12px}'+
+'.imq-flag-wrap:hover .imq-dd{display:grid}'+
+'.imq-dd-section{min-width:0}'+
+'.imq-dd-title{font-size:10px;font-weight:600;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em;padding:4px 10px 6px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:4px}'+
+'.imq-dd-link{display:block;padding:6px 10px;font-size:12.5px;color:rgba(255,255,255,.78)!important;text-decoration:none!important;border-radius:4px;transition:all .12s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}'+
+'.imq-dd-link:hover{background:rgba(59,130,246,.2);color:#fff!important;text-decoration:none!important}'+
+'.imq-dd-city{color:rgba(255,255,255,.65)!important}'+
+'.imq-dd-city:hover{color:#fff!important}'+
+/* Language toggle */
 '.imq-zh{display:none}'+
 'html[lang="zh"] .imq-en,body[data-lang="zh"] .imq-en{display:none}'+
 'html[lang="zh"] .imq-zh,body[data-lang="zh"] .imq-zh{display:inline}'+
+/* Mobile */
 '@media(max-width:820px){'+
   '.imq-row1{padding:0 14px;gap:8px;height:52px}'+
+  '.imq-row2{padding:0 14px}'+
   '.imq-logo{font-size:15px}'+
   '.imq-sub{display:none}'+
   '.imq-tools{display:none}'+
   '.imq-burger{display:inline-block}'+
+  '.imq-flags{overflow-x:auto;padding:4px 0}'+
+  '.imq-flag-name{display:none}'+
+  '.imq-flag{padding:7px 8px}'+
+  '.imq-flag-emoji{font-size:17px}'+
   '.imq-tools.open{display:flex!important;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:#0f172a;padding:10px;border-top:1px solid rgba(255,255,255,.1);z-index:150}'+
+  '.imq-dd{position:fixed;top:auto;left:8px;right:8px;bottom:8px;min-width:0;max-height:60vh;overflow-y:auto}'+
+  '.imq-flag-wrap:hover .imq-dd{display:none}'+
+  '.imq-flag-wrap.open .imq-dd{display:grid}'+
 '}';
 
 /* ---------- inject ---------- */
@@ -141,26 +196,21 @@ root.innerHTML = html;
 /* ---------- language switching ---------- */
 function applyLang(lang){
   try{localStorage.setItem('lang',lang);}catch(e){}
-  // toggle both our tokens (imq-en/zh) and the site-wide lang-en/lang-zh
   document.body.setAttribute('data-lang', lang);
   var en = document.querySelectorAll('.lang-en'), zh = document.querySelectorAll('.lang-zh');
   en.forEach(function(e){e.style.display = (lang==='en')?'':'none';});
   zh.forEach(function(e){e.style.display = (lang==='zh')?'':'none';});
-  // update buttons
   document.querySelectorAll('.imq-lbtn').forEach(function(b){
     b.classList.toggle('on', b.getAttribute('data-lang')===lang);
   });
-  // also toggle legacy .lang-btn buttons elsewhere on the page
   document.querySelectorAll('.lang-btn').forEach(function(b){
     b.classList.toggle('active', b.getAttribute('data-lang')===lang||b.dataset.lang===lang);
   });
 }
 
-// hook buttons
 root.querySelectorAll('.imq-lbtn').forEach(function(btn){
   btn.addEventListener('click', function(){
     var lang = btn.getAttribute('data-lang');
-    // if the page provides its own setLang (e.g. to re-render charts), let it run
     if (typeof window.setLang === 'function' && window.setLang !== applyLang) {
       window.setLang(lang);
     } else {
@@ -169,12 +219,10 @@ root.querySelectorAll('.imq-lbtn').forEach(function(btn){
   });
 });
 
-// expose a default setLang if page didn't define one
 if (typeof window.setLang !== 'function') {
   window.setLang = applyLang;
 }
 
-// apply saved language on load
 var saved = 'en';
 try{saved = localStorage.getItem('lang')||'en';}catch(e){}
 if (typeof window.setLang === 'function') window.setLang(saved);
@@ -185,5 +233,23 @@ var tools = root.querySelector('.imq-tools');
 if (burger && tools) {
   burger.addEventListener('click', function(){ tools.classList.toggle('open'); });
 }
+
+/* ---------- mobile flag tap-to-open dropdown ---------- */
+root.querySelectorAll('.imq-flag-wrap').forEach(function(wrap){
+  var flag = wrap.querySelector('.imq-flag');
+  if (!flag) return;
+  flag.addEventListener('click', function(e){
+    if (window.innerWidth <= 820) {
+      var isOpen = wrap.classList.contains('open');
+      root.querySelectorAll('.imq-flag-wrap.open').forEach(function(w){ w.classList.remove('open'); });
+      if (!isOpen) { e.preventDefault(); wrap.classList.add('open'); }
+    }
+  });
+});
+document.addEventListener('click', function(e){
+  if (window.innerWidth <= 820 && !e.target.closest('.imq-flag-wrap')) {
+    root.querySelectorAll('.imq-flag-wrap.open').forEach(function(w){ w.classList.remove('open'); });
+  }
+});
 
 })();
