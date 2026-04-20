@@ -41,15 +41,26 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
 .section-title{font-size:10px;letter-spacing:.16em;color:#3b82f6;font-weight:600}
 .section-desc{font-size:12px;color:#94a3b8}
 
-.markets-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
-.mcard{background:#fff;border:1px solid #dce8f5;border-radius:8px;padding:10px 12px;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:10px;position:relative;overflow:hidden;transition:border-color .18s,box-shadow .18s;color:#1e3a5f}
-.mcard:hover{border-color:#3b82f6;box-shadow:0 2px 8px rgba(59,130,246,.08)}
-.mcard::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--accent)}
-.mcard-flag{font-size:18px;flex-shrink:0;line-height:1}
-.mcard-info{min-width:0}
-.mcard-name{font-size:12px;font-weight:700;color:#1e3a5f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mcard-cities{font-size:9px;color:#94a3b8;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.markets-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mcard{background:#fff;border:1px solid #dce8f5;border-radius:10px;padding:14px 16px;display:block;text-decoration:none;position:relative;overflow:hidden;transition:border-color .18s,box-shadow .18s;color:#1e3a5f}
+.mcard:hover{border-color:#3b82f6;box-shadow:0 2px 10px rgba(59,130,246,.08)}
+.mcard::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--accent)}
+.mcard-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #eef3f9}
+.mcard-flag{font-size:22px;flex-shrink:0;line-height:1}
+.mcard-info{min-width:0;flex:1}
+.mcard-name{font-size:14px;font-weight:700;color:#1e3a5f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard-cities{font-size:10px;color:#94a3b8;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard-report{font-size:10px;color:#3b82f6;font-weight:600;padding:3px 8px;border:1px solid #dce8f5;border-radius:4px;text-decoration:none;white-space:nowrap}
+.mcard-report:hover{background:#3b82f6;color:#fff;border-color:#3b82f6}
+.mcard-sublinks{display:flex;flex-wrap:wrap;gap:3px 4px}
+.mcard-sublink{font-size:10.5px;color:#5a7a9a;text-decoration:none;padding:3px 7px;border-radius:4px;background:#f4f7fc;transition:all .12s;white-space:nowrap;display:inline-block}
+.mcard-sublink:hover{background:#3b82f6;color:#fff}
+.mcard-sublink.city{color:#1e3a5f;background:transparent;padding:3px 5px;font-weight:500}
+.mcard-sublink.city:hover{background:#eef3f9;color:#3b82f6}
+.mcard-divider{color:#dce8f5;padding:3px 2px;font-size:10px}
 .mcard-kpi-lbl,.mcard-kpi{display:none}
+@media(max-width:920px){.markets-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.markets-grid{grid-template-columns:1fr}}
 
 .compare-wrap{background:#fff;border:1px solid #dce8f5;border-radius:12px;overflow:auto;max-height:75vh;-webkit-overflow-scrolling:touch}
 .compare-tbl{width:100%;border-collapse:collapse;min-width:920px;table-layout:fixed}
@@ -134,18 +145,179 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
       <span class="section-desc lang-zh">點擊進入各市場</span>
     </div>
     <div class="markets-grid">
-      <a class="mcard" style="--accent:#e65100" href="report.html"><span class="mcard-flag">&#x1F1F2;&#x1F1FE;</span><div class="mcard-info"><div class="mcard-name lang-en">Malaysia</div><div class="mcard-name lang-zh">馬來西亞</div><div class="mcard-cities lang-en">KL &middot; Penang</div><div class="mcard-cities lang-zh">吉隆坡 &middot; 檳城</div></div></a>
-      <a class="mcard" style="--accent:#1e3a5f" href="tw/report.html"><span class="mcard-flag">&#x1F1F9;&#x1F1FC;</span><div class="mcard-info"><div class="mcard-name lang-en">Taiwan</div><div class="mcard-name lang-zh">台灣</div><div class="mcard-cities lang-en">Taipei &middot; New Taipei &middot; Taoyuan &middot; Hsinchu &middot; Taichung &middot; Tainan &middot; Kaohsiung</div><div class="mcard-cities lang-zh">台北 &middot; 新北 &middot; 桃園 &middot; 新竹 &middot; 台中 &middot; 台南 &middot; 高雄</div></div></a>
-      <a class="mcard" style="--accent:#dc2626" href="jp/report.html"><span class="mcard-flag">&#x1F1EF;&#x1F1F5;</span><div class="mcard-info"><div class="mcard-name lang-en">Japan</div><div class="mcard-name lang-zh">日本</div><div class="mcard-cities lang-en">Tokyo &middot; Osaka &middot; Fukuoka</div><div class="mcard-cities lang-zh">東京 &middot; 大阪 &middot; 福岡</div></div></a>
-      <a class="mcard" style="--accent:#16a34a" href="au/report.html"><span class="mcard-flag">&#x1F1E6;&#x1F1FA;</span><div class="mcard-info"><div class="mcard-name lang-en">Australia</div><div class="mcard-name lang-zh">澳洲</div><div class="mcard-cities lang-en">Sydney &middot; Melbourne &middot; Brisbane</div><div class="mcard-cities lang-zh">雪梨 &middot; 墨爾本 &middot; 布里斯本</div></div></a>
-      <a class="mcard" style="--accent:#0891b2" href="nz/report.html"><span class="mcard-flag">&#x1F1F3;&#x1F1FF;</span><div class="mcard-info"><div class="mcard-name lang-en">New Zealand</div><div class="mcard-name lang-zh">紐西蘭</div><div class="mcard-cities lang-en">Auckland &middot; Christchurch</div><div class="mcard-cities lang-zh">奧克蘭 &middot; 基督城</div></div></a>
-      <a class="mcard" style="--accent:#7c3aed" href="uk/report.html"><span class="mcard-flag">&#x1F1EC;&#x1F1E7;</span><div class="mcard-info"><div class="mcard-name lang-en">United Kingdom</div><div class="mcard-name lang-zh">英國</div><div class="mcard-cities lang-en">London &middot; Manchester &middot; Edinburgh</div><div class="mcard-cities lang-zh">倫敦 &middot; 曼徹斯特 &middot; 愛丁堡</div></div></a>
-      <a class="mcard" style="--accent:#2563eb" href="us/index.html"><span class="mcard-flag">&#x1F1FA;&#x1F1F8;</span><div class="mcard-info"><div class="mcard-name lang-en">United States</div><div class="mcard-name lang-zh">美國</div><div class="mcard-cities lang-en">12 cities &middot; NYC LA SF SV SD MIA AUS SEA CHI BOS PHX DEN</div><div class="mcard-cities lang-zh">12 城市 &middot; 紐約 洛杉磯 舊金山 矽谷 聖地牙哥 邁阿密等</div></div></a>
-      <a class="mcard" style="--accent:#d97706" href="th/report.html"><span class="mcard-flag">&#x1F1F9;&#x1F1ED;</span><div class="mcard-info"><div class="mcard-name lang-en">Thailand</div><div class="mcard-name lang-zh">泰國</div><div class="mcard-cities lang-en">Bangkok &middot; Chiang Mai</div><div class="mcard-cities lang-zh">曼谷 &middot; 清邁</div></div></a>
-      <a class="mcard" style="--accent:#ef4444" href="vn/report.html"><span class="mcard-flag">&#x1F1FB;&#x1F1F3;</span><div class="mcard-info"><div class="mcard-name lang-en">Vietnam</div><div class="mcard-name lang-zh">越南</div><div class="mcard-cities lang-en">Ho Chi Minh City &middot; Hanoi</div><div class="mcard-cities lang-zh">胡志明市 &middot; 河內</div></div></a>
-      <a class="mcard" style="--accent:#1d4ed8" href="kr/report.html"><span class="mcard-flag">&#x1F1F0;&#x1F1F7;</span><div class="mcard-info"><div class="mcard-name lang-en">South Korea</div><div class="mcard-name lang-zh">韓國</div><div class="mcard-cities lang-en">Seoul &middot; Busan</div><div class="mcard-cities lang-zh">首爾 &middot; 釜山</div></div></a>
-      <a class="mcard" style="--accent:#b91c1c" href="ca/report.html"><span class="mcard-flag">&#x1F1E8;&#x1F1E6;</span><div class="mcard-info"><div class="mcard-name lang-en">Canada</div><div class="mcard-name lang-zh">加拿大</div><div class="mcard-cities lang-en">Toronto &middot; Vancouver</div><div class="mcard-cities lang-zh">多倫多 &middot; 溫哥華</div></div></a>
-      <a class="mcard" style="--accent:#16a34a" href="ie/report.html"><span class="mcard-flag">&#x1F1EE;&#x1F1EA;</span><div class="mcard-info"><div class="mcard-name lang-en">Ireland</div><div class="mcard-name lang-zh">愛爾蘭</div><div class="mcard-cities lang-en">Dublin &middot; Cork</div><div class="mcard-cities lang-zh">都柏林 &middot; 科克</div></div></a>
+      <div class="mcard" style="--accent:#e65100">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1F2;&#x1F1FE;</span><div class="mcard-info"><div class="mcard-name lang-en">Malaysia</div><div class="mcard-name lang-zh">馬來西亞</div></div><a class="mcard-report" href="report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="kl.html"><span class="lang-en">KL</span><span class="lang-zh">吉隆坡</span></a>
+          <a class="mcard-sublink city" href="penang.html"><span class="lang-en">Penang</span><span class="lang-zh">檳城</span></a>
+        </div>
+      </div>
+      <div class="mcard" style="--accent:#1e3a5f">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1F9;&#x1F1FC;</span><div class="mcard-info"><div class="mcard-name lang-en">Taiwan</div><div class="mcard-name lang-zh">台灣</div></div><a class="mcard-report" href="tw/report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="tw/index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="tw/supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="tw/demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="tw/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="tw/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="tw/taipei.html"><span class="lang-en">Taipei</span><span class="lang-zh">台北</span></a>
+          <a class="mcard-sublink city" href="tw/newtaipei.html"><span class="lang-en">NT</span><span class="lang-zh">新北</span></a>
+          <a class="mcard-sublink city" href="tw/taoyuan.html"><span class="lang-en">Taoyuan</span><span class="lang-zh">桃園</span></a>
+          <a class="mcard-sublink city" href="tw/hsinchu.html"><span class="lang-en">Hsinchu</span><span class="lang-zh">新竹</span></a>
+          <a class="mcard-sublink city" href="tw/taichung.html"><span class="lang-en">Taichung</span><span class="lang-zh">台中</span></a>
+          <a class="mcard-sublink city" href="tw/tainan.html"><span class="lang-en">Tainan</span><span class="lang-zh">台南</span></a>
+          <a class="mcard-sublink city" href="tw/kaohsiung.html"><span class="lang-en">Kaohsiung</span><span class="lang-zh">高雄</span></a>
+        </div>
+      </div>
+      <div class="mcard" style="--accent:#dc2626">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1EF;&#x1F1F5;</span><div class="mcard-info"><div class="mcard-name lang-en">Japan</div><div class="mcard-name lang-zh">日本</div></div><a class="mcard-report" href="jp/report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="jp/index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="jp/supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="jp/demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="jp/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="jp/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="jp/tokyo.html"><span class="lang-en">Tokyo</span><span class="lang-zh">東京</span></a>
+          <a class="mcard-sublink city" href="jp/osaka.html"><span class="lang-en">Osaka</span><span class="lang-zh">大阪</span></a>
+          <a class="mcard-sublink city" href="jp/fukuoka.html"><span class="lang-en">Fukuoka</span><span class="lang-zh">福岡</span></a>
+        </div>
+      </div>
+      <div class="mcard" style="--accent:#16a34a">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1E6;&#x1F1FA;</span><div class="mcard-info"><div class="mcard-name lang-en">Australia</div><div class="mcard-name lang-zh">澳洲</div></div><a class="mcard-report" href="au/report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="au/index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="au/supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="au/demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="au/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="au/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="au/sydney.html"><span class="lang-en">Sydney</span><span class="lang-zh">雪梨</span></a>
+          <a class="mcard-sublink city" href="au/melbourne.html"><span class="lang-en">Melbourne</span><span class="lang-zh">墨爾本</span></a>
+          <a class="mcard-sublink city" href="au/brisbane.html"><span class="lang-en">Brisbane</span><span class="lang-zh">布里斯本</span></a>
+          <a class="mcard-sublink city" href="au/goldcoast.html"><span class="lang-en">Gold Coast</span><span class="lang-zh">黃金海岸</span></a>
+        </div>
+      </div>
+      <div class="mcard" style="--accent:#0891b2">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1F3;&#x1F1FF;</span><div class="mcard-info"><div class="mcard-name lang-en">New Zealand</div><div class="mcard-name lang-zh">紐西蘭</div></div><a class="mcard-report" href="nz/report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="nz/index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="nz/supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="nz/demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="nz/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="nz/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="nz/auckland.html"><span class="lang-en">Auckland</span><span class="lang-zh">奧克蘭</span></a>
+          <a class="mcard-sublink city" href="nz/christchurch.html"><span class="lang-en">Christchurch</span><span class="lang-zh">基督城</span></a>
+        </div>
+      </div>
+      <div class="mcard" style="--accent:#7c3aed">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1EC;&#x1F1E7;</span><div class="mcard-info"><div class="mcard-name lang-en">United Kingdom</div><div class="mcard-name lang-zh">英國</div></div><a class="mcard-report" href="uk/report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="uk/index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="uk/supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="uk/demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="uk/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="uk/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="uk/london.html"><span class="lang-en">London</span><span class="lang-zh">倫敦</span></a>
+          <a class="mcard-sublink city" href="uk/manchester.html"><span class="lang-en">Manchester</span><span class="lang-zh">曼徹斯特</span></a>
+          <a class="mcard-sublink city" href="uk/edinburgh.html"><span class="lang-en">Edinburgh</span><span class="lang-zh">愛丁堡</span></a>
+          <a class="mcard-sublink city" href="uk/newcastle.html"><span class="lang-en">Newcastle</span><span class="lang-zh">紐卡斯爾</span></a>
+          <a class="mcard-sublink city" href="uk/birmingham.html"><span class="lang-en">Birmingham</span><span class="lang-zh">伯明翰</span></a>
+        </div>
+      </div>
+      <div class="mcard" style="--accent:#2563eb">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1FA;&#x1F1F8;</span><div class="mcard-info"><div class="mcard-name lang-en">United States</div><div class="mcard-name lang-zh">美國</div></div><a class="mcard-report" href="us/report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="us/index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="us/supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="us/demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="us/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="us/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="us/nyc.html">NYC</a>
+          <a class="mcard-sublink city" href="us/la.html">LA</a>
+          <a class="mcard-sublink city" href="us/sf.html">SF</a>
+          <a class="mcard-sublink city" href="us/sv.html">SV</a>
+          <a class="mcard-sublink city" href="us/miami.html">Miami</a>
+          <a class="mcard-sublink city" href="us/austin.html">Austin</a>
+          <a class="mcard-sublink city" href="us/seattle.html">Seattle</a>
+          <a class="mcard-sublink city" href="us/boston.html">Boston</a>
+        </div>
+      </div>
+      <div class="mcard" style="--accent:#d97706">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1F9;&#x1F1ED;</span><div class="mcard-info"><div class="mcard-name lang-en">Thailand</div><div class="mcard-name lang-zh">泰國</div></div><a class="mcard-report" href="th/report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="th/index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="th/supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="th/demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="th/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="th/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="th/bangkok.html"><span class="lang-en">Bangkok</span><span class="lang-zh">曼谷</span></a>
+          <a class="mcard-sublink city" href="th/chiangmai.html"><span class="lang-en">Chiang Mai</span><span class="lang-zh">清邁</span></a>
+        </div>
+      </div>
+      <div class="mcard" style="--accent:#ef4444">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1FB;&#x1F1F3;</span><div class="mcard-info"><div class="mcard-name lang-en">Vietnam</div><div class="mcard-name lang-zh">越南</div></div><a class="mcard-report" href="vn/report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="vn/index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="vn/supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="vn/demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="vn/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="vn/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="vn/hochiminh.html"><span class="lang-en">HCMC</span><span class="lang-zh">胡志明</span></a>
+          <a class="mcard-sublink city" href="vn/hanoi.html"><span class="lang-en">Hanoi</span><span class="lang-zh">河內</span></a>
+        </div>
+      </div>
+      <div class="mcard" style="--accent:#1d4ed8">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1F0;&#x1F1F7;</span><div class="mcard-info"><div class="mcard-name lang-en">South Korea</div><div class="mcard-name lang-zh">韓國</div></div><a class="mcard-report" href="kr/report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="kr/index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="kr/supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="kr/demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="kr/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="kr/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="kr/seoul.html"><span class="lang-en">Seoul</span><span class="lang-zh">首爾</span></a>
+          <a class="mcard-sublink city" href="kr/busan.html"><span class="lang-en">Busan</span><span class="lang-zh">釜山</span></a>
+        </div>
+      </div>
+      <div class="mcard" style="--accent:#b91c1c">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1E8;&#x1F1E6;</span><div class="mcard-info"><div class="mcard-name lang-en">Canada</div><div class="mcard-name lang-zh">加拿大</div></div><a class="mcard-report" href="ca/report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="ca/index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="ca/supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="ca/demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="ca/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="ca/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="ca/toronto.html"><span class="lang-en">Toronto</span><span class="lang-zh">多倫多</span></a>
+          <a class="mcard-sublink city" href="ca/vancouver.html"><span class="lang-en">Vancouver</span><span class="lang-zh">溫哥華</span></a>
+        </div>
+      </div>
+      <div class="mcard" style="--accent:#16a34a">
+        <div class="mcard-head"><span class="mcard-flag">&#x1F1EE;&#x1F1EA;</span><div class="mcard-info"><div class="mcard-name lang-en">Ireland</div><div class="mcard-name lang-zh">愛爾蘭</div></div><a class="mcard-report" href="ie/report.html"><span class="lang-en">Full Report</span><span class="lang-zh">深度報告</span></a></div>
+        <div class="mcard-sublinks">
+          <a class="mcard-sublink" href="ie/index.html"><span class="lang-en">Overview</span><span class="lang-zh">總覽</span></a>
+          <a class="mcard-sublink" href="ie/supply.html"><span class="lang-en">Supply</span><span class="lang-zh">供給</span></a>
+          <a class="mcard-sublink" href="ie/demand.html"><span class="lang-en">Demand</span><span class="lang-zh">需求</span></a>
+          <a class="mcard-sublink" href="ie/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
+          <a class="mcard-sublink" href="ie/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
+          <span class="mcard-divider">|</span>
+          <a class="mcard-sublink city" href="ie/dublin.html"><span class="lang-en">Dublin</span><span class="lang-zh">都柏林</span></a>
+          <a class="mcard-sublink city" href="ie/cork.html"><span class="lang-en">Cork</span><span class="lang-zh">科克</span></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>

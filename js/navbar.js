@@ -100,6 +100,30 @@ var flagsHtml = MARKETS.map(function(m){
   '</div>';
 }).join('');
 
+/* Row 3: persistent sub-nav for active country (Sections + Cities) */
+var subnavHtml = '';
+if (activeMarket) {
+  var activeMk = MARKETS.filter(function(m){return m.k===activeMarket;})[0];
+  if (activeMk) {
+    var activeFile = fileSeg;
+    // for Malaysia root, the "base" is "/" so compare just filenames
+    var secLinks = SECTIONS.map(function(s){
+      var href = activeMk.base + s.f;
+      var isOn = (s.f === activeFile);
+      return '<a class="imq-sub-link'+(isOn?' on':'')+'" href="'+href+'">'+spanBL(s.en,s.zh)+'</a>';
+    }).join('');
+    var cityLinks = activeMk.cities.map(function(ct){
+      var href = activeMk.base + ct.f;
+      var isOn = (ct.f === activeFile);
+      return '<a class="imq-sub-link imq-sub-city'+(isOn?' on':'')+'" href="'+href+'">'+spanBL(ct.en,ct.zh)+'</a>';
+    }).join('');
+    subnavHtml = '<div class="imq-row3">'+
+      '<div class="imq-sub-label"><span class="imq-flag-emoji">'+activeMk.flag+'</span><span class="imq-sub-mk">'+spanBL(activeMk.en,activeMk.zh)+'</span></div>'+
+      '<div class="imq-sub-links">'+secLinks+'<span class="imq-sub-sep">·</span>'+cityLinks+'</div>'+
+    '</div>';
+  }
+}
+
 var html = ''+
 '<nav class="imq-nav">'+
   '<div class="imq-row1">'+
@@ -118,6 +142,7 @@ var html = ''+
   '<div class="imq-row2">'+
     '<div class="imq-flags">'+flagsHtml+'</div>'+
   '</div>'+
+  subnavHtml+
 '</nav>';
 
 /* ---------- CSS ---------- */
@@ -160,6 +185,17 @@ var css = ''+
 '.imq-dd-link:hover{background:rgba(59,130,246,.2);color:#fff!important;text-decoration:none!important}'+
 '.imq-dd-city{color:rgba(255,255,255,.65)!important}'+
 '.imq-dd-city:hover{color:#fff!important}'+
+/* Row 3: persistent sub-nav for active country */
+'.imq-row3{display:flex;align-items:center;gap:14px;padding:6px 28px 8px;border-top:1px solid rgba(255,255,255,.06);background:rgba(59,130,246,.08);flex-wrap:wrap}'+
+'.imq-sub-label{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.85);white-space:nowrap}'+
+'.imq-sub-label .imq-flag-emoji{font-size:14px}'+
+'.imq-sub-mk{letter-spacing:.02em}'+
+'.imq-sub-links{display:flex;align-items:center;gap:2px;flex-wrap:wrap}'+
+'.imq-sub-link{padding:4px 10px;font-size:12.5px;color:rgba(255,255,255,.72)!important;text-decoration:none!important;border-radius:4px;transition:all .12s;white-space:nowrap}'+
+'.imq-sub-link:hover{color:#fff!important;background:rgba(255,255,255,.1);text-decoration:none!important}'+
+'.imq-sub-link.on{color:#fff!important;background:rgba(59,130,246,.35);font-weight:600}'+
+'.imq-sub-city{color:rgba(255,255,255,.58)!important;font-size:12px}'+
+'.imq-sub-sep{color:rgba(255,255,255,.25);margin:0 4px;font-size:12px}'+
 /* Language toggle */
 '.imq-zh{display:none}'+
 'html[lang="zh"] .imq-en,body[data-lang="zh"] .imq-en{display:none}'+
@@ -176,6 +212,12 @@ var css = ''+
   '.imq-flag-name{display:none}'+
   '.imq-flag{padding:7px 8px}'+
   '.imq-flag-emoji{font-size:17px}'+
+  '.imq-row3{padding:6px 10px;gap:6px}'+
+  '.imq-sub-label{font-size:11px}'+
+  '.imq-sub-links{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}'+
+  '.imq-sub-links::-webkit-scrollbar{display:none}'+
+  '.imq-sub-link{padding:4px 8px;font-size:11.5px}'+
+  '.imq-sub-sep{display:none}'+
   '.imq-tools.open{display:flex!important;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:#0f172a;padding:10px;border-top:1px solid rgba(255,255,255,.1);z-index:150}'+
   '.imq-dd{position:fixed;top:auto;left:8px;right:8px;bottom:8px;min-width:0;max-height:60vh;overflow-y:auto}'+
   '.imq-flag-wrap:hover .imq-dd{display:none}'+
