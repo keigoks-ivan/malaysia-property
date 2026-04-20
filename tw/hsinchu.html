@@ -13,63 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
-  <header class="navbar">
-    <a href="../home.html" class="logo">PROPERTY MONITOR</a>
-    <div class="market-selector">
-      <button class="market-btn" onclick="toggleMarketMenu()">🇹🇼 <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">台灣</span> ▾</button>
-      <div class="market-dropdown" id="marketDropdown">
-        <a href="../report.html">🇲🇾 Malaysia / 馬來西亞</a>
-        <a href="index.html" class="active">🇹🇼 Taiwan / 台灣</a>
-        <a href="../jp/report.html">🇯🇵 Japan / 日本</a>
-        <a href="../au/report.html">🇦🇺 Australia / 澳洲</a>
-      <a href="../nz/report.html">🇳🇿 <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">紐西蘭</span></a>
-      <a href="../uk/report.html">🇬🇧 <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">英國</span></a>
-        <a href="../th/report.html">🇹🇭 <span class="lang-en">Thailand</span><span class="lang-zh" style="display:none">泰國</span></a>
-        <a href="../us/report.html">🇺🇸 <span class="lang-en">United States</span><span class="lang-zh" style="display:none">美國</span></a>
-      </div>
-    </div>
-    <nav>
-      <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
-      <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">總覽</span></a>
-      <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
-      <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
-      <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
-      <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
-      <a href="taipei.html">Taipei / 台北</a>
-      <a href="hsinchu.html" class="active">Hsinchu / 新竹</a>
-      <a href="taichung.html">Taichung / 台中</a>
-      <a href="kaohsiung.html">Kaohsiung / 高雄</a>
-      <a href="newtaipei.html">New Taipei / 新北</a>
-      <a href="taoyuan.html">Taoyuan / 桃園</a>
-      <a href="tainan.html">Tainan / 台南</a>
-    </nav>
-    <div class="lang-switcher">
-      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
-    </div>
-    <span class="opr-badge">CBS: 2.0%</span>
-    <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
-  </header>
-  <div class="mobile-menu">
-    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">報告</span></a>
-    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">總覽</span></a>
-    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">供給</span></a>
-    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">需求</span></a>
-    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">估值</span></a>
-    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">風險</span></a>
-    <a href="taipei.html">Taipei / 台北</a>
-    <a href="hsinchu.html" class="active">Hsinchu / 新竹</a>
-    <a href="taichung.html">Taichung / 台中</a>
-    <a href="kaohsiung.html">Kaohsiung / 高雄</a>
-    <a href="newtaipei.html">New Taipei / 新北</a>
-    <a href="taoyuan.html">Taoyuan / 桃園</a>
-    <a href="tainan.html">Tainan / 台南</a>
-    <div class="mobile-meta">
-      <span class="opr-badge">CBS: 2.0%</span>
-      <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button></div>
-    </div>
-  </div>
-
+  <div id="nav-root"></div>
   <main class="container">
     <div class="page-header">
       <span class="updated"><span class="lang-en">LAST UPDATED: Q3 2025</span><span class="lang-zh" style="display:none">最後更新：2025年Q3</span></span>
@@ -220,5 +164,6 @@
   window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
   window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
   </script>
+<script src="/js/navbar.js" defer></script>
 </body>
 </html>

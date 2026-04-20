@@ -14,52 +14,7 @@
 </head>
 <body>
 
-<header class="navbar">
-  <a href="../home.html" class="logo">PROPERTY MONITOR</a>
-  <div class="market-selector">
-    <button class="market-btn" onclick="toggleMarketMenu()">&#x1f1ee;&#x1f1ea; <span class="lang-en">Ireland</span><span class="lang-zh" style="display:none">&#x611B;&#x723E;&#x862D;</span> &#x25BE;</button>
-    <div class="market-dropdown" id="marketDropdown">
-      <a href="../report.html">&#x1f1f2;&#x1f1fe; <span class="lang-en">Malaysia</span><span class="lang-zh" style="display:none">&#x99AC;&#x4F86;&#x897F;&#x4E9E;</span></a>
-      <a href="../tw/report.html">&#x1f1f9;&#x1f1fc; <span class="lang-en">Taiwan</span><span class="lang-zh" style="display:none">&#x53F0;&#x7063;</span></a>
-      <a href="../jp/report.html">&#x1f1ef;&#x1f1f5; <span class="lang-en">Japan</span><span class="lang-zh" style="display:none">&#x65E5;&#x672C;</span></a>
-      <a href="../au/report.html">&#x1f1e6;&#x1f1fa; <span class="lang-en">Australia</span><span class="lang-zh" style="display:none">&#x6FB3;&#x6D32;</span></a>
-      <a href="../nz/report.html">&#x1f1f3;&#x1f1ff; <span class="lang-en">New Zealand</span><span class="lang-zh" style="display:none">&#x7D10;&#x897F;&#x862D;</span></a>
-      <a href="../uk/report.html">&#x1f1ec;&#x1f1e7; <span class="lang-en">United Kingdom</span><span class="lang-zh" style="display:none">&#x82F1;&#x570B;</span></a>
-      <a href="index.html" class="active">&#x1f1ee;&#x1f1ea; <span class="lang-en">Ireland</span><span class="lang-zh" style="display:none">&#x611B;&#x723E;&#x862D;</span></a>
-    </div>
-  </div>
-  <nav>
-    <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">&#x5831;&#x544A;</span></a>
-    <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">&#x5E02;&#x5834;&#x7E3D;&#x89BD;</span></a>
-    <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">&#x4F9B;&#x7D66;</span></a>
-    <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">&#x9700;&#x6C42;</span></a>
-    <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">&#x4F30;&#x503C;</span></a>
-    <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">&#x98A8;&#x96AA;</span></a>
-    <a href="dublin.html"><span class="lang-en">Dublin</span><span class="lang-zh" style="display:none">&#x90FD;&#x67CF;&#x6797;</span></a>
-    <a href="cork.html" class="active"><span class="lang-en">Cork</span><span class="lang-zh" style="display:none">&#x79D1;&#x514B;</span></a>
-  </nav>
-  <div class="lang-switcher">
-    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">&#x4E2D;&#x6587;</button>
-  </div>
-  <span class="opr-badge">ECB: 2.65%</span>
-  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">&#9776;</button>
-</header>
-<div class="mobile-menu">
-  <a href="report.html"><span class="lang-en">Report</span><span class="lang-zh" style="display:none">&#x5831;&#x544A;</span></a>
-  <a href="index.html"><span class="lang-en">Dashboard</span><span class="lang-zh" style="display:none">&#x5E02;&#x5834;&#x7E3D;&#x89BD;</span></a>
-  <a href="supply.html"><span class="lang-en">Supply</span><span class="lang-zh" style="display:none">&#x4F9B;&#x7D66;</span></a>
-  <a href="demand.html"><span class="lang-en">Demand</span><span class="lang-zh" style="display:none">&#x9700;&#x6C42;</span></a>
-  <a href="valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh" style="display:none">&#x4F30;&#x503C;</span></a>
-  <a href="risk.html"><span class="lang-en">Risk</span><span class="lang-zh" style="display:none">&#x98A8;&#x96AA;</span></a>
-  <a href="dublin.html"><span class="lang-en">Dublin</span><span class="lang-zh" style="display:none">&#x90FD;&#x67CF;&#x6797;</span></a>
-  <a href="cork.html" class="active"><span class="lang-en">Cork</span><span class="lang-zh" style="display:none">&#x79D1;&#x514B;</span></a>
-  <div class="mobile-meta">
-    <span class="opr-badge">ECB: 2.65%</span>
-    <div class="lang-switcher"><button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-lang="zh" onclick="setLang('zh')">&#x4E2D;&#x6587;</button></div>
-  </div>
-</div>
-
+<div id="nav-root"></div>
 <main class="container">
   <div class="page-header">
     <span class="updated"><span class="lang-en">LAST UPDATED: Q1 2026</span><span class="lang-zh" style="display:none">&#x6700;&#x5F8C;&#x66F4;&#x65B0;&#xFF1A;2026&#x5E74;Q1</span></span>
@@ -269,5 +224,6 @@ function initCharts(lang){
 window.addEventListener('load',function(){setLang(localStorage.getItem('lang')||'en');});
 window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
 </script>
+<script src="/js/navbar.js" defer></script>
 </body>
 </html>
