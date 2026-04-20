@@ -59,6 +59,14 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
 .mcard-sublink.city:hover{background:#eef3f9;color:#3b82f6}
 .mcard-divider{color:#dce8f5;padding:3px 2px;font-size:10px}
 .mcard-kpi-lbl,.mcard-kpi{display:none}
+.mcard-city-dd{position:relative;display:inline-block}
+.mcard-city-dd-btn{font-size:10.5px;color:#1e3a5f;background:#eef3f9;border:1px solid #dce8f5;padding:3px 9px;border-radius:4px;cursor:pointer;font-family:inherit;font-weight:500}
+.mcard-city-dd-btn:hover{background:#3b82f6;color:#fff;border-color:#3b82f6}
+.mcard-city-dd-btn::after{content:' ▾';font-size:9px}
+.mcard-city-dd-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #dce8f5;border-radius:6px;box-shadow:0 4px 16px rgba(30,58,95,.12);padding:6px;z-index:50;min-width:160px;max-height:280px;overflow-y:auto}
+.mcard-city-dd.open .mcard-city-dd-menu{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+.mcard-city-dd-menu a{display:block;padding:5px 9px;font-size:11.5px;color:#1e3a5f;text-decoration:none;border-radius:4px;white-space:nowrap}
+.mcard-city-dd-menu a:hover{background:#3b82f6;color:#fff}
 @media(max-width:920px){.markets-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.markets-grid{grid-template-columns:1fr}}
 
@@ -243,14 +251,23 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
           <a class="mcard-sublink" href="us/valuation.html"><span class="lang-en">Valuation</span><span class="lang-zh">估值</span></a>
           <a class="mcard-sublink" href="us/risk.html"><span class="lang-en">Risk</span><span class="lang-zh">風險</span></a>
           <span class="mcard-divider">|</span>
-          <a class="mcard-sublink city" href="us/nyc.html">NYC</a>
-          <a class="mcard-sublink city" href="us/la.html">LA</a>
-          <a class="mcard-sublink city" href="us/sf.html">SF</a>
-          <a class="mcard-sublink city" href="us/sv.html">SV</a>
-          <a class="mcard-sublink city" href="us/miami.html">Miami</a>
-          <a class="mcard-sublink city" href="us/austin.html">Austin</a>
-          <a class="mcard-sublink city" href="us/seattle.html">Seattle</a>
-          <a class="mcard-sublink city" href="us/boston.html">Boston</a>
+          <div class="mcard-city-dd" onclick="event.stopPropagation();this.classList.toggle('open');">
+            <button class="mcard-city-dd-btn" type="button"><span class="lang-en">12 Cities</span><span class="lang-zh">12 城市</span></button>
+            <div class="mcard-city-dd-menu">
+              <a href="us/nyc.html"><span class="lang-en">NYC</span><span class="lang-zh">紐約</span></a>
+              <a href="us/la.html"><span class="lang-en">LA</span><span class="lang-zh">洛杉磯</span></a>
+              <a href="us/sf.html"><span class="lang-en">SF</span><span class="lang-zh">舊金山</span></a>
+              <a href="us/sv.html"><span class="lang-en">Silicon Valley</span><span class="lang-zh">矽谷</span></a>
+              <a href="us/sandiego.html"><span class="lang-en">San Diego</span><span class="lang-zh">聖地牙哥</span></a>
+              <a href="us/miami.html"><span class="lang-en">Miami</span><span class="lang-zh">邁阿密</span></a>
+              <a href="us/austin.html"><span class="lang-en">Austin</span><span class="lang-zh">奧斯丁</span></a>
+              <a href="us/seattle.html"><span class="lang-en">Seattle</span><span class="lang-zh">西雅圖</span></a>
+              <a href="us/chicago.html"><span class="lang-en">Chicago</span><span class="lang-zh">芝加哥</span></a>
+              <a href="us/boston.html"><span class="lang-en">Boston</span><span class="lang-zh">波士頓</span></a>
+              <a href="us/phoenix.html"><span class="lang-en">Phoenix</span><span class="lang-zh">鳳凰城</span></a>
+              <a href="us/denver.html"><span class="lang-en">Denver</span><span class="lang-zh">丹佛</span></a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="mcard" style="--accent:#d97706">
@@ -1154,6 +1171,12 @@ function setLang(lang){
   renderTable(lang);
 }
 window.addEventListener('load',function(){setLang(currentLang);});
+// Close city dropdowns when clicking outside
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.mcard-city-dd')){
+    document.querySelectorAll('.mcard-city-dd.open').forEach(function(d){d.classList.remove('open');});
+  }
+});
 </script>
 <script src="/js/navbar.js" defer></script>
 </body>
