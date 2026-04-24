@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Macro Overlay | Taiwan Property Monitor</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="tw.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<main class="dashboard">
+  <h1 class="page-title">
+    <span class="lang-en">Macro Economy × Property Price Overlay</span>
+    <span class="lang-zh" style="display:none">總體經濟 × 房價指數疊加分析（2015–2025）</span>
+  </h1>
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">CBC Rate</span><span class="lang-zh" style="display:none">CBC利率</span></div>
+      <div class="kpi-value">2.125%</div>
+      <span class="kpi-badge badge-orange"><span class="lang-en">+100bp from low</span><span class="lang-zh" style="display:none">距低點+100bp</span></span>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">House Price Index</span><span class="lang-zh" style="display:none">房價指數</span></div>
+      <div class="kpi-value">154</div>
+      <span class="kpi-badge badge-orange"><span class="lang-en">vs 2015 +54%</span><span class="lang-zh" style="display:none">vs 2015 +54%</span></span>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label"><span class="lang-en">CPI</span><span class="lang-zh" style="display:none">CPI</span></div>
+      <div class="kpi-value">1.8%</div>
+      <span class="kpi-badge badge-green"><span class="lang-en">Cooling</span><span class="lang-zh" style="display:none">降溫中</span></span>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label"><span class="lang-en">GDP Growth</span><span class="lang-zh" style="display:none">GDP成長</span></div>
+      <div class="kpi-value">3.5%</div>
+      <span class="kpi-badge badge-green"><span class="lang-en">AI-driven</span><span class="lang-zh" style="display:none">AI驅動</span></span>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">Mortgage Credit Growth</span><span class="lang-zh" style="display:none">房貸成長</span></div>
+      <div class="kpi-value">6.2%</div>
+      <span class="kpi-badge badge-orange"><span class="lang-en">Gradually slowing</span><span class="lang-zh" style="display:none">緩降中</span></span>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-label"><span class="lang-en">Population</span><span class="lang-zh" style="display:none">人口</span></div>
+      <div class="kpi-value">23.0M</div>
+      <span class="kpi-badge badge-red"><span class="lang-en">-0.8% YoY</span><span class="lang-zh" style="display:none">-0.8% YoY</span></span>
+    </div>
+  </div>
+
+  <!-- Chart 1: Monetary Cycle × HPI -->
+  <div class="chart-card" style="margin-bottom:24px">
+    <h3>
+      <span class="lang-en">Monetary Cycle × House Price Index (2015–2025)</span>
+      <span class="lang-zh" style="display:none">貨幣週期 × 房價指數（2015–2025）</span>
+    </h3>
+    <div id="chartMacroMonetary" style="height:420px"></div>
+  </div>
+
+  <!-- Chart 2: Real Economy + Supply × HPI -->
+  <div class="chart-card" style="margin-bottom:24px">
+    <h3>
+      <span class="lang-en">Real Economy + Supply × House Price Index (2015–2025)</span>
+      <span class="lang-zh" style="display:none">實體經濟 + 供給 × 房價指數（2015–2025）</span>
+    </h3>
+    <div id="chartMacroReal" style="height:420px"></div>
+  </div>
+
+  <!-- Timeline / Insight Box -->
+  <div class="insight-box" style="margin-bottom:24px">
+    <div class="insight-title">
+      <span class="lang-en">Key Cycle Events Timeline</span>
+      <span class="lang-zh" style="display:none">關鍵週期事件時間軸</span>
+    </div>
+    <ul style="margin:10px 0 0 0;padding:0 0 0 18px;line-height:2">
+      <li>
+        <span class="lang-en">🟡 <strong>Jul 2016</strong>: House & Land Combined Tax (房地合一稅) implemented → market cooling, transaction volume shrinks</span>
+        <span class="lang-zh" style="display:none">🟡 <strong>2016年7月</strong>：房地合一稅實施 → 市場冷卻，交易量萎縮</span>
+      </li>
+      <li>
+        <span class="lang-en">🟢 <strong>Mar 2020</strong>: CBC cuts rate to 1.125% (COVID response) → liquidity surge, housing prices accelerate</span>
+        <span class="lang-zh" style="display:none">🟢 <strong>2020年3月</strong>：CBC 降息至 1.125%（COVID response）→ 流動性湧入，房價加速</span>
+      </li>
+      <li>
+        <span class="lang-en">🟠 <strong>2021</strong>: New building permits surge +13.8%, HPI up +13% YoY</span>
+        <span class="lang-zh" style="display:none">🟠 <strong>2021年</strong>：新建執照衝高 +13.8%，房價年增 13%</span>
+      </li>
+      <li>
+        <span class="lang-en">🔴 <strong>Mar 2022</strong>: CBC's first rate hike in 11 years → rate hike cycle begins (4 hikes in 2022)</span>
+        <span class="lang-zh" style="display:none">🔴 <strong>2022年3月</strong>：CBC 11 年來首次升息 → 升息週期開始（4次 in 2022）</span>
+      </li>
+      <li>
+        <span class="lang-en">🔴 <strong>2022</strong>: 6th round of Selective Credit Controls → bank mortgage lending constrained</span>
+        <span class="lang-zh" style="display:none">🔴 <strong>2022年</strong>：選擇性信用管制升級（第6次）→ 銀行房貸受限</span>
+      </li>
+      <li>
+        <span class="lang-en">🟡 <strong>2023–2025</strong>: Volume shrinks, prices rise — transactions at historic lows, HPI still climbing</span>
+        <span class="lang-zh" style="display:none">🟡 <strong>2023–2025年</strong>：量縮價漲，成交量歷史低位，房價指數仍升</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Data Source Footer -->
+  <p class="source-footer">
+    <span class="lang-en">Sources: CBC (Central Bank of the Republic of China), DGBAS (Directorate-General of Budget, Accounting and Statistics), Ministry of the Interior Real Estate Information Platform, FSC Banking Bureau</span>
+    <span class="lang-zh" style="display:none">來源：CBC（中央銀行）、DGBAS（行政院主計總處）、內政部不動產資訊平台、金管會銀行局</span>
+  </p>
+</main>
+
+<footer>
+  <p>A project by InvestMQuest.</p>
+</footer>
+
+<script>
+/* ---- data ---- */
+var years = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+var hpi   = [100.0, 97.0, 97.8, 99.5, 102.8, 109.5, 124.0, 136.5, 143.0, 150.5, 154.0];
+
+/* Chart 1: Monetary Cycle */
+var cbcRate  = [1.625, 1.375, 1.375, 1.375, 1.375, 1.125, 1.125, 1.750, 2.000, 2.125, 2.125];
+var mortRate = [2.05, 1.85, 1.84, 1.85, 1.84, 1.62, 1.61, 1.98, 2.35, 2.52, 2.55];
+var cpi      = [-0.3, 1.4, 0.6, 1.4, 0.6, -0.2, 1.97, 2.95, 2.5, 2.3, 1.8];
+var m2Growth = [5.8, 5.6, 4.8, 4.1, 5.5, 8.5, 9.1, 7.8, 6.4, 5.7, 5.0];
+
+/* Chart 2: Real Economy + Supply */
+var gdp          = [1.5, 2.2, 3.3, 2.8, 3.1, 3.4, 6.5, 2.7, 1.3, 4.3, 3.5];
+var unemp        = [3.78, 3.92, 3.76, 3.71, 3.73, 3.85, 3.95, 3.67, 3.53, 3.35, 3.28];
+var mortCredit   = [4.8, 4.2, 4.8, 5.3, 6.0, 8.8, 11.5, 9.2, 8.3, 7.5, 6.2];
+var buildPermits = [3.5, -5.2, -2.8, 4.5, 8.2, 12.3, 13.8, -3.2, -15.5, -9.3, -3.5];
+
+/* ---- chart infrastructure ---- */
+var C = {navy:'#1e3a5f', green:'#16a34a', orange:'#d97706', red:'#dc2626', blue:'#2563eb', muted:'#5a7a9a', grid:'#e8f0f9'};
+var baseText    = {color:C.muted, fontFamily:'Inter, sans-serif', fontSize:11};
+var baseTooltip = {trigger:'axis', backgroundColor:'#fff', borderColor:'#ccd9e8', borderWidth:1, textStyle:{color:C.navy, fontSize:11, fontFamily:'Inter'}};
+var baseLegend  = {top:8, textStyle:baseText, icon:'circle', itemWidth:8, itemHeight:8};
+function mkAxis(o){
+  var b={axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}};
+  var r=Object.assign({},b,o||{});
+  if(o&&o.axisLabel) r.axisLabel=Object.assign({},baseText,o.axisLabel);
+  return r;
+}
+
+var allCharts = [];
+
+function initCharts(lang){
+  allCharts.length = 0;
+  var isZh = lang === 'zh';
+
+  /* ======================================================
+     Chart 1: Monetary Cycle × House Price Index
+     ====================================================== */
+  var c1 = echarts.init(document.getElementById('chartMacroMonetary'));
+  allCharts.push(c1);
+
+  var markAreaData1 = [
+    [{xAxis:'2015', itemStyle:{color:'rgba(251,191,36,0.08)'}, label:{formatter: isZh ? '房地合一稅冷卻期' : 'Tax Reform Cooling', color:C.orange, fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2019'}],
+    [{xAxis:'2020', itemStyle:{color:'rgba(22,163,74,0.08)'},  label:{formatter: isZh ? 'COVID寬鬆期' : 'COVID Easing',        color:C.green,  fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2021'}],
+    [{xAxis:'2022', itemStyle:{color:'rgba(220,38,38,0.08)'},  label:{formatter: isZh ? '升息週期' : 'Rate Hike Cycle',        color:C.red,    fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2025'}]
+  ];
+
+  var markLineData1 = [
+    {xAxis:'2016', label:{formatter: isZh ? '房地合一稅' : 'Tax Reform', color:C.orange, fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.orange, type:'dashed', width:1}},
+    {xAxis:'2020', label:{formatter: isZh ? 'CBC降息' : 'CBC Cut',       color:C.blue,   fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.blue,   type:'dashed', width:1}},
+    {xAxis:'2022', label:{formatter: isZh ? 'CBC首升' : 'First Hike',    color:C.red,    fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.red,    type:'dashed', width:1}}
+  ];
+
+  c1.setOption({
+    tooltip: Object.assign({}, baseTooltip, {
+      formatter: function(params){
+        var s = params[0].name + '<br/>';
+        params.forEach(function(p){
+          s += '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+p.color+';margin-right:4px"></span>'+
+               p.seriesName+': '+p.value+'<br/>';
+        });
+        return s;
+      }
+    }),
+    legend: Object.assign({}, baseLegend),
+    grid: {left:50, right:60, top:40, bottom:30, containLabel:true},
+    xAxis: mkAxis({type:'category', data:years, boundaryGap:false}),
+    yAxis: [
+      mkAxis({type:'value', min:-1, max:12, interval:2, axisLabel:{formatter:'{value}%', color:C.muted, fontFamily:'Inter, sans-serif', fontSize:11}, name: isZh?'%指標':'% Indicators', nameTextStyle:{color:C.muted, fontSize:10, fontFamily:'Inter, sans-serif'}}),
+      mkAxis({type:'value', min:80, max:175, interval:20, axisLabel:{formatter:'{value}', color:C.muted, fontFamily:'Inter, sans-serif', fontSize:11}, splitLine:{show:false}, name: isZh?'房價指數':'HPI', nameTextStyle:{color:C.muted, fontSize:10, fontFamily:'Inter, sans-serif'}})
+    ],
+    series: [
+      {
+        name: isZh ? 'CBC政策利率' : 'CBC Policy Rate',
+        type:'line', data:cbcRate, yAxisIndex:0,
+        lineStyle:{color:C.navy, width:2.5},
+        itemStyle:{color:C.navy}, symbol:'circle', symbolSize:5,
+        smooth:false
+      },
+      {
+        name: isZh ? '房貸利率' : 'Mortgage Rate',
+        type:'line', data:mortRate, yAxisIndex:0,
+        lineStyle:{color:C.blue, width:1.5},
+        itemStyle:{color:C.blue}, symbol:'circle', symbolSize:4,
+        smooth:false
+      },
+      {
+        name: isZh ? 'CPI YoY%' : 'CPI YoY%',
+        type:'line', data:cpi, yAxisIndex:0,
+        lineStyle:{color:C.orange, width:1.5},
+        itemStyle:{color:C.orange}, symbol:'circle', symbolSize:4,
+        smooth:false
+      },
+      {
+        name: isZh ? 'M2 YoY%' : 'M2 YoY%',
+        type:'line', data:m2Growth, yAxisIndex:0,
+        lineStyle:{color:C.muted, width:1, type:'dashed'},
+        itemStyle:{color:C.muted}, symbol:'circle', symbolSize:4,
+        smooth:false
+      },
+      {
+        name: isZh ? '房價指數' : 'House Price Index',
+        type:'line', data:hpi, yAxisIndex:1,
+        lineStyle:{color:C.green, width:2.5},
+        itemStyle:{color:C.green}, symbol:'circle', symbolSize:5,
+        smooth:false,
+        areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[
+          {offset:0,color:'rgba(22,163,74,0.08)'},
+          {offset:1,color:'rgba(22,163,74,0)'}
+        ])},
+        markArea:{
+          silent:true,
+          data: markAreaData1
+        },
+        markLine:{
+          silent:true,
+          symbol:'none',
+          data: markLineData1
+        }
+      }
+    ]
+  });
+
+  /* ======================================================
+     Chart 2: Real Economy + Supply × House Price Index
+     ====================================================== */
+  var c2 = echarts.init(document.getElementById('chartMacroReal'));
+  allCharts.push(c2);
+
+  var gdpBarData = gdp.map(function(v){
+    return {value:v, itemStyle:{color: v >= 0 ? C.blue : C.red, borderRadius:[3,3,0,0]}};
+  });
+
+  var markAreaData2 = [
+    [{xAxis:'2015', itemStyle:{color:'rgba(251,191,36,0.08)'}, label:{formatter: isZh ? '房地合一稅冷卻期' : 'Tax Reform Cooling', color:C.orange, fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2019'}],
+    [{xAxis:'2020', itemStyle:{color:'rgba(22,163,74,0.08)'},  label:{formatter: isZh ? 'COVID寬鬆期' : 'COVID Easing',        color:C.green,  fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2021'}],
+    [{xAxis:'2022', itemStyle:{color:'rgba(220,38,38,0.08)'},  label:{formatter: isZh ? '升息週期' : 'Rate Hike Cycle',        color:C.red,    fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2025'}]
+  ];
+
+  var markLineData2 = [
+    {xAxis:'2016', label:{formatter: isZh ? '房地合一稅' : 'Tax Reform', color:C.orange, fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.orange, type:'dashed', width:1}},
+    {xAxis:'2020', label:{formatter: isZh ? 'CBC降息' : 'CBC Cut',       color:C.blue,   fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.blue,   type:'dashed', width:1}},
+    {xAxis:'2022', label:{formatter: isZh ? 'CBC首升' : 'First Hike',    color:C.red,    fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.red,    type:'dashed', width:1}}
+  ];
+
+  c2.setOption({
+    tooltip: Object.assign({}, baseTooltip, {
+      formatter: function(params){
+        var s = params[0].name + '<br/>';
+        params.forEach(function(p){
+          s += '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+p.color+';margin-right:4px"></span>'+
+               p.seriesName+': '+p.value+'<br/>';
+        });
+        return s;
+      }
+    }),
+    legend: Object.assign({}, baseLegend),
+    grid: {left:50, right:60, top:40, bottom:30, containLabel:true},
+    xAxis: mkAxis({type:'category', data:years, boundaryGap:true}),
+    yAxis: [
+      mkAxis({type:'value', min:-20, max:16, interval:4, axisLabel:{formatter:'{value}%', color:C.muted, fontFamily:'Inter, sans-serif', fontSize:11}, name: isZh?'%指標':'% Indicators', nameTextStyle:{color:C.muted, fontSize:10, fontFamily:'Inter, sans-serif'}}),
+      mkAxis({type:'value', min:80, max:175, interval:20, axisLabel:{formatter:'{value}', color:C.muted, fontFamily:'Inter, sans-serif', fontSize:11}, splitLine:{show:false}, name: isZh?'房價指數':'HPI', nameTextStyle:{color:C.muted, fontSize:10, fontFamily:'Inter, sans-serif'}})
+    ],
+    series: [
+      {
+        name: isZh ? 'GDP YoY%' : 'GDP YoY%',
+        type:'bar', data:gdpBarData, yAxisIndex:0,
+        barMaxWidth:20
+      },
+      {
+        name: isZh ? '失業率%' : 'Unemployment%',
+        type:'line', data:unemp, yAxisIndex:0,
+        lineStyle:{color:C.red, width:1.5},
+        itemStyle:{color:C.red}, symbol:'circle', symbolSize:4,
+        smooth:false
+      },
+      {
+        name: isZh ? '房貸成長%' : 'Mortgage Credit%',
+        type:'line', data:mortCredit, yAxisIndex:0,
+        lineStyle:{color:C.orange, width:1.5},
+        itemStyle:{color:C.orange}, symbol:'circle', symbolSize:4,
+        smooth:false
+      },
+      {
+        name: isZh ? '建照年增%' : 'Build Permits%',
+        type:'line', data:buildPermits, yAxisIndex:0,
+        lineStyle:{color:C.muted, width:1, type:'dashed'},
+        itemStyle:{color:C.muted}, symbol:'circle', symbolSize:4,
+        smooth:false
+      },
+      {
+        name: isZh ? '房價指數' : 'House Price Index',
+        type:'line', data:hpi, yAxisIndex:1,
+        lineStyle:{color:C.green, width:2.5},
+        itemStyle:{color:C.green}, symbol:'circle', symbolSize:5,
+        smooth:false,
+        areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[
+          {offset:0,color:'rgba(22,163,74,0.08)'},
+          {offset:1,color:'rgba(22,163,74,0)'}
+        ])},
+        markArea:{
+          silent:true,
+          data: markAreaData2
+        },
+        markLine:{
+          silent:true,
+          symbol:'none',
+          data: markLineData2
+        }
+      }
+    ]
+  });
+}
+
+function setLang(lang){
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  allCharts.forEach(function(c){if(c)c.dispose();});
+  allCharts=[];
+  initCharts(lang);
+}
+
+window.addEventListener('resize', function(){ allCharts.forEach(function(c){if(c)c.resize();}); });
+window.addEventListener('load', function(){
+  var lang = 'en';
+  try{ lang = localStorage.getItem('lang') || 'en'; }catch(e){}
+  setLang(lang);
+});
+</script>
+<script src="../js/navbar.js"></script>
+</body>
+</html>

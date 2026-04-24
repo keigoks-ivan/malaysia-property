@@ -40,7 +40,8 @@ var SECTIONS = [
   {f:'demand.html',en:'Demand',zh:'需求'},
   {f:'valuation.html',en:'Valuation',zh:'估值'},
   {f:'risk.html',en:'Risk',zh:'風險'},
-  {f:'report.html',en:'Report',zh:'報告'}
+  {f:'report.html',en:'Report',zh:'報告'},
+  {f:'macro.html',en:'Macro',zh:'總經'}
 ];
 
 var TOOLS = [
