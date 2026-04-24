@@ -45,6 +45,8 @@ var SECTIONS = [
 
 var TOOLS = [
   {k:'home',href:'/home.html',en:'Home',zh:'首頁'},
+  {k:'stress',href:'/tools/stress-test.html',en:'⚡ Stress',zh:'⚡ 壓測'},
+  {k:'buy-rent',href:'/tools/buy-vs-rent.html',en:'🔁 Buy/Rent',zh:'🔁 買租'},
   {k:'reits',href:'/reits.html',en:'REITs',zh:'REITs'},
   {k:'markets',href:'/markets.html',en:'Markets',zh:'股市'},
   {k:'sectors',href:'/sectors.html',en:'Sectors',zh:'類股'},
@@ -66,7 +68,10 @@ var mk = MARKETS.filter(function(m){return m.k===firstSeg;})[0];
 if (mk) {
   activeMarket = mk.k;
 } else {
-  var t = TOOLS.filter(function(x){return x.href.replace(/^\//,'')===fileSeg;})[0];
+  var t = TOOLS.filter(function(x){
+    var href=x.href.replace(/^\//,'');
+    return href===fileSeg || href===path.replace(/^\//,'') || href===(path.replace(/^\//,'').replace(/\.html$/,'')+'.html');
+  })[0];
   if (t) activeTool = t.k;
 }
 

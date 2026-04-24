@@ -720,12 +720,14 @@
 
   function fmtNum(v) { return v >= 1000 ? (v/1000).toFixed(0)+'K' : v; }
   function mkAxis(opts) {
-    return Object.assign({
+    var r = Object.assign({
       axisLine: { lineStyle: { color: C.grid } },
       axisTick: { show: false },
       axisLabel: baseText,
       splitLine: { lineStyle: { color: C.grid } }
     }, opts || {});
+    if(opts && opts.axisLabel) r.axisLabel = Object.assign({}, baseText, opts.axisLabel);
+    return r;
   }
 
   var allCharts = [];

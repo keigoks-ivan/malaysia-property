@@ -209,7 +209,7 @@
 var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9'};
 var baseText={color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
 var baseTooltip={trigger:'axis',backgroundColor:'#fff',borderColor:'#ccd9e8',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
-function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function mkAxis(o){var b={axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}};var r=Object.assign({},b,o||{});if(o&&o.axisLabel)r.axisLabel=Object.assign({},baseText,o.axisLabel);return r;}
 var allCharts=[];
 function initAllCharts(lang){allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];
   drawCMPrice(lang);drawCMUnits(lang);drawCMNomads(lang);drawCMLightRail(lang);drawCMRental(lang);drawCMAQI(lang);drawCMForecast(lang);}

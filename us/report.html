@@ -483,12 +483,14 @@
     textStyle: { color: C.navy, fontSize: 11, fontFamily: 'Inter' }
   };
   function mkAxis(opts) {
-    return Object.assign({
+    var r = Object.assign({
       axisLine: { lineStyle: { color: C.grid } },
       axisTick: { show: false },
       axisLabel: baseText,
       splitLine: { lineStyle: { color: C.grid } }
     }, opts || {});
+    if(opts && opts.axisLabel) r.axisLabel = Object.assign({}, baseText, opts.axisLabel);
+    return r;
   }
   var allCharts = [];
 

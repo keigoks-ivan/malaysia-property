@@ -304,7 +304,7 @@ var baseText = {color:C.muted, fontFamily:'Inter, sans-serif', fontSize:11};
 var baseGrid = {left:50, right:20, top:40, bottom:30, containLabel:true};
 var baseTooltip = {trigger:'axis', backgroundColor:'#fff', borderColor:'#ccd9e8', borderWidth:1, textStyle:{color:C.navy, fontSize:11, fontFamily:'Inter'}};
 var baseLegend = {top:8, textStyle:baseText, icon:'circle', itemWidth:8, itemHeight:8};
-function mkAxis(o){return Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}},o||{});}
+function mkAxis(o){var b={axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}};var r=Object.assign({},b,o||{});if(o&&o.axisLabel)r.axisLabel=Object.assign({},baseText,o.axisLabel);return r;}
 
 var allCharts = [];
 

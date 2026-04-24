@@ -26,6 +26,13 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
 .stats-row > div{display:flex;align-items:baseline;gap:5px}
 .stat-num{font-size:15px;font-weight:700;color:#1e3a5f;font-variant-numeric:tabular-nums;line-height:1}
 .stat-lbl{font-size:10px;color:#7fa3c4;letter-spacing:.04em;margin-top:0}
+.hero-tools{display:flex;gap:10px;flex-shrink:0}
+.hero-tool{display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(135deg,#0f1e33 0%,#1e3a5f 100%);border-radius:8px;text-decoration:none;color:#e2ecf8;transition:transform .15s,box-shadow .15s;border:1px solid rgba(59,130,246,.2)}
+.hero-tool:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(30,58,95,.2);border-color:#3b82f6}
+.hero-tool-icon{font-size:22px;line-height:1}
+.hero-tool-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+.hero-tool-title{font-size:12.5px;font-weight:700;color:#fff;line-height:1.2;white-space:nowrap}
+.hero-tool-sub{font-size:10px;color:#5a8ab5;line-height:1.2;white-space:nowrap}
 @media(max-width:820px){
   .hero{padding:10px 14px}
   .hero-inner{gap:10px}
@@ -33,6 +40,13 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
   .stats-row{gap:14px}
   .stat-num{font-size:13px}
   .stat-lbl{font-size:9px}
+  .hero-tools{gap:6px}
+  .hero-tool{padding:8px 10px}
+  .hero-tool-sub{display:none}
+}
+@media(max-width:560px){
+  .hero-tools{width:100%}
+  .hero-tool{flex:1}
 }
 
 .ticker{background:#0f1e33;border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:0}
@@ -143,11 +157,25 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f8f9fc;color:#1e
       <span class="hero-eyebrow lang-en">· 18 markets · 81 cities · 25 countries</span>
       <span class="hero-eyebrow lang-zh">· 18 市場 · 81 城市 · 25 國家</span>
     </div>
-    <div class="stats-row">
-      <div><span class="stat-num">18</span><span class="stat-lbl lang-en">MKT</span><span class="stat-lbl lang-zh">市場</span></div>
-      <div><span class="stat-num">81</span><span class="stat-lbl lang-en">CITY</span><span class="stat-lbl lang-zh">城市</span></div>
-      <div><span class="stat-num">25</span><span class="stat-lbl lang-en">CTRY</span><span class="stat-lbl lang-zh">國家</span></div>
-      <div><span class="stat-num">Apr 2026</span><span class="stat-lbl lang-en">UPD</span><span class="stat-lbl lang-zh">更新</span></div>
+    <div class="hero-tools">
+      <a class="hero-tool" href="/tools/stress-test.html">
+        <span class="hero-tool-icon">⚡</span>
+        <div class="hero-tool-text">
+          <div class="hero-tool-title lang-en">Stress Test</div>
+          <div class="hero-tool-title lang-zh" style="display:none">壓力測試</div>
+          <div class="hero-tool-sub lang-en">Rate +100bp / Rent −20% / FX −10%</div>
+          <div class="hero-tool-sub lang-zh" style="display:none">利率/租金/匯率三壓力</div>
+        </div>
+      </a>
+      <a class="hero-tool" href="/tools/buy-vs-rent.html">
+        <span class="hero-tool-icon">🔁</span>
+        <div class="hero-tool-text">
+          <div class="hero-tool-title lang-en">Buy vs Rent</div>
+          <div class="hero-tool-title lang-zh" style="display:none">買 vs 租</div>
+          <div class="hero-tool-sub lang-en">12 markets · break-even year</div>
+          <div class="hero-tool-sub lang-zh" style="display:none">12 市場 · 幾年回本</div>
+        </div>
+      </a>
     </div>
   </div>
 </section>

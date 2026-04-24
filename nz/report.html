@@ -326,12 +326,14 @@
   var baseLegend = { top: 8, textStyle: baseText, icon: 'circle', itemWidth: 8, itemHeight: 8 };
 
   function mkAxis(opts) {
-    return Object.assign({
+    var r = Object.assign({
       axisLine: { lineStyle: { color: C.grid } },
       axisTick: { show: false },
       axisLabel: baseText,
       splitLine: { lineStyle: { color: C.grid } }
     }, opts || {});
+    if(opts && opts.axisLabel) r.axisLabel = Object.assign({}, baseText, opts.axisLabel);
+    return r;
   }
 
   function toggleMarketMenu(){document.getElementById('marketDropdown').classList.toggle('open');}
