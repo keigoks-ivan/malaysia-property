@@ -805,6 +805,45 @@ window.addEventListener('load',function(){
   var lang=localStorage.getItem('lang')||'en';
   setLang(lang);
 });
+
+/* ── Query string highlight (from DD reports) ── */
+(function(){
+  var params = new URLSearchParams(location.search);
+  if (!params.toString()) return;
+
+  var city = params.get('city');
+  var from = params.get('from');
+
+  // Wait for initial renderAll to finish
+  setTimeout(function(){
+    if (city) {
+      // Find the row index in tableData (which reflects current sort order)
+      var targetIdx = -1;
+      for (var k = 0; k < tableData.length; k++) {
+        if (tableData[k].key === city) { targetIdx = k; break; }
+      }
+      if (targetIdx >= 0) {
+        var targetRow = document.querySelectorAll('#cmpTbody tr')[targetIdx];
+        if (targetRow) {
+          targetRow.style.background = '#fef3c7';
+          targetRow.style.boxShadow = 'inset 0 0 0 2px #f59e0b';
+          targetRow.scrollIntoView({behavior:'smooth', block:'center'});
+        }
+      }
+    }
+
+    if (from) {
+      var hdr = document.querySelector('.page-header');
+      if (hdr && !document.getElementById('dd-source-banner')) {
+        var b = document.createElement('div');
+        b.id = 'dd-source-banner';
+        b.style.cssText = 'background:#eff6ff;border:0.5px solid #bfdbfe;border-left:3px solid #2563eb;border-radius:4px;padding:8px 14px;margin-top:10px;font-size:12px;color:#1e3a5f;display:flex;align-items:center;gap:8px';
+        b.innerHTML = '<span style="font-size:14px">&#128203;</span><span><strong>From DD report:</strong> ' + String(from).replace(/[&<>]/g,'') + ' &middot; <a href="/docs/dd/index.html" style="color:#2563eb;text-decoration:underline;margin-left:4px">Browse all DDs</a></span>';
+        hdr.appendChild(b);
+      }
+    }
+  }, 300); // Wait for initial renderAll
+})();
 </script>
 <script src="/js/navbar.js"></script>
 </body>
