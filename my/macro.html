@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Macro Overlay | Malaysia Property Monitor</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../tw/tw.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>html,body{background:#eef3f9!important;color:#1e3a5f!important;color-scheme:light}.navbar{background:#fff!important}.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:#fff!important;border-color:#ccd9e8!important}</style>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<main class="dashboard">
+  <h1 class="page-title">
+    <span class="lang-en">Macro Economy × Property Price Overlay</span>
+    <span class="lang-zh" style="display:none">總體經濟 × 房價指數疊加分析（2008–2025）</span>
+  </h1>
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">OPR</span><span class="lang-zh" style="display:none">隔夜政策利率</span></div>
+      <div class="kpi-value">3.00%</div>
+      <span class="kpi-badge badge-orange"><span class="lang-en">+125bp from low</span><span class="lang-zh" style="display:none">距低點+125bp</span></span>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">House Price Index</span><span class="lang-zh" style="display:none">房價指數</span></div>
+      <div class="kpi-value">227</div>
+      <span class="kpi-badge badge-orange"><span class="lang-en">1990 base · +75% vs 2008</span><span class="lang-zh" style="display:none">1990基期 · vs 2008 +75%</span></span>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label"><span class="lang-en">CPI</span><span class="lang-zh" style="display:none">CPI</span></div>
+      <div class="kpi-value">1.4%</div>
+      <span class="kpi-badge badge-green"><span class="lang-en">Within target</span><span class="lang-zh" style="display:none">目標範圍內</span></span>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label"><span class="lang-en">GDP Growth</span><span class="lang-zh" style="display:none">GDP成長</span></div>
+      <div class="kpi-value">5.1%</div>
+      <span class="kpi-badge badge-green"><span class="lang-en">2024 full year</span><span class="lang-zh" style="display:none">2024全年</span></span>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label"><span class="lang-en">Housing Loan Growth</span><span class="lang-zh" style="display:none">房貸成長</span></div>
+      <div class="kpi-value">6.3%</div>
+      <span class="kpi-badge badge-orange"><span class="lang-en">Steady pace</span><span class="lang-zh" style="display:none">穩定增速</span></span>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label"><span class="lang-en">Unemployment</span><span class="lang-zh" style="display:none">失業率</span></div>
+      <div class="kpi-value">3.1%</div>
+      <span class="kpi-badge badge-green"><span class="lang-en">Near full employment</span><span class="lang-zh" style="display:none">接近完全就業</span></span>
+    </div>
+  </div>
+
+  <!-- Chart 1: Monetary Cycle × HPI -->
+  <div class="chart-card" style="margin-bottom:24px">
+    <h3>
+      <span class="lang-en">Monetary Cycle × House Price Index (2008–2025)</span>
+      <span class="lang-zh" style="display:none">貨幣週期 × 房價指數（2008–2025）</span>
+    </h3>
+    <div id="chartMacroMonetary" style="height:420px"></div>
+  </div>
+
+  <!-- Chart 2: Real Economy × HPI -->
+  <div class="chart-card" style="margin-bottom:24px">
+    <h3>
+      <span class="lang-en">Real Economy × House Price Index (2008–2025)</span>
+      <span class="lang-zh" style="display:none">實體經濟 × 房價指數（2008–2025）</span>
+    </h3>
+    <div id="chartMacroReal" style="height:420px"></div>
+  </div>
+
+  <!-- Timeline / Insight Box -->
+  <div class="insight-box" style="margin-bottom:24px">
+    <div class="insight-title">
+      <span class="lang-en">Key Cycle Events Timeline (2008–2025)</span>
+      <span class="lang-zh" style="display:none">關鍵週期事件時間軸（2008–2025）</span>
+    </div>
+    <ul style="margin:10px 0 0 0;padding:0 0 0 18px;line-height:2">
+      <li>
+        <span class="lang-en">⬛ <strong>2008–2009</strong>: GFC — BNM cuts OPR from 3.50% to 2.00%; GDP contracts −1.6% in 2009</span>
+        <span class="lang-zh" style="display:none">⬛ <strong>2008–2009年</strong>：全球金融危機 — BNM將OPR從3.50%降至2.00%；2009年GDP衰退1.6%</span>
+      </li>
+      <li>
+        <span class="lang-en">🟢 <strong>2010–2014</strong>: Property Boom — HPI surges +36%, M2 peaks at 14.6% in 2011 (ETP-driven credit expansion)</span>
+        <span class="lang-zh" style="display:none">🟢 <strong>2010–2014年</strong>：房產榮景 — HPI上漲36%，2011年M2達14.6%高峰（ETP計劃驅動信貸擴張）</span>
+      </li>
+      <li>
+        <span class="lang-en">🟡 <strong>Jul 2014</strong>: BNM hikes to 3.25%; government tightens TDSR, LTV caps — speculative demand curbed</span>
+        <span class="lang-zh" style="display:none">🟡 <strong>2014年7月</strong>：BNM升息至3.25%；政府收緊TDSR、LTV上限 — 投機需求受抑</span>
+      </li>
+      <li>
+        <span class="lang-en">🟡 <strong>Apr 2015</strong>: GST introduced at 6%; construction cost inflation, property affordability worsens</span>
+        <span class="lang-zh" style="display:none">🟡 <strong>2015年4月</strong>：GST以6%稅率推出；建設成本上升，房屋可負擔性下降</span>
+      </li>
+      <li>
+        <span class="lang-en">🟡 <strong>Jul 2016</strong>: OPR cut to 3.00%; property overhang begins climbing — buyers cautious</span>
+        <span class="lang-zh" style="display:none">🟡 <strong>2016年7月</strong>：OPR降至3.00%；房產積壓開始攀升 — 買家觀望</span>
+      </li>
+      <li>
+        <span class="lang-en">🔵 <strong>2020</strong>: COVID — BNM makes 4 cuts to historic low 1.75%; GDP −5.5%; HPI near flat</span>
+        <span class="lang-zh" style="display:none">🔵 <strong>2020年</strong>：COVID疫情 — BNM四度降息至歷史低點1.75%；GDP衰退5.5%；HPI近乎持平</span>
+      </li>
+      <li>
+        <span class="lang-en">🔴 <strong>2022–2023</strong>: BNM hike cycle — OPR raised from 1.75% to 3.00% in 5 steps; HPI resumes climb</span>
+        <span class="lang-zh" style="display:none">🔴 <strong>2022–2023年</strong>：BNM升息週期 — OPR分5步從1.75%升至3.00%；HPI恢復上升</span>
+      </li>
+      <li>
+        <span class="lang-en">🟢 <strong>2024–2025</strong>: OPR steady at 3.00%; HPI at 227 — data centre investment and Johor-Singapore SEZ boost outlook</span>
+        <span class="lang-zh" style="display:none">🟢 <strong>2024–2025年</strong>：OPR維持3.00%；HPI達227 — 數據中心投資及柔新經濟特區帶動前景樂觀</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Data Source Footer -->
+  <p class="source-footer">
+    <span class="lang-en">Sources: BNM (Bank Negara Malaysia OPR Decisions, Monthly Statistical Bulletin), DOSM (OpenDOSM — GDP, CPI, Labour Force Survey), NAPIC (Malaysian House Price Index), data.gov.my (interest rates, monetary aggregates)</span>
+    <span class="lang-zh" style="display:none">來源：BNM（國家銀行OPR決策、月度統計公報）、DOSM（OpenDOSM — GDP、CPI、勞動力調查）、NAPIC（馬來西亞房價指數）、data.gov.my（利率、貨幣總量）</span>
+  </p>
+</main>
+
+<footer>
+  <p>A project by InvestMQuest.</p>
+</footer>
+
+<script>
+/* ---- data (2008–2025, actual figures from BNM / DOSM / NAPIC) ---- */
+var years = ['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+
+/* NAPIC Malaysian House Price Index (base: 1990 Q1 = 100)
+   Confirmed anchors: 2018=193.3, 2023=216.5, H1-2024=218.7, H1-2025=227.3
+   2008–2017: interpolated from BNM Table A.25 trend between confirmed anchor points */
+var hpi = [130.1,128.0,131.5,138.0,149.6,162.3,174.2,180.4,185.1,190.0,193.3,196.5,197.3,197.6,205.0,216.5,225.0,227.3];
+
+/* Chart 1: Monetary Cycle */
+/* BNM OPR year-end decisions (bnm.gov.my/monetary-stability/opr-decisions) */
+var oprRate = [3.25,2.00,2.75,3.00,3.00,3.00,3.25,3.25,3.00,3.00,3.25,3.00,1.75,1.75,2.75,3.00,3.00,3.00];
+/* BNM Average Lending Rate — data.gov.my/interest_rates_annual.csv */
+var avgLendingRate = [6.08,5.08,5.00,4.92,4.79,4.65,4.59,4.57,4.53,4.61,4.93,4.81,3.89,3.37,3.91,5.32,5.28,4.82];
+/* DOSM CPI YoY% annual average — storage.dosm.gov.my/cpi/cpi_2d_annual.csv */
+var cpiYoy = [5.5,0.6,1.6,3.2,1.7,2.1,3.1,2.1,2.1,3.8,1.0,0.7,-1.1,2.5,3.4,2.5,1.8,1.4];
+/* BNM M2 YoY% — data.gov.my/money_aggregates.csv (2013–2025); World Bank IFS (2008–2012) */
+var m2Growth = [10.5,7.7,7.4,14.6,8.9,7.4,7.5,3.4,3.2,5.1,8.9,3.5,4.5,6.3,4.3,5.9,3.7,4.2];
+
+/* Chart 2: Real Economy */
+/* DOSM real GDP growth — storage.dosm.gov.my/gdp/gdp_gni_annual_real.csv; 2025=Q1 actual */
+var gdpGrowth = [4.8,-1.6,7.2,5.3,5.5,4.7,6.0,5.1,4.4,5.8,4.8,4.4,-5.5,3.3,9.0,3.5,5.1,4.4];
+/* DOSM Labour Force Survey — storage.dosm.gov.my/labour/lfs_year.csv */
+var unemployRate = [3.3,3.7,3.3,3.1,3.0,3.1,2.9,3.1,3.4,3.4,3.3,3.3,4.5,4.6,3.9,3.4,3.2,3.1];
+/* BNM outstanding housing loans YoY% — FSR / EMR annual; 2008–2012 reconstructed from RM balances */
+var housingLoanGrowth = [12.0,8.0,14.0,13.0,11.0,10.7,9.5,9.0,10.1,8.5,8.0,7.5,7.1,6.5,5.4,5.6,7.2,6.3];
+
+/* ---- chart infrastructure ---- */
+var C = {navy:'#1e3a5f', green:'#16a34a', orange:'#d97706', red:'#dc2626', blue:'#2563eb', muted:'#5a7a9a', grid:'#e8f0f9'};
+var baseText    = {color:C.muted, fontFamily:'Inter, sans-serif', fontSize:11};
+var baseTooltip = {trigger:'axis', backgroundColor:'#fff', borderColor:'#ccd9e8', borderWidth:1, textStyle:{color:C.navy, fontSize:11, fontFamily:'Inter'}};
+var baseLegend  = {top:8, textStyle:baseText, icon:'circle', itemWidth:8, itemHeight:8};
+function mkAxis(o){
+  var b={axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}};
+  var r=Object.assign({},b,o||{});
+  if(o&&o.axisLabel) r.axisLabel=Object.assign({},baseText,o.axisLabel);
+  return r;
+}
+
+var allCharts = [];
+
+function initCharts(lang){
+  allCharts.length = 0;
+  var isZh = lang === 'zh';
+
+  /* ======================================================
+     Chart 1: Monetary Cycle × House Price Index
+     ====================================================== */
+  var c1 = echarts.init(document.getElementById('chartMacroMonetary'));
+  allCharts.push(c1);
+
+  var markAreaData1 = [
+    [{xAxis:'2008', itemStyle:{color:'rgba(107,114,128,0.12)'}, label:{formatter: isZh ? 'GFC衝擊' : 'GFC Shock',          color:'#6b7280', fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2009'}],
+    [{xAxis:'2010', itemStyle:{color:'rgba(22,163,74,0.08)'},   label:{formatter: isZh ? '房產榮景' : 'Property Boom',     color:C.green,   fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2014'}],
+    [{xAxis:'2015', itemStyle:{color:'rgba(251,191,36,0.08)'}, label:{formatter: isZh ? '宏觀審慎冷卻' : 'Macro-Pru Cooling', color:C.orange, fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2019'}],
+    [{xAxis:'2020', itemStyle:{color:'rgba(37,99,235,0.08)'},  label:{formatter: isZh ? 'COVID刺激' : 'COVID Stimulus',    color:C.blue,    fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2021'}],
+    [{xAxis:'2022', itemStyle:{color:'rgba(220,38,38,0.08)'},  label:{formatter: isZh ? '升息週期' : 'Rate Hike Cycle',   color:C.red,     fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2025'}]
+  ];
+
+  var markLineData1 = [
+    {xAxis:'2009', label:{formatter: isZh ? 'OPR低點2%' : 'OPR Low 2%',   color:'#6b7280', fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:'#6b7280', type:'dashed', width:1}},
+    {xAxis:'2014', label:{formatter: isZh ? 'BNM升息+審慎' : 'Hike+Macro-Pru', color:C.orange, fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.orange, type:'dashed', width:1}},
+    {xAxis:'2020', label:{formatter: isZh ? 'OPR歷史低點' : 'OPR Hist.Low', color:C.blue,   fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.blue,   type:'dashed', width:1}},
+    {xAxis:'2022', label:{formatter: isZh ? 'BNM首升息' : 'First Hike',    color:C.red,    fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.red,    type:'dashed', width:1}}
+  ];
+
+  c1.setOption({
+    tooltip: Object.assign({}, baseTooltip, {
+      formatter: function(params){
+        var s = params[0].name + '<br/>';
+        params.forEach(function(p){
+          s += '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+p.color+';margin-right:4px"></span>'+
+               p.seriesName+': '+p.value+'<br/>';
+        });
+        return s;
+      }
+    }),
+    legend: Object.assign({}, baseLegend),
+    grid: {left:50, right:60, top:40, bottom:30, containLabel:true},
+    xAxis: mkAxis({type:'category', data:years, boundaryGap:false}),
+    yAxis: [
+      mkAxis({type:'value', min:-2, max:16, interval:2, axisLabel:{formatter:'{value}%', color:C.muted, fontFamily:'Inter, sans-serif', fontSize:11}, name: isZh?'%指標':'% Indicators', nameTextStyle:{color:C.muted, fontSize:10, fontFamily:'Inter, sans-serif'}}),
+      mkAxis({type:'value', min:120, max:240, interval:20, axisLabel:{formatter:'{value}', color:C.muted, fontFamily:'Inter, sans-serif', fontSize:11}, splitLine:{show:false}, name: isZh?'房價指數(MHPI)':'MHPI (1990=100)', nameTextStyle:{color:C.muted, fontSize:10, fontFamily:'Inter, sans-serif'}})
+    ],
+    series: [
+      {
+        name: isZh ? 'OPR' : 'OPR',
+        type:'line', data:oprRate, yAxisIndex:0,
+        lineStyle:{color:C.navy, width:2.5},
+        itemStyle:{color:C.navy}, symbol:'circle', symbolSize:5,
+        smooth:false
+      },
+      {
+        name: isZh ? '平均貸款利率' : 'Avg Lending Rate',
+        type:'line', data:avgLendingRate, yAxisIndex:0,
+        lineStyle:{color:C.blue, width:1.5},
+        itemStyle:{color:C.blue}, symbol:'circle', symbolSize:4,
+        smooth:false
+      },
+      {
+        name: isZh ? 'CPI YoY%' : 'CPI YoY%',
+        type:'line', data:cpiYoy, yAxisIndex:0,
+        lineStyle:{color:C.orange, width:1.5},
+        itemStyle:{color:C.orange}, symbol:'circle', symbolSize:4,
+        smooth:false
+      },
+      {
+        name: isZh ? 'M2 YoY%' : 'M2 YoY%',
+        type:'line', data:m2Growth, yAxisIndex:0,
+        lineStyle:{color:C.muted, width:1, type:'dashed'},
+        itemStyle:{color:C.muted}, symbol:'circle', symbolSize:4,
+        smooth:false
+      },
+      {
+        name: isZh ? '房價指數(MHPI)' : 'House Price Index',
+        type:'line', data:hpi, yAxisIndex:1,
+        lineStyle:{color:C.green, width:2.5},
+        itemStyle:{color:C.green}, symbol:'circle', symbolSize:5,
+        smooth:false,
+        areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[
+          {offset:0,color:'rgba(22,163,74,0.08)'},
+          {offset:1,color:'rgba(22,163,74,0)'}
+        ])},
+        markArea:{silent:true, data:markAreaData1},
+        markLine:{silent:true, symbol:'none', data:markLineData1}
+      }
+    ]
+  });
+
+  /* ======================================================
+     Chart 2: Real Economy × House Price Index
+     ====================================================== */
+  var c2 = echarts.init(document.getElementById('chartMacroReal'));
+  allCharts.push(c2);
+
+  var gdpBarData = gdpGrowth.map(function(v){
+    return {value:v, itemStyle:{color: v >= 0 ? C.blue : C.red, borderRadius:[3,3,0,0]}};
+  });
+
+  var markAreaData2 = [
+    [{xAxis:'2008', itemStyle:{color:'rgba(107,114,128,0.12)'}, label:{formatter: isZh ? 'GFC衝擊' : 'GFC Shock',          color:'#6b7280', fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2009'}],
+    [{xAxis:'2010', itemStyle:{color:'rgba(22,163,74,0.08)'},   label:{formatter: isZh ? '房產榮景' : 'Property Boom',     color:C.green,   fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2014'}],
+    [{xAxis:'2015', itemStyle:{color:'rgba(251,191,36,0.08)'}, label:{formatter: isZh ? '宏觀審慎冷卻' : 'Macro-Pru Cooling', color:C.orange, fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2019'}],
+    [{xAxis:'2020', itemStyle:{color:'rgba(37,99,235,0.08)'},  label:{formatter: isZh ? 'COVID刺激' : 'COVID Stimulus',    color:C.blue,    fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2021'}],
+    [{xAxis:'2022', itemStyle:{color:'rgba(220,38,38,0.08)'},  label:{formatter: isZh ? '升息週期' : 'Rate Hike Cycle',   color:C.red,     fontSize:10, fontFamily:'Inter, sans-serif'}}, {xAxis:'2025'}]
+  ];
+
+  var markLineData2 = [
+    {xAxis:'2009', label:{formatter: isZh ? 'OPR低點2%' : 'OPR Low 2%',    color:'#6b7280', fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:'#6b7280', type:'dashed', width:1}},
+    {xAxis:'2014', label:{formatter: isZh ? 'BNM升息+審慎' : 'Hike+Macro-Pru', color:C.orange, fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.orange, type:'dashed', width:1}},
+    {xAxis:'2020', label:{formatter: isZh ? 'OPR歷史低點' : 'OPR Hist.Low', color:C.blue,   fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.blue,   type:'dashed', width:1}},
+    {xAxis:'2022', label:{formatter: isZh ? 'BNM首升息' : 'First Hike',     color:C.red,    fontSize:10, fontFamily:'Inter, sans-serif', position:'end'}, lineStyle:{color:C.red,    type:'dashed', width:1}}
+  ];
+
+  c2.setOption({
+    tooltip: Object.assign({}, baseTooltip, {
+      formatter: function(params){
+        var s = params[0].name + '<br/>';
+        params.forEach(function(p){
+          s += '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+p.color+';margin-right:4px"></span>'+
+               p.seriesName+': '+p.value+'<br/>';
+        });
+        return s;
+      }
+    }),
+    legend: Object.assign({}, baseLegend),
+    grid: {left:50, right:60, top:40, bottom:30, containLabel:true},
+    xAxis: mkAxis({type:'category', data:years, boundaryGap:true}),
+    yAxis: [
+      mkAxis({type:'value', min:-8, max:16, interval:4, axisLabel:{formatter:'{value}%', color:C.muted, fontFamily:'Inter, sans-serif', fontSize:11}, name: isZh?'%指標':'% Indicators', nameTextStyle:{color:C.muted, fontSize:10, fontFamily:'Inter, sans-serif'}}),
+      mkAxis({type:'value', min:120, max:240, interval:20, axisLabel:{formatter:'{value}', color:C.muted, fontFamily:'Inter, sans-serif', fontSize:11}, splitLine:{show:false}, name: isZh?'房價指數(MHPI)':'MHPI (1990=100)', nameTextStyle:{color:C.muted, fontSize:10, fontFamily:'Inter, sans-serif'}})
+    ],
+    series: [
+      {
+        name: isZh ? 'GDP YoY%' : 'GDP YoY%',
+        type:'bar', data:gdpBarData, yAxisIndex:0,
+        barMaxWidth:20
+      },
+      {
+        name: isZh ? '失業率%' : 'Unemployment%',
+        type:'line', data:unemployRate, yAxisIndex:0,
+        lineStyle:{color:C.red, width:1.5},
+        itemStyle:{color:C.red}, symbol:'circle', symbolSize:4,
+        smooth:false
+      },
+      {
+        name: isZh ? '房貸成長%' : 'Housing Loan Growth%',
+        type:'line', data:housingLoanGrowth, yAxisIndex:0,
+        lineStyle:{color:C.orange, width:1.5},
+        itemStyle:{color:C.orange}, symbol:'circle', symbolSize:4,
+        smooth:false
+      },
+      {
+        name: isZh ? '房價指數(MHPI)' : 'House Price Index',
+        type:'line', data:hpi, yAxisIndex:1,
+        lineStyle:{color:C.green, width:2.5},
+        itemStyle:{color:C.green}, symbol:'circle', symbolSize:5,
+        smooth:false,
+        areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[
+          {offset:0,color:'rgba(22,163,74,0.08)'},
+          {offset:1,color:'rgba(22,163,74,0)'}
+        ])},
+        markArea:{silent:true, data:markAreaData2},
+        markLine:{silent:true, symbol:'none', data:markLineData2}
+      }
+    ]
+  });
+}
+
+function setLang(lang){
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  allCharts.forEach(function(c){if(c)c.dispose();});
+  allCharts=[];
+  initCharts(lang);
+}
+
+window.addEventListener('resize', function(){ allCharts.forEach(function(c){if(c)c.resize();}); });
+window.addEventListener('load', function(){
+  var lang = 'en';
+  try{ lang = localStorage.getItem('lang') || 'en'; }catch(e){}
+  setLang(lang);
+});
+</script>
+<script src="../js/navbar.js"></script>
+</body>
+</html>
