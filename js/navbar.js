@@ -257,6 +257,14 @@ function applyLang(lang){
 root.querySelectorAll('.imq-lbtn').forEach(function(btn){
   btn.addEventListener('click', function(){
     var lang = btn.getAttribute('data-lang');
+    /* Always update navbar button + body[data-lang] regardless of whether the
+       page provides a custom setLang. Page setLang typically only handles
+       lang-en/lang-zh visibility + chart re-render, not navbar button state. */
+    document.body.setAttribute('data-lang', lang);
+    try{localStorage.setItem('lang',lang);}catch(e){}
+    document.querySelectorAll('.imq-lbtn').forEach(function(b){
+      b.classList.toggle('on', b.getAttribute('data-lang')===lang);
+    });
     if (typeof window.setLang === 'function' && window.setLang !== applyLang) {
       window.setLang(lang);
     } else {
@@ -271,6 +279,11 @@ if (typeof window.setLang !== 'function') {
 
 var saved = 'en';
 try{saved = localStorage.getItem('lang')||'en';}catch(e){}
+/* Sync navbar button state on initial load (page setLang doesn't touch .imq-lbtn) */
+document.body.setAttribute('data-lang', saved);
+document.querySelectorAll('.imq-lbtn').forEach(function(b){
+  b.classList.toggle('on', b.getAttribute('data-lang')===saved);
+});
 if (typeof window.setLang === 'function') window.setLang(saved);
 
 /* ---------- mobile menu ---------- */
