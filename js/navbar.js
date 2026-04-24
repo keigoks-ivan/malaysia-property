@@ -8,7 +8,7 @@
 
 /* ---------- market metadata ---------- */
 var MARKETS = [
-  {k:'my',flag:'🇲🇾',en:'Malaysia',zh:'馬來西亞',base:'/',
+  {k:'my',flag:'🇲🇾',en:'Malaysia',zh:'馬來西亞',base:'/my/',
     cities:[{f:'kl.html',en:'Kuala Lumpur',zh:'吉隆坡'},{f:'penang.html',en:'Penang',zh:'檳城'}]},
   {k:'tw',flag:'🇹🇼',en:'Taiwan',zh:'台灣',base:'/tw/',
     cities:[{f:'taipei.html',en:'Taipei',zh:'台北'},{f:'newtaipei.html',en:'New Taipei',zh:'新北'},{f:'taoyuan.html',en:'Taoyuan',zh:'桃園'},{f:'hsinchu.html',en:'Hsinchu',zh:'新竹'},{f:'taichung.html',en:'Taichung',zh:'台中'},{f:'tainan.html',en:'Tainan',zh:'台南'},{f:'kaohsiung.html',en:'Kaohsiung',zh:'高雄'}]},
@@ -57,6 +57,9 @@ var path = location.pathname;
 if (path === '' || path === '/') path = '/home.html';
 var firstSeg = path.split('/')[1] || '';
 var fileSeg = path.split('/').pop() || '';
+/* Cloudflare Pages serves /foo for foo.html — normalize so detection still works */
+if (fileSeg === '') fileSeg = 'index.html';
+else if (fileSeg.indexOf('.') === -1) fileSeg += '.html';
 
 var activeMarket = null, activeTool = null;
 var mk = MARKETS.filter(function(m){return m.k===firstSeg;})[0];
@@ -65,10 +68,6 @@ if (mk) {
 } else {
   var t = TOOLS.filter(function(x){return x.href.replace(/^\//,'')===fileSeg;})[0];
   if (t) activeTool = t.k;
-  else {
-    var myRoot = ['index.html','kl.html','penang.html','supply.html','demand.html','valuation.html','risk.html','report.html'];
-    if (myRoot.indexOf(fileSeg)!==-1) activeMarket = 'my';
-  }
 }
 
 /* ---------- build HTML ---------- */
