@@ -49,6 +49,9 @@ var TOOLS = [
   {k:'timing',href:'/timing.html',en:'🚦 Timing',zh:'🚦 時機'},
   {k:'stress',href:'/tools/stress-test.html',en:'⚡ Stress',zh:'⚡ 壓測'},
   {k:'buy-rent',href:'/tools/buy-vs-rent.html',en:'🔁 Buy/Rent',zh:'🔁 買租'},
+  {k:'cost-calc',href:'/tools/cost-calculator.html',en:'💰 Cost',zh:'💰 成本'},
+  {k:'compare',href:'/tools/compare.html',en:'🌏 Compare',zh:'🌏 城市比較'},
+  {k:'yield-spread',href:'/tools/yield-spread.html',en:'💵 Yield Spread',zh:'💵 殖利率利差'},
   {k:'reits',href:'/reits.html',en:'REITs',zh:'REITs'}
 ];
 
