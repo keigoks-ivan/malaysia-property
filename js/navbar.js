@@ -46,14 +46,14 @@ var SECTIONS = [
 
 var TOOLS = [
   {k:'home',href:'/home.html',en:'Home',zh:'首頁'},
-  {k:'timing',href:'/timing.html',en:'🚦 Timing',zh:'🚦 時機'},
-  {k:'stress',href:'/tools/stress-test.html',en:'⚡ Stress',zh:'⚡ 壓測'},
-  {k:'buy-rent',href:'/tools/buy-vs-rent.html',en:'🔁 Buy/Rent',zh:'🔁 買租'},
-  {k:'cost-calc',href:'/tools/cost-calculator.html',en:'💰 Cost',zh:'💰 成本'},
-  {k:'compare',href:'/tools/compare.html',en:'🌏 Compare',zh:'🌏 城市比較'},
-  {k:'yield-spread',href:'/tools/yield-spread.html',en:'💵 Yield Spread',zh:'💵 殖利率利差'},
-  {k:'personal-fit',href:'/tools/personal-fit.html',en:'🎯 Fit',zh:'🎯 匹配'},
-  {k:'reits',href:'/reits.html',en:'REITs',zh:'REITs'}
+  {k:'timing',href:'/timing.html',en:'Timing',zh:'時機',icon:'<circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="18" r="2.5"/>'},
+  {k:'stress',href:'/tools/stress-test.html',en:'Stress',zh:'壓測',icon:'<polyline points="13,2 4,14 11,14 11,22 20,10 13,10"/>'},
+  {k:'buy-rent',href:'/tools/buy-vs-rent.html',en:'Buy/Rent',zh:'買租',icon:'<path d="M3 7h13l-3-3M21 17H8l3 3"/>'},
+  {k:'cost-calc',href:'/tools/cost-calculator.html',en:'Cost',zh:'成本',icon:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9h5a2 2 0 010 4h-4a2 2 0 000 4h6"/>'},
+  {k:'compare',href:'/tools/compare.html',en:'Compare',zh:'城市比較',icon:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/>'},
+  {k:'yield-spread',href:'/tools/yield-spread.html',en:'Yield Spread',zh:'殖利率利差',icon:'<path d="M3 17l6-6 4 4 8-8"/>'},
+  {k:'personal-fit',href:'/tools/personal-fit.html',en:'Fit',zh:'匹配',icon:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>'},
+  {k:'reits',href:'/reits.html',en:'REITs',zh:'REITs',icon:'<path d="M3 10l9-7 9 7v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10z"/>'}
 ];
 
 /* ---------- detect active ---------- */
@@ -82,7 +82,8 @@ function spanBL(en,zh){return '<span class="imq-en">'+en+'</span><span class="im
 
 var toolsHtml = TOOLS.map(function(t){
   var cls = 'imq-tool'+(t.k===activeTool?' on':'');
-  return '<a class="'+cls+'" href="'+t.href+'">'+spanBL(t.en,t.zh)+'</a>';
+  var iconHtml = t.icon ? '<svg class="imq-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+t.icon+'</svg>' : '';
+  return '<a class="'+cls+'" href="'+t.href+'">'+iconHtml+spanBL(t.en,t.zh)+'</a>';
 }).join('');
 
 /* Row 2: market flags with hover dropdowns */
@@ -165,9 +166,12 @@ var css = ''+
 '.imq-sub{font-size:11px;color:rgba(255,255,255,.4);margin-left:10px;letter-spacing:.04em;font-weight:400}'+
 '.imq-tools{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}'+
 '.imq-tools::-webkit-scrollbar{display:none}'+
-'.imq-tool{padding:7px 13px;font-size:14px;font-weight:500;color:rgba(255,255,255,.75)!important;text-decoration:none!important;border-radius:6px;transition:all .15s;white-space:nowrap;letter-spacing:.01em}'+
+'.imq-tool{display:inline-flex;align-items:center;gap:5px;padding:7px 13px;font-size:14px;font-weight:500;color:rgba(255,255,255,.75)!important;text-decoration:none!important;border-radius:6px;transition:all .15s;white-space:nowrap;letter-spacing:.01em}'+
 '.imq-tool:hover{color:#fff!important;background:rgba(255,255,255,.06);text-decoration:none!important}'+
 '.imq-tool.on{color:#fff!important;background:rgba(59,130,246,.2);font-weight:600}'+
+'.imq-tool-icon{width:14px;height:14px;flex-shrink:0;color:rgba(255,255,255,.85)}'+
+'.imq-tool:hover .imq-tool-icon{color:#fff}'+
+'.imq-tool.on .imq-tool-icon{color:#fff}'+
 '.imq-lang{display:flex;gap:4px}'+
 '.imq-lbtn{padding:6px 13px;border:1px solid rgba(255,255,255,.15);border-radius:5px;font-size:13px;cursor:pointer;background:transparent;color:rgba(255,255,255,.75);font-family:inherit;font-weight:500;transition:all .15s}'+
 '.imq-lbtn:hover{color:#fff;border-color:rgba(255,255,255,.3)}'+
@@ -224,6 +228,7 @@ var css = ''+
   '.imq-sub-links::-webkit-scrollbar{display:none}'+
   '.imq-sub-link{padding:4px 8px;font-size:11.5px}'+
   '.imq-sub-sep{display:none}'+
+  '.imq-tool-icon{width:13px;height:13px}'+
   '.imq-tools.open{display:flex!important;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:#0f172a;padding:10px;border-top:1px solid rgba(255,255,255,.1);z-index:150}'+
   '.imq-dd{position:fixed;top:auto;left:8px;right:8px;bottom:8px;min-width:0;max-height:60vh;overflow-y:auto}'+
   '.imq-flag-wrap:hover .imq-dd{display:none}'+
