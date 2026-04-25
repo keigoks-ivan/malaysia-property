@@ -673,8 +673,12 @@ var MKTDATA = {
     foreignAllowed:true,
     foreignNote_en:'Foreigners pay 8% flat stamp duty (Budget 2026, effective 1 Jan 2026). Minimum purchase: RM1M (KL/Selangor/Penang); varies by state. MM2H Silver tier: RM600K min. EPU approval may be required for certain properties.',
     foreignNote_zh:'外國人繳8%統一印花稅（2026預算案，2026年1月1日起）。最低購屋門檻：吉隆坡/雪蘭莪/檳城 RM100萬；各州不同。MM2H白銀組：最低 RM60萬。特定房產需州EPU批准。',
-    stampDutyFn:function(price){
-      /* Progressive: 1% on first RM100K, 2% on RM100K-500K, 3% on RM500K-1M, 4% above RM1M */
+    stampDutyFn:function(price,foreigner){
+      /* Foreigners: 8% flat (replaces progressive entirely, Budget 2026, eff. 1 Jan 2026) */
+      if(foreigner){
+        return {amount:price*0.08,label:'8% flat',note_en:'Foreigner: 8% flat (Budget 2026, eff. 1 Jan 2026)',note_zh:'外國人：8%統一稅率（2026預算案，2026-01-01起）'};
+      }
+      /* Resident/PR: Progressive 1% on first RM100K, 2% on RM100K-500K, 3% on RM500K-1M, 4% above RM1M */
       var duty=0;
       var b1=Math.min(price,100000);
       duty+=b1*0.01;
@@ -685,19 +689,9 @@ var MKTDATA = {
       return {amount:duty,label:effRate+'% eff.',note_en:'Progressive 1-4% (Stamp Duty Act)',note_zh:'累進 1-4%（印花稅法）'};
     },
     foreignSurchargeFn:function(price,foreigner){
-      if(!foreigner)return {amount:0,label:'—',note_en:'Resident/PR — progressive 1-4%',note_zh:'居民/永久居民 — 累進1-4%'};
-      /* Foreigners: 8% flat from 1 Jan 2026 (Budget 2026); was 4% flat Jan 2024-Dec 2025 */
-      /* We charge the 8% flat on top; resident progressive already computed in stampDutyFn, but
-         for foreigners the entire duty is replaced by the 8% flat rate.
-         Show the delta vs. resident progressive rate. */
-      var residentDuty=0;
-      var b1=Math.min(price,100000);residentDuty+=b1*0.01;
-      if(price>100000){var b2=Math.min(price-100000,400000);residentDuty+=b2*0.02;}
-      if(price>500000){var b3=Math.min(price-500000,500000);residentDuty+=b3*0.03;}
-      if(price>1000000){residentDuty+=(price-1000000)*0.04;}
-      var foreignDuty=price*0.08;
-      var surcharge=Math.max(0,foreignDuty-residentDuty);
-      return {amount:surcharge,label:'8% flat',note_en:'Foreign buyer: 8% flat stamp duty (Budget 2026, eff. 1 Jan 2026)',note_zh:'外國人：8%統一印花稅（2026預算案，2026年1月起）'};
+      /* MY: 8% flat replaces resident progressive entirely (handled in stampDutyFn). No separate surcharge row. */
+      if(!foreigner)return {amount:0,label:'—',note_en:'Resident/PR',note_zh:'居民/永久居民'};
+      return {amount:0,label:'—',note_en:'Already in stamp duty (8% flat replaces progressive)',note_zh:'已併入印花稅（8%統一稅率取代累進）'};
     },
     cgtFn:function(gain,horizon,foreigner){
       /* RPGT rates */
