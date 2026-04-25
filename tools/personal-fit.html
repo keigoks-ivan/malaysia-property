@@ -738,7 +738,7 @@ input[type=range].weight-slider:disabled{
           <span class="lang-zh" style="display:none">欄位說明 — 每個分數量什麼</span>
         </div>
         <ul class="lang-en" style="margin:0;padding-left:18px;font-size:12px;line-height:1.7;color:#3a5275">
-          <li><strong>🛂 Visa</strong> — Difficulty of obtaining a long-term (2yr+) visa. Score is the inverse of the minimum capital requirement across available programs: ≤$50K → 95, ≤$200K → 85, ≤$500K → 75, ≤$1M → 65, ≤$2.5M → 50, &gt;$2.5M → 35. Visa goal (PR / passport) then adjusts: fast path → +10, no path → up to -35. 100 if origin = market (no visa needed); 15-25 if all programs closed (e.g. IE Tier 1).</li>
+          <li><strong>🛂 Visa</strong> — Difficulty of obtaining a long-term (1yr+) visa. Score is the inverse of the minimum capital requirement across available programs: ≤$50K → 95, ≤$200K → 85, ≤$500K → 75, ≤$1M → 65, ≤$2.5M → 50, &gt;$2.5M → 35. Visa goal (PR / passport) then adjusts: fast path → +10, no path → up to -35. 100 if origin = market (no visa needed); 15-25 if all programs closed (e.g. IE Tier 1).</li>
           <li><strong>🗣️ Lang</strong> — Daily-life language friction. Combines market's English usability + Mandarin speaker % + your selected languages. 100 if origin = market (native speaker assumed). EF EPI 2024 source.</li>
           <li><strong>✈️ Flight</strong> — Direct flight hours from your origin. ≤2h → 98, ≤4h → 90, ≤8h → 65, &gt;18h → 18. 100 if origin = market.</li>
           <li><strong>🌡️ Climate</strong> — Temperature comfort + 5 disaster types averaged (earthquake/typhoon/flood/wildfire/haze). Sweet spot 22-27°C. Age 50+ penalised for &gt;28°C. World Bank Climate / UN INDR sources.</li>
@@ -749,7 +749,7 @@ input[type=range].weight-slider:disabled{
           <li><strong>Total</strong> — Weighted sum across all 8 dimensions, normalised 0-100. Adjust the weight sliders on the left to reflect your priorities. If visa goal is "holiday only", visa weight is forced to 0 (irrelevant).</li>
         </ul>
         <ul class="lang-zh" style="display:none;margin:0;padding-left:18px;font-size:12px;line-height:1.7;color:#3a5275">
-          <li><strong>🛂 簽證</strong> — 取得長期（2 年以上）簽證的難易度。分數為「最低資金門檻」的反函數：≤$5 萬 → 95、≤$20 萬 → 85、≤$50 萬 → 75、≤$100 萬 → 65、≤$250 萬 → 50、&gt;$250 萬 → 35。簽證目標（PR / 入籍）再調整：路徑快 → +10、無路徑 → 最多 -35。原籍 = 該市場 → 100（不需簽證）；所有計畫關閉（如 IE Tier 1）→ 15-25。</li>
+          <li><strong>🛂 簽證</strong> — 取得長期（1 年以上）簽證的難易度。分數為「最低資金門檻」的反函數：≤$5 萬 → 95、≤$20 萬 → 85、≤$50 萬 → 75、≤$100 萬 → 65、≤$250 萬 → 50、&gt;$250 萬 → 35。簽證目標（PR / 入籍）再調整：路徑快 → +10、無路徑 → 最多 -35。原籍 = 該市場 → 100（不需簽證）；所有計畫關閉（如 IE Tier 1）→ 15-25。</li>
           <li><strong>🗣️ 語言</strong> — 日常生活語言摩擦。結合市場英語使用度 + 華人比例 + 你勾選的語言。原籍 = 該市場 → 100（假定母語）。資料源 EF EPI 2024。</li>
           <li><strong>✈️ 飛行</strong> — 從你原籍直飛時數。≤2h → 98、≤4h → 90、≤8h → 65、&gt;18h → 18。原籍 = 該市場 → 100。</li>
           <li><strong>🌡️ 氣候</strong> — 溫度舒適度 + 5 種天災平均（地震 / 颱風 / 洪水 / 野火 / 霾害）。最佳區間 22-27°C。50+ 對 &gt;28°C 額外扣分。資料源 World Bank Climate / UN INDR。</li>
@@ -810,14 +810,20 @@ function scoreVisa(visa, visaGoal, isHome) {
   if (isHome) return 100; // origin === target market: you live there, no visa needed
   if (visaGoal === 'holiday') return 70; // holiday → visa dimension not important, neutral score
 
-  // Core: difficulty of obtaining a long-term (2yr+) visa.
+  // Core: difficulty of obtaining a long-term (1yr+) visa.
   // Lower capital requirement → higher score. Visa goal adjusts at the end.
   var tiers = visa.tiers || [];
   var longTermTiers = tiers.filter(function(t){
     var d = (t.duration || '').toLowerCase();
-    return d.indexOf('2yr')>=0 || d.indexOf('3yr')>=0 || d.indexOf('5yr')>=0 ||
-           d.indexOf('10yr')>=0 || d.indexOf('15yr')>=0 || d.indexOf('20yr')>=0 ||
-           d.indexOf('permanent')>=0 || d.indexOf('indefinite')>=0;
+    if (/permanent|indefinite/.test(d)) return true;
+    if (/\bpr\b/.test(d)) return true;
+    // Extract every "Nyr" occurrence; qualify if any is >= 1
+    var m = d.match(/(\d+)\s*yr/g);
+    if (!m) return false;
+    for (var k = 0; k < m.length; k++) {
+      if (parseInt(m[k], 10) >= 1) return true;
+    }
+    return false;
   });
 
   // No long-term route available
