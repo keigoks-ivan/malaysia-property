@@ -48,11 +48,7 @@ var TOOLS = [
   {k:'home',href:'/home.html',en:'Home',zh:'首頁'},
   {k:'stress',href:'/tools/stress-test.html',en:'⚡ Stress',zh:'⚡ 壓測'},
   {k:'buy-rent',href:'/tools/buy-vs-rent.html',en:'🔁 Buy/Rent',zh:'🔁 買租'},
-  {k:'reits',href:'/reits.html',en:'REITs',zh:'REITs'},
-  {k:'markets',href:'/markets.html',en:'Markets',zh:'股市'},
-  {k:'sectors',href:'/sectors.html',en:'Sectors',zh:'類股'},
-  {k:'screener-us',href:'/screener.html',en:'US Screener',zh:'美股選股'},
-  {k:'screener-tw',href:'/screener-tw.html',en:'TW Screener',zh:'台股選股'}
+  {k:'reits',href:'/reits.html',en:'REITs',zh:'REITs'}
 ];
 
 /* ---------- detect active ---------- */
