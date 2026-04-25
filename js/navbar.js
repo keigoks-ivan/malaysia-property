@@ -46,6 +46,7 @@ var SECTIONS = [
 
 var TOOLS = [
   {k:'home',href:'/home.html',en:'Home',zh:'首頁'},
+  {k:'timing',href:'/timing.html',en:'🚦 Timing',zh:'🚦 時機'},
   {k:'stress',href:'/tools/stress-test.html',en:'⚡ Stress',zh:'⚡ 壓測'},
   {k:'buy-rent',href:'/tools/buy-vs-rent.html',en:'🔁 Buy/Rent',zh:'🔁 買租'},
   {k:'reits',href:'/reits.html',en:'REITs',zh:'REITs'}
