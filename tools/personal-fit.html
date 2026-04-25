@@ -871,7 +871,8 @@ function scoreLang(language, userLangs) {
 }
 
 function scoreFlight(hours) {
-  if (!hours || hours === 0) return 20; // no data → assume far
+  if (hours == null) return 20; // missing data → assume far
+  if (hours === 0) return 100;  // same country (origin === target market)
   if (hours <= 2) return 98;
   if (hours <= 4) return 90;
   if (hours <= 6) return 78;
