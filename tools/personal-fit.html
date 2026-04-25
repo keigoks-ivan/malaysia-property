@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Fit Score | Property Monitor</title>
+<meta name="color-scheme" content="light">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/tw/tw.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+/* ══════════════════════════════════════════════
+   TOOL LAYOUT — 320px sticky left + fluid right
+══════════════════════════════════════════════ */
+.fit-layout{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:20px;
+  align-items:start;
+  margin-top:0;
+}
+@media(max-width:900px){.fit-layout{grid-template-columns:1fr}}
+
+/* ══════════════════════════════════════════════
+   INPUT PANEL
+══════════════════════════════════════════════ */
+.input-panel{
+  background:#fff;
+  border:0.5px solid #ccd9e8;
+  border-radius:4px;
+  padding:0;
+  position:sticky;
+  top:60px;
+  overflow:hidden;
+  max-height:calc(100vh - 80px);
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:#ccd9e8 transparent;
+}
+.input-panel::-webkit-scrollbar{width:4px}
+.input-panel::-webkit-scrollbar-thumb{background:#ccd9e8;border-radius:2px}
+
+.input-section{
+  padding:12px 14px;
+  border-bottom:1px solid #f0f5fb;
+}
+.input-section:last-child{border-bottom:none}
+
+.input-sec-label{
+  font-size:9px;
+  letter-spacing:.13em;
+  color:#5a7a9a;
+  font-weight:600;
+  text-transform:uppercase;
+  margin-bottom:8px;
+  display:block;
+}
+
+/* Origin select */
+.origin-select{
+  width:100%;
+  padding:7px 10px;
+  border:0.5px solid #ccd9e8;
+  border-radius:4px;
+  font-size:12px;
+  color:#1e3a5f;
+  background:#fff;
+  cursor:pointer;
+  font-family:'Inter',sans-serif;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235a7a9a'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  padding-right:28px;
+}
+.origin-select:focus{outline:none;border-color:#1e3a5f}
+
+/* Pill controls (same as buy-vs-rent) */
+.pill-row{display:flex;flex-wrap:wrap;gap:4px}
+.pill-opt{
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:500;
+  color:#4a6080;
+  background:#eef3f9;
+  border:1px solid #ccd9e8;
+  cursor:pointer;
+  user-select:none;
+  transition:all .12s;
+  white-space:nowrap;
+  font-family:'Inter',sans-serif;
+}
+.pill-opt:hover{background:#dde8f2;color:#1e3a5f}
+.pill-opt.active{
+  background:#1e3a5f;
+  color:#fff;
+  border-color:#1e3a5f;
+  box-shadow:0 1px 4px rgba(30,58,95,.22);
+}
+
+/* Checkbox lang items */
+.lang-checks{display:flex;flex-direction:column;gap:5px;padding-top:2px}
+.lang-check{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  cursor:pointer;
+}
+.lang-check input[type=checkbox]{
+  accent-color:#1e3a5f;
+  width:13px;height:13px;
+  cursor:pointer;
+  flex-shrink:0;
+}
+.lang-check-label{font-size:11.5px;color:#4a6080;font-weight:500}
+
+/* Toggle pill */
+.toggle-pill{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  user-select:none;
+  padding-top:2px;
+}
+.toggle-pill input[type=checkbox]{
+  accent-color:#1e3a5f;
+  width:14px;height:14px;
+  cursor:pointer;
+  flex-shrink:0;
+}
+.toggle-pill-label{font-size:11.5px;color:#4a6080;font-weight:500;line-height:1.35}
+
+/* Weight sliders */
+.weight-rows{display:flex;flex-direction:column;gap:7px}
+.weight-row{display:flex;flex-direction:column;gap:2px}
+.weight-label{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.weight-lbl-txt{font-size:10.5px;color:#5a7a9a;font-weight:500}
+.weight-val{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:700;
+  color:#1e3a5f;
+}
+input[type=range].weight-slider{
+  width:100%;
+  padding:0;
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  accent-color:#1e3a5f;
+  height:16px;
+}
+input[type=range].weight-slider:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+/* Save / Sync buttons */
+.panel-btn{
+  width:100%;
+  padding:8px 12px;
+  border-radius:4px;
+  font-size:11.5px;
+  font-weight:600;
+  cursor:pointer;
+  border:0.5px solid #ccd9e8;
+  font-family:'Inter',sans-serif;
+  transition:all .12s;
+  text-align:center;
+  margin-bottom:6px;
+}
+.panel-btn.primary{
+  background:#1e3a5f;
+  color:#fff;
+  border-color:#1e3a5f;
+}
+.panel-btn.primary:hover{background:#16305a}
+.panel-btn.secondary{
+  background:#f0f6ff;
+  color:#1e3a5f;
+}
+.panel-btn.secondary:hover{background:#e0ecff}
+.panel-btn.saved{
+  background:#dcfce7;
+  color:#166534;
+  border-color:#86efac;
+}
+
+/* ══════════════════════════════════════════════
+   RESULT PANEL
+══════════════════════════════════════════════ */
+.result-panel{min-width:0}
+
+/* ── Alert banners ── */
+.alert-banners{display:flex;flex-direction:column;gap:6px;margin-bottom:0}
+.alert-banner{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  background:#fffbeb;
+  border:0.5px solid #fde68a;
+  border-left:3px solid #d97706;
+  border-radius:4px;
+  padding:8px 12px;
+  font-size:11px;
+  color:#92400e;
+  line-height:1.45;
+}
+.alert-banner .alert-icon{font-size:14px;flex-shrink:0;line-height:1.2}
+.alert-banner .alert-dismiss{
+  margin-left:auto;
+  flex-shrink:0;
+  font-size:13px;
+  color:#b45309;
+  cursor:pointer;
+  line-height:1;
+  padding:0 2px;
+}
+.alert-banner .alert-dismiss:hover{color:#92400e}
+
+/* ── Fit ranking list ── */
+.ranking-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.fit-card{
+  background:#fff;
+  border:0.5px solid #ccd9e8;
+  border-radius:4px;
+  padding:10px 14px;
+  cursor:pointer;
+  transition:box-shadow .15s, border-color .15s;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.fit-card:hover{box-shadow:0 2px 8px rgba(30,58,95,.08);border-color:#b3cde8}
+.fit-card.selected{
+  border-color:#1e3a5f;
+  box-shadow:0 0 0 1px #1e3a5f;
+  background:#f8fbff;
+}
+.fit-card.gold  {border-left:3px solid #fbbf24}
+.fit-card.silver{border-left:3px solid #cbd5e1}
+.fit-card.bronze{border-left:3px solid #b45309}
+
+.fit-card-medal{font-size:18px;flex-shrink:0;line-height:1}
+.fit-card-flag{font-size:20px;flex-shrink:0;line-height:1}
+.fit-card-body{flex:1;min-width:0}
+.fit-card-name{
+  font-size:12.5px;
+  font-weight:600;
+  color:#1e3a5f;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.fit-card-dims{
+  display:flex;
+  gap:3px;
+  margin-top:4px;
+  flex-wrap:wrap;
+}
+.dim-mini{
+  height:4px;
+  border-radius:2px;
+  background:#ccd9e8;
+  flex:1;
+  min-width:16px;
+  max-width:30px;
+  position:relative;
+  overflow:hidden;
+}
+.dim-mini-fill{
+  height:100%;
+  border-radius:2px;
+  position:absolute;
+  left:0;top:0;
+}
+.fit-score-big{
+  font-family:'JetBrains Mono',monospace;
+  font-size:22px;
+  font-weight:700;
+  line-height:1;
+  flex-shrink:0;
+  min-width:36px;
+  text-align:right;
+}
+
+/* ── Detail section ── */
+.detail-box{
+  background:#fff;
+  border:0.5px solid #ccd9e8;
+  border-radius:4px;
+  overflow:hidden;
+}
+.detail-header{
+  background:#f0f6ff;
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid #dce8f5;
+}
+.detail-header-flag{font-size:24px;line-height:1}
+.detail-header-name{
+  font-size:15px;
+  font-weight:700;
+  color:#1e3a5f;
+}
+.detail-header-score{
+  margin-left:auto;
+  font-family:'JetBrains Mono',monospace;
+  font-size:28px;
+  font-weight:700;
+  color:#1e3a5f;
+}
+.detail-body{padding:16px}
+.detail-cols{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-bottom:16px;
+}
+@media(max-width:700px){.detail-cols{grid-template-columns:1fr}}
+
+/* Strengths / Weaknesses list */
+.sw-list{display:flex;flex-direction:column;gap:4px}
+.sw-item{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:11.5px;
+  color:#1e3a5f;
+}
+.sw-dot{
+  width:6px;height:6px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+.sw-dot.green{background:#16a34a}
+.sw-dot.red{background:#dc2626}
+
+/* Visa / Tax summary */
+.detail-subsection-title{
+  font-size:9px;
+  letter-spacing:.12em;
+  color:#5a7a9a;
+  font-weight:600;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.detail-kv{
+  display:flex;
+  gap:6px;
+  font-size:11.5px;
+  margin-bottom:4px;
+  align-items:flex-start;
+}
+.detail-key{
+  color:#5a7a9a;
+  min-width:90px;
+  flex-shrink:0;
+  font-weight:500;
+}
+.detail-val{color:#1e3a5f;font-weight:500}
+.detail-note{
+  font-size:10.5px;
+  color:#5a7a9a;
+  margin-top:6px;
+  line-height:1.45;
+}
+
+/* Radar chart */
+#detailRadar{height:220px;width:100%}
+
+/* ── Score color classes ── */
+.score-green{color:#16a34a;font-weight:700}
+.score-yellow{color:#ca8a04;font-weight:700}
+.score-red{color:#dc2626;font-weight:700}
+
+/* ── Full breakdown matrix ── */
+.matrix-wrap{
+  background:#fff;
+  border:0.5px solid #ccd9e8;
+  border-radius:4px;
+  overflow:auto;
+}
+.matrix-tbl{
+  width:100%;
+  border-collapse:collapse;
+  min-width:780px;
+}
+.matrix-tbl thead{position:sticky;top:0;z-index:3}
+.matrix-tbl th{
+  background:#f0f6ff;
+  font-size:9px;
+  letter-spacing:.09em;
+  color:#5a7a9a;
+  font-weight:600;
+  padding:9px 10px;
+  text-align:center;
+  border-bottom:1px solid #dce8f5;
+  white-space:nowrap;
+  cursor:pointer;
+  user-select:none;
+  transition:background .12s;
+}
+.matrix-tbl th:hover{background:#e4eefb;color:#1e3a5f}
+.matrix-tbl th:first-child{text-align:left;cursor:default;padding-left:14px}
+.matrix-tbl th.sorted{background:#ddeeff;color:#1e3a5f}
+.matrix-tbl th.sorted::after{content:' ↓';font-size:9px}
+.matrix-tbl th.sorted.asc::after{content:' ↑'}
+.matrix-tbl th[data-dim]:not(.sorted):hover::after{content:' ↕';font-size:8px;color:#94a3b8}
+.matrix-tbl td{
+  padding:9px 10px;
+  font-size:12px;
+  border-bottom:1px solid #f0f5fb;
+  text-align:center;
+  font-variant-numeric:tabular-nums;
+  color:#1e3a5f;
+  white-space:nowrap;
+  font-family:'JetBrains Mono',monospace;
+}
+.matrix-tbl td:first-child{
+  text-align:left;
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  padding-left:14px;
+}
+.matrix-tbl tbody tr:nth-child(even) td{background:#fafcfe}
+.matrix-tbl tr:hover td{background:#f3f8ff!important}
+.matrix-tbl tr:last-child td{border-bottom:none}
+
+.cell-score{
+  display:inline-block;
+  padding:2px 7px;
+  border-radius:3px;
+  font-size:11px;
+  font-weight:700;
+  font-family:'JetBrains Mono',monospace;
+}
+.cell-green{background:#dcfce7;color:#166534}
+.cell-yellow{background:#fef9c3;color:#854d0e}
+.cell-red{background:#fee2e2;color:#991b1b}
+
+/* ══════════════════════════════════════════════
+   MISC UTILITIES
+══════════════════════════════════════════════ */
+.section-sep{margin-top:20px}
+.warn-badge{
+  display:inline-block;
+  background:#fee2e2;
+  color:#991b1b;
+  font-size:9.5px;
+  font-weight:600;
+  padding:1px 6px;
+  border-radius:3px;
+  margin-left:4px;
+  vertical-align:middle;
+  font-family:'Inter',sans-serif;
+}
+.no-detail{
+  padding:32px;
+  text-align:center;
+  color:#94a3b8;
+  font-size:12px;
+}
+.tag-pill{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:10px;
+  font-size:10px;
+  font-weight:600;
+}
+.tag-green{background:#dcfce7;color:#166534}
+.tag-yellow{background:#fef9c3;color:#854d0e}
+.tag-red{background:#fee2e2;color:#991b1b}
+.tag-blue{background:#dbeafe;color:#1e40af}
+</style>
+</head>
+<body>
+<div id="nav-root"></div>
+<main class="container">
+
+  <!-- ══ PAGE HEADER ══ -->
+  <div class="page-header">
+    <span class="updated"><span class="lang-en">PERSONAL TOOL</span><span class="lang-zh" style="display:none">個人工具</span></span>
+    <h1><span class="lang-en">🎯 Personal Fit Score</span><span class="lang-zh" style="display:none">🎯 個人匹配度</span></h1>
+    <p class="subtitle">
+      <span class="lang-en">Match 12 markets to YOUR profile — visa pathway, language comfort, flight distance, climate, healthcare, education, safety &amp; tax regime. Same market, different person = very different score.</span>
+      <span class="lang-zh" style="display:none">12 市場依你的個人條件評分——簽證路徑、語言、飛行距離、氣候、醫療、教育、安全、稅制。同一市場，不同背景的人分數差很多。</span>
+    </p>
+  </div>
+
+  <!-- ══ INSIGHT BOX ══ -->
+  <div class="insight-box accent" style="margin-bottom:16px">
+    <span class="lang-en"><strong>How this works:</strong> Fill in your personal context on the left. The 12 markets are instantly ranked by weighted fit score (0-100). Click any market card to see a full 8-dimension radar + visa / tax breakdown. Adjust priority weights to reflect what matters most to you.</span>
+    <span class="lang-zh" style="display:none"><strong>使用方式：</strong>在左方填入你的個人條件。12 個市場即時依加權匹配分數（0-100）排列。點任一市場卡片可查看 8 維雷達圖 + 簽證 / 稅務詳情。調整優先權重可反映你最在意的事項。</span>
+  </div>
+
+  <!-- ══ ALERT BANNERS ══ -->
+  <div class="alert-banners" id="alertBanners" style="margin-bottom:14px"></div>
+
+  <div class="fit-layout">
+
+    <!-- ═══ LEFT: INPUT PANEL ═══ -->
+    <div class="input-panel">
+
+      <!-- YOUR CONTEXT -->
+      <div class="input-section">
+        <span class="input-sec-label"><span class="lang-en">YOUR CONTEXT</span><span class="lang-zh" style="display:none">你的背景</span></span>
+
+        <!-- Origin -->
+        <div style="margin-bottom:10px">
+          <div style="font-size:10.5px;color:#5a7a9a;font-weight:500;margin-bottom:4px"><span class="lang-en">Passport / Origin</span><span class="lang-zh" style="display:none">護照 / 來源地</span></div>
+          <select class="origin-select" id="selOrigin">
+            <option value="tw">🇹🇼 Taiwan / 台灣 (passport #32)</option>
+            <option value="hk">🇭🇰 Hong Kong SAR / 香港 (passport #13)</option>
+            <option value="sg">🇸🇬 Singapore / 新加坡 (passport #1)</option>
+            <option value="us">🇺🇸 United States / 美國 (passport #10)</option>
+            <option value="ca">🇨🇦 Canada / 加拿大 (passport #7)</option>
+            <option value="au">🇦🇺 Australia / 澳洲 (passport #7)</option>
+            <option value="uk">🇬🇧 United Kingdom / 英國 (passport #7)</option>
+            <option value="jp">🇯🇵 Japan / 日本 (passport #2)</option>
+            <option value="cn">🇨🇳 China / 中國 (passport #56)</option>
+            <option value="my">🇲🇾 Malaysia / 馬來西亞 (passport #12)</option>
+          </select>
+        </div>
+
+        <!-- Family -->
+        <div style="margin-bottom:10px">
+          <div style="font-size:10.5px;color:#5a7a9a;font-weight:500;margin-bottom:4px"><span class="lang-en">Family Situation</span><span class="lang-zh" style="display:none">家庭狀況</span></div>
+          <div class="pill-row" id="pillsFamily">
+            <button class="pill-opt" data-val="single"><span class="lang-en">Single</span><span class="lang-zh" style="display:none">單身</span></button>
+            <button class="pill-opt active" data-val="couple"><span class="lang-en">Couple</span><span class="lang-zh" style="display:none">夫妻/伴侶</span></button>
+            <button class="pill-opt" data-val="w/kids"><span class="lang-en">With Kids</span><span class="lang-zh" style="display:none">有子女</span></button>
+          </div>
+        </div>
+
+        <!-- Age -->
+        <div style="margin-bottom:10px">
+          <div style="font-size:10.5px;color:#5a7a9a;font-weight:500;margin-bottom:4px"><span class="lang-en">Age Group</span><span class="lang-zh" style="display:none">年齡層</span></div>
+          <div class="pill-row" id="pillsAge">
+            <button class="pill-opt" data-val="<35"><span class="lang-en">&lt;35</span><span class="lang-zh" style="display:none">&lt;35</span></button>
+            <button class="pill-opt active" data-val="35-50"><span class="lang-en">35–50</span><span class="lang-zh" style="display:none">35–50</span></button>
+            <button class="pill-opt" data-val="50+"><span class="lang-en">50+</span><span class="lang-zh" style="display:none">50+</span></button>
+          </div>
+        </div>
+
+        <!-- Languages -->
+        <div style="margin-bottom:10px">
+          <div style="font-size:10.5px;color:#5a7a9a;font-weight:500;margin-bottom:6px"><span class="lang-en">Languages You Speak</span><span class="lang-zh" style="display:none">你會說的語言</span></div>
+          <div class="lang-checks">
+            <label class="lang-check"><input type="checkbox" id="langMandarin" checked><span class="lang-check-label"><span class="lang-en">Mandarin (Chinese)</span><span class="lang-zh" style="display:none">普通話（中文）</span></span></label>
+            <label class="lang-check"><input type="checkbox" id="langEnglish" checked><span class="lang-check-label"><span class="lang-en">English</span><span class="lang-zh" style="display:none">英語</span></span></label>
+            <label class="lang-check"><input type="checkbox" id="langJapanese"><span class="lang-check-label"><span class="lang-en">Japanese</span><span class="lang-zh" style="display:none">日語</span></span></label>
+            <label class="lang-check"><input type="checkbox" id="langKorean"><span class="lang-check-label"><span class="lang-en">Korean</span><span class="lang-zh" style="display:none">韓語</span></span></label>
+            <label class="lang-check"><input type="checkbox" id="langCantonese"><span class="lang-check-label"><span class="lang-en">Cantonese</span><span class="lang-zh" style="display:none">廣東話</span></span></label>
+          </div>
+        </div>
+
+        <!-- Visa Goal -->
+        <div style="margin-bottom:10px">
+          <div style="font-size:10.5px;color:#5a7a9a;font-weight:500;margin-bottom:4px"><span class="lang-en">Visa Goal</span><span class="lang-zh" style="display:none">簽證目標</span></div>
+          <div class="pill-row" id="pillsVisa">
+            <button class="pill-opt" data-val="holiday"><span class="lang-en">Holiday</span><span class="lang-zh" style="display:none">度假</span></button>
+            <button class="pill-opt active" data-val="part-time"><span class="lang-en">Part-time</span><span class="lang-zh" style="display:none">長留簽</span></button>
+            <button class="pill-opt" data-val="PR"><span class="lang-en">PR</span><span class="lang-zh" style="display:none">永居</span></button>
+            <button class="pill-opt" data-val="passport"><span class="lang-en">Passport</span><span class="lang-zh" style="display:none">入籍</span></button>
+          </div>
+        </div>
+
+        <!-- Overseas Income -->
+        <div style="margin-bottom:6px">
+          <label class="toggle-pill">
+            <input type="checkbox" id="chkOverseasIncome">
+            <span class="toggle-pill-label"><span class="lang-en">Has overseas passive income</span><span class="lang-zh" style="display:none">有境外被動收入</span></span>
+          </label>
+        </div>
+
+        <!-- Tax Status -->
+        <div>
+          <div style="font-size:10.5px;color:#5a7a9a;font-weight:500;margin-bottom:4px"><span class="lang-en">Tax Status</span><span class="lang-zh" style="display:none">稅務身份</span></div>
+          <div class="pill-row" id="pillsTax">
+            <button class="pill-opt active" data-val="tax-resident-home"><span class="lang-en">Home tax resident</span><span class="lang-zh" style="display:none">本國稅務居民</span></button>
+            <button class="pill-opt" data-val="multi-jurisdiction"><span class="lang-en">Multi-jurisdiction</span><span class="lang-zh" style="display:none">多地管轄</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRIORITY WEIGHTS -->
+      <div class="input-section">
+        <span class="input-sec-label"><span class="lang-en">PRIORITY WEIGHTS (0 = ignore, 5 = critical)</span><span class="lang-zh" style="display:none">優先權重（0=忽略，5=最重要）</span></span>
+        <div class="weight-rows">
+          <div class="weight-row">
+            <div class="weight-label">
+              <span class="weight-lbl-txt"><span class="lang-en">🛂 Visa / Residency</span><span class="lang-zh" style="display:none">🛂 簽證 / 居留</span></span>
+              <span class="weight-val" id="wValVisa">4</span>
+            </div>
+            <input type="range" class="weight-slider" id="wVisa" min="0" max="5" step="1" value="4">
+          </div>
+          <div class="weight-row">
+            <div class="weight-label">
+              <span class="weight-lbl-txt"><span class="lang-en">🗣️ Language</span><span class="lang-zh" style="display:none">🗣️ 語言</span></span>
+              <span class="weight-val" id="wValLang">3</span>
+            </div>
+            <input type="range" class="weight-slider" id="wLang" min="0" max="5" step="1" value="3">
+          </div>
+          <div class="weight-row">
+            <div class="weight-label">
+              <span class="weight-lbl-txt"><span class="lang-en">✈️ Flight Distance</span><span class="lang-zh" style="display:none">✈️ 飛行距離</span></span>
+              <span class="weight-val" id="wValFlight">3</span>
+            </div>
+            <input type="range" class="weight-slider" id="wFlight" min="0" max="5" step="1" value="3">
+          </div>
+          <div class="weight-row">
+            <div class="weight-label">
+              <span class="weight-lbl-txt"><span class="lang-en">🌡️ Climate</span><span class="lang-zh" style="display:none">🌡️ 氣候</span></span>
+              <span class="weight-val" id="wValClimate">2</span>
+            </div>
+            <input type="range" class="weight-slider" id="wClimate" min="0" max="5" step="1" value="2">
+          </div>
+          <div class="weight-row">
+            <div class="weight-label">
+              <span class="weight-lbl-txt"><span class="lang-en">🏥 Healthcare</span><span class="lang-zh" style="display:none">🏥 醫療</span></span>
+              <span class="weight-val" id="wValHealth">4</span>
+            </div>
+            <input type="range" class="weight-slider" id="wHealth" min="0" max="5" step="1" value="4">
+          </div>
+          <div class="weight-row">
+            <div class="weight-label">
+              <span class="weight-lbl-txt"><span class="lang-en">🎓 Education</span><span class="lang-zh" style="display:none">🎓 教育</span></span>
+              <span class="weight-val" id="wValEdu">1</span>
+            </div>
+            <input type="range" class="weight-slider" id="wEdu" min="0" max="5" step="1" value="1">
+          </div>
+          <div class="weight-row">
+            <div class="weight-label">
+              <span class="weight-lbl-txt"><span class="lang-en">🛡️ Safety</span><span class="lang-zh" style="display:none">🛡️ 治安</span></span>
+              <span class="weight-val" id="wValSafety">4</span>
+            </div>
+            <input type="range" class="weight-slider" id="wSafety" min="0" max="5" step="1" value="4">
+          </div>
+          <div class="weight-row">
+            <div class="weight-label">
+              <span class="weight-lbl-txt"><span class="lang-en">💰 Tax</span><span class="lang-zh" style="display:none">💰 稅務</span></span>
+              <span class="weight-val" id="wValTax">4</span>
+            </div>
+            <input type="range" class="weight-slider" id="wTax" min="0" max="5" step="1" value="4">
+          </div>
+        </div>
+      </div>
+
+      <!-- SAVE / SYNC -->
+      <div class="input-section">
+        <button class="panel-btn primary" id="btnSave" onclick="saveProfile()">
+          <span class="lang-en">💾 Save Profile</span><span class="lang-zh" style="display:none">💾 儲存設定</span>
+        </button>
+        <a href="/sync.html" class="panel-btn secondary" style="display:block;text-decoration:none;color:#1e3a5f">
+          <span class="lang-en">🔄 Sync / Export</span><span class="lang-zh" style="display:none">🔄 同步 / 匯出</span>
+        </a>
+      </div>
+
+    </div><!-- /input-panel -->
+
+    <!-- ═══ RIGHT: RESULT PANEL ═══ -->
+    <div class="result-panel">
+
+      <!-- FIT RANKING -->
+      <div class="section-label"><span class="lang-en">FIT RANKING</span><span class="lang-zh" style="display:none">匹配排名</span></div>
+      <div class="ranking-list" id="rankingList">
+        <div style="padding:24px;text-align:center;color:#94a3b8;font-size:12px"><span class="lang-en">Loading…</span><span class="lang-zh" style="display:none">載入中…</span></div>
+      </div>
+
+      <!-- DETAIL -->
+      <div class="section-label section-sep"><span class="lang-en">MARKET DETAIL</span><span class="lang-zh" style="display:none">市場詳情</span></div>
+      <div class="detail-box" id="detailBox">
+        <div class="no-detail">
+          <span class="lang-en">Click a market card above to see full breakdown</span>
+          <span class="lang-zh" style="display:none">點上方市場卡片查看完整分析</span>
+        </div>
+      </div>
+
+      <!-- FULL BREAKDOWN MATRIX -->
+      <div class="section-label section-sep"><span class="lang-en">FULL BREAKDOWN — all 12 markets × 8 dimensions</span><span class="lang-zh" style="display:none">完整矩陣 — 12 市場 × 8 維度</span></div>
+      <div class="insight-box" style="margin-bottom:10px">
+        <span class="lang-en">Click any column header to sort. Green ≥80 / Yellow 50-79 / Red &lt;50. Scores update when you change profile or weights.</span>
+        <span class="lang-zh" style="display:none">點欄位標題可排序。綠色 ≥80 / 黃色 50-79 / 紅色 &lt;50。更改個人設定或權重後分數即時更新。</span>
+      </div>
+      <div class="matrix-wrap">
+        <table class="matrix-tbl" id="matrixTbl">
+          <thead>
+            <tr>
+              <th><span class="lang-en">Market</span><span class="lang-zh" style="display:none">市場</span></th>
+              <th data-dim="visa"><span class="lang-en">🛂 Visa</span><span class="lang-zh" style="display:none">🛂 簽證</span></th>
+              <th data-dim="lang"><span class="lang-en">🗣️ Lang</span><span class="lang-zh" style="display:none">🗣️ 語言</span></th>
+              <th data-dim="flight"><span class="lang-en">✈️ Flight</span><span class="lang-zh" style="display:none">✈️ 飛行</span></th>
+              <th data-dim="climate"><span class="lang-en">🌡️ Climate</span><span class="lang-zh" style="display:none">🌡️ 氣候</span></th>
+              <th data-dim="health"><span class="lang-en">🏥 Health</span><span class="lang-zh" style="display:none">🏥 醫療</span></th>
+              <th data-dim="edu"><span class="lang-en">🎓 Edu</span><span class="lang-zh" style="display:none">🎓 教育</span></th>
+              <th data-dim="safety"><span class="lang-en">🛡️ Safety</span><span class="lang-zh" style="display:none">🛡️ 治安</span></th>
+              <th data-dim="tax"><span class="lang-en">💰 Tax</span><span class="lang-zh" style="display:none">💰 稅務</span></th>
+              <th data-dim="total"><span class="lang-en">Total</span><span class="lang-zh" style="display:none">總分</span></th>
+            </tr>
+          </thead>
+          <tbody id="matrixBody"></tbody>
+        </table>
+      </div>
+
+      <div class="source-footer" style="margin-top:14px">
+        <span class="lang-en"><strong>Data sources:</strong> Henley Passport Index Q4 2025 · EF EPI 2024 · Numbeo Healthcare &amp; Safety Index 2025 · Global Peace Index 2024 · QS World University Rankings 2025 · ISC Research · World Bank Climate Portal · PwC / KPMG / EY Tax Summaries 2025. Scores are approximations — consult professionals before making residency or investment decisions. Last data refresh: 2026-04-25.</span>
+        <span class="lang-zh" style="display:none"><strong>資料來源：</strong>Henley 護照指數 Q4 2025 · EF EPI 2024 · Numbeo 醫療/安全指數 2025 · 全球和平指數 2024 · QS 世界大學排名 2025 · ISC Research · 世界銀行氣候資料庫 · 普華永道 / KPMG / 安永 2025 稅務摘要。分數為近似值，做出移居或投資決策前請諮詢專業人士。資料更新日期：2026-04-25。</span>
+      </div>
+
+    </div><!-- /result-panel -->
+  </div><!-- /fit-layout -->
+</main>
+
+<footer class="footer">A project by <span>InvestMQuest</span></footer>
+
+<script>
+/* ════════════════════════════════════════════════════════
+   PERSONAL FIT SCORE TOOL — main JS
+   Reads /data/personal-fit-data.json at runtime
+════════════════════════════════════════════════════════ */
+
+/* ── Color palette ── */
+var C={navy:'#1e3a5f',green:'#16a34a',orange:'#d97706',red:'#dc2626',blue:'#2563eb',muted:'#5a7a9a',grid:'#e8f0f9',text:'#1e3a5f'};
+var baseText={color:'#3a5275',fontFamily:'Inter, sans-serif',fontSize:11};
+function mkAxis(o){o=o||{};var m=Object.assign({axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},splitLine:{lineStyle:{color:C.grid}}},o);m.axisLabel=Object.assign({},baseText,o.axisLabel||{});return m;}
+
+/* ── App state ── */
+var FIT_DATA = null;    // loaded from JSON
+var allCharts = [];
+var selectedMarket = null;
+var matrixSortDim = 'total';
+var matrixSortAsc = false;
+
+/* ── Default profile ── */
+var DEFAULT_PROFILE = {
+  origin: 'tw',
+  family: 'couple',
+  age: '35-50',
+  langs: ['mandarin','english'],
+  visaGoal: 'part-time',
+  hasOverseasIncome: false,
+  taxStatus: 'tax-resident-home',
+  weights: {visa:4,lang:3,flight:3,climate:2,health:4,edu:1,safety:4,tax:4}
+};
+
+var profile = Object.assign({}, DEFAULT_PROFILE, {weights: Object.assign({}, DEFAULT_PROFILE.weights)});
+
+/* ════════════ SCORE FUNCTIONS ════════════ */
+
+function scoreVisa(visa, visaGoal) {
+  if (visaGoal === 'holiday') return 70; // holiday → visa dimension not important, neutral score
+
+  if (visaGoal === 'part-time') {
+    // Look for a long-stay option (90+ days)
+    var tiers = visa.tiers || [];
+    var hasLongStay = false;
+    for (var i = 0; i < tiers.length; i++) {
+      var t = tiers[i];
+      var dur = (t.duration || '').toLowerCase();
+      // Check for multi-year stay programs or explicit 90+ days mentions
+      if (dur.indexOf('10yr') >= 0 || dur.indexOf('15yr') >= 0 || dur.indexOf('20yr') >= 0 ||
+          dur.indexOf('5yr') >= 0 || dur.indexOf('3yr') >= 0 || dur.indexOf('2yr') >= 0 ||
+          dur.indexOf('permanent') >= 0 || (t.stayRequirement && t.stayRequirement.indexOf('90') >= 0)) {
+        hasLongStay = true;
+        break;
+      }
+    }
+    // Check if program is closed
+    var closed = visa.closedPrograms && visa.closedPrograms.length > 0 &&
+                 !visa.tiers.length;
+    if (closed) return 25;
+    return hasLongStay ? 85 : 40;
+  }
+
+  if (visaGoal === 'PR') {
+    var yrs = visa.pathToPR_years;
+    if (yrs === null || yrs === undefined) {
+      // Check if closed
+      if (visa.closedPrograms && visa.closedPrograms.length > 0) return 10;
+      return 20;
+    }
+    if (yrs <= 3) return 95;
+    if (yrs <= 5) return 85;
+    if (yrs <= 7) return 70;
+    if (yrs <= 10) return 55;
+    return 35;
+  }
+
+  if (visaGoal === 'passport') {
+    var cYrs = visa.pathToCitizenship_years;
+    if (cYrs === null || cYrs === undefined) return 15;
+    if (cYrs <= 5) return 95;
+    if (cYrs <= 8) return 85;
+    if (cYrs <= 12) return 65;
+    if (cYrs <= 15) return 45;
+    return 30;
+  }
+  return 50;
+}
+
+function scoreLang(language, userLangs) {
+  var score = 0;
+  var official = (language.official || []).map(function(l){return l.toLowerCase();});
+  var englishUsability = language.englishUsability || '';
+  var mandarinPct = language.mandarinSpeakerPct || 0;
+
+  // Base: user has English + market has high English usability
+  if (userLangs.indexOf('english') >= 0) {
+    if (englishUsability === 'very high' || englishUsability === 'native') score += 50;
+    else if (englishUsability === 'high') score += 35;
+    else if (englishUsability === 'moderate') score += 20;
+    else if (englishUsability === 'low-moderate') score += 10;
+    else score += 5;
+  }
+
+  // Mandarin bonus
+  if (userLangs.indexOf('mandarin') >= 0) {
+    if (mandarinPct >= 70) score += 40;
+    else if (mandarinPct >= 40) score += 30;
+    else if (mandarinPct >= 20) score += 20;
+    else if (mandarinPct >= 8) score += 10;
+    else score += 2;
+  }
+
+  // Cantonese bonus (overlaps with HK/SG/MY Chinese community)
+  if (userLangs.indexOf('cantonese') >= 0 && mandarinPct >= 15) {
+    score += 5;
+  }
+
+  // Japanese
+  if (userLangs.indexOf('japanese') >= 0) {
+    var hasJp = official.some(function(o){return o.indexOf('japanese') >= 0;});
+    if (hasJp) score += 40;
+  }
+
+  // Korean
+  if (userLangs.indexOf('korean') >= 0) {
+    var hasKr = official.some(function(o){return o.indexOf('korean') >= 0;});
+    if (hasKr) score += 40;
+  }
+
+  // Check official language matches
+  for (var i = 0; i < official.length; i++) {
+    var o = official[i];
+    if (o.indexOf('english') >= 0 && userLangs.indexOf('english') >= 0) {
+      score = Math.max(score, 65); // guaranteed good if official EN
+    }
+    if ((o.indexOf('mandarin') >= 0 || o.indexOf('chinese') >= 0) && userLangs.indexOf('mandarin') >= 0) {
+      score = Math.max(score, 70);
+    }
+    if (o.indexOf('malay') >= 0 && englishUsability === 'high') {
+      // MY: if user has English, it's actually fine
+      if (userLangs.indexOf('english') >= 0) score = Math.max(score, 60);
+    }
+  }
+
+  return Math.min(100, Math.round(score));
+}
+
+function scoreFlight(hours) {
+  if (!hours || hours === 0) return 20; // no data → assume far
+  if (hours <= 2) return 98;
+  if (hours <= 4) return 90;
+  if (hours <= 6) return 78;
+  if (hours <= 8) return 65;
+  if (hours <= 11) return 50;
+  if (hours <= 14) return 35;
+  if (hours <= 18) return 25;
+  return 18;
+}
+
+function scoreClimate(climate, age) {
+  var temp = climate.avgTempC || 15;
+  var disasters = climate.disasters || {};
+
+  // Temperature fit: ideal 20-27°C. Extreme cold (<10) or extreme heat (>30) penalize.
+  var tempScore;
+  if (temp >= 22 && temp <= 27) tempScore = 90;
+  else if (temp >= 18 && temp <= 30) tempScore = 75;
+  else if (temp >= 13 && temp <= 32) tempScore = 60;
+  else tempScore = 45;
+
+  // Disaster penalty
+  var penalty = 0;
+  var sevMap = {'very low':0,'low':3,'low-moderate':5,'moderate':10,'high':18,'very high':28};
+  var dkeys = Object.keys(disasters);
+  for (var i = 0; i < dkeys.length; i++) {
+    var sev = (disasters[dkeys[i]] || 'low').toLowerCase();
+    // Handle compound values like "low-moderate"
+    penalty += (sevMap[sev] !== undefined ? sevMap[sev] : 5);
+  }
+
+  // Age modifier: older travellers care more about extreme heat
+  if (age === '50+' && temp > 28) penalty += 8;
+
+  var score = Math.max(10, Math.round(tempScore - penalty * 0.6));
+  return Math.min(100, score);
+}
+
+function scoreHealth(healthcare, age) {
+  var base = healthcare.numbeoIndex2025 || 60;
+  var score = base;
+
+  // Bonus for universal coverage
+  if (healthcare.universalCoverage) {
+    score = Math.min(100, score + 5);
+  }
+
+  // Age modifier: 50+ cares more about healthcare quality
+  if (age === '50+' && base >= 75) score = Math.min(100, score + 5);
+  if (age === '50+' && base < 65) score = Math.max(0, score - 5);
+
+  return Math.min(100, Math.round(score));
+}
+
+function scoreEdu(education, family) {
+  if (family !== 'w/kids') {
+    // Adults without kids: light weight on education, based on top uni access
+    var uniRank = education.topUniRank_QS2025 || 500;
+    if (uniRank <= 20) return 85;
+    if (uniRank <= 50) return 75;
+    if (uniRank <= 100) return 65;
+    if (uniRank <= 200) return 55;
+    if (uniRank <= 400) return 45;
+    return 35;
+  }
+
+  // With kids: international school count + tuition affordability + curricula
+  var count = education.intlSchoolCount || 0;
+  var curricula = (education.curriculaAvailable || []).length;
+  var tuition = education.intlSchoolTuition_USD_year || [10000, 30000];
+  var avgTuition = (tuition[0] + tuition[1]) / 2;
+
+  var score = 0;
+  if (count >= 200) score += 40;
+  else if (count >= 100) score += 35;
+  else if (count >= 50) score += 28;
+  else if (count >= 20) score += 20;
+  else if (count >= 10) score += 12;
+  else score += 5;
+
+  score += Math.min(30, curricula * 8); // up to 4 curricula → 30 pts
+
+  // Tuition penalty: if avg > $30K it's expensive
+  if (avgTuition > 45000) score -= 15;
+  else if (avgTuition > 35000) score -= 8;
+  else if (avgTuition < 10000) score += 10; // affordable bonus
+
+  return Math.min(100, Math.max(10, Math.round(score)));
+}
+
+function scoreSafety(safety) {
+  var numbeo = safety.numbeoSafetyIndex2025 || 50;
+  var gpiRank = safety.globalPeaceIndexRank2024 || 80;
+
+  var score = numbeo; // 0-100 directly from Numbeo
+
+  // GPI bonus/penalty
+  if (gpiRank <= 5) score = Math.min(100, score + 8);
+  else if (gpiRank <= 20) score = Math.min(100, score + 4);
+  else if (gpiRank >= 100) score = Math.max(0, score - 8);
+  else if (gpiRank >= 60) score = Math.max(0, score - 3);
+
+  return Math.min(100, Math.round(score));
+}
+
+function scoreTax(tax, origin, hasOverseasIncome, taxStatus) {
+  var regime = tax.regime || 'worldwide';
+  var overseasTaxed = tax.overseasIncomeTaxed;
+  var topRate = tax.personalIncomeTopRate || 35;
+  var score = 60; // baseline
+
+  if (hasOverseasIncome) {
+    // Core: territorial + overseas income not taxed → top score
+    if (regime === 'territorial' && overseasTaxed === false) {
+      score = 95;
+    } else if (regime === 'territorial' && overseasTaxed === 'conditional') {
+      // TH: 2024 change — same-year remittance taxable
+      score = 55;
+    } else if (regime === 'mixed' && overseasTaxed === 'conditional') {
+      // TW / JP: conditional
+      score = 65;
+    } else if (regime === 'worldwide' && overseasTaxed === true) {
+      score = 30;
+    } else {
+      score = 50;
+    }
+  } else {
+    // No overseas income: regime matters less, but still penalize high tax
+    if (regime === 'territorial') score = 80;
+    else if (regime === 'mixed') score = 65;
+    else score = 50;
+  }
+
+  // Top rate penalty
+  if (topRate > 45) score = Math.max(0, score - 12);
+  else if (topRate > 40) score = Math.max(0, score - 6);
+  else if (topRate <= 25) score = Math.min(100, score + 6);
+
+  // Multi-jurisdiction concern: CRS matters more
+  if (taxStatus === 'multi-jurisdiction') {
+    var crs = tax.crsParticipant;
+    if (!crs) score = Math.min(100, score + 5); // US is NOT CRS — beneficial for info-sharing avoidance
+    // No additional penalty for CRS participants since it's the global standard
+  }
+
+  // US citizen warning: worldwide taxation follows you regardless of where you move
+  if (origin && origin.taxResidencyType === 'worldwide' && origin.overseasIncomeTaxed === true) {
+    // User is from US/CA/AU — they already pay worldwide tax at home
+    // Moving to territorial regime still helps reduce local tax in destination
+    // Keep score but reduce by 10 since home country still taxes them
+    score = Math.max(10, score - 10);
+  }
+
+  return Math.min(100, Math.max(10, Math.round(score)));
+}
+
+/* ════════════ MAIN CALC ════════════ */
+
+var DIMS = ['visa','lang','flight','climate','health','edu','safety','tax'];
+var MARKET_IDS = ['my','tw','jp','au','nz','uk','us','th','vn','kr','ca','ie'];
+
+var MARKET_META = {
+  my:  {flag:'🇲🇾',en:'Malaysia',    zh:'馬來西亞'},
+  tw:  {flag:'🇹🇼',en:'Taiwan',      zh:'台灣'},
+  jp:  {flag:'🇯🇵',en:'Japan',       zh:'日本'},
+  au:  {flag:'🇦🇺',en:'Australia',   zh:'澳洲'},
+  nz:  {flag:'🇳🇿',en:'New Zealand', zh:'紐西蘭'},
+  uk:  {flag:'🇬🇧',en:'UK',          zh:'英國'},
+  us:  {flag:'🇺🇸',en:'United States',zh:'美國'},
+  th:  {flag:'🇹🇭',en:'Thailand',    zh:'泰國'},
+  vn:  {flag:'🇻🇳',en:'Vietnam',     zh:'越南'},
+  kr:  {flag:'🇰🇷',en:'Korea',       zh:'韓國'},
+  ca:  {flag:'🇨🇦',en:'Canada',      zh:'加拿大'},
+  ie:  {flag:'🇮🇪',en:'Ireland',     zh:'愛爾蘭'}
+};
+
+// Market-level critical warnings (from spec)
+var MARKET_ALERTS = {
+  ie: {en:'🇮🇪 IE: Tier 1 Investor Visa permanently closed Feb 2022 — Innovator Founder / Global Talent only (no passive investment route)',
+       zh:'🇮🇪 IE：Tier 1 投資人簽證於2022年2月永久關閉——目前只有創新創業/全球人才路徑（無被動投資路線）'},
+  au: {en:'🇦🇺 AU: Foreign buyer ban on established dwellings Apr 2025–Mar 2027 (new builds still OK with FIRB approval)',
+       zh:'🇦🇺 AU：2025年4月至2027年3月外國人禁購二手住宅（新建案需FIRB批准仍可購）'},
+  th: {en:'🇹🇭 TH: 2024 rule change — overseas income remitted to Thailand in same tax year is now taxable for tax residents',
+       zh:'🇹🇭 TH：2024年規則改變——泰國稅務居民在同一課稅年度匯入的境外所得需課稅'},
+  kr: {en:'🇰🇷 KR: Aug 2025 — Seoul/Gyeonggi/Incheon require purchase permit + 2-year self-occupy requirement',
+       zh:'🇰🇷 KR：2025年8月起，首爾/京畿/仁川地區購房需申請許可 + 須自住2年'},
+  ca: {en:'🇨🇦 CA: SUV (Start-Up Visa) paused 2026; Foreign Buyer Ban extended to 2027',
+       zh:'🇨🇦 CA：創業簽證（SUV）2026年暫停；外國人購房禁令延至2027年'}
+};
+
+function calcMarketScores(mId, mData, originData) {
+  var hours = (originData.directFlightHours || {})[mId];
+  var userLangs = profile.langs;
+  var age = profile.age;
+  var family = profile.family;
+  var visaGoal = profile.visaGoal;
+  var hasIncome = profile.hasOverseasIncome;
+  var taxStatus = profile.taxStatus;
+
+  var dim = {
+    visa:    scoreVisa(mData.visa, visaGoal),
+    lang:    scoreLang(mData.language, userLangs),
+    flight:  scoreFlight(hours),
+    climate: scoreClimate(mData.climate, age),
+    health:  scoreHealth(mData.healthcare, age),
+    edu:     scoreEdu(mData.education, family),
+    safety:  scoreSafety(mData.safety),
+    tax:     scoreTax(mData.tax, originData, hasIncome, taxStatus)
+  };
+
+  // Weighted sum
+  var total = 0, totalW = 0;
+  for (var d = 0; d < DIMS.length; d++) {
+    var dim_key = DIMS[d];
+    var w = profile.weights[dim_key] || 0;
+    // Visa goal holiday → visa weight = 0
+    if (dim_key === 'visa' && profile.visaGoal === 'holiday') w = 0;
+    total += dim[dim_key] * w;
+    totalW += w;
+  }
+  dim.total = totalW > 0 ? Math.round(total / totalW) : 0;
+  return dim;
+}
+
+function calcAll() {
+  if (!FIT_DATA) return [];
+  var originData = FIT_DATA.origins[profile.origin] || FIT_DATA.origins['tw'];
+  var results = [];
+  for (var i = 0; i < MARKET_IDS.length; i++) {
+    var mId = MARKET_IDS[i];
+    var mData = FIT_DATA.markets[mId];
+    if (!mData) continue;
+    var scores = calcMarketScores(mId, mData, originData);
+    var meta = MARKET_META[mId];
+    results.push({id:mId, flag:meta.flag, en:meta.en, zh:meta.zh, scores:scores});
+  }
+  results.sort(function(a,b){return b.scores.total - a.scores.total;});
+  return results;
+}
+
+/* ════════════ RENDER ════════════ */
+
+function scoreColor(s) {
+  if (s >= 80) return C.green;
+  if (s >= 50) return C.orange;
+  return C.red;
+}
+function scoreCellCls(s) {
+  if (s >= 80) return 'cell-green';
+  if (s >= 50) return 'cell-yellow';
+  return 'cell-red';
+}
+function scoreFitCls(s) {
+  if (s >= 80) return 'score-green';
+  if (s >= 50) return 'score-yellow';
+  return 'score-red';
+}
+
+function renderAlerts() {
+  var lang = localStorage.getItem('lang') || 'en';
+  var en = lang === 'en';
+  var html = '';
+  var keys = Object.keys(MARKET_ALERTS);
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i];
+    var a = MARKET_ALERTS[k];
+    html += '<div class="alert-banner" id="alert-'+k+'">'+
+      '<span class="alert-icon">⚠️</span>'+
+      '<span>'+(en ? a.en : a.zh)+'</span>'+
+      '<span class="alert-dismiss" onclick="dismissAlert(\''+k+'\')">✕</span>'+
+    '</div>';
+  }
+  document.getElementById('alertBanners').innerHTML = html;
+}
+
+function dismissAlert(k) {
+  var el = document.getElementById('alert-'+k);
+  if (el) el.style.display = 'none';
+}
+
+function renderRanking(results, lang) {
+  var en = lang === 'en';
+  var medals = ['🥇','🥈','🥉'];
+  var rankClass = ['gold','silver','bronze'];
+  var html = '';
+
+  for (var i = 0; i < results.length; i++) {
+    var r = results[i];
+    var sc = r.scores;
+    var cls = 'fit-card';
+    if (i < 3) cls += ' ' + rankClass[i];
+    if (r.id === selectedMarket) cls += ' selected';
+    var medal = i < 3 ? medals[i] : (i + 1).toString();
+    var fitCls = scoreFitCls(sc.total);
+
+    // Mini dimension bars
+    var barsHtml = '';
+    for (var d = 0; d < DIMS.length; d++) {
+      var pct = Math.round(sc[DIMS[d]]);
+      var col = scoreColor(pct);
+      barsHtml += '<div class="dim-mini" title="'+DIMS[d]+': '+pct+'"><div class="dim-mini-fill" style="width:'+pct+'%;background:'+col+'"></div></div>';
+    }
+
+    html += '<div class="'+cls+'" data-id="'+r.id+'" onclick="selectMarket(\''+r.id+'\')" >'+
+      '<div class="fit-card-medal">'+medal+'</div>'+
+      '<div class="fit-card-flag">'+r.flag+'</div>'+
+      '<div class="fit-card-body">'+
+        '<div class="fit-card-name">'+(en ? r.en : r.zh)+'</div>'+
+        '<div class="fit-card-dims">'+barsHtml+'</div>'+
+      '</div>'+
+      '<div class="fit-score-big '+fitCls+'">'+sc.total+'</div>'+
+    '</div>';
+  }
+  document.getElementById('rankingList').innerHTML = html;
+}
+
+function selectMarket(mId) {
+  selectedMarket = mId;
+  // Re-render ranking to update selected state
+  var results = calcAll();
+  var lang = localStorage.getItem('lang') || 'en';
+  renderRanking(results, lang);
+  renderDetail(mId, results, lang);
+  // Scroll detail into view on mobile
+  if (window.innerWidth <= 900) {
+    setTimeout(function(){
+      var el = document.getElementById('detailBox');
+      if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 100);
+  }
+}
+
+function renderDetail(mId, results, lang) {
+  if (!FIT_DATA || !mId) return;
+  var en = lang === 'en';
+  var mData = FIT_DATA.markets[mId];
+  var meta = MARKET_META[mId];
+  if (!mData || !meta) return;
+
+  var r = null;
+  for (var i = 0; i < results.length; i++) {
+    if (results[i].id === mId) { r = results[i]; break; }
+  }
+  if (!r) return;
+
+  var sc = r.scores;
+
+  // Strengths / weaknesses
+  var strengths = [], weaknesses = [];
+  var dimLabels = {
+    visa: en?'🛂 Visa':'🛂 簽證',
+    lang: en?'🗣️ Language':'🗣️ 語言',
+    flight: en?'✈️ Flight':'✈️ 飛行',
+    climate: en?'🌡️ Climate':'🌡️ 氣候',
+    health: en?'🏥 Healthcare':'🏥 醫療',
+    edu: en?'🎓 Education':'🎓 教育',
+    safety: en?'🛡️ Safety':'🛡️ 治安',
+    tax: en?'💰 Tax':'💰 稅務'
+  };
+  for (var d = 0; d < DIMS.length; d++) {
+    var dKey = DIMS[d];
+    var dSc = sc[dKey];
+    if (dSc >= 80) strengths.push({label: dimLabels[dKey], score: dSc});
+    else if (dSc <= 40) weaknesses.push({label: dimLabels[dKey], score: dSc});
+  }
+  strengths.sort(function(a,b){return b.score-a.score;});
+  weaknesses.sort(function(a,b){return a.score-b.score;});
+
+  function swList(arr, isStrength) {
+    if (!arr.length) return '<span style="font-size:11px;color:#94a3b8">'+(en?'None':'無')+'</span>';
+    return arr.map(function(x){
+      return '<div class="sw-item"><div class="sw-dot '+(isStrength?'green':'red')+'"></div>'+x.label+' <span style="font-family:\'JetBrains Mono\',monospace;font-size:10.5px;color:'+(isStrength?C.green:C.red)+'">'+x.score+'</span></div>';
+    }).join('');
+  }
+
+  // Visa summary
+  var visa = mData.visa;
+  var visaTiers = (visa.tiers || []).slice(0, 2); // show max 2 tiers
+  var visaTierHtml = visaTiers.map(function(t){
+    var inv = t.minDeposit_USD || t.minInvestment_USD || t.minCost_USD || null;
+    var invStr = inv ? 'USD ' + Number(inv).toLocaleString() : '—';
+    return '<div class="detail-kv"><span class="detail-key">'+(t.name||'')+'</span><span class="detail-val">'+t.duration+(inv ? ' · ' + invStr : '')+'</span></div>';
+  }).join('');
+  if (visa.closedPrograms && visa.closedPrograms.length) {
+    visaTierHtml += '<div class="detail-kv"><span class="detail-key"><span class="warn-badge">CLOSED</span></span><span class="detail-val" style="color:#dc2626">'+visa.closedPrograms[0]+'</span></div>';
+  }
+
+  var prYrs = visa.pathToPR_years != null ? visa.pathToPR_years + (en?' yr':' 年') : (en?'Not available':'無路徑');
+  var citYrs = visa.pathToCitizenship_years != null ? visa.pathToCitizenship_years + (en?' yr':' 年') : '—';
+
+  // Tax summary
+  var tax = mData.tax;
+  var regimeLabel = {
+    'territorial': en ? 'Territorial (overseas income generally exempt)' : '領土制（境外所得一般免稅）',
+    'worldwide': en ? 'Worldwide (all income taxable)' : '全球課稅（全部所得課稅）',
+    'mixed': en ? 'Mixed / Conditional' : '混合 / 條件式'
+  }[tax.regime] || tax.regime;
+  var overseasNote = en ? (tax.overseasIncomeNote_en || '') : (tax.overseasIncomeNote_zh || '');
+
+  var detailHtml = '<div class="detail-header">'+
+    '<div class="detail-header-flag">'+meta.flag+'</div>'+
+    '<div>'+
+      '<div class="detail-header-name">'+(en?meta.en:meta.zh)+'</div>'+
+      '<div style="font-size:10.5px;color:#5a7a9a;margin-top:1px">'+
+        (en?'Fit Score: ':'匹配分數：')+'<strong style="color:'+scoreColor(sc.total)+'">'+sc.total+'</strong>'+
+      '</div>'+
+    '</div>'+
+    '<div class="detail-header-score '+scoreFitCls(sc.total)+'">'+sc.total+'</div>'+
+  '</div>'+
+  '<div class="detail-body">'+
+
+    // Radar chart
+    '<div id="detailRadar" style="height:220px;width:100%;margin-bottom:16px"></div>'+
+
+    // Strengths / Weaknesses + Visa
+    '<div class="detail-cols">'+
+      '<div>'+
+        '<div class="detail-subsection-title"><span class="lang-en">STRENGTHS</span><span class="lang-zh" style="display:none">優勢</span></div>'+
+        '<div class="sw-list">'+swList(strengths, true)+'</div>'+
+        '<div class="detail-subsection-title" style="margin-top:12px"><span class="lang-en">WEAKNESSES</span><span class="lang-zh" style="display:none">劣勢</span></div>'+
+        '<div class="sw-list">'+swList(weaknesses, false)+'</div>'+
+      '</div>'+
+      '<div>'+
+        '<div class="detail-subsection-title"><span class="lang-en">VISA PATHWAY</span><span class="lang-zh" style="display:none">簽證路徑</span></div>'+
+        visaTierHtml+
+        '<div class="detail-kv"><span class="detail-key">'+(en?'Path to PR:':'PR路徑：')+'</span><span class="detail-val">'+prYrs+'</span></div>'+
+        '<div class="detail-kv"><span class="detail-key">'+(en?'Citizenship:':'入籍：')+'</span><span class="detail-val">'+citYrs+'</span></div>'+
+        (visa.notes ? '<div class="detail-note">'+visa.notes+'</div>' : '')+
+      '</div>'+
+    '</div>'+
+
+    // Tax detail
+    '<div style="margin-top:12px;padding-top:12px;border-top:1px solid #f0f5fb">'+
+      '<div class="detail-subsection-title"><span class="lang-en">TAX REGIME</span><span class="lang-zh" style="display:none">稅務制度</span></div>'+
+      '<div class="detail-kv"><span class="detail-key">'+(en?'Regime:':'稅制：')+'</span><span class="detail-val">'+regimeLabel+'</span></div>'+
+      '<div class="detail-kv"><span class="detail-key">'+(en?'Top rate:':'最高稅率：')+'</span><span class="detail-val">'+tax.personalIncomeTopRate+'%</span></div>'+
+      '<div class="detail-kv"><span class="detail-key">'+(en?'Overseas income:':'海外所得：')+'</span>'+
+        '<span class="detail-val">'+
+          (tax.overseasIncomeTaxed === false ? '<span class="tag-pill tag-green">'+(en?'Exempt (territorial)':'免稅')+'</span>' :
+           tax.overseasIncomeTaxed === true ? '<span class="tag-pill tag-red">'+(en?'Taxed (worldwide)':'課稅')+'</span>' :
+           '<span class="tag-pill tag-yellow">'+(en?'Conditional':'條件式')+'</span>')+
+        '</span>'+
+      '</div>'+
+      '<div class="detail-kv"><span class="detail-key">CRS:</span><span class="detail-val">'+(tax.crsParticipant ? (en?'Yes':'是') : (en?'No':'否'))+'</span></div>'+
+      (overseasNote ? '<div class="detail-note">'+overseasNote+'</div>' : '')+
+    '</div>'+
+
+  '</div>';
+
+  document.getElementById('detailBox').innerHTML = detailHtml;
+
+  // Apply lang classes inside detail
+  var curLang = lang;
+  document.querySelectorAll('#detailBox .lang-en').forEach(function(e){e.style.display=curLang==='en'?'':'none';});
+  document.querySelectorAll('#detailBox .lang-zh').forEach(function(e){e.style.display=curLang==='zh'?'':'none';});
+
+  // Draw radar
+  renderRadar(sc, lang);
+}
+
+function renderRadar(sc, lang) {
+  var en = lang === 'en';
+
+  // Dispose existing radar chart
+  allCharts.forEach(function(c){if(c && !c.isDisposed()) try{c.dispose();}catch(e){}});
+  allCharts = allCharts.filter(function(c){return c && !c.isDisposed();});
+
+  var el = document.getElementById('detailRadar');
+  if (!el) return;
+
+  var labels = en
+    ? ['Visa','Language','Flight','Climate','Healthcare','Education','Safety','Tax']
+    : ['簽證','語言','飛行','氣候','醫療','教育','治安','稅務'];
+
+  var radarIndicators = labels.map(function(l){return {name:l, max:100};});
+  var vals = DIMS.map(function(d){return sc[d] || 0;});
+
+  var c = echarts.init(el);
+  c.setOption({
+    tooltip: {trigger:'item', backgroundColor:'#fff', borderColor:'#ccd9e8', borderWidth:1,
+      textStyle:{color:C.navy, fontSize:11, fontFamily:'Inter'}},
+    radar: {
+      indicator: radarIndicators,
+      center: ['50%','52%'],
+      radius: '65%',
+      splitNumber: 4,
+      axisName: {color: C.muted, fontFamily:'Inter, sans-serif', fontSize:10.5, fontWeight:500},
+      splitArea: {areaStyle:{color:['#f8fbff','#f0f6ff','#e8f0f9','#dce8f5']}},
+      splitLine: {lineStyle:{color:'#ccd9e8', width:0.5}},
+      axisLine: {lineStyle:{color:'#ccd9e8'}}
+    },
+    series: [{
+      type: 'radar',
+      data: [{
+        value: vals,
+        name: en ? 'Fit Score' : '匹配分數',
+        areaStyle: {color: 'rgba(30,58,95,0.12)'},
+        lineStyle: {color: C.navy, width:2},
+        itemStyle: {color: C.navy}
+      }]
+    }]
+  });
+  allCharts.push(c);
+}
+
+function renderMatrix(results, lang) {
+  var en = lang === 'en';
+
+  // Sort
+  var sorted = results.slice();
+  sorted.sort(function(a, b){
+    var av = a.scores[matrixSortDim] || 0;
+    var bv = b.scores[matrixSortDim] || 0;
+    return matrixSortAsc ? av - bv : bv - av;
+  });
+
+  var html = '';
+  for (var i = 0; i < sorted.length; i++) {
+    var r = sorted[i];
+    var sc = r.scores;
+    var cells = DIMS.map(function(d){
+      var s = sc[d] || 0;
+      return '<td><span class="cell-score '+scoreCellCls(s)+'">'+s+'</span></td>';
+    }).join('');
+    var totalCls = scoreCellCls(sc.total);
+    html += '<tr>'+
+      '<td>'+r.flag+' <span class="lang-en">'+(en?r.en:'')+'</span><span class="lang-zh" style="display:'+(en?'none':'')+'">'+r.zh+'</span></td>'+
+      cells+
+      '<td><span class="cell-score '+totalCls+'" style="font-size:12px;font-weight:800">'+sc.total+'</span></td>'+
+    '</tr>';
+  }
+  document.getElementById('matrixBody').innerHTML = html;
+
+  // Re-apply lang
+  document.querySelectorAll('#matrixBody .lang-en').forEach(function(e){e.style.display=en?'':'none';});
+  document.querySelectorAll('#matrixBody .lang-zh').forEach(function(e){e.style.display=en?'none':'';});
+
+  // Sort indicators
+  document.querySelectorAll('.matrix-tbl th[data-dim]').forEach(function(th){
+    th.classList.remove('sorted','asc');
+    if (th.getAttribute('data-dim') === matrixSortDim) {
+      th.classList.add('sorted');
+      if (matrixSortAsc) th.classList.add('asc');
+    }
+  });
+}
+
+/* ════════════ FULL RENDER ════════════ */
+
+function renderAll() {
+  var lang = localStorage.getItem('lang') || 'en';
+  var results = calcAll();
+  renderRanking(results, lang);
+  renderMatrix(results, lang);
+
+  // If a market is selected, re-render its detail
+  if (selectedMarket) {
+    renderDetail(selectedMarket, results, lang);
+  }
+}
+
+/* ════════════ PROFILE READ/WRITE ════════════ */
+
+function readProfile() {
+  profile.origin = document.getElementById('selOrigin').value;
+
+  // Family pills
+  document.querySelectorAll('#pillsFamily .pill-opt').forEach(function(b){
+    if (b.classList.contains('active')) profile.family = b.getAttribute('data-val');
+  });
+
+  // Age pills
+  document.querySelectorAll('#pillsAge .pill-opt').forEach(function(b){
+    if (b.classList.contains('active')) profile.age = b.getAttribute('data-val');
+  });
+
+  // Languages
+  profile.langs = [];
+  if (document.getElementById('langMandarin').checked) profile.langs.push('mandarin');
+  if (document.getElementById('langEnglish').checked) profile.langs.push('english');
+  if (document.getElementById('langJapanese').checked) profile.langs.push('japanese');
+  if (document.getElementById('langKorean').checked) profile.langs.push('korean');
+  if (document.getElementById('langCantonese').checked) profile.langs.push('cantonese');
+
+  // Visa goal pills
+  document.querySelectorAll('#pillsVisa .pill-opt').forEach(function(b){
+    if (b.classList.contains('active')) profile.visaGoal = b.getAttribute('data-val');
+  });
+
+  profile.hasOverseasIncome = document.getElementById('chkOverseasIncome').checked;
+
+  // Tax status pills
+  document.querySelectorAll('#pillsTax .pill-opt').forEach(function(b){
+    if (b.classList.contains('active')) profile.taxStatus = b.getAttribute('data-val');
+  });
+
+  // Weights
+  ['Visa','Lang','Flight','Climate','Health','Edu','Safety','Tax'].forEach(function(dim){
+    var key = dim.toLowerCase();
+    // Special: 'health' slider has id 'wHealth' etc.
+    var el = document.getElementById('w' + dim);
+    if (el) profile.weights[key] = parseInt(el.value) || 0;
+  });
+
+  // Visa goal holiday → grey out visa slider
+  var visaSlider = document.getElementById('wVisa');
+  if (profile.visaGoal === 'holiday') {
+    visaSlider.disabled = true;
+    document.getElementById('wValVisa').style.opacity = '0.4';
+  } else {
+    visaSlider.disabled = false;
+    document.getElementById('wValVisa').style.opacity = '';
+  }
+}
+
+function applyProfileToUI() {
+  // Origin
+  document.getElementById('selOrigin').value = profile.origin;
+
+  // Family pills
+  setPillActive('pillsFamily', profile.family);
+
+  // Age pills
+  setPillActive('pillsAge', profile.age);
+
+  // Languages
+  document.getElementById('langMandarin').checked = profile.langs.indexOf('mandarin') >= 0;
+  document.getElementById('langEnglish').checked = profile.langs.indexOf('english') >= 0;
+  document.getElementById('langJapanese').checked = profile.langs.indexOf('japanese') >= 0;
+  document.getElementById('langKorean').checked = profile.langs.indexOf('korean') >= 0;
+  document.getElementById('langCantonese').checked = profile.langs.indexOf('cantonese') >= 0;
+
+  // Visa goal pills
+  setPillActive('pillsVisa', profile.visaGoal);
+
+  // Overseas income
+  document.getElementById('chkOverseasIncome').checked = profile.hasOverseasIncome;
+
+  // Tax status pills
+  setPillActive('pillsTax', profile.taxStatus);
+
+  // Weights
+  var wMap = {Visa:'visa',Lang:'lang',Flight:'flight',Climate:'climate',Health:'health',Edu:'edu',Safety:'safety',Tax:'tax'};
+  Object.keys(wMap).forEach(function(dim){
+    var key = wMap[dim];
+    var slider = document.getElementById('w' + dim);
+    if (slider) {
+      slider.value = profile.weights[key] !== undefined ? profile.weights[key] : 3;
+      document.getElementById('wVal' + dim).textContent = slider.value;
+    }
+  });
+}
+
+function setPillActive(groupId, val) {
+  document.querySelectorAll('#' + groupId + ' .pill-opt').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-val') === val);
+  });
+}
+
+function saveProfile() {
+  try {
+    localStorage.setItem('personal-fit-profile-v1', JSON.stringify(profile));
+    var btn = document.getElementById('btnSave');
+    btn.classList.add('saved');
+    setTimeout(function(){btn.classList.remove('saved');}, 1500);
+  } catch(e) {}
+}
+
+function loadProfile() {
+  try {
+    var saved = localStorage.getItem('personal-fit-profile-v1');
+    if (saved) {
+      var parsed = JSON.parse(saved);
+      profile.origin = parsed.origin || profile.origin;
+      profile.family = parsed.family || profile.family;
+      profile.age = parsed.age || profile.age;
+      profile.langs = parsed.langs || profile.langs;
+      profile.visaGoal = parsed.visaGoal || profile.visaGoal;
+      profile.hasOverseasIncome = !!parsed.hasOverseasIncome;
+      profile.taxStatus = parsed.taxStatus || profile.taxStatus;
+      if (parsed.weights) {
+        Object.keys(parsed.weights).forEach(function(k){
+          if (profile.weights.hasOwnProperty(k)) profile.weights[k] = parsed.weights[k];
+        });
+      }
+    }
+  } catch(e) {}
+}
+
+/* ════════════ EVENT WIRING ════════════ */
+
+function wirePills(groupId) {
+  document.querySelectorAll('#' + groupId + ' .pill-opt').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('#' + groupId + ' .pill-opt').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+      readProfile();
+      renderAll();
+    });
+  });
+}
+
+function wireWeightSliders() {
+  var wMap = {Visa:'visa',Lang:'lang',Flight:'flight',Climate:'climate',Health:'health',Edu:'edu',Safety:'safety',Tax:'tax'};
+  Object.keys(wMap).forEach(function(dim){
+    var slider = document.getElementById('w' + dim);
+    var valEl = document.getElementById('wVal' + dim);
+    if (slider) {
+      slider.addEventListener('input', function(){
+        valEl.textContent = slider.value;
+        readProfile();
+        renderAll();
+      });
+    }
+  });
+}
+
+function wireMatrixSort() {
+  document.querySelectorAll('.matrix-tbl th[data-dim]').forEach(function(th){
+    th.addEventListener('click', function(){
+      var dim = th.getAttribute('data-dim');
+      if (matrixSortDim === dim) { matrixSortAsc = !matrixSortAsc; }
+      else { matrixSortDim = dim; matrixSortAsc = false; }
+      var lang = localStorage.getItem('lang') || 'en';
+      var results = calcAll();
+      renderMatrix(results, lang);
+    });
+  });
+}
+
+/* ════════════ LANG SWITCH ════════════ */
+
+function setLang(lang) {
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  // navbar lang buttons
+  document.querySelectorAll('.imq-lbtn').forEach(function(b){b.classList.toggle('on',b.dataset.lang===lang);});
+  localStorage.setItem('lang', lang);
+  renderAlerts();
+  renderAll();
+}
+
+window.addEventListener('resize', function(){
+  allCharts.forEach(function(c){if(c && !c.isDisposed()) try{c.resize();}catch(e){}});
+});
+
+/* ════════════ INIT ════════════ */
+
+window.addEventListener('load', function(){
+  // Load profile from localStorage
+  loadProfile();
+  applyProfileToUI();
+
+  // Wire all controls
+  document.getElementById('selOrigin').addEventListener('change', function(){
+    readProfile();
+    renderAll();
+  });
+
+  wirePills('pillsFamily');
+  wirePills('pillsAge');
+  wirePills('pillsVisa');
+  wirePills('pillsTax');
+
+  ['langMandarin','langEnglish','langJapanese','langKorean','langCantonese'].forEach(function(id){
+    document.getElementById(id).addEventListener('change', function(){
+      readProfile();
+      renderAll();
+    });
+  });
+
+  document.getElementById('chkOverseasIncome').addEventListener('change', function(){
+    readProfile();
+    renderAll();
+  });
+
+  wireWeightSliders();
+  wireMatrixSort();
+
+  // Load JSON data then render
+  fetch('/data/personal-fit-data.json')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      FIT_DATA = data;
+      var lang = localStorage.getItem('lang') || 'en';
+      renderAlerts();
+      readProfile();
+      renderAll();
+      // Apply lang after initial render
+      setLang(lang);
+    })
+    .catch(function(e){
+      console.error('personal-fit-data.json load error:', e);
+      document.getElementById('rankingList').innerHTML =
+        '<div style="padding:24px;text-align:center;color:#dc2626;font-size:12px">Failed to load data. Please refresh.</div>';
+    });
+});
+
+/* ════════════ NAVBAR LANG HOOK ════════════ */
+// The navbar.js fires setLang() on the window; ensure we handle it
+// (navbar dispatches a custom pattern — we override via existing setLang)
+</script>
+<script src="/js/navbar.js"></script>
+</body>
+</html>
