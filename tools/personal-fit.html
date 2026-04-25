@@ -777,7 +777,8 @@ var profile = Object.assign({}, DEFAULT_PROFILE, {weights: Object.assign({}, DEF
 
 /* ════════════ SCORE FUNCTIONS ════════════ */
 
-function scoreVisa(visa, visaGoal) {
+function scoreVisa(visa, visaGoal, isHome) {
+  if (isHome) return 100; // origin === target market: you live there, no visa needed
   if (visaGoal === 'holiday') return 70; // holiday → visa dimension not important, neutral score
 
   if (visaGoal === 'part-time') {
@@ -828,7 +829,8 @@ function scoreVisa(visa, visaGoal) {
   return 50;
 }
 
-function scoreLang(language, userLangs) {
+function scoreLang(language, userLangs, isHome) {
+  if (isHome) return 100; // origin === target market: native speaker assumed
   var score = 0;
   var official = (language.official || []).map(function(l){return l.toLowerCase();});
   var englishUsability = language.englishUsability || '';
@@ -911,20 +913,23 @@ function scoreClimate(climate, age) {
   else if (temp >= 13 && temp <= 32) tempScore = 60;
   else tempScore = 45;
 
-  // Disaster penalty
+  // Disaster penalty (averaged across listed disasters so markets with more disaster keys
+  // aren't unfairly punished; result is a per-disaster severity 0-28)
   var penalty = 0;
   var sevMap = {'very low':0,'low':3,'low-moderate':5,'moderate':10,'high':18,'very high':28};
   var dkeys = Object.keys(disasters);
   for (var i = 0; i < dkeys.length; i++) {
     var sev = (disasters[dkeys[i]] || 'low').toLowerCase();
-    // Handle compound values like "low-moderate"
     penalty += (sevMap[sev] !== undefined ? sevMap[sev] : 5);
   }
+  // Average per-disaster severity (capped 0-28), then scale to a max −35 penalty
+  var avgSev = dkeys.length > 0 ? penalty / dkeys.length : 0;
+  var disasterPenalty = Math.min(35, avgSev * 1.5);
 
   // Age modifier: older travellers care more about extreme heat
-  if (age === '50+' && temp > 28) penalty += 8;
+  if (age === '50+' && temp > 28) disasterPenalty += 8;
 
-  var score = Math.max(10, Math.round(tempScore - penalty * 0.6));
+  var score = Math.max(10, Math.round(tempScore - disasterPenalty));
   return Math.min(100, score);
 }
 
@@ -995,7 +1000,7 @@ function scoreSafety(safety) {
   return Math.min(100, Math.round(score));
 }
 
-function scoreTax(tax, origin, hasOverseasIncome, taxStatus) {
+function scoreTax(tax, origin, hasOverseasIncome, taxStatus, isHome) {
   var regime = tax.regime || 'worldwide';
   var overseasTaxed = tax.overseasIncomeTaxed;
   var topRate = tax.personalIncomeTopRate || 35;
@@ -1036,7 +1041,8 @@ function scoreTax(tax, origin, hasOverseasIncome, taxStatus) {
   }
 
   // US citizen warning: worldwide taxation follows you regardless of where you move
-  if (origin && origin.taxResidencyType === 'worldwide' && origin.overseasIncomeTaxed === true) {
+  // (Skip if isHome — you're already in your origin's tax regime, no double-tax issue)
+  if (!isHome && origin && origin.taxResidencyType === 'worldwide' && origin.overseasIncomeTaxed === true) {
     // User is from US/CA/AU — they already pay worldwide tax at home
     // Moving to territorial regime still helps reduce local tax in destination
     // Keep score but reduce by 10 since home country still taxes them
@@ -1088,16 +1094,17 @@ function calcMarketScores(mId, mData, originData) {
   var visaGoal = profile.visaGoal;
   var hasIncome = profile.hasOverseasIncome;
   var taxStatus = profile.taxStatus;
+  var isHome = profile.origin === mId; // origin === target market: home court advantage
 
   var dim = {
-    visa:    scoreVisa(mData.visa, visaGoal),
-    lang:    scoreLang(mData.language, userLangs),
+    visa:    scoreVisa(mData.visa, visaGoal, isHome),
+    lang:    scoreLang(mData.language, userLangs, isHome),
     flight:  scoreFlight(hours),
     climate: scoreClimate(mData.climate, age),
     health:  scoreHealth(mData.healthcare, age),
     edu:     scoreEdu(mData.education, family),
     safety:  scoreSafety(mData.safety),
-    tax:     scoreTax(mData.tax, originData, hasIncome, taxStatus)
+    tax:     scoreTax(mData.tax, originData, hasIncome, taxStatus, isHome)
   };
 
   // Weighted sum
