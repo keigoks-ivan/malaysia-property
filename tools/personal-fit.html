@@ -955,7 +955,9 @@ function scoreClimate(climate, age) {
   var sevMap = {'very low':0,'low':3,'low-moderate':5,'moderate':10,'high':18,'very high':28};
   var dkeys = Object.keys(disasters);
   for (var i = 0; i < dkeys.length; i++) {
-    var sev = (disasters[dkeys[i]] || 'low').toLowerCase();
+    // Strip parenthesized detail (e.g. "high (Alpine Fault)") and trim
+    var sevRaw = (disasters[dkeys[i]] || 'low').toLowerCase();
+    var sev = sevRaw.split('(')[0].trim();
     penalty += (sevMap[sev] !== undefined ? sevMap[sev] : 5);
   }
   // Average per-disaster severity (capped 0-28), then scale to a max −35 penalty
