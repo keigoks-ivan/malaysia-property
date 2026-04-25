@@ -658,11 +658,12 @@ function fmtNum(v){return Math.round(v).toLocaleString();}
 var MKTDATA = {
 
   /* ─── MALAYSIA ──────────────────────────────
-     Stamp Duty: 1% ≤RM100K, 2% RM100K-500K, 3% RM500K-1M, 4% >RM1M
-     Source: Stamp Duty Act 1949, Finance Act 2024
+     Stamp Duty: 1% ≤RM100K, 2% RM100K-500K, 3% RM500K-1M, 4% >RM1M (residents/PRs)
+     Foreigners: 8% flat (Budget 2026, effective 1 Jan 2026; was 4% flat Jan 2024-Dec 2025)
+     Source: Stamp Duty Act 1949, Finance Act 2024, Budget 2026 (effective 1 Jan 2026)
      RPGT: Individuals — Yr1-3: 30%, Yr4: 20%, Yr5: 15%, Yr6+: 5% (citizens)
-     Foreigners: Yr1-2: 30%, Yr3-5: 30%, Yr6+: 10%
-     Source: RPGT Act 1976 as amended
+     Foreigners: Yr1-5: 30%, Yr6+: 10%
+     Source: RPGT Act 1976 as amended; hasil.gov.my 2025
      ─────────────────────────────────────────── */
   my:{
     key:'my',flag:'🇲🇾',cur:'RM ',curCode:'MYR',
@@ -670,8 +671,8 @@ var MKTDATA = {
     defPrice:1200000,defPtax:0.10,defAgent:2.5,defLegalBuy:1.0,defLegalSell:0.5,
     insurance:0.08,
     foreignAllowed:true,
-    foreignNote_en:'Foreigners must pay minimum RM600,000 (most states). Some states require RM1M-2M. State Economic Planning Unit (EPU) approval may be required for certain properties.',
-    foreignNote_zh:'外國人最低購屋門檻 RM 600,000（多數州屬），部分州屬要求 RM100-200萬。特定房產可能需要州經濟規劃單位（EPU）批准。',
+    foreignNote_en:'Foreigners pay 8% flat stamp duty (Budget 2026, effective 1 Jan 2026). Minimum purchase: RM1M (KL/Selangor/Penang); varies by state. MM2H Silver tier: RM600K min. EPU approval may be required for certain properties.',
+    foreignNote_zh:'外國人繳8%統一印花稅（2026預算案，2026年1月1日起）。最低購屋門檻：吉隆坡/雪蘭莪/檳城 RM100萬；各州不同。MM2H白銀組：最低 RM60萬。特定房產需州EPU批准。',
     stampDutyFn:function(price){
       /* Progressive: 1% on first RM100K, 2% on RM100K-500K, 3% on RM500K-1M, 4% above RM1M */
       var duty=0;
@@ -684,15 +685,26 @@ var MKTDATA = {
       return {amount:duty,label:effRate+'% eff.',note_en:'Progressive 1-4% (Stamp Duty Act)',note_zh:'累進 1-4%（印花稅法）'};
     },
     foreignSurchargeFn:function(price,foreigner){
-      return {amount:0,label:'—',note_en:'No foreign stamp surcharge (but RM600K min)',note_zh:'無外國人附加印花稅（但有最低門檻）'};
+      if(!foreigner)return {amount:0,label:'—',note_en:'Resident/PR — progressive 1-4%',note_zh:'居民/永久居民 — 累進1-4%'};
+      /* Foreigners: 8% flat from 1 Jan 2026 (Budget 2026); was 4% flat Jan 2024-Dec 2025 */
+      /* We charge the 8% flat on top; resident progressive already computed in stampDutyFn, but
+         for foreigners the entire duty is replaced by the 8% flat rate.
+         Show the delta vs. resident progressive rate. */
+      var residentDuty=0;
+      var b1=Math.min(price,100000);residentDuty+=b1*0.01;
+      if(price>100000){var b2=Math.min(price-100000,400000);residentDuty+=b2*0.02;}
+      if(price>500000){var b3=Math.min(price-500000,500000);residentDuty+=b3*0.03;}
+      if(price>1000000){residentDuty+=(price-1000000)*0.04;}
+      var foreignDuty=price*0.08;
+      var surcharge=Math.max(0,foreignDuty-residentDuty);
+      return {amount:surcharge,label:'8% flat',note_en:'Foreign buyer: 8% flat stamp duty (Budget 2026, eff. 1 Jan 2026)',note_zh:'外國人：8%統一印花稅（2026預算案，2026年1月起）'};
     },
     cgtFn:function(gain,horizon,foreigner){
       /* RPGT rates */
       var rate;
       if(foreigner){
-        if(horizon<=2)rate=0.30;
-        else if(horizon<=5)rate=0.30;
-        else rate=0.10;
+        if(horizon<=5)rate=0.30;/* Yr1-5: 30% flat for foreigners */
+        else rate=0.10;/* Yr6+: 10% */
       } else {
         if(horizon<=3)rate=0.30;
         else if(horizon===4)rate=0.20;
@@ -700,8 +712,8 @@ var MKTDATA = {
         else rate=0.05;
       }
       var amount=Math.max(0,gain)*rate;
-      var note_en='RPGT '+Math.round(rate*100)+'% (yr '+(horizon<=5?horizon:'6+')+')';
-      var note_zh='RPGT '+Math.round(rate*100)+'%（第'+(horizon<=5?horizon:'6+')+'年）';
+      var note_en='RPGT '+Math.round(rate*100)+'% (yr '+(horizon<=5?horizon:'6+')+')' +(foreigner?' [foreigner: 30% yr1-5, 10% yr6+]':'');
+      var note_zh='RPGT '+Math.round(rate*100)+'%（第'+(horizon<=5?horizon:'6+')+'年）'+(foreigner?' [外國人：1-5年30%，6年+10%]':'');
       return {rate:rate,amount:amount,note_en:note_en,note_zh:note_zh};
     }
   },
@@ -787,14 +799,14 @@ var MKTDATA = {
 
   /* ─── AUSTRALIA ──────────────────────────────
      Stamp duty (NSW rates 2024-25): progressive 1.25%-5.5%
-     Foreign surcharge: +8% NSW (as of Jan 2024), +7% VIC, +7% QLD
-     FIRB approval fee: $14,100 (≤$1M), $28,200 ($1M-2M), $56,400 ($2M-3M), etc.
+     Foreign surcharge: +9% NSW (from 1 Jan 2025; was 8% Jul 2017-Dec 2024), +8% VIC, +8% QLD
+     FIRB approval fee (new dwellings only; established dwellings BANNED 1 Apr 2025-31 Mar 2027):
+       A$15,100 (≤A$1M), A$30,300 (A$1M-2M), A$90,900 (A$2M-4M) [2025-26 schedule]
      (We model NSW — most common market for foreign buyers)
      Property tax: Land tax varies; council rates ~0.3-0.5% of land value
      CGT: 50% discount if held >12mo; effective marginal rate ~23.5% (resident)
      Non-resident: no CGT discount; withholding 12.5% of sale price applies
-     Agent: 2-2.5% (varies by state)
-     Source: Revenue NSW, ATO, FIRB.gov.au 2024-25
+     Source: Revenue NSW, ATO, FIRB.gov.au / foreigninvestment.gov.au 2025-26
      ─────────────────────────────────────────── */
   au:{
     key:'au',flag:'🇦🇺',cur:'A$',curCode:'AUD',
@@ -802,8 +814,8 @@ var MKTDATA = {
     defPrice:1400000,defPtax:0.4,defAgent:2.5,defLegalBuy:0.2,defLegalSell:0.1,
     insurance:0.06,
     foreignAllowed:'restricted',
-    foreignNote_en:'Foreign buyers require FIRB approval. NSW charges +8% foreign stamp duty surcharge. FIRB fee: A$14,100 (≤A$1M), A$28,200 (A$1M-2M), A$56,400 (A$2M-3M). Non-residents lose the 50% CGT discount.',
-    foreignNote_zh:'外國買家需申請 FIRB 批准。NSW 附加 8% 外國人印花稅。FIRB 費用：A$14,100（≤A$100萬）、A$28,200（A$100-200萬）、A$56,400（A$200-300萬）。非居民不適用 50% CGT 折扣。',
+    foreignNote_en:'IMPORTANT: Foreign buyers BANNED from established (existing) dwellings 1 Apr 2025 – 31 Mar 2027. New builds still permitted with FIRB approval. NSW +9% foreign stamp surcharge (from 1 Jan 2025; was 8%). FIRB fee: A$15,100 (≤A$1M), A$30,300 (A$1M-2M), A$90,900 (A$2M-4M). Non-residents lose 50% CGT discount.',
+    foreignNote_zh:'注意：外國人禁止購買現有住宅（2025年4月1日-2027年3月31日）。新建樓盤仍可憑FIRB批准購買。NSW 附加 9% 外國人印花稅（2025年1月起；原為8%）。FIRB費：A$15,100（≤A$100萬）、A$30,300（A$100-200萬）、A$90,900（A$200-400萬）。非居民不適用50% CGT折扣。',
     stampDutyFn:function(price){
       /* NSW 2024-25 progressive stamp duty (residential):
          ≤$17,000: $1.25 per $100
@@ -825,16 +837,16 @@ var MKTDATA = {
     },
     foreignSurchargeFn:function(price,foreigner){
       if(!foreigner)return {amount:0,label:'—',note_en:'Resident — no surcharge',note_zh:'本地居民 — 無附加稅'};
-      /* NSW: 8% foreign purchaser duty surcharge */
-      var surcharge=price*0.08;
-      /* FIRB fee (NSW/ATO schedule) */
+      /* NSW: 9% foreign purchaser duty surcharge from 1 Jan 2025 (was 8% Jul 2017-Dec 2024) */
+      var surcharge=price*0.09;
+      /* FIRB fee (new dwellings; established dwellings banned 1 Apr 2025-31 Mar 2027)
+         2025-26 schedule: foreigninvestment.gov.au */
       var firb;
-      if(price<=1000000)firb=14100;
-      else if(price<=2000000)firb=28200;
-      else if(price<=3000000)firb=56400;
-      else if(price<=4000000)firb=84700;
-      else firb=113500;
-      return {amount:surcharge+firb,label:'8%+FIRB',note_en:'NSW +8% foreign surcharge + FIRB A$'+Math.round(firb/1000)+'K',note_zh:'NSW 外國人附加8% + FIRB費A$'+Math.round(firb/1000)+'K'};
+      if(price<=1000000)firb=15100;
+      else if(price<=2000000)firb=30300;
+      else if(price<=4000000)firb=90900;
+      else firb=181800;/* est. for >$4M, schedule tiers up */
+      return {amount:surcharge+firb,label:'9%+FIRB',note_en:'NSW +9% foreign surcharge (Jan 2025) + FIRB A$'+Math.round(firb/1000)+'K (new dwellings only)',note_zh:'NSW 外國人附加9%（2025年1月起）+ FIRB費A$'+Math.round(firb/1000)+'K（新建樓盤）'};
     },
     cgtFn:function(gain,horizon,foreigner){
       if(foreigner){
@@ -887,13 +899,14 @@ var MKTDATA = {
   },
 
   /* ─── UK ─────────────────────────────────────
-     SDLT (England): 0% ≤£250K, 5% £250K-925K, 10% £925K-1.5M, 12% >£1.5M
-     Additional dwelling surcharge: +3% (2nd home/buy-to-let)
-     Non-resident surcharge: +2% (from Apr 2021)
-     CGT: 18% (basic rate) / 28% (higher rate) residential non-resident
-          Residents: 18%/24% from Apr 2024 Budget
+     SDLT (England): 0% ≤£125K, 2% £125K-250K, 5% £250K-925K, 10% £925K-1.5M, 12% >£1.5M
+     (Thresholds reverted from Apr 1 2025; nil-rate band was £250K during 2022-2025 holiday)
+     Additional dwelling surcharge: +5% (from Oct 31 2024; was +3% before Autumn Budget 2024)
+     Non-resident surcharge: +2% (from Apr 2021, still in force 2025)
+     CGT: 18% (basic rate) / 24% (higher rate) residential — from Apr 2024 Budget (was 28%)
+          Non-residents: same 18%/24% brackets (no additional non-resident rate)
      Agent: 1-2%
-     Source: HMRC SDLT guidance, OTS CGT review 2024
+     Source: HMRC SDLT guidance gov.uk, HMRC CGT guidance 2024-25; gov.uk/guidance/capital-gains-tax-rates-and-allowances
      ─────────────────────────────────────────── */
   uk:{
     key:'uk',flag:'🇬🇧',cur:'£',curCode:'GBP',
@@ -901,26 +914,27 @@ var MKTDATA = {
     defPrice:525000,defPtax:0.20,defAgent:1.5,defLegalBuy:0.3,defLegalSell:0.2,
     insurance:0.08,
     foreignAllowed:true,
-    foreignNote_en:'Non-residents pay +2% SDLT surcharge (all UK residential). If buying as additional dwelling, +3% more. Combined max: 5% extra = 17% headline on top tranche.',
-    foreignNote_zh:'非居民需額外支付2% SDLT附加稅。若為額外住宅，再加3%。合計最多額外5%，最高稅率達17%。',
+    foreignNote_en:'Non-residents pay +2% SDLT surcharge (from Apr 2021). Additional dwelling surcharge now +5% (from Oct 31 2024; was +3%). Combined non-resident + additional = +7% on top of standard rates. SDLT nil-rate threshold reverted to £125K from Apr 2025.',
+    foreignNote_zh:'非居民額外支付2% SDLT附加稅（2021年4月起）。額外住宅附加稅現為+5%（2024年10月31日起；原+3%）。非居民+額外住宅合計+7%。SDLT免稅門檻2025年4月起恢復至£125K。',
     stampDutyFn:function(price,foreigner){
-      /* England SDLT 2024: 0% ≤£250K, 5% £250K-925K, 10% £925K-1.5M, 12% >£1.5M
-         Note: Mar 2025 threshold reverts to £125K. We use 2024 thresholds.
-         For investment: +3% additional dwelling surcharge on full amount */
+      /* England SDLT from Apr 1 2025: 0% ≤£125K, 2% £125K-250K, 5% £250K-925K, 10% £925K-1.5M, 12% >£1.5M
+         Nil-rate threshold reverted from £250K to £125K on 1 Apr 2025.
+         For investment: +5% additional dwelling surcharge on full amount (from Oct 31 2024) */
       var duty=0;
-      if(price<=250000)duty=0;
-      else if(price<=925000)duty=(price-250000)*0.05;
-      else if(price<=1500000)duty=(925000-250000)*0.05+(price-925000)*0.10;
-      else duty=(925000-250000)*0.05+(1500000-925000)*0.10+(price-1500000)*0.12;
-      /* +3% additional dwelling (assume investment purchase) */
-      var addl=price*0.03;
+      if(price<=125000)duty=0;
+      else if(price<=250000)duty=(price-125000)*0.02;
+      else if(price<=925000)duty=125000*0.02+(price-250000)*0.05;
+      else if(price<=1500000)duty=125000*0.02+(925000-250000)*0.05+(price-925000)*0.10;
+      else duty=125000*0.02+(925000-250000)*0.05+(1500000-925000)*0.10+(price-1500000)*0.12;
+      /* +5% additional dwelling (from Oct 31 2024; was 3%) */
+      var addl=price*0.05;
       duty+=addl;
       var effRate=((duty)/price*100).toFixed(2);
-      return {amount:duty,label:effRate+'% eff.',note_en:'SDLT progressive +3% addl. dwelling',note_zh:'SDLT累進稅率+3%額外住宅附加'};
+      return {amount:duty,label:effRate+'% eff.',note_en:'SDLT progressive (Apr 2025 thresholds) +5% addl. dwelling surcharge (Oct 2024)',note_zh:'SDLT累進稅率（2025年4月門檻）+5%額外住宅附加（2024年10月起）'};
     },
     foreignSurchargeFn:function(price,foreigner){
       if(!foreigner)return {amount:0,label:'—',note_en:'Resident — no non-resident surcharge',note_zh:'居民 — 無非居民附加稅'};
-      return {amount:price*0.02,label:'+2%',note_en:'Non-resident SDLT surcharge (HMRC 2021+)',note_zh:'非居民SDLT附加稅（HMRC 2021起）'};
+      return {amount:price*0.02,label:'+2%',note_en:'Non-resident SDLT surcharge +2% (HMRC, from Apr 2021)',note_zh:'非居民SDLT附加稅+2%（HMRC，2021年4月起）'};
     },
     cgtFn:function(gain,horizon,foreigner){
       /* From Apr 2024: residents 18% (basic) / 24% (higher) on residential
@@ -1114,8 +1128,8 @@ var MKTDATA = {
     defPrice:1100000,defPtax:0.70,defAgent:4.0,defLegalBuy:0.25,defLegalSell:0.15,
     insurance:0.07,
     foreignAllowed:'restricted',
-    foreignNote_en:'Canadian federal ban on foreign residential purchases (Jan 2023, extended to 2027). Exceptions: work permit holders, some permanent residents. If eligible: ON +25% NRST, BC +20% NRST. Vancouver empty home tax 3%/yr.',
-    foreignNote_zh:'加拿大聯邦禁止外國人購買住宅（2023年1月起，延至2027年）。例外：工作簽證持有人、部分永久居民。若符合資格：安省+25% NRST，BC省+20% NRST。溫哥華空屋稅每年3%。',
+    foreignNote_en:'Canadian federal ban on foreign residential purchases (Jan 2023, extended to Jan 2027). If eligible (work permit / PR): ON +25% NRST province-wide; Toronto city adds +10% MNRST (total 35% in Toronto, effective Jan 1 2025). BC +20% NRST. Vancouver empty home tax 3%/yr.',
+    foreignNote_zh:'加拿大聯邦禁止外國人購買住宅（2023年1月起，延至2027年1月）。若符合資格（工作簽/永居）：安省+25% NRST（全省）；多倫多市另加+10% MNRST（多倫多市合計35%，2025年1月起）。BC省+20% NRST。溫哥華空屋稅每年3%。',
     stampDutyFn:function(price){
       /* Ontario LTT + Toronto MLTT (doubles ON rates for Toronto purchases) */
       function ontarioLTT(p){
@@ -1151,12 +1165,12 @@ var MKTDATA = {
   },
 
   /* ─── IRELAND ─────────────────────────────────
-     SDLT/Stamp: 1% ≤€1M, 2% >€1M residential
-     CGT: 33% (standard rate, reduced to 33% from 40% over years)
+     Stamp: 1% ≤€1M, 2% €1M-€1.5M, 6% >€1.5M residential (Budget 2025, from 2 Oct 2024)
+     CGT: 33% (standard rate)
      Annual LPT (Local Property Tax): 0.1% ≤€1.05M, 0.25% portion >€1.05M
      No foreign surcharge
      Agent: 1-2% + VAT 23% = net ~1.2-2.5%
-     Source: Revenue.ie Stamp Duty Manual, CGT Manual 2024
+     Source: Revenue.ie stamp duty rates (revenue.ie/en/property/stamp-duty), Budget 2025 (Oct 2024)
      ─────────────────────────────────────────── */
   ie:{
     key:'ie',flag:'🇮🇪',cur:'€',curCode:'EUR',
@@ -1164,15 +1178,16 @@ var MKTDATA = {
     defPrice:420000,defPtax:0.12,defAgent:1.5,defLegalBuy:0.5,defLegalSell:0.25,
     insurance:0.08,
     foreignAllowed:true,
-    foreignNote_en:'No foreign buyer restrictions in Ireland. EU right of movement applies. Non-EU nationals face no extra stamp duty but may have mortgage restrictions.',
-    foreignNote_zh:'愛爾蘭無外國人購房限制。歐盟居民享有遷移自由。非歐盟國民無額外印花稅，但可能有貸款限制。',
+    foreignNote_en:'No foreign buyer restrictions in Ireland. EU right of movement applies. Non-EU nationals face no extra stamp duty but may have mortgage restrictions. Note: Golden Visa scheme closed Feb 2024.',
+    foreignNote_zh:'愛爾蘭無外國人購房限制。歐盟居民享有遷移自由。非歐盟國民無額外印花稅，但可能有貸款限制。注意：黃金簽證計劃已於2024年2月關閉。',
     stampDutyFn:function(price){
-      /* 1% ≤€1M, 2% above €1M */
+      /* Revenue.ie: 1% ≤€1M, 2% €1M-€1.5M, 6% >€1.5M (from 2 Oct 2024, Budget 2025) */
       var duty;
       if(price<=1000000)duty=price*0.01;
-      else duty=1000000*0.01+(price-1000000)*0.02;
+      else if(price<=1500000)duty=1000000*0.01+(price-1000000)*0.02;
+      else duty=1000000*0.01+500000*0.02+(price-1500000)*0.06;
       var effRate=(duty/price*100).toFixed(2);
-      return {amount:duty,label:effRate+'% eff.',note_en:'Stamp duty 1% ≤€1M, 2% >€1M (Revenue.ie)',note_zh:'印花稅1%（百萬以下）/ 2%（超過百萬）'};
+      return {amount:duty,label:effRate+'% eff.',note_en:'Stamp duty 1% ≤€1M, 2% €1M-1.5M, 6% >€1.5M (Revenue.ie Budget 2025)',note_zh:'印花稅1%（≤€100萬）/ 2%（€100-150萬）/ 6%（>€150萬）（2024年10月起）'};
     },
     foreignSurchargeFn:function(price,foreigner){
       return {amount:0,label:'—',note_en:'No foreign surcharge in Ireland',note_zh:'愛爾蘭無外國人附加稅'};
@@ -1231,15 +1246,14 @@ function calcMarket(mktKey,price,foreigner,horizon,appr,maint,ptax,agentPct,rent
   if(mktKey==='au'&&foreigner){
     /* Already included in foreignSurchargeFn amount, separate display */
     var furbAmt;
-    if(price<=1000000)furbAmt=14100;
-    else if(price<=2000000)furbAmt=28200;
-    else if(price<=3000000)furbAmt=56400;
-    else if(price<=4000000)furbAmt=84700;
-    else furbAmt=113500;
+    if(price<=1000000)furbAmt=15100;
+    else if(price<=2000000)furbAmt=30300;
+    else if(price<=4000000)furbAmt=90900;
+    else furbAmt=181800;/* est. >$4M */
     /* Don't double-count — foreignSurcharge already includes FIRB */
     /* We split display */
-    acqItems[2]={label_en:'NSW Foreign Stamp Surcharge',label_zh:'NSW外國人印花附加稅',rate:'8%',amount:price*0.08,note_en:'NSW +8% foreign purchaser duty (Jan 2024)',note_zh:'NSW外國人購買者附加稅8%（2024年1月起）'};
-    acqItems.push({label_en:'FIRB Application Fee',label_zh:'FIRB申請費',rate:'fixed',amount:furbAmt,note_en:'FIRB.gov.au fee schedule',note_zh:'FIRB費用表'});
+    acqItems[2]={label_en:'NSW Foreign Stamp Surcharge',label_zh:'NSW外國人印花附加稅',rate:'9%',amount:price*0.09,note_en:'NSW +9% foreign purchaser duty (from 1 Jan 2025; was 8%)',note_zh:'NSW外國人購買者附加稅9%（2025年1月起；原為8%）'};
+    acqItems.push({label_en:'FIRB Fee (new dwellings only)',label_zh:'FIRB費（新建樓盤）',rate:'fixed',amount:furbAmt,note_en:'foreigninvestment.gov.au 2025-26; established dwellings banned Apr 2025-Mar 2027',note_zh:'FIRB費用表2025-26；現有住宅2025年4月至2027年3月禁止'});
   }
 
   var acqFriction=0;
