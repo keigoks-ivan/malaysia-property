@@ -176,10 +176,10 @@ a{color:inherit;text-decoration:none}
     <span class="cal-meta"><span class="lang-en">Click row for detail · hover cell for value</span><span class="lang-zh">點列看詳情 · 滑鼠移格看數值</span></span>
   </div>
 
-  <!-- Researched vs Model legend -->
+  <!-- Researched vs Modeled legend -->
   <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:8px 12px;background:#f8fbff;border:1px solid #dce8f5;border-radius:6px;margin-bottom:14px;font-size:10.5px;color:#5a7a9a">
-    <span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#0f1e33"></span><strong style="color:#0f1e33;font-weight:700"><span class="lang-en">Researched</span><span class="lang-zh">已驗證</span></strong> <span class="lang-en">— quarterly data from named sources (CMHC, Colliers, NAPIC, BSP, etc.)</span><span class="lang-zh">— 季度資料來自具名來源（CMHC、Colliers、NAPIC、BSP 等）</span></span>
-    <span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#94a3b8"></span><strong style="color:#5a7a9a;font-weight:700">·model</strong> <span class="lang-en">— curve modeled from current pipeline % &amp; supply state, no project-level data</span><span class="lang-zh">— 由當前在建 % 與供需狀態推算曲線，無專案級資料</span></span>
+    <span style="display:inline-flex;align-items:center;gap:6px"><strong style="color:#0f1e33;font-weight:700;font-size:11.5px"><span class="lang-en">Bold dark name</span><span class="lang-zh">深色粗體名稱</span></strong> = <span class="lang-en">researched · sourced quarterly data</span><span class="lang-zh">已驗證 · 具名來源季度資料</span></span>
+    <span style="display:inline-flex;align-items:center;gap:6px"><em style="color:#94a3b8;font-weight:500;font-size:11.5px"><span class="lang-en">Grey italic name</span><span class="lang-zh">灰色斜體名稱</span></em> = <span class="lang-en">modeled from pipeline % &amp; supply state</span><span class="lang-zh">由在建 % 與供需狀態推算</span></span>
   </div>
 
   <div class="cal-wrap" style="position:relative">
@@ -627,10 +627,11 @@ function renderCal(){
     /* tier dot */
     var dotColor=c.tier==='danger'?'#dc2626':c.tier==='watch'?'#d97706':'#16a34a';
     html+='<circle cx="14" cy="'+(y+cellH/2)+'" r="4" fill="'+dotColor+'" pointer-events="none"/>';
-    /* researched indicator: solid bullet vs hollow */
-    var nmColor=c.researched?'#0f1e33':'#5a7a9a';
+    /* researched: bold dark | indicative: lighter grey + italic (font-style is the only differentiator beyond color/weight) */
+    var nmColor=c.researched?'#0f1e33':'#94a3b8';
     var nmWeight=c.researched?'600':'500';
-    html+='<text x="26" y="'+(y+cellH/2+4)+'" fill="'+nmColor+'" font-size="11.5" font-weight="'+nmWeight+'" pointer-events="none">'+c.f+' '+nm+(c.researched?'':' <tspan fill="#94a3b8" font-size="9">·model</tspan>')+'</text>';
+    var nmStyle=c.researched?'normal':'italic';
+    html+='<text x="26" y="'+(y+cellH/2+4)+'" fill="'+nmColor+'" font-size="11.5" font-weight="'+nmWeight+'" font-style="'+nmStyle+'" pointer-events="none">'+c.f+' '+nm+'</text>';
     /* peak indicator on right of label */
     html+='<text x="'+(labelW-8)+'" y="'+(y+cellH/2+4)+'" fill="#5a7a9a" font-size="9.5" text-anchor="end" font-weight="600" pointer-events="none">peak '+c.peak.toFixed(1)+'%</text>';
     /* cells */
