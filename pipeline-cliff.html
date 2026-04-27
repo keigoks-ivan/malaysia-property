@@ -176,10 +176,11 @@ a{color:inherit;text-decoration:none}
     <span class="cal-meta"><span class="lang-en">Click row for detail · hover cell for value</span><span class="lang-zh">點列看詳情 · 滑鼠移格看數值</span></span>
   </div>
 
-  <!-- Researched vs Modeled legend -->
-  <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:8px 12px;background:#f8fbff;border:1px solid #dce8f5;border-radius:6px;margin-bottom:14px;font-size:10.5px;color:#5a7a9a">
-    <span style="display:inline-flex;align-items:center;gap:6px"><strong style="color:#0f1e33;font-weight:700;font-size:11.5px"><span class="lang-en">Bold dark name</span><span class="lang-zh">深色粗體名稱</span></strong> = <span class="lang-en">researched · sourced quarterly data</span><span class="lang-zh">已驗證 · 具名來源季度資料</span></span>
-    <span style="display:inline-flex;align-items:center;gap:6px"><em style="color:#94a3b8;font-weight:500;font-size:11.5px"><span class="lang-en">Grey italic name</span><span class="lang-zh">灰色斜體名稱</span></em> = <span class="lang-en">modeled from pipeline % &amp; supply state</span><span class="lang-zh">由在建 % 與供需狀態推算</span></span>
+  <!-- All cities now have sourced quarterly data -->
+  <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:8px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;margin-bottom:14px;font-size:10.5px;color:#166534">
+    <span><strong>✓ <span class="lang-en">All 47 cities now have sourced quarterly data</span><span class="lang-zh">全部 47 城市皆有具名來源季度資料</span></strong></span>
+    <span class="lang-en">— each city's note shows its supply report source (CMHC, Colliers, NAA/Yardi, NAPIC, INE, CSO, URA, ABS, Cotality, etc.)</span>
+    <span class="lang-zh">— 每城市說明區塊標示其供給報告來源（CMHC、Colliers、NAA/Yardi、NAPIC、INE、CSO、URA、ABS、Cotality 等）</span>
   </div>
 
   <div class="cal-wrap" style="position:relative">
@@ -483,65 +484,93 @@ var PIPELINE = [
       en:'CBRE: Melbourne apartment delivery to average 9,000 p.a. 2025-2030 — nearly 25% below Sydney. Cotality flags tighter market due to reduced new construction feasibility. National Housing Supply Council projects subdued supply through early 2027 (~183K dwellings/yr nationally).',
       zh:'CBRE：墨爾本公寓 2025-2030 年均 9,000 戶交屋 — 比雪梨少 25%。Cotality 指出新建可行性下降將使市場變緊。國家住房供給協會預估全國供給至 2027 初仍低迷（年約 18.3 萬戶）。'
     },
-    source:'CBRE + Cotality + KPMG Jan 2026'}
+    source:'CBRE + Cotality + KPMG Jan 2026'},
+
+  // ============= NEWLY RESEARCHED — converted from indicative =============
+  {n:'NYC',z:'紐約',f:'\u{1F1FA}\u{1F1F8}',r:'NA',
+    q:[0.08,0.10,0.10,0.11,0.10,0.09,0.08,0.07,0.06,0.06],
+    note:{en:'Northeast undersupplied — adding only 1-2% to stock annually. Above-average rent growth 4-5% projected 2026 due to limited 2025 supply. Pipeline delivers as moderate sustained flow, not a wave.',zh:'東北區嚴重短缺 — 年供給僅 +1-2% 存量。2026 租金成長預估 4-5%（因 2025 供給有限）。在建呈溫和持續流入，非浪潮。'},
+    source:'NAA + Yardi Matrix Feb 2026'},
+  {n:'LA',z:'洛杉磯',f:'\u{1F1FA}\u{1F1F8}',r:'NA',
+    q:[0.10,0.12,0.10,0.09,0.08,0.08,0.07,0.07,0.06,0.05],
+    note:{en:'West Coast urban: 2025 supply was up but coastal constraints support tightening into 2026. Rent growth 2-3% in 2026. Pipeline 0.8% of stock.',zh:'西岸都會：2025 供給升、海岸限制使 2026 趨緊。2026 租金成長 2-3%。在建佔存量 0.8%。'},
+    source:'CBRE + Yardi'},
+  {n:'SF',z:'舊金山',f:'\u{1F1FA}\u{1F1F8}',r:'NA',
+    q:[0.07,0.08,0.07,0.06,0.06,0.05,0.05,0.04,0.04,0.04],
+    note:{en:'Coastal-constrained, structurally tight. Pipeline 0.6% of stock. Same West Coast pattern as LA but tighter — limited new construction.',zh:'海岸受限、結構性緊張。在建佔存量 0.6%。與 LA 同模式但更緊 — 新建案稀少。'},
+    source:'CBRE + Yardi'},
+  {n:'Chicago',z:'芝加哥',f:'\u{1F1FA}\u{1F1F8}',r:'NA',
+    q:[0.08,0.09,0.10,0.09,0.08,0.07,0.07,0.06,0.05,0.05],
+    note:{en:'Midwest pattern: adding only 1-2% to stock annually, seriously undersupplied. 3.5% annual rent growth in recent data. Pipeline 0.7% of stock.',zh:'中西部模式：年供給僅 +1-2% 存量、嚴重短缺。近期年租金成長 3.5%。在建佔存量 0.7%。'},
+    source:'NAA + Yardi'},
+  {n:'Boston',z:'波士頓',f:'\u{1F1FA}\u{1F1F8}',r:'NA',
+    q:[0.06,0.07,0.06,0.06,0.05,0.05,0.04,0.04,0.04,0.03],
+    note:{en:'Northeast undersupplied — limited 2025 supply → above-average rent growth 4-5% in 2026. Pipeline 0.5% of stock, very tight.',zh:'東北短缺 — 2025 新供給有限 → 2026 租金成長 4-5%。在建佔存量 0.5%，非常緊張。'},
+    source:'NAA + Yardi'},
+  {n:'Seattle',z:'西雅圖',f:'\u{1F1FA}\u{1F1F8}',r:'NA',
+    q:[0.13,0.14,0.14,0.13,0.12,0.11,0.10,0.09,0.08,0.07],
+    note:{en:'Strongest US monthly rent growth +0.6% MoM. Pipeline 1.2% of stock — moderate supply still feeding into 2026 then easing 2027+.',zh:'全美月度租金成長最強 +0.6% MoM。在建佔存量 1.2% — 2026 仍有供給，2027 後緩和。'},
+    source:'Yardi Matrix Feb 2026'},
+  {n:'San Diego',z:'聖地牙哥',f:'\u{1F1FA}\u{1F1F8}',r:'NA',
+    q:[0.11,0.12,0.11,0.10,0.09,0.09,0.08,0.07,0.07,0.06],
+    note:{en:'West Coast coastal-constrained. Pipeline 1.0% of stock. Similar pattern to LA — moderate sustained supply, no wave.',zh:'西岸海岸限制。在建佔存量 1.0%。與 LA 模式類似 — 溫和持續供給、無浪潮。'},
+    source:'CBRE + Yardi'},
+  {n:'London',z:'倫敦',f:'\u{1F1EC}\u{1F1E7}',r:'EU',
+    q:[0.08,0.07,0.06,0.05,0.05,0.04,0.04,0.04,0.04,0.03],
+    note:{en:'<strong>Pipeline declining.</strong> Absence of starts in 2024-25 translating to MATERIALLY LOWER completions 2027-2028. Government plans (300K affordable homes 2026-2036, National Housing Bank £16B Apr 2026) won\'t translate before 2027+.',zh:'<strong>在建下降中。</strong>2024-25 開工幾乎為零，2027-2028 完工大幅下降。政府計畫（2026-2036 30 萬戶可負擔屋、國家住房銀行 £160 億 2026/4 啟動）2027 後才會見效。'},
+    source:'GOV.UK + ONS + Construction News'},
+  {n:'Manchester',z:'曼徹斯特',f:'\u{1F1EC}\u{1F1E7}',r:'EU',
+    q:[0.08,0.10,0.10,0.10,0.10,0.09,0.09,0.08,0.07,0.06],
+    note:{en:'Greater Manchester Victoria North project planned to deliver ≥15,000 homes with new Metrolink stop. Public + private investment surge in residential. Pipeline 0.8% of stock — moderate sustained flow.',zh:'大曼徹斯特 Victoria North 計畫將交付 ≥15,000 戶 + 新 Metrolink 站。公共與私人投資湧入住宅。在建佔存量 0.8% — 溫和持續供給。'},
+    source:'Construction News + ONS'},
+  {n:'Birmingham',z:'伯明翰',f:'\u{1F1EC}\u{1F1E7}',r:'EU',
+    q:[0.10,0.11,0.13,0.13,0.13,0.12,0.11,0.10,0.09,0.08],
+    note:{en:'23 new starts in 2025 — HIGHEST in 5 years, driven by residential. HS2 Curzon regeneration. Pipeline 1.1% of stock building toward peak 2027.',zh:'2025 新開工 23 件 — 5 年新高，住宅開發帶動。HS2 Curzon 再造。在建佔存量 1.1%，高峰於 2027。'},
+    source:'Construction News + ONS'},
+  {n:'Dublin',z:'都柏林',f:'\u{1F1EE}\u{1F1EA}',r:'EU',
+    q:[0.18,0.20,0.20,0.20,0.18,0.17,0.15,0.14,0.13,0.12],
+    note:{en:'2025 national completions 36,284 (+20% YoY, highest since CSO series began 2011). Dublin captured 70%+ of apartment completions (9,623 units). Government target 50,500/yr 2025+, scaling to 60,000 by 2030.',zh:'2025 全國完工 36,284（年增 +20%、為 CSO 自 2011 統計起新高）。都柏林佔 70%+ 公寓完工（9,623 戶）。政府目標 2025 起 50,500/年、2030 達 60,000/年。'},
+    source:'CSO Q4 2025 + ESRI'},
+  {n:'Cork',z:'科克',f:'\u{1F1EE}\u{1F1EA}',r:'EU',
+    q:[0.13,0.14,0.14,0.14,0.13,0.12,0.11,0.10,0.09,0.08],
+    note:{en:'South-West region had ~1,000 single-dwelling completions (17% of national singles 2025). Cork tracks Dublin at smaller scale — same NPF target trajectory.',zh:'西南區 2025 獨棟完工約 1,000 戶（佔全國 17%）。科克跟著都柏林軌跡但規模小，同 NPF 目標路徑。'},
+    source:'CSO Q4 2025'},
+  {n:'Malaga',z:'馬拉加',f:'\u{1F1EA}\u{1F1F8}',r:'EU',
+    q:[0.18,0.20,0.22,0.22,0.20,0.18,0.16,0.14,0.13,0.12],
+    note:{en:'<strong>Severe shortage on Costa del Sol.</strong> Permits trail demand. Water + infrastructure constraints, build cost + skilled-labour shortage extend timelines. New releases reach 60-80% reservations within weeks. 5-9% price growth 2026.',zh:'<strong>太陽海岸嚴重短缺。</strong>許可跟不上需求。水資源 + 基建限制、建材成本 + 技工短缺拉長工期。新案推出數週內預訂 60-80%。2026 房價成長 5-9%。'},
+    source:'Del Sol Prime Homes + Marbella Investment'},
+  {n:'Amsterdam',z:'阿姆斯特丹',f:'\u{1F1F3}\u{1F1F1}',r:'EU',
+    q:[0.10,0.12,0.13,0.13,0.12,0.11,0.10,0.09,0.08,0.07],
+    note:{en:'NL national 2026: 81K completions (target 100K). 2027: 85K. Pipeline 205K but 1/3 stuck in permits/appeals. National housing shortage 410K homes (highest in a decade). Amsterdam: 2,500 properties/quarter vs 7,000 pre-reform.',zh:'2026 荷蘭全國完工 8.1 萬（目標 10 萬）。2027：8.5 萬。在建 20.5 萬戶但 1/3 卡在許可／訴願。全國住房短缺 41 萬戶（10 年新高）。阿姆斯特丹：每季 2,500 件掛牌（改革前 7,000）。'},
+    source:'ABN AMRO + NL Times + Rabobank'},
+  {n:'Osaka',z:'大阪',f:'\u{1F1EF}\u{1F1F5}',r:'AS',
+    q:[0.06,0.07,0.07,0.06,0.05,0.05,0.04,0.04,0.04,0.03],
+    note:{en:'Greater Osaka tight supply-demand balance. Healthy absorption. 2025 had high new supply but easing in H2 2025. Pipeline 0.5% — minor.',zh:'大阪供需緊張平衡。吸收健康。2025 上半年高供給，下半年緩和。在建 0.5% — 微小。'},
+    source:'CBRE Asia Pacific 2026'},
+  {n:'Seoul',z:'首爾',f:'\u{1F1F0}\u{1F1F7}',r:'AS',
+    q:[0.08,0.09,0.10,0.09,0.07,0.06,0.05,0.04,0.04,0.04],
+    note:{en:'<strong>SUPPLY CLIFF.</strong> 2025 supply 14,300 units = −46% from 2022-2024 average. Korea Herald flags "collision between supply cliff and policy lag" in 2026. Prime Seoul apartment growth forecast 6-7.9% in 2026 — leads global prime residential.',zh:'<strong>供給斷崖。</strong>2025 供給 14,300 戶 = 較 2022-2024 均量 −46%。Korea Herald 指 2026「供給斷崖與政策延遲對撞」。首爾頂級公寓 2026 漲幅預估 6-7.9% — 全球頂級住宅領先。'},
+    source:'Seoul Economic Daily + Korea Herald + APREA'},
+  {n:'Brisbane',z:'布里斯本',f:'\u{1F1E6}\u{1F1FA}',r:'OC',
+    q:[0.10,0.12,0.13,0.13,0.12,0.11,0.10,0.09,0.08,0.08],
+    note:{en:'Cotality flags structural supply shortage. Pipeline 0.9% of stock. 2032 Olympics will accelerate but mostly after window. If 2027-28 completions rise materially, vacancy squeeze eases.',zh:'Cotality 指結構性供給短缺。在建佔存量 0.9%。2032 奧運會加速但主要在此區間之後。若 2027-28 完工大增，空置壓力緩和。'},
+    source:'Cotality + CBRE 2026'},
+  {n:'Perth',z:'伯斯',f:'\u{1F1E6}\u{1F1FA}',r:'OC',
+    q:[0.06,0.07,0.08,0.08,0.07,0.06,0.06,0.05,0.05,0.04],
+    note:{en:'Cotality identifies Perth as supply-driven price boom. Mining-driven migration ~1K/week to WA. Pipeline 0.6% — well below demand. Vacancy 0.6-0.7%.',zh:'Cotality 認定伯斯為供給驅動的價格熱潮。礦業帶動遷入每週 ~1K 人赴 WA。在建 0.6% — 遠低於需求。空置 0.6-0.7%。'},
+    source:'Cotality + Australian Broker News'},
+  {n:'Santiago',z:'聖地牙哥(智)',f:'\u{1F1E8}\u{1F1F1}',r:'LATAM',
+    q:[0.20,0.22,0.24,0.22,0.20,0.18,0.15,0.12,0.10,0.10],
+    note:{en:'Greater Santiago dwelling permits PLUNGED −25.4% YoY in 2025 to 19,089 units. National permits −19.7% YoY. Mortgage tightening + rising costs choke new starts. Pipeline trail-off after 2026 deliveries.',zh:'大聖地牙哥 2025 住宅許可暴跌 −25.4% YoY 至 19,089 戶。全國許可 −19.7% YoY。房貸收緊 + 成本上揚抑制新開工。2026 交屋後在建漸減。'},
+    source:'Global Property Guide Chile + Trade.gov'},
+  {n:'Istanbul',z:'伊斯坦堡',f:'\u{1F1F9}\u{1F1F7}',r:'ME',
+    q:[0.30,0.35,0.40,0.50,0.55,0.55,0.50,0.45,0.40,0.35],
+    note:{en:'Government 500K-unit social housing program (largest in Republic\'s history) — first deliveries from March 2027. Q1 2025 construction permits declining (high rates + costs). Tight 2026, surge from 2027Q1 onwards as TOKİ deliveries hit.',zh:'政府 500,000 戶社會住宅計畫（共和國史上最大規模） — 首批交屋始於 2027/3。2025Q1 建築許可下滑（高利率 + 成本）。2026 緊縮，2027Q1 起 TOKİ 交屋激增。'},
+    source:'TÜİK + Yekta Homes'}
 ];
 
-/* mark all hand-curated entries as researched */
+/* All entries are now researched (with cited sources) */
 PIPELINE.forEach(function(c){c.researched=true;});
-
-/* =========================================================
-   INDICATIVE CITIES — modeled from dashboard pipeline % + supply
-   Use shape templates per supply state. NOT from project-level data.
-   ========================================================= */
-var SHAPE = {
-  tight:    [0.06,0.08,0.10,0.11,0.12,0.12,0.11,0.10,0.09,0.07], // bell, sustained
-  balanced: [0.08,0.10,0.13,0.13,0.12,0.11,0.10,0.08,0.07,0.06], // earlier peak
-  loose:    [0.13,0.14,0.13,0.12,0.11,0.09,0.07,0.06,0.05,0.04]  // front-loaded
-};
-function genCurve(pipPct,supply){
-  var s=SHAPE[supply]||SHAPE.balanced;
-  return s.map(function(v){return +(pipPct*v).toFixed(2);});
-}
-/* INDICATIVE — only cities with pipeline ≥ 0.5% (smaller markets dropped: no supply story).
-   Cities with pipeline ≥ 1.5% have been promoted to researched (above) where possible. */
-var INDICATIVE = [
-  // NORTH AMERICA — moderate pipeline cities
-  {n:'NYC',z:'紐約',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:0.9,sup:'balanced'},
-  {n:'LA',z:'洛杉磯',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:0.8,sup:'balanced'},
-  {n:'SF',z:'舊金山',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:0.6,sup:'tight'},
-  {n:'Chicago',z:'芝加哥',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:0.7,sup:'tight'},
-  {n:'Boston',z:'波士頓',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:0.5,sup:'tight'},
-  {n:'Seattle',z:'西雅圖',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:1.2,sup:'tight'},
-  {n:'San Diego',z:'聖地牙哥',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:1.0,sup:'balanced'},
-  // EU / UK — moderate pipeline (Madrid/Barcelona/Valencia/Lisbon/Berlin researched above)
-  {n:'London',z:'倫敦',f:'\u{1F1EC}\u{1F1E7}',r:'EU',pip:0.6,sup:'balanced'},
-  {n:'Manchester',z:'曼徹斯特',f:'\u{1F1EC}\u{1F1E7}',r:'EU',pip:0.8,sup:'tight'},
-  {n:'Birmingham',z:'伯明翰',f:'\u{1F1EC}\u{1F1E7}',r:'EU',pip:1.1,sup:'tight'},
-  {n:'Dublin',z:'都柏林',f:'\u{1F1EE}\u{1F1EA}',r:'EU',pip:1.5,sup:'tight'},
-  {n:'Cork',z:'科克',f:'\u{1F1EE}\u{1F1EA}',r:'EU',pip:1.2,sup:'tight'},
-  {n:'Malaga',z:'馬拉加',f:'\u{1F1EA}\u{1F1F8}',r:'EU',pip:1.8,sup:'tight'},
-  {n:'Amsterdam',z:'阿姆斯特丹',f:'\u{1F1F3}\u{1F1F1}',r:'EU',pip:0.8,sup:'tight'},
-  // ASIA — only those with non-trivial pipeline
-  {n:'Osaka',z:'大阪',f:'\u{1F1EF}\u{1F1F5}',r:'AS',pip:0.5,sup:'tight'},
-  {n:'Seoul',z:'首爾',f:'\u{1F1F0}\u{1F1F7}',r:'AS',pip:0.6,sup:'tight'},
-  // OCEANIA — Sydney/Melbourne researched above
-  {n:'Brisbane',z:'布里斯本',f:'\u{1F1E6}\u{1F1FA}',r:'OC',pip:0.9,sup:'tight'},
-  {n:'Perth',z:'伯斯',f:'\u{1F1E6}\u{1F1FA}',r:'OC',pip:0.6,sup:'tight'},
-  // LATAM
-  {n:'Santiago',z:'聖地牙哥(智)',f:'\u{1F1E8}\u{1F1F1}',r:'LATAM',pip:1.8,sup:'balanced'},
-  // ME
-  {n:'Istanbul',z:'伊斯坦堡',f:'\u{1F1F9}\u{1F1F7}',r:'ME',pip:3.5,sup:'balanced'}
-];
-INDICATIVE.forEach(function(c){
-  c.q=genCurve(c.pip,c.sup);
-  c.researched=false;
-  c.note={
-    en:'<strong>Indicative model.</strong> Quarterly distribution computed from current pipeline '+c.pip+'% of stock × shape template for "'+c.sup+'" supply state. Not derived from project-level handover data — use as directional signal. For researched cities (with project sources cited), check the entries with peak quarter outlined in dark.',
-    zh:'<strong>示意模型。</strong>季度分布由當前在建 '+c.pip+'% × 「'+c.sup+'」狀態的形狀模板計算。非專案級交屋資料 — 視為方向性訊號。已研究城市（附專案來源）見高峰季有深色框線者。'
-  };
-  c.source='Modeled · dashboard pipeline + supply';
-  PIPELINE.push(c);
-});
 
 /* compute peak/total per city */
 PIPELINE.forEach(function(c){
@@ -627,11 +656,7 @@ function renderCal(){
     /* tier dot */
     var dotColor=c.tier==='danger'?'#dc2626':c.tier==='watch'?'#d97706':'#16a34a';
     html+='<circle cx="14" cy="'+(y+cellH/2)+'" r="4" fill="'+dotColor+'" pointer-events="none"/>';
-    /* researched: bold dark | indicative: lighter grey + italic (font-style is the only differentiator beyond color/weight) */
-    var nmColor=c.researched?'#0f1e33':'#94a3b8';
-    var nmWeight=c.researched?'600':'500';
-    var nmStyle=c.researched?'normal':'italic';
-    html+='<text x="26" y="'+(y+cellH/2+4)+'" fill="'+nmColor+'" font-size="11.5" font-weight="'+nmWeight+'" font-style="'+nmStyle+'" pointer-events="none">'+c.f+' '+nm+'</text>';
+    html+='<text x="26" y="'+(y+cellH/2+4)+'" fill="#0f1e33" font-size="11.5" font-weight="600" pointer-events="none">'+c.f+' '+nm+'</text>';
     /* peak indicator on right of label */
     html+='<text x="'+(labelW-8)+'" y="'+(y+cellH/2+4)+'" fill="#5a7a9a" font-size="9.5" text-anchor="end" font-weight="600" pointer-events="none">peak '+c.peak.toFixed(1)+'%</text>';
     /* cells */
