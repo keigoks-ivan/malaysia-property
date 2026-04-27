@@ -46,6 +46,8 @@ var SECTIONS = [
 
 var TOOLS = [
   {k:'home',href:'/home.html',en:'Home',zh:'首頁'},
+  {k:'dashboard',href:'/dashboard.html',en:'Dashboard',zh:'儀表板',icon:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>'},
+  {k:'playbook',href:'/playbook.html',en:'Playbook',zh:'手冊',icon:'<path d="M4 4h12a3 3 0 013 3v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/><path d="M8 8h8M8 12h8M8 16h5"/>'},
   {k:'timing',href:'/timing.html',en:'Timing',zh:'時機',icon:'<circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="18" r="2.5"/>'},
   {k:'stress',href:'/tools/stress-test.html',en:'Stress',zh:'壓測',icon:'<polyline points="13,2 4,14 11,14 11,22 20,10 13,10"/>'},
   {k:'buy-rent',href:'/tools/buy-vs-rent.html',en:'Buy/Rent',zh:'買租',icon:'<path d="M3 7h13l-3-3M21 17H8l3 3"/>'},
