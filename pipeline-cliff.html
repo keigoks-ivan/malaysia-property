@@ -203,6 +203,19 @@ a{color:inherit;text-decoration:none}
     </div>
   </div>
 
+  <!-- SUPPLY-CONSTRAINED FOOTNOTE -->
+  <div style="margin-top:24px;background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #16a34a;border-radius:8px;padding:14px 18px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+      <span style="font-size:13px">✓</span>
+      <span style="font-size:11px;letter-spacing:.10em;font-weight:700;color:#166534"><span class="lang-en">SUPPLY-CONSTRAINED · pipeline &lt; 0.5%</span><span class="lang-zh">供給受限 · 在建 &lt; 0.5%</span></span>
+    </div>
+    <div style="font-size:11.5px;color:#166534;line-height:1.6;margin-bottom:10px">
+      <span class="lang-en">These markets are excluded from the calendar above because their pipelines are too small to register meaningfully (peak quarter would be &lt; 0.06% of stock). <strong>This is generally a positive signal</strong> — no supply shock, structural scarcity persists. Typically driven by geographic constraints, planning restrictions, or low population growth.</span>
+      <span class="lang-zh">這些市場未列入上方日曆，因為在建量太小無法有意義地呈現（高峰季 &lt; 0.06% 存量）。<strong>這通常是正面訊號</strong> — 無供給衝擊、結構性稀缺持續。原因多為地理限制、規劃限制、或低人口成長。</span>
+    </div>
+    <div id="supply-constrained-list" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+  </div>
+
   <div class="disclaimer">
     <strong>⚠ <span class="lang-en">Methodology &amp; caveats</span><span class="lang-zh">方法與注意事項</span></strong><br>
     <span class="lang-en">Quarterly delivery profiles built from official supply reports (CMHC, Colliers, C&amp;W, NAPIC, Cotality, REIC, BSP) plus developer announcements. Slippage is the rule — Dubai's 2026 record showed only 48% of forecast units actually completing on schedule. We modeled with that slippage where the source provided it; otherwise straight-line allocation. <strong>Use as directional signal, not a precise spreadsheet.</strong></span>
@@ -697,12 +710,35 @@ function renderRisk(){
   document.getElementById('cnt-easing-zh').textContent=easing.length;
 }
 
+/* Supply-constrained markets (pipeline < 0.5% — excluded from calendar above) */
+var SUPPLY_CONSTRAINED = [
+  {n:'Silicon Valley',z:'矽谷',f:'\u{1F1FA}\u{1F1F8}',pip:0.4,note:{en:'Low builds + Santa Clara constraints',zh:'低建量 + Santa Clara 限制'}},
+  {n:'Tokyo',z:'東京',f:'\u{1F1EF}\u{1F1F5}',pip:0.3,note:{en:'Pipeline 0.3%, +20% YoY price still going',zh:'在建 0.3%，房價年增 +20% 仍在跑'}},
+  {n:'Fukuoka',z:'福岡',f:'\u{1F1EF}\u{1F1F5}',pip:0.4,note:{en:'Land price +9% YoY 2yrs running, TSMC spillover',zh:'地價連 2 年 +9%，台積電熊本外溢'}},
+  {n:'Nagoya',z:'名古屋',f:'\u{1F1EF}\u{1F1F5}',pip:0.4,note:{en:'Toyota anchor + tight supply',zh:'豐田就業錨 + 供給緊張'}},
+  {n:'Munich',z:'慕尼黑',f:'\u{1F1E9}\u{1F1EA}',pip:0.4,note:{en:'2024 completions −34%, vacancy &lt;1%',zh:'2024 完工 −34%，空置 &lt;1%'}},
+  {n:'Edinburgh',z:'愛丁堡',f:'\u{1F1EC}\u{1F1E7}',pip:0.4,note:{en:'EH3 compact yields up to 7.4%',zh:'EH3 緊湊單位收益率達 7.4%'}},
+  {n:'Hong Kong',z:'香港',f:'\u{1F1ED}\u{1F1F0}',pip:0.4,note:{en:'CCL 11mo gains, 2024 stamp duty cut',zh:'CCL 連 11 月升，2024 撤辣'}},
+  {n:'Taipei',z:'台北',f:'\u{1F1F9}\u{1F1FC}',pip:0.3,note:{en:'Vacancy 7.1% but pipeline tiny — sales-driven story',zh:'空置 7.1% 但在建極少 — 成交驅動'}},
+  {n:'Geneva',z:'日內瓦',f:'\u{1F1E8}\u{1F1ED}',pip:0.2,note:{en:'Vacancy 0.3%, intl org demand',zh:'空置 0.3%，國際組織需求'}},
+  {n:'Zurich',z:'蘇黎世',f:'\u{1F1E8}\u{1F1ED}',pip:0.3,note:{en:'235 empty units citywide, vacancy 0.1%',zh:'全市僅 235 戶空置，空置率 0.1%'}},
+  {n:'Florence',z:'佛羅倫斯',f:'\u{1F1EE}\u{1F1F9}',pip:0.3,note:{en:'+7.4% YoY, Airbnb ban tightens supply further',zh:'年增 +7.4%，Airbnb 禁令進一步收緊供給'}}
+];
+function renderSupplyConstrained(){
+  var lng=getLang();
+  document.getElementById('supply-constrained-list').innerHTML=SUPPLY_CONSTRAINED.map(function(c){
+    var nm=lng==='zh'?c.z:c.n;
+    var note=lng==='zh'?c.note.zh:c.note.en;
+    return '<span style="display:inline-flex;align-items:center;gap:5px;padding:6px 10px;background:#fff;border:1px solid #bbf7d0;border-radius:11px;font-size:10.5px;color:#166534;font-weight:500" title="'+note.replace(/"/g,'&quot;')+'"><span style="font-size:11px">'+c.f+'</span>'+nm+'<span style="color:#16a34a;font-size:9.5px;font-variant-numeric:tabular-nums;font-weight:700">'+c.pip.toFixed(1)+'%</span></span>';
+  }).join('');
+}
+
 function getLang(){var l='en';try{l=localStorage.getItem('lang')||'en';}catch(e){}return l;}
 function setLang(l){
   document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=l==='en'?(e.tagName==='SPAN'?'inline':'block'):'none';});
   document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=l==='zh'?(e.tagName==='SPAN'?'inline':'block'):'none';});
   try{localStorage.setItem('lang',l);}catch(e){}
-  renderRisk();renderCal();
+  renderRisk();renderCal();renderSupplyConstrained();
 }
 
 window.addEventListener('load',function(){setLang(getLang());});
