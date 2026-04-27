@@ -57,6 +57,7 @@ var TOOLS = [
 var SECONDARY_TOOLS = [
   {k:'visa',href:'/visa.html',en:'Visa Map',zh:'簽證地圖',icon:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="8" cy="14.5" r="1.5"/><path d="M13 14h5M13 17h4"/>'},
   {k:'carry-heatmap',href:'/carry-heatmap.html',en:'Carry Heatmap',zh:'利差熱力圖',icon:'<rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1"/><rect x="19" y="3" width="2" height="6" rx="1"/><rect x="3" y="11" width="6" height="6" rx="1"/><rect x="11" y="11" width="6" height="6" rx="1"/><rect x="19" y="11" width="2" height="6" rx="1"/>'},
+  {k:'pipeline-cliff',href:'/pipeline-cliff.html',en:'Pipeline Cliff',zh:'供給日曆',icon:'<rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><rect x="6" y="12" width="3" height="3" fill="currentColor" stroke="none"/><rect x="11" y="12" width="3" height="6" fill="currentColor" stroke="none"/><rect x="16" y="14" width="3" height="4" fill="currentColor" stroke="none"/>'},
   {k:'timing',href:'/timing.html',en:'Entry Timing',zh:'進場時機',icon:'<circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="18" r="2.5"/>'},
   {k:'stress',href:'/tools/stress-test.html',en:'Stress Test',zh:'壓力測試',icon:'<polyline points="13,2 4,14 11,14 11,22 20,10 13,10"/>'},
   {k:'buy-rent',href:'/tools/buy-vs-rent.html',en:'Buy vs Rent',zh:'買 vs 租',icon:'<path d="M3 7h13l-3-3M21 17H8l3 3"/>'},
