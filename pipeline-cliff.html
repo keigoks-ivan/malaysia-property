@@ -722,11 +722,11 @@ function renderCal(){
       var color=cellColor(v);
       var isPeak=(q===c.peakIdx);
       html+='<rect x="'+(cx+1)+'" y="'+(y+2)+'" width="'+(cellW-2)+'" height="'+(cellH-4)+'" fill="'+color+'" '+(isPeak?'stroke="#0f1e33" stroke-width="1.5"':'')+' data-c="'+PIPELINE.indexOf(c)+'" data-q="'+q+'" onmouseover="showTip(event,'+PIPELINE.indexOf(c)+','+q+')" onmouseout="hideTip()" style="cursor:pointer"/>';
-      /* numeric overlay — show even tiny values for completeness */
-      if(v>=0.05){
-        var textColor=v>=2.0?'#fff':'#0f1e33';
-        var textSize=v>=0.6?10:v>=0.2?8.5:7.5;
-        var textWeight=v>=0.6?700:600;
+      /* numeric overlay — always show, even tiny values */
+      if(v>0){
+        var textColor=v>=2.0?'#fff':v<0.05?'#94a3b8':'#0f1e33';
+        var textSize=v>=0.6?10:v>=0.2?8.5:v>=0.05?7.5:7;
+        var textWeight=v>=0.6?700:v>=0.05?600:500;
         html+='<text x="'+(cx+cellW/2)+'" y="'+(y+cellH/2+3)+'" fill="'+textColor+'" font-size="'+textSize+'" text-anchor="middle" font-weight="'+textWeight+'" pointer-events="none">'+v.toFixed(2).replace(/\.?0+$/,'')+'</text>';
       }
     }
