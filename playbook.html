@@ -75,23 +75,7 @@ a{color:inherit;text-decoration:none}
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="nav-l">
-    <a class="nav-brand" href="/home">PROPERTY MONITOR</a>
-    <span class="nav-sep">·</span>
-    <span class="nav-page"><span class="lang-en">Playbook</span><span class="lang-zh">操作手冊</span></span>
-  </div>
-  <div class="nav-r">
-    <a class="nav-link" href="/home"><span class="lang-en">Home</span><span class="lang-zh">首頁</span></a>
-    <a class="nav-link" href="/dashboard"><span class="lang-en">Dashboard</span><span class="lang-zh">儀表板</span></a>
-    <a class="nav-link" href="/methodology.html"><span class="lang-en">Methodology</span><span class="lang-zh">方法論</span></a>
-    <a class="nav-link" href="/tools/personal-fit.html"><span class="lang-en">Tools</span><span class="lang-zh">工具</span></a>
-    <div class="lang-btns">
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('zh')">中文</button>
-    </div>
-  </div>
-</nav>
+<div id="nav-root"></div>
 
 <section class="hero">
   <div class="hero-inner">
@@ -574,10 +558,10 @@ a{color:inherit;text-decoration:none}
 
 <script>
 function setLang(lang){
-  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
-  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?(e.tagName==='SPAN'?'inline':'block'):'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?(e.tagName==='SPAN'?'inline':'block'):'none';});
   document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.textContent.trim()===(lang==='en'?'EN':'中文'));});
-  try{localStorage.setItem('pm-lang',lang);}catch(e){}
+  try{localStorage.setItem('lang',lang);}catch(e){}
   if(typeof ccRender==='function')ccRender();
 }
 
@@ -618,7 +602,7 @@ var CC_COUNTRIES=[
   {code:'tr',flag:'🇹🇷',name:'Turkey',nameZh:'土耳其',entry:8.0,holdAnnual:0.2,exitFee:4.0,cgt:[{maxYr:5,rate:25},{maxYr:99,rate:0}],note:{en:'$400K route to citizenship; 5yr CGT exemption',zh:'$40 萬可申請公民；持有 5 年免 CGT'}},
   {code:'sg',flag:'🇸🇬',name:'Singapore',nameZh:'新加坡',entry:62.0,holdAnnual:0.5,exitFee:2.5,cgt:[{maxYr:1,rate:12},{maxYr:2,rate:8},{maxYr:3,rate:4},{maxYr:99,rate:0}],note:{en:'60% ABSD foreign buyer (highest globally); SSD tapers 12→0% over 3yr',zh:'外國買家 60% ABSD（全球最高）；SSD 3 年內 12% 降至 0%'}}
 ];
-function ccLang(){var l='en';try{l=localStorage.getItem('pm-lang')||'en';}catch(e){}return l;}
+function ccLang(){var l='en';try{l=localStorage.getItem('lang')||'en';}catch(e){}return l;}
 function ccFmt(n){if(!isFinite(n))return '$0';var sign=n<0?'-':'';n=Math.abs(n);if(n>=1e6)return sign+'$'+(n/1e6).toFixed(2)+'M';if(n>=1e3)return sign+'$'+Math.round(n/1e3)+'K';return sign+'$'+Math.round(n);}
 function ccCgtAt(c,yr){for(var i=0;i<c.cgt.length;i++){if(yr<=c.cgt[i].maxYr)return c.cgt[i].rate;}return c.cgt[c.cgt.length-1].rate;}
 function ccCgtCliff(c,yr){
@@ -700,10 +684,11 @@ function ccRender(){
 }
 
 window.addEventListener('load',function(){
-  var saved='en';try{saved=localStorage.getItem('pm-lang')||'en';}catch(e){}
+  var saved='en';try{saved=localStorage.getItem('lang')||localStorage.getItem('lang')||'en';}catch(e){}
   setLang(saved);
   if(typeof ccInit==='function')ccInit();
 });
 </script>
+<script src="/js/navbar.js" defer></script>
 </body>
 </html>

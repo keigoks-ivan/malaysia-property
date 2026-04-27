@@ -59,17 +59,7 @@ td a:hover{text-decoration:underline}
 </head>
 <body>
 
-<nav class="navbar">
-  <div style="display:flex;align-items:center;gap:14px">
-    <a class="nav-brand" href="/home">PROPERTY MONITOR</a>
-    <span style="color:#dce8f5">&middot;</span>
-    <span style="font-size:11px;font-weight:600;letter-spacing:.08em;color:#3b82f6"><span class="lang-en">Methodology</span><span class="lang-zh">方法論</span></span>
-  </div>
-  <div class="lang-btns">
-    <button class="lang-btn active" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" onclick="setLang('zh')">中文</button>
-  </div>
-</nav>
+<div id="nav-root"></div>
 
 <section class="hero">
   <div class="hero-inner">
@@ -478,16 +468,16 @@ td a:hover{text-decoration:underline}
 
 <script>
 function setLang(lang){
-  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
-  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?(e.tagName==='SPAN'?'inline':'block'):'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?(e.tagName==='SPAN'?'inline':'block'):'none';});
   document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.textContent.trim()===(lang==='en'?'EN':'中文'));});
-  try{localStorage.setItem('pm-lang',lang);}catch(e){}
+  try{localStorage.setItem('lang',lang);}catch(e){}
 }
 window.addEventListener('load',function(){
-  var saved='en';try{saved=localStorage.getItem('pm-lang')||'en';}catch(e){}
+  var saved='en';try{saved=localStorage.getItem('lang')||localStorage.getItem('lang')||'en';}catch(e){}
   setLang(saved);
 });
 </script>
-
+<script src="/js/navbar.js" defer></script>
 </body>
 </html>

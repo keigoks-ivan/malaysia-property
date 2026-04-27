@@ -141,22 +141,7 @@ footer.foot a{color:#5a8ab5}footer.foot a:hover{color:#3b82f6}
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <div class="nav-l">
-    <a class="nav-brand" href="/">PROPERTY MONITOR</a>
-  </div>
-  <div class="nav-r">
-    <a class="nav-link" href="/dashboard"><span class="lang-en">Dashboard</span><span class="lang-zh">儀表板</span></a>
-    <a class="nav-link" href="/playbook"><span class="lang-en">Playbook</span><span class="lang-zh">手冊</span></a>
-    <a class="nav-link" href="/methodology.html"><span class="lang-en">Methodology</span><span class="lang-zh">方法論</span></a>
-    <a class="nav-link" href="/tools/personal-fit.html"><span class="lang-en">Tools</span><span class="lang-zh">工具</span></a>
-    <div class="lang-btns">
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('zh')">中文</button>
-    </div>
-  </div>
-</nav>
+<div id="nav-root"></div>
 
 <!-- ===== HERO + PERSONAS (B) ===== -->
 <section class="hero">
@@ -682,12 +667,12 @@ function fillTop5(){
 }
 
 /* lang helpers */
-function getLang(){var l='en';try{l=localStorage.getItem('pm-lang')||'en';}catch(e){}return l;}
+function getLang(){var l='en';try{l=localStorage.getItem('lang')||localStorage.getItem('lang')||'en';}catch(e){}return l;}
 function setLang(lang){
-  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
-  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?(e.tagName==='SPAN'?'inline':'block'):'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?(e.tagName==='SPAN'?'inline':'block'):'none';});
   document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.textContent.trim()===(lang==='en'?'EN':'中文'));});
-  try{localStorage.setItem('pm-lang',lang);}catch(e){}
+  try{localStorage.setItem('lang',lang);}catch(e){}
   drawScatter();drawMap();fillQuadrants();fillTop5();
 }
 window.addEventListener('load',function(){
@@ -695,5 +680,6 @@ window.addEventListener('load',function(){
   loadWorld().then(function(d){if(d)drawMap();});
 });
 </script>
+<script src="/js/navbar.js" defer></script>
 </body>
 </html>

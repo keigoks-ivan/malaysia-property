@@ -44,18 +44,24 @@ var SECTIONS = [
   {f:'macro.html',en:'Macro',zh:'總經'}
 ];
 
+/* PRIMARY NAV — main pages always visible. Detail calculators live in Tools dropdown. */
 var TOOLS = [
-  {k:'home',href:'/home.html',en:'Home',zh:'首頁'},
+  {k:'home',href:'/home.html',en:'Home',zh:'首頁',icon:'<path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10"/>'},
   {k:'dashboard',href:'/dashboard.html',en:'Dashboard',zh:'儀表板',icon:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>'},
   {k:'playbook',href:'/playbook.html',en:'Playbook',zh:'手冊',icon:'<path d="M4 4h12a3 3 0 013 3v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/><path d="M8 8h8M8 12h8M8 16h5"/>'},
-  {k:'timing',href:'/timing.html',en:'Timing',zh:'時機',icon:'<circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="18" r="2.5"/>'},
-  {k:'stress',href:'/tools/stress-test.html',en:'Stress',zh:'壓測',icon:'<polyline points="13,2 4,14 11,14 11,22 20,10 13,10"/>'},
-  {k:'buy-rent',href:'/tools/buy-vs-rent.html',en:'Buy/Rent',zh:'買租',icon:'<path d="M3 7h13l-3-3M21 17H8l3 3"/>'},
-  {k:'cost-calc',href:'/tools/cost-calculator.html',en:'Cost',zh:'成本',icon:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9h5a2 2 0 010 4h-4a2 2 0 000 4h6"/>'},
-  {k:'compare',href:'/tools/compare.html',en:'Compare',zh:'城市比較',icon:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/>'},
-  {k:'yield-spread',href:'/tools/yield-spread.html',en:'Yield Spread',zh:'殖利率利差',icon:'<path d="M3 17l6-6 4 4 8-8"/>'},
-  {k:'personal-fit',href:'/tools/personal-fit.html',en:'Fit',zh:'匹配',icon:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>'},
-  {k:'reits',href:'/reits.html',en:'REITs',zh:'REITs',icon:'<path d="M3 10l9-7 9 7v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10z"/>'}
+  {k:'reits',href:'/reits.html',en:'REITs',zh:'REITs',icon:'<path d="M3 10l9-7 9 7v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10z"/>'},
+  {k:'methodology',href:'/methodology.html',en:'Methodology',zh:'方法論',icon:'<circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/>'}
+];
+
+/* SECONDARY TOOLS — accessed via "Tools ▾" dropdown */
+var SECONDARY_TOOLS = [
+  {k:'timing',href:'/timing.html',en:'Entry Timing',zh:'進場時機',icon:'<circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="18" r="2.5"/>'},
+  {k:'stress',href:'/tools/stress-test.html',en:'Stress Test',zh:'壓力測試',icon:'<polyline points="13,2 4,14 11,14 11,22 20,10 13,10"/>'},
+  {k:'buy-rent',href:'/tools/buy-vs-rent.html',en:'Buy vs Rent',zh:'買 vs 租',icon:'<path d="M3 7h13l-3-3M21 17H8l3 3"/>'},
+  {k:'cost-calc',href:'/tools/cost-calculator.html',en:'Cost Calc',zh:'成本計算',icon:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9h5a2 2 0 010 4h-4a2 2 0 000 4h6"/>'},
+  {k:'compare',href:'/tools/compare.html',en:'City Compare',zh:'城市比較',icon:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/>'},
+  {k:'yield-spread',href:'/tools/yield-spread.html',en:'Yield Spread',zh:'利差工具',icon:'<path d="M3 17l6-6 4 4 8-8"/>'},
+  {k:'personal-fit',href:'/tools/personal-fit.html',en:'Personal Fit',zh:'個人匹配',icon:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>'}
 ];
 
 /* ---------- detect active ---------- */
@@ -72,7 +78,8 @@ var mk = MARKETS.filter(function(m){return m.k===firstSeg;})[0];
 if (mk) {
   activeMarket = mk.k;
 } else {
-  var t = TOOLS.filter(function(x){
+  var allTools = TOOLS.concat(SECONDARY_TOOLS);
+  var t = allTools.filter(function(x){
     var href=x.href.replace(/^\//,'');
     return href===fileSeg || href===path.replace(/^\//,'') || href===(path.replace(/^\//,'').replace(/\.html$/,'')+'.html');
   })[0];
@@ -87,6 +94,22 @@ var toolsHtml = TOOLS.map(function(t){
   var iconHtml = t.icon ? '<svg class="imq-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+t.icon+'</svg>' : '';
   return '<a class="'+cls+'" href="'+t.href+'">'+iconHtml+spanBL(t.en,t.zh)+'</a>';
 }).join('');
+
+/* Tools dropdown */
+var secActiveCls = SECONDARY_TOOLS.some(function(s){return s.k===activeTool;}) ? ' on' : '';
+var secLinksHtml = SECONDARY_TOOLS.map(function(s){
+  var iconHtml = s.icon ? '<svg class="imq-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+s.icon+'</svg>' : '';
+  var cls = 'imq-tools-dd-link'+(s.k===activeTool?' on':'');
+  return '<a class="'+cls+'" href="'+s.href+'">'+iconHtml+spanBL(s.en,s.zh)+'</a>';
+}).join('');
+var toolsDropdownHtml = '<div class="imq-tools-dd-wrap">'+
+  '<button class="imq-tool imq-tools-dd-btn'+secActiveCls+'" type="button">'+
+    '<svg class="imq-tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 105.7 5.7l-9 9-3-3 9-9a4 4 0 00-3-3z"/></svg>'+
+    spanBL('Tools','工具')+
+    '<span class="imq-caret">▾</span>'+
+  '</button>'+
+  '<div class="imq-tools-dd-menu">'+secLinksHtml+'</div>'+
+'</div>';
 
 /* Row 2: market flags with hover dropdowns */
 var flagsHtml = MARKETS.map(function(m){
@@ -139,6 +162,7 @@ var html = ''+
     '<div class="imq-left">'+
       '<a class="imq-logo" href="/home.html">PROPERTY<span class="imq-dot">·</span>MONITOR<span class="imq-sub">investmquest</span></a>'+
       '<div class="imq-tools">'+toolsHtml+'</div>'+
+      toolsDropdownHtml+
     '</div>'+
     '<div class="imq-right">'+
       '<div class="imq-lang">'+
@@ -179,6 +203,19 @@ var css = ''+
 '.imq-lbtn:hover{color:#fff;border-color:rgba(255,255,255,.3)}'+
 '.imq-lbtn.on{background:#3b82f6;color:#fff;border-color:#3b82f6}'+
 '.imq-burger{display:none;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:5px;color:#fff;font-size:18px;padding:5px 12px;cursor:pointer}'+
+/* Tools dropdown */
+'.imq-tools-dd-wrap{position:relative;flex-shrink:0;margin-left:3px}'+
+'.imq-tools-dd-btn{background:transparent;border:none;font-family:inherit;cursor:pointer}'+
+'.imq-tools-dd-btn .imq-caret{margin-left:2px;font-size:10px;opacity:.7;transition:transform .15s}'+
+'.imq-tools-dd-wrap.open .imq-tools-dd-btn .imq-caret{transform:rotate(180deg)}'+
+'.imq-tools-dd-menu{display:none;position:absolute;top:100%;right:0;min-width:220px;background:#0f172a;border:1px solid rgba(255,255,255,.10);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.45);padding:6px;z-index:200;margin-top:6px}'+
+/* invisible bridge to keep hover when moving cursor down to menu */
+'.imq-tools-dd-menu::before{content:"";position:absolute;top:-10px;left:0;right:0;height:10px}'+
+'.imq-tools-dd-wrap:hover .imq-tools-dd-menu,.imq-tools-dd-wrap.open .imq-tools-dd-menu{display:flex;flex-direction:column}'+
+'.imq-tools-dd-link{display:flex;align-items:center;gap:8px;padding:8px 11px;font-size:13px;font-weight:500;color:rgba(255,255,255,.78)!important;text-decoration:none!important;border-radius:5px;transition:all .12s}'+
+'.imq-tools-dd-link:hover{background:rgba(59,130,246,.18);color:#fff!important;text-decoration:none!important}'+
+'.imq-tools-dd-link.on{background:rgba(59,130,246,.28);color:#fff!important;font-weight:600}'+
+'.imq-tools-dd-link .imq-tool-icon{width:14px;height:14px;flex-shrink:0}'+
 /* Row 2 flags */
 '.imq-flags{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:0;min-height:40px;align-items:center}'+
 '.imq-flags::-webkit-scrollbar{display:none}'+
@@ -219,6 +256,7 @@ var css = ''+
   '.imq-logo{font-size:15px}'+
   '.imq-sub{display:none}'+
   '.imq-tools{display:none}'+
+  '.imq-tools-dd-wrap{display:none}'+
   '.imq-burger{display:inline-block}'+
   '.imq-flags{overflow-x:auto;padding:4px 0}'+
   '.imq-flag-name{display:none}'+
@@ -253,8 +291,9 @@ function applyLang(lang){
   try{localStorage.setItem('lang',lang);}catch(e){}
   document.body.setAttribute('data-lang', lang);
   var en = document.querySelectorAll('.lang-en'), zh = document.querySelectorAll('.lang-zh');
-  en.forEach(function(e){e.style.display = (lang==='en')?'':'none';});
-  zh.forEach(function(e){e.style.display = (lang==='zh')?'':'none';});
+  /* Use explicit inline/block so we override any `.lang-zh{display:none}` page CSS rule */
+  en.forEach(function(e){e.style.display = (lang==='en') ? (e.tagName==='SPAN'?'inline':'block') : 'none';});
+  zh.forEach(function(e){e.style.display = (lang==='zh') ? (e.tagName==='SPAN'?'inline':'block') : 'none';});
   document.querySelectorAll('.imq-lbtn').forEach(function(b){
     b.classList.toggle('on', b.getAttribute('data-lang')===lang);
   });
@@ -301,6 +340,25 @@ var tools = root.querySelector('.imq-tools');
 if (burger && tools) {
   burger.addEventListener('click', function(){ tools.classList.toggle('open'); });
 }
+
+/* ---------- Tools dropdown (click to toggle on touch + as fallback) ---------- */
+root.querySelectorAll('.imq-tools-dd-wrap').forEach(function(wrap){
+  var btn = wrap.querySelector('.imq-tools-dd-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    var isOpen = wrap.classList.contains('open');
+    /* close any other open dropdowns */
+    root.querySelectorAll('.imq-tools-dd-wrap.open').forEach(function(w){w.classList.remove('open');});
+    if (!isOpen) wrap.classList.add('open');
+  });
+});
+document.addEventListener('click', function(e){
+  if (!e.target.closest('.imq-tools-dd-wrap')) {
+    root.querySelectorAll('.imq-tools-dd-wrap.open').forEach(function(w){w.classList.remove('open');});
+  }
+});
 
 /* ---------- mobile flag tap-to-open dropdown ---------- */
 root.querySelectorAll('.imq-flag-wrap').forEach(function(wrap){
