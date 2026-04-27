@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REIT vs Direct Property | Property Monitor</title>
+<meta name="color-scheme" content="light">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e3a5f}
+
+.hero{background:#0f1e33;color:#fff;padding:44px 32px 36px}
+.hero-inner{max-width:min(1400px,96vw);margin:0 auto}
+.hero-eyebrow{font-size:10px;letter-spacing:.18em;font-weight:700;color:#f59e0b;margin-bottom:12px}
+.hero-h1{font-size:32px;font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.01em;margin-bottom:12px;max-width:840px}
+.hero-sub{font-size:13.5px;color:#94a3b8;line-height:1.65;max-width:720px}
+
+.section{max-width:min(1400px,96vw);margin:0 auto;padding:30px 32px}
+
+.residency-bar{background:#fff;border:1px solid #dce8f5;border-radius:10px;padding:18px 22px;margin-bottom:20px;display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.residency-bar .label{font-size:11px;letter-spacing:.10em;font-weight:700;color:#1e3a5f;text-transform:uppercase}
+.residency-bar .desc{font-size:11.5px;color:#5a7a9a;flex:1;min-width:200px;line-height:1.45}
+.residency-toggle{display:flex;gap:0;background:#f0f5fb;padding:3px;border-radius:8px;border:1px solid #dce8f5}
+.residency-toggle button{padding:9px 18px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:transparent;color:#5a7a9a;border-radius:6px;font-family:inherit;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+.residency-toggle button.active{background:#1e3a5f;color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.residency-toggle button:not(.active):hover{color:#1e3a5f}
+.residency-toggle button .ic{font-size:14px}
+
+.compare-card{background:#fff;border:1px solid #dce8f5;border-radius:10px;overflow:hidden}
+.compare-hdr{background:#1e3a5f;padding:14px 20px}
+.compare-hdr .t{font-size:14px;font-weight:700;color:#fff}
+.compare-hdr .s{font-size:10.5px;color:#94a3b8;margin-top:3px;line-height:1.5}
+.compare-body{padding:20px}
+
+.scenario-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.scenario-tabs button{padding:6px 14px;border-radius:6px;font-size:10.5px;font-weight:600;cursor:pointer;border:1px solid #dce8f5;background:#fff;color:#5a7a9a;font-family:inherit}
+.scenario-tabs button.active{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
+
+.compare-tbl{width:100%;border-collapse:collapse;font-size:10.5px}
+.compare-tbl th{padding:7px 8px;font-weight:600;color:#5a7a9a;border-bottom:2px solid #dce8f5;background:#f0f6ff;text-align:center}
+.compare-tbl th:first-child{text-align:left}
+.compare-tbl td{padding:7px 8px;border-bottom:1px solid #f0f5fb;text-align:center;font-variant-numeric:tabular-nums}
+.compare-tbl td:first-child{text-align:left;font-weight:600}
+.compare-tbl tr:nth-child(even){background:#f9fbfd}
+
+.three-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.three-cards .card{padding:12px 14px;border-radius:6px;font-size:10.5px;line-height:1.55;color:#475569}
+.three-cards .card.blue{background:#f0f7ff;border-left:3px solid #1e3a5f}
+.three-cards .card.green{background:#f0fdf4;border-left:3px solid #16a34a}
+.three-cards .card.amber{background:#fffbeb;border-left:3px solid #d97706}
+.three-cards .card.red{background:#fef2f2;border-left:3px solid #dc2626}
+.three-cards .card .h{font-weight:700;margin-bottom:4px;font-size:11px}
+.three-cards .card.blue .h{color:#1e3a5f}
+.three-cards .card.green .h{color:#16a34a}
+.three-cards .card.amber .h{color:#d97706}
+.three-cards .card.red .h{color:#dc2626}
+
+.foreign-detail{background:#fff;border:1px solid #dce8f5;border-radius:10px;margin-top:18px;padding:18px 22px}
+.foreign-detail h3{font-size:11px;letter-spacing:.10em;font-weight:700;color:#1e3a5f;text-transform:uppercase;margin-bottom:12px}
+.foreign-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.fd-card{padding:11px 14px;background:#f9fbfd;border:1px solid #e2e8f0;border-radius:6px;font-size:10.5px;line-height:1.55}
+.fd-card .head{display:flex;align-items:center;gap:6px;margin-bottom:5px;font-weight:700;color:#1e3a5f;font-size:11.5px}
+.fd-card .head .flag{font-size:13px}
+.fd-card .nums{display:flex;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.fd-card .num{display:flex;flex-direction:column;font-variant-numeric:tabular-nums}
+.fd-card .num .k{font-size:8.5px;color:#94a3b8;letter-spacing:.05em;text-transform:uppercase}
+.fd-card .num .v{font-size:13px;font-weight:700;color:#0f1e33}
+.fd-card .num .v.red{color:#dc2626}
+.fd-card .num .v.amber{color:#d97706}
+.fd-card .note{font-size:10px;color:#5a7a9a;line-height:1.5;border-top:1px solid #e2e8f0;padding-top:6px;margin-top:4px}
+
+.foot-note{font-size:9.5px;color:#94a3b8;line-height:1.55;padding:14px 22px;margin-top:14px;background:#fff;border:1px solid #dce8f5;border-radius:10px}
+.foot-note em{font-style:italic}
+
+.foot{background:#0f1e33;color:#94a3b8;padding:22px 0;font-size:11px;margin-top:32px}
+.foot-inner{max-width:min(1400px,96vw);margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center}
+.foot-l{font-size:11px;font-weight:700;letter-spacing:.08em;color:#fff}
+
+.lang-zh{display:none}
+
+@media(max-width:760px){
+  .hero-h1{font-size:24px}
+  .three-cards{grid-template-columns:1fr}
+  .residency-bar{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<div id="nav-root"></div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span class="lang-en">REIT VS DIRECT PROPERTY · 7 MARKETS · 10-YEAR LOOKBACK</span><span class="lang-zh">REIT vs 實體房產 · 7 個市場 · 10 年回顧</span></div>
+    <h1 class="hero-h1"><span class="lang-en">Same USD 100K — REIT or direct property? It depends on whether you're local or foreign.</span><span class="lang-zh">同一筆 USD 100K — 買 REIT 還是實體？答案取決於你是本國人還是外國人。</span></h1>
+    <p class="hero-sub"><span class="lang-en">Direct property won 7-of-7 markets in 2015–2025 on local-resident pre-tax basis. Switch to foreign-buyer mode and Singapore's ABSD 60%, Australia's FIRB+state surcharges, US 30% non-treaty withholding flip several conclusions. Choose your residency below — every cell recalculates.</span><span class="lang-zh">2015-2025 十年，實體房產在本國居民稅前基礎下 7 個市場全勝。但切到外國人模式：新加坡 ABSD 60%、澳洲 FIRB+州外資附加、美國 30% 非條約預扣會把好幾條結論翻盤。在下方選你的身分 — 每一格會重算。</span></p>
+  </div>
+</section>
+
+<section class="section">
+
+  <!-- Residency selector (page-level setting) -->
+  <div class="residency-bar">
+    <div>
+      <div class="label"><span class="lang-en">Step 1 · You are</span><span class="lang-zh">步驟 1 · 你是</span></div>
+      <div class="desc" style="margin-top:4px"><span class="lang-en">Tax residency frames every number below. Local = baseline (existing pre-income-tax data). Foreign = local + foreign-buyer surcharges (ABSD/FIRB/SDLT extra) + non-resident withholding + foreigner CGT.</span><span class="lang-zh">稅務身分決定下方每個數字。本國 = 基線（既有稅前資料）。外國 = 本國 + 外資附加（ABSD/FIRB/SDLT 額外）+ 非居民預扣 + 外國人 CGT。</span></div>
+    </div>
+    <div class="residency-toggle" id="residencyToggle">
+      <button class="active" data-r="local" onclick="setResidency('local')"><span class="ic">&#x1F3E0;</span><span class="lang-en">Local</span><span class="lang-zh">本國</span></button>
+      <button data-r="foreign" onclick="setResidency('foreign')"><span class="ic">&#x2708;&#xFE0F;</span><span class="lang-en">Foreign</span><span class="lang-zh">外國</span></button>
+    </div>
+  </div>
+
+  <!-- Comparison card -->
+  <div class="compare-card">
+    <div class="compare-hdr">
+      <div class="t"><span class="lang-en">10-Year Annualized Returns · 2015–2025</span><span class="lang-zh">10 年年化報酬 · 2015-2025</span></div>
+      <div class="s"><span class="lang-en">Direct: BIS/FRED residential indices + Global Property Guide gross yields, net of holding costs AND round-trip transaction costs. REITs: Nareit / SGX Research / VanEck / iShares fact sheets. <span id="modeNote"></span></span><span class="lang-zh">實體：BIS/FRED 住宅指數 + Global Property Guide 毛租金，已扣除持有成本與往返交易成本。REIT：Nareit / SGX Research / VanEck / iShares Fact Sheet。<span id="modeNoteZh"></span></span></div>
+    </div>
+    <div class="compare-body">
+      <div class="scenario-tabs">
+        <button class="active" data-s="cash" onclick="setScenario('cash')"><span class="lang-en">All Cash</span><span class="lang-zh">全現金</span></button>
+        <button data-s="ltv70" onclick="setScenario('ltv70')"><span class="lang-en">70% LTV</span><span class="lang-zh">70% 貸款</span></button>
+        <button data-s="ltv50" onclick="setScenario('ltv50')"><span class="lang-en">50% LTV</span><span class="lang-zh">50% 貸款</span></button>
+      </div>
+
+      <table class="compare-tbl">
+        <thead>
+          <tr>
+            <th style="width:16%"></th>
+            <th style="width:14%"><span class="lang-en">Direct Income</span><span class="lang-zh">實體收入</span></th>
+            <th style="width:14%"><span class="lang-en">Direct Total</span><span class="lang-zh">實體總報酬</span></th>
+            <th style="width:14%"><span class="lang-en">REIT Income</span><span class="lang-zh">REIT 收入</span></th>
+            <th style="width:14%"><span class="lang-en">REIT Total</span><span class="lang-zh">REIT 總報酬</span></th>
+            <th style="width:14%"><span class="lang-en">Gap</span><span class="lang-zh">差距</span></th>
+            <th style="width:14%"><span class="lang-en">Winner</span><span class="lang-zh">勝出</span></th>
+          </tr>
+        </thead>
+        <tbody id="scenarioBody"></tbody>
+      </table>
+
+      <div class="three-cards" id="cardsRow">
+        <!-- Cards populated by JS based on residency -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Foreign-mode detail (per-market tax breakdown) -->
+  <div class="foreign-detail" id="foreignDetail" style="display:none">
+    <h3><span class="lang-en">Foreign-Buyer Tax Drag · Per Market</span><span class="lang-zh">外國買家稅負 · 各市場明細</span></h3>
+    <div class="foreign-grid" id="foreignGrid"></div>
+  </div>
+
+  <div class="foot-note">
+    <em><span class="lang-en">All figures 10-year annualized (Dec 2015 – Dec 2025), nominal. <strong>Direct property capital CAGR</strong>: BIS Residential Property Price indices via FRED (Case-Shiller 20-City 6.33% US; URA Singapore 4.33%; Japan 3.26%; Cotality AU 5.26%; NAPIC MY 3.40%; Nationwide UK 3.47%; Eurostat Euro Area 4.45%). Gross yields from Global Property Guide Q3-Q4 2025. <strong>Annual holding costs</strong>: US ~2.8%, JP ~2.9%, AU ~2.5%, UK ~2.3%, EU ~2.0%, MY ~1.7%, SG ~1.7%. <strong>Round-trip txn costs</strong> (10yr-amortized): US 0.9%; SG 0.7%; JP 1.1%; AU 0.8%; MY 0.6%; UK 0.6%; EU 1.2%. <strong>REIT</strong>: FTSE Nareit All Equity US 5.77%; FTSE ST REIT 5.9%; Developed Asia (Nareit 2026) 3.6%; S&amp;P/ASX 200 A-REIT 5.31%; FBM MREIT ~6%; FTSE EPRA UK ~-0.2%; FTSE EPRA Dev Europe 0.1%. <strong>Leveraged columns</strong> scale txn costs by 1/equity-ratio. <strong>Foreign mode</strong> overlays: foreign-buyer surcharge (ABSD 60% SG · FIRB 3%+state 7-9% AU · 2% non-resident SDLT UK · FBLB 2-4% MY · 5% avg EU · 1.5% US) divided by 10yr & equity-ratio; non-resident rental WHT (US 30% / SG 24% / JP 20% / AU 32.5% / MY 30% / UK 20% / EU 24%); REIT div WHT (US 30% / SG 0% / JP 15% / AU 15% / MY 10% / UK 20% / EU 25%); foreigner-only CGT delta on exit (US 5% / SG 0 / JP 0 / AU 8% / MY 5% / UK 5% / EU 5%, 10yr-amortized). Specialised REITs in growth sectors (DC, healthcare, logistics) may significantly beat index averages — see <a href="/reits.html" style="color:#3b82f6">REITs page</a>.</span><span class="lang-zh">所有數據為 10 年年化（2015/12 - 2025/12），名義。<strong>實體資本 CAGR</strong>：BIS（FRED）住宅指數（美 Case-Shiller 20 城 6.33%、新 URA 4.33%、日全國 3.26%、澳 Cotality 5.26%、馬 NAPIC 3.40%、英 Nationwide 3.47%、歐 Eurostat 4.45%）。毛租金來自 Global Property Guide 2025 Q3-Q4。<strong>年持有成本</strong>：美 ~2.8%、日 ~2.9%、澳 ~2.5%、英 ~2.3%、歐 ~2.0%、馬 ~1.7%、新 ~1.7%。<strong>往返交易成本</strong>（10 年攤銷）：美 0.9%、新 0.7%、日 1.1%、澳 0.8%、馬 0.6%、英 0.6%、歐 1.2%。<strong>REIT</strong>：FTSE Nareit All Equity 美 5.77%、FTSE ST REIT 新 5.9%、Developed Asia（Nareit 2026）3.6%、S&amp;P/ASX 200 A-REIT 澳 5.31%、FBM MREIT 馬 ~6%、FTSE EPRA UK 英 ~-0.2%、FTSE EPRA Dev Europe 歐 0.1%。<strong>槓桿欄</strong>交易成本依 1/自有資金比率放大。<strong>外國模式</strong>疊加：外資附加（ABSD 60% 新加坡、FIRB 3% + 州 7-9% 澳洲、SDLT 額外 2% 英、FBLB 2-4% 馬、歐平均 5%、美 1.5%）依 10 年與自有資金比率攤銷；非居民租金預扣（美 30% / 新 24% / 日 20% / 澳 32.5% / 馬 30% / 英 20% / 歐 24%）；REIT 股息預扣（美 30% / 新 0% / 日 15% / 澳 15% / 馬 10% / 英 20% / 歐 25%）；外國人退場 CGT 額外（美 5%、新 0、日 0、澳 8%、馬 5%、英 5%、歐 5%，10 年攤銷）。專業板塊 REIT（DC、醫療、物流）可能大幅領先指數均值 — 見 <a href="/reits.html" style="color:#3b82f6">REITs 頁面</a>。</span></em>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-l">PROPERTY MONITOR</div>
+    <div><span class="lang-en">Data for reference only · Not investment advice · &copy; 2026 InvestMQuest</span><span class="lang-zh">資料僅供參考 · 非投資建議 · &copy; 2026 InvestMQuest</span></div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   DATA — Local-resident baseline. All ranges as [lo, hi] arrays.
+   ========================================================= */
+var SCENARIOS = {
+  cash: [
+    {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:[3.5,4.0],dTot:[8,10],rInc:[4.0,4.5],rTot:[5.5,6.0]},
+    {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:[1.5,2.0],dTot:[5,6],rInc:[5.5,6.5],rTot:[5.5,6.5]},
+    {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:[1.0,1.5],dTot:[3,4],rInc:[3.5,4.0],rTot:[3,4]},
+    {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:[1.0,1.5],dTot:[5,6],rInc:[4.5,5.0],rTot:[5,6]},
+    {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:[3.0,3.5],dTot:[5.5,7.5],rInc:[5.5,6.5],rTot:[6,7]},
+    {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:[3.0,4.0],dTot:[6.5,7.5],rInc:[4.0,5.0],rTot:[-1,1]},
+    {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:[2.0,3.0],dTot:[5,7],rInc:[3.5,4.5],rTot:[0,1]}
+  ],
+  ltv70: [
+    {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:[-1,2],dTot:[13,19],rInc:[4.0,4.5],rTot:[5.5,6.0]},
+    {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:[-1,1],dTot:[9,14],rInc:[5.5,6.5],rTot:[5.5,6.5]},
+    {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:[1,3],dTot:[4,10],rInc:[3.5,4.0],rTot:[3,4]},
+    {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:[-2,0],dTot:[10,15],rInc:[4.5,5.0],rTot:[5,6]},
+    {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:[3,6],dTot:[8,12],rInc:[5.5,6.5],rTot:[6,7]},
+    {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:[0,2],dTot:[7,10],rInc:[4.0,5.0],rTot:[-1,1]},
+    {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:[-1,1],dTot:[7,11],rInc:[3.5,4.5],rTot:[0,1]}
+  ],
+  ltv50: [
+    {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:[1,3],dTot:[10,13],rInc:[4.0,4.5],rTot:[5.5,6.0]},
+    {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:[0,2],dTot:[7,11],rInc:[5.5,6.5],rTot:[5.5,6.5]},
+    {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:[1,2],dTot:[4,8],rInc:[3.5,4.0],rTot:[3,4]},
+    {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:[-1,1],dTot:[7,11],rInc:[4.5,5.0],rTot:[5,6]},
+    {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:[3,5],dTot:[7,10],rInc:[5.5,6.5],rTot:[6,7]},
+    {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:[2,4],dTot:[7,10],rInc:[4.0,5.0],rTot:[-1,1]},
+    {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:[1,2],dTot:[6,9],rInc:[3.5,4.5],rTot:[0,1]}
+  ]
+};
+
+/* Foreign-buyer specific tax data (over local baseline) */
+var YIELDS = {
+  US:{dy:4.0,ry:4.25}, Singapore:{dy:2.5,ry:5.9}, Japan:{dy:4.0,ry:3.75},
+  Australia:{dy:3.0,ry:4.75}, Malaysia:{dy:4.5,ry:6.0}, UK:{dy:5.0,ry:4.5}, Europe:{dy:4.0,ry:4.0}
+};
+var FOREIGN_TAX = {
+  US:        {surch:1.5,  rentTax:30,   cgtExit:5,  reitWh:30,
+    note:{en:'FIRPTA 15% withholding on exit; 30% non-treaty WHT on rent &amp; divs',zh:'退場 FIRPTA 15% 預扣；非條約國居民租金與股息預扣 30%'}},
+  Singapore: {surch:60,   rentTax:24,   cgtExit:0,  reitWh:0,
+    note:{en:'ABSD 60% on residential dominates; no CGT; SG REIT divs tax-free even to foreigners',zh:'住宅 ABSD 60% 為主因；無資本利得稅；SG REIT 股息對外國人也免稅'}},
+  Japan:     {surch:0,    rentTax:20,   cgtExit:0,  reitWh:15,
+    note:{en:'No foreign-buyer surcharge — JP is the most foreigner-friendly market here',zh:'無外資附加 — 日本對外國人最友善'}},
+  Australia: {surch:13,   rentTax:32.5, cgtExit:8,  reitWh:15,
+    note:{en:'FIRB 3% + state surcharge 7-9% (NSW 9% / VIC 8%); foreigners lose 50% CGT discount',zh:'FIRB 3% + 州外資附加 7-9%（NSW 9%、VIC 8%）；外國人無 50% CGT 折扣'}},
+  Malaysia:  {surch:3,    rentTax:30,   cgtExit:5,  reitWh:10,
+    note:{en:'State FBLB 2-4% + min RM1M floor; non-resident rental WHT 30%; RPGT 10% if &gt;5yr',zh:'各州 FBLB 2-4% + 最低 RM100 萬；非居民租金預扣 30%；RPGT >5 年 10%'}},
+  UK:        {surch:2,    rentTax:20,   cgtExit:5,  reitWh:20,
+    note:{en:'2% non-resident SDLT surcharge; 28% non-resident CGT on residential; PID divs 20% WHT',zh:'非居民 SDLT 附加 2%；住宅非居民 CGT 28%；PID 股息預扣 20%'}},
+  Europe:    {surch:5,    rentTax:24,   cgtExit:5,  reitWh:25,
+    note:{en:'Avg of ES/FR/DE/IT: non-resident IRNR ~24%; transfer tax 5-10% varies',zh:'西/法/德/義平均：非居民 IRNR ~24%；過戶稅 5-10% 各國差異'}}
+};
+
+var EQUITY_RATIO = {cash:1.0, ltv70:0.30, ltv50:0.50};
+
+/* =========================================================
+   STATE
+   ========================================================= */
+var residency = 'local';
+var scenario = 'cash';
+
+/* =========================================================
+   FORMATTING & DRAG MATH (ranges are [lo, hi] arrays internally)
+   ========================================================= */
+function fmtRange(r){
+  var lo=r[0], hi=r[1];
+  if(Math.abs(hi-lo)<0.05) return lo.toFixed(1)+'%';
+  return lo.toFixed(1)+' → '+hi.toFixed(1)+'%';
+}
+function midOfRange(r){return (r[0]+r[1])/2;}
+function shiftRange(r, drag){return [r[0]+drag, r[1]+drag];}
+
+/* Drag (percentage points subtracted) for foreign mode — per country & equityRatio */
+function foreignDrag(country, equityRatio){
+  var t = FOREIGN_TAX[country], y = YIELDS[country];
+  if(!t||!y) return {dInc:0,dTot:0,rInc:0,rTot:0};
+  /* Rental tax on gross rental yield, scaled by leverage (rent on equity = dy/equityRatio) */
+  var rentDrag = -(y.dy * t.rentTax/100) / equityRatio;
+  /* One-time foreign-buyer surcharge (% of price), 10yr-amortized & leverage-scaled */
+  var surchDrag = -(t.surch / equityRatio) / 10;
+  /* Foreigner-only CGT extra on exit (% of price), 10yr-amortized & leverage-scaled */
+  var cgtDrag = -(t.cgtExit / equityRatio) / 10;
+  /* REIT div WHT on REIT yield (REITs are not levered at investor level) */
+  var reitDrag = -(y.ry * t.reitWh/100);
+  return {
+    dInc: rentDrag,
+    dTot: rentDrag + surchDrag + cgtDrag,
+    rInc: reitDrag,
+    rTot: reitDrag
+  };
+}
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+function setResidency(r){
+  residency = r;
+  document.querySelectorAll('#residencyToggle button').forEach(function(b){
+    b.classList.toggle('active', b.dataset.r===r);
+  });
+  render();
+}
+function setScenario(s){
+  scenario = s;
+  document.querySelectorAll('.scenario-tabs button').forEach(function(b){
+    b.classList.toggle('active', b.dataset.s===s);
+  });
+  render();
+}
+
+function render(){
+  var equityRatio = EQUITY_RATIO[scenario];
+  var lang = (typeof getLang==='function')?getLang():(localStorage.getItem('lang')||'en');
+
+  var rows = SCENARIOS[scenario].map(function(r){
+    var d = residency==='foreign' ? foreignDrag(r.en, equityRatio) : {dInc:0,dTot:0,rInc:0,rTot:0};
+    return {
+      flag:r.flag, en:r.en, zh:r.zh,
+      dInc: shiftRange(r.dInc, d.dInc),
+      dTot: shiftRange(r.dTot, d.dTot),
+      rInc: shiftRange(r.rInc, d.rInc),
+      rTot: shiftRange(r.rTot, d.rTot)
+    };
+  });
+
+  var html = '';
+  rows.forEach(function(r){
+    var dMid = midOfRange(r.dTot), rMid = midOfRange(r.rTot);
+    var gap = dMid - rMid;
+    var gapStr = (gap>=0?'+':'')+gap.toFixed(1)+'%';
+    var gapColor = gap>1?'#16a34a':gap<-1?'#dc2626':'#d97706';
+    var winnerEn, winnerZh, winColor;
+    if(gap>1){winnerEn='Direct';winnerZh='實體勝';winColor='#1e3a5f';}
+    else if(gap<-1){winnerEn='REIT';winnerZh='REIT 勝';winColor='#16a34a';}
+    else{winnerEn='Tie';winnerZh='平手';winColor='#d97706';}
+    var dStyle = dMid>=rMid?'font-weight:600;color:#1e3a5f':'';
+    var rStyle = rMid>=dMid?'font-weight:600;color:#16a34a':'';
+    html += '<tr>'
+      + '<td>'+r.flag+' <span class="lang-en">'+r.en+'</span><span class="lang-zh">'+r.zh+'</span></td>'
+      + '<td>'+fmtRange(r.dInc)+'</td>'
+      + '<td style="'+dStyle+'">'+fmtRange(r.dTot)+'</td>'
+      + '<td>'+fmtRange(r.rInc)+'</td>'
+      + '<td style="'+rStyle+'">'+fmtRange(r.rTot)+'</td>'
+      + '<td style="font-weight:600;color:'+gapColor+'">'+gapStr+'</td>'
+      + '<td style="font-weight:700;color:'+winColor+'"><span class="lang-en">'+winnerEn+'</span><span class="lang-zh">'+winnerZh+'</span></td>'
+      + '</tr>';
+  });
+  document.getElementById('scenarioBody').innerHTML = html;
+
+  /* Three contextual cards */
+  var cards = '';
+  if(residency==='local'){
+    cards += '<div class="card blue"><div class="h"><span class="lang-en">The Honest 10yr Answer</span><span class="lang-zh">10 年真實答案</span></div><span class="lang-en"><strong>Direct property won in all 7 markets</strong> over 2015-2025. Widest gaps: UK (+7.6pp) &amp; EU (+6.8pp) where REITs had brutal 2022 rate-hike drawdowns. Closest: SG (0.1pp tie).</span><span class="lang-zh"><strong>2015-2025 十年實體房產 7 個市場全勝</strong>。差距最大：英國 +7.6pp、歐洲 +6.8pp（REIT 2022 升息崩跌至今未復）。最接近：新加坡 0.1pp 平手。</span></div>';
+    cards += '<div class="card green"><div class="h"><span class="lang-en">When REITs Still Make Sense</span><span class="lang-zh">REIT 仍合理的情境</span></div><span class="lang-en">(1) Need liquidity. (2) Capital &lt;USD 100K. (3) No local expertise. (4) Specialised sectors (DC, healthcare, industrial) with structural tailwinds beat the index.</span><span class="lang-zh">(1) 需流動性。(2) 資金 &lt;USD 100K。(3) 無當地專業。(4) 結構性順風的專業板塊（DC、醫療、工業）跑贏大盤。</span></div>';
+    cards += '<div class="card amber"><div class="h"><span class="lang-en">Caveats Still Excluded</span><span class="lang-zh">仍未計入</span></div><span class="lang-en">Vacancy drag (1-3%/yr); local income tax; capital-gains tax on exit (varies). US 15yr Nareit = 7.78%, 20yr = 6.57% — the 10yr window was kind to direct (post-COVID spike + REIT 2022 crash).</span><span class="lang-zh">空置率（年 1-3%）；本國所得稅；退場資本利得稅。美 15 年 Nareit = 7.78%、20 年 = 6.57% — 10 年窗口對實體房產有利（疫後飆升 + REIT 2022 崩跌）。</span></div>';
+  }else{
+    cards += '<div class="card red"><div class="h"><span class="lang-en">Foreign Mode Flips These</span><span class="lang-zh">外國模式翻盤這些</span></div><span class="lang-en"><strong>Singapore</strong>: ABSD 60% means cash buyer needs &gt;15yr just to break-even on the surcharge alone — REIT clearly wins. <strong>Australia</strong>: FIRB + state + no CGT discount narrows the gap sharply. <strong>US</strong>: 30% WHT on REIT divs makes US REITs much weaker for non-treaty investors.</span><span class="lang-zh"><strong>新加坡</strong>：ABSD 60% 讓現金買家光是回收附加稅就要 15 年以上 — REIT 明顯勝。<strong>澳洲</strong>：FIRB + 州外資 + 無 CGT 折扣使差距急縮。<strong>美國</strong>：30% REIT 股息預扣讓美 REIT 對無稅務協定投資人吸引力大跌。</span></div>';
+    cards += '<div class="card green"><div class="h"><span class="lang-en">Foreign-Friendly Markets</span><span class="lang-zh">對外國人友善的市場</span></div><span class="lang-en"><strong>Japan</strong>: zero foreign-buyer surcharge. <strong>SG REITs</strong>: 0% dividend WHT even to foreigners (unique special exemption). <strong>Malaysia</strong>: low FBLB + RPGT 10% after 5yr — but rental WHT 30% is the silent drag.</span><span class="lang-zh"><strong>日本</strong>：零外資附加。<strong>新加坡 REIT</strong>：對外國人 0% 股息預扣（獨特豁免）。<strong>馬來西亞</strong>：低 FBLB + 5 年後 RPGT 10% — 但租金預扣 30% 是隱性拖累。</span></div>';
+    cards += '<div class="card amber"><div class="h"><span class="lang-en">Treaties Can Recover Some</span><span class="lang-zh">稅務協定可回收部分</span></div><span class="lang-en">US WHT drops from 30% → 15% for treaty residents (UK, AU, JP, SG, MY have treaties). AU MIT WHT down to 15% with treaty. Numbers above show non-treaty default — your actual drag may be lower if home country has a treaty.</span><span class="lang-zh">美國預扣自 30% → 15%（英、澳、日、新、馬均有租稅協定）。澳 MIT 預扣依協定降至 15%。上方數字為無協定預設值 — 若母國有協定，實際拖累較輕。</span></div>';
+  }
+  document.getElementById('cardsRow').innerHTML = cards;
+
+  /* Foreign detail grid */
+  var detailEl = document.getElementById('foreignDetail');
+  if(residency==='foreign'){
+    detailEl.style.display = 'block';
+    var grid = '';
+    SCENARIOS.cash.forEach(function(r){
+      var t = FOREIGN_TAX[r.en], y = YIELDS[r.en];
+      var d = foreignDrag(r.en, equityRatio);
+      var totalDrag = d.dTot;
+      var totColor = totalDrag<-3?'red':totalDrag<-1?'amber':'';
+      grid += '<div class="fd-card">'
+        + '<div class="head"><span class="flag">'+r.flag+'</span><span class="lang-en">'+r.en+'</span><span class="lang-zh">'+r.zh+'</span></div>'
+        + '<div class="nums">'
+        +   '<div class="num"><span class="k"><span class="lang-en">Surcharge</span><span class="lang-zh">外資附加</span></span><span class="v '+(t.surch>10?'red':t.surch>2?'amber':'')+'">'+t.surch+'%</span></div>'
+        +   '<div class="num"><span class="k"><span class="lang-en">Rent WHT</span><span class="lang-zh">租金預扣</span></span><span class="v">'+t.rentTax+'%</span></div>'
+        +   '<div class="num"><span class="k"><span class="lang-en">REIT Div WHT</span><span class="lang-zh">REIT 預扣</span></span><span class="v">'+t.reitWh+'%</span></div>'
+        +   '<div class="num"><span class="k"><span class="lang-en">Direct Drag</span><span class="lang-zh">實體拖累</span></span><span class="v '+totColor+'">'+totalDrag.toFixed(1)+'%</span></div>'
+        + '</div>'
+        + '<div class="note"><span class="lang-en">'+t.note.en+'</span><span class="lang-zh">'+t.note.zh+'</span></div>'
+        + '</div>';
+    });
+    document.getElementById('foreignGrid').innerHTML = grid;
+  }else{
+    detailEl.style.display = 'none';
+  }
+
+  /* Mode note in header */
+  var modeEn = residency==='foreign' ? '<strong style="color:#dc2626"> &middot; Foreign-buyer mode</strong>: foreign-specific surcharges &amp; withholdings overlaid on baseline.' : '';
+  var modeZh = residency==='foreign' ? '<strong style="color:#dc2626"> &middot; 外國買家模式</strong>：外資附加與預扣稅疊加於基線之上。' : '';
+  document.getElementById('modeNote').innerHTML = modeEn;
+  document.getElementById('modeNoteZh').innerHTML = modeZh;
+
+  /* Re-apply lang display to newly-rendered nodes */
+  applyLang(lang);
+}
+
+function applyLang(lang){
+  document.querySelectorAll('.lang-en').forEach(function(e){
+    e.style.display = lang==='en' ? (e.tagName==='SPAN'?'inline':'block') : 'none';
+  });
+  document.querySelectorAll('.lang-zh').forEach(function(e){
+    e.style.display = lang==='zh' ? (e.tagName==='SPAN'?'inline':'block') : 'none';
+  });
+}
+function getLang(){var l='en';try{l=localStorage.getItem('lang')||'en';}catch(e){}return l;}
+
+window.addEventListener('load', function(){
+  applyLang(getLang());
+  render();
+});
+</script>
+<script src="/js/navbar.js" defer></script>
+</body>
+</html>

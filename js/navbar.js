@@ -50,6 +50,7 @@ var TOOLS = [
   {k:'dashboard',href:'/dashboard.html',en:'Dashboard',zh:'儀表板',icon:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>'},
   {k:'playbook',href:'/playbook.html',en:'Playbook',zh:'手冊',icon:'<path d="M4 4h12a3 3 0 013 3v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/><path d="M8 8h8M8 12h8M8 16h5"/>'},
   {k:'reits',href:'/reits.html',en:'REITs',zh:'REITs',icon:'<path d="M3 10l9-7 9 7v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10z"/>'},
+  {k:'reit-vs-direct',href:'/reit-vs-direct.html',en:'REIT vs Direct',zh:'REIT vs 實體',icon:'<path d="M3 12h7M14 12h7"/><path d="M3 6h7M14 6h7"/><path d="M3 18h7M14 18h7"/>'},
   {k:'methodology',href:'/methodology.html',en:'Methodology',zh:'方法論',icon:'<circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/>'}
 ];
 

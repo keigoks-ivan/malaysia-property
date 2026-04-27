@@ -580,151 +580,20 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f5fb;color:#1e
   </div>
 </section>
 
-<!-- Direct Property vs REITs Return Comparison (always at bottom) -->
+<!-- Teaser linking to dedicated REIT vs Direct page -->
 <section style="background:#f0f5fb">
   <div class="section" style="max-width:min(1400px,96vw);margin:0 auto;padding-top:28px;padding-bottom:28px">
-    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">
-      <div style="background:#1e3a5f;padding:14px 20px">
-        <div style="font-size:14px;font-weight:700;color:#fff"><span class="lang-en">Direct Property vs REITs: Which Delivers Better Returns?</span><span class="lang-zh">實體房產 vs REITs：哪個報酬率更好？</span></div>
-        <div style="font-size:10px;color:#94a3b8;margin-top:3px"><span class="lang-en">10-year annualized returns (2015–2025, pre-income-tax) &mdash; direct property: BIS/FRED residential indices + Global Property Guide gross yields, <strong>net of both holding costs AND round-trip transaction costs</strong> (stamp duty, agent fees, legal, registration). REITs: Nareit / SGX Research / VanEck / JPX / iShares official fact sheets.</span><span class="lang-zh">10 年年化報酬（2015-2025、所得稅前）——實體房產：BIS/FRED 住宅價格指數 + Global Property Guide 毛租金收益率，<strong>已扣除持有成本 AND 往返交易成本</strong>（印花稅、仲介、律師、登記費）。REIT：Nareit / SGX Research / VanEck / JPX / iShares 官方 Fact Sheet。</span></div>
+    <a href="/reit-vs-direct.html" style="display:block;text-decoration:none;color:inherit">
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:22px 26px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;transition:all .15s" onmouseover="this.style.borderColor='#1e3a5f';this.style.boxShadow='0 4px 14px rgba(30,58,95,.08)'" onmouseout="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
+        <div style="font-size:32px;line-height:1">&#x2696;&#xFE0F;</div>
+        <div style="flex:1;min-width:240px">
+          <div style="font-size:10px;letter-spacing:.16em;color:#3b82f6;font-weight:700;margin-bottom:5px"><span class="lang-en">DEDICATED COMPARISON TOOL</span><span class="lang-zh">獨立比較工具</span></div>
+          <div style="font-size:16px;font-weight:700;color:#1e3a5f;margin-bottom:4px"><span class="lang-en">Direct Property vs REITs &mdash; Now with Local / Foreign Toggle</span><span class="lang-zh">實體房產 vs REITs &mdash; 現支援本國 / 外國身分切換</span></div>
+          <div style="font-size:12px;color:#5a7a9a;line-height:1.55"><span class="lang-en">Pick your tax residency at the top &mdash; ABSD, FIRB, SDLT surcharges and non-resident withholding redraw the table for foreign buyers. 7 markets &times; 3 LTV scenarios.</span><span class="lang-zh">頂部先選稅務身分 &mdash; ABSD、FIRB、SDLT 附加稅與非居民預扣會把外國買家的數字重畫一次。7 個市場 &times; 3 種槓桿情境。</span></div>
+        </div>
+        <div style="font-size:13px;color:#1e3a5f;font-weight:600;display:inline-flex;align-items:center;gap:6px"><span class="lang-en">Open tool</span><span class="lang-zh">開啟工具</span> &rarr;</div>
       </div>
-      <div style="padding:20px;font-family:Inter,sans-serif">
-        <!-- Scenario tabs -->
-        <div id="scenarioTabs" style="display:flex;gap:6px;margin-bottom:14px">
-          <button onclick="showScenario('cash')" id="tabCash" style="padding:6px 14px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid #1e3a5f;background:#1e3a5f;color:#fff"><span class="lang-en">All Cash</span><span class="lang-zh">全現金</span></button>
-          <button onclick="showScenario('ltv70')" id="tabLtv70" style="padding:6px 14px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid #dce8f5;background:#fff;color:#5a7a9a"><span class="lang-en">70% LTV</span><span class="lang-zh">70% 貸款</span></button>
-          <button onclick="showScenario('ltv50')" id="tabLtv50" style="padding:6px 14px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid #dce8f5;background:#fff;color:#5a7a9a"><span class="lang-en">50% LTV</span><span class="lang-zh">50% 貸款</span></button>
-        </div>
-
-        <table style="width:100%;border-collapse:collapse;font-size:10px">
-          <thead>
-            <tr style="background:#f0f6ff">
-              <th style="padding:7px 8px;text-align:left;font-weight:600;color:#5a7a9a;border-bottom:2px solid #dce8f5;width:16%"></th>
-              <th style="padding:7px 8px;text-align:center;font-weight:600;color:#5a7a9a;border-bottom:2px solid #dce8f5;width:14%"><span class="lang-en">Direct Income</span><span class="lang-zh">實體收入</span></th>
-              <th style="padding:7px 8px;text-align:center;font-weight:600;color:#5a7a9a;border-bottom:2px solid #dce8f5;width:14%"><span class="lang-en">Direct Total</span><span class="lang-zh">實體總報酬</span></th>
-              <th style="padding:7px 8px;text-align:center;font-weight:600;color:#5a7a9a;border-bottom:2px solid #dce8f5;width:14%"><span class="lang-en">REIT Income</span><span class="lang-zh">REIT收入</span></th>
-              <th style="padding:7px 8px;text-align:center;font-weight:600;color:#5a7a9a;border-bottom:2px solid #dce8f5;width:14%"><span class="lang-en">REIT Total</span><span class="lang-zh">REIT總報酬</span></th>
-              <th style="padding:7px 8px;text-align:center;font-weight:600;color:#5a7a9a;border-bottom:2px solid #dce8f5;width:14%"><span class="lang-en">Gap</span><span class="lang-zh">差距</span></th>
-              <th style="padding:7px 8px;text-align:center;font-weight:600;color:#5a7a9a;border-bottom:2px solid #dce8f5;width:14%"><span class="lang-en">Winner</span><span class="lang-zh">勝出</span></th>
-            </tr>
-          </thead>
-          <tbody id="scenarioBody"></tbody>
-        </table>
-
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;font-size:9.5px;color:#475569;line-height:1.6">
-          <div style="padding:12px;background:#f0f7ff;border-radius:6px;border-left:3px solid #1e3a5f">
-            <div style="font-weight:700;color:#1e3a5f;margin-bottom:4px"><span class="lang-en">The Honest 10yr Answer</span><span class="lang-zh">10年真實數據的誠實答案</span></div>
-            <span class="lang-en"><strong>Direct property won in all 7 markets</strong> over 2015–2025 (Nareit + BIS/FRED data). Widest gaps: UK (+7.6pp) and EU (+6.8pp) where REITs had brutal 2022 rate-hike drawdowns. Closest: Singapore (0.1pp tie).</span>
-            <span class="lang-zh"><strong>2015-2025 十年，實體房產在全部 7 個市場勝出</strong>（Nareit + BIS/FRED 官方數據）。差距最大：英國+7.6pp、歐洲+6.8pp（REIT 2022 年升息崩跌後至今未復）。最接近：新加坡 0.1pp 平手。</span>
-          </div>
-          <div style="padding:12px;background:#f0fdf4;border-radius:6px;border-left:3px solid #16a34a">
-            <div style="font-weight:700;color:#16a34a;margin-bottom:4px"><span class="lang-en">When REITs Still Make Sense</span><span class="lang-zh">REIT 仍然合理的情境</span></div>
-            <span class="lang-en">(1) Need liquidity — can exit in a day. (2) Small capital &lt;$100K — buys diversified portfolio. (3) No local expertise. (4) Specialized sectors (Data Centers, Healthcare, Industrial) with structural tailwinds that beat the index average.</span>
-            <span class="lang-zh">(1) 需流動性——當日可出場。(2) 小資金 &lt;$100K——買得到分散組合。(3) 無當地專業。(4) 結構性順風的專門板塊（資料中心、醫療、工業）可跑贏大盤均值。</span>
-          </div>
-          <div style="padding:12px;background:#fffbeb;border-radius:6px;border-left:3px solid #d97706">
-            <div style="font-weight:700;color:#d97706;margin-bottom:4px"><span class="lang-en">Important Caveats</span><span class="lang-zh">重要警語</span></div>
-            <span class="lang-en">Direct returns <strong>already net of</strong> holding costs + round-trip transaction costs. <strong>Still excluded:</strong> vacancy drag (1-3%/yr), capital-gains tax (varies by residency), foreign-buyer surcharges. REITs net of all fund costs. US 15yr Nareit = 7.78%, 20yr = 6.57% — the 10yr window was unusually kind to direct housing (post-COVID price spike + REIT 2022 crash).</span>
-            <span class="lang-zh">實體報酬<strong>已扣除</strong>持有成本+往返交易成本。<strong>仍未扣：</strong>空置率（年 1-3%）、資本利得稅（依居民身分）、外資附加稅。REIT 已內含所有基金費用。美 15 年 Nareit = 7.78%、20 年 = 6.57% — 10 年窗口對實體房產異常友好（疫後房價飆+REIT 2022 崩跌）。</span>
-          </div>
-        </div>
-
-        <div style="margin-top:12px;font-size:8.5px;color:#94a3b8;line-height:1.5">
-          <span class="lang-en"><em>All figures are 10-year annualized (Dec 2015 – Dec 2025), nominal, pre-income-tax. <strong>Direct property capital CAGR</strong> from BIS Residential Property Price indices via FRED: Case-Shiller 20-City 6.33% US; URA Singapore 4.33%; Japan 3.26% nat; Cotality AU 5.26%; NAPIC MY 3.40%; Nationwide UK 3.47%; Eurostat Euro Area 4.45%. Gross yields from Global Property Guide Q3&ndash;Q4 2025. <strong>Holding costs</strong> (annual): US ~2.8%, JP ~2.9%, AU ~2.5%, UK ~2.3%, EU ~2.0%, MY ~1.7%, SG ~1.7%. <strong>Round-trip transaction costs</strong> (10yr-amortized): US 0.9% (5-6% agent + 3-4% closing); SG 0.7% (BSD 3-6% + legal 0.5% + 1-2% agent, SSD waived &gt;3yr); JP 1.1% (3-4% acq tax + 2% reg + 2×3% agent); AU 0.8% (4-5.5% stamp + 2-3% agent); MY 0.6% (1-4% stamp + 1-2% legal + 2-3% agent); UK 0.6% (tiered SDLT + 1-3% agent); EU 1.2% (2% notary + 4-10% transfer tax + 3-6% agent). <strong>REITs</strong> = Nareit FTSE All Equity US 5.77% (Fact Sheet Dec-2025); FTSE ST REIT 5.9% (SGX Research Q3 2025); TSE REIT / Developed Asia 3.6% (Nareit 2026); S&amp;P/ASX 200 A-REIT 5.31% (VanEck MVA); FBM MREIT ~6-7% estimate; FTSE EPRA Nareit UK ~-0.2% (iShares IUKP 10yr -1.91%); Developed Europe 1.3% cumulative ≈ 0.1% annualized. <strong>Leveraged columns</strong>: transaction costs scale by 1/equity-ratio (LTV70 = 3.33×, LTV50 = 2×). Income tax excluded (varies by residency).</em></span>
-          <span class="lang-zh"><em>所有數據為 10 年年化（2015/12 – 2025/12），名義、所得稅前。<strong>實體房產資本 CAGR</strong> 來自 BIS 住宅價格指數（FRED）：美 Case-Shiller 20 城 6.33%；新 URA 4.33%；日全國 3.26%；澳 Cotality 5.26%；馬 NAPIC 3.40%；英 Nationwide 3.47%；歐 Eurostat 4.45%。毛租金收益率來自 Global Property Guide 2025 Q3-Q4。<strong>年度持有成本</strong>：美 ~2.8%、日 ~2.9%、澳 ~2.5%、英 ~2.3%、歐 ~2.0%、馬 ~1.7%、新 ~1.7%。<strong>往返交易成本</strong>（10 年攤銷）：美 0.9%（仲介 5-6%+過戶 3-4%）；新 0.7%（BSD 3-6%+律師 0.5%+仲介 1-2%，持有 &gt;3 年 SSD=0）；日 1.1%（取得稅 3-4%+登記 2%+雙邊仲介 3%）；澳 0.8%（stamp 4-5.5%+仲介 2-3%）；馬 0.6%（stamp 1-4%+律師 1-2%+仲介 2-3%）；英 0.6%（SDLT 分級+仲介 1-3%）；歐 1.2%（公證 2%+過戶稅 4-10%+仲介 3-6%）。<strong>REIT</strong> = FTSE Nareit All Equity 美 5.77%（2025/12 Fact Sheet）；FTSE ST REIT 新 5.9%（SGX Research 2025 Q3）；TSE REIT / Developed Asia 3.6%（Nareit 2026）；S&amp;P/ASX 200 A-REIT 澳 5.31%（VanEck MVA）；FBM MREIT 馬 ~6-7% 估計；FTSE EPRA Nareit UK 英 ~-0.2%（iShares IUKP 10年 -1.91%）；Developed Europe 歐 10 年累計 1.3% ≈ 年化 0.1%。<strong>槓桿欄</strong>：交易成本按 1/自有資金比率放大（LTV70 = 3.33×、LTV50 = 2×）。所得稅因居民身份差異太大故未計入。</em></span>
-        </div>
-      </div>
-
-      <script>
-      // VERIFIED DATA (2015–2025 decade) via WebSearch primary sources Apr 2026:
-      // Direct property capital CAGR: BIS/FRED residential price indices (Case-Shiller US, URA SG, Cotality AU, NAPIC MY, Nationwide UK, vdp/Eurostat EU); Japan national 3.26% CAGR but Tokyo 23W used-condo 7–8% CAGR (Kantei)
-      // Direct gross yields: Global Property Guide Q3–Q4 2025
-      // Holding-cost deductions per market: US 2.8%, JP 2.9%, AU 2.5%, UK 2.3%, EU 2.0%, MY 1.7%, SG 1.7%
-      // REIT 10yr annualized total returns (price + reinvested dividends):
-      //   US = FTSE Nareit All Equity 5.77% (Nareit Fact Sheet Dec-2025)
-      //   SG = FTSE ST REIT Index 5.9% (SGX Research SREIT Chartbook Q3-2025)
-      //   JP = Developed Asia 3.6% (Nareit Global Returns 2026); TSE REIT Index ~3-4%
-      //   AU = S&P/ASX 200 A-REIT 5.31% (VanEck MVA fact sheet)
-      //   MY = FBM MREIT ~6-7% estimate (KLREI +7.59% 2025; sector div yield 5.9-6.2%)
-      //   UK = FTSE EPRA Nareit UK ~-0.2% (iShares IUKP 10yr -1.91%) — brutal 2022 drawdown
-      //   EU = FTSE EPRA Nareit Dev Europe 0.1% annualized (1.3% cumulative per Nareit 2026)
-      // Direct property dTot NOW NETS TRANSACTION COSTS (10yr-amortized round-trip):
-      // US 0.9%, SG 0.7%, JP 1.1%, AU 0.8%, MY 0.6%, UK 0.6%, EU 1.2%
-      // Leveraged: cost drag scales by 1/equity ratio (LTV70=3.33x, LTV50=2x)
-      var SCENARIOS={
-        cash:[
-          {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:'3.5-4.0%',dTot:'8-10%',rInc:'4.0-4.5%',rTot:'5.5-6.0%'},
-          {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:'1.5-2.0%',dTot:'5-6%',rInc:'5.5-6.5%',rTot:'5.5-6.5%'},
-          {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:'1.0-1.5%',dTot:'3-4%',rInc:'3.5-4.0%',rTot:'3-4%'},
-          {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:'1.0-1.5%',dTot:'5-6%',rInc:'4.5-5.0%',rTot:'5-6%'},
-          {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:'3.0-3.5%',dTot:'5.5-7.5%',rInc:'5.5-6.5%',rTot:'6-7%'},
-          {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:'3.0-4.0%',dTot:'6.5-7.5%',rInc:'4.0-5.0%',rTot:'-1-1%'},
-          {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:'2.0-3.0%',dTot:'5-7%',rInc:'3.5-4.5%',rTot:'0-1%'}
-        ],
-        ltv70:[
-          {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:'-1-2%',dTot:'13-19%',rInc:'4.0-4.5%',rTot:'5.5-6.0%'},
-          {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:'-1-1%',dTot:'9-14%',rInc:'5.5-6.5%',rTot:'5.5-6.5%'},
-          {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:'1-3%',dTot:'4-10%',rInc:'3.5-4.0%',rTot:'3-4%'},
-          {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:'-2-0%',dTot:'10-15%',rInc:'4.5-5.0%',rTot:'5-6%'},
-          {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:'3-6%',dTot:'8-12%',rInc:'5.5-6.5%',rTot:'6-7%'},
-          {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:'0-2%',dTot:'7-10%',rInc:'4.0-5.0%',rTot:'-1-1%'},
-          {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:'-1-1%',dTot:'7-11%',rInc:'3.5-4.5%',rTot:'0-1%'}
-        ],
-        ltv50:[
-          {flag:'\u{1F1FA}\u{1F1F8}',en:'US',zh:'美國',dInc:'1-3%',dTot:'10-13%',rInc:'4.0-4.5%',rTot:'5.5-6.0%'},
-          {flag:'\u{1F1F8}\u{1F1EC}',en:'Singapore',zh:'新加坡',dInc:'0-2%',dTot:'7-11%',rInc:'5.5-6.5%',rTot:'5.5-6.5%'},
-          {flag:'\u{1F1EF}\u{1F1F5}',en:'Japan',zh:'日本',dInc:'1-2%',dTot:'4-8%',rInc:'3.5-4.0%',rTot:'3-4%'},
-          {flag:'\u{1F1E6}\u{1F1FA}',en:'Australia',zh:'澳洲',dInc:'-1-1%',dTot:'7-11%',rInc:'4.5-5.0%',rTot:'5-6%'},
-          {flag:'\u{1F1F2}\u{1F1FE}',en:'Malaysia',zh:'馬來西亞',dInc:'3-5%',dTot:'7-10%',rInc:'5.5-6.5%',rTot:'6-7%'},
-          {flag:'\u{1F1EC}\u{1F1E7}',en:'UK',zh:'英國',dInc:'2-4%',dTot:'7-10%',rInc:'4.0-5.0%',rTot:'-1-1%'},
-          {flag:'\u{1F1EA}\u{1F1FA}',en:'Europe',zh:'歐洲',dInc:'1-2%',dTot:'6-9%',rInc:'3.5-4.5%',rTot:'0-1%'}
-        ]
-      };
-      function midVal(s){
-        s=s.replace(/%/g,'').trim();
-        // Robust parse: handles "5.5-6.5", "-1-1", "-3--1", "3.5" alike
-        var m=s.match(/^(-?\d+\.?\d*)(?:-(-?\d+\.?\d*))?$/);
-        if(!m)return 0;
-        var low=parseFloat(m[1]);
-        if(m[2]===undefined)return low;
-        return (low+parseFloat(m[2]))/2;
-      }
-      function showScenario(key){
-        ['cash','ltv70','ltv50'].forEach(function(k){
-          var b=document.getElementById('tab'+{cash:'Cash',ltv70:'Ltv70',ltv50:'Ltv50'}[k]);
-          if(k===key){b.style.background='#1e3a5f';b.style.color='#fff';b.style.borderColor='#1e3a5f';}
-          else{b.style.background='#fff';b.style.color='#5a7a9a';b.style.borderColor='#dce8f5';}
-        });
-        var rows=SCENARIOS[key],html='',lang=document.documentElement.lang||'en';
-        rows.forEach(function(r,i){
-          var bg=i%2?'background:#f9fbfd;':'';
-          var dMid=midVal(r.dTot),rMid=midVal(r.rTot);
-          var gap=dMid-rMid,gapStr=(gap>=0?'+':'')+gap.toFixed(1)+'%';
-          var gapColor=gap>1?'#16a34a':gap<-1?'#dc2626':'#d97706';
-          var winner,winColor;
-          if(gap>1){winner={en:'Direct',zh:'實體勝'};winColor='#1e3a5f';}
-          else if(gap<-1){winner={en:'REIT',zh:'REIT勝'};winColor='#16a34a';}
-          else{winner={en:'Tie',zh:'平手'};winColor='#d97706';}
-          var dTotStyle=dMid>=rMid?'font-weight:600;color:#1e3a5f':'';
-          var rTotStyle=rMid>=dMid?'font-weight:600;color:#16a34a':'';
-          html+='<tr style="border-bottom:1px solid #f0f5fb;'+bg+'">'
-            +'<td style="padding:7px 8px;font-weight:600">'+r.flag+' <span class="lang-en">'+r.en+'</span><span class="lang-zh">'+r.zh+'</span></td>'
-            +'<td style="padding:7px 8px;text-align:center">'+r.dInc+'</td>'
-            +'<td style="padding:7px 8px;text-align:center;'+dTotStyle+'">'+r.dTot+'</td>'
-            +'<td style="padding:7px 8px;text-align:center">'+r.rInc+'</td>'
-            +'<td style="padding:7px 8px;text-align:center;'+rTotStyle+'">'+r.rTot+'</td>'
-            +'<td style="padding:7px 8px;text-align:center;font-weight:600;color:'+gapColor+'">'+gapStr+'</td>'
-            +'<td style="padding:7px 8px;text-align:center;font-weight:700;color:'+winColor+'"><span class="lang-en">'+winner.en+'</span><span class="lang-zh">'+winner.zh+'</span></td>'
-            +'</tr>';
-        });
-        document.getElementById('scenarioBody').innerHTML=html;
-        var l=(typeof currentLang!=='undefined')?currentLang:'en';
-        document.querySelectorAll('#scenarioBody .lang-zh').forEach(function(e){e.style.display=l==='zh'?'inline':'none';});
-        document.querySelectorAll('#scenarioBody .lang-en').forEach(function(e){e.style.display=l==='en'?'inline':'none';});
-      }
-      showScenario('cash');
-      </script>
-    </div>
+    </a>
   </div>
 </section>
 
