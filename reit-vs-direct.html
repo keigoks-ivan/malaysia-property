@@ -170,10 +170,10 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:#f0f5fb;col
     </div>
   </div>
 
-  <!-- Step 3 · Home country (only visible in foreign mode) -->
-  <div class="home-bar hidden" id="homeBar">
+  <!-- Step 3 · Home country (always visible; only takes effect in foreign mode) -->
+  <div class="home-bar" id="homeBar">
     <div style="flex:1;min-width:240px">
-      <div class="label"><span class="lang-en">Step 3 · Home country (treaty)</span><span class="lang-zh">步驟 3 · 母國（稅務協定）</span></div>
+      <div class="label"><span class="lang-en">Step 3 · Home country (treaty) <span id="homeStatus" style="font-weight:500;letter-spacing:0;text-transform:none;font-size:10px;color:#94a3b8;margin-left:6px"></span></span><span class="lang-zh">步驟 3 · 母國（稅務協定）<span id="homeStatusZh" style="font-weight:500;letter-spacing:0;text-transform:none;font-size:10px;color:#94a3b8;margin-left:6px"></span></span></div>
       <div class="desc" style="margin-top:4px"><span class="lang-en">Treaty WHT relief applies <strong>only to REIT dividends</strong>. Surcharges (ABSD/FIRB/SDLT), rental WHT and CGT stay the same — those aren't treaty-relievable. <strong>Critical for Asian retail:</strong> US has NO treaty with HK / SG / TW / MY → US REIT WHT stays 30% regardless. SG REIT is 0% to all foreigners. MY REIT is 30% to all foreigners (2026 LHDN PR 2/2026).</span><span class="lang-zh">稅務協定只影響 <strong>REIT 股息預扣</strong>。外資附加（ABSD/FIRB/SDLT）、租金預扣與 CGT 不受協定減免。<strong>亞洲散戶關鍵：</strong>美國跟 HK / SG / TW / MY 沒有租稅協定 → 美 REIT 預扣對你永遠 30%。SG REIT 對所有外國人 0%。MY REIT 對所有外國人 30%（2026 LHDN PR 2/2026）。</span></div>
     </div>
     <div class="home-chips" id="homeChips"></div>
@@ -562,9 +562,15 @@ function render(){
     detailEl.style.display = 'none';
   }
 
-  /* Show/hide home country bar based on residency */
+  /* Step 3 home bar always visible. Show inactive state in local mode. */
   var homeBar = document.getElementById('homeBar');
-  if(homeBar) homeBar.className = residency==='foreign' ? 'home-bar' : 'home-bar hidden';
+  if(homeBar) homeBar.style.opacity = residency==='foreign' ? '1' : '0.45';
+  var statusEn = document.getElementById('homeStatus');
+  var statusZh = document.getElementById('homeStatusZh');
+  var statusEnText = residency==='foreign' ? '· active' : '· inactive (only applies in Foreign mode)';
+  var statusZhText = residency==='foreign' ? '· 啟用中' : '· 未啟用（僅在外國模式生效）';
+  if(statusEn) statusEn.textContent = statusEnText;
+  if(statusZh) statusZh.textContent = statusZhText;
 
   /* Find current home country label for header note */
   var homeLabel = HOME_COUNTRIES.filter(function(h){return h.k===homeCountry;})[0] || HOME_COUNTRIES[0];
