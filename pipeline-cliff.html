@@ -351,6 +351,82 @@ var PIPELINE = [
     source:'ABS approvals + SQM Research'}
 ];
 
+/* mark all hand-curated entries as researched */
+PIPELINE.forEach(function(c){c.researched=true;});
+
+/* =========================================================
+   INDICATIVE CITIES — modeled from dashboard pipeline % + supply
+   Use shape templates per supply state. NOT from project-level data.
+   ========================================================= */
+var SHAPE = {
+  tight:    [0.06,0.08,0.10,0.11,0.12,0.12,0.11,0.10,0.09,0.07], // bell, sustained
+  balanced: [0.08,0.10,0.13,0.13,0.12,0.11,0.10,0.08,0.07,0.06], // earlier peak
+  loose:    [0.13,0.14,0.13,0.12,0.11,0.09,0.07,0.06,0.05,0.04]  // front-loaded
+};
+function genCurve(pipPct,supply){
+  var s=SHAPE[supply]||SHAPE.balanced;
+  return s.map(function(v){return +(pipPct*v).toFixed(2);});
+}
+var INDICATIVE = [
+  // NORTH AMERICA
+  {n:'NYC',z:'紐約',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:0.9,sup:'balanced'},
+  {n:'LA',z:'洛杉磯',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:0.8,sup:'balanced'},
+  {n:'SF',z:'舊金山',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:0.6,sup:'tight'},
+  {n:'Chicago',z:'芝加哥',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:0.7,sup:'tight'},
+  {n:'Boston',z:'波士頓',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:0.5,sup:'tight'},
+  {n:'Seattle',z:'西雅圖',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:1.2,sup:'tight'},
+  {n:'Phoenix',z:'鳳凰城',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:2.8,sup:'balanced'},
+  {n:'Denver',z:'丹佛',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:2.1,sup:'balanced'},
+  {n:'San Diego',z:'聖地牙哥',f:'\u{1F1FA}\u{1F1F8}',r:'NA',pip:1.0,sup:'balanced'},
+  // EU / UK
+  {n:'London',z:'倫敦',f:'\u{1F1EC}\u{1F1E7}',r:'EU',pip:0.6,sup:'balanced'},
+  {n:'Manchester',z:'曼徹斯特',f:'\u{1F1EC}\u{1F1E7}',r:'EU',pip:0.8,sup:'tight'},
+  {n:'Edinburgh',z:'愛丁堡',f:'\u{1F1EC}\u{1F1E7}',r:'EU',pip:0.4,sup:'tight'},
+  {n:'Birmingham',z:'伯明翰',f:'\u{1F1EC}\u{1F1E7}',r:'EU',pip:1.1,sup:'tight'},
+  {n:'Dublin',z:'都柏林',f:'\u{1F1EE}\u{1F1EA}',r:'EU',pip:1.5,sup:'tight'},
+  {n:'Cork',z:'科克',f:'\u{1F1EE}\u{1F1EA}',r:'EU',pip:1.2,sup:'tight'},
+  {n:'Madrid',z:'馬德里',f:'\u{1F1EA}\u{1F1F8}',r:'EU',pip:1.2,sup:'tight'},
+  {n:'Barcelona',z:'巴塞隆納',f:'\u{1F1EA}\u{1F1F8}',r:'EU',pip:0.8,sup:'tight'},
+  {n:'Valencia',z:'瓦倫西亞',f:'\u{1F1EA}\u{1F1F8}',r:'EU',pip:1.5,sup:'balanced'},
+  {n:'Malaga',z:'馬拉加',f:'\u{1F1EA}\u{1F1F8}',r:'EU',pip:1.8,sup:'tight'},
+  {n:'Lisbon',z:'里斯本',f:'\u{1F1F5}\u{1F1F9}',r:'EU',pip:1.2,sup:'tight'},
+  {n:'Berlin',z:'柏林',f:'\u{1F1E9}\u{1F1EA}',r:'EU',pip:1.0,sup:'balanced'},
+  {n:'Munich',z:'慕尼黑',f:'\u{1F1E9}\u{1F1EA}',r:'EU',pip:0.4,sup:'tight'},
+  {n:'Amsterdam',z:'阿姆斯特丹',f:'\u{1F1F3}\u{1F1F1}',r:'EU',pip:0.8,sup:'tight'},
+  {n:'Paris',z:'巴黎',f:'\u{1F1EB}\u{1F1F7}',r:'EU',pip:0.5,sup:'balanced'},
+  {n:'Zurich',z:'蘇黎世',f:'\u{1F1E8}\u{1F1ED}',r:'EU',pip:0.3,sup:'tight'},
+  // ASIA
+  {n:'Tokyo',z:'東京',f:'\u{1F1EF}\u{1F1F5}',r:'AS',pip:0.3,sup:'tight'},
+  {n:'Osaka',z:'大阪',f:'\u{1F1EF}\u{1F1F5}',r:'AS',pip:0.5,sup:'tight'},
+  {n:'Fukuoka',z:'福岡',f:'\u{1F1EF}\u{1F1F5}',r:'AS',pip:0.4,sup:'tight'},
+  {n:'Singapore',z:'新加坡',f:'\u{1F1F8}\u{1F1EC}',r:'AS',pip:1.5,sup:'tight'},
+  {n:'Hong Kong',z:'香港',f:'\u{1F1ED}\u{1F1F0}',r:'AS',pip:0.4,sup:'tight'},
+  {n:'Seoul',z:'首爾',f:'\u{1F1F0}\u{1F1F7}',r:'AS',pip:0.6,sup:'tight'},
+  {n:'Taipei',z:'台北',f:'\u{1F1F9}\u{1F1FC}',r:'AS',pip:0.3,sup:'tight'},
+  // OCEANIA
+  {n:'Melbourne',z:'墨爾本',f:'\u{1F1E6}\u{1F1FA}',r:'OC',pip:1.5,sup:'balanced'},
+  {n:'Brisbane',z:'布里斯本',f:'\u{1F1E6}\u{1F1FA}',r:'OC',pip:0.9,sup:'tight'},
+  {n:'Perth',z:'伯斯',f:'\u{1F1E6}\u{1F1FA}',r:'OC',pip:0.6,sup:'tight'},
+  {n:'Adelaide',z:'阿德萊德',f:'\u{1F1E6}\u{1F1FA}',r:'OC',pip:0.5,sup:'tight'},
+  {n:'Gold Coast',z:'黃金海岸',f:'\u{1F1E6}\u{1F1FA}',r:'OC',pip:0.5,sup:'tight'},
+  // LATAM
+  {n:'Mexico City',z:'墨西哥城',f:'\u{1F1F2}\u{1F1FD}',r:'LATAM',pip:2.0,sup:'balanced'},
+  {n:'São Paulo',z:'聖保羅',f:'\u{1F1E7}\u{1F1F7}',r:'LATAM',pip:2.5,sup:'balanced'},
+  {n:'Santiago',z:'聖地牙哥(智)',f:'\u{1F1E8}\u{1F1F1}',r:'LATAM',pip:1.8,sup:'balanced'},
+  // ME
+  {n:'Istanbul',z:'伊斯坦堡',f:'\u{1F1F9}\u{1F1F7}',r:'ME',pip:3.5,sup:'balanced'}
+];
+INDICATIVE.forEach(function(c){
+  c.q=genCurve(c.pip,c.sup);
+  c.researched=false;
+  c.note={
+    en:'<strong>Indicative model.</strong> Quarterly distribution computed from current pipeline '+c.pip+'% of stock × shape template for "'+c.sup+'" supply state. Not derived from project-level handover data — use as directional signal. For researched cities (with project sources cited), check the entries with peak quarter outlined in dark.',
+    zh:'<strong>示意模型。</strong>季度分布由當前在建 '+c.pip+'% × 「'+c.sup+'」狀態的形狀模板計算。非專案級交屋資料 — 視為方向性訊號。已研究城市（附專案來源）見高峰季有深色框線者。'
+  };
+  c.source='Modeled · dashboard pipeline + supply';
+  PIPELINE.push(c);
+});
+
 /* compute peak/total per city */
 PIPELINE.forEach(function(c){
   c.peak=Math.max.apply(null,c.q);
@@ -389,7 +465,7 @@ function sorted(){
   if(sortBy==='peak')arr.sort(function(a,b){return b.peak-a.peak;});
   else if(sortBy==='total')arr.sort(function(a,b){return b.total-a.total;});
   else if(sortBy==='region'){
-    var ord={NA:0,EU:1,AS:2,OC:3,ME:4};
+    var ord={NA:0,LATAM:1,EU:2,AS:3,OC:4,ME:5};
     arr.sort(function(a,b){
       if(a.r!==b.r)return ord[a.r]-ord[b.r];
       return b.peak-a.peak;
@@ -432,7 +508,10 @@ function renderCal(){
     /* tier dot */
     var dotColor=c.tier==='danger'?'#dc2626':c.tier==='watch'?'#d97706':'#16a34a';
     html+='<circle cx="14" cy="'+(y+cellH/2)+'" r="4" fill="'+dotColor+'" pointer-events="none"/>';
-    html+='<text x="26" y="'+(y+cellH/2+4)+'" fill="#0f1e33" font-size="11.5" font-weight="600" pointer-events="none">'+c.f+' '+nm+'</text>';
+    /* researched indicator: solid bullet vs hollow */
+    var nmColor=c.researched?'#0f1e33':'#5a7a9a';
+    var nmWeight=c.researched?'600':'500';
+    html+='<text x="26" y="'+(y+cellH/2+4)+'" fill="'+nmColor+'" font-size="11.5" font-weight="'+nmWeight+'" pointer-events="none">'+c.f+' '+nm+(c.researched?'':' <tspan fill="#94a3b8" font-size="9">·model</tspan>')+'</text>';
     /* peak indicator on right of label */
     html+='<text x="'+(labelW-8)+'" y="'+(y+cellH/2+4)+'" fill="#5a7a9a" font-size="9.5" text-anchor="end" font-weight="600" pointer-events="none">peak '+c.peak.toFixed(1)+'%</text>';
     /* cells */
