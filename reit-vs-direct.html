@@ -54,6 +54,24 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:#f0f5fb;col
 
 .endpoint-grid-hdr{display:grid;grid-template-columns:120px 1fr 1fr;gap:8px;padding:0 0 8px 0;font-size:9.5px;color:#5a7a9a;letter-spacing:.10em;font-weight:700;text-transform:uppercase;border-bottom:1px solid #dce8f5;margin-bottom:6px}
 
+.home-bar{background:#fff;border:1px solid #dce8f5;border-radius:10px;padding:18px 22px;margin-bottom:20px;display:flex;flex-wrap:wrap;align-items:flex-start;gap:16px}
+.home-bar.hidden{display:none}
+.home-bar .label{font-size:11px;letter-spacing:.10em;font-weight:700;color:#1e3a5f;text-transform:uppercase}
+.home-bar .desc{font-size:11.5px;color:#5a7a9a;flex:1;min-width:200px;line-height:1.45}
+.home-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.home-chips button{padding:7px 11px;font-size:11.5px;font-weight:600;cursor:pointer;border:1px solid #dce8f5;background:#fff;color:#5a7a9a;border-radius:18px;font-family:inherit;display:inline-flex;align-items:center;gap:5px;transition:all .12s}
+.home-chips button.active{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
+.home-chips button:not(.active):hover{border-color:#1e3a5f;color:#1e3a5f}
+.home-chips button .flag{font-size:13px;line-height:1}
+
+.treaty-savings{margin-top:14px;padding:12px 14px;background:#eff6ff;border-left:3px solid #3b82f6;border-radius:6px;font-size:11px;color:#1e3a5f;line-height:1.55}
+.treaty-savings strong{color:#0f1e33}
+.treaty-savings .row{display:flex;justify-content:space-between;gap:14px;padding:3px 0;font-variant-numeric:tabular-nums}
+.treaty-savings .row .mkt{color:#5a7a9a;font-size:10.5px}
+.treaty-savings .row .delta{font-weight:700}
+.treaty-savings .row .delta.win{color:#16a34a}
+.treaty-savings .row .delta.zero{color:#94a3b8}
+
 .compare-card{background:#fff;border:1px solid #dce8f5;border-radius:10px;overflow:hidden}
 .compare-hdr{background:#1e3a5f;padding:14px 20px}
 .compare-hdr .t{font-size:14px;font-weight:700;color:#fff}
@@ -152,6 +170,15 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:#f0f5fb;col
     </div>
   </div>
 
+  <!-- Step 3 · Home country (only visible in foreign mode) -->
+  <div class="home-bar hidden" id="homeBar">
+    <div style="flex:1;min-width:240px">
+      <div class="label"><span class="lang-en">Step 3 · Home country (treaty)</span><span class="lang-zh">步驟 3 · 母國（稅務協定）</span></div>
+      <div class="desc" style="margin-top:4px"><span class="lang-en">Treaty WHT relief applies <strong>only to REIT dividends</strong>. Surcharges (ABSD/FIRB/SDLT), rental WHT and CGT stay the same — those aren't treaty-relievable. <strong>Critical for Asian retail:</strong> US has NO treaty with HK / SG / TW / MY → US REIT WHT stays 30% regardless. SG REIT is 0% to all foreigners. MY REIT is 30% to all foreigners (2026 LHDN PR 2/2026).</span><span class="lang-zh">稅務協定只影響 <strong>REIT 股息預扣</strong>。外資附加（ABSD/FIRB/SDLT）、租金預扣與 CGT 不受協定減免。<strong>亞洲散戶關鍵：</strong>美國跟 HK / SG / TW / MY 沒有租稅協定 → 美 REIT 預扣對你永遠 30%。SG REIT 對所有外國人 0%。MY REIT 對所有外國人 30%（2026 LHDN PR 2/2026）。</span></div>
+    </div>
+    <div class="home-chips" id="homeChips"></div>
+  </div>
+
   <!-- Comparison card -->
   <div class="compare-card">
     <div class="compare-hdr">
@@ -205,7 +232,7 @@ body{font-family:Inter,system-ui,-apple-system,sans-serif;background:#f0f5fb;col
   </div>
 
   <div class="foot-note">
-    <em><span class="lang-en">All figures 10-year annualized (Dec 2015 – Dec 2025), nominal. <strong>Direct property capital CAGR</strong>: BIS Residential Property Price indices via FRED (Case-Shiller 20-City 6.33% US; URA Singapore 4.33%; Japan 3.26%; Cotality AU 5.26%; NAPIC MY 3.40%; Nationwide UK 3.47%; Eurostat Euro Area 4.45%). Gross yields from Global Property Guide Q3-Q4 2025. <strong>Annual holding costs</strong>: US ~2.8%, JP ~2.9%, AU ~2.5%, UK ~2.3%, EU ~2.0%, MY ~1.7%, SG ~1.7%. <strong>Round-trip txn costs</strong> (10yr-amortized): US 0.9%; SG 0.7%; JP 1.1%; AU 0.8%; MY 0.6%; UK 0.6%; EU 1.2%. <strong>REIT</strong>: FTSE Nareit All Equity US 5.77%; FTSE ST REIT 5.9%; Developed Asia (Nareit 2026) 3.6%; S&amp;P/ASX 200 A-REIT 5.31%; FBM MREIT ~6%; FTSE EPRA UK ~-0.2%; FTSE EPRA Dev Europe 0.1%. <strong>Leveraged columns</strong> scale txn costs by 1/equity-ratio. <strong>Foreign mode</strong> overlays: foreign-buyer surcharge (ABSD 60% SG · FIRB 3%+state 7-9% AU · 2% non-resident SDLT UK · FBLB 2-4% MY · 5% avg EU · 1.5% US) divided by 10yr & equity-ratio; non-resident rental WHT (US 30% / SG 24% / JP 20% / AU 32.5% / MY 30% / UK 20% / EU 24%); REIT div WHT (US 30% / SG 0% / JP 15% / AU 15% / MY 10% / UK 20% / EU 25%); foreigner-only CGT delta on exit (US 5% / SG 0 / JP 0 / AU 8% / MY 5% / UK 5% / EU 5%, 10yr-amortized). Specialised REITs in growth sectors (DC, healthcare, logistics) may significantly beat index averages — see <a href="/reits.html" style="color:#3b82f6">REITs page</a>.</span><span class="lang-zh">所有數據為 10 年年化（2015/12 - 2025/12），名義。<strong>實體資本 CAGR</strong>：BIS（FRED）住宅指數（美 Case-Shiller 20 城 6.33%、新 URA 4.33%、日全國 3.26%、澳 Cotality 5.26%、馬 NAPIC 3.40%、英 Nationwide 3.47%、歐 Eurostat 4.45%）。毛租金來自 Global Property Guide 2025 Q3-Q4。<strong>年持有成本</strong>：美 ~2.8%、日 ~2.9%、澳 ~2.5%、英 ~2.3%、歐 ~2.0%、馬 ~1.7%、新 ~1.7%。<strong>往返交易成本</strong>（10 年攤銷）：美 0.9%、新 0.7%、日 1.1%、澳 0.8%、馬 0.6%、英 0.6%、歐 1.2%。<strong>REIT</strong>：FTSE Nareit All Equity 美 5.77%、FTSE ST REIT 新 5.9%、Developed Asia（Nareit 2026）3.6%、S&amp;P/ASX 200 A-REIT 澳 5.31%、FBM MREIT 馬 ~6%、FTSE EPRA UK 英 ~-0.2%、FTSE EPRA Dev Europe 歐 0.1%。<strong>槓桿欄</strong>交易成本依 1/自有資金比率放大。<strong>外國模式</strong>疊加：外資附加（ABSD 60% 新加坡、FIRB 3% + 州 7-9% 澳洲、SDLT 額外 2% 英、FBLB 2-4% 馬、歐平均 5%、美 1.5%）依 10 年與自有資金比率攤銷；非居民租金預扣（美 30% / 新 24% / 日 20% / 澳 32.5% / 馬 30% / 英 20% / 歐 24%）；REIT 股息預扣（美 30% / 新 0% / 日 15% / 澳 15% / 馬 10% / 英 20% / 歐 25%）；外國人退場 CGT 額外（美 5%、新 0、日 0、澳 8%、馬 5%、英 5%、歐 5%，10 年攤銷）。專業板塊 REIT（DC、醫療、物流）可能大幅領先指數均值 — 見 <a href="/reits.html" style="color:#3b82f6">REITs 頁面</a>。</span></em>
+    <em><span class="lang-en">All figures 10-year annualized (Dec 2015 – Dec 2025), nominal. <strong>Direct property capital CAGR</strong>: BIS Residential Property Price indices via FRED (Case-Shiller 20-City 6.33% US; URA Singapore 4.33%; Japan 3.26%; Cotality AU 5.26%; NAPIC MY 3.40%; Nationwide UK 3.47%; Eurostat Euro Area 4.45%). Gross yields from Global Property Guide Q3-Q4 2025. <strong>Annual holding costs</strong>: US ~2.8%, JP ~2.9%, AU ~2.5%, UK ~2.3%, EU ~2.0%, MY ~1.7%, SG ~1.7%. <strong>Round-trip txn costs</strong> (10yr-amortized): US 0.9%; SG 0.7%; JP 1.1%; AU 0.8%; MY 0.6%; UK 0.6%; EU 1.2%. <strong>REIT</strong>: FTSE Nareit All Equity US 5.77%; FTSE ST REIT 5.9%; Developed Asia (Nareit 2026) 3.6%; S&amp;P/ASX 200 A-REIT 5.31%; FBM MREIT ~6%; FTSE EPRA UK ~-0.2%; FTSE EPRA Dev Europe 0.1%. <strong>Leveraged columns</strong> scale txn costs by 1/equity-ratio. <strong>Foreign mode</strong> overlays: foreign-buyer surcharge (ABSD 60% SG · FIRB 3%+state 7-9% AU · 2% non-resident SDLT UK · FBLB 2-4% MY · 5% avg EU · 1.5% US) divided by 10yr & equity-ratio; non-resident rental WHT (US 30% / SG 24% / JP 20% / AU 32.5% / MY 30% / UK 20% / EU 24%); REIT div WHT default (US 30% / SG 0% / JP 15% / AU 30% / MY 30% post-2026 / UK 20% / EU 25%) reduced for treaty residents per matrix below; foreigner-only CGT delta on exit (US 5% / SG 0 / JP 0 / AU 8% / MY 5% / UK 5% / EU 5%, 10yr-amortized). Specialised REITs in growth sectors (DC, healthcare, logistics) may significantly beat index averages — see <a href="/reits.html" style="color:#3b82f6">REITs page</a>.</span><span class="lang-zh">所有數據為 10 年年化（2015/12 - 2025/12），名義。<strong>實體資本 CAGR</strong>：BIS（FRED）住宅指數（美 Case-Shiller 20 城 6.33%、新 URA 4.33%、日全國 3.26%、澳 Cotality 5.26%、馬 NAPIC 3.40%、英 Nationwide 3.47%、歐 Eurostat 4.45%）。毛租金來自 Global Property Guide 2025 Q3-Q4。<strong>年持有成本</strong>：美 ~2.8%、日 ~2.9%、澳 ~2.5%、英 ~2.3%、歐 ~2.0%、馬 ~1.7%、新 ~1.7%。<strong>往返交易成本</strong>（10 年攤銷）：美 0.9%、新 0.7%、日 1.1%、澳 0.8%、馬 0.6%、英 0.6%、歐 1.2%。<strong>REIT</strong>：FTSE Nareit All Equity 美 5.77%、FTSE ST REIT 新 5.9%、Developed Asia（Nareit 2026）3.6%、S&amp;P/ASX 200 A-REIT 澳 5.31%、FBM MREIT 馬 ~6%、FTSE EPRA UK 英 ~-0.2%、FTSE EPRA Dev Europe 歐 0.1%。<strong>槓桿欄</strong>交易成本依 1/自有資金比率放大。<strong>外國模式</strong>疊加：外資附加（ABSD 60% 新加坡、FIRB 3% + 州 7-9% 澳洲、SDLT 額外 2% 英、FBLB 2-4% 馬、歐平均 5%、美 1.5%）依 10 年與自有資金比率攤銷；非居民租金預扣（美 30% / 新 24% / 日 20% / 澳 32.5% / 馬 30% / 英 20% / 歐 24%）；REIT 股息預扣預設（美 30% / 新 0% / 日 15% / 澳 30% / 馬 2026 起 30% / 英 20% / 歐 25%），租稅協定居民依矩陣減免；外國人退場 CGT 額外（美 5%、新 0、日 0、澳 8%、馬 5%、英 5%、歐 5%，10 年攤銷）。專業板塊 REIT（DC、醫療、物流）可能大幅領先指數均值 — 見 <a href="/reits.html" style="color:#3b82f6">REITs 頁面</a>。</span></em>
   </div>
 </section>
 
@@ -264,8 +291,8 @@ var FOREIGN_TAX = {
     note:{en:'No foreign-buyer surcharge — JP is the most foreigner-friendly market here',zh:'無外資附加 — 日本對外國人最友善'}},
   Australia: {surch:13,   rentTax:32.5, cgtExit:8,  reitWh:15,
     note:{en:'FIRB 3% + state surcharge 7-9% (NSW 9% / VIC 8%); foreigners lose 50% CGT discount',zh:'FIRB 3% + 州外資附加 7-9%（NSW 9%、VIC 8%）；外國人無 50% CGT 折扣'}},
-  Malaysia:  {surch:3,    rentTax:30,   cgtExit:5,  reitWh:10,
-    note:{en:'State FBLB 2-4% + min RM1M floor; non-resident rental WHT 30%; RPGT 10% if &gt;5yr',zh:'各州 FBLB 2-4% + 最低 RM100 萬；非居民租金預扣 30%；RPGT >5 年 10%'}},
+  Malaysia:  {surch:3,    rentTax:30,   cgtExit:5,  reitWh:30,
+    note:{en:'State FBLB 2-4% + min RM1M floor; non-resident rental WHT 30%; RPGT 10% if &gt;5yr. <strong>2026 change: REIT distribution WHT to non-resident individuals raised from 10% → 30%</strong> (LHDN PR 2/2026)',zh:'各州 FBLB 2-4% + 最低 RM100 萬；非居民租金預扣 30%；RPGT >5 年 10%。<strong>2026 變動：非居民個人 REIT 預扣自 10% → 30%</strong>（LHDN PR 2/2026）'}},
   UK:        {surch:2,    rentTax:20,   cgtExit:5,  reitWh:20,
     note:{en:'2% non-resident SDLT surcharge; 28% non-resident CGT on residential; PID divs 20% WHT',zh:'非居民 SDLT 附加 2%；住宅非居民 CGT 28%；PID 股息預扣 20%'}},
   Europe:    {surch:5,    rentTax:24,   cgtExit:5,  reitWh:25,
@@ -273,6 +300,41 @@ var FOREIGN_TAX = {
 };
 
 var EQUITY_RATIO = {cash:1.0, ltv70:0.30, ltv50:0.50};
+
+/* =========================================================
+   TREATY MATRIX — REIT dividend WHT [source][homeCountry]
+   Source: US Treasury IRS treaty tables, IRAS, HMRC, ATO,
+           HK IRD DTA Notes, JP NTA, LHDN PR 2/2026
+   Notes:
+   - US-SG / US-HK / US-TW / US-MY = NO comprehensive treaty → 30%
+   - SG REIT distributions to non-res individuals = 0% (extended to 2030 per Budget 2025)
+   - MY REIT 30% post-2026 regardless of home (LHDN PR 2/2026)
+   - JP J-REIT default 15.315%; HK-JP DTA reduces to 10%
+   - AU MIT 30% default; reduced to 15% for "info exchange" countries (HK, SG, TW etc)
+   - UK PID 20% default; treaty 15% widely available
+   - EU = mix; use representative rates for ES/FR/DE blended
+   ========================================================= */
+var TREATY_REIT_WHT = {
+  US:        {generic:30, HK:30, SG:30, TW:30, MY:30, JP:15, UK:15, AU:15},
+  Singapore: {generic:0,  HK:0,  SG:0,  TW:0,  MY:0,  JP:0,  UK:0,  AU:0},
+  Japan:     {generic:15, HK:10, SG:15, TW:15, MY:15, JP:0,  UK:10, AU:15},
+  Australia: {generic:30, HK:15, SG:15, TW:15, MY:15, JP:15, UK:15, AU:0},
+  Malaysia:  {generic:30, HK:30, SG:30, TW:30, MY:0,  JP:30, UK:30, AU:30},
+  UK:        {generic:20, HK:15, SG:15, TW:20, MY:15, JP:15, UK:0,  AU:15},
+  Europe:    {generic:25, HK:20, SG:15, TW:25, MY:15, JP:15, UK:15, AU:15}
+};
+
+/* Home country labels with flags, used for chips */
+var HOME_COUNTRIES = [
+  {k:'generic', en:'Generic', zh:'一般', flag:'\u{1F310}'},
+  {k:'HK',      en:'HK',      zh:'香港', flag:'\u{1F1ED}\u{1F1F0}'},
+  {k:'SG',      en:'SG',      zh:'新加坡',flag:'\u{1F1F8}\u{1F1EC}'},
+  {k:'TW',      en:'TW',      zh:'台灣', flag:'\u{1F1F9}\u{1F1FC}'},
+  {k:'MY',      en:'MY',      zh:'馬來西亞',flag:'\u{1F1F2}\u{1F1FE}'},
+  {k:'JP',      en:'JP',      zh:'日本', flag:'\u{1F1EF}\u{1F1F5}'},
+  {k:'UK',      en:'UK',      zh:'英國', flag:'\u{1F1EC}\u{1F1E7}'},
+  {k:'AU',      en:'AU',      zh:'澳洲', flag:'\u{1F1E6}\u{1F1FA}'}
+];
 
 /* Total round-trip transaction cost (% of price) — used for re-amortization across periods */
 var TXN_COST_TOTAL = {US:9, Singapore:7, Japan:11, Australia:8, Malaysia:6, UK:6, Europe:12};
@@ -304,6 +366,7 @@ var PERIOD_REIT_DELTA = {
 var residency = 'local';
 var scenario = 'cash';
 var period = 10;
+var homeCountry = 'generic';
 
 /* =========================================================
    FORMATTING & DRAG MATH (ranges are [lo, hi] arrays internally)
@@ -316,18 +379,27 @@ function fmtRange(r){
 function midOfRange(r){return (r[0]+r[1])/2;}
 function shiftRange(r, drag){return [r[0]+drag, r[1]+drag];}
 
-/* Drag (percentage points subtracted) for foreign mode — per country, equityRatio & holding period N */
-function foreignDrag(country, equityRatio, N){
+/* REIT div WHT: lookup treaty matrix; fallback to default reitWh if no entry */
+function effectiveReitWh(country, home){
+  var row = TREATY_REIT_WHT[country];
+  if(!row) return (FOREIGN_TAX[country]||{}).reitWh || 0;
+  if(row[home] !== undefined) return row[home];
+  return row.generic !== undefined ? row.generic : ((FOREIGN_TAX[country]||{}).reitWh || 0);
+}
+
+/* Drag (percentage points subtracted) for foreign mode — country, equityRatio, period N, home country */
+function foreignDrag(country, equityRatio, N, home){
   var t = FOREIGN_TAX[country], y = YIELDS[country];
   if(!t||!y) return {dInc:0,dTot:0,rInc:0,rTot:0};
-  /* Rental tax on gross rental yield, scaled by leverage (rent on equity = dy/equityRatio) */
+  /* Rental tax on gross rental yield, scaled by leverage. Treaty rarely affects rental WHT for portfolio holders → use default */
   var rentDrag = -(y.dy * t.rentTax/100) / equityRatio;
-  /* One-time foreign-buyer surcharge (% of price), N-yr-amortized & leverage-scaled */
+  /* One-time foreign-buyer surcharge (% of price), N-yr-amortized & leverage-scaled. Never treaty-relievable. */
   var surchDrag = -(t.surch / equityRatio) / N;
-  /* Foreigner-only CGT extra on exit (% of price), N-yr-amortized & leverage-scaled */
+  /* Foreigner-only CGT extra on exit (% of price), N-yr-amortized & leverage-scaled. */
   var cgtDrag = -(t.cgtExit / equityRatio) / N;
-  /* REIT div WHT on REIT yield (REITs are not levered at investor level) */
-  var reitDrag = -(y.ry * t.reitWh/100);
+  /* REIT div WHT — uses treaty matrix lookup based on homeCountry */
+  var reitWh = effectiveReitWh(country, home||'generic');
+  var reitDrag = -(y.ry * reitWh/100);
   return {
     dInc: rentDrag,
     dTot: rentDrag + surchDrag + cgtDrag,
@@ -379,6 +451,13 @@ function setPeriod(p){
   });
   render();
 }
+function setHomeCountry(h){
+  homeCountry = h;
+  document.querySelectorAll('#homeChips button').forEach(function(b){
+    b.classList.toggle('active', b.dataset.h===h);
+  });
+  render();
+}
 
 function render(){
   var equityRatio = EQUITY_RATIO[scenario];
@@ -386,7 +465,7 @@ function render(){
 
   var rows = SCENARIOS[scenario].map(function(r){
     var pa = periodAdjustment(r.en, equityRatio, period);
-    var fd = residency==='foreign' ? foreignDrag(r.en, equityRatio, period) : {dInc:0,dTot:0,rInc:0,rTot:0};
+    var fd = residency==='foreign' ? foreignDrag(r.en, equityRatio, period, homeCountry) : {dInc:0,dTot:0,rInc:0,rTot:0};
     return {
       flag:r.flag, en:r.en, zh:r.zh,
       dInc: shiftRange(r.dInc, pa.dInc + fd.dInc),
@@ -427,9 +506,28 @@ function render(){
     cards += '<div class="card green"><div class="h"><span class="lang-en">When REITs Still Make Sense</span><span class="lang-zh">REIT 仍合理的情境</span></div><span class="lang-en">(1) Need liquidity. (2) Capital &lt;USD 100K. (3) No local expertise. (4) Specialised sectors (DC, healthcare, industrial) with structural tailwinds beat the index.</span><span class="lang-zh">(1) 需流動性。(2) 資金 &lt;USD 100K。(3) 無當地專業。(4) 結構性順風的專業板塊（DC、醫療、工業）跑贏大盤。</span></div>';
     cards += '<div class="card amber"><div class="h"><span class="lang-en">Caveats Still Excluded</span><span class="lang-zh">仍未計入</span></div><span class="lang-en">Vacancy drag (1-3%/yr); local income tax; capital-gains tax on exit (varies). US 15yr Nareit = 7.78%, 20yr = 6.57% — the 10yr window was kind to direct (post-COVID spike + REIT 2022 crash).</span><span class="lang-zh">空置率（年 1-3%）；本國所得稅；退場資本利得稅。美 15 年 Nareit = 7.78%、20 年 = 6.57% — 10 年窗口對實體房產有利（疫後飆升 + REIT 2022 崩跌）。</span></div>';
   }else{
-    cards += '<div class="card red"><div class="h"><span class="lang-en">Foreign Mode Flips These</span><span class="lang-zh">外國模式翻盤這些</span></div><span class="lang-en"><strong>Singapore</strong>: ABSD 60% means cash buyer needs &gt;15yr just to break-even on the surcharge alone — REIT clearly wins. <strong>Australia</strong>: FIRB + state + no CGT discount narrows the gap sharply. <strong>US</strong>: 30% WHT on REIT divs makes US REITs much weaker for non-treaty investors.</span><span class="lang-zh"><strong>新加坡</strong>：ABSD 60% 讓現金買家光是回收附加稅就要 15 年以上 — REIT 明顯勝。<strong>澳洲</strong>：FIRB + 州外資 + 無 CGT 折扣使差距急縮。<strong>美國</strong>：30% REIT 股息預扣讓美 REIT 對無稅務協定投資人吸引力大跌。</span></div>';
-    cards += '<div class="card green"><div class="h"><span class="lang-en">Foreign-Friendly Markets</span><span class="lang-zh">對外國人友善的市場</span></div><span class="lang-en"><strong>Japan</strong>: zero foreign-buyer surcharge. <strong>SG REITs</strong>: 0% dividend WHT even to foreigners (unique special exemption). <strong>Malaysia</strong>: low FBLB + RPGT 10% after 5yr — but rental WHT 30% is the silent drag.</span><span class="lang-zh"><strong>日本</strong>：零外資附加。<strong>新加坡 REIT</strong>：對外國人 0% 股息預扣（獨特豁免）。<strong>馬來西亞</strong>：低 FBLB + 5 年後 RPGT 10% — 但租金預扣 30% 是隱性拖累。</span></div>';
-    cards += '<div class="card amber"><div class="h"><span class="lang-en">Treaties Can Recover Some</span><span class="lang-zh">稅務協定可回收部分</span></div><span class="lang-en">US WHT drops from 30% → 15% for treaty residents (UK, AU, JP, SG, MY have treaties). AU MIT WHT down to 15% with treaty. Numbers above show non-treaty default — your actual drag may be lower if home country has a treaty.</span><span class="lang-zh">美國預扣自 30% → 15%（英、澳、日、新、馬均有租稅協定）。澳 MIT 預扣依協定降至 15%。上方數字為無協定預設值 — 若母國有協定，實際拖累較輕。</span></div>';
+    cards += '<div class="card red"><div class="h"><span class="lang-en">Foreign Mode Flips These</span><span class="lang-zh">外國模式翻盤這些</span></div><span class="lang-en"><strong>Singapore</strong>: ABSD 60% means cash buyer needs &gt;15yr just to break-even on the surcharge alone — REIT clearly wins. <strong>Australia</strong>: FIRB + state + no CGT discount narrows the gap sharply. <strong>Malaysia REIT 30% (2026)</strong>: LHDN PR 2/2026 raised non-resident individual REIT WHT from 10% → 30% — major shift.</span><span class="lang-zh"><strong>新加坡</strong>：ABSD 60% 讓現金買家光是回收附加稅就要 15 年以上 — REIT 明顯勝。<strong>澳洲</strong>：FIRB + 州外資 + 無 CGT 折扣使差距急縮。<strong>馬來西亞 REIT 30%（2026 起）</strong>：LHDN PR 2/2026 將非居民個人 REIT 預扣從 10% → 30%，重大變動。</span></div>';
+    cards += '<div class="card green"><div class="h"><span class="lang-en">Foreign-Friendly Markets</span><span class="lang-zh">對外國人友善的市場</span></div><span class="lang-en"><strong>Japan</strong>: zero foreign-buyer surcharge. <strong>SG REITs</strong>: 0% dividend WHT to all foreign individuals (extended through 2030 in Budget 2025). HK home gets a bonus on JP REITs too (HK-JP DTA: 10%).</span><span class="lang-zh"><strong>日本</strong>：零外資附加。<strong>新加坡 REIT</strong>：對所有外國個人 0% 股息預扣（2025 預算延長至 2030）。香港居民投資日本 REIT 還有 HK-JP DTA 10% 加成。</span></div>';
+    /* Dynamic treaty savings card based on selected home country */
+    var savingsRows = '';
+    var hasAnySavings = false;
+    SCENARIOS.cash.forEach(function(srow){
+      var src = srow.en;
+      var generic = TREATY_REIT_WHT[src].generic;
+      var actual = effectiveReitWh(src, homeCountry);
+      var ydt = (YIELDS[src]||{}).ry || 4;
+      var savingPct = ((generic - actual)/100) * ydt;
+      if(actual === generic){
+        savingsRows += '<div class="row"><span class="mkt">'+srow.flag+' '+(lang==='zh'?srow.zh:src)+'</span><span class="delta zero">'+actual+'% (no change)</span></div>';
+      }else{
+        hasAnySavings = true;
+        savingsRows += '<div class="row"><span class="mkt">'+srow.flag+' '+(lang==='zh'?srow.zh:src)+'</span><span class="delta win">'+generic+'% → '+actual+'%  (+'+savingPct.toFixed(2)+'%/yr)</span></div>';
+      }
+    });
+    var savingsHeader = homeCountry==='generic'
+      ? (lang==='zh'?'選擇你的母國 chip 看實際協定減免':'Pick your home country chip to see treaty relief')
+      : ((lang==='zh'?homeLabel.zh+' 居民的 REIT 預扣減免':homeLabel.en+' resident · REIT WHT relief'));
+    cards += '<div class="card amber"><div class="h"><span class="lang-en">Treaty Relief · '+homeLabel.flag+' '+homeLabel.en+'</span><span class="lang-zh">協定減免 · '+homeLabel.flag+' '+homeLabel.zh+'</span></div><div style="font-size:10.5px;line-height:1.55"><strong style="color:#d97706">'+savingsHeader+'</strong></div><div class="treaty-savings" style="background:transparent;border-left:none;padding:6px 0 0 0;margin-top:6px">'+savingsRows+'</div></div>';
   }
   document.getElementById('cardsRow').innerHTML = cards;
 
@@ -440,15 +538,20 @@ function render(){
     var grid = '';
     SCENARIOS.cash.forEach(function(r){
       var t = FOREIGN_TAX[r.en], y = YIELDS[r.en];
-      var d = foreignDrag(r.en, equityRatio, period);
+      var d = foreignDrag(r.en, equityRatio, period, homeCountry);
       var totalDrag = d.dTot;
       var totColor = totalDrag<-3?'red':totalDrag<-1?'amber':'';
+      var genericReit = (TREATY_REIT_WHT[r.en]||{}).generic;
+      var effectiveReit = effectiveReitWh(r.en, homeCountry);
+      var reitDisplay = (genericReit !== undefined && genericReit !== effectiveReit)
+        ? '<span style="color:#16a34a">'+effectiveReit+'%</span> <span style="color:#94a3b8;font-size:10px;font-weight:500">(was '+genericReit+'%)</span>'
+        : effectiveReit+'%';
       grid += '<div class="fd-card">'
         + '<div class="head"><span class="flag">'+r.flag+'</span><span class="lang-en">'+r.en+'</span><span class="lang-zh">'+r.zh+'</span></div>'
         + '<div class="nums">'
         +   '<div class="num"><span class="k"><span class="lang-en">Surcharge</span><span class="lang-zh">外資附加</span></span><span class="v '+(t.surch>10?'red':t.surch>2?'amber':'')+'">'+t.surch+'%</span></div>'
         +   '<div class="num"><span class="k"><span class="lang-en">Rent WHT</span><span class="lang-zh">租金預扣</span></span><span class="v">'+t.rentTax+'%</span></div>'
-        +   '<div class="num"><span class="k"><span class="lang-en">REIT Div WHT</span><span class="lang-zh">REIT 預扣</span></span><span class="v">'+t.reitWh+'%</span></div>'
+        +   '<div class="num"><span class="k"><span class="lang-en">REIT Div WHT</span><span class="lang-zh">REIT 預扣</span></span><span class="v">'+reitDisplay+'</span></div>'
         +   '<div class="num"><span class="k"><span class="lang-en">Direct Drag</span><span class="lang-zh">實體拖累</span></span><span class="v '+totColor+'">'+totalDrag.toFixed(1)+'%</span></div>'
         + '</div>'
         + '<div class="note"><span class="lang-en">'+t.note.en+'</span><span class="lang-zh">'+t.note.zh+'</span></div>'
@@ -459,11 +562,23 @@ function render(){
     detailEl.style.display = 'none';
   }
 
+  /* Show/hide home country bar based on residency */
+  var homeBar = document.getElementById('homeBar');
+  if(homeBar) homeBar.className = residency==='foreign' ? 'home-bar' : 'home-bar hidden';
+
+  /* Find current home country label for header note */
+  var homeLabel = HOME_COUNTRIES.filter(function(h){return h.k===homeCountry;})[0] || HOME_COUNTRIES[0];
+
   /* Mode note in header — period & residency context */
   var modeEnBase = ' &middot; <strong>'+period+'-yr horizon</strong>';
   var modeZhBase = ' &middot; <strong>'+period+' 年期</strong>';
-  var modeEn = modeEnBase + (residency==='foreign' ? ' &middot; <strong style="color:#dc2626">Foreign-buyer mode</strong>: foreign-specific surcharges &amp; withholdings overlaid.' : '');
-  var modeZh = modeZhBase + (residency==='foreign' ? ' &middot; <strong style="color:#dc2626">外國買家模式</strong>：外資附加與預扣稅疊加。' : '');
+  var foreignEn = '', foreignZh = '';
+  if(residency==='foreign'){
+    foreignEn = ' &middot; <strong style="color:#dc2626">Foreign · '+homeLabel.flag+' '+homeLabel.en+' home</strong>';
+    foreignZh = ' &middot; <strong style="color:#dc2626">外國 · '+homeLabel.flag+' '+homeLabel.zh+'</strong>';
+  }
+  var modeEn = modeEnBase + foreignEn;
+  var modeZh = modeZhBase + foreignZh;
   document.getElementById('modeNote').innerHTML = modeEn;
   document.getElementById('modeNoteZh').innerHTML = modeZh;
 
@@ -525,7 +640,21 @@ function applyLang(lang){
 }
 function getLang(){var l='en';try{l=localStorage.getItem('lang')||'en';}catch(e){}return l;}
 
+/* Build the home country chips (one-time) */
+function initHomeChips(){
+  var html = HOME_COUNTRIES.map(function(h){
+    var active = h.k===homeCountry ? ' active' : '';
+    return '<button class="'+active.trim()+'" data-h="'+h.k+'" onclick="setHomeCountry(\''+h.k+'\')">'
+      + '<span class="flag">'+h.flag+'</span>'
+      + '<span class="lang-en">'+h.en+'</span>'
+      + '<span class="lang-zh">'+h.zh+'</span>'
+      + '</button>';
+  }).join('');
+  document.getElementById('homeChips').innerHTML = html;
+}
+
 window.addEventListener('load', function(){
+  initHomeChips();
   applyLang(getLang());
   render();
 });
