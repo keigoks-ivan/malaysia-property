@@ -137,8 +137,8 @@ async def main():
         await shot(page, "10-reit-vs-direct-au-local.png", viewport_h=1300)
 
         # ── 11: Carry Heatmap — AU rows visible ──
-        print("[11] /tools/carry-heatmap AU rows")
-        await page.goto(f"{BASE}/tools/carry-heatmap.html", wait_until="networkidle")
+        print("[11] /carry-heatmap AU rows")
+        await page.goto(f"{BASE}/carry-heatmap.html", wait_until="networkidle")
         await page.evaluate("window.scrollTo(0, 0)")
         await page.wait_for_timeout(800)
         await shot(page, "11-carry-heatmap-au.png", viewport_h=1100)
