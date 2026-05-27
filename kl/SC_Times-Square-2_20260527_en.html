@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Times Square 2 — KL Property Scorecard</title>
+<meta name="description" content="Independent scorecard for Times Square 2 @ Bukit Bintang. Malaysian buyer 6.2 / Foreign buyer 5.6. Brickz · JPPH · NAPIC sources · 5-dimension framework.">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f8fafc; --card:#ffffff; --text:#1a1a2e; --muted:#64748b;
+  --border:#e2e8f0; --accent:#2563eb;
+  --t1:#16a34a; --t2:#2563eb; --t3:#d97706; --t4:#ea580c; --t5:#dc2626;
+  --local:#2563eb; --foreign:#ea580c;
+  --pos-bg:#ecfdf5; --pos-border:#16a34a; --pos-text:#14532d;
+  --warn-bg:#fefce8; --warn-border:#ca8a04; --warn-text:#713f12;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --border:#334155; --accent:#60a5fa;
+    --pos-bg:#052e1f; --pos-text:#bbf7d0; --warn-bg:#3a2f0a; --warn-text:#fde68a; }
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter','Noto Sans TC',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+
+.nav{background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:960px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.brand-by{font-size:11px;color:var(--muted);font-weight:400;margin-left:6px}
+.lang-link{font-size:12px;padding:5px 12px;border:1px solid var(--border);border-radius:5px;color:var(--muted);text-decoration:none}
+.lang-link:hover{color:var(--accent);border-color:var(--accent)}
+
+.wrap{max-width:960px;margin:0 auto;padding:24px 20px 48px}
+
+.hero-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 26px;margin-bottom:20px;position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--t4)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.hero-meta .sep{opacity:.5}
+.proj-name{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:6px}
+.proj-zh{font-size:18px;color:var(--muted);font-weight:500}
+.one-liner{font-size:14.5px;color:var(--text);line-height:1.6;margin:14px 0 18px;max-width:680px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+.score-card{padding:16px 18px;border-radius:10px;background:var(--bg);border:1px solid var(--border);position:relative}
+.score-card.local{border-left:4px solid var(--local)}
+.score-card.foreign{border-left:4px solid var(--foreign)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.score-num.local{color:var(--local)}
+.score-num.foreign{color:var(--foreign)}
+.score-sfx{font-size:13px;color:var(--muted)}
+.tier{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;color:#fff;margin-left:auto}
+.tier-T4{background:var(--t4)}
+.tier-T5{background:var(--t5)}
+.score-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.5}
+
+.section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-bottom:18px}
+.section-title{font-size:16px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px}
+.section-sub{font-size:12.5px;color:var(--muted);margin-bottom:18px}
+
+.radar-block{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center}
+.radar-svg{width:280px;height:280px}
+.radar-legend{display:flex;gap:16px;margin-top:10px;font-size:12px}
+.lg-item{display:inline-flex;align-items:center;gap:5px}
+.lg-dot{width:10px;height:10px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:14px}
+.dim{padding:10px 0;border-bottom:1px solid var(--border)}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;flex-wrap:wrap;gap:6px}
+.dim-name{font-size:13.5px;font-weight:600}
+.dim-weight{font-size:10.5px;color:var(--muted);margin-left:6px;font-weight:500}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:3px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{color:var(--foreign)}
+.dim-rsn{font-size:12px;color:var(--muted);line-height:1.55}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:2px}
+
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:8px 10px;font-weight:600;background:var(--bg);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+.kv-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px}
+.kv-val{font-weight:500}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+.cmp-table th{text-align:left;padding:9px 10px;background:var(--bg);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border);font-weight:600}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--foreign)}
+.cmp-table td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+.assump-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:12px;font-size:12px;color:var(--muted);line-height:1.7}
+.assump-box strong{color:var(--text);font-weight:600}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.cost-table th{text-align:right;padding:9px 10px;background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--foreign)}
+.cost-table td{padding:7px 10px;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:var(--bg);font-weight:600;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:6px 10px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:rgba(37,99,235,.04)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:18px}
+.cost-bottom{margin-top:12px;padding:12px 16px;background:var(--warn-bg);color:var(--warn-text);border-radius:8px;border-left:3px solid var(--warn-border);font-size:13px;line-height:1.6}
+
+.summary-text{font-size:14px;line-height:1.85;color:var(--text)}
+.summary-text p{margin-bottom:14px}
+.summary-text p:last-child{margin-bottom:0}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pc-col{padding:14px 16px;border-radius:10px}
+.pc-col.pros{background:var(--pos-bg);border-left:4px solid var(--pos-border)}
+.pc-col.cons{background:var(--warn-bg);border-left:4px solid var(--warn-border)}
+.pc-title{font-size:13px;font-weight:700;margin-bottom:10px;letter-spacing:.02em}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:9px;font-size:12.5px;line-height:1.6}
+.pc-list li{padding-left:14px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border)}
+.pc-col.cons .pc-list li::before{background:var(--warn-border)}
+
+.profile{padding:12px 0;border-bottom:1px solid var(--border)}
+.profile:last-child{border-bottom:none}
+.profile-head{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:13.5px;font-weight:600}
+.profile-icon{font-size:18px}
+.profile-fit{font-size:12.5px;color:var(--muted);line-height:1.6;padding-left:26px}
+
+.footer{margin-top:20px;padding:20px 24px;background:var(--card);border:1px solid var(--border);border-radius:12px;font-size:11.5px;color:var(--muted);line-height:1.75}
+.footer h4{font-size:11px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.footer-sources{margin-bottom:14px}
+.footer-disclaimer{padding-top:14px;border-top:1px solid var(--border)}
+
+@media (max-width:768px){
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 16px 36px}
+  .hero-card{padding:20px}
+  .proj-name{font-size:22px}
+  .proj-zh{font-size:16px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:18px 18px}
+  .radar-block{grid-template-columns:1fr;gap:18px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:7px 6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div>
+      <span class="brand">KL Property Scorecards</span>
+      <span class="brand-by">by InvestMQuest</span>
+    </div>
+    <a class="lang-link" href="SC_Times-Square-2_20260527_zh.html">中文</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-meta">
+    <span>Bukit Bintang · KL</span>
+    <span class="sep">·</span>
+    <span>FREEHOLD COMMERCIAL SA</span>
+    <span class="sep">·</span>
+    <span>As of 2026-05-27</span>
+  </div>
+  <h1 class="proj-name">Times Square 2 <span class="proj-zh">時代廣場2</span></h1>
+  <p class="one-liner">
+    Freehold serviced apartment in Bukit Bintang's walking core, Imbi Monorail 100m, the strongest Airbnb-fit location in KL — suited to active short-let operators and long-hold buyers comfortable with commercial-tenure structure.
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>Malaysian buyer</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.4</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche fit</span>
+      </div>
+      <div class="score-note">Commercial SA excludes first-home incentives; investment-led hold still viable</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>Foreign buyer</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.7</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche fit</span>
+      </div>
+      <div class="score-note">8% stamp duty + 30% rental tax + MM2H ineligible form structural premium</div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <h2 class="section-title">Six-Dimension Scoring (Investor Framework)</h2>
+  <p class="section-sub">Returns block (cash yield + capital appreciation) = 35% · Risk block (developer + exit/regulatory) = 30% · Location = 20% · Valuation = 15%. Four shared + two split dimensions.</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+      <svg class="radar-svg" viewBox="0 0 280 280" aria-label="Six-dimension radar chart">
+        <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+          <polygon points="140,28 237,84 237,196 140,252 43,196 43,84"/>
+          <polygon points="140,50.4 217.6,95.2 217.6,184.8 140,229.6 62.4,184.8 62.4,95.2"/>
+          <polygon points="140,72.8 198.2,106.4 198.2,173.6 140,207.2 81.8,173.6 81.8,106.4"/>
+          <polygon points="140,95.2 178.8,117.6 178.8,162.4 140,184.8 101.2,162.4 101.2,117.6"/>
+          <polygon points="140,117.6 159.4,128.8 159.4,151.2 140,162.4 120.6,151.2 120.6,128.8"/>
+        </g>
+        <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+          <line x1="140" y1="140" x2="140" y2="28"/>
+          <line x1="140" y1="140" x2="237" y2="84"/>
+          <line x1="140" y1="140" x2="237" y2="196"/>
+          <line x1="140" y1="140" x2="140" y2="252"/>
+          <line x1="140" y1="140" x2="43" y2="196"/>
+          <line x1="140" y1="140" x2="43" y2="84"/>
+        </g>
+        <polygon points="140,44.8 203,103.6 193.4,170.8 140,201.6 86.7,170.8 81.8,106.4"
+                 fill="#2563eb" fill-opacity=".22" stroke="#2563eb" stroke-width="2"/>
+        <g fill="#2563eb">
+          <circle cx="140" cy="44.8" r="3.5"/>
+          <circle cx="203" cy="103.6" r="3.5"/>
+          <circle cx="193.4" cy="170.8" r="3.5"/>
+          <circle cx="140" cy="201.6" r="3.5"/>
+          <circle cx="86.7" cy="170.8" r="3.5"/>
+          <circle cx="81.8" cy="106.4" r="3.5"/>
+        </g>
+        <polygon points="140,44.8 203,103.6 174,159.6 140,201.6 86.7,170.8 101.2,117.6"
+                 fill="#ea580c" fill-opacity=".22" stroke="#ea580c" stroke-width="2"/>
+        <g fill="#ea580c">
+          <circle cx="140" cy="44.8" r="3"/>
+          <circle cx="203" cy="103.6" r="3"/>
+          <circle cx="174" cy="159.6" r="3"/>
+          <circle cx="140" cy="201.6" r="3"/>
+          <circle cx="86.7" cy="170.8" r="3"/>
+          <circle cx="101.2" cy="117.6" r="3"/>
+        </g>
+        <g fill="#475569" font-size="10.5" font-weight="600" font-family="'Inter', sans-serif">
+          <text x="140" y="18" text-anchor="middle">Location</text>
+          <text x="248" y="80" text-anchor="start">Valuation</text>
+          <text x="248" y="200" text-anchor="start">Cash yield</text>
+          <text x="140" y="270" text-anchor="middle">Cap. gain</text>
+          <text x="32" y="200" text-anchor="end">Developer</text>
+          <text x="32" y="80" text-anchor="end">Exit / regs</text>
+        </g>
+      </svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>Malaysian 6.4</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>Foreign 5.7</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Location &amp; Transit</span><span class="dim-weight">20% · Shared</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">8.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Imbi Monorail 100m — best transit walk among KL's RM1M+ launches.</p>
+        <p class="dim-data">MRT Bukit Bintang 750m · skybridge to Berjaya Times Square + LaLaport BBCC (developer)</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Entry Valuation</span><span class="dim-weight">15% · Shared</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Launch RM 1,500 psf vs Dorsett completed median RM 1,637 — ~8% cushion at entry.</p>
+        <p class="dim-data">Brickz Dorsett Residensi BB 46-txn median · Agile Bukit Bintang RM 1,100–1,400 in same area is cheaper</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Cash Yield (Net)</span><span class="dim-weight">15% · Split</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">MY</span><span class="val local">5.5</span></span>
+            <span class="dim-score"><span class="lbl">FG</span><span class="val foreign">3.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Gross yield 3.85% below 5% baseline; foreign loses extra 1–2% to non-resident tax + commercial utilities.</p>
+        <p class="dim-data">PropertyGuru 678 sqft asking RM 3,000–5,000/mo · LHDN 30% flat non-resident rate</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Capital Appreciation</span><span class="dim-weight">20% · Shared</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">SA segment +1.5%/yr (slowest in KL); Bukit Bintang corridor +5–7% provides some support.</p>
+        <p class="dim-data">BambooRoutes Jan 2026 · MRT 3 Circle Line 2030+ long-term catalyst (alignment pending)</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Developer Quality</span><span class="dim-weight">10% · Shared</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Adjacent BTS mall aligns landlord incentives; parent group financials require monitoring.</p>
+        <p class="dim-data">Berjaya Corp FY2025 net loss RM556M (The Edge 2025-08) · no abandoned project record</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Exit &amp; Regulations</span><span class="dim-weight">20% · Split</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">MY</span><span class="val local">6.0</span></span>
+            <span class="dim-score"><span class="lbl">FG</span><span class="val foreign">4.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">SA broad overhang 22,314 units caps foreign side; local pool excludes first-home buyers but investors remain.</p>
+        <p class="dim-data">NAPIC Q3 2025 · Foreign: 8% stamp + 30% rental tax + 10% RPGT permanent + MM2H ineligible</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <h2 class="section-title">Key Data</h2>
+  <p class="section-sub">Representative unit: 678 sqft (2BR / Dual Key, main density mid-floor) at ~RM 1,090,000.</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">Project basics</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">Developer</td><td class="kv-val">Berjaya Times Square Sdn Bhd<span class="kv-src">Berjaya Properties official</span></td></tr>
+          <tr><td class="kv-label">Tenure</td><td class="kv-val">Freehold commercial SA<span class="kv-src">PropertyGuru / iProperty</span></td></tr>
+          <tr><td class="kv-label">Total scale</td><td class="kv-val">41 storeys · 629 residential + 15 commercial<span class="kv-src">The Edge 2024-05</span></td></tr>
+          <tr><td class="kv-label">Unit sizes</td><td class="kv-val">488–1,356 sqft<span class="kv-src">Developer site</span></td></tr>
+          <tr><td class="kv-label">Rep unit price</td><td class="kv-val">678 sqft @ RM 1.09M (est.)<span class="kv-src">PropertyGuru Apr 2026 mid-floor</span></td></tr>
+          <tr><td class="kv-label">Completion</td><td class="kv-val">October 2027<span class="kv-src">PropertyGuru</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">Location &amp; certifications</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">Nearest transit</td><td class="kv-val">Imbi Monorail 100m<span class="kv-src">1–2 min walk</span></td></tr>
+          <tr><td class="kv-label">Next MRT</td><td class="kv-val">Bukit Bintang 750m<span class="kv-src">8–10 min walk</span></td></tr>
+          <tr><td class="kv-label">Skybridge to</td><td class="kv-val">Berjaya Times Square · LaLaport BBCC<span class="kv-src">Direct aerial walkways</span></td></tr>
+          <tr><td class="kv-label">Green rating</td><td class="kv-val">GreenRE Gold Rating<span class="kv-src">Official certification</span></td></tr>
+          <tr><td class="kv-label">Same-area pipeline</td><td class="kv-val">Agile Bukit Bintang · SWNK Houze · Pavilion Square BB<span class="kv-src">Completing in next 2–3 yrs</span></td></tr>
+          <tr><td class="kv-label">Completed comp</td><td class="kv-val">Dorsett Residensi BB RM 1,637 psf<span class="kv-src">Brickz 46 txns Apr 2024–Mar 2025 median</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table" style="margin-top:18px">
+    <thead>
+      <tr>
+        <th style="width:30%">Item</th>
+        <th class="local">🇲🇾 Malaysian</th>
+        <th class="foreign">🌏 Foreign</th>
+        <th style="width:18%">Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Stamp duty (MOT)</td><td class="num">1–4% progressive<br><small style="color:var(--muted)">≈ RM 27,600</small></td><td class="num">8% flat<br><small style="color:var(--muted)">RM 87,200</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>Down payment</td><td class="num">15% (commercial LTV 85%)<br><small style="color:var(--muted)">RM 163,500</small></td><td class="num">30% (LTV 70%)<br><small style="color:var(--muted)">RM 327,000</small></td><td><small>BNM / banks</small></td></tr>
+      <tr><td>Commercial mortgage rate</td><td class="num">4.5–5.0%</td><td class="num">5.0–5.5%</td><td><small>BNM OPR 3.00%</small></td></tr>
+      <tr><td>Gross yield (678 sqft long-let)</td><td class="num">~3.85%</td><td class="num">~3.85% (same)</td><td><small>PropertyGuru / calc.</small></td></tr>
+      <tr><td>Rental income tax</td><td class="num">10–24% progressive<br><small style="color:var(--muted)">assumed ~15%</small></td><td class="num">30% flat (non-resident)</td><td><small>LHDN</small></td></tr>
+      <tr><td>Net yield after tax (long-let)</td><td class="num">~2.8%</td><td class="num">~1.8%</td><td><small>Calc · v1.3 §5</small></td></tr>
+      <tr><td>Net yield after tax (Airbnb)</td><td class="num">~4–5%</td><td class="num">~2.8–3.2%</td><td><small>Calc · Bukit Bintang occupancy 80–95%</small></td></tr>
+      <tr><td>RPGT (from year 6)</td><td class="num">0%</td><td class="num">10% permanent</td><td><small>LHDN</small></td></tr>
+      <tr><td>Minimum purchase threshold (KL)</td><td class="num">None</td><td class="num">RM 1,000,000</td><td><small>Federal Territory</small></td></tr>
+      <tr><td>MM2H mandatory asset eligibility</td><td class="num">—</td><td class="num">No (commercial SA does not qualify)</td><td><small>MM2H Gold programme</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <h2 class="section-title">10-Year Total Hold Cost Comparison</h2>
+  <p class="section-sub">Based on representative unit at RM 1,090,000 — Malaysian vs Foreign buyer 10-year total costs and net P&amp;L.</p>
+
+  <div class="assump-box">
+    <strong>Fixed assumptions:</strong>
+    Representative unit 678 sqft mid-floor · 10-year hold · 30-year loan · rent growth 3%/yr · vacancy 1 month/yr ·
+    maintenance RM 0.50/sqft/mo · Malaysian rate 4.75% · Foreign rate 5.25%.
+    All figures rounded to nearest thousand.
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th class="local">🇲🇾 Malaysian (RM)</th>
+        <th class="foreign">🌏 Foreign (RM)</th>
+        <th>Difference (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>Entry costs</td><td></td><td></td><td></td></tr>
+      <tr><td>Down payment</td><td>163,500</td><td>327,000</td><td>+163,500</td></tr>
+      <tr><td>Stamp duty (MOT)</td><td>27,600</td><td>87,200</td><td>+59,600</td></tr>
+      <tr><td>Legal + loan fees</td><td>17,000</td><td>21,800</td><td>+4,800</td></tr>
+      <tr><td>State consent fee</td><td>—</td><td>5,000</td><td>+5,000</td></tr>
+      <tr class="sum"><td>Entry subtotal</td><td>208,100</td><td>441,000</td><td>+232,900</td></tr>
+
+      <tr class="cat"><td>Holding costs (10-yr cumulative)</td><td></td><td></td><td></td></tr>
+      <tr><td>Mortgage payments total</td><td>579,600</td><td>505,600</td><td>−74,000</td></tr>
+      <tr><td>Maintenance + sinking fund</td><td>40,700</td><td>40,700</td><td>0</td></tr>
+      <tr><td>Assessment + quit rent</td><td>8,000</td><td>8,000</td><td>0</td></tr>
+      <tr><td>Insurance</td><td>15,000</td><td>15,000</td><td>0</td></tr>
+      <tr class="sum"><td>Holding subtotal</td><td>643,300</td><td>569,300</td><td>−74,000</td></tr>
+
+      <tr class="cat"><td>Rental income (10-yr cumulative)</td><td></td><td></td><td></td></tr>
+      <tr><td>Gross rent received</td><td>441,400</td><td>441,400</td><td>0</td></tr>
+      <tr><td>Rental income tax</td><td>66,200</td><td>132,400</td><td>+66,200</td></tr>
+      <tr class="sum"><td>Net rent (after tax)</td><td>375,200</td><td>309,000</td><td>−66,200</td></tr>
+
+      <tr class="cat"><td>Exit costs (year 10)</td><td></td><td></td><td></td></tr>
+      <tr><td>Agent fee (2.4%, 3% growth case)</td><td>35,200</td><td>35,200</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>37,500</td><td>+37,500</td></tr>
+      <tr><td>Loan balance (after 10 yrs)</td><td>748,000</td><td>625,200</td><td>−122,800</td></tr>
+
+      <tr class="cat"><td>10-year net P&amp;L (by price growth)</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0% growth</td><td>−155,000</td><td>−262,700</td><td>−107,700</td></tr>
+      <tr class="scenario"><td>3%/yr growth</td><td>+210,500</td><td>+65,500</td><td>−145,000</td></tr>
+      <tr class="scenario"><td>5%/yr growth</td><td>+513,700</td><td>+337,700</td><td>−176,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    Under base assumptions (3% annual price growth, 2027 completion + 10-year hold), the foreign buyer's 10-year net P&amp;L is roughly RM 145K lower than the Malaysian buyer's — about 13% of the purchase price. The combination of 8% stamp duty, 30% non-resident rental tax, and permanent 10% RPGT form a structural premium that price growth alone cannot fully close — the key lever is whether Airbnb active management can lift rental yield enough to compensate.
+  </div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <h2 class="section-title">Project Deep-Dive</h2>
+
+  <div class="summary-text">
+    <p>Times Square 2 sits on Jalan Imbi in the heart of Bukit Bintang, KL's most established tourism-and-retail district. A 41-storey serviced apartment block, its standout location advantage is the 100m walk to Imbi Monorail station (1–2 minutes); MRT Bukit Bintang is 750m away. Direct aerial skybridges connect to the developer group's adjacent Berjaya Times Square mall and LaLaport BBCC, while Pavilion Bukit Bintang, Lot 10, and Jalan Alor food street are 5–10 minutes on foot — making this the densest walking-retail catchment of any KL residential project.</p>
+
+    <p>The development holds 629 residential units plus 15 commercial lots on a 0.96-acre site — at 655 units/acre, this is a high-density build. Unit sizes range from 488 sqft (1BR) to 1,356 sqft (3BR + Dual Key), with the dual-key layout designed for Airbnb flexibility. Amenities include sky pools and sky gyms on Levels 7 and 41, pet-friendly common areas, fully fitted kitchens and bathrooms, smart locks, and GreenRE Gold sustainability certification.</p>
+
+    <p>The developer, Berjaya Times Square Sdn Bhd, is a subsidiary of Berjaya Asset within the Berjaya Corp group. The adjacent Berjaya Times Square mall (completed 2003) is the parent group's anchor asset, creating clear landlord-incentive alignment for property management and ecosystem integration. However, Berjaya Corp posted its largest-ever annual loss of RM556M in FY2025 (The Edge, August 2025); the group has no abandoned-project history, but quarterly financials and construction progress warrant ongoing monitoring.</p>
+
+    <p>Phase 1 launch pricing starts at RM 1,500 psf, with PropertyGuru listings ranging RM 1,138–1,869 psf. Versus the closest completed comparable — Dorsett Residensi Bukit Bintang at a Brickz 46-transaction median of RM 1,637 psf — TS2 carries roughly 8% of valuation cushion at launch. However, the same Bukit Bintang corridor is set to absorb 1,500 units from Agile Bukit Bintang plus pipeline from SWNK Houze BBCC over the next 2–3 years, putting downward pressure on rents and resale values. KL's serviced-apartment segment grew just ~1.5% annually (BambooRoutes Jan 2026), the slowest of any KL property type.</p>
+
+    <p>For the rental market, 678 sqft units in the area lease at RM 3,000–5,000/month for a gross yield around 3.85%. Bukit Bintang's Airbnb occupancy runs 80–95% with ADRs of RM 200–600/night (Ericanfly, October 2025) — the strongest short-let location in KL. For foreign holders, after 30% non-resident rental tax and elevated commercial electricity rates, long-let net yield drops to ~1.8% and Airbnb net yield to 2.8–3.2%. Rental income alone is insufficient to justify the hold; the investment thesis must combine yield with capital gain expectations.</p>
+
+    <p>Hold-period notes: freehold commercial SA is the best tenure within the SA segment, but commercial electricity rates (5–6× residential), higher mortgage rates (+0.5–1%), and weaker HDA protection are structural costs. MM2H Gold mandatory asset purchase requires a residential-title property — TS2's commercial SA does not satisfy this requirement. The buyer pool excludes local first-home applicants (no EPF, weaker loan terms); secondary-market exit cycles average 3–5 years (NAPIC), so factor exit price flexibility into the hold plan.</p>
+  </div>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <h2 class="section-title">Highlights &amp; Items to Note</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ Highlights</div>
+      <ul class="pc-list">
+        <li>Imbi Monorail at 100m — among the strongest transit walks of any KL launch in the RM1M+ tier</li>
+        <li>Bukit Bintang Airbnb occupancy 80–95%, ADR RM 200–600/night — the best short-let location fit in KL</li>
+        <li>Freehold commercial SA — the strongest tenure available in the SA segment; clear advantage vs leasehold competitors in the same corridor (e.g. SWNK Houze BBCC)</li>
+        <li>Launch PSF of RM 1,500 vs Dorsett Residensi BB completed comparable at RM 1,637 — roughly 8% valuation cushion at entry</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ Items to note</div>
+      <ul class="pc-list">
+        <li>Commercial-tariff utility rates are 5–6× residential; consider confirming with the management committee whether residential rates can be applied</li>
+        <li>Parent Berjaya Corp posted a record FY2025 net loss of RM 556M; recommend tracking BJCORP / BERJ quarterlies and construction progress</li>
+        <li>MM2H Gold mandatory asset purchase requires residential title — commercial SA buyers will need a separate residential-title property to remain compliant</li>
+        <li>KL SA broad overhang of 22,314 units (NAPIC Q3 2025), plus Agile Bukit Bintang's 1,500-unit pipeline — monitor same-tower resale listing volumes</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: BUYER PROFILES -->
+<section class="section">
+  <h2 class="section-title">Buyer Profile Fit</h2>
+  <p class="section-sub">Three typical buyer types and how this project fits each. Readers can position themselves accordingly.</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">👤</span>Owner-occupier (expat worker / student / family)</div>
+    <div class="profile-fit">Bukit Bintang's walking retail and Imbi Monorail appeal to daily commuters. Commercial-SA's higher utilities and weaker HDA protection favour shorter residency over long-term anchoring. MM2H applicants cannot count this project toward the mandatory-asset requirement.</div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>Investment buyer (Airbnb active operator)</div>
+    <div class="profile-fit">Bukit Bintang ranks as KL's strongest Airbnb location, and the dual-key layout, pet-friendly common areas, and smart-lock setup are short-let friendly. Active management — self-run or via a managed-service operator at 20–25% commission — is required. Recommend ≥ 7-year hold to amortise the 8% stamp duty and 10% RPGT structural premium.</div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>Pied-à-terre (non-resident, occasional use)</div>
+    <div class="profile-fit">Location is highly appealing for occasional KL visitors — Pavilion, BTS, and LaLaport are all on foot. Freehold tenure is inheritable and suits long-term holding. Factor management fees, electricity, and opportunity cost into the carrying cost; partial Airbnb sublet can offset the holding burden.</div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>Sources</h4>
+    NAPIC JPPH Q3 2025 · Brickz Jan–Dec 2025 · PropertyGuru Apr 2026 · iProperty Apr 2026 · Berjaya Properties (developer) · The Edge 2024-05-18 / 2025-08-29 · BambooRoutes Jan 2026 · Ericanfly Oct 2025 · Airbtics Sep 2024–Aug 2025 · BNM · LHDN · MM2H Gold Programme · AMRO Feb 2026
+  </div>
+  <div class="footer-disclaimer">
+    <h4>Disclaimer</h4>
+    This scorecard is an independent analysis for reference only and does not constitute investment advice. Scores are based on publicly verifiable data as of 2026-05-27. The author is an MM2H Silver holder, not a licensed real estate agent or financial advisor. Always consult qualified professionals and conduct on-site due diligence before any investment decision.
+  </div>
+</div>
+
+</div>
+</body>
+</html>

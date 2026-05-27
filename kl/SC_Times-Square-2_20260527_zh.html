@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Times Square 2 時代廣場2 — KL 建案獨立評分卡</title>
+<meta name="description" content="Times Square 2 @ Bukit Bintang 獨立評分卡。本國人 6.2 / 外國人 5.6。Brickz · JPPH · NAPIC 資料源 · 5 維度框架。">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f8fafc; --card:#ffffff; --text:#1a1a2e; --muted:#64748b;
+  --border:#e2e8f0; --accent:#2563eb;
+  --t1:#16a34a; --t2:#2563eb; --t3:#d97706; --t4:#ea580c; --t5:#dc2626;
+  --local:#2563eb; --foreign:#ea580c;
+  --pos-bg:#ecfdf5; --pos-border:#16a34a; --pos-text:#14532d;
+  --warn-bg:#fefce8; --warn-border:#ca8a04; --warn-text:#713f12;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --border:#334155; --accent:#60a5fa;
+    --pos-bg:#052e1f; --pos-text:#bbf7d0; --warn-bg:#3a2f0a; --warn-text:#fde68a; }
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter','Noto Sans TC',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+
+.nav{background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:960px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.brand-by{font-size:11px;color:var(--muted);font-weight:400;margin-left:6px}
+.lang-link{font-size:12px;padding:5px 12px;border:1px solid var(--border);border-radius:5px;color:var(--muted);text-decoration:none}
+.lang-link:hover{color:var(--accent);border-color:var(--accent)}
+
+.wrap{max-width:960px;margin:0 auto;padding:24px 20px 48px}
+
+/* Block 1: Header */
+.hero-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 26px;margin-bottom:20px;position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--t4)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.hero-meta .sep{opacity:.5}
+.proj-name{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:6px}
+.proj-zh{font-size:18px;color:var(--muted);font-weight:500}
+.one-liner{font-size:14.5px;color:var(--text);line-height:1.6;margin:14px 0 18px;max-width:680px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+.score-card{padding:16px 18px;border-radius:10px;background:var(--bg);border:1px solid var(--border);position:relative}
+.score-card.local{border-left:4px solid var(--local)}
+.score-card.foreign{border-left:4px solid var(--foreign)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.score-num.local{color:var(--local)}
+.score-num.foreign{color:var(--foreign)}
+.score-sfx{font-size:13px;color:var(--muted)}
+.tier{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;color:#fff;margin-left:auto}
+.tier-T4{background:var(--t4)}
+.tier-T5{background:var(--t5)}
+.score-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.5}
+
+/* Section */
+.section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-bottom:18px}
+.section-title{font-size:16px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px}
+.section-sub{font-size:12.5px;color:var(--muted);margin-bottom:18px}
+
+/* Block 2: Radar + dim scores */
+.radar-block{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center}
+.radar-svg{width:280px;height:280px}
+.radar-legend{display:flex;gap:16px;margin-top:10px;font-size:12px}
+.lg-item{display:inline-flex;align-items:center;gap:5px}
+.lg-dot{width:10px;height:10px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:14px}
+.dim{padding:10px 0;border-bottom:1px solid var(--border)}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;flex-wrap:wrap;gap:6px}
+.dim-name{font-size:13.5px;font-weight:600}
+.dim-weight{font-size:10.5px;color:var(--muted);margin-left:6px;font-weight:500}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:3px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{color:var(--foreign)}
+.dim-rsn{font-size:12px;color:var(--muted);line-height:1.55}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:2px}
+
+/* Block 3: Data tables */
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:8px 10px;font-weight:600;background:var(--bg);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+.kv-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px}
+.kv-val{font-weight:500}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+.cmp-table th{text-align:left;padding:9px 10px;background:var(--bg);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border);font-weight:600}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--foreign)}
+.cmp-table td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+/* Block 3.5: Cost table */
+.assump-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:12px;font-size:12px;color:var(--muted);line-height:1.7}
+.assump-box strong{color:var(--text);font-weight:600}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.cost-table th{text-align:right;padding:9px 10px;background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--foreign)}
+.cost-table td{padding:7px 10px;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:var(--bg);font-weight:600;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:6px 10px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:rgba(37,99,235,.04)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:18px}
+.cost-bottom{margin-top:12px;padding:12px 16px;background:var(--warn-bg);color:var(--warn-text);border-radius:8px;border-left:3px solid var(--warn-border);font-size:13px;line-height:1.6}
+
+/* Block 4A */
+.summary-text{font-size:14px;line-height:1.85;color:var(--text)}
+.summary-text p{margin-bottom:14px}
+.summary-text p:last-child{margin-bottom:0}
+
+/* Block 4B */
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pc-col{padding:14px 16px;border-radius:10px}
+.pc-col.pros{background:var(--pos-bg);border-left:4px solid var(--pos-border)}
+.pc-col.cons{background:var(--warn-bg);border-left:4px solid var(--warn-border)}
+.pc-title{font-size:13px;font-weight:700;margin-bottom:10px;letter-spacing:.02em}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:9px;font-size:12.5px;line-height:1.6}
+.pc-list li{padding-left:14px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border)}
+.pc-col.cons .pc-list li::before{background:var(--warn-border)}
+
+/* Block 4C */
+.profile{padding:12px 0;border-bottom:1px solid var(--border)}
+.profile:last-child{border-bottom:none}
+.profile-head{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:13.5px;font-weight:600}
+.profile-icon{font-size:18px}
+.profile-fit{font-size:12.5px;color:var(--muted);line-height:1.6;padding-left:26px}
+
+/* Footer */
+.footer{margin-top:20px;padding:20px 24px;background:var(--card);border:1px solid var(--border);border-radius:12px;font-size:11.5px;color:var(--muted);line-height:1.75}
+.footer h4{font-size:11px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.footer-sources{margin-bottom:14px}
+.footer-disclaimer{padding-top:14px;border-top:1px solid var(--border)}
+
+@media (max-width:768px){
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 16px 36px}
+  .hero-card{padding:20px}
+  .proj-name{font-size:22px}
+  .proj-zh{font-size:16px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:18px 18px}
+  .radar-block{grid-template-columns:1fr;gap:18px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:7px 6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div>
+      <span class="brand">KL Property Scorecards</span>
+      <span class="brand-by">by InvestMQuest</span>
+    </div>
+    <a class="lang-link" href="SC_Times-Square-2_20260527_en.html">EN</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-meta">
+    <span>Bukit Bintang · KL</span>
+    <span class="sep">·</span>
+    <span>FREEHOLD 商業 SA</span>
+    <span class="sep">·</span>
+    <span>資料截至 2026-05-27</span>
+  </div>
+  <h1 class="proj-name">Times Square 2 <span class="proj-zh">時代廣場2</span></h1>
+  <p class="one-liner">
+    Bukit Bintang 步行商圈核心 freehold，Imbi Monorail 100m，全 KL 最強 Airbnb 地段適配性；適合主動經營短租、可接受商業地契結構的長期持有型買家。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.4</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · 適合特定需求</span>
+      </div>
+      <div class="score-note">商業 SA 排除首購族補貼，仍可投資導向持有</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.7</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · 適合特定需求</span>
+      </div>
+      <div class="score-note">8% 印花稅 + 30% 租金稅 + MM2H 不合規構成結構性溢價</div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <h2 class="section-title">六維度評分（投資人視角）</h2>
+  <p class="section-sub">報酬類（現金 yield + 資本利得）= 35% · 風險類（開發商 + 出場法規）= 30% · 地段 = 20% · 估值 = 15%。四個共用維度 + 兩個分開評。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+      <svg class="radar-svg" viewBox="0 0 280 280" aria-label="六維度雷達圖">
+        <!-- Hex grid: 100%, 80%, 60%, 40%, 20% -->
+        <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+          <polygon points="140,28 237,84 237,196 140,252 43,196 43,84"/>
+          <polygon points="140,50.4 217.6,95.2 217.6,184.8 140,229.6 62.4,184.8 62.4,95.2"/>
+          <polygon points="140,72.8 198.2,106.4 198.2,173.6 140,207.2 81.8,173.6 81.8,106.4"/>
+          <polygon points="140,95.2 178.8,117.6 178.8,162.4 140,184.8 101.2,162.4 101.2,117.6"/>
+          <polygon points="140,117.6 159.4,128.8 159.4,151.2 140,162.4 120.6,151.2 120.6,128.8"/>
+        </g>
+        <!-- Axes from center to each vertex -->
+        <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+          <line x1="140" y1="140" x2="140" y2="28"/>
+          <line x1="140" y1="140" x2="237" y2="84"/>
+          <line x1="140" y1="140" x2="237" y2="196"/>
+          <line x1="140" y1="140" x2="140" y2="252"/>
+          <line x1="140" y1="140" x2="43" y2="196"/>
+          <line x1="140" y1="140" x2="43" y2="84"/>
+        </g>
+        <!-- Local (blue): 地段 8.5 / 估值 6.5 / yield 5.5 / 利得 5.5 / 開發 5.5 / 出場 6.0 -->
+        <polygon points="140,44.8 203,103.6 193.4,170.8 140,201.6 86.7,170.8 81.8,106.4"
+                 fill="#2563eb" fill-opacity=".22" stroke="#2563eb" stroke-width="2"/>
+        <g fill="#2563eb">
+          <circle cx="140" cy="44.8" r="3.5"/>
+          <circle cx="203" cy="103.6" r="3.5"/>
+          <circle cx="193.4" cy="170.8" r="3.5"/>
+          <circle cx="140" cy="201.6" r="3.5"/>
+          <circle cx="86.7" cy="170.8" r="3.5"/>
+          <circle cx="81.8" cy="106.4" r="3.5"/>
+        </g>
+        <!-- Foreign (orange): 地段 8.5 / 估值 6.5 / yield 3.5 / 利得 5.5 / 開發 5.5 / 出場 4.0 -->
+        <polygon points="140,44.8 203,103.6 174,159.6 140,201.6 86.7,170.8 101.2,117.6"
+                 fill="#ea580c" fill-opacity=".22" stroke="#ea580c" stroke-width="2"/>
+        <g fill="#ea580c">
+          <circle cx="140" cy="44.8" r="3"/>
+          <circle cx="203" cy="103.6" r="3"/>
+          <circle cx="174" cy="159.6" r="3"/>
+          <circle cx="140" cy="201.6" r="3"/>
+          <circle cx="86.7" cy="170.8" r="3"/>
+          <circle cx="101.2" cy="117.6" r="3"/>
+        </g>
+        <!-- Axis labels -->
+        <g fill="#475569" font-size="10.5" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+          <text x="140" y="18" text-anchor="middle">地段</text>
+          <text x="248" y="80" text-anchor="start">入手估值</text>
+          <text x="248" y="200" text-anchor="start">現金 yield</text>
+          <text x="140" y="270" text-anchor="middle">資本利得</text>
+          <text x="32" y="200" text-anchor="end">開發商</text>
+          <text x="32" y="80" text-anchor="end">出場法規</text>
+        </g>
+      </svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 6.4</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 5.7</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">地段與交通</span><span class="dim-weight">20% · 同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">8.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Imbi Monorail 100m，KL RM100 萬級建案最佳捷運步行距離。</p>
+        <p class="dim-data">MRT BB 750m · 直連橋至 Berjaya Times Square + LaLaport BBCC（開發商官網）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">入手估值</span><span class="dim-weight">15% · 同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">發售 RM 1,500 psf vs Dorsett 完工中位 RM 1,637，有 8% 折扣緩衝。</p>
+        <p class="dim-data">Brickz Dorsett Residensi BB 46 筆中位 · Agile Bukit Bintang RM 1,100–1,400 同地段較便宜</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">現金 yield（淨）</span><span class="dim-weight">15% · 分開評</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">5.5</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">3.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">毛 yield 3.85% 低於 5% 基準線；外籍 30% 非居民稅 + 商業電費再扣 1–2%。</p>
+        <p class="dim-data">PropertyGuru 678 sqft 月租 RM 3,000–5,000 · LHDN 非居民 30% 固定稅率</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本利得潛力</span><span class="dim-weight">20% · 同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">SA 細分年增速 +1.5% 為 KL 最慢；Bukit Bintang 走廊 +5–7% 有支撐。</p>
+        <p class="dim-data">BambooRoutes Jan 2026 · MRT 3 Circle Line 2030+ 長線催化（待路線確認）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商品質</span><span class="dim-weight">10% · 同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">毗鄰 BTS 商場地主利益對齊，但母公司財務壓力需追蹤。</p>
+        <p class="dim-data">Berjaya Corp FY2025 淨虧 RM5.56 億（The Edge 2025-08）· 無爛尾紀錄</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">出場與法規</span><span class="dim-weight">20% · 分開評</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">6.0</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">4.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">商業 SA 廣義積壓 22,314 戶觸發外籍上限；本地買家池排除首購族但可投資轉手。</p>
+        <p class="dim-data">NAPIC Q3 2025 · 外籍：8% 印花稅 + 30% 租金稅 + RPGT 10% 永久 + MM2H 不合規</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <h2 class="section-title">關鍵數據</h2>
+  <p class="section-sub">代表戶型：678 sqft（2BR / Dual Key，主力坪數段中層），約 RM 1,090,000。</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">Berjaya Times Square Sdn Bhd<span class="kv-src">Berjaya Properties 官網</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">Freehold 商業 SA<span class="kv-src">PropertyGuru / iProperty</span></td></tr>
+          <tr><td class="kv-label">總規模</td><td class="kv-val">41 層 · 629 住宅 + 15 商業<span class="kv-src">The Edge 2024-05</span></td></tr>
+          <tr><td class="kv-label">坪數範圍</td><td class="kv-val">488–1,356 sqft<span class="kv-src">開發商官網</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">678 sqft @ RM 1.09M（估）<span class="kv-src">PropertyGuru Apr 2026 中層估算</span></td></tr>
+          <tr><td class="kv-label">預計交屋</td><td class="kv-val">2027 年 10 月<span class="kv-src">PropertyGuru</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與認證</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">最近捷運</td><td class="kv-val">Imbi Monorail 100m<span class="kv-src">步行 1–2 分鐘</span></td></tr>
+          <tr><td class="kv-label">次近 MRT</td><td class="kv-val">Bukit Bintang 750m<span class="kv-src">步行 8–10 分鐘</span></td></tr>
+          <tr><td class="kv-label">直連商場</td><td class="kv-val">Berjaya Times Square · LaLaport BBCC<span class="kv-src">空中連橋</span></td></tr>
+          <tr><td class="kv-label">綠建築</td><td class="kv-val">GreenRE Gold Rating<span class="kv-src">官方認證</span></td></tr>
+          <tr><td class="kv-label">同地段競品</td><td class="kv-val">Agile Bukit Bintang · SWNK Houze · Pavilion Square BB<span class="kv-src">未來 2–3 年完工</span></td></tr>
+          <tr><td class="kv-label">完工同類可比</td><td class="kv-val">Dorsett Residensi BB RM 1,637 psf<span class="kv-src">Brickz 46 筆 2024-04 至 2025-03 中位</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table" style="margin-top:18px">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1–4% 累進<br><small style="color:var(--muted)">≈ RM 27,600</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 87,200</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">15%（商業 LTV 85%）<br><small style="color:var(--muted)">RM 163,500</small></td><td class="num">30%（LTV 70%）<br><small style="color:var(--muted)">RM 327,000</small></td><td><small>BNM / 各銀行</small></td></tr>
+      <tr><td>商業房貸利率</td><td class="num">4.5–5.0%</td><td class="num">5.0–5.5%</td><td><small>BNM OPR 3.00%</small></td></tr>
+      <tr><td>毛租金收益率（678 sqft 長租）</td><td class="num">~3.85%</td><td class="num">~3.85%（同）</td><td><small>PropertyGuru / 計算</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">10–24% 累進<br><small style="color:var(--muted)">假設 ~15%</small></td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>長租稅後淨 yield</td><td class="num">~2.8%</td><td class="num">~1.8%</td><td><small>計算 · v1.3 §5</small></td></tr>
+      <tr><td>Airbnb 稅後淨 yield</td><td class="num">~4–5%</td><td class="num">~2.8–3.2%</td><td><small>計算 · Bukit Bintang 佔率 80–95%</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>最低購買門檻（KL）</td><td class="num">無</td><td class="num">RM 100 萬</td><td><small>聯邦直轄區</small></td></tr>
+      <tr><td>MM2H 強制購置適用</td><td class="num">—</td><td class="num">否（商業 SA 不符合）</td><td><small>MM2H Gold 規定</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 RM 1,090,000 為基礎，計算本國人 vs 外國人 10 年持有所有成本與最終淨損益。</p>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 678 sqft 中層 · 持有期 10 年 · 房貸 30 年 · 租金年漲 3% · 空置 1 個月/年 ·
+    管理費 RM 0.50/sqft/月 · 本國人房貸 4.75% · 外國人房貸 5.25%。
+    所有金額四捨五入至千位。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>163,500</td><td>327,000</td><td>+163,500</td></tr>
+      <tr><td>印花稅（MOT）</td><td>27,600</td><td>87,200</td><td>+59,600</td></tr>
+      <tr><td>律師費 + 貸款費</td><td>17,000</td><td>21,800</td><td>+4,800</td></tr>
+      <tr><td>州政府批准費</td><td>—</td><td>5,000</td><td>+5,000</td></tr>
+      <tr class="sum"><td>買入成本小計</td><td>208,100</td><td>441,000</td><td>+232,900</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額</td><td>579,600</td><td>505,600</td><td>−74,000</td></tr>
+      <tr><td>管理費 + 維修基金</td><td>40,700</td><td>40,700</td><td>0</td></tr>
+      <tr><td>門牌稅 + 地稅</td><td>8,000</td><td>8,000</td><td>0</td></tr>
+      <tr><td>保險</td><td>15,000</td><td>15,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有成本小計</td><td>643,300</td><td>569,300</td><td>−74,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>441,400</td><td>441,400</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>66,200</td><td>132,400</td><td>+66,200</td></tr>
+      <tr class="sum"><td>淨租金收入</td><td>375,200</td><td>309,000</td><td>−66,200</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年）</td><td></td><td></td><td></td></tr>
+      <tr><td>仲介費（2.4%，3% 漲幅情境）</td><td>35,200</td><td>35,200</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>37,500</td><td>+37,500</td></tr>
+      <tr><td>剩餘貸款餘額（10 年後）</td><td>748,000</td><td>625,200</td><td>−122,800</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0% 漲幅</td><td>−155,000</td><td>−262,700</td><td>−107,700</td></tr>
+      <tr class="scenario"><td>3%/年 漲幅</td><td>+210,500</td><td>+65,500</td><td>−145,000</td></tr>
+      <tr class="scenario"><td>5%/年 漲幅</td><td>+513,700</td><td>+337,700</td><td>−176,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在基準假設（3% 年漲、2027 完工 + 10 年持有）下，外國人 10 年淨損益較本國人少約 RM 14.5 萬（相當於房價的 13%）。8% 印花稅 + 30% 租金所得稅 + 10% RPGT 永久適用三者疊加，構成外國人持有的結構性溢價，無法靠房價成長完全打平——關鍵在於是否能透過 Airbnb 主動經營提升租金回報。
+  </div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>Times Square 2 位於吉隆坡 Bukit Bintang 觀光商業核心區，Jalan Imbi 上 41 層樓的高密度服務式公寓。最大的地段優勢是 Imbi Monorail 站僅 100m，步行 1–2 分鐘可達；MRT Bukit Bintang 站 750m 可達；透過空中連橋直接連通開發商集團旗下的 Berjaya Times Square 商場與 LaLaport BBCC，步行 5–10 分鐘可達 Pavilion Bukit Bintang、Lot 10、Jalan Alor 美食街——KL 步行商圈密度最高的地段。</p>
+
+    <p>建案規模 629 戶住宅 + 15 商業單位於 0.96 英畝土地，密度 655 戶/英畝屬高密度設計；坪數涵蓋 488 sqft（1BR）至 1,356 sqft（3BR + Dual Key），雙鑰匙設計對 Airbnb 經營極為友善。設施包含 Level 7 與 41 樓的天際泳池與天際健身房、寵物友善、全配廚房浴室、智能門鎖、GreenRE Gold 環保認證。</p>
+
+    <p>開發商 Berjaya Times Square Sdn Bhd 是 Berjaya Asset 子公司、Berjaya Corp 集團旗下成員，毗鄰 Berjaya Times Square 商場（2003 年完工）為開發商核心資產，對 TS2 物業管理與生態系整合有明確地主利益對齊。然而母公司 Berjaya Corp 在 FY2025 創下淨虧 RM5.56 億的歷史最大年虧（The Edge 2025-08）；雖無爛尾紀錄，但需持續追蹤季度財報與施工進度。</p>
+
+    <p>價格定位上 Phase 1 發售價 RM 1,500 psf 起，PropertyGuru 掛牌範圍 RM 1,138–1,869 psf，與同地段已完工的 Dorsett Residensi Bukit Bintang（Brickz 46 筆中位 RM 1,637 psf）相比仍有約 8% 估值緩衝；但相對 BBCC 走廊新供給 Agile Bukit Bintang 同地段 1,500 戶大量釋出，未來租金與售價向下壓力顯著。SA 細分年增速僅約 +1.5%（BambooRoutes Jan 2026），為 KL 物業類型最慢。</p>
+
+    <p>租金市場以 678 sqft 主力坪數段月租 RM 3,000–5,000、毛租金收益率約 3.85%；Bukit Bintang Airbnb 佔率 80–95%、ADR RM 200–600/晚（Ericanfly Oct 2025），是 KL 短租市場最強地段。但外籍持有人扣除 30% 非居民租金稅與商業電費後，長租稅後淨 yield 約 1.8%、Airbnb 稅後 2.8–3.2%——租金收益不足以單獨支撐持有邏輯，需結合資本利得期望。</p>
+
+    <p>持有注意事項：Freehold 商業地契是 SA 市場中最優地契類型，但商業電費（住宅 5–6 倍）、商業貸款利率較高 0.5–1%、HDA 保護較弱是結構性成本；MM2H 強制購置資產要求住宅地契，TS2 商業 SA 不符合 MM2H 合規。買家池排除本地首購族（貸款劣勢、無 EPF 優惠），二手退出週期 3–5 年（NAPIC 平均），議價空間需預留。</p>
+  </div>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>Imbi Monorail 100m 步行距離，為 KL 所有 RM 100 萬級建案中最強的捷運條件之一</li>
+        <li>Bukit Bintang Airbnb 佔率 80–95%、ADR RM 200–600/晚，是全 KL 短租市場適配性最高的地段</li>
+        <li>Freehold 商業 SA 地契——SA 市場中最優地契類型，相對同地段 Leasehold 競品（SWNK Houze BBCC）有明確優勢</li>
+        <li>RM 1,500 psf 發售相對同地段已完工 SA（Dorsett Residensi BB 中位 RM 1,637 psf）有約 8% 估值緩衝</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li>商業地契水電費率高於住宅 5–6 倍，建議向開發商確認管委會是否允許住宅費率轉換</li>
+        <li>母公司 Berjaya Corp FY2025 淨虧 RM 5.56 億（歷史最大），建議每季追蹤 BJCORP / BERJ 財報與施工進度</li>
+        <li>MM2H 強制購置資產需住宅地契，本案商業 SA 不符合，MM2H 申請者需另行配置住宅地契物業</li>
+        <li>KL SA 廣義積壓 22,314 戶（NAPIC Q3 2025）+ 同地段 Agile Bukit Bintang 1,500 戶未來釋出，建議關注同棟轉售掛牌量</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: BUYER PROFILES -->
+<section class="section">
+  <h2 class="section-title">適合買家輪廓</h2>
+  <p class="section-sub">三種典型買家類型對本建案的契合度。讀者可依自身定位對照。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">👤</span>自住型買家（外籍工作者 / 學生 / 家庭）</div>
+    <div class="profile-fit">Bukit Bintang 步行商圈與 Imbi Monorail 對通勤族吸引力高；但商業地契 SA 的高電費、HDA 保護較弱適合短期居留勝過長期定居。MM2H 申請者本案不能算入強制購置資產。</div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>投資型買家（Airbnb 主動經營為主）</div>
+    <div class="profile-fit">Bukit Bintang 是 KL 最強 Airbnb 地段，雙鑰匙設計、寵物友善、智能門鎖等對短租運營友善。需有積極管理意願（自管或委託專業公司抽成 20–25%），建議持有 7 年以上以攤平 8% 印花稅與 RPGT 結構性溢價。</div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>備用居所型買家（非常住，旅遊或商務偶用）</div>
+    <div class="profile-fit">地段對偶爾來 KL 的買家極具吸引力——一進門就是 Pavilion、BTS、LaLaport 步行圈。Freehold 地契可繼承，適合長期持有；但持有期間管理費 + 電費 + 機會成本需納入考量，Airbnb 部分租出可緩解持有負擔。</div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    NAPIC JPPH Q3 2025 · Brickz Jan–Dec 2025 · PropertyGuru Apr 2026 · iProperty Apr 2026 · Berjaya Properties 官網 · The Edge 2024-05-18 / 2025-08-29 · BambooRoutes Jan 2026 · Ericanfly Oct 2025 · Airbtics Sep 2024–Aug 2025 · BNM · LHDN · MM2H Gold Programme · AMRO Feb 2026
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-05-27。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+  </div>
+</div>
+
+</div>
+</body>
+</html>
