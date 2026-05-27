@@ -295,16 +295,40 @@ Tier 定義：
 
 ## 【HTML 輸出規格】
 
-### 視覺設計
+### 視覺設計（v2 — Navy + Gold）
 
-- **整體風格**：乾淨、扁平、專業。與 myproperty.investmquest.com 現有風格一致。
+- **整體風格**：現代專業、克制活潑。介於 Stripe/Linear 的清晰結構與 JPM PB 的私銀質感之間。
 - **配色**：
-  - 主背景：transparent（繼承網站背景）
-  - 卡片底色：#FFFFFF（亮色）/ #1a1a2e（暗色），支援 prefers-color-scheme
-  - Tier 顏色：T1 #16a34a / T2 #2563eb / T3 #d97706 / T4 #ea580c / T5 #dc2626
-- **字型**：Noto Sans TC（中文）+ Inter（英文數字），引用 Google Fonts
-- **雷達圖**：純 SVG，不依賴外部 JS 庫
-- **RWD**：手機優先設計，576px 以下單欄堆疊
+  - 主背景：`#faf9f6`（暖偏白；非冷灰）
+  - 卡片底色：`#ffffff`，支援 dark mode（`#0f172a` body / `#1e293b` card）
+  - **主色**：深海軍藍 `#0f2845`（標題、本國人數字、本國人分數區）
+  - **Accent**：暖金 `#b8924a`（外國人數字、tier badge 邊框、hero 左緣裝飾、章節 pill）
+  - **金色變體**：`#c9a96b`（淺金 hover）、`#f5ead0`（金 soft 背景）、`#fef9ed`（tier badge 底）
+  - **海軍藍變體**：`#0a1f3d` deep、`#e8eef5` soft（內塊背景）
+  - **Tier 顏色（badge 文字色，邊框可用金色）**：T1 `#16a34a` / T2 `#2563eb` / T3 `#d97706` / T4 `#b8924a` / T5 `#dc2626`
+  - 本國人代表色 = navy；外國人代表色 = 金；不再使用橘色 (`#ea580c`) 為外籍代表色
+- **字型**：
+  - Body：Inter 400/500/600（英數）+ Noto Sans TC 400/500/600（中文），Google Fonts
+  - 標題（H1 建案名）：Inter 800、字距 `-.035em`、大小 38–46px
+  - 數字（分數）：Inter 800 tabular-nums、字距 `-.04em`，大小 48–64px（hero 區）
+- **卡片與陰影**：
+  - 圓角：14–20px（外卡 20、內塊 12–14）
+  - 邊框：`1px solid #e5e7eb`
+  - 陰影：`0 1px 3px rgba(15,40,69,.05), 0 12px 32px rgba(15,40,69,.06)`（hero）、`0 1px 3px rgba(15,40,69,.04)`（一般卡）
+- **Hero 區裝飾**：
+  - 微漸層背景：`linear-gradient(135deg, #ffffff 0%, #f4f7fc 100%)`
+  - 左緣裝飾條：5px 寬 `linear-gradient(180deg, #b8924a 0%, #0f2845 100%)`，貫穿整個 hero card
+  - 右上角金色 radial 光暈（`rgba(184,146,74,.08)`）
+- **Pill / Badge**：
+  - 一般 pill：圓角 99px、padding `3–4px × 9–11px`、字重 600–700、letter-spacing `.04–.08em`、uppercase
+  - Tier pill：金邊 + 金底 soft、文字 navy 或 gold（依 tier）
+  - Section 編號 pill：navy 文字 + 淡藍底（`var(--navy-soft)`）
+- **進度條（dim score）**：
+  - 高度 5–6px（單分數）、8px（split 雙分數）
+  - 圓角 99px
+  - 填充：本國人 `linear-gradient(90deg, #0f2845, #0a1f3d)`；外國人 `linear-gradient(90deg, #c9a96b, #b8924a)`
+- **雷達圖**：六角形 SVG、navy `#0f2845` 本國人填充（透明 .22）+ gold `#b8924a` 外國人填充（透明 .22）。不依賴外部 JS 庫。
+- **RWD**：手機優先；576px 以下單欄堆疊，hero 內 padding 收到 24px、score 字級降至 40px。
 
 ### 頁面結構
 

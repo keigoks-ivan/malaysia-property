@@ -11,15 +11,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f8fafc; --card:#ffffff; --text:#1a1a2e; --muted:#64748b;
-  --border:#e2e8f0; --accent:#2563eb;
-  --t1:#16a34a; --t2:#2563eb; --t3:#d97706; --t4:#ea580c; --t5:#dc2626;
-  --local:#2563eb; --foreign:#ea580c;
+  --bg:#faf9f6; --card:#ffffff; --text:#0c1521; --muted:#64748b;
+  --border:#e5e7eb; --accent:#0f2845;
+  --navy:#0f2845; --navy-deep:#0a1f3d; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-light:#c9a96b; --gold-soft:#f5ead0; --gold-bg:#fef9ed;
+  --t1:#16a34a; --t1-bg:#dcfce7; --t1-bd:#bbf7d0;
+  --t2:#2563eb; --t2-bg:#dbeafe; --t2-bd:#bfdbfe;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fde68a;
+  --t4:#b8924a; --t4-bg:#fef9ed; --t4-bd:#e8d5a8;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fecaca;
+  --local:#0f2845; --foreign:#b8924a;
   --pos-bg:#ecfdf5; --pos-border:#16a34a; --pos-text:#14532d;
-  --warn-bg:#fefce8; --warn-border:#ca8a04; --warn-text:#713f12;
+  --warn-bg:#fef9ed; --warn-border:#b8924a; --warn-text:#713f12;
 }
 @media (prefers-color-scheme: dark){
-  :root{ --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --border:#334155; --accent:#60a5fa;
+  :root{ --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --border:#334155; --accent:#c9a96b;
+    --navy:#60a5fa; --navy-soft:#1e3a5f;
     --pos-bg:#052e1f; --pos-text:#bbf7d0; --warn-bg:#3a2f0a; --warn-text:#fde68a; }
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -35,17 +42,18 @@ body{font-family:'Inter','Noto Sans TC',system-ui,sans-serif;background:var(--bg
 
 .wrap{max-width:960px;margin:0 auto;padding:24px 20px 48px}
 
-.hero-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 26px;margin-bottom:20px;position:relative;overflow:hidden}
-.hero-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--t4)}
+.hero-card{background:linear-gradient(135deg,#ffffff 0%,#f4f7fc 100%);border:1px solid var(--border);border-radius:20px;padding:28px 30px;margin-bottom:20px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(15,40,69,.05),0 12px 32px rgba(15,40,69,.06)}
+.hero-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,#b8924a 0%,#0f2845 100%)}
+.hero-card::after{content:'';position:absolute;top:-40px;right:-40px;width:240px;height:240px;background:radial-gradient(circle,rgba(184,146,74,.08) 0%,transparent 70%);pointer-events:none}
 .hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
 .hero-meta .sep{opacity:.5}
 .proj-name{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:6px}
 .proj-zh{font-size:18px;color:var(--muted);font-weight:500}
 .one-liner{font-size:14.5px;color:var(--text);line-height:1.6;margin:14px 0 18px;max-width:680px}
 .dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
-.score-card{padding:16px 18px;border-radius:10px;background:var(--bg);border:1px solid var(--border);position:relative}
-.score-card.local{border-left:4px solid var(--local)}
-.score-card.foreign{border-left:4px solid var(--foreign)}
+.score-card{padding:16px 20px;border-radius:14px;background:#ffffff;border:1px solid var(--border);position:relative;box-shadow:0 1px 3px rgba(15,40,69,.04)}
+.score-card.local{border-left:4px solid var(--navy)}
+.score-card.foreign{border-left:4px solid var(--gold)}
 .score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.04em}
 .score-flag{font-size:14px;margin-right:4px}
 .score-row{display:flex;align-items:baseline;gap:10px}
@@ -53,13 +61,16 @@ body{font-family:'Inter','Noto Sans TC',system-ui,sans-serif;background:var(--bg
 .score-num.local{color:var(--local)}
 .score-num.foreign{color:var(--foreign)}
 .score-sfx{font-size:13px;color:var(--muted)}
-.tier{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;color:#fff;margin-left:auto}
-.tier-T4{background:var(--t4)}
-.tier-T5{background:var(--t5)}
+.tier{display:inline-block;font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.04em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:var(--t4-bg);color:var(--t4);border-color:var(--t4-bd)}
+.tier-T5{background:var(--t5-bg);color:var(--t5);border-color:var(--t5-bd)}
 .score-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.5}
 
-.section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-bottom:18px}
-.section-title{font-size:16px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px}
+.section{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px 28px;margin-bottom:18px;box-shadow:0 1px 3px rgba(15,40,69,.04)}
+.section-title{font-size:18px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px;color:var(--navy)}
 .section-sub{font-size:12.5px;color:var(--muted);margin-bottom:18px}
 
 .radar-block{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start}
@@ -239,8 +250,8 @@ body{font-family:'Inter','Noto Sans TC',system-ui,sans-serif;background:var(--bg
           <line x1="140" y1="140" x2="43" y2="84"/>
         </g>
         <polygon points="140,44.8 203,103.6 193.4,170.8 140,201.6 86.7,170.8 81.8,106.4"
-                 fill="#2563eb" fill-opacity=".22" stroke="#2563eb" stroke-width="2"/>
-        <g fill="#2563eb">
+                 fill="#0f2845" fill-opacity=".22" stroke="#0f2845" stroke-width="2"/>
+        <g fill="#0f2845">
           <circle cx="140" cy="44.8" r="3.5"/>
           <circle cx="203" cy="103.6" r="3.5"/>
           <circle cx="193.4" cy="170.8" r="3.5"/>
@@ -249,8 +260,8 @@ body{font-family:'Inter','Noto Sans TC',system-ui,sans-serif;background:var(--bg
           <circle cx="81.8" cy="106.4" r="3.5"/>
         </g>
         <polygon points="140,44.8 203,103.6 174,159.6 140,201.6 86.7,170.8 86.7,109.2"
-                 fill="#ea580c" fill-opacity=".22" stroke="#ea580c" stroke-width="2"/>
-        <g fill="#ea580c">
+                 fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+        <g fill="#b8924a">
           <circle cx="140" cy="44.8" r="3"/>
           <circle cx="203" cy="103.6" r="3"/>
           <circle cx="174" cy="159.6" r="3"/>

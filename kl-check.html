@@ -11,17 +11,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f8fafc;
+  --bg:#faf9f6;
   --card:#ffffff;
-  --text:#1a1a2e;
+  --text:#0c1521;
   --muted:#64748b;
-  --border:#e2e8f0;
-  --accent:#2563eb;
+  --border:#e5e7eb;
+  --accent:#0f2845;
+  --navy:#0f2845;
+  --navy-deep:#0a1f3d;
+  --navy-soft:#e8eef5;
+  --gold:#b8924a;
+  --gold-light:#c9a96b;
+  --gold-soft:#f5ead0;
+  --gold-bg:#fef9ed;
   --t1:#16a34a;
   --t2:#2563eb;
-  --t3:#d97706;
-  --t4:#ea580c;
-  --t5:#dc2626;
+  --t3:#a16207;
+  --t4:#b8924a;
+  --t5:#b91c1c;
 }
 @media (prefers-color-scheme: dark){
   :root{
@@ -30,7 +37,9 @@
     --text:#f1f5f9;
     --muted:#94a3b8;
     --border:#334155;
-    --accent:#60a5fa;
+    --accent:#c9a96b;
+    --navy:#60a5fa;
+    --navy-soft:#1e3a5f;
   }
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -49,21 +58,22 @@ body.zh .lang-en{display:none}
 body.zh .lang-zh{display:inline}
 
 /* Navbar */
-.nav{background:var(--card);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:960px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav{background:var(--card);border-bottom:1px solid var(--border);box-shadow:0 1px 3px rgba(15,40,69,.03)}
+.nav-inner{max-width:960px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;color:var(--text)}
-.brand-name{font-size:16px;font-weight:700;letter-spacing:-.01em}
-.brand-by{font-size:11px;color:var(--muted);font-weight:400}
+.brand::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:2px;align-self:center}
+.brand-name{font-size:16px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.04em}
 .nav-links{display:flex;gap:14px;align-items:center}
 .lang-btns{display:flex;gap:4px;margin-left:4px}
 .lang-btn{padding:4px 9px;border:1px solid var(--border);border-radius:4px;font-size:11px;cursor:pointer;background:var(--card);color:var(--muted);font-family:inherit}
-.lang-btn.active{background:var(--text);color:var(--card);border-color:var(--text)}
+.lang-btn.active{background:var(--navy);color:var(--card);border-color:var(--navy)}
 
 /* Hero */
 .hero{padding:48px 20px 36px;text-align:center}
 .hero-inner{max-width:680px;margin:0 auto}
-.eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
-.hero h1{font-size:32px;font-weight:700;line-height:1.25;letter-spacing:-.02em;margin-bottom:12px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-size:36px;font-weight:800;line-height:1.15;letter-spacing:-.035em;margin-bottom:14px;color:var(--navy)}
 .hero-sub{font-size:14px;color:var(--muted);margin-bottom:14px;line-height:1.6}
 
 .trust-byline{
@@ -86,13 +96,14 @@ body.zh .lang-zh{display:inline}
   font-size:15px;
   font-family:inherit;
   border:1px solid var(--border);
-  border-radius:10px;
+  border-radius:12px;
   background:var(--card);
   color:var(--text);
   outline:none;
   transition:border-color .15s, box-shadow .15s;
+  box-shadow:0 1px 3px rgba(15,40,69,.03);
 }
-.search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.search-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,146,74,.15)}
 .search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
 .search-results{
   position:absolute;
@@ -128,9 +139,10 @@ body.zh .lang-zh{display:inline}
   position:relative;
   background:var(--card);
   border:1px solid var(--border);
-  border-radius:12px;
+  border-radius:16px;
   overflow:hidden;
   transition:border-color .15s, transform .15s, box-shadow .15s;
+  box-shadow:0 1px 3px rgba(15,40,69,.04);
 }
 .card::before{
   content:'';
@@ -142,9 +154,9 @@ body.zh .lang-zh{display:inline}
 .card.tier-T1::before{background:var(--t1)}
 .card.tier-T2::before{background:var(--t2)}
 .card.tier-T3::before{background:var(--t3)}
-.card.tier-T4::before{background:var(--t4)}
+.card.tier-T4::before{background:linear-gradient(180deg,var(--gold) 0%,var(--navy) 100%)}
 .card.tier-T5::before{background:var(--t5)}
-.card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.card:hover{border-color:var(--gold);transform:translateY(-1px);box-shadow:0 4px 18px rgba(184,146,74,.1)}
 
 .card-body{
   display:flex;
@@ -163,7 +175,8 @@ body.zh .lang-zh{display:inline}
 .scores{flex-shrink:0;display:flex;gap:14px;padding-left:8px}
 .score-block{text-align:center;min-width:56px}
 .score-label{font-size:9.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:3px;font-weight:600}
-.score-value{font-size:24px;font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--text)}
+.score-value{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--navy);font-variant-numeric:tabular-nums}
+.score-value.foreign{color:var(--gold)}
 .score-suffix{font-size:11px;color:var(--muted);font-weight:500}
 
 .card-actions{
@@ -188,7 +201,7 @@ body.zh .lang-zh{display:inline}
   cursor:pointer;
   transition:all .15s;
 }
-.action-btn:hover{color:var(--accent);border-color:var(--accent)}
+.action-btn:hover{color:var(--gold);border-color:var(--gold);background:var(--gold-bg)}
 .action-btn svg{width:13px;height:13px}
 .action-btn.copied{color:var(--t1);border-color:var(--t1)}
 
@@ -375,7 +388,7 @@ function renderCards(){
             </div>
             <div class="score-block">
               <div class="score-label">${I18N.scoreForeign[lang]}</div>
-              <div><span class="score-value">${p.scoreFG.toFixed(1)}</span><span class="score-suffix"> /10</span></div>
+              <div><span class="score-value foreign">${p.scoreFG.toFixed(1)}</span><span class="score-suffix"> /10</span></div>
             </div>
           </div>
         </a>
