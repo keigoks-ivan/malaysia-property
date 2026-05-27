@@ -5,42 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KL Property Scorecards — Independent Ratings for KL Developments</title>
 <meta name="description" content="Independent scorecards for Kuala Lumpur developments. Brickz / JPPH / NAPIC sources, 5-dimension framework, dual scoring for local & foreign buyers. Not investment advice.">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#faf9f6;
+  --bg:#f7f3ea;
+  --bg-soft:#fbf8f1;
   --card:#ffffff;
   --text:#0c1521;
-  --muted:#64748b;
-  --border:#e5e7eb;
-  --accent:#0f2845;
-  --navy:#0f2845;
-  --navy-deep:#0a1f3d;
+  --text-soft:#2a3a52;
+  --muted:#6b7a92;
+  --border:#e5dfd0;
+  --border-soft:#efe9da;
+  --navy:#0d2244;
+  --navy-deep:#081832;
+  --navy-mid:#173564;
   --navy-soft:#e8eef5;
   --gold:#b8924a;
-  --gold-light:#c9a96b;
-  --gold-soft:#f5ead0;
-  --gold-bg:#fef9ed;
-  --t1:#16a34a;
-  --t2:#2563eb;
+  --gold-deep:#8f6d2c;
+  --gold-light:#d4b576;
+  --gold-soft:#f3e5c3;
+  --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d;
+  --t2:#1d4ed8;
   --t3:#a16207;
   --t4:#b8924a;
   --t5:#b91c1c;
-}
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg:#0f172a;
-    --card:#1e293b;
-    --text:#f1f5f9;
-    --muted:#94a3b8;
-    --border:#334155;
-    --accent:#c9a96b;
-    --navy:#60a5fa;
-    --navy-soft:#1e3a5f;
-  }
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+  --shadow-gold:0 8px 28px rgba(184,146,74,.18),0 2px 8px rgba(184,146,74,.12);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
@@ -50,190 +47,371 @@ body{
   color:var(--text);
   line-height:1.55;
   min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
 }
 
 /* Bilingual */
 .lang-zh{display:none}
 body.zh .lang-en{display:none}
 body.zh .lang-zh{display:inline}
+body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
 
 /* Navbar */
-.nav{background:var(--card);border-bottom:1px solid var(--border);box-shadow:0 1px 3px rgba(15,40,69,.03)}
-.nav-inner{max-width:960px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;color:var(--text)}
-.brand::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:2px;align-self:center}
-.brand-name{font-size:16px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
-.brand-by{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.04em}
+.nav{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--border-soft);
+  position:sticky;top:0;z-index:50;
+}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:700;
+  font-size:16px;color:var(--gold-light);
+  box-shadow:inset 0 -2px 4px rgba(0,0,0,.2), 0 2px 6px rgba(13,34,68,.18);
+  letter-spacing:-.04em;
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand-name{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
 .nav-links{display:flex;gap:14px;align-items:center}
-.lang-btns{display:flex;gap:4px;margin-left:4px}
-.lang-btn{padding:4px 9px;border:1px solid var(--border);border-radius:4px;font-size:11px;cursor:pointer;background:var(--card);color:var(--muted);font-family:inherit}
-.lang-btn.active{background:var(--navy);color:var(--card);border-color:var(--navy)}
+.lang-btns{display:inline-flex;gap:0;background:var(--bg-soft);border:1px solid var(--border);border-radius:999px;padding:3px}
+.lang-btn{padding:5px 12px;border:none;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--muted);font-family:inherit;letter-spacing:.04em;transition:all .2s}
+.lang-btn.active{background:var(--navy);color:#fff;box-shadow:0 1px 4px rgba(13,34,68,.18)}
 
 /* Hero */
-.hero{padding:48px 20px 36px;text-align:center}
-.hero-inner{max-width:680px;margin:0 auto}
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
-.hero h1{font-size:36px;font-weight:800;line-height:1.15;letter-spacing:-.035em;margin-bottom:14px;color:var(--navy)}
-.hero-sub{font-size:14px;color:var(--muted);margin-bottom:14px;line-height:1.6}
+.hero{
+  position:relative;
+  padding:72px 20px 80px;
+  text-align:center;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 0%, rgba(184,146,74,.12), transparent 50%),
+    linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 55%, #112a52 100%);
+  color:#f3ebd6;
+  overflow:hidden;
+  isolation:isolate;
+}
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(212,181,118,.04) 0 1px, transparent 1px 18px),
+    repeating-linear-gradient(-45deg, rgba(212,181,118,.04) 0 1px, transparent 1px 18px);
+  pointer-events:none;
+  z-index:-1;
+}
+.hero::after{
+  content:'';
+  position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--gold-line);
+  opacity:.6;
+}
+.hero-inner{max-width:760px;margin:0 auto;position:relative}
+.ornament{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  margin-bottom:24px;
+}
+.ornament-line{
+  flex:0 0 56px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-light));
+}
+.ornament-line.right{background:linear-gradient(90deg,var(--gold-light),transparent)}
+.ornament-mark{
+  width:8px;height:8px;transform:rotate(45deg);
+  background:var(--gold-light);
+  box-shadow:0 0 0 4px rgba(212,181,118,.18);
+}
+.eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.22em;
+  color:var(--gold-light);text-transform:uppercase;
+  margin-bottom:18px;
+}
+.hero h1{
+  font-family:'Playfair Display','Noto Serif TC',serif;
+  font-weight:700;
+  font-size:54px;line-height:1.05;letter-spacing:-.02em;
+  margin-bottom:18px;color:#f7eed3;
+}
+.hero h1 .accent{
+  font-style:italic;font-weight:500;
+  color:var(--gold-light);
+  background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:15px;color:#c8d2e2;
+  margin:0 auto 22px;line-height:1.7;
+  max-width:540px;
+}
+.hero-sub strong{color:#e6dfc6;font-weight:600}
 
 .trust-byline{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:6px 14px;
-  font-size:12px;
-  color:var(--muted);
-  margin-bottom:28px;
-  padding:8px 0;
+  display:inline-flex;align-items:center;flex-wrap:wrap;
+  gap:8px 0;
+  font-size:12px;color:#a9b6cb;
+  margin-bottom:32px;
+  padding:10px 22px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(212,181,118,.18);
+  border-radius:999px;
+  backdrop-filter:blur(4px);
 }
-.trust-byline span.tb-item{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
-.trust-byline .tb-sep{color:var(--border)}
+.trust-byline .tb-item{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding:0 14px}
+.trust-byline .tb-icon{color:var(--gold-light);font-size:13px}
+.trust-byline .tb-sep{width:1px;height:14px;background:rgba(212,181,118,.3)}
 
-.search-wrap{position:relative;max-width:440px;margin:0 auto}
+/* Search */
+.search-wrap{position:relative;max-width:480px;margin:0 auto}
+.search-frame{
+  position:relative;
+  padding:2px;border-radius:14px;
+  background:linear-gradient(135deg, rgba(212,181,118,.5) 0%, rgba(212,181,118,.15) 50%, rgba(212,181,118,.5) 100%);
+  box-shadow:0 12px 36px rgba(0,0,0,.25), 0 0 0 1px rgba(212,181,118,.1);
+  transition:transform .2s;
+}
+.search-frame:focus-within{transform:translateY(-1px)}
 .search-input{
   width:100%;
-  padding:14px 18px 14px 44px;
-  font-size:15px;
-  font-family:inherit;
-  border:1px solid var(--border);
+  padding:15px 18px 15px 46px;
+  font-size:15px;font-family:inherit;
+  border:none;
   border-radius:12px;
-  background:var(--card);
+  background:#fcfaf3;
   color:var(--text);
   outline:none;
-  transition:border-color .15s, box-shadow .15s;
-  box-shadow:0 1px 3px rgba(15,40,69,.03);
 }
-.search-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,146,74,.15)}
-.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
+.search-input::placeholder{color:#9aa6bc}
+.search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--gold-deep);pointer-events:none;z-index:2}
 .search-results{
   position:absolute;
-  top:calc(100% + 6px);
-  left:0;right:0;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:10px;
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
-  max-height:280px;
-  overflow-y:auto;
-  display:none;
-  z-index:10;
-  text-align:left;
+  top:calc(100% + 8px);left:0;right:0;
+  background:#fcfaf3;
+  border:1px solid var(--gold-soft);
+  border-radius:12px;
+  box-shadow:var(--shadow-lg);
+  max-height:300px;overflow-y:auto;
+  display:none;z-index:10;text-align:left;
+  padding:6px;
 }
 .search-results.show{display:block}
-.search-item{display:block;padding:12px 16px;text-decoration:none;color:var(--text);border-bottom:1px solid var(--border)}
-.search-item:last-child{border-bottom:none}
-.search-item:hover{background:var(--bg)}
-.search-item-name{font-size:14px;font-weight:600}
+.search-item{display:block;padding:12px 14px;text-decoration:none;color:var(--text);border-radius:8px;transition:background .15s}
+.search-item:hover{background:var(--gold-bg)}
+.search-item-name{font-size:14.5px;font-weight:600}
 .search-item-meta{font-size:12px;color:var(--muted);margin-top:2px}
-.search-empty{padding:16px;text-align:center;font-size:13px;color:var(--muted)}
-.search-count{margin-top:12px;font-size:12px;color:var(--muted)}
+.search-empty{padding:18px;text-align:center;font-size:13px;color:var(--muted)}
+.search-count{margin-top:14px;font-size:12px;color:#a9b6cb;letter-spacing:.04em}
 
-/* Projects */
-.section{max-width:880px;margin:0 auto;padding:24px 20px 48px}
-.section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
-.section-title{font-size:18px;font-weight:700;letter-spacing:-.01em}
-.section-sort{font-size:12px;color:var(--muted)}
-.cards{display:flex;flex-direction:column;gap:12px}
+/* Section */
+.section{max-width:920px;margin:0 auto;padding:56px 20px 32px}
+.section-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:24px;gap:16px;flex-wrap:wrap;
+}
+.section-head-main{display:flex;flex-direction:column;gap:6px}
+.section-eyebrow{
+  font-size:10.5px;font-weight:700;letter-spacing:.2em;
+  color:var(--gold-deep);text-transform:uppercase;
+}
+.section-title{
+  font-family:'Playfair Display','Noto Serif TC',serif;
+  font-size:30px;font-weight:700;letter-spacing:-.02em;
+  color:var(--navy);
+}
+.section-sort{font-size:12px;color:var(--muted);font-style:italic}
+
+.cards{display:flex;flex-direction:column;gap:16px}
 
 .card{
   position:relative;
-  background:var(--card);
+  background:linear-gradient(135deg, #ffffff 0%, #fbf6e8 100%);
   border:1px solid var(--border);
-  border-radius:16px;
+  border-radius:18px;
   overflow:hidden;
-  transition:border-color .15s, transform .15s, box-shadow .15s;
-  box-shadow:0 1px 3px rgba(15,40,69,.04);
+  transition:transform .25s cubic-bezier(.2,.7,.3,1), box-shadow .25s, border-color .2s;
+  box-shadow:var(--shadow-sm);
 }
 .card::before{
   content:'';
-  position:absolute;
-  left:0;top:0;bottom:0;
-  width:4px;
+  position:absolute;left:0;top:0;bottom:0;
+  width:5px;
   background:var(--border);
 }
-.card.tier-T1::before{background:var(--t1)}
-.card.tier-T2::before{background:var(--t2)}
-.card.tier-T3::before{background:var(--t3)}
-.card.tier-T4::before{background:linear-gradient(180deg,var(--gold) 0%,var(--navy) 100%)}
-.card.tier-T5::before{background:var(--t5)}
-.card:hover{border-color:var(--gold);transform:translateY(-1px);box-shadow:0 4px 18px rgba(184,146,74,.1)}
+.card::after{
+  content:'';
+  position:absolute;top:-30px;right:-30px;width:140px;height:140px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(212,181,118,.14) 0%, transparent 65%);
+  pointer-events:none;
+  opacity:.7;transition:opacity .25s;
+}
+.card.tier-T1::before{background:linear-gradient(180deg,var(--t1) 0%,#0a5a2c 100%)}
+.card.tier-T2::before{background:linear-gradient(180deg,var(--t2) 0%,#1739a8 100%)}
+.card.tier-T3::before{background:linear-gradient(180deg,var(--t3) 0%,#7b4d05 100%)}
+.card.tier-T4::before{background:linear-gradient(180deg,var(--gold-light) 0%,var(--gold) 50%,var(--navy) 100%)}
+.card.tier-T5::before{background:linear-gradient(180deg,var(--t5) 0%,#7c1414 100%)}
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-gold);
+  border-color:var(--gold-light);
+}
+.card:hover::after{opacity:1}
 
 .card-body{
-  display:flex;
-  align-items:center;
-  gap:20px;
-  padding:18px 20px;
-  text-decoration:none;
-  color:var(--text);
+  display:flex;align-items:center;gap:24px;
+  padding:22px 26px 20px 28px;
+  text-decoration:none;color:var(--text);
+  position:relative;
 }
-.card-main{flex:1;min-width:0}
-.card-head{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap}
-.card-name{font-size:16px;font-weight:600;letter-spacing:-.01em}
-.card-meta{font-size:12.5px;color:var(--muted);margin-bottom:6px}
-.card-verdict{font-size:13.5px;color:var(--text);line-height:1.5}
+.card-main{flex:1;min-width:0;position:relative;z-index:1}
+.card-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.card-name{
+  font-family:'Playfair Display','Noto Serif TC',serif;
+  font-size:21px;font-weight:600;letter-spacing:-.015em;
+  color:var(--navy);line-height:1.2;
+}
+.tier-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 9px;
+  font-size:10px;font-weight:700;letter-spacing:.1em;
+  border-radius:999px;
+  background:linear-gradient(135deg,#fbf3df,#f3e5c3);
+  border:1px solid var(--gold-light);
+  color:var(--gold-deep);text-transform:uppercase;
+}
+.card.tier-T1 .tier-badge{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border-color:#86efac;color:#15803d}
+.card.tier-T2 .tier-badge{background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-color:#93c5fd;color:#1d4ed8}
+.card.tier-T3 .tier-badge{background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#fcd34d;color:#a16207}
+.card.tier-T5 .tier-badge{background:linear-gradient(135deg,#fee2e2,#fecaca);border-color:#fca5a5;color:#b91c1c}
+.card-meta{
+  font-size:13px;color:var(--text-soft);margin-bottom:8px;
+  display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.card-meta .sep{color:var(--gold-light);font-size:14px;line-height:1}
+.card-meta .area{font-weight:600;color:var(--navy)}
+.card-verdict{font-size:14px;color:var(--text-soft);line-height:1.55}
 
-.scores{flex-shrink:0;display:flex;gap:14px;padding-left:8px}
-.score-block{text-align:center;min-width:56px}
-.score-label{font-size:9.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:3px;font-weight:600}
-.score-value{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--navy);font-variant-numeric:tabular-nums}
-.score-value.foreign{color:var(--gold)}
-.score-suffix{font-size:11px;color:var(--muted);font-weight:500}
+.scores{flex-shrink:0;display:flex;gap:14px;padding-left:8px;position:relative;z-index:1}
+.score-block{
+  position:relative;
+  text-align:center;
+  min-width:78px;padding:14px 12px 12px;
+  background:rgba(255,255,255,.7);
+  border:1px solid var(--border-soft);
+  border-radius:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8), 0 1px 2px rgba(13,34,68,.04);
+}
+.score-block.foreign{
+  background:linear-gradient(180deg,#fef9ed 0%, #fbf3df 100%);
+  border-color:var(--gold-light);
+}
+.score-label{
+  font-size:9px;letter-spacing:.16em;
+  color:var(--muted);text-transform:uppercase;
+  margin-bottom:4px;font-weight:700;
+}
+.score-block.foreign .score-label{color:var(--gold-deep)}
+.score-value{
+  font-family:'Playfair Display',serif;
+  font-size:32px;font-weight:700;letter-spacing:-.04em;
+  line-height:1;color:var(--navy);
+  font-variant-numeric:tabular-nums;
+}
+.score-value.foreign{
+  background:linear-gradient(180deg,var(--gold) 0%, var(--gold-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.score-suffix{font-size:11px;color:var(--muted);font-weight:500;margin-left:2px}
 
 .card-actions{
-  display:flex;
-  gap:8px;
-  padding:10px 18px;
-  border-top:1px solid var(--border);
-  background:var(--bg);
+  display:flex;gap:8px;
+  padding:12px 26px;
+  border-top:1px solid var(--border-soft);
+  background:linear-gradient(180deg,#fbf6e8 0%, #f7f0dd 100%);
 }
 .action-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  padding:6px 11px;
-  font-size:11.5px;
-  font-weight:500;
-  font-family:inherit;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 13px;
+  font-size:12px;font-weight:500;font-family:inherit;
   border:1px solid var(--border);
-  border-radius:6px;
-  background:var(--card);
-  color:var(--muted);
-  cursor:pointer;
-  transition:all .15s;
+  border-radius:8px;
+  background:#fff;color:var(--text-soft);
+  cursor:pointer;transition:all .15s;
 }
-.action-btn:hover{color:var(--gold);border-color:var(--gold);background:var(--gold-bg)}
+.action-btn:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg);box-shadow:0 2px 6px rgba(184,146,74,.15)}
 .action-btn svg{width:13px;height:13px}
-.action-btn.copied{color:var(--t1);border-color:var(--t1)}
+.action-btn.copied{color:var(--t1);border-color:var(--t1);background:#dcfce7}
 
-.more-note{margin-top:16px;text-align:center;font-size:12.5px;color:var(--muted)}
+.more-note{
+  margin-top:28px;text-align:center;
+  font-size:13px;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.more-note::before, .more-note::after{
+  content:'';flex:0 0 60px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-light));
+}
+.more-note::after{background:linear-gradient(90deg,var(--gold-light),transparent)}
 
 /* Footer */
-.footer{padding:32px 20px 40px;text-align:center;max-width:720px;margin:0 auto;border-top:1px solid var(--border)}
-.footer-disclaimer{font-size:11.5px;color:var(--muted);line-height:1.7}
+.footer{
+  margin-top:24px;padding:40px 20px 48px;
+  text-align:center;max-width:760px;margin-left:auto;margin-right:auto;
+  position:relative;
+}
+.footer::before{
+  content:'';display:block;
+  width:100%;height:1px;
+  background:var(--gold-line);
+  margin-bottom:28px;
+}
+.footer-ornament{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-bottom:18px;
+}
+.footer-ornament .dot{width:5px;height:5px;background:var(--gold);border-radius:50%;opacity:.6}
+.footer-ornament .dot:nth-child(2){opacity:1;width:7px;height:7px;transform:rotate(45deg);border-radius:1px}
+.footer-disclaimer{font-size:12px;color:var(--muted);line-height:1.75;max-width:620px;margin:0 auto}
+.footer-disclaimer strong{color:var(--text-soft);font-weight:600}
 
 /* RWD */
-@media (max-width:576px){
+@media (max-width:640px){
   .nav-inner{padding:12px 16px;gap:10px}
-  .brand-name{font-size:15px}
+  .brand-mark{width:28px;height:28px;font-size:15px}
+  .brand-name{font-size:14px}
   .brand-by{display:none}
-  .nav-links{gap:10px}
-  .hero{padding:36px 16px 28px}
-  .hero h1{font-size:24px}
-  .hero-sub{font-size:13px}
-  .trust-byline{font-size:11px;gap:4px 10px}
-  .section{padding:20px 16px 36px}
-  .section-title{font-size:16px}
-  .card-body{padding:14px 16px;gap:12px;flex-wrap:wrap}
+  .hero{padding:48px 18px 56px}
+  .hero h1{font-size:34px;letter-spacing:-.025em}
+  .hero-sub{font-size:13.5px;margin-bottom:18px}
+  .ornament-line{flex-basis:36px}
+  .trust-byline{padding:8px 14px;font-size:11px}
+  .trust-byline .tb-item{padding:0 8px}
+  .section{padding:40px 16px 24px}
+  .section-title{font-size:24px}
+  .card-body{padding:18px 18px 16px 22px;gap:14px;flex-wrap:wrap}
   .card-main{flex-basis:100%}
-  .card-name{font-size:15px}
+  .card-name{font-size:18px}
   .card-meta{font-size:12px}
   .card-verdict{font-size:13px}
   .scores{gap:10px;padding-left:0;width:100%;justify-content:flex-start;margin-top:4px}
-  .score-block{min-width:0;text-align:left}
-  .score-value{font-size:20px}
-  .card-actions{padding:10px 16px}
-  .action-btn{padding:6px 10px;font-size:11px}
-  .footer{padding:24px 16px 32px}
+  .score-block{min-width:0;flex:1;padding:10px 8px}
+  .score-value{font-size:26px}
+  .card-actions{padding:10px 18px}
+  .action-btn{padding:6px 11px;font-size:11.5px}
+  .footer{padding:28px 16px 36px}
+}
+@media (max-width:380px){
+  .hero h1{font-size:28px}
+  .trust-byline{flex-direction:column;gap:6px;border-radius:14px;padding:10px 14px}
+  .trust-byline .tb-sep{display:none}
 }
 </style>
 </head>
@@ -241,10 +419,13 @@ body.zh .lang-zh{display:inline}
 
 <nav class="nav">
   <div class="nav-inner">
-    <div class="brand">
-      <span class="brand-name">KL Property Check</span>
-      <span class="brand-by">by InvestMQuest</span>
-    </div>
+    <a class="brand" href="/kl-check">
+      <span class="brand-mark">K</span>
+      <span class="brand-text">
+        <span class="brand-name">KL Property Check</span>
+        <span class="brand-by">by InvestMQuest</span>
+      </span>
+    </a>
     <div class="nav-links">
       <div class="lang-btns">
         <button class="lang-btn active" data-lang="en">EN</button>
@@ -256,28 +437,35 @@ body.zh .lang-zh{display:inline}
 
 <section class="hero">
   <div class="hero-inner">
+    <div class="ornament" aria-hidden="true">
+      <span class="ornament-line"></span>
+      <span class="ornament-mark"></span>
+      <span class="ornament-line right"></span>
+    </div>
     <div class="eyebrow">
       <span class="lang-en">INDEPENDENT KL DEVELOPMENT SCORECARDS</span>
       <span class="lang-zh">吉隆坡建案獨立評分</span>
     </div>
     <h1>
-      <span class="lang-en">KL Property Scorecards</span>
-      <span class="lang-zh">KL 建案獨立評分卡</span>
+      <span class="lang-en">KL Property <span class="accent">Scorecards</span></span>
+      <span class="lang-zh">KL 建案 <span class="accent">獨立評分卡</span></span>
     </h1>
     <p class="hero-sub">
-      <span class="lang-en">Brickz · JPPH · NAPIC sources · 5-dimension framework · Dual scoring for local &amp; foreign buyers</span>
-      <span class="lang-zh">Brickz · JPPH · NAPIC 資料源 · 5 維度框架 · 本國人/外國人雙評分</span>
+      <span class="lang-en"><strong>Brickz · JPPH · NAPIC</strong> sources &nbsp;·&nbsp; <strong>5-dimension</strong> framework &nbsp;·&nbsp; dual scoring for local &amp; foreign buyers</span>
+      <span class="lang-zh"><strong>Brickz · JPPH · NAPIC</strong> 資料源 &nbsp;·&nbsp; <strong>5 維度</strong>框架 &nbsp;·&nbsp; 本國人 / 外國人雙評分</span>
     </p>
     <div class="trust-byline">
-      <span class="tb-item">🛡️ <span class="lang-en">Independent analysis</span><span class="lang-zh">獨立分析</span></span>
-      <span class="tb-sep">·</span>
-      <span class="tb-item">👤 <span class="lang-en">MM2H holder</span><span class="lang-zh">MM2H 持有者</span></span>
-      <span class="tb-sep">·</span>
-      <span class="tb-item">✅ <span class="lang-en">5-dimension methodology</span><span class="lang-zh">5 維度方法論</span></span>
+      <span class="tb-item"><span class="tb-icon">◆</span><span class="lang-en">Independent analysis</span><span class="lang-zh">獨立分析</span></span>
+      <span class="tb-sep"></span>
+      <span class="tb-item"><span class="tb-icon">◆</span><span class="lang-en">MM2H holder</span><span class="lang-zh">MM2H 持有者</span></span>
+      <span class="tb-sep"></span>
+      <span class="tb-item"><span class="tb-icon">◆</span><span class="lang-en">5-dimension methodology</span><span class="lang-zh">5 維度方法論</span></span>
     </div>
     <div class="search-wrap">
-      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      <input id="search" type="text" class="search-input" autocomplete="off">
+      <div class="search-frame">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="search" type="text" class="search-input" autocomplete="off">
+      </div>
       <div id="results" class="search-results"></div>
     </div>
     <div class="search-count" id="count"></div>
@@ -286,11 +474,16 @@ body.zh .lang-zh{display:inline}
 
 <section class="section">
   <div class="section-head">
-    <h2 class="section-title">
-      <span class="lang-en">All Developments</span><span class="lang-zh">全部建案</span>
-    </h2>
+    <div class="section-head-main">
+      <span class="section-eyebrow">
+        <span class="lang-en">THE COLLECTION</span><span class="lang-zh">建案收錄</span>
+      </span>
+      <h2 class="section-title">
+        <span class="lang-en">All Developments</span><span class="lang-zh">全部建案</span>
+      </h2>
+    </div>
     <span class="section-sort">
-      <span class="lang-en">Sorted by score</span><span class="lang-zh">依評分排序</span>
+      <span class="lang-en">Sorted by foreign score</span><span class="lang-zh">依外國人評分排序</span>
     </span>
   </div>
   <div class="cards" id="cards"></div>
@@ -300,9 +493,12 @@ body.zh .lang-zh{display:inline}
 </section>
 
 <footer class="footer">
+  <div class="footer-ornament" aria-hidden="true">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
   <p class="footer-disclaimer">
-    <span class="lang-en">Scores are independent analysis for reference only and do not constitute investment advice. Sources: Brickz · JPPH · NAPIC · developer disclosures. The author is an MM2H Silver holder, not a licensed real estate agent or financial advisor.</span>
-    <span class="lang-zh">本站評分為獨立分析參考，不構成投資建議。資料來源：Brickz · JPPH · NAPIC · 開發商公開資料。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。</span>
+    <span class="lang-en">Scores are <strong>independent analysis for reference only</strong> and do not constitute investment advice. Sources: Brickz · JPPH · NAPIC · developer disclosures. The author is an MM2H Silver holder, not a licensed real estate agent or financial advisor.</span>
+    <span class="lang-zh">本站評分為<strong>獨立分析參考</strong>，不構成投資建議。資料來源：Brickz · JPPH · NAPIC · 開發商公開資料。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。</span>
   </p>
 </footer>
 
@@ -315,6 +511,7 @@ const projects = [
     scoreMY: 6.4,
     scoreFG: 6.0,
     tier: "T4",
+    tierLabel: { en: "Niche-only", zh: "利基型" },
     verdict: {
       en: "Bukit Bintang freehold + Imbi 100m — top Airbnb-fit location in KL",
       zh: "Bukit Bintang freehold + Imbi 100m，全 KL 最強 Airbnb 地段適配性"
@@ -327,9 +524,9 @@ const projects = [
 ];
 
 const I18N = {
-  searchPh: { en: "Enter development name, e.g. Kiaramas deDaun", zh: "輸入建案名稱，例如 Kiaramas deDaun" },
+  searchPh: { en: "Search by name or area, e.g. Kiaramas, Bukit Bintang", zh: "輸入建案或地段，例如 Kiaramas、Bukit Bintang" },
   count: {
-    en: n => `${n} KL development${n===1?'':'s'} listed · more coming soon`,
+    en: n => `${n} KL development${n===1?'':'s'} curated · more coming soon`,
     zh: n => `目前收錄 ${n} 個 KL 建案 · 持續新增中`
   },
   scoreLocal: { en: "LOCAL", zh: "本國人" },
@@ -377,18 +574,23 @@ function renderCards(){
           <div class="card-main">
             <div class="card-head">
               <span class="card-name">${p.name}</span>
+              <span class="tier-badge">${p.tier} · ${p.tierLabel ? p.tierLabel[lang] : ''}</span>
             </div>
-            <div class="card-meta">${p.area} · ${p.tenure[lang]}</div>
+            <div class="card-meta">
+              <span class="area">${p.area}</span>
+              <span class="sep">◆</span>
+              <span>${p.tenure[lang]}</span>
+            </div>
             <div class="card-verdict">${p.verdict[lang]}</div>
           </div>
           <div class="scores">
             <div class="score-block">
               <div class="score-label">${I18N.scoreLocal[lang]}</div>
-              <div><span class="score-value">${p.scoreMY.toFixed(1)}</span><span class="score-suffix"> /10</span></div>
+              <div><span class="score-value">${p.scoreMY.toFixed(1)}</span><span class="score-suffix">/10</span></div>
             </div>
-            <div class="score-block">
+            <div class="score-block foreign">
               <div class="score-label">${I18N.scoreForeign[lang]}</div>
-              <div><span class="score-value foreign">${p.scoreFG.toFixed(1)}</span><span class="score-suffix"> /10</span></div>
+              <div><span class="score-value foreign">${p.scoreFG.toFixed(1)}</span><span class="score-suffix">/10</span></div>
             </div>
           </div>
         </a>
