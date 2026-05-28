@@ -8,7 +8,7 @@
 <meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f7f3ea;
@@ -398,7 +398,11 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
 .footer-disclaimer strong{color:var(--text-soft);font-weight:600}
 
 /* Scoreboard table */
-.scoreboard-section{padding-top:20px;padding-bottom:48px}
+.scoreboard-section{
+  max-width:1280px;
+  padding-top:20px;
+  padding-bottom:48px;
+}
 .view-toggle{
   display:inline-flex;gap:0;
   background:var(--bg-soft);
@@ -432,7 +436,7 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
   border-collapse:collapse;
   font-size:13px;
   font-variant-numeric:tabular-nums;
-  min-width:760px;
+  min-width:920px;
 }
 .scoreboard thead{
   background:linear-gradient(180deg,var(--navy-deep) 0%,var(--navy) 100%);
@@ -501,14 +505,27 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
   display:block;font-size:11px;color:var(--muted);
   font-weight:400;font-family:'Inter',sans-serif;margin-top:2px;
 }
-.scoreboard td.score{font-size:14px;font-weight:600}
-.scoreboard td.score.high{
-  color:var(--navy);font-weight:700;
-  font-family:'Playfair Display','Noto Serif TC',serif;font-size:15px;
+.scoreboard td.score{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:15px;font-weight:500;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.02em;
+  line-height:1;
 }
+.scoreboard td.score.high{color:var(--navy)}
 .scoreboard td.score.top{
-  background:linear-gradient(180deg,rgba(212,181,118,.12),rgba(212,181,118,.05));
+  background:#fdf6e1;
   color:var(--gold-deep);
+  position:relative;
+}
+.scoreboard td.score.top::after{
+  content:'★';
+  font-size:8px;
+  vertical-align:5px;
+  margin-left:3px;
+  color:var(--gold);
+  font-weight:400;
+  font-family:'Inter',sans-serif;
 }
 .scoreboard td.tier-cell{font-weight:700;font-size:12px;letter-spacing:.04em}
 .scoreboard td.tier-cell .tier-pill{
@@ -524,9 +541,11 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
 .scoreboard td.tier-cell.tier-T5 .tier-pill{background:#fee2e2;border-color:#fca5a5;color:#b91c1c}
 .scoreboard td.total{
   background:rgba(212,181,118,.06);
-  font-family:'Playfair Display','Noto Serif TC',serif;
-  font-size:16px;font-weight:700;
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:17px;font-weight:600;
+  font-variant-numeric:tabular-nums;
   letter-spacing:-.02em;
+  line-height:1;
 }
 .scoreboard td.total .total-row{display:flex;align-items:baseline;justify-content:center;gap:4px;line-height:1.1}
 .scoreboard td.total .my-num{color:var(--navy)}
@@ -544,6 +563,21 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
   letter-spacing:.08em;text-transform:uppercase;
   margin-top:1px;
 }
+.scoreboard td.best-fit{
+  min-width:170px;
+  text-align:left;
+  padding:14px 16px;
+  white-space:nowrap;
+}
+.scoreboard td.best-fit .bf-icon{
+  font-size:18px;line-height:1;margin-right:8px;
+  display:inline-block;vertical-align:-2px;
+  filter:saturate(.85);
+}
+.scoreboard td.best-fit .bf-label{
+  font-size:12.5px;font-weight:600;
+  color:var(--navy);letter-spacing:.01em;
+}
 .legend-note{
   margin-top:14px;
   display:flex;gap:18px;flex-wrap:wrap;justify-content:center;
@@ -551,7 +585,10 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
 }
 .legend-note .l-item{display:inline-flex;align-items:center;gap:6px}
 .legend-note .l-swatch{width:12px;height:12px;border-radius:3px;display:inline-block}
-.legend-note .l-swatch.top{background:linear-gradient(180deg,rgba(212,181,118,.4),rgba(212,181,118,.2));border:1px solid var(--gold-light)}
+.legend-note .l-swatch.top{
+  background:#fdf6e1;
+  border:1px solid var(--gold-light);
+}
 .legend-note .l-swatch.high{background:var(--navy);opacity:.6}
 
 /* RWD */
@@ -725,6 +762,7 @@ const projects = [
       zh: "Damansara Heights 旗艦地段 + Pavilion 機構級護城河 + MRT 有蓋直連，10 年護城河最強；投資收益率偏低"
     },
     dims: { d1: 8.0, d2: 4.5, d3: [4.5, 2.5], d4: 6.5, d5: 8.0, d6: [6.5, 4.0] },
+    bestFit: { icon: "🏛️", en: "Flagship · Generational", zh: "旗艦地段・世代" },
     urls: {
       en: "/kl/SC_Pavilion-Damansara-Heights_20260527_en.html",
       zh: "/kl/SC_Pavilion-Damansara-Heights_20260527_zh.html"
@@ -744,6 +782,7 @@ const projects = [
       zh: "Bukit Bintang freehold + Imbi monorail 100m，10 年地段護城河強；Berjaya Corp 母公司虧損 + SA overhang 是 10 年退場拖累"
     },
     dims: { d1: 7.5, d2: 6.5, d3: [5.5, 3.5], d4: 5.0, d5: 6.0, d6: [6.2, 4.5] },
+    bestFit: { icon: "📈", en: "Airbnb operator", zh: "Airbnb 經營" },
     urls: {
       en: "/kl/SC_Times-Square-2_20260527_en.html",
       zh: "/kl/SC_Times-Square-2_20260527_zh.html"
@@ -763,6 +802,7 @@ const projects = [
       zh: "Pavilion KL 直連 + 全 KL 最強零售生活密度；Leasehold + 商業地契 + 期房三重結構性折扣壓制 10 年退場"
     },
     dims: { d1: 7.5, d2: 4.5, d3: [4.0, 2.0], d4: 4.5, d5: 6.5, d6: [6.0, 2.5] },
+    bestFit: { icon: "✈️", en: "Pied-à-terre", zh: "備用居所" },
     urls: {
       en: "/kl/SC_Pavilion-Square_20260528_en.html",
       zh: "/kl/SC_Pavilion-Square_20260528_zh.html"
@@ -782,6 +822,7 @@ const projects = [
       zh: "Freehold 住宅 + Asia Quest Kiaramas 系列第六案 + MM2H 達門檻；期房 2 年等待 + MRT3 2032 催化遠"
     },
     dims: { d1: 7.5, d2: 6.5, d3: [6.0, 3.5], d4: 6.5, d5: 7.5, d6: [7.5, 5.5] },
+    bestFit: { icon: "👨‍👩‍👧", en: "MM2H family", zh: "MM2H 家庭" },
     urls: {
       en: "/kl/SC_Kiaramas-deDaun_20260528_en.html",
       zh: "/kl/SC_Kiaramas-deDaun_20260528_zh.html"
@@ -801,6 +842,7 @@ const projects = [
       zh: "DPC 旗艦 + ParkCity × CapitaLand 完工 + Brickz 70 筆 +40% 5 年實證；資本增值取向，gross 4.3% 非高 yield play"
     },
     dims: { d1: 8.0, d2: 7.0, d3: [5.0, 3.0], d4: 7.5, d5: 9.0, d6: [8.0, 6.0] },
+    bestFit: { icon: "🏡", en: "Family · Appreciation", zh: "家庭自住・長期增值" },
     urls: {
       en: "/kl/SC_Park-Regent_20260528_en.html",
       zh: "/kl/SC_Park-Regent_20260528_zh.html"
@@ -820,6 +862,7 @@ const projects = [
       zh: "MK 7.5 district 基線 + 鄰 Bukit Kiara Hill + UEM Sunrise 28 MK master 軌跡 + Indochine GreenRE 設計；期房 1 年 + MRT3 2032 催化遠"
     },
     dims: { d1: 7.7, d2: 6.0, d3: [7.0, 5.0], d4: 6.5, d5: 8.0, d6: [7.5, 5.5] },
+    bestFit: { icon: "👨‍👩‍👧", en: "MM2H family", zh: "MM2H 家庭" },
     urls: {
       en: "/kl/SC_The-MINH_20260528_en.html",
       zh: "/kl/SC_The-MINH_20260528_zh.html"
@@ -839,6 +882,7 @@ const projects = [
       zh: "MK 7.5 district 基線 + UEM Sunrise 4 戶/層低密度旗艦 + Brickz 31 筆 +50% over MK 中位實證；9 年完工成熟，現金流非主軸"
     },
     dims: { d1: 7.5, d2: 7.0, d3: [5.0, 3.0], d4: 6.5, d5: 8.5, d6: [7.5, 5.5] },
+    bestFit: { icon: "💎", en: "Boutique · Generational", zh: "精品自住・世代" },
     urls: {
       en: "/kl/SC_Residensi-22_20260528_en.html",
       zh: "/kl/SC_Residensi-22_20260528_zh.html"
@@ -858,6 +902,7 @@ const projects = [
       zh: "DPC 唯一 Parkfront 直連 Central Park + Perdana 50 年 master developer 不折扣保值 + Brickz 18 筆 +50% 12 年實證；成熟二手市場，現金流非主軸"
     },
     dims: { d1: 8.0, d2: 7.0, d3: [5.5, 3.5], d4: 7.5, d5: 8.5, d6: [7.5, 5.5] },
+    bestFit: { icon: "🌳", en: "Family · Parkfront", zh: "家庭自住・公園景" },
     urls: {
       en: "/kl/SC_One-Central-Park_20260528_en.html",
       zh: "/kl/SC_One-Central-Park_20260528_zh.html"
@@ -890,7 +935,9 @@ const I18N = {
   thD6:    { en: "Exit",           zh: "退場流動性" },
   thTier:  { en: "Tier",           zh: "Tier" },
   thTotal: { en: "Total",          zh: "總分" },
-  thTotalSub: { en: "MY / FG",     zh: "本/外" }
+  thTotalSub: { en: "MY / FG",     zh: "本/外" },
+  thBestFit: { en: "Best fit",     zh: "最適合" },
+  thBestFitSub: { en: "Buyer type", zh: "買家類型" }
 };
 
 const cardsEl = document.getElementById('cards');
@@ -934,6 +981,7 @@ function renderScoreboard(){
     <th>${I18N.thD6[lang]}<small>20%</small></th>
     <th>${I18N.thTier[lang]}</th>
     <th>${I18N.thTotal[lang]}<small>${I18N.thTotalSub[lang]}</small></th>
+    <th>${I18N.thBestFit[lang]}<small>${I18N.thBestFitSub[lang]}</small></th>
   `;
 
   // find max per dim for highlighting
@@ -972,6 +1020,10 @@ function renderScoreboard(){
             <span class="div">/</span>
             <span class="fg-num">${p.scoreFG.toFixed(1)}</span>
           </div>
+        </td>
+        <td class="best-fit">
+          <span class="bf-icon">${p.bestFit ? p.bestFit.icon : ''}</span>
+          <span class="bf-label">${p.bestFit ? p.bestFit[lang] : ''}</span>
         </td>
       </tr>
     `;
