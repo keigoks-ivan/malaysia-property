@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KL Property Scorecards — Independent Ratings for KL Developments</title>
-<meta name="description" content="Independent scorecards for Kuala Lumpur developments v2.0. 10-year hold professional investor lens, 6-dimension framework, dual scoring for local & foreign buyers. Brickz / JPPH / NAPIC sources. Not investment advice.">
+<meta name="description" content="Independent scorecards for Kuala Lumpur developments. 10-year hold professional investor lens, 6-dimension framework, dual scoring for local & foreign buyers. Brickz / JPPH / NAPIC sources. Not investment advice.">
 <meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -286,6 +286,21 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
   border:1px solid var(--gold-light);
   color:var(--gold-deep);text-transform:uppercase;
 }
+.status-badge{
+  display:inline-flex;align-items:center;
+  padding:2px 9px;
+  font-size:10px;font-weight:700;letter-spacing:.06em;
+  border-radius:999px;
+  border:1px solid;
+}
+.status-badge.status-completed{
+  background:linear-gradient(135deg,#dcfce7,#bbf7d0);
+  border-color:#86efac;color:#15803d;
+}
+.status-badge.status-offplan{
+  background:linear-gradient(135deg,#dbeafe,#bfdbfe);
+  border-color:#93c5fd;color:#1d4ed8;
+}
 .card.tier-T1 .tier-badge{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border-color:#86efac;color:#15803d}
 .card.tier-T2 .tier-badge{background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-color:#93c5fd;color:#1d4ed8}
 .card.tier-T3 .tier-badge{background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#fcd34d;color:#a16207}
@@ -459,7 +474,7 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
       <span class="tb-sep"></span>
       <span class="tb-item"><span class="tb-icon">◆</span><span class="lang-en">MM2H holder</span><span class="lang-zh">MM2H 持有者</span></span>
       <span class="tb-sep"></span>
-      <span class="tb-item"><span class="tb-icon">◆</span><span class="lang-en">10-year hold framework v2.0</span><span class="lang-zh">10 年持有框架 v2.0</span></span>
+      <span class="tb-item"><span class="tb-icon">◆</span><span class="lang-en">10-year hold framework</span><span class="lang-zh">10 年持有框架</span></span>
     </div>
     <div class="search-wrap">
       <div class="search-frame">
@@ -508,6 +523,7 @@ const projects = [
     name: "Pavilion Damansara Heights",
     area: "Bukit Damansara",
     tenure: { en: "Freehold commercial", zh: "永久商業地契" },
+    status: { en: "Completed (VP Mar 2025)", zh: "成屋（2025-03 交屋）", code: "completed" },
     scoreMY: 6.7,
     scoreFG: 5.9,
     tier: "T3",
@@ -525,6 +541,7 @@ const projects = [
     name: "Times Square 2 時代廣場2",
     area: "Bukit Bintang",
     tenure: { en: "Freehold commercial SA", zh: "永久商業 SA 地契" },
+    status: { en: "Off-plan (VP Oct 2027)", zh: "預售屋（2027-10 完工）", code: "offplan" },
     scoreMY: 6.2,
     scoreFG: 5.6,
     tier: "T4",
@@ -542,6 +559,7 @@ const projects = [
     name: "Pavilion Square @ Bukit Bintang",
     area: "Bukit Bintang",
     tenure: { en: "Leasehold 99-yr commercial", zh: "Leasehold 99 年商業地契" },
+    status: { en: "Off-plan (VP 2028-2029)", zh: "預售屋（2028-2029 完工）", code: "offplan" },
     scoreMY: 5.5,
     scoreFG: 4.5,
     tier: "T4",
@@ -609,6 +627,7 @@ function renderCards(){
             <div class="card-head">
               <span class="card-name">${p.name}</span>
               <span class="tier-badge">${p.tier} · ${p.tierLabel ? p.tierLabel[lang] : ''}</span>
+              ${p.status ? `<span class="status-badge status-${p.status.code}">${p.status[lang]}</span>` : ''}
             </div>
             <div class="card-meta">
               <span class="area">${p.area}</span>
