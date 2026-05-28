@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bangsar Hill Park — KL 建案獨立評分卡</title>
+<meta name="description" content="Bangsar Hill Park 獨立評分卡。本國人 6.5 / 外國人 5.8。10 年持有專業投資人視角 · 6 維度框架 · Sunsuria × MKH JV / Brickz / NAPIC 公開資料源。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:'Inter','Noto Sans TC',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;background-image:radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);background-attachment:fixed}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}
+.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{font-family:'Noto Serif TC','Playfair Display',serif;font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+
+.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{font-family:'Noto Serif TC','Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}
+.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{font-family:'Noto Serif TC','Playfair Display',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+@media (max-width:768px){
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/kl-check">
+      <span class="brand-mark">K</span>
+      <span class="brand-text">
+        <span class="brand">KL 建案獨立評分卡</span>
+        <span class="brand-by">by InvestMQuest</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/kl-check">← 全部評分</a>
+      <a class="lang-link" href="SC_Bangsar-Hill-Park_20260528_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Bangsar · Lorong Maarof</span>
+    <span class="sep">◆</span>
+    <span>LEASEHOLD 99-YR RESIDENTIAL</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-05-28</span>
+  </div>
+  <h1 class="proj-name">Bangsar Hill Park</h1>
+  <p class="one-liner">
+    Bangsar 7.0 district 基線 + Bank Rakyat-Bangsar LRT 600m 步行 + Sunsuria × MKH Bursa T2 JV 開發商；leasehold 99 年（剩餘 94 年）+ 57 樓塔高密度 + Talisa Phase 2（2028 完工）內部供給 + 開發商分相對偏弱為核心 caveat。Block D/E 2025-03 完工為 Phase 1，整體 master plan 開發週期延伸至 2028。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.5</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T3">T3 · 10 年需權衡 thesis</span>
+      </div>
+      <div class="score-note">Bangsar district 7.2 + LRT 600m + 成熟 lifestyle hub；leasehold 99 + 開發商 6.5 + 5% Bumi 池 + Talisa Phase 2 內供 全面 caveat 整體偏弱</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.8</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">Leasehold 99 + 8% 印花 + 30% 非居民租金稅 + 5% Bumi 結構性買家池窄；外籍買家應額外考量 leasehold 折讓於退場時，Bangsar 對外籍辨識度低於 MK / KLCC</div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">六維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。地段護城河 30% · 買價判斷 5% · 持有現金流 15% · 資本增值路徑 20% · 開發商與管理移交 10% · 退場流動性與摩擦 20%。4 個維度本外同分、2 個維度本外分開（現金流 + 退場）。核心信仰：buy the land, not the price。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+      <svg class="radar-svg" viewBox="-30 -30 340 340" aria-label="六維度雷達圖">
+        <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+          <polygon points="140,28 237,84 237,196 140,252 43,196 43,84"/>
+          <polygon points="140,50.4 217.6,95.2 217.6,184.8 140,229.6 62.4,184.8 62.4,95.2"/>
+          <polygon points="140,72.8 198.2,106.4 198.2,173.6 140,207.2 81.8,173.6 81.8,106.4"/>
+          <polygon points="140,95.2 178.8,117.6 178.8,162.4 140,184.8 101.2,162.4 101.2,117.6"/>
+          <polygon points="140,117.6 159.4,128.8 159.4,151.2 140,162.4 120.6,151.2 120.6,128.8"/>
+        </g>
+        <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+          <line x1="140" y1="140" x2="140" y2="28"/>
+          <line x1="140" y1="140" x2="237" y2="84"/>
+          <line x1="140" y1="140" x2="237" y2="196"/>
+          <line x1="140" y1="140" x2="140" y2="252"/>
+          <line x1="140" y1="140" x2="43" y2="196"/>
+          <line x1="140" y1="140" x2="43" y2="84"/>
+        </g>
+        <!-- 本國人: 護城河 7.2 / 買價 5.5 / 現金流 6.0 / 利得 6.0 / 開發商 6.5 / 退場 6.5 -->
+        <polygon points="140,59.36 193.35,109.16 198.2,173.6 140,207.2 79.55,173.6 76.65,109.2"
+                 fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+        <g fill="#0d2244">
+          <circle cx="140" cy="59.36" r="3.5"/>
+          <circle cx="193.35" cy="109.16" r="3.5"/>
+          <circle cx="198.2" cy="173.6" r="3.5"/>
+          <circle cx="140" cy="207.2" r="3.5"/>
+          <circle cx="79.55" cy="173.6" r="3.5"/>
+          <circle cx="76.65" cy="109.2" r="3.5"/>
+        </g>
+        <!-- 外國人: 現金流 4.0 / 退場 4.5，其他同本國人 -->
+        <polygon points="140,59.36 193.35,109.16 178.8,162.4 140,207.2 79.55,173.6 96.35,114.8"
+                 fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+        <g fill="#b8924a">
+          <circle cx="140" cy="59.36" r="3"/>
+          <circle cx="193.35" cy="109.16" r="3"/>
+          <circle cx="178.8" cy="162.4" r="3"/>
+          <circle cx="140" cy="207.2" r="3"/>
+          <circle cx="79.55" cy="173.6" r="3"/>
+          <circle cx="96.35" cy="114.8" r="3"/>
+        </g>
+        <g fill="#475569" font-size="10.5" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+          <text x="140" y="18" text-anchor="middle">地段護城河</text>
+          <text x="248" y="80" text-anchor="start">買價判斷</text>
+          <text x="248" y="200" text-anchor="start">持有現金流</text>
+          <text x="140" y="270" text-anchor="middle">資本增值</text>
+          <text x="32" y="200" text-anchor="end">開發商</text>
+          <text x="32" y="80" text-anchor="end">退場流動性</text>
+        </g>
+      </svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 6.5</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 5.8</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">地段護城河</span><span class="dim-weight">30% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">7.2</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Bangsar district 7.0 基線（freehold 住宅地段、MRT/KTM 覆蓋良好，但密度較高為共同特徵）+ Bank Rakyat-Bangsar LRT 站 600m 步行 +0.2 + Bangsar Shopping Centre + Bangsar Village + Telawi/Lucky Garden 成熟 lifestyle hub = 7.2。位置在 Lorong Maarof（Bangsar Utama，Bangsar 核心區）；但 57 樓塔在 Bangsar 歷史低密度地段是結構變化，影響鄰里認知。</p>
+        <p class="dim-data">Lorong Maarof, Bangsar Utama · LRT Bank Rakyat-Bangsar 站（KJ16，Kelana Jaya Line）600m 步行 · Bangsar Shopping Centre + Bangsar Village + Telawi/Lucky Garden F&amp;B 圈 5-10 分鐘車程 · KL Sentral 5 分鐘車程 · 57 樓塔為 Bangsar 中最高建物之一</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">買價判斷</span><span class="dim-weight">5% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Block D/E 2025-03 完工 Brickz &lt;10 筆基線 5.0 + Sunsuria × MKH Bursa T2 JV sponsor +0.5 = 5.5。Asking RM 997-1,168 psf 顯著高於 Bangsar Brickz 整體中位 RM 765 psf（229 筆 2024-04 至 2025-03），但相對 Sri Penaga（Bangsar 高端 luxury anchor）RM 975 psf 接近，反映 BHP 為 Bangsar 新建案中高定位。Talisa Phase 2 RM 914-1,807k 與 Block D/E 同檔。5% Bumi 折扣為 Bumi 買家專屬，非 Bumi 買家無此折扣。</p>
+        <p class="dim-data">Block D/E 售價 RM 835,000-1,599,000，PSF RM 997-1,168 · Talisa（Block B/C）售價 RM 914,000-1,807,000，VP 2028-01 · 5% Bumiputera 折扣（非 Bumi 不適用） · vs Bangsar 整體 Brickz 229 筆中位 RM 765 psf · vs Sri Penaga 11 筆中位 RM 975 psf · vs Cascadium 4 筆中位 RM 866 psf</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">15% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">6.0</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">4.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Gross 5.30%（RM 4,500/月 2BR 970 sqft / RM 1.02M）為 5.0-5.5% anchor 區間，本國人基線 6.0 + Bangsar 成熟租賃市場（本地專業人士、KL Sentral 通勤族、外籍移居者）+0.3 − 預期高管理費 RM 0.40-0.50 psf（中端 luxury）-0.2 − 完工初期租金 ramp -0.1 = 6.0。外籍 = 本 −2.0 = 4.0（30% 非居民租金稅 + 利率 +0.5% 結構性差距）。Bangsar 對外籍辨識度低於 MK / KLCC，租客池偏本地專業人士。</p>
+        <p class="dim-data">Bangsar 整體 gross yield 4-5%（rates.my、bambooroutes 2026 預測） · 2BR 970 sqft 長租估 RM 4,500/月 · 預期管理費 RM 0.40-0.50 psf · 本國人 Net Yield ~3.5%、外籍 Net Yield ~2.5% · 借貸利率本 4.55% / 外 5.05% → 兩者均負利差</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值路徑</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Residential strata 6.0 基線 + Bangsar 成熟 lifestyle hub +0.3 + MM2H 2,637 待購 +0.3 + NAPIC Premium &gt;RM 1M 24-mo 78% 認購率穩健性 +0.2 − Leasehold 99 年遞減（剩餘 94 年）-0.3 − 57 樓塔 vs Bangsar 歷史低密度住宅文化的結構變化 -0.2 − Talisa Phase 2（B/C）2028 完工同建案內部供給壓力 -0.3 = 6.0。Bangsar 整體地段價值穩健，但 BHP 的高密度 + leasehold + 內部多 Phase 供給為主要拖累。</p>
+        <p class="dim-data">NAPIC 2024 KL RM 1M+ 成交量 +31% YoY · NAPIC Q3 2025 Premium &gt;RM 1M 78% 24-mo take-up · Bangsar 整體 Brickz 5 年升值 +20-30%（多筆中位數據） · Talisa Phase 2 同建案 2028 完工 · MRT3 Circle Line（2032 通車）為長期 pipeline 但未直接覆蓋 BHP</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Sunsuria Bhd（Bursa：5135）× MKH Bhd（Bursa：6114）JV 為 Bursa T2 等級開發商雙方合資 6.5 基線（兩家均有 10+ 案交付紀錄但非 Bursa T1 旗艦如 Pavilion / IGB / SP Setia 等）；Block D/E 2025-03 完工後 JMB 移交僅 ~12 個月，尚未驗證 ≥ 2 年保固期 -0.0（中性）。Sunsuria 代表案 Sunsuria City、Suria Setapak；MKH 為 plantation + 物業 + 商業 mall 混合集團。</p>
+        <p class="dim-data">Sunsuria Bhd（Bursa：5135）2024 營收 RM 200M+ · MKH Bhd（Bursa：6114）2024 營收 RM 1.6B+（含 plantation + 物業 + 商業 mall） · 案場主體 Bangsar Hill Park Development Sdn Bhd · Block D/E VP 2025-03 · Talisa Phase 2 VP 2028-01 · Block D/E 90% 售罄</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場流動性與摩擦</span><span class="dim-weight">20% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">6.5</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">4.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">本地：Leasehold 99 年（剩餘 94 年）住宅地契 6.5 基線 + Bangsar 二手市場活躍 +0.3 + LRT 600m proximity +0.2 − Block D/E 剛完工 Brickz &lt;10 筆 -0.3 − 5% Bumi 結構性買家池（部分單位限 Bumi 買家轉售）-0.2 = 6.5。外籍：4.5 基線（= 本 −2.0）+ Bangsar 成熟外籍轉售活躍 +0.3 + LRT proximity +0.2 − 8% 印花 + 30% 租金稅 + 10% 永久 RPGT − Leasehold 99 年 structural drag −0.3 − Brickz &lt;10 -0.5 = 4.2 → 4.5。</p>
+        <p class="dim-data">住宅 90% LTV vs 商業 70-85% · HDA Schedule H 保護 · Leasehold 99 年 expiring 2119-10-13（剩餘 ~94 年） · Bangsar 整體 Brickz 229 筆/年（mature 二手市場） · 5% Bumi 折扣對應的單位限 Bumi 轉售 · Block D/E Brickz 樣本 &lt;10 筆</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+  <p class="section-sub">代表戶型：<strong>2BR 970 sqft 中層約 RM 1,019,000</strong>（@ RM 1,050 psf）。BHP 戶型結構為 2BR 917-1,000 sqft / 3BR 1,100-1,300 sqft / 4BR 1,478 sqft；採 2BR 970 sqft 為跨建案標準代表戶型，PSF 為 Block D/E 發售區間中段。</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">Bangsar Hill Park Development Sdn Bhd<span class="kv-src">Sunsuria Bhd（Bursa：5135）× MKH Bhd（Bursa：6114）JV · 均為 Bursa T2 中型開發商</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">Leasehold 99 年（expiring 2119-10-13）<span class="kv-src">剩餘 ~94 年 · HDA Schedule H 保護 / 住宅 90% LTV 適用 · 民用電費</span></td></tr>
+          <tr><td class="kv-label">規模</td><td class="kv-val">57 層 · 812 戶（Block D + E）<span class="kv-src">Talisa Phase 2（Block B + C）為後續開發，VP 2028-01；整體 master plan 含 retail 與商業</span></td></tr>
+          <tr><td class="kv-label">單位坪數</td><td class="kv-val">917-1,478 sqft（2BR-4BR）<span class="kv-src">2BR 917-1,000 sqft / 3BR 1,100-1,300 sqft / 4BR 1,478 sqft</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">2BR 970 sqft 中層 @ RM 1.02M<span class="kv-src">RM 1,050 psf 為 Block D/E RM 997-1,168 區間中段</span></td></tr>
+          <tr><td class="kv-label">完工時間</td><td class="kv-val">Block D/E VP 2025-03（已完工 ~14 個月）<span class="kv-src">Block D/E 90% 售罄 · Talisa Phase 2 VP 2028-01</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與品牌</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">微觀位置</td><td class="kv-val">Lorong Maarof, Bangsar Utama<span class="kv-src">Bangsar 核心區，鄰 Telawi / Lucky Garden 餐飲圈</span></td></tr>
+          <tr><td class="kv-label">最近捷運</td><td class="kv-val">Bank Rakyat-Bangsar LRT 站（KJ16，Kelana Jaya Line）600m 步行<span class="kv-src">1999 通車已成熟 · KL Sentral 5 分鐘車程</span></td></tr>
+          <tr><td class="kv-label">商業/生活</td><td class="kv-val">Bangsar Shopping Centre / Bangsar Village / Telawi F&amp;B 圈<span class="kv-src">5-10 分鐘車程；步行密度中等</span></td></tr>
+          <tr><td class="kv-label">建築設計</td><td class="kv-val">57 樓塔住宅 + 整合 retail/商業<span class="kv-src">Bangsar 中最高建物之一；密度設計與 Bangsar 歷史低密度文化有衝突</span></td></tr>
+          <tr><td class="kv-label">服務標準</td><td class="kv-val">中端 luxury 住宅標準<span class="kv-src">游泳池、健身房、24h 保安、basement parking、resort-style 設施</span></td></tr>
+          <tr><td class="kv-label">同地段直接對照</td><td class="kv-val">Sri Penaga / Cascadium / Suasana Bangsar<span class="kv-src">Sri Penaga RM 975 psf luxury · Cascadium RM 866 · Suasana RM 658 · BHP RM 1,050 為 Bangsar 新建案高端</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-4% 階梯制<br><small style="color:var(--muted)">RM 25,000</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 82,000</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">10%（住宅 LTV 90%）<br><small style="color:var(--muted)">RM 102,000</small></td><td class="num">30%（LTV 70%）<br><small style="color:var(--muted)">RM 306,000</small></td><td><small>BNM / 銀行政策</small></td></tr>
+      <tr><td>住宅房貸利率</td><td class="num">4.55%</td><td class="num">5.05%</td><td><small>BNM OPR 2.75%（2025-07 降息）</small></td></tr>
+      <tr><td>毛租金收益率（2BR 970 sqft 長租）</td><td class="num">~5.3%</td><td class="num">~5.3%（同）</td><td><small>RM 4,500/月 / RM 1.02M</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">10-24% 累進<br><small style="color:var(--muted)">估約 15-20%</small></td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>稅後淨收益率（含 1 月空置）</td><td class="num">~3.5%</td><td class="num">~2.5%</td><td><small>計算（管理費 + 稅後）</small></td></tr>
+      <tr><td>利差（淨 yield − 房貸利率）</td><td class="num">−1.1%</td><td class="num">−2.6%</td><td><small>計算</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>最低購買門檻（KL）</td><td class="num">無</td><td class="num">RM 1,000,000</td><td><small>聯邦直轄區</small></td></tr>
+      <tr><td>MM2H 強制資產資格</td><td class="num">—</td><td class="num">勉強達門檻（RM 1.02M ≈ RM 100 萬）</td><td><small>MM2H 黃金計畫</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>2BR 970 sqft 中層 RM 1,019,000</strong>（@ RM 1,050 psf）為基礎——本國人 vs 外國人 10 年總成本與淨損益對照。建案 Block D/E 2025-03 完工 14 個月，rental cashflow 從 Y1 即啟動。</p>
+
+  <div class="assump-box" style="background:linear-gradient(135deg,#fef9ed 0%, #fbf3df 100%);border:1px solid var(--gold);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative">
+    <strong>⚠️ 買價透明度說明：</strong>本評分卡 PSF 為 BHP Block D/E 發售區間 RM 997-1,168 psf 中段 RM 1,050（樣本以 2BR 為主）。Block D/E 90% 售罄 + 完工 14 個月 Brickz 樣本仍 &lt;10 筆無厚度，PSF 透明度需依賴 Bangsar 整體 cluster（Brickz 229 筆/年中位 RM 765 psf）+ Sri Penaga 等鄰案參考。5% Bumi 折扣為 Bumi 買家專屬，非 Bumi 不適用；Talisa Phase 2（B/C）2028 完工後可能有早鳥折扣，買家應追蹤 Phase 2 launch 對 Block D/E 二手 PSF 的潛在比較效應。
+  </div>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>2BR 970 sqft 中層 @ RM 1.02M</strong> · 10 年持有 · 30 年房貸 · 租金 RM 4,500/月 Y1，年漲幅 3% · 空置 1 個月/年 ·
+    管理費 RM 0.45/sqft/月（含沉沒基金，Bangsar 中端 luxury 標準）· 本國人利率 4.55%、外國人利率 5.05%（OPR 2.75% + spread）· 機會成本基準 5%/年（MGS 10Y + 100bp）。
+    所有金額四捨五入至千位。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>102,000</td><td>306,000</td><td>+204,000</td></tr>
+      <tr><td>印花稅（MOT）</td><td>25,000</td><td>82,000</td><td>+57,000</td></tr>
+      <tr><td>律師費 + 貸款費</td><td>18,000</td><td>25,000</td><td>+7,000</td></tr>
+      <tr><td>州政府批准費</td><td>—</td><td>5,000</td><td>+5,000</td></tr>
+      <tr class="sum"><td>買入小計</td><td>145,000</td><td>418,000</td><td>+273,000</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額</td><td>562,000</td><td>462,000</td><td>−100,000</td></tr>
+      <tr><td>管理費 + 沉沒基金</td><td>52,400</td><td>52,400</td><td>0</td></tr>
+      <tr><td>門牌稅 + 地稅</td><td>15,000</td><td>15,000</td><td>0</td></tr>
+      <tr><td>保險</td><td>20,000</td><td>20,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>649,400</td><td>549,400</td><td>−100,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，月租 RM 4,500 Y1，3%/年成長）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>567,000</td><td>567,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>85,000</td><td>170,000</td><td>+85,000</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>482,000</td><td>397,000</td><td>−85,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，3% 漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>仲介費（2.4%）</td><td>33,000</td><td>33,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>35,000</td><td>+35,000</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>735,000</td><td>581,000</td><td>−154,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0% 漲幅</td><td>−45,000</td><td>−150,000</td><td>−105,000</td></tr>
+      <tr class="scenario"><td>3%/年 漲幅</td><td>+297,000</td><td>+157,000</td><td>−140,000</td></tr>
+      <tr class="scenario"><td>5%/年 漲幅</td><td>+580,000</td><td>+411,000</td><td>−169,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在基準假設（3% 年漲、10 年滿租 + 1 月空置、機會成本 5%/年）下，外國人 10 年淨損益比本國人少約 <strong>RM 140,000（相當於房價的 13.7%）</strong>。8% 印花稅、30% 非居民租金稅、10% 永久 RPGT 形成結構性溢價；gross 5.30% 放大 30% 非居民租金稅的絕對金額。<strong>跨建案比較</strong>：本/外差額佔房價比 13.7%（PavDH 12.7% / PavSq 12.0% / TS2 13.1% / Kiaramas 13.1% / Park Regent 9.9% / OCP 11.2% / The MINH 14.2% / R22 10.3% / Hilltop 12.6% / Conlay 11.6% / TRX 12.2% / BHP 13.7%）—— BHP 與 TS2 / Kiaramas 同級偏高，反映較高 gross yield 對 30% 租金稅 magnification 的影響。<strong>本案特色</strong>：3% 漲幅情境下本國人 IRR 約 3-4%、外籍 1-2%（受 leasehold 折讓 + 5% Bumi 池影響長期假設），下行情境若 Bangsar 整體停滯 0%/年，本國人虧損 RM 4.5 萬、外籍虧損 RM 15 萬，是「Bangsar 地段持有」的論點而非 yield play 或 capital appreciation play。
+  </div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>Bangsar Hill Park 位於 Lorong Maarof（Bangsar Utama，Bangsar 核心區），由 Bangsar Hill Park Development Sdn Bhd 開發，案場主體為 Sunsuria Bhd（Bursa：5135）與 MKH Bhd（Bursa：6114）的合資公司。整體 master plan 規劃含住宅 + retail + 商業，分多個 Block 推出：Block D + Block E（合計 812 戶 57 層塔）於 2025 年 3 月完工交付，已 90% 售罄；Talisa Phase 2（Block B + C）為後續開發，VP 預計 2028 年 1 月。Block D/E 戶型結構為 2BR 917-1,000 sqft / 3BR 1,100-1,300 sqft / 4BR 1,478 sqft，發售區間 RM 835,000-1,599,000，對應 PSF RM 997-1,168。本評分卡採 2BR 970 sqft @ RM 1,050 psf = RM 1,019,000 為跨建案標準代表戶型。</p>
+
+    <p>地段層面，Bangsar district 在 v2.0.1 anchor table 為 7.0 baseline（freehold 住宅地段，MRT/KTM 覆蓋良好，但密度較高），BHP 通過項目級加分：Bank Rakyat-Bangsar LRT 站 600m 步行 +0.2（KJ16 站，Kelana Jaya Line，1999 通車已成熟）+ Bangsar 成熟 lifestyle hub（Bangsar Shopping Centre、Bangsar Village、Telawi/Lucky Garden 餐飲圈、KL Sentral 5 分鐘車程），合計 7.2。Bangsar 為 KL 中產與外籍移居者的成熟生活圈，覆蓋本地專業人士、KL Sentral 通勤族、Mont Kiara 之外的另一個外籍偏好地段，但密度較高、車道交通常擁塞為共同特徵。MRT3 Circle Line 2032 通車為長期 pipeline 但未直接覆蓋 BHP 微觀位置。值得留意的是，57 樓塔在 Bangsar 歷史低密度住宅文化中為結構性變化（Bangsar 早期以 bungalow + 低層 condo 為主），這個密度認知差異可能影響本地買家對 BHP 的長期定位接受度。</p>
+
+    <p>建案規模 Block D/E 共 812 戶 57 層為 Bangsar 中最高建物之一，這個高密度設計反映了 Bangsar 近年向高層化轉型的趨勢。Talisa Phase 2（B/C）2028 年 1 月完工將進一步增加同建案內部供給壓力，這對 Block D/E 二手價的潛在比較效應為買家應追蹤的核心 watch item。設施配置為中端 luxury 住宅標準（游泳池、健身房、24h 保安、basement parking、resort-style 設施），整合 retail 與商業在 master plan 內。5% Bumi 折扣為 Bumi 買家專屬機制，非 Bumi 買家無此折扣；同時，5% Bumi 折扣對應的單位在二手轉售時通常限 Bumi 買家承接，這會影響非 Bumi 持有者的退場買家池廣度，是 Bangsar / KL 城市建案中的結構性 nuance。</p>
+
+    <p>開發商層面，Sunsuria Bhd × MKH Bhd 為 Bursa T2 等級開發商合資 6.5 baseline。Sunsuria 代表案 Sunsuria City（雪蘭莪 Salak Tinggi）、Suria Setapak、Suria Putra，是中型開發商，2024 年營收 RM 200M+ 規模；MKH Bhd 為 mixed 集團，業務含 plantation（油棕種植）+ 物業 + 商業 mall，2024 年營收 RM 1.6B+。兩家均有 10+ 案交付紀錄，但都不屬於 Bursa T1 旗艦如 Pavilion / IGB / SP Setia / KLCC Property 等級。Block D/E 2025-03 完工後 JMB 移交僅 ~12 個月，尚未驗證 ≥ 2 年保固期。買家應追蹤：①兩家母公司財務透明度 + JMB 移交品質；②Talisa Phase 2 是否能延續 Block D/E 的執行標準；③管理公司延續性 + 設施維護水準。整體開發商分相對 BHP 在已分析建案中是相對偏弱（vs Pavilion / Mitsui × E&amp;O / Lendlease × MOF / Perdana / UEM Sunrise 等更高分 sponsor）。</p>
+
+    <p>定價層面，Block D/E 發售 PSF RM 997-1,168 對 Bangsar 整體 Brickz 中位 RM 765 psf（229 筆 2024-04 至 2025-03）為 30-50% 溢價，但這個比較有失公允——Bangsar Brickz 樣本含大量 older 低密度 condo 與 landed bungalow 拉低中位。對比同類新建案：Sri Penaga（Bangsar 高端 luxury anchor）Brickz 11 筆中位 RM 975 psf 接近 BHP；Cascadium RM 866 psf、Suasana Bangsar RM 658 psf 為中端，BHP 整體定位為 Bangsar 新建案中高端段位。Block D/E 90% 售罄反映市場對 Bangsar 新建案的需求穩健，但 Brickz 樣本仍 &lt;10 筆無厚度，PSF 透明度需依賴 Bangsar cluster 比較。買家在 Talisa Phase 2 launch 前後應追蹤 Phase 2 launch PSF 對 Block D/E 二手 PSF 的影響——若 Phase 2 launch &gt; D/E 二手，則 D/E 持有人受惠；反之則可能受壓。</p>
+
+    <p>租金市場，Bangsar 整體 gross yield 4-5%（rates.my、bambooroutes 2026 預測），BHP 2BR 970 sqft 全裝潢長租估 RM 4,500/月（RM 4.64 psf），對應 gross yield 5.30%——在 v2.0.1 anchor table 5.0-5.5% 區間。本國人 Net Yield ~3.5%、利差 −1.1%；外籍 30% 非居民稅後 Net Yield ~2.5%、利差 −2.6%，兩者均負利差但本國人差距較小。Bangsar 租客來源核心為本地專業人士（KL Sentral 通勤、Bangsar / Mid Valley 商圈工作者）、KLIA 通勤族、Mont Kiara 替代地段的外籍家庭與單身派駐者。Bangsar 對外籍辨識度低於 MK / KLCC（外籍生態未如 MK 成熟），但對追求 city + lifestyle balance 的本地中產 + 國際派駐人士 fit 度高。完工初期租金仍在 ramp，預期 2-3 年內穩定後 yield 可能有 0.2-0.3% 的微幅 upside。</p>
+
+    <p>持有面結構，**Leasehold 99 年（剩餘 ~94 年）住宅地契**為 BHP 最顯著的結構性 caveat——v2.0.1 anchor table 中 leasehold 住宅 6.5 baseline 已內建此折讓，但長期持有者應評估：①每 10 年 leasehold 殘值對房價的隱含 -0.5% 至 -1% 年度折讓；②再續約程序（toptional renewal 一般需在剩餘 30 年內申請）；③下一代繼承時對 leasehold 期限的接受度。HDA Schedule H 保護 + 住宅 90% LTV + 民用電費，制度層面其他持有摩擦低。MM2H 強制資產資格方面，2BR 970 sqft × RM 1.02M 勉強達 RM 100 萬聯邦直轄區門檻 ✓，但僅勉強達標，對 MM2H Gold/Platinum 高門檻持有者較不適合。10 年退場期望：以基準 3%/年漲幅推算，Year 10 房價 ~RM 1.37M，本國人淨損益約 +RM 29.7 萬（IRR 3-4%）、外籍 +RM 15.7 萬（IRR 1-2%）。退場買家池：Bangsar 整體 Brickz 229 筆/年活躍，但 BHP 本身樣本 &lt;10 筆、5% Bumi 單位限 Bumi 轉售結構，預期掛牌-成交 4-8 個月、折讓 5-10%。</p>
+
+    <p>主要留意事項：①Leasehold 99 年（剩餘 94 年）為核心結構性 caveat，長期持有需評估每 10 年隱含折讓；②Talisa Phase 2（Block B/C）2028 完工同建案內部供給壓力 + Phase 2 launch PSF 對 Block D/E 二手價的潛在比較效應；③5% Bumi 折扣對應單位限 Bumi 轉售的結構性買家池窄；④Sunsuria × MKH JV 為 Bursa T2 中型開發商，相對 Bursa T1 旗艦 sponsor 的長期管理 + JMB 移交標準需持續驗證；⑤57 樓塔在 Bangsar 歷史低密度住宅文化中為結構變化，本地買家對高密度的長期接受度為 watch item；⑥管理費 RM 0.40-0.50 psf 對 Net Yield 影響顯著，建議向 JMB 書面確認；⑦Bangsar 對外籍辨識度低於 MK / KLCC，外籍買家退場池窄於 MK / KLCC 同級建案。</p>
+
+    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+      <strong style="color:var(--navy);font-weight:700">10 年情境基準</strong>：假設 2026-05 進場、2036-05 退場：
+      <ul style="margin:8px 0 0 18px;padding:0">
+        <li><strong>合理情境</strong>（base case）：Bangsar 整體 +3%/年、租金年漲 3%、空置 1 月/年、Talisa Phase 2 順利完工不過度壓制 D/E 二手。本國人 10 年累計淨報酬約 <strong>RM 29.7 萬</strong>，IRR 約 3-4%；外國人約 <strong>RM 15.7 萬</strong>，IRR 約 1-2%。</li>
+        <li><strong>上行情境</strong>（bull case）：Bangsar lifestyle hub 持續升值 + MM2H 持續入市 + 房價 +5%/年。本國人 IRR 約 6-7%（RM 58 萬+），外國人 IRR 約 4-5%（RM 41 萬+）。</li>
+        <li><strong>下行情境</strong>（bear case）：Talisa Phase 2 launch 壓制 D/E 二手 + Bangsar 整體高密度供給壓力 + Leasehold 折讓加深 + 房價 0%/年。本國人 IRR 接近 −1%（10 年虧損 RM 4.5 萬），外國人因 8% 印花 + 30% 租金稅 + 永久 RPGT IRR 接近 −2.5%（10 年虧損 RM 15 萬）。</li>
+      </ul>
+      <div style="margin-top:10px">10 年退場流動性：Bangsar 整體 Brickz 229 筆/年活躍，但 BHP 本身樣本 &lt;10 筆 + 5% Bumi 池結構性窄，預期掛牌-成交 4-8 個月、折讓 5-10%。</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>Bangsar 7.0 district 基線 + Bank Rakyat-Bangsar LRT 600m 步行 + 成熟 lifestyle hub（Bangsar Village / Telawi / Lucky Garden）</li>
+        <li>Block D/E 已完工 14 個月可實地查驗管理品質、設施運轉、社區氛圍</li>
+        <li>gross yield 5.30% 為已分析建案中相對較高（vs Conlay 4.9% / TRX 4.9% / Hilltop 5.08%）</li>
+        <li>Sunsuria × MKH Bursa T2 JV 雙公司均上市，母公司財務透明度高</li>
+        <li>2BR 970 sqft @ RM 1.02M 入場價對本地中產 + 外籍可負擔，買家池廣度大</li>
+        <li>Block D/E 90% 售罄反映市場對 Bangsar 新建案需求穩健</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li>Leasehold 99 年（剩餘 ~94 年）為核心結構性 caveat，長期持有需評估隱含折讓</li>
+        <li>Talisa Phase 2（Block B/C）2028 完工同建案內部供給壓力 + Phase 2 launch PSF 對 D/E 二手影響</li>
+        <li>5% Bumi 折扣對應單位限 Bumi 轉售，非 Bumi 持有者退場買家池窄</li>
+        <li>Sunsuria × MKH 為 Bursa T2 中型開發商，相對 T1 旗艦 sponsor 長期管理標準需驗證</li>
+        <li>57 樓塔在 Bangsar 歷史低密度文化中為結構變化，本地買家對高密度長期接受度為 watch item</li>
+        <li>Bangsar 對外籍辨識度低於 MK / KLCC，外籍退場池窄於 MK / KLCC 同級建案</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：地段護城河（7.2）、開發商與管理移交（6.5）、退場流動性（6.5 本 / 4.5 外）<br>
+      <strong>可妥協</strong>：持有現金流（自住設算租金，不影響）<br>
+      <strong>本案 fit</strong>：Bangsar lifestyle hub + LRT 600m + KL Sentral 5 分鐘 + Bangsar Village / Telawi 餐飲圈為本地中產 + 外籍移居者偏好的 city + lifestyle balance 地段，對追求 Bangsar 文化認同的本地專業人士、跨國中階派駐者、KL Sentral 通勤族 fit 高。2BR 970 sqft 適合 single / couple；3BR 1,100-1,300 sqft 對中小家庭舒適；4BR 1,478 sqft 為旗艦戶型。需接受：①Leasehold 99 年對長期繼承的隱含影響；②57 樓塔高密度與 Bangsar 歷史低密度文化的差異；③Talisa Phase 2 完工後設施擁擠的可能性。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（6.0 本 / 4.0 外）、退場流動性、資本增值（6.0）<br>
+      <strong>可妥協</strong>：地段護城河（已強）、開發商品質（Bursa T2 中等）<br>
+      <strong>本案 fit</strong>：gross 5.30% yield 為已分析建案中相對較強，本國人利差 −1.1% 為較小負利差；外籍利差 −2.6% 仍依賴資本利得補足。租客來源以 Bangsar 本地專業人士 + KL Sentral 通勤族 + 跨國中階派駐為主。Block D/E 90% 售罄無早鳥折扣空間，但 Talisa Phase 2 launch 時可能有議價空間。建議入場前向 JMB 書面確認管理費實際水平 + 議價空間。Leasehold 99 年對純 yield 投資影響相對較小（10 年持有不會大幅折讓），但若想 20 年+ 持有需評估 leasehold 折讓加速。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：地段護城河、開發商與管理移交<br>
+      <strong>可妥協</strong>：持有現金流<br>
+      <strong>本案 fit</strong>：Bangsar 為 KL 餐飲、夜生活、購物的成熟 lifestyle hub，對偶爾來 KL 工作 / 度假的本地高淨值買家、區域跨國商務人士、亞洲短住客群為合適選擇。Leasehold 99 年 + 中端 luxury 服務水準 + 較合理入場價（RM 1.02M）為 vs MK / KLCC 旗艦案的差異化定位。短期租賃（Airbnb 等）取決於 JMB 政策；長期空置成本主要為管理費 RM 0.45 psf × 970 sqft × 12 = RM 5,238/年，相對中低。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：地段護城河（30%）、買價判斷（長期 anchor）、退場流動性（下一代脫手）<br>
+      <strong>可妥協</strong>：短期 yield、短期催化<br>
+      <strong>本案 fit</strong>：Bangsar 地段在 20 年內仍會是 KL lifestyle 核心圈之一，地段護城河相對穩健；但 <strong>Leasehold 99 年</strong>是世代傳承的核心 caveat——20 年後剩餘 74 年，30 年後剩餘 64 年，leasehold 折讓會逐步加深，這對「世代傳承」的「永久持有」邏輯衝擊較大。下一代脫手時，買家對 leasehold 期限 + 5% Bumi 限制的接受度為長期變數。世代傳承前提：①Bangsar 長期定位持續（高機率）；②Leasehold 折讓速度可控（需追蹤 leasehold 續約政策）；③5% Bumi 結構對非 Bumi 持有者影響有限（多數單位非 Bumi 折扣）。Bangsar Hill Park 相對 freehold 同級建案（如 R22 / The MINH）在世代傳承維度為較弱選擇。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    NAPIC JPPH Q3 2025（KL SA overhang 3,643 套、KL RM100萬+ 成交 +31% YoY、premium &gt;RM 1M 24-mo take-up 78%） · Brickz Bangsar 整體 229 筆 2024-04 至 2025-03（中位 RM 765 psf、中位總價 RM 1,445,000） · Brickz Sri Penaga 11 筆中位 RM 975 psf · Brickz Bangsar Puteri 8 筆中位 RM 711 psf · Brickz Cascadium 4 筆中位 RM 866 psf · Brickz Suasana Bangsar 5 筆中位 RM 658 psf · BHP 官網 + Sunsuria 官網（Block D/E 售價 RM 835-1,599k、Talisa B/C VP 2028-01） · iProperty / PropertyGuru BHP 戶型結構（2BR 917-1,000 sqft / 3BR 1,100-1,300 sqft / 4BR 1,478 sqft） · rates.my / bambooroutes 2026 Bangsar 整體 yield 4-5% · Sunsuria Bhd（Bursa：5135） · MKH Bhd（Bursa：6114） · Bank Rakyat-Bangsar LRT 站（KJ16 Kelana Jaya Line，1999 通車） · MRT3 Circle Line（2032 通車） · BNM OPR 2.75%（2025-07 降息） · LHDN Finance Act 2026（外籍 stamp duty 4%→8%、非居民 30% 租金稅、10% 永久 RPGT） · MM2H 黃金計畫
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-05-28。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限（自住／出租／備用居所／世代傳承）。</strong>本案 Leasehold 99 年（剩餘 ~94 年）為核心結構性 caveat；Block D/E 完工 14 個月 Brickz 樣本 &lt;10 筆 PSF 透明度需依賴 Bangsar cluster 同業對照；5% Bumi 折扣對應單位限 Bumi 轉售為結構性買家池影響因素。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+  </div>
+</div>
+
+</div>
+</body>
+</html>
