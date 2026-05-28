@@ -418,6 +418,189 @@ description: "收到 KL（吉隆坡）具體建案名稱後，產出精煉的公
 
 ---
 
+## 【§評分基準錨表——KL 大環境校準起跳分】（v2.0.1 新增）
+
+新建案進入評分流程前，先讀本錨表確定每個維度的「起跳分」。session 之間不能漂移——所有分數應從基線出發再做項目層級調整。
+
+### 1. 地段護城河（30%）——按 KL district 錨定
+
+| District | 起跳分 | 結構性理由 |
+|:---|:---:|:---|
+| Damansara Heights | 8.0 | KL 旗艦地段、freehold、極高擁有門檻；土地稀缺最強 |
+| Desa ParkCity | 8.0 | 單一 master developer 473 英畝整合社區，KL 唯一；自給自足生活圈 |
+| KLCC (Bukit Ceylon, Conlay) | 8.0 | CBD core；多 MRT/LRT 覆蓋 |
+| Bukit Bintang | 7.5 | KL CBD 觀光零售核心、freehold、Pavilion/TS 整合 |
+| Mont Kiara | 7.5 | KL 第一外籍聚居地段、4 大國際學校、30+ 年成熟；但無現有 MRT、car-dependent |
+| Bangsar / Bangsar South | 7.0 | freehold 住宅地段，MRT/KTM 覆蓋良好；密度較高 |
+| TRX | 7.0 | 新興 CBD，未完全成熟；MRT 已就位 |
+| KL Sentral / Brickfields | 6.5 | 交通樞紐，混合用途密度高 |
+| KL Eco City / Mid Valley | 6.5 | 商業集中，居住屬性次之 |
+| 其他 KL | 6.0 | default baseline，新地段加入前先查證 |
+
+**項目層級調整**（相對 district 基線）：
+- 直連 MRT 站（步行≤200m）+0.3-0.5
+- 直連 mall（Pavilion / 1MK / The Waterfront 等）+0.3-0.5
+- 微觀位置稀缺（Parkfront / Lakefront / Hilltop）+0.2-0.3
+- 無步行外部商業圈 -0.3
+- MRT pipeline（未開通）不調整——pipeline 不算 already-priced
+
+**跨建案規則**：同 district 不同建案的地段分差距應 ≤ 0.5（取代 v2.0 §11 的 ±0.3，因為微觀位置差異常超過 0.3）。
+
+### 2. 買價判斷（5%）——按 Brickz 樣本厚度 + 同地段溢價
+
+| Brickz 樣本厚度 | 起跳分 |
+|:---|:---:|
+| 50+ 筆 | 7.0 |
+| 10-50 筆 | 6.5 |
+| <10 筆有同 sponsor 鄰接強對照 | 6.0 |
+| <10 筆無強對照 | 5.0 |
+| 0 筆（純發售）+ asking ≈ district 中位 | 5.5 |
+| 0 筆 + asking 25-30% 溢價 district | 4.5 |
+| 0 筆 + asking ≥ 30% 溢價無強敘事 | 4.0 |
+
+**敘事調整**：
+- 同 sponsor 鄰接老案 brickz 成交 ±5% 對齊 +0.5（如 Kiaramas deDaun vs Danai）
+- 微觀位置溢價有 brickz 同類驗證 +0.5（如 OCP Parkfront）
+
+Rebate 不透明風險：所有分數已內建「-0.5 confidence haircut」於 5% 權重設計中，**不重複扣分**。
+
+### 3. 持有現金流（15%，本／外）
+
+**本國人——按 Gross Yield**：
+
+| Gross Yield | 本國人起跳分 |
+|:---|:---:|
+| ≥ 5.5% | 7.0 |
+| 5.0-5.5% | 6.0 |
+| 4.5-5.0% | 5.0-5.5 |
+| 4.0-4.5% | 4.5 |
+| < 4.0% | 4.0 |
+
+**外國人 = 本國人 −2.0 ±0.3**（30% 租金稅 + 利率溢價的結構性差距，差距 <1.5 表示計算錯誤）
+
+**調整項**：
+- 商業地契（電費 1.3-1.6 倍）-0.3
+- 管理費 ≥ RM 0.6 psf 高負擔 -0.3
+- DPC / MK 外籍企業 2 年+ 合約穩定 +0.2
+- 觀光導向 SA 預期 2+ 月/年空置 -0.3
+
+### 4. 資本增值路徑（20%）——按物業類型 + KL 催化劑
+
+**起跳分**：
+
+| 物業類型 | 起跳分 | 理由 |
+|:---|:---:|:---|
+| Landed | 7.0 | 土地稀缺、自然增值 |
+| Residential strata | 6.0 | KL 高端需求 +31% YoY 2024（NAPIC）支撐 |
+| Mixed-use commercial+retail | 5.5 | 整合溢價但仍受 SA overhang 影響 |
+| Commercial SA | 5.0 | KL SA overhang 3,643 套（NAPIC Q3 2025）壓制 |
+
+**催化劑加分**（最多 +1.5 累計）：
+- MRT/LRT 站 5 年內通車 + 步行可達 +1
+- MRT3 pipeline（2032 通車）覆蓋 +0.5
+- 同地段 master developer 供給封頂（如 DPC） +1
+- 同 sponsor 已驗證 5 年 +30% 以上 brickz 升值 +0.5
+- 大型 urban regen 整合啟動（如 TRX / KL Sentral）+0.5
+- MM2H 2,637 待購集中入市針對段位 +0.3
+
+**減分**（最多 -1.5 累計）：
+- 同建案 Phase 2 內部供給 -0.3 到 -0.5
+- 同地段 5 年內新供給 ≥ 5 個競品 -0.5
+- 大坪定位（≥ 2,000 sqft 起）買家池窄 -0.2
+- Leasehold 99 年遞減 -0.3
+- 期房 2+ 年完工 -0.3（執行風險未實現）
+
+### 5. 開發商與管理移交（10%）——按組織結構
+
+| 開發商類型 | 起跳分 |
+|:---|:---:|
+| SGX / HKEx / 東京上市東南亞大型開發商 | 8.5 |
+| Bursa Tier 1（Pavilion、IGB、SP Setia、UEM Sunrise、Sime Darby、KLCC Property）| 7.5 |
+| Bursa Tier 2（有財務疑慮如 Berjaya）| 6.0-6.5 |
+| 私有 ≥ 10 個成功交付案 + 30+ 年公司歷史 | 7.5 |
+| 私有 5-10 個成功交付案 | 7.0 |
+| 私有 < 5 個案或首案 | 6.0 |
+
+**調整項**：
+- 機構級 JV 夥伴（CapitaLand SGX / CPPIB / GIC / Temasek）+0.5
+- 地主對齊（同集團 mall / medical / 學校）+0.3-0.5
+- 公開「不折扣保值」聲明（如 Perdana ParkCity）+0.3
+- 過往 12 個月母公司重大虧損公告 -1.5
+- 過往交屋延期 ≥ 1 年（無爛尾）-0.3
+- 爛尾紀錄 -2 起跳
+- JMB 移交完成 ≥ 5 年穩定運作 +0.3
+- 完工後 ≥ 2 年保固期通過 +0.2
+
+### 6. 退場流動性與摩擦（20%，本／外）
+
+**本國人按地契**：
+
+| 地契類型 | 本國人起跳分 |
+|:---|:---:|
+| Freehold 住宅 | 7.5 |
+| Freehold 商業 SA | 6.5 |
+| Leasehold 住宅（99 年 ≥ 70 年剩餘）| 6.5 |
+| Leasehold 商業 SA | 6.0 |
+
+**本國人調整項**：
+- Brickz 50+ 筆活躍二手 +0.5
+- Brickz 10-50 筆 +0.3
+- Brickz < 10 筆 -0.3
+- 同地段二手市場活躍（DPC、MK、DH）+0.3
+- 首購 stamp duty 全免（價格 ≤ RM 500K）+0.3
+- 商業房貸 LTV 70-85% 限制 -0.3
+
+**外國人 = 本國人 −2.0 baseline**
+
+**外國人調整項**：
+- MM2H 達門檻 +0（門檻為入場條件，不額外加分）
+- MM2H 勉強達門檻（< RM 130 萬入場）+0.3（更廣門檻適用性）
+- MM2H 無法達門檻 -1.0
+- SA overhang cap：KL SA 廣義 overhang > 3,000 套時，商業 SA 外籍退場分 cap 6
+- 活躍 MM2H / 外籍轉售市場（DPC、MK）+0.3
+- 商業 SA 外籍買家池結構性窄 -0.5
+
+---
+
+## 【§跨建案校準檢查清單】（v2.0.1 新增）
+
+每張新評分卡 publish 前必須執行：
+
+1. **錨表對照**：6 個維度逐一對比 §評分基準錨表，每個維度與基線差距 ±0.5 內無需 rationale；±0.5-0.8 需 written rationale；>0.8 需獨立 callout
+2. **跨建案矩陣**：列出所有已分析建案在 6 個維度的分數，新建案應在合理區間
+   - 同 district 建案：±0.5 內（地段、利得通常）
+   - 同 sponsor 結構：±0.3 內（開發商）
+   - 同地契類型：±0.5 內（退場本）
+   - 同 yield 區間（±0.5% gross）：現金流分 ±0.5 內
+3. **總分鑑別力**：跑完所有建案，本國人總分區間應 ≥ 2.0 點、外國人 ≥ 2.0 點。如全部建案集中 ±0.5 內，代表框架失去鑑別力
+4. **本/外差距合理性**：每個建案 Local − Foreign 應在 0.5-1.5 區間
+5. **總分計算驗證**：六維度加權結果 ±0.05 內等於 hero 總分
+
+任何違反項目必須回到 §評分基準錨表 重新校準，不可硬填合理化。
+
+---
+
+## 【§開發商分級表——當前已知 KL 開發商錨點】（v2.0.1 新增）
+
+新建案 sponsor 必須對應到本表的 archetype；沒有對應的，先擴充至本表後再評分。
+
+| 開發商 | Type | 開發商分基線 | 備註 |
+|:---|:---|:---:|:---|
+| ParkCity Group × CapitaLand JV | 私有 master dev × SGX JV | 9.0 | DPC master + SGX 上市 JV + 自有 mall/medical |
+| Perdana ParkCity（單獨）| 私有 ≥ 10 案 50+ 年 | 8.5 | DPC master + 27 案全交付 + 不折扣保值聲明 +0.3 |
+| Pavilion Group × CPPIB JV | Bursa T1 × 機構 JV | 8.0 | Pavilion KL / Bukit Jalil 代表作；自有 mall +0.5；2.5 年延期 -0.5 |
+| Pavilion Group（單獨）| Bursa T1 | 7.5 | PavSq 等 |
+| Asia Quest Group（Kiaramas Collection）| 私有 ≥ 5 案 | 7.5 | 1991 年成立；5 個前案全交付；土地延續性 +0.3 |
+| Sunrise / UEM Sunrise | Bursa T1 | 7.5 | Mont Kiara 始祖開發商 |
+| IGB | Bursa T1 | 7.5 | Mid Valley、Conlay 等 |
+| SP Setia | Bursa T1 | 7.5 | KL Eco City 等 |
+| Sime Darby Property | Bursa T1 | 7.5 | KLGCC 等 |
+| KLCC Property | Bursa T1 / GLC | 7.5 | KLCC 區 |
+| Berjaya Corp（含 Times Square）| Bursa T2 | 6.0 | 母公司過往虧損 -0.5 |
+| 待新增 | — | — | 評分新建案時擴充 |
+
+---
+
 ## 【HTML 輸出規格】
 
 ### 視覺設計（Navy + Gold，自 v1.0 沿用）
