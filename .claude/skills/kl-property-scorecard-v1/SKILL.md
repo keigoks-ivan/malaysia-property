@@ -673,6 +673,74 @@ SC_[建案名稱]_[YYYYMMDD]_en.html   ← 英文版
 
 ---
 
+## 【§ kl-check.html 整合規格】（v2.0.2 新增）
+
+每張新評分卡產出後，**必須**在 `/Users/ivanchang/malaysia-property/kl-check.html` 的 `projects = [...]` 陣列加入該建案 entry。kl-check 頁面包含兩個獨立 UI 元件，都讀取同一個 projects 陣列：
+
+1. **建案卡片清單**（依 foreign score 排序的單張卡片）
+2. **6 維度跨建案對比 scoreboard**（橫向表格，Local / Foreign view toggle，column 高亮 top score）
+
+兩者都依賴每個 entry 的完整欄位才能正確渲染。
+
+### projects 陣列 entry 必填欄位
+
+```js
+{
+  name: "建案名稱（英文 + 中文若有）",
+  area: "district 名稱（Bukit Bintang / Mont Kiara / Desa ParkCity 等）",
+  tenure: { en: "Freehold residential / Leasehold 99-yr commercial / ...", zh: "永久住宅地契 / Leasehold 99 年商業地契 / ..." },
+  status: {
+    en: "Off-plan (VP <month year>) / Completed (VP <month year>)",
+    zh: "預售屋（<YYYY-MM> 完工） / 成屋（<YYYY-MM> 交屋）",
+    code: "offplan" // 或 "completed"
+  },
+  scoreMY: 7.0,                    // 本國人總分（小數一位）
+  scoreFG: 6.3,                    // 外國人總分（小數一位）
+  tier: "T3",                      // T1 / T2 / T3 / T4 / T5
+  tierLabel: { en: "10-yr thesis to weigh", zh: "10 年需權衡 thesis" },
+  verdict: {
+    en: "≤ 200 字短結論：核心優勢 + 主要 caveat",
+    zh: "≤ 100 字短結論：核心優勢 + 主要 caveat"
+  },
+  dims: {                          // ⚠️ 6 維度對比 scoreboard 必填，缺則建案不出現於對比表
+    d1: <地段護城河, number>,
+    d2: <買價判斷, number>,
+    d3: [<現金流本, number>, <現金流外, number>],
+    d4: <資本增值, number>,
+    d5: <開發商, number>,
+    d6: [<退場本, number>, <退場外, number>]
+  },
+  urls: {
+    en: "/kl/SC_<建案名稱>_<YYYYMMDD>_en.html",
+    zh: "/kl/SC_<建案名稱>_<YYYYMMDD>_zh.html"
+  }
+}
+```
+
+### 關鍵規則
+
+1. **dims 欄位的數字必須與評分卡 HTML 區塊 2 的 dim-list 內分數完全一致**——dims 是該頁 scoreboard 的單一資料來源，若評分卡 HTML 與 dims 不同步，使用者看到兩個矛盾的數字
+2. **d3 / d6 用陣列 `[本國人, 外國人]`**——對應「本/外分開」的兩個維度。其餘 4 個維度用單一 number
+3. **scoreMY / scoreFG 必須等於 dims 加權結果**（±0.05 容差）—— v2.0.1 §跨建案校準檢查清單 §5 已要求此驗證
+4. **加新 entry 時放在 projects 陣列末端**——卡片清單會自動依 scoreFG 排序，scoreboard 也會依此順序渲染；不需手動排序
+5. **不要動到 const I18N / const view 等其他 const**——僅追加 projects entry
+
+### 加新建案的 workflow
+
+1. 產出 zh + en 兩個 SC_* HTML（依 §HTML 輸出規格）
+2. 開啟 kl-check.html，在 projects 陣列末端追加新 entry（包含完整 dims）
+3. 驗證 dims 加權結果等於 scoreMY / scoreFG（±0.05）
+4. git add 三個檔案、commit、push
+5. （可選）等 1-2 分鐘 Cloudflare Pages 部署後檢查 https://myproperty.investmquest.com/kl-check 顯示正確
+
+### 已知問題
+
+- kl-check.html 是手寫 HTML/JS，**不要** 執行任何 build script 重生（會覆蓋手工修改）
+- scoreboard 的 column 高亮邏輯是「該維度所有建案中最高分標 top class」——加新建案後，原本的 top 可能轉移，這是預期行為
+- 若該建案 dims 含未來才會更新的數字（如 yield 估算待校準），先用當下評分卡 HTML 一致的數字 commit，後續更新時同步更新 HTML + dims
+
+---
+
 ## 【品質檢查清單——輸出前必須逐項確認】
 
 **數據與評分：**
