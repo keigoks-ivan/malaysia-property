@@ -512,7 +512,6 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
   letter-spacing:-.02em;
   line-height:1;
 }
-.scoreboard td.score.high{color:var(--navy)}
 .scoreboard td.score.top{
   background:#fdf6e1;
   color:var(--gold-deep);
@@ -533,6 +532,15 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
   font-variant-numeric:tabular-nums;
   letter-spacing:-.02em;
   color:var(--text-soft);
+  line-height:1.2;
+}
+.scoreboard td.yield-cell .yield-airbnb{
+  display:block;
+  font-family:'Inter','Noto Sans TC',sans-serif;
+  font-size:10px;font-weight:500;font-style:italic;
+  color:var(--gold-deep);
+  margin-top:4px;
+  letter-spacing:.01em;
 }
 .scoreboard td.tier-cell{font-weight:700;font-size:12px;letter-spacing:.04em}
 .scoreboard td.tier-cell .tier-pill{
@@ -596,7 +604,10 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
   background:#fdf6e1;
   border:1px solid var(--gold-light);
 }
-.legend-note .l-swatch.high{background:var(--navy);opacity:.6}
+.legend-note .l-swatch.airbnb{
+  background:var(--gold-bg);
+  border:1px dashed var(--gold);
+}
 
 /* RWD */
 @media (max-width:640px){
@@ -739,7 +750,7 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
   </div>
   <div class="legend-note">
     <span class="l-item"><span class="l-swatch top"></span><span class="lang-en">Top score in column</span><span class="lang-zh">該維度最高分</span></span>
-    <span class="l-item"><span class="l-swatch high"></span><span class="lang-en">Score ≥ 7.0</span><span class="lang-zh">分數 ≥ 7.0</span></span>
+    <span class="l-item"><span class="l-swatch airbnb"></span><span class="lang-en">↗ Airbnb upside scenario</span><span class="lang-zh">↗ Airbnb 情境潛力</span></span>
   </div>
 </section>
 
@@ -791,6 +802,7 @@ const projects = [
     },
     dims: { d1: 7.5, d2: 6.5, d3: [5.5, 3.5], d4: 5.0, d5: 6.0, d6: [6.2, 4.5] },
     grossYield: 3.9,
+    airbnbYield: 7.0,
     bestFit: { icon: "📈", en: "Airbnb operator", zh: "Airbnb 經營" },
     urls: {
       en: "/kl/SC_Times-Square-2_20260527_en.html",
@@ -1122,14 +1134,14 @@ function renderScoreboard(){
     const cells = dims.map(d => {
       const v = dimValue(p, d, view);
       const isTop = Math.abs(v - maxes[d]) < 0.001;
-      const isHigh = v >= 7.0;
-      const cls = ['score', isTop ? 'top' : '', isHigh ? 'high' : ''].filter(Boolean).join(' ');
+      const cls = ['score', isTop ? 'top' : ''].filter(Boolean).join(' ');
       return `<td class="${cls}">${v.toFixed(1)}</td>`;
     }).join('');
 
     const projShortMeta = `${p.area} · ${p.tenure[lang].replace(/\s*\([^)]*\)/,'')}`;
 
     const yieldVal = (p.grossYield != null) ? p.grossYield.toFixed(1) + '%' : '—';
+    const airbnbExtra = (p.airbnbYield != null) ? `<small class="yield-airbnb">↗ Airbnb ${p.airbnbYield.toFixed(1)}%</small>` : '';
     return `
       <tr>
         <td class="proj">
@@ -1137,7 +1149,7 @@ function renderScoreboard(){
           <small>${projShortMeta}</small>
         </td>
         ${cells}
-        <td class="yield-cell">${yieldVal}</td>
+        <td class="yield-cell">${yieldVal}${airbnbExtra}</td>
         <td class="tier-cell tier-${p.tier}"><span class="tier-pill">${p.tier}</span></td>
         <td class="total">
           <div class="total-row">
