@@ -397,6 +397,163 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
 .footer-disclaimer{font-size:12px;color:var(--muted);line-height:1.75;max-width:620px;margin:0 auto}
 .footer-disclaimer strong{color:var(--text-soft);font-weight:600}
 
+/* Scoreboard table */
+.scoreboard-section{padding-top:20px;padding-bottom:48px}
+.view-toggle{
+  display:inline-flex;gap:0;
+  background:var(--bg-soft);
+  border:1px solid var(--border);
+  border-radius:999px;padding:3px;
+}
+.vt-btn{
+  padding:6px 14px;border:none;border-radius:999px;
+  font-size:11px;font-weight:600;cursor:pointer;
+  background:transparent;color:var(--muted);
+  font-family:inherit;letter-spacing:.04em;
+  transition:all .2s;text-transform:uppercase;
+}
+.vt-btn.active{
+  background:var(--navy);color:#fff;
+  box-shadow:0 1px 4px rgba(13,34,68,.18);
+}
+.vt-btn .flag{font-size:13px;margin-right:5px;vertical-align:-1px}
+
+.table-wrap{
+  background:#ffffff;
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+  position:relative;
+}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scoreboard{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+  font-variant-numeric:tabular-nums;
+  min-width:760px;
+}
+.scoreboard thead{
+  background:linear-gradient(180deg,var(--navy-deep) 0%,var(--navy) 100%);
+  color:#f3ebd6;
+}
+.scoreboard thead::after{
+  content:'';display:block;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-light) 30%,var(--gold-light) 70%,transparent);
+}
+.scoreboard th{
+  text-align:center;
+  padding:13px 10px 11px;
+  font-weight:600;
+  letter-spacing:.06em;
+  font-size:11px;
+  text-transform:uppercase;
+  border-right:1px solid rgba(212,181,118,.12);
+  white-space:nowrap;
+  vertical-align:middle;
+}
+.scoreboard th:last-child{border-right:none}
+.scoreboard th:first-child{text-align:left;padding-left:20px}
+.scoreboard th small{
+  display:block;
+  font-size:9.5px;
+  font-weight:500;
+  color:var(--gold-light);
+  margin-top:3px;
+  letter-spacing:.06em;
+  text-transform:none;
+  font-style:italic;
+}
+.scoreboard tbody tr{
+  border-bottom:1px solid var(--border-soft);
+  transition:background .15s;
+}
+.scoreboard tbody tr:last-child{border-bottom:none}
+.scoreboard tbody tr:hover{background:var(--gold-bg)}
+.scoreboard tbody tr:nth-child(even){background:rgba(247,243,234,.4)}
+.scoreboard tbody tr:nth-child(even):hover{background:var(--gold-bg)}
+.scoreboard td{
+  padding:14px 10px;
+  text-align:center;
+  border-right:1px solid var(--border-soft);
+  color:var(--text-soft);
+}
+.scoreboard td:last-child{border-right:none}
+.scoreboard td.proj{
+  text-align:left;padding-left:20px;
+  min-width:200px;
+  position:sticky;left:0;
+  background:#ffffff;
+  box-shadow:1px 0 0 var(--border-soft);
+}
+.scoreboard tbody tr:nth-child(even) td.proj{background:#faf6ec}
+.scoreboard tbody tr:hover td.proj{background:var(--gold-bg)}
+.scoreboard td.proj a{
+  font-family:'Playfair Display','Noto Serif TC',serif;
+  font-size:14.5px;font-weight:600;
+  color:var(--navy);text-decoration:none;
+  letter-spacing:-.005em;line-height:1.25;
+  display:block;
+}
+.scoreboard td.proj a:hover{color:var(--gold-deep)}
+.scoreboard td.proj small{
+  display:block;font-size:11px;color:var(--muted);
+  font-weight:400;font-family:'Inter',sans-serif;margin-top:2px;
+}
+.scoreboard td.score{font-size:14px;font-weight:600}
+.scoreboard td.score.high{
+  color:var(--navy);font-weight:700;
+  font-family:'Playfair Display','Noto Serif TC',serif;font-size:15px;
+}
+.scoreboard td.score.top{
+  background:linear-gradient(180deg,rgba(212,181,118,.12),rgba(212,181,118,.05));
+  color:var(--gold-deep);
+}
+.scoreboard td.tier-cell{font-weight:700;font-size:12px;letter-spacing:.04em}
+.scoreboard td.tier-cell .tier-pill{
+  display:inline-block;
+  padding:3px 9px;border-radius:999px;
+  font-size:10.5px;font-weight:700;letter-spacing:.08em;
+  border:1px solid;
+}
+.scoreboard td.tier-cell.tier-T1 .tier-pill{background:#dcfce7;border-color:#86efac;color:#15803d}
+.scoreboard td.tier-cell.tier-T2 .tier-pill{background:#dbeafe;border-color:#93c5fd;color:#1d4ed8}
+.scoreboard td.tier-cell.tier-T3 .tier-pill{background:#fef3c7;border-color:#fcd34d;color:#a16207}
+.scoreboard td.tier-cell.tier-T4 .tier-pill{background:linear-gradient(135deg,#fbf3df,#f3e5c3);border-color:var(--gold-light);color:var(--gold-deep)}
+.scoreboard td.tier-cell.tier-T5 .tier-pill{background:#fee2e2;border-color:#fca5a5;color:#b91c1c}
+.scoreboard td.total{
+  background:rgba(212,181,118,.06);
+  font-family:'Playfair Display','Noto Serif TC',serif;
+  font-size:16px;font-weight:700;
+  letter-spacing:-.02em;
+}
+.scoreboard td.total .total-row{display:flex;align-items:baseline;justify-content:center;gap:4px;line-height:1.1}
+.scoreboard td.total .my-num{color:var(--navy)}
+.scoreboard td.total .fg-num{
+  background:linear-gradient(180deg,var(--gold) 0%, var(--gold-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.scoreboard td.total .div{
+  color:var(--gold-light);font-size:13px;font-weight:400;margin:0 1px;
+}
+.scoreboard td.total small{
+  display:block;font-size:9.5px;
+  color:var(--muted);font-weight:600;
+  font-family:'Inter',sans-serif;
+  letter-spacing:.08em;text-transform:uppercase;
+  margin-top:1px;
+}
+.legend-note{
+  margin-top:14px;
+  display:flex;gap:18px;flex-wrap:wrap;justify-content:center;
+  font-size:11.5px;color:var(--muted);
+}
+.legend-note .l-item{display:inline-flex;align-items:center;gap:6px}
+.legend-note .l-swatch{width:12px;height:12px;border-radius:3px;display:inline-block}
+.legend-note .l-swatch.top{background:linear-gradient(180deg,rgba(212,181,118,.4),rgba(212,181,118,.2));border:1px solid var(--gold-light)}
+.legend-note .l-swatch.high{background:var(--navy);opacity:.6}
+
 /* RWD */
 @media (max-width:640px){
   .nav-inner{padding:12px 16px;gap:10px}
@@ -507,6 +664,41 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
   </div>
 </section>
 
+<section class="section scoreboard-section">
+  <div class="section-head">
+    <div class="section-head-main">
+      <span class="section-eyebrow">
+        <span class="lang-en">THE SCOREBOARD</span><span class="lang-zh">建案總表</span>
+      </span>
+      <h2 class="section-title">
+        <span class="lang-en">Side-by-side comparison</span><span class="lang-zh">6 維度跨建案對比</span>
+      </h2>
+    </div>
+    <div class="view-toggle" role="tablist">
+      <button class="vt-btn" data-view="my" role="tab">
+        <span class="flag">🇲🇾</span><span class="lang-en">Local</span><span class="lang-zh">本國人</span>
+      </button>
+      <button class="vt-btn active" data-view="fg" role="tab">
+        <span class="flag">🌏</span><span class="lang-en">Foreign</span><span class="lang-zh">外國人</span>
+      </button>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <div class="table-scroll">
+      <table class="scoreboard">
+        <thead>
+          <tr id="scoreboard-head"></tr>
+        </thead>
+        <tbody id="scoreboard-body"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="legend-note">
+    <span class="l-item"><span class="l-swatch top"></span><span class="lang-en">Top score in column</span><span class="lang-zh">該維度最高分</span></span>
+    <span class="l-item"><span class="l-swatch high"></span><span class="lang-en">Score ≥ 7.0</span><span class="lang-zh">分數 ≥ 7.0</span></span>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="footer-ornament" aria-hidden="true">
     <span class="dot"></span><span class="dot"></span><span class="dot"></span>
@@ -532,6 +724,7 @@ const projects = [
       en: "Damansara Heights flagship address + Pavilion institutional moat + covered MRT link — strongest 10-year location moat",
       zh: "Damansara Heights 旗艦地段 + Pavilion 機構級護城河 + MRT 有蓋直連，10 年護城河最強；投資收益率偏低"
     },
+    dims: { d1: 8.0, d2: 4.5, d3: [4.5, 2.5], d4: 6.5, d5: 8.0, d6: [6.5, 4.0] },
     urls: {
       en: "/kl/SC_Pavilion-Damansara-Heights_20260527_en.html",
       zh: "/kl/SC_Pavilion-Damansara-Heights_20260527_zh.html"
@@ -550,6 +743,7 @@ const projects = [
       en: "Bukit Bintang freehold + Imbi monorail 100m — strong 10-yr location moat; Berjaya Corp losses + SA overhang are 10-yr exit drag",
       zh: "Bukit Bintang freehold + Imbi monorail 100m，10 年地段護城河強；Berjaya Corp 母公司虧損 + SA overhang 是 10 年退場拖累"
     },
+    dims: { d1: 7.5, d2: 6.5, d3: [5.5, 3.5], d4: 5.0, d5: 6.0, d6: [6.2, 4.5] },
     urls: {
       en: "/kl/SC_Times-Square-2_20260527_en.html",
       zh: "/kl/SC_Times-Square-2_20260527_zh.html"
@@ -568,6 +762,7 @@ const projects = [
       en: "Pavilion KL direct link + KL's strongest walkable retail density; Leasehold + commercial + off-plan triple structural discount on 10-yr exit",
       zh: "Pavilion KL 直連 + 全 KL 最強零售生活密度；Leasehold + 商業地契 + 期房三重結構性折扣壓制 10 年退場"
     },
+    dims: { d1: 7.5, d2: 4.5, d3: [4.0, 2.0], d4: 4.5, d5: 6.5, d6: [6.0, 2.5] },
     urls: {
       en: "/kl/SC_Pavilion-Square_20260528_en.html",
       zh: "/kl/SC_Pavilion-Square_20260528_zh.html"
@@ -586,6 +781,7 @@ const projects = [
       en: "Freehold residential + Asia Quest's 6th Kiaramas + MM2H eligible; 2-yr off-plan wait + MRT3 (2032) still far away",
       zh: "Freehold 住宅 + Asia Quest Kiaramas 系列第六案 + MM2H 達門檻；期房 2 年等待 + MRT3 2032 催化遠"
     },
+    dims: { d1: 7.5, d2: 6.5, d3: [6.0, 3.5], d4: 6.5, d5: 7.5, d6: [7.5, 5.5] },
     urls: {
       en: "/kl/SC_Kiaramas-deDaun_20260528_en.html",
       zh: "/kl/SC_Kiaramas-deDaun_20260528_zh.html"
@@ -604,6 +800,7 @@ const projects = [
       en: "DPC flagship (single master-developer 473 acres) + ParkCity × CapitaLand completed + Brickz 70-tx +40% over 5 yrs; capital-appreciation thesis, gross 4.3% not a yield play",
       zh: "DPC 旗艦 + ParkCity × CapitaLand 完工 + Brickz 70 筆 +40% 5 年實證；資本增值取向，gross 4.3% 非高 yield play"
     },
+    dims: { d1: 8.0, d2: 7.0, d3: [5.0, 3.0], d4: 7.5, d5: 9.0, d6: [8.0, 6.0] },
     urls: {
       en: "/kl/SC_Park-Regent_20260528_en.html",
       zh: "/kl/SC_Park-Regent_20260528_zh.html"
@@ -622,6 +819,7 @@ const projects = [
       en: "MK 7.5 district baseline + Bukit Kiara Hill adjacency + UEM Sunrise's deep MK master-developer track + Indochine GreenRE design; 1-yr off-plan + MRT3 (2032) catalyst still far",
       zh: "MK 7.5 district 基線 + 鄰 Bukit Kiara Hill + UEM Sunrise 28 MK master 軌跡 + Indochine GreenRE 設計；期房 1 年 + MRT3 2032 催化遠"
     },
+    dims: { d1: 7.7, d2: 6.0, d3: [7.0, 5.0], d4: 6.5, d5: 8.0, d6: [7.5, 5.5] },
     urls: {
       en: "/kl/SC_The-MINH_20260528_en.html",
       zh: "/kl/SC_The-MINH_20260528_zh.html"
@@ -640,6 +838,7 @@ const projects = [
       en: "Only Parkfront condo in DPC (direct access to Central Park) + Perdana 50-yr master-developer no-discount preservation policy + Brickz 18-tx +50% over 12 yrs; mature secondary market, cash flow not the main driver",
       zh: "DPC 唯一 Parkfront 直連 Central Park + Perdana 50 年 master developer 不折扣保值 + Brickz 18 筆 +50% 12 年實證；成熟二手市場，現金流非主軸"
     },
+    dims: { d1: 8.0, d2: 7.0, d3: [5.5, 3.5], d4: 7.5, d5: 8.5, d6: [7.5, 5.5] },
     urls: {
       en: "/kl/SC_One-Central-Park_20260528_en.html",
       zh: "/kl/SC_One-Central-Park_20260528_zh.html"
@@ -662,13 +861,27 @@ const I18N = {
   shareMsg: {
     en: name => `Independent scorecard for ${name}`,
     zh: name => `${name} 獨立評分卡`
-  }
+  },
+  thProj:  { en: "Development",    zh: "建案" },
+  thD1:    { en: "Location",       zh: "地段護城河" },
+  thD2:    { en: "Valuation",      zh: "買價判斷" },
+  thD3:    { en: "Cashflow",       zh: "持有現金流" },
+  thD4:    { en: "Appreciation",   zh: "資本增值" },
+  thD5:    { en: "Developer",      zh: "開發商" },
+  thD6:    { en: "Exit",           zh: "退場流動性" },
+  thTier:  { en: "Tier",           zh: "Tier" },
+  thTotal: { en: "Total",          zh: "總分" },
+  thTotalSub: { en: "MY / FG",     zh: "本/外" }
 };
 
 const cardsEl = document.getElementById('cards');
 const searchEl = document.getElementById('search');
 const resultsEl = document.getElementById('results');
 const countEl = document.getElementById('count');
+const sbHeadEl = document.getElementById('scoreboard-head');
+const sbBodyEl = document.getElementById('scoreboard-body');
+
+let currentView = 'fg'; // 'my' or 'fg'
 
 function getLang(){
   let l = 'en';
@@ -680,6 +893,83 @@ function applyStaticI18n(lang){
   searchEl.placeholder = I18N.searchPh[lang];
   countEl.textContent = I18N.count[lang](projects.length);
 }
+
+function dimValue(p, dimKey, view){
+  const v = p.dims[dimKey];
+  if(Array.isArray(v)) return view === 'fg' ? v[1] : v[0];
+  return v;
+}
+
+function renderScoreboard(){
+  const lang = getLang();
+  const view = currentView;
+
+  // header
+  sbHeadEl.innerHTML = `
+    <th>${I18N.thProj[lang]}</th>
+    <th>${I18N.thD1[lang]}<small>30%</small></th>
+    <th>${I18N.thD2[lang]}<small>5%</small></th>
+    <th>${I18N.thD3[lang]}<small>15%</small></th>
+    <th>${I18N.thD4[lang]}<small>20%</small></th>
+    <th>${I18N.thD5[lang]}<small>10%</small></th>
+    <th>${I18N.thD6[lang]}<small>20%</small></th>
+    <th>${I18N.thTier[lang]}</th>
+    <th>${I18N.thTotal[lang]}<small>${I18N.thTotalSub[lang]}</small></th>
+  `;
+
+  // find max per dim for highlighting
+  const dims = ['d1','d2','d3','d4','d5','d6'];
+  const maxes = {};
+  dims.forEach(d => { maxes[d] = Math.max(...projects.map(p => dimValue(p, d, view))); });
+
+  // sort by the current view's total
+  const sortedProjects = projects.slice().sort((a,b) =>
+    (view === 'fg' ? b.scoreFG - a.scoreFG : b.scoreMY - a.scoreMY)
+  );
+
+  // body rows
+  sbBodyEl.innerHTML = sortedProjects.map(p => {
+    const cells = dims.map(d => {
+      const v = dimValue(p, d, view);
+      const isTop = Math.abs(v - maxes[d]) < 0.001;
+      const isHigh = v >= 7.0;
+      const cls = ['score', isTop ? 'top' : '', isHigh ? 'high' : ''].filter(Boolean).join(' ');
+      return `<td class="${cls}">${v.toFixed(1)}</td>`;
+    }).join('');
+
+    const projShortMeta = `${p.area} · ${p.tenure[lang].replace(/\s*\([^)]*\)/,'')}`;
+
+    return `
+      <tr>
+        <td class="proj">
+          <a href="${p.urls[lang]}">${p.name}</a>
+          <small>${projShortMeta}</small>
+        </td>
+        ${cells}
+        <td class="tier-cell tier-${p.tier}"><span class="tier-pill">${p.tier}</span></td>
+        <td class="total">
+          <div class="total-row">
+            <span class="my-num">${p.scoreMY.toFixed(1)}</span>
+            <span class="div">/</span>
+            <span class="fg-num">${p.scoreFG.toFixed(1)}</span>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function setView(view){
+  currentView = view;
+  document.querySelectorAll('.vt-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.view === view);
+  });
+  renderScoreboard();
+}
+
+document.querySelectorAll('.vt-btn').forEach(b => {
+  b.addEventListener('click', () => setView(b.dataset.view));
+});
 
 function absoluteUrl(path){
   if(/^https?:\/\//.test(path)) return path;
@@ -815,6 +1105,7 @@ function setLang(lang){
   try { localStorage.setItem('lang', lang); } catch(e) {}
   applyStaticI18n(lang);
   renderCards();
+  renderScoreboard();
   if(searchEl.value.trim()) handleSearch();
 }
 
