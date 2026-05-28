@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stonor 3 @ KLCC — KL 建案獨立評分卡</title>
+<meta name="description" content="Stonor 3 @ KLCC 獨立評分卡。本國人 6.4 / 外國人 5.9。10 年持有專業投資人視角 · 6 維度框架 · Brickz / JPPH / iRumah / iProperty 資料源。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:'Inter','Noto Sans TC',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;background-image:radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);background-attachment:fixed}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}
+.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{font-family:'Noto Serif TC','Playfair Display',serif;font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{font-family:'Noto Serif TC','Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}
+.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{font-family:'Noto Serif TC','Playfair Display',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+@media (max-width:768px){.nav-inner{padding:12px 16px}.wrap{padding:20px 14px 36px}.hero-card{padding:22px 20px}.proj-name{font-size:26px}.dual-scores{grid-template-columns:1fr}.section{padding:22px 20px}.section-title{font-size:20px}.radar-block{grid-template-columns:1fr;gap:22px}.radar-svg{width:240px;height:240px}.data-grid{grid-template-columns:1fr}.pros-cons{grid-template-columns:1fr}.cmp-table,.cost-table,.kv-table{font-size:11.5px}.cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}.profile-fit{padding-left:0;margin-top:6px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/kl-check">
+      <span class="brand-mark">K</span>
+      <span class="brand-text">
+        <span class="brand">KL 建案獨立評分卡</span>
+        <span class="brand-by">by InvestMQuest</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/kl-check">← 全部評分</a>
+      <a class="lang-link" href="SC_Stonor-3_20260528_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>KLCC · Lorong Stonor</span>
+    <span class="sep">◆</span>
+    <span>FREEHOLD COMMERCIAL UNDER HDA</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-05-28</span>
+  </div>
+  <h1 class="proj-name">Stonor 3 @ KLCC</h1>
+  <p class="one-liner">
+    KLCC Embassy Row freehold + Conlay MRT 500m + Tan&Tan × 三菱地所精品工藝；2016 發售 RM 2,000 psf 至今修正 −34%（現 RM 1,320 psf），69% 掛牌率使 10 年增值需地段催化才能達標。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.4</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">KLCC 旗艦地段 + Conlay MRT 步行 + 精品品質 + 充分修正進場價；但 69% 掛牌率 + 商業 SA 結構性折扣壓制資本增值</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.9</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">2026-01 起 8% 印花稅 + 30% 租金稅使外籍 Net Yield 1.9-2.3%（本系列最低之一）；打平機會成本需漲幅 ~5.5%/年偏難</div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">六維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。地段護城河 25% · 交通與生活機能 15% · 持有現金流 15% · 資本增值路徑 25% · 開發商與管理移交 10% · 退場流動性與摩擦 10%。4 個維度本外同分、2 個維度本外分開（現金流 + 退場）。核心信仰：buy the land, not the price。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+      <svg class="radar-svg" viewBox="-30 -30 340 340" aria-label="六維度雷達圖">
+        <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+          <polygon points="140,28 237,84 237,196 140,252 43,196 43,84"/>
+          <polygon points="140,50.4 217.6,95.2 217.6,184.8 140,229.6 62.4,184.8 62.4,95.2"/>
+          <polygon points="140,72.8 198.2,106.4 198.2,173.6 140,207.2 81.8,173.6 81.8,106.4"/>
+          <polygon points="140,95.2 178.8,117.6 178.8,162.4 140,184.8 101.2,162.4 101.2,117.6"/>
+          <polygon points="140,117.6 159.4,128.8 159.4,151.2 140,162.4 120.6,151.2 120.6,128.8"/>
+        </g>
+        <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+          <line x1="140" y1="140" x2="140" y2="28"/>
+          <line x1="140" y1="140" x2="237" y2="84"/>
+          <line x1="140" y1="140" x2="237" y2="196"/>
+          <line x1="140" y1="140" x2="140" y2="252"/>
+          <line x1="140" y1="140" x2="43" y2="196"/>
+          <line x1="140" y1="140" x2="43" y2="84"/>
+        </g>
+        <!-- Local (navy): 地段 8.0 / 交通 8.5 / 現金流 3.5 / 利得 5.0 / 開發 8.0 / 退場 5.5 -->
+        <polygon points="140,50.4 222.45,92.4 173.95,159.6 140,196.0 62.4,184.8 86.65,109.2"
+                 fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+        <g fill="#0d2244">
+          <circle cx="140" cy="50.4" r="3.5"/>
+          <circle cx="222.45" cy="92.4" r="3.5"/>
+          <circle cx="173.95" cy="159.6" r="3.5"/>
+          <circle cx="140" cy="196.0" r="3.5"/>
+          <circle cx="62.4" cy="184.8" r="3.5"/>
+          <circle cx="86.65" cy="109.2" r="3.5"/>
+        </g>
+        <!-- Foreign (gold): 現金流 1.5 / 退場 3.0，其他同本國人 -->
+        <polygon points="140,50.4 222.45,92.4 154.55,148.4 140,196.0 62.4,184.8 110.9,123.2"
+                 fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+        <g fill="#b8924a">
+          <circle cx="140" cy="50.4" r="3"/>
+          <circle cx="222.45" cy="92.4" r="3"/>
+          <circle cx="154.55" cy="148.4" r="3"/>
+          <circle cx="140" cy="196.0" r="3"/>
+          <circle cx="62.4" cy="184.8" r="3"/>
+          <circle cx="110.9" cy="123.2" r="3"/>
+        </g>
+        <g fill="#475569" font-size="10.5" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+          <text x="140" y="18" text-anchor="middle">地段護城河</text>
+          <text x="248" y="80" text-anchor="start">交通與生活機能</text>
+          <text x="248" y="200" text-anchor="start">持有現金流</text>
+          <text x="140" y="270" text-anchor="middle">資本增值</text>
+          <text x="32" y="200" text-anchor="end">開發商</text>
+          <text x="32" y="80" text-anchor="end">退場流動性</text>
+        </g>
+      </svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 6.4</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 5.9</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">地段護城河</span><span class="dim-weight">25% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">8.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">KLCC base 8.0；Lorong Stonor Embassy Row 安靜地段稀缺，但微觀位置稍偏 Petronas Towers 核心外。</p>
+        <p class="dim-data">3 Lorong Stonor · 距 KLCC Park 10 分鐘步行 · 與大使館區比鄰 · vs 4SP 8.5（緊鄰雙峰塔）· §評分基準錨表 §1</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與生活機能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">8.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Conlay MRT（Putrajaya Line）步行 500m + KLCC LRT 可達 + Ampang Park 700m；KLCC Park 步行 10 分鐘，多條軌道交通選擇。</p>
+        <p class="dim-data">Conlay MRT 500m 步行 5-7 分（KLCC 罕見步行 MRT）· Suria KLCC 走路可達 · Prince Court Medical 5 分車程 · vs 4SP 9.0（有自帶 mall）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">15% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">3.5</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">1.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Gross yield 4.23% 且下行（2023 高點 4.73%）；69% 掛牌率（140 售 + 136 租 / 400 戶）造成填租競爭極大；外籍 Net Yield 1.9-2.3%。</p>
+        <p class="dim-data">iRumah 2025 yield 4.23% · iProperty 136 筆掛牌租 · 871 sqft 2BR 月租 ~RM 4,500 · 商業地契電費接近民用（HDA 保護）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值路徑</span><span class="dim-weight">25% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Residential strata base 6.0；KL KLCC 中端 SR 系統性積壓（KL 8-9K 戶）-1；69% 掛牌率反映持續賣壓 -0.5；Tan&Tan × 三菱品質提供價值底 +0.3。</p>
+        <p class="dim-data">上游 KL 報告標注「KLCC 2015-18 量產投資盤 -5% 至 -14%，至今未回發售價」· 發售 RM 2,000 psf → 現 RM 1,320 psf（-34%）· MRT3 Circle Line 2032+ 為長線非 5 年 catalyst</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">8.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Tan & Tan（IGB Corp 子公司，Bursa T1，50 年紀錄）× Mitsubishi Jisho Residence 機構級日本 JV +0.5；2019 已完工 + 6 年 JMB 穩定運作 +0.3。</p>
+        <p class="dim-data">IGB Corp 為 Bursa T1 · 三菱地所為日本領先住宅開發商 · GreenRE Gold 認證（KLCC 首例住宅）· 品質有口碑（Burmese Teak / Toto / De Dietrich）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場流動性與摩擦</span><span class="dim-weight">10% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">5.5</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">3.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">本地：Freehold 商業 SA base 6.5 + HDA 保護 +0.3 - 高掛牌率拋壓 -1.0。外籍：MM2H 達標但 SA overhang 觸發 cap + 商業 SA 外籍買家池窄 + 帳面虧損賣方議價空間大。</p>
+        <p class="dim-data">iProperty 140 筆掛牌售 + 136 筆掛牌租 = 69% 掛牌率（KL 健康市場通常 &lt;20%）· KL SA overhang 8-9K 戶觸發 foreign cap ≤ 6 · LHDN Finance Act 2026 8% 印花稅</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+  <p class="section-sub">代表戶型：<strong>871 sqft（2BR Type C 中層）約 RM 1,150,000</strong>（@ RM 1,320 psf）。Stonor 3 僅 1 種 2BR（Type C 871 sqft，最熱門），直接採用。</p>
+
+  <div class="assump-box" style="background:linear-gradient(135deg,#fef9ed 0%, #fbf3df 100%);border:1px solid var(--gold);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative">
+    <strong>⚠️ 買價透明度說明：</strong>本評分卡使用的 PSF RM 1,320 為 iRumah 2BR 成交中位價（多筆 brickz 成交綜合）。掛牌 PSF 範圍 RM 1,338-1,771 顯示部分業主仍偏高定價，議價空間大（69% 掛牌率 = 買方市場）。Stonor 3 2019 完工已 6 年，二手市場成熟但供給過剩——歷史成交清晰，當前 RM 1,320 是「充分修正」後的市場價，相比發售 RM 2,000 psf 已下跌 −34%。
+  </div>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">Tan & Tan Developments × Mitsubishi Jisho Residence JV<span class="kv-src">IGB Corp 子公司（Bursa T1）× 三菱地所子公司</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">Freehold 商業地契（Commercial under HDA）<span class="kv-src">Hartamas / iProperty 確認</span></td></tr>
+          <tr><td class="kv-label">總規模</td><td class="kv-val">1 棟 41 層 · 400 戶 · GDV RM 6.4 億<span class="kv-src">Tan & Tan 官方</span></td></tr>
+          <tr><td class="kv-label">坪數範圍</td><td class="kv-val">689 sqft（1BR）/ 871 sqft（2BR）/ 1,031-1,232 sqft（3BR）<span class="kv-src">開發商 product menu</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">871 sqft 2BR Type C 中層 @ RM 1.15M<span class="kv-src">iRumah 中位 RM 1,320 psf × 871 sqft</span></td></tr>
+          <tr><td class="kv-label">完工</td><td class="kv-val">2019 年 12 月（已 6 年）<span class="kv-src">The Edge 2020</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與生活設施</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">最近捷運</td><td class="kv-val">Conlay MRT 500m 步行（Putrajaya Line）<span class="kv-src">步行 5-7 分鐘</span></td></tr>
+          <tr><td class="kv-label">次近 LRT</td><td class="kv-val">Ampang Park LRT/MRT 700m<span class="kv-src">補充連接</span></td></tr>
+          <tr><td class="kv-label">KLCC 公園</td><td class="kv-val">步行 10 分鐘 + KLCC LRT 步行可達<span class="kv-src">Suria KLCC 同步</span></td></tr>
+          <tr><td class="kv-label">綠建築認證</td><td class="kv-val">GreenRE Gold（KLCC 首例住宅）<span class="kv-src">官方認證</span></td></tr>
+          <tr><td class="kv-label">同地段競品</td><td class="kv-val">The Conlay（RM 2,450 psf）· Aria KLCC · Suria Stonor<span class="kv-src">PropertyGuru / iProperty</span></td></tr>
+          <tr><td class="kv-label">發售歷史</td><td class="kv-val">2016 RM 2,000 psf → 2025 RM 1,320 psf（−34%）<span class="kv-src">Tan & Tan 官方 / iRumah</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table" style="margin-top:18px">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-4% 累進<br><small style="color:var(--muted)">≈ RM 30,000</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 92,000</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">15%（商業 LTV 85%）<br><small style="color:var(--muted)">RM 172,500</small></td><td class="num">30%（LTV 70%）<br><small style="color:var(--muted)">RM 345,000</small></td><td><small>BNM / 各銀行</small></td></tr>
+      <tr><td>商業房貸利率</td><td class="num">4.5-4.8%</td><td class="num">4.8-5.3%</td><td><small>BNM OPR 2.75%</small></td></tr>
+      <tr><td>毛租金收益率（871 sqft 長租）</td><td class="num">~4.23%</td><td class="num">~4.23%（同）</td><td><small>iRumah 2025</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">10-24% 累進<br><small style="color:var(--muted)">假設 ~15%</small></td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>長租稅後淨 yield</td><td class="num">~2.8%</td><td class="num">~1.9-2.3%</td><td><small>計算（含 RM 0.50 psf 管理費）</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>最低購買門檻（KL）</td><td class="num">無</td><td class="num">RM 100 萬</td><td><small>聯邦直轄區</small></td></tr>
+      <tr><td>MM2H 強制購置適用</td><td class="num">—</td><td class="num">符合（達 RM 100 萬門檻）</td><td><small>MM2H Gold（商業地契合規性建議律師確認）</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>871 sqft 2BR Type C 中層 @ RM 1,150,000</strong> 為基礎，計算本國人 vs 外國人 10 年持有所有成本與淨損益對照。</p>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>871 sqft 2BR @ RM 1.15M</strong> · 持有期 10 年 · 房貸 30 年 · 租金年漲 3% · 空置 1 個月/年 ·
+    管理費 RM 0.50/sqft/月 · 本國人房貸 4.75% · 外國人房貸 5.25% · 機會成本基準 5%/年（MGS 10Y + 100bp）。
+    所有金額四捨五入至千位。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>172,500</td><td>345,000</td><td>+172,500</td></tr>
+      <tr><td>印花稅（MOT）</td><td>30,000</td><td>92,000</td><td>+62,000</td></tr>
+      <tr><td>律師費 + 貸款費</td><td>17,000</td><td>20,000</td><td>+3,000</td></tr>
+      <tr><td>州政府批准費</td><td>—</td><td>5,000</td><td>+5,000</td></tr>
+      <tr class="sum"><td>買入成本小計</td><td>219,500</td><td>462,000</td><td>+242,500</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額</td><td>612,000</td><td>533,000</td><td>−79,000</td></tr>
+      <tr><td>管理費 + 維修基金</td><td>52,000</td><td>52,000</td><td>0</td></tr>
+      <tr><td>門牌稅 + 地稅</td><td>10,000</td><td>10,000</td><td>0</td></tr>
+      <tr><td>保險</td><td>16,000</td><td>16,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有成本小計</td><td>690,000</td><td>611,000</td><td>−79,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，月租 RM 4,500 估）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>567,000</td><td>567,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>85,000</td><td>170,000</td><td>+85,000</td></tr>
+      <tr class="sum"><td>淨租金收入</td><td>482,000</td><td>397,000</td><td>−85,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，3% 漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>仲介費（2.4%）</td><td>37,000</td><td>37,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>40,000</td><td>+40,000</td></tr>
+      <tr><td>剩餘貸款餘額（10 年後）</td><td>790,000</td><td>659,000</td><td>−131,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0% 漲幅</td><td>−96,000</td><td>−213,000</td><td>−117,000</td></tr>
+      <tr class="scenario"><td>3%/年 漲幅</td><td>+291,000</td><td>+133,000</td><td>−158,000</td></tr>
+      <tr class="scenario"><td>5%/年 漲幅</td><td>+611,000</td><td>+421,000</td><td>−190,000</td></tr>
+      <tr class="scenario"><td>打平 5%/年機會成本所需漲幅</td><td>~1.8%/年</td><td>~5.5%/年</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在基準假設（3% 年漲、已完工 + 10 年持有）下，外國人 10 年淨損益較本國人少約 <strong>RM 15.8 萬（相當於房價的 13.7%）</strong>。8% 印花稅（2026-01 起從 4% 翻倍）+ 30% 租金所得稅 + 10% RPGT 永久三者疊加為外國人結構性溢價。<strong>打平機會成本門檻</strong>：本國人 ~1.8%/年（極低，KLCC 通膨可達標）、外國人 ~5.5%/年——後者高於 SA 細分 KL 年增速 1.5%，需要明確 5 年內 hard catalyst。<strong>跨建案比較</strong>：本/外差額佔房價比 13.7% 與 TS2 13%、PavDH 13% 相當，反映 KL 外籍持有的系統性溢價穩定。
+  </div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>Stonor 3 位於 3 Lorong Stonor，KLCC 黃金三角中最安靜稀缺的微觀地段——與 Embassy Row 大使館區為鄰，10 分鐘步行可達 KLCC Park 和 Suria KLCC，500m 達 Conlay MRT 站（Putrajaya Line）。相對於 Jalan Ampang 的喧鬧，Lorong Stonor 提供「KLCC 地址 + Embassy Row 安靜氛圍」的獨特組合，吸引外籍高淨值人士和企業派駐高管的長租需求。</p>
+
+    <p>建案規模 41 層樓 400 戶單塔結構，GDV RM 6.4 億，密度相對適中。坪數涵蓋 689 sqft（1BR）、871 sqft（2BR 為最熱門型號）、1,031 sqft 與 1,232 sqft（3BR）；單一 2BR sub-type 簡化跨建案比較。全棟全配交付，配置 Burmese Teak 緬甸柚木地板、Toto Neorest 馬桶、De Dietrich 廚電；獲 GreenRE Gold 認證（KLCC 首例住宅建案）。設施以精品定位為主：高層 sky lounge、健身房、泳池。</p>
+
+    <p>開發商 Tan & Tan Developments 為 IGB Corp（Bursa T1 上市）子公司，50 年開發紀錄；JV 夥伴為日本三菱地所子公司 Mitsubishi Jisho Residence（日本領先住宅開發商）——這是 KL 罕見的日本機構級 JV，品質標準有明確日本血統。2019 年 12 月已完工交付，運作 6 年穩定，JMB 移交完成，零交屋風險（HDA 保護對已交屋建案無實際意義）。</p>
+
+    <p>定價層面：2016 年發售均價 RM 2,000 psf——當時定位接近 Binjai on the Park 級頂奢住宅地契案。2025 年 2BR 成交中位 RM 1,320 psf（iRumah，多筆 brickz 成交綜合），9 年後跌 −34%。掛牌 PSF 範圍 RM 1,338-1,771（iProperty 140 筆，2026-04）顯示部分賣方仍偏高定價，議價空間大。同地段對照：The Conlay（E&O × Mitsui Fudosan）發售 RM 2,450 psf；Stonor 3 RM 1,320 屬已修正完整的市場價位。</p>
+
+    <p>租金市場：iProperty 顯示 136 筆活躍掛牌租，2BR 871 sqft 月租中位 ~RM 4,500，毛租金收益率 4.23%（iRumah 2025）——但較 2023 年高點 4.73% 連續下滑兩年。下行原因：①KL 廣義 SR 庫存 8,000-9,000 戶；②同建案 69% 掛牌率（140 售 + 136 租 / 400 戶）造成填租競爭極大；③TRX 完工後新供給陸續釋出。租客結構以外籍企業高管長租為主（40-50%），需向 Embassy Row catchment 借助 KL Convention Centre/銀行/法律事務所外派高管維持租金水位。</p>
+
+    <p>持有面注意事項：Commercial under HDA 是介於住宅地契與純商業 SOVO 之間的混合結構——HDA 保護完工風險（對已完工建案無實際差異）、可申請民用水電費率，但 State Consent 流程比純住宅地契多一道行政門檻，銀行貸款部分依商業條件審批（LTV 與利率略嚴）。買家池比純住宅地契（Park Place、R22）窄、比 SOVO 純商業（Armani Hallson）寬，二手流動性介於兩者之間。10 年回報邏輯仰賴三件事：①Conlay MRT 已開通的 KLCC 步行可達 MRT 溢價持續定價；②KL 廣義 SR 庫存 2027-2028 開始消化（上游報告預測），緩解供給壓力；③Tan & Tan × 三菱品牌信用使租金維持外籍 4%+ gross yield。外籍打平機會成本門檻 ~5.5%/年偏難——需要 KLCC 中端 SR 結構性復甦才能達標，10 年持有期內可期但需明確催化。</p>
+  </div>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>KLCC 旗艦地段 freehold + Embassy Row Lorong Stonor 安靜微觀位置稀缺；與 Jalan Ampang 喧鬧區隔開的居住氛圍</li>
+        <li>Conlay MRT 500m 步行（5-7 分）——KLCC 廊帶罕見的步行可達 MRT 條件，相比 Suria Stonor、Aria 等競品有真實差異化</li>
+        <li>Tan & Tan（IGB Corp，Bursa T1，50 年）× 三菱地所子公司 JV：機構級日本品質標準，GreenRE Gold KLCC 首例住宅</li>
+        <li>2016 發售 RM 2,000 psf → 2025 RM 1,320 psf（−34%）已充分修正；現價相對發售估值降幅明確、買家有充分議價空間</li>
+        <li>達 RM 100 萬 MM2H 強制購置門檻 + 已完工 6 年穩定運作 + JMB 移交完成</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li>69% 掛牌率（140 售 + 136 租 / 400 戶）為本系列最高之一；上游 KL 報告直接標注「KLCC 2016-2019 SR 為舊存貨積壓段」</li>
+        <li>外籍 Net Yield 1.9-2.3%（本系列最低之一），打平機會成本需漲幅 ~5.5%/年；10 年增值需 KLCC 中端 SR 結構性復甦才能達標</li>
+        <li>Commercial under HDA 商業地契：State Consent 比純住宅多一道流程，銀行貸款條件略嚴；建議事前向至少 2-3 家銀行確認貸款類別</li>
+        <li>2026-01 起外籍印花稅從 4% 翻倍至 8%，買入成本 RM 1.15M 級建案外籍買家額外 RM 4.6 萬負擔</li>
+        <li>Gross Yield 從 4.73%（2023）下滑至 4.23%（2025）連續兩年下行；建議觀察 iRumah Yield 是否止跌回升至 4.5%+ 作為進場信號</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：地段護城河（8.0）、開發商與管理移交（8.0）、退場流動性（換屋時 5.5 本 / 3.0 外）<br>
+      <strong>可妥協</strong>：持有現金流（自住設算租金，不影響）<br>
+      <strong>本案 fit</strong>：KLCC 步行圈 + Conlay MRT 500m + Embassy Row 安靜地段 + Tan&Tan × 三菱精品工藝，對追求 KLCC 自住氛圍的高淨值人士有真實吸引力。商業 SA 結構對自住者影響有限（HDA 保護電費可民用），是本案最合理的持有框架。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（3.5 本 / 1.5 外）、退場流動性、資本增值（5.0）<br>
+      <strong>可妥協</strong>：地段護城河（次級也可若 yield 夠高，但本案地段是支撐）<br>
+      <strong>本案 fit</strong>：純出租框架弱——Gross 4.23% 且下行、外籍 Net 1.9-2.3%、136 筆出租掛牌競爭激烈。10 年累計現金流不足以單獨支撐持有邏輯，需配合資本增值才能成立。同預算下 R22 Mont Kiara、Park Place DPC 等 yield 表現更優。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：地段護城河、開發商與管理移交<br>
+      <strong>可妥協</strong>：持有現金流（不出租或短租為主）<br>
+      <strong>本案 fit</strong>：偶爾來 KL 的買家會極喜歡——KLCC 步行圈 + Conlay MRT + Embassy Row 安靜+ 全配交付即住。RM 0.50 psf 管理費屬合理水位（vs 4SP 1.20、CloutHaus 0.80），閒置月份可委託短租部分填租。Tan&Tan × 三菱品質長期維護無虞。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：地段護城河（25%）、資本增值（長期 anchor）、退場流動性（下一代脫手）<br>
+      <strong>可妥協</strong>：短期 yield、短期催化<br>
+      <strong>本案 fit</strong>：KLCC 旗艦地段 + Freehold 是繼承友善基礎；20 年後 KLCC 仍將是 KL 重心，Embassy Row 微觀位置稀缺難複製。但商業 SA 結構在傳承時下一代脫手時的買家池窄是真實考量，建議搭配純住宅地契（Park Place / R22）做多元化。20 年週期內 KL SR 庫存問題可期消化，但需明確檢視中段（10 年點）市場狀態。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    NAPIC JPPH Q3 2025（KL SR overhang 8-9K 戶）· iRumah 2025（2BR 中位 RM 1,320 psf · Yield 4.23%）· iProperty 2026-04（140 筆掛牌售 / 136 筆掛牌租）· PropertyGuru 2025-09 · Tan & Tan Developments 官方 · IGB Corp 季報 · Mitsubishi Jisho Residence · Hartamas Listing（Commercial under HDA 確認）· The Edge Malaysia 2020（竣工報導）· KL RM1M+ 高端住宅市場深度研究 2026-03 · KL 供需 Overhang 深度分析 2026-04-01 · BNM OPR 2.75%（2025-07 降息）· LHDN Finance Act 2026（外籍 stamp duty 4%→8%）· MM2H Gold Programme · 內部深度分析報告 2026-04-12
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-05-28。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限（自住／出租／備用居所／世代傳承）。</strong>作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+  </div>
+</div>
+
+</div>
+</body>
+</html>
