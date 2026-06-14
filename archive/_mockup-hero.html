@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>Navbar + Hero Mockup Preview</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter','Noto Sans TC',sans-serif;background:#f8f9fc;color:#1e3a5f;padding:24px}
+h1{font-size:14px;letter-spacing:.1em;margin-bottom:8px;text-transform:uppercase}
+h2{font-size:11px;letter-spacing:.16em;color:#3b82f6;font-weight:700;margin:36px 0 0;padding-bottom:6px;border-bottom:1px solid #dce8f5;text-transform:uppercase}
+h2 small{color:#94a3b8;font-weight:400;letter-spacing:0;text-transform:none;margin-left:8px}
+.label-row{font-size:9.5px;letter-spacing:.13em;color:#5a7a9a;font-weight:600;text-transform:uppercase;margin:14px 0 4px}
+
+/* ============ SHARED NAVBAR STYLE (mimics imq-nav) ============ */
+.nav{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:6px;padding:10px 16px;display:flex;align-items:center;gap:14px;overflow:hidden}
+.logo{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.02em;white-space:nowrap}
+.logo .dot{color:#3b82f6}
+.tools{display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.tools::-webkit-scrollbar{display:none}
+.tool{padding:6px 10px;font-size:13px;font-weight:500;color:rgba(255,255,255,.78);text-decoration:none;border-radius:5px;transition:all .15s;white-space:nowrap;display:inline-flex;align-items:center;gap:5px}
+.tool:hover{color:#fff;background:rgba(255,255,255,.06)}
+.tool.on{color:#fff;background:rgba(59,130,246,.2);font-weight:600}
+
+/* ============ HERO CARD CONTAINER ============ */
+.hero{background:#fff;border:1px solid #dce8f5;border-radius:6px;padding:18px;margin-top:8px}
+.hero-title{font-size:15px;font-weight:700;color:#0f2a45;margin-bottom:4px}
+.hero-eyebrow{font-size:9.5px;letter-spacing:.15em;color:#3b82f6;font-weight:600;text-transform:uppercase;margin-bottom:14px;display:block}
+.toolset{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ============ A. EDITORIAL ============ */
+.A .tool-h{flex:1;min-width:180px;padding:10px 14px;background:linear-gradient(135deg,#0f1e33,#1e3a5f);border-radius:6px;color:#e2ecf8;text-decoration:none;border:1px solid rgba(59,130,246,.2);cursor:pointer}
+.A .tool-h-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:1px}
+.A .tool-h-zh{font-size:9.5px;color:#5a8ab5;margin-bottom:4px}
+.A .tool-h-line{height:1px;background:#3b82f6;width:20px;margin-bottom:4px}
+.A .tool-h-sub{font-size:9.5px;color:#7fa3c4}
+
+/* ============ B. LETTER MONOGRAM ============ */
+.B .tool .badge{width:18px;height:18px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;flex-shrink:0;font-family:'Inter',sans-serif}
+.B .b-T{background:#16a34a}
+.B .b-S{background:#d97706}
+.B .b-B{background:#3b82f6}
+.B .b-C{background:#06b6d4}
+.B .b-O{background:#8b5cf6}
+.B .b-Y{background:#ec4899}
+.B .b-F{background:#f59e0b}
+.B .b-R{background:#64748b}
+.B .tool-h{flex:1;min-width:180px;padding:10px 14px;background:linear-gradient(135deg,#0f1e33,#1e3a5f);border-radius:6px;color:#e2ecf8;text-decoration:none;border:1px solid rgba(59,130,246,.2);display:flex;align-items:center;gap:10px;cursor:pointer}
+.B .badge-h{width:30px;height:30px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0}
+.B .tool-h-title{font-size:12px;font-weight:700;color:#fff}
+.B .tool-h-sub{font-size:9.5px;color:#5a8ab5}
+
+/* ============ C. SVG LINE ICONS ============ */
+.C .tool svg{width:14px;height:14px;color:#3b82f6;flex-shrink:0}
+.C .tool-h{flex:1;min-width:180px;padding:10px 14px;background:linear-gradient(135deg,#0f1e33,#1e3a5f);border-radius:6px;color:#e2ecf8;text-decoration:none;border:1px solid rgba(59,130,246,.2);display:flex;align-items:center;gap:8px;cursor:pointer}
+.C .tool-h svg{width:20px;height:20px;color:#3b82f6;flex-shrink:0}
+.C .tool-h-title{font-size:12px;font-weight:700;color:#fff}
+.C .tool-h-sub{font-size:9.5px;color:#5a8ab5}
+
+/* ============ D. NUMBER SERIAL ============ */
+.D .tool .num{font-family:Georgia,serif;font-size:11px;font-style:italic;color:#3b82f6;font-weight:600}
+.D .tool-h{flex:1;min-width:180px;padding:10px 14px;background:linear-gradient(135deg,#0f1e33,#1e3a5f);border-radius:6px;color:#e2ecf8;text-decoration:none;border:1px solid rgba(59,130,246,.2);cursor:pointer}
+.D .num-h{font-family:Georgia,serif;font-size:18px;font-weight:700;color:#3b82f6;font-style:italic;margin-bottom:2px;line-height:1}
+.D .tool-h-title{font-size:12px;font-weight:700;color:#fff}
+.D .tool-h-zh{font-size:9.5px;color:#5a8ab5}
+
+/* ============ E. COLOR DOT ACCENT ============ */
+.E .tool .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.E .e-1{background:#16a34a}.E .e-2{background:#d97706}.E .e-3{background:#3b82f6}.E .e-4{background:#06b6d4}.E .e-5{background:#8b5cf6}.E .e-6{background:#ec4899}.E .e-7{background:#f59e0b}.E .e-8{background:#64748b}
+.E .tool-h{flex:1;min-width:180px;padding:10px 14px;background:#fff;border:1px solid #ccd9e8;border-radius:6px;border-left:3px solid var(--accent);text-decoration:none;color:#1e3a5f;cursor:pointer}
+.E .h1{--accent:#16a34a}.E .h2{--accent:#d97706}.E .h3{--accent:#3b82f6}
+.E .tool-h-title{font-size:12px;font-weight:700}
+.E .tool-h-zh{font-size:9.5px;color:#5a7a9a}
+
+.note{font-size:11px;color:#94a3b8;margin-top:8px;font-style:italic}
+</style>
+</head>
+<body>
+
+<h1>Navbar Tools + Hero — No-Emoji Designs</h1>
+<p style="font-size:11px;color:#94a3b8;margin-bottom:8px">每個方案同時顯示「navbar 工具列（8 項，每頁可見）」+「home hero 大卡（3 項）」。</p>
+
+<!-- A -->
+<h2>A. Editorial / 純文字 <small>最 minimal</small></h2>
+<div class="A">
+  <div class="label-row">Navbar (visible on every page)</div>
+  <nav class="nav">
+    <span class="logo">PROPERTY<span class="dot">·</span>MONITOR</span>
+    <div class="tools">
+      <a class="tool on">Home</a>
+      <a class="tool">Timing</a>
+      <a class="tool">Stress</a>
+      <a class="tool">Buy/Rent</a>
+      <a class="tool">Cost</a>
+      <a class="tool">Compare</a>
+      <a class="tool">Yield</a>
+      <a class="tool">Fit</a>
+      <a class="tool">REITs</a>
+    </div>
+  </nav>
+  <div class="label-row">Hero (home page only)</div>
+  <div class="hero">
+    <div class="hero-title">Global Real Estate Intelligence</div>
+    <span class="hero-eyebrow">· 18 markets · 81 cities</span>
+    <div class="toolset">
+      <a class="tool-h"><div class="tool-h-title">Entry Timing</div><div class="tool-h-zh">進場時機</div><div class="tool-h-line"></div><div class="tool-h-sub">12 markets · buy/watch</div></a>
+      <a class="tool-h"><div class="tool-h-title">Stress Test</div><div class="tool-h-zh">壓力測試</div><div class="tool-h-line"></div><div class="tool-h-sub">Rate / Rent / FX</div></a>
+      <a class="tool-h"><div class="tool-h-title">Buy vs Rent</div><div class="tool-h-zh">買 vs 租</div><div class="tool-h-line"></div><div class="tool-h-sub">break-even year</div></a>
+    </div>
+  </div>
+  <p class="note">優：navbar 最乾淨。缺：8 項全純字差異性低，掃讀稍慢。</p>
+</div>
+
+<!-- B -->
+<h2>B. Letter Monogram / 字母方塊 <small>Vercel 風格</small></h2>
+<div class="B">
+  <div class="label-row">Navbar</div>
+  <nav class="nav">
+    <span class="logo">PROPERTY<span class="dot">·</span>MONITOR</span>
+    <div class="tools">
+      <a class="tool on">Home</a>
+      <a class="tool"><span class="badge b-T">T</span>Timing</a>
+      <a class="tool"><span class="badge b-S">S</span>Stress</a>
+      <a class="tool"><span class="badge b-B">B</span>Buy/Rent</a>
+      <a class="tool"><span class="badge b-C">$</span>Cost</a>
+      <a class="tool"><span class="badge b-O">C</span>Compare</a>
+      <a class="tool"><span class="badge b-Y">Y</span>Yield</a>
+      <a class="tool"><span class="badge b-F">F</span>Fit</a>
+      <a class="tool"><span class="badge b-R">R</span>REITs</a>
+    </div>
+  </nav>
+  <div class="label-row">Hero</div>
+  <div class="hero">
+    <div class="hero-title">Global Real Estate Intelligence</div>
+    <span class="hero-eyebrow">· 18 markets · 81 cities</span>
+    <div class="toolset">
+      <a class="tool-h"><div class="badge-h b-T">T</div><div><div class="tool-h-title">Entry Timing</div><div class="tool-h-sub">進場時機</div></div></a>
+      <a class="tool-h"><div class="badge-h b-S">S</div><div><div class="tool-h-title">Stress Test</div><div class="tool-h-sub">壓力測試</div></div></a>
+      <a class="tool-h"><div class="badge-h b-B">B</div><div><div class="tool-h-title">Buy vs Rent</div><div class="tool-h-sub">買 vs 租</div></div></a>
+    </div>
+  </div>
+  <p class="note">優：每工具有顏色記憶（綠 T = Timing、橘 S = Stress…）。缺：navbar 9 個方塊稍擠。</p>
+</div>
+
+<!-- C -->
+<h2>C. SVG Line Icons / 線條圖示 <small>Stripe / Notion 風格</small></h2>
+<div class="C">
+  <div class="label-row">Navbar</div>
+  <nav class="nav">
+    <span class="logo">PROPERTY<span class="dot">·</span>MONITOR</span>
+    <div class="tools">
+      <a class="tool on">Home</a>
+      <a class="tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg>Timing</a>
+      <a class="tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13,2 4,14 11,14 11,22 20,10 13,10"/></svg>Stress</a>
+      <a class="tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h13l-3-3M21 17H8l3 3"/></svg>Buy/Rent</a>
+      <a class="tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9h5a2 2 0 010 4h-4a2 2 0 000 4h6"/></svg>Cost</a>
+      <a class="tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>Compare</a>
+      <a class="tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/></svg>Yield</a>
+      <a class="tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>Fit</a>
+      <a class="tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10l9-7 9 7v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10z"/></svg>REITs</a>
+    </div>
+  </nav>
+  <div class="label-row">Hero</div>
+  <div class="hero">
+    <div class="hero-title">Global Real Estate Intelligence</div>
+    <span class="hero-eyebrow">· 18 markets · 81 cities</span>
+    <div class="toolset">
+      <a class="tool-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg><div><div class="tool-h-title">Entry Timing</div><div class="tool-h-sub">12 markets · 進場時機</div></div></a>
+      <a class="tool-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="13,2 4,14 11,14 11,22 20,10 13,10"/></svg><div><div class="tool-h-title">Stress Test</div><div class="tool-h-sub">Rate / Rent / FX</div></div></a>
+      <a class="tool-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h13l-3-3M21 17H8l3 3"/></svg><div><div class="tool-h-title">Buy vs Rent</div><div class="tool-h-sub">12 markets · break-even</div></div></a>
+    </div>
+  </div>
+  <p class="note">優：最專業、跨系統一致渲染。缺：要設計 8 個 icon（已示意，可再調整）。</p>
+</div>
+
+<!-- D -->
+<h2>D. Number Serial / 數字序號 <small>編輯雜誌風</small></h2>
+<div class="D">
+  <div class="label-row">Navbar</div>
+  <nav class="nav">
+    <span class="logo">PROPERTY<span class="dot">·</span>MONITOR</span>
+    <div class="tools">
+      <a class="tool on">Home</a>
+      <a class="tool"><span class="num">01</span>Timing</a>
+      <a class="tool"><span class="num">02</span>Stress</a>
+      <a class="tool"><span class="num">03</span>Buy/Rent</a>
+      <a class="tool"><span class="num">04</span>Cost</a>
+      <a class="tool"><span class="num">05</span>Compare</a>
+      <a class="tool"><span class="num">06</span>Yield</a>
+      <a class="tool"><span class="num">07</span>Fit</a>
+      <a class="tool"><span class="num">08</span>REITs</a>
+    </div>
+  </nav>
+  <div class="label-row">Hero</div>
+  <div class="hero">
+    <div class="hero-title">Global Real Estate Intelligence</div>
+    <span class="hero-eyebrow">· 18 markets · 81 cities</span>
+    <div class="toolset">
+      <a class="tool-h"><div class="num-h">01</div><div class="tool-h-title">Entry Timing</div><div class="tool-h-zh">進場時機</div></a>
+      <a class="tool-h"><div class="num-h">02</div><div class="tool-h-title">Stress Test</div><div class="tool-h-zh">壓力測試</div></a>
+      <a class="tool-h"><div class="num-h">03</div><div class="tool-h-title">Buy vs Rent</div><div class="tool-h-zh">買 vs 租</div></a>
+    </div>
+  </div>
+  <p class="note">優：質感獨特、像精品雜誌。缺：序號抽象，使用者要記「02 是哪個」。</p>
+</div>
+
+<!-- E -->
+<h2>E. Color Dot / 色點 <small>輕量但可辨識</small></h2>
+<div class="E">
+  <div class="label-row">Navbar</div>
+  <nav class="nav">
+    <span class="logo">PROPERTY<span class="dot">·</span>MONITOR</span>
+    <div class="tools">
+      <a class="tool on">Home</a>
+      <a class="tool"><span class="dot e-1"></span>Timing</a>
+      <a class="tool"><span class="dot e-2"></span>Stress</a>
+      <a class="tool"><span class="dot e-3"></span>Buy/Rent</a>
+      <a class="tool"><span class="dot e-4"></span>Cost</a>
+      <a class="tool"><span class="dot e-5"></span>Compare</a>
+      <a class="tool"><span class="dot e-6"></span>Yield</a>
+      <a class="tool"><span class="dot e-7"></span>Fit</a>
+      <a class="tool"><span class="dot e-8"></span>REITs</a>
+    </div>
+  </nav>
+  <div class="label-row">Hero</div>
+  <div class="hero">
+    <div class="hero-title">Global Real Estate Intelligence</div>
+    <span class="hero-eyebrow">· 18 markets · 81 cities</span>
+    <div class="toolset">
+      <a class="tool-h h1"><div class="tool-h-title">Entry Timing</div><div class="tool-h-zh">進場時機</div></a>
+      <a class="tool-h h2"><div class="tool-h-title">Stress Test</div><div class="tool-h-zh">壓力測試</div></a>
+      <a class="tool-h h3"><div class="tool-h-title">Buy vs Rent</div><div class="tool-h-zh">買 vs 租</div></a>
+    </div>
+  </div>
+  <p class="note">優：navbar 最節省空間（小色點）；hero 用 left border 跟 markets 卡呼應。缺：色點要記憶哪色對應哪工具。</p>
+</div>
+
+</body>
+</html>
