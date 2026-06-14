@@ -1,12 +1,10 @@
 # Site collapsed to: /kl-check (home) + /my/report + /my/macro + /kl/ scorecards.
+# NOTE: Cloudflare Pages evaluates _redirects BEFORE serving static assets, so a
+# blanket /* rule would loop /kl-check and swallow every survivor. Do NOT add /*.
+# Unmatched/old URLs are handled by /404.html (client-side redirect to /kl-check).
+
 # Surviving legacy aliases (targets still exist):
 /report           /my/report         301
 /report.html      /my/report.html    301
 /macro            /my/macro          301
 /macro.html       /my/macro.html     301
-
-# Everything else (archived pages, removed markets, old deep URLs) → home.
-# Cloudflare serves existing static assets before applying redirects, so the
-# survivors above and /kl-check, /my/report, /my/macro, /kl/SC_*.html serve 200;
-# only missing/archived paths fall through to this catch-all.
-/*                /kl-check          301
