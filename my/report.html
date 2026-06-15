@@ -82,6 +82,18 @@
     .fig-note.good{background:#eafaef;border-left-color:var(--t1)}
     .fig-note.good strong{color:var(--t1)}
     body.zh .fig-title{font-family:'Noto Serif TC','Playfair Display',serif}
+    /* scenario cards (contrarian section) */
+    .scen{display:flex;flex-direction:column;gap:10px;margin:22px 0 8px}
+    .scen-row{border:1px solid var(--border);border-left:3px solid var(--navy);border-radius:12px;padding:13px 16px;background:linear-gradient(135deg,#fff,#fbf6e8);box-shadow:var(--shadow-sm)}
+    .scen-row.c{border-left-color:var(--t5)}
+    .scen-row.d{border-left-color:var(--gold-deep)}
+    .scen-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:5px}
+    .scen-t{font-family:'Playfair Display','Noto Serif TC',serif;font-size:14.5px;font-weight:600;color:var(--navy)}
+    .scen-pct{font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--navy);white-space:nowrap}
+    .scen-row.c .scen-pct{color:var(--t5)}
+    .scen-row.d .scen-pct{color:var(--gold-deep)}
+    .scen-row p{font-family:Inter,'Noto Sans TC',sans-serif;font-size:12.5px;line-height:1.65;color:var(--text-soft);margin:0}
+    .scen-row p strong{font-family:Inter,'Noto Sans TC',sans-serif;background:none;color:var(--navy);font-size:12.5px;padding:0;font-weight:700}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
@@ -118,6 +130,7 @@
       <a href="#sec-jb" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Johor Bahru</span><span class="side-nav-label lang-zh" style="display:none">新山</span></a>
       <a href="#sec-national" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">National</span><span class="side-nav-label lang-zh" style="display:none">全國圖景</span></a>
       <a href="#sec-infra" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Infrastructure</span><span class="side-nav-label lang-zh" style="display:none">基礎建設</span></a>
+      <a href="#sec-bear" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Bear case</span><span class="side-nav-label lang-zh" style="display:none">反向情境</span></a>
       <a href="#sec-outlook" class="side-nav-item"><span class="side-nav-dot"></span><span class="side-nav-label lang-en">Outlook</span><span class="side-nav-label lang-zh" style="display:none">展望</span></a>
     </nav>
     <div class="report-header">
@@ -149,7 +162,8 @@
           <a href="#sec-jb" onclick="closeTocOnMobile()"><span class="lang-en">8. Johor Bahru</span><span class="lang-zh" style="display:none">8. 新山</span></a>
           <a href="#sec-national" onclick="closeTocOnMobile()"><span class="lang-en">9. National Overhang Picture</span><span class="lang-zh" style="display:none">9. 全馬餘屋圖景</span></a>
           <a href="#sec-infra" onclick="closeTocOnMobile()"><span class="lang-en">10. Infrastructure Catalysts</span><span class="lang-zh" style="display:none">10. 基礎建設催化劑</span></a>
-          <a href="#sec-outlook" onclick="closeTocOnMobile()"><span class="lang-en">11. Outlook &amp; Key Risks</span><span class="lang-zh" style="display:none">11. 展望與主要風險</span></a>
+          <a href="#sec-bear" onclick="closeTocOnMobile()"><span class="lang-en">11. What Could Break This Thesis</span><span class="lang-zh" style="display:none">11. 空方與反向情境</span></a>
+          <a href="#sec-outlook" onclick="closeTocOnMobile()"><span class="lang-en">12. Outlook &amp; Key Risks</span><span class="lang-zh" style="display:none">12. 展望與主要風險</span></a>
         </div>
       </div>
 
@@ -698,8 +712,58 @@
         <p><strong>MRT3 環線</strong>（2025 核准、2030 至 2031 完工）是吉隆坡下一個地段溢價催化劑，而且有前例撐腰：MRT1、MRT2 都在時間表一確定，就把站點周邊房價往上抬了一截。<strong>資料中心與 FDI 浪潮</strong>——微軟 22 億美元（含柔佛新雲端區）、谷歌 20 億美元——則是結構上最耐久的一條，因為它創造的高薪就業，跟住宅循環根本不掛鉤；2025 年工業地產成交值就因此年增 <strong>21.3%</strong>。投資上怎麼解讀？基建不會直接救供過於求的產品——一棟挨著未來 MRT 站的空置服務式公寓，今天照樣是空的——但它會把周邊的土地、地段好的物件重新估值，這也是為什麼「離已確定的路線近不近」，如今是第一道篩選關卡，而不只是加分項。</p>
       </div>
 
-      <!-- ════════════ 11. OUTLOOK ════════════ -->
-      <h2 id="sec-outlook"><span class="sec-no">11</span><span class="lang-en">OUTLOOK &amp; KEY RISKS</span><span class="lang-zh" style="display:none">展望與主要風險</span></h2>
+      <!-- ════════════ 11. CONTRARIAN ════════════ -->
+      <h2 id="sec-bear"><span class="sec-no">11</span><span class="lang-en">WHAT COULD BREAK THIS THESIS</span><span class="lang-zh" style="display:none">空方與反向情境：什麼會推翻這套論點</span></h2>
+
+      <div class="lang-en">
+        <p>Everything to this point is, in effect, the consensus read — and an honest forecast has to stress-test itself. So this section argues the other side: the forces most likely to break the thesis, and what the latest data says about which path the market is actually on.</p>
+        <p>Four of the report's load-bearing claims are more fragile than they look. First, the completion wave is not truly &ldquo;locked in&rdquo;: Malaysian developers routinely slow construction and stagger VP/CCC issuance to avoid feeding the overhang, so the 2026&ndash;2028 wall may be stretched and softened rather than dumped. Second, the headline +2.44-point carry is a gross, blended figure — net of service charges, SA utilities at four-to-six times residential, vacancy and the 8% entry duty, the high-rise/SA product that dominates supply nets closer to <strong>2&ndash;3%</strong>, barely above the 2.75% OPR. Third, &ldquo;buy landed&rdquo; is the most crowded trade in the country; the mispricing may now sit in the beaten-down prime high-rise everyone avoids, while the landed premium itself is where late-cycle risk has quietly accumulated. Fourth, sticky prices comfort only until holding costs rise: a sustained rate move or a refinancing event at a mid-sized developer could crack the &ldquo;hold-don't-discount&rdquo; equilibrium into the first real high-rise price declines in a decade.</p>
+        <p>The single weakest link is Johor. The claim that the RTS converts empty serviced-apartment stock into occupied homes runs into arithmetic — ~10,000 passengers per hour per direction cannot absorb a <strong>9,477-unit</strong> glut plus pipeline — and into behaviour: cross-border commuters are far likelier to rent than buy, so the link lifts rents and occupancy without necessarily clearing developer inventory, exactly as Forest City warned. Penang's &ldquo;structural&rdquo; demand anchor, meanwhile, is a leveraged bet on a cyclical, geopolitically-exposed industry whose automation converts each ringgit of investment into fewer housing buyers than the last cycle did. The one reversal that cuts the other way is the ringgit: a genuinely weak MYR would make Malaysian property cheap enough for foreigners to swamp the 8% duty — a bull tail the base thesis omits.</p>
+      </div>
+      <div class="lang-zh" style="display:none">
+        <p>到這裡為止的判斷，其實也就是市場共識——而一份誠實的預測，必須先壓力測試自己。所以這一節專講反方：最可能推翻前述論點的力量，以及最新數據告訴我們，市場現在到底走在哪一條路上。</p>
+        <p>報告有四根承重的論點，其實比看起來脆弱。其一，完工潮並非真的「鎖死」：馬來西亞建商很習慣放慢工程、分期請領 VP／CCC，刻意不去餵養餘屋，所以 2026 至 2028 那道牆很可能被攤平、拉長，而不是一次砸下。其二，那個 +2.44 個百分點的利差是「毛的、混合的」——扣掉管理費、服務式公寓 4 至 6 倍的水電、空置與 8% 入場稅，真正主導供給的高層／服務式公寓，淨收益其實只貼近 <strong>2% 至 3%</strong>，只比 2.75% 的 OPR 高一點點。其三，「買有地」是全國最擁擠的交易；錯價如今可能反而藏在人人迴避、被打趴的精華高層，而有地的溢價本身，才是這輪後段悄悄累積風險的地方。其四，價格僵固只在持有成本不漲時才是安慰：一旦升息持續、或某家中型建商爆出再融資問題，「寧囤不降」的均衡就可能裂開，出現十年來第一次高層實質降價。</p>
+        <p>最弱的一環是柔佛。「RTS 把空置服務式公寓變成入住住宅」這個說法，先卡在算術（單向每小時約 1 萬人，吃不下 <strong>9,477 戶</strong>餘屋加上後面的在建），再卡在行為：跨境通勤族遠比想像中更傾向租、而不是買，所以這條線會拉高租金與入住率，卻不一定清掉建商的庫存——森林城市早就示範過。檳城那個「結構性」需求錨，則是押在一個景氣循環、又高度地緣曝險的產業上，而它的自動化讓每一塊投資換到的購屋人口，一輪比一輪少。唯一往反方向走的反轉，是令吉：真正的弱令吉會讓馬來西亞房產便宜到外資足以淹過 8% 印花稅，這是基本論點漏掉的一條多頭尾巴。</p>
+      </div>
+
+      <div class="lang-en">
+        <p>What does the live data say? As of mid-2026 the market is tracking the slow-grind path, not yet a tail. The OPR is held at <strong>2.75%</strong>, the ringgit is firm at <strong>~RM4.06/USD</strong> (so the foreign-demand tail D is dormant), and developers are still sitting on stock rather than discounting — the sticky equilibrium is intact. But the stress is visible underneath: REHDA's H2 2025 take-up collapsed from <strong>38% to 21%</strong>, <strong>72%</strong> of buyers still cannot secure financing, and inflation edging toward 1.5&ndash;2.5% on Middle-East oil keeps a 25bp hike — the trigger for path C — firmly on the table. Offsetting it, Greater KL still absorbs <strong>100,000&ndash;150,000</strong> net migrants a year and KL rents are rising. Net read: A grinding toward B, with C the rising tail to watch (oil &rarr; hike &rarr; developer refinancing) and D dormant unless the ringgit breaks.</p>
+      </div>
+      <div class="lang-zh" style="display:none">
+        <p>那最新數據怎麼說？到 2026 年年中，市場走的是「慢 grind」這條路，還沒進尾巴。OPR 維持 <strong>2.75%</strong>，令吉在 <strong>~RM4.06／美元</strong>偏穩（所以外資尾巴 D 休眠），建商也還在抱貨、不肯降價——僵固的均衡完好。但底下的壓力看得見：REHDA 2025 下半年去化從 <strong>38% 崩到 21%</strong>、<strong>72%</strong> 買家仍貸不到款，加上通膨在中東油價下升向 1.5% 至 2.5%，讓 25 個基點的升息（也就是 C 路徑的引信）一直擺在桌上。抵銷它的，是大吉隆坡每年仍淨移入 <strong>10 萬至 15 萬人</strong>、KL 租金在漲。綜合判讀：A 正往 B 靠，C 是正在升溫、最該盯的尾巴（油價 &rarr; 升息 &rarr; 建商再融資），D 則在令吉走弱前都休眠。</p>
+      </div>
+
+      <figure class="fig">
+        <div class="fig-head">
+          <div class="fig-kicker"><span class="lang-en">Exhibit 23 · Contrarian view</span><span class="lang-zh" style="display:none">圖 23 · 反向情境</span></div>
+          <div class="fig-title"><span class="lang-en">Four paths, fatter tails than the house view</span><span class="lang-zh" style="display:none">四條路徑：尾巴比官方版更肥</span></div>
+          <div class="fig-sub"><span class="lang-en">Probability · contrarian re-weighting · Source: author</span><span class="lang-zh" style="display:none">機率 · 反向重新加權 · 來源：作者</span></div>
+        </div>
+        <div class="fig-chart"><div id="cScenario" style="height:200px"></div></div>
+        <div class="fig-note"><span class="lang-en">Against the report's 50/25/25 base/bull/bear, the contrarian read fattens both tails: a live rate/credit risk (C) the house view underweights, and a dormant ringgit-driven upside (D) it omits entirely.</span><span class="lang-zh" style="display:none">相對報告的 50／25／25 基本／樂觀／悲觀，反向版把兩條尾巴都加肥：一條是官方版低估、且正在升溫的利率信貸風險（C），一條是它完全略過、目前休眠的弱令吉上行（D）。</span></div>
+      </figure>
+
+      <div class="scen">
+        <div class="scen-row">
+          <div class="scen-h"><span class="scen-t"><span class="lang-en">A · Slow grind (Japanification-lite)</span><span class="lang-zh" style="display:none">A · 慢性停滯（日本化 lite）</span></span><span class="scen-pct">~45%</span></div>
+          <p><span class="lang-en">Prices freeze, the overhang drains over 5&ndash;7 years, real returns stay thin; landed and income product are fine, high-rise speculation is dead money. <strong>vs report:</strong> ≈ its base case, but I stress this is a lost decade for high-rise holders, not a neutral outcome.</span><span class="lang-zh" style="display:none">價格凍住，餘屋花 5 至 7 年慢慢消，實質報酬很薄；有地與收租型還行，高層投機＝死錢。<strong>與報告差異：</strong>≈ 它的基本情境，但我強調這對高層持有者是「失落的十年」，不是中性結果。</span></p>
+        </div>
+        <div class="scen-row">
+          <div class="scen-h"><span class="scen-t"><span class="lang-en">B · The K-shape widens</span><span class="lang-zh" style="display:none">B · K 型分化擴大</span></span><span class="scen-pct">~25%</span></div>
+          <p><span class="lang-en">RTS lifts rents not prices, Penang E&amp;E holds, KL prime/landed appreciates; high-rise/SA stays stuck. <strong>vs report:</strong> the report's bullish version — I am neutral: winners win, losers are long-term dead money.</span><span class="lang-zh" style="display:none">RTS 撐租金不撐價、檳城電子業撐住、KL 精華／有地漲；高層／服務式公寓持續卡死。<strong>與報告差異：</strong>報告偏多頭版，我偏中性——贏家贏、輸家是長期死錢。</span></p>
+        </div>
+        <div class="scen-row c">
+          <div class="scen-h"><span class="scen-t"><span class="lang-en">C · Rate/credit shock cracks the stickiness</span><span class="lang-zh" style="display:none">C · 利率／信貸戳破僵固</span></span><span class="scen-pct">~20%</span></div>
+          <p><span class="lang-en">Oil/geopolitics push inflation up &rarr; BNM hikes &rarr; developer refinancing stress &rarr; a mid-sized developer event triggers discounting &rarr; the first real high-rise price falls in a decade. <strong>vs report:</strong> the house view all but ignores this tail — my biggest divergence.</span><span class="lang-zh" style="display:none">油價／地緣推升通膨 &rarr; BNM 升息 &rarr; 建商再融資壓力 &rarr; 某中型建商出事、引發降價 &rarr; 十年來第一次高層實質降價。<strong>與報告差異：</strong>官方版幾乎忽略這條尾巴，這是我最大的分歧。</span></p>
+        </div>
+        <div class="scen-row d">
+          <div class="scen-h"><span class="scen-t"><span class="lang-en">D · Contrarian bull: foreign demand returns</span><span class="lang-zh" style="display:none">D · 反向多頭：外資回流</span></span><span class="scen-pct">~10%</span></div>
+          <p><span class="lang-en">A genuinely weak ringgit + SEZ traction + capital fleeing pricey Singapore/Hong Kong &rarr; foreigners shrug off the 8% duty, and the beaten-down prime SA everyone is short snaps back. <strong>vs report:</strong> absent from the report entirely.</span><span class="lang-zh" style="display:none">真正的弱令吉＋SEZ 見效＋區域資金逃離貴森森的星港 &rarr; 外資無視 8% 稅回流，被打趴、人人看空的精華服務式公寓急彈。<strong>與報告差異：</strong>報告完全沒有這一條。</span></p>
+        </div>
+      </div>
+
+      <!-- ════════════ 12. OUTLOOK ════════════ -->
+      <h2 id="sec-outlook"><span class="sec-no">12</span><span class="lang-en">OUTLOOK &amp; KEY RISKS</span><span class="lang-zh" style="display:none">展望與主要風險</span></h2>
 
       <div class="lang-en">
         <p>The national overhang path through 2029 is the product of one fixed input and three moving ones. The fixed input is the completion curve: it is already poured in concrete by the 2024&ndash;2025 starts and cannot be changed by any decision taken now. The three moving inputs are all on the demand side, on different clocks. <strong>RTS commissioning</strong> is the fastest — every month of on-time progress releases pent-up Singapore-linked demand into Johor; every month of delay subtracts it. The <strong>JS-SEZ employment ramp</strong> works on an 18&ndash;36-month lag and determines whether the 2027&ndash;2028 Johor completion peak meets genuine resident demand or simply adds to overhang. The <strong>KL SA planned-pipeline decision</strong> is the longest-dated but the largest single swing factor — a binary policy switch on a planned-SA queue that stood at 8,340 units at end-2025 and had already grown to 10,189 by 1Q2026. Layered across all three is the 2026 demand headwind of the 8% foreign stamp duty, which bites the exact SA/luxury buyer pool the overhang depends on to clear.</p>
@@ -709,17 +773,17 @@
       </div>
 
       <div class="lang-en">
-        <p>Translating those inputs into a forecast gives three scenarios. The <strong>base case (50%)</strong> chains as follows: the UC pipeline completes through 2026&ndash;2027, launches stay disciplined, RTS commissions roughly on time, and the KL NC pipeline is deferred rather than approved — residential overhang plateaus near <strong>31,000&ndash;33,000 units</strong> through 2026 before declining toward <strong>18,000</strong> by 2029, while SA overhang stays above 17,000 through 2027 then eases toward 11,000. The <strong>bull case (25%)</strong> requires RTS on time, JS-SEZ above RM50 billion of deployed investment and stable rates; that combination drives overhang toward <strong>10,000 residential and 6,500 SA</strong> by 2029. The <strong>bear case (25%)</strong> chains the failures together — RTS slips past 2027, the KL NC pipeline is approved, and the 8% duty plus a global risk-off chill foreign demand — pushing residential overhang to <strong>38,000&ndash;40,000</strong> by 2028 and SA toward <strong>25,000</strong>.</p>
+        <p>Translating those inputs into a forecast gives three scenarios. The <strong>base case (50%)</strong> chains as follows: the UC pipeline completes through 2026&ndash;2027, launches stay disciplined, RTS commissions roughly on time, and the KL NC pipeline is deferred rather than approved — residential overhang plateaus near <strong>31,000&ndash;33,000 units</strong> through 2026 before declining toward <strong>18,000</strong> by 2029, while SA overhang stays above 17,000 through 2027 then eases toward 11,000. The <strong>bull case (25%)</strong> requires RTS on time, JS-SEZ above RM50 billion of deployed investment and stable rates — and a weak ringgit pulling foreign buyers back despite the 8% duty would reinforce it; that combination drives overhang toward <strong>10,000 residential and 6,500 SA</strong> by 2029. The <strong>bear case (25%)</strong> chains the failures together — RTS slips past 2027, the KL NC pipeline is approved, an oil-driven OPR hike squeezes developer refinancing, and the 8% duty plus a global risk-off chill foreign demand — pushing residential overhang to <strong>38,000&ndash;40,000</strong> by 2028 and SA toward <strong>25,000</strong>.</p>
         <p>The single most useful thing an investor can do is stop forecasting price and start watching the demand trend — and watch it properly, not as a single round number. Because Malaysian prices are sticky, they are a lagging, noisy signal; the leading indicator is transaction volume. The trap is to fixate on an absolute quarterly floor: all-sector volume normally runs in a <strong>90,000&ndash;110,000</strong> band each quarter (Q3 2025 was 108,250), and the first quarter is always the seasonal low, so a print near 90k is ordinary, not a regime break. The signals that actually matter are directional: residential year-on-year volume turning negative for two-to-three consecutive quarters, and the trailing-twelve-month total slipping well below 2025's ~416,000. On that test 1Q2026 is a yellow flag, not a red one — all-sector transactions came in at <strong>89,966</strong> (RM51.9 billion), down 8% year-on-year and below even 2025's weakest quarter, but it is one seasonally-soft quarter and it bundles in commercial and land deals, not just the residential demand this report tracks. Conversely, residential volume holding its year-ago level through the 2026&ndash;2027 completion peak would confirm the base-to-bull path, in which the wave is absorbed and the cycle turns by 2028. Underwrite the product, not the average; favour landed and confirmed-transit-adjacent stock; and let the trend in the quarterly residential print, not a single headline number, tell you which scenario is unfolding.</p>
       </div>
       <div class="lang-zh" style="display:none">
-        <p>把這些變數轉成預測，會跑出三種劇本。<strong>基本情境（50%）</strong>這樣串起來：在建供給在 2026 至 2027 陸續完工、推案維持紀律、RTS 大致準時通車、吉隆坡 NC 供給線延後而非放行——住宅餘屋 2026 年在 <strong>31,000 至 33,000 戶</strong>築頂打平，到 2029 年降向 <strong>18,000</strong>，服務式公寓餘屋 2027 年前守在 17,000 以上，之後慢慢降到約 11,000。<strong>樂觀情境（25%）</strong>的要件比較苛：RTS 準時、JS-SEZ 落地投資突破 RM500 億、利率又穩；這套組合能把 2029 年的餘屋壓到 <strong>住宅 10,000、服務式公寓 6,500</strong>。<strong>悲觀情境（25%）</strong>則是壞事湊一起——RTS 拖過 2027 年、吉隆坡 NC 供給線放行、8% 稅再加上全球避險把外籍需求凍住——住宅餘屋 2028 年衝到 <strong>38,000 至 40,000</strong>、服務式公寓逼近 <strong>25,000</strong>。</p>
+        <p>把這些變數轉成預測，會跑出三種劇本。<strong>基本情境（50%）</strong>這樣串起來：在建供給在 2026 至 2027 陸續完工、推案維持紀律、RTS 大致準時通車、吉隆坡 NC 供給線延後而非放行——住宅餘屋 2026 年在 <strong>31,000 至 33,000 戶</strong>築頂打平，到 2029 年降向 <strong>18,000</strong>，服務式公寓餘屋 2027 年前守在 17,000 以上，之後慢慢降到約 11,000。<strong>樂觀情境（25%）</strong>的要件比較苛：RTS 準時、JS-SEZ 落地投資突破 RM500 億、利率又穩——若再加上弱令吉把外資買盤拉回來、蓋過 8% 印花稅，會更強化；這套組合能把 2029 年的餘屋壓到 <strong>住宅 10,000、服務式公寓 6,500</strong>。<strong>悲觀情境（25%）</strong>則是壞事湊一起——RTS 拖過 2027 年、吉隆坡 NC 供給線放行、油價推動 OPR 升息掐住建商再融資、再加上 8% 稅與全球避險把外籍需求凍住——住宅餘屋 2028 年衝到 <strong>38,000 至 40,000</strong>、服務式公寓逼近 <strong>25,000</strong>。</p>
         <p>投資人最該做的一件事，是別再去猜價格，改盯需求的「趨勢」；而且要盯對方法，不是盯著一個整數關卡。馬來西亞房價太僵，本來就是個又慢又吵的訊號，真正的領先指標是成交量。陷阱在於死守某個絕對門檻：全行業季成交本來就在每季 <strong>9 萬至 11 萬件</strong>之間跑（2025 年第三季是 108,250 件），加上第一季永遠是季節低點，所以單季靠近 9 萬其實很正常，並不是結構轉折。真正有意義的是「方向」：住宅成交量的同季年增率連續兩到三季轉負，以及滾動四季總量明顯跌破 2025 年的約 41.6 萬件。用這把尺看，2026 年第一季是黃燈、不是紅燈：全行業成交 <strong>89,966 件</strong>（RM519 億）、年減 8%，還低於 2025 年最淡的一季，確實值得留意，但它只是季節偏弱的一季，而且把商業與土地交易也算了進去，並非本報告真正在追的住宅需求。反過來，只要住宅成交量能在 2026 至 2027 完工高峰那段守住去年水準，走的就是基本到樂觀那條路，供給被吸收、循環在 2028 年翻身。看產品、別看平均值；有地與已確定捷運旁的物件優先；讓「季度住宅成交的趨勢」、而不是某個表面數字，告訴你正在演哪一齣。</p>
       </div>
 
       <figure class="fig">
         <div class="fig-head">
-          <div class="fig-kicker"><span class="lang-en">Exhibit 23 · Outlook</span><span class="lang-zh" style="display:none">圖 23 · 展望</span></div>
+          <div class="fig-kicker"><span class="lang-en">Exhibit 24 · Outlook</span><span class="lang-zh" style="display:none">圖 24 · 展望</span></div>
           <div class="fig-title"><span class="lang-en">National overhang forecast, 2025&ndash;2029E</span><span class="lang-zh" style="display:none">全國餘屋預測 2025&ndash;2029E</span></div>
           <div class="fig-sub"><span class="lang-en">Residential units · three scenarios · Source: NAPIC + research model</span><span class="lang-zh" style="display:none">住宅戶數 · 三情境 · 來源：NAPIC＋研究模型</span></div>
         </div>
@@ -1021,6 +1085,22 @@
     })();
 
     /* 16 · National overhang 3-scenario forecast */
+    /* 23 · contrarian scenario probabilities */
+    (function(){ var c=mk('cScenario'); if(!c) return;
+      var cats=[L('A · Slow grind','A · 慢性停滯'),L('B · K-shape widens','B · K 型分化'),L('C · Rate/credit shock','C · 利率信貸衝擊'),L('D · Foreign demand returns','D · 外資回流')];
+      var v=[45,25,20,10];
+      var cols=[lg(C.navyMid,C.navy),lg(C.navyMid,C.navy),lg('#d66b5e','#b91c1c'),lg(C.goldHi,C.gold)];
+      var rc=cols.slice().reverse(), rv=v.slice().reverse();
+      c.setOption({
+        tooltip:Object.assign({},baseTip,{trigger:'item',valueFormatter:function(x){return x+'%';}}),
+        grid:{left:8,right:48,top:10,bottom:6,containLabel:true},
+        xAxis:valAxis({axisLabel:ax({formatter:'{value}%'}),max:50}),
+        yAxis:catAxis(cats.slice().reverse(),{axisLabel:ax({fontSize:10})}),
+        series:[{type:'bar',data:rv.map(function(x,i){return {value:x,itemStyle:{color:rc[i],borderRadius:[0,5,5,0]}};}),barMaxWidth:22,
+          label:{show:true,position:'right',color:C.navy,fontFamily:FONT,fontSize:11,fontWeight:600,formatter:'{c}%'}}]
+      });
+    })();
+
     (function(){ var c=mk('cForecast'); if(!c) return;
       var yr=['2025','2026E','2027E','2028E','2029E'];
       var base=[30471,32000,29000,23000,18000];
