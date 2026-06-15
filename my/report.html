@@ -373,6 +373,16 @@
         <p>這就是為什麼餘屋的需求面是結構性的，不只是景氣性的：那個製造不出高收入的勞動市場，正是那個製造不出廣大有殼族的勞動市場，而 2.75% 的 OPR，主要幫得到的是本來就過得了關的買家。完整的機制——產業結構、薪資、分配與人口結構如何咬合成一個被封頂、又頭重腳輕的需求基座——寫在另一篇<a href="/my/macro" style="color:var(--gold-deep);font-weight:600">總經 × 房產</a>分析裡；本報告把它當成底下這一切的地板。</p>
       </div>
 
+      <figure class="fig">
+        <div class="fig-head">
+          <div class="fig-kicker"><span class="lang-en">Exhibit 8b · Demand · 18-year history</span><span class="lang-zh" style="display:none">圖 8b · 需求 · 18 年歷史</span></div>
+          <div class="fig-title"><span class="lang-en">The leverage ceiling: household debt to GDP</span><span class="lang-zh" style="display:none">槓桿天花板：家庭債務佔 GDP</span></div>
+          <div class="fig-sub"><span class="lang-en">% of GDP · 2008–2025 · Source: BNM</span><span class="lang-zh" style="display:none">佔 GDP % · 2008–2025 · 來源：BNM</span></div>
+        </div>
+        <div class="fig-chart"><div id="cHHDebt" style="height:240px"></div></div>
+        <div class="fig-note warn"><span class="lang-en">Household debt nearly <strong>doubled</strong> from ~60% of GDP in 2008 to a COVID peak of <strong>93.2%</strong>, easing to <strong>84.8%</strong> — among the highest in ASEAN. That standing leverage is the binding constraint behind the credit filter: it leaves banks little room to approve the marginal buyer, which is why even genuine intent fails to convert above RM500k.</span><span class="lang-zh" style="display:none">家庭債務從 2008 年約佔 GDP 60%，幾乎<strong>翻倍</strong>到疫情高峰的 <strong>93.2%</strong>，之後回落到 <strong>84.8%</strong>——仍是東協數一數二高。這個既有的槓桿，正是貸款篩選器背後的硬限制：銀行幾乎沒有空間再核准邊際買家，這也是為什麼 RM50 萬以上即便有真實買意，也成交不了。</span></div>
+      </figure>
+
       <div class="lang-en">
         <p>Policy has leaned against this, but at the margin. Budget 2026 doubled the SJKP mortgage-guarantee scheme to <strong>RM20 billion</strong> for about 80,000 buyers (now including gig and informal-income workers) and extended the full stamp-duty exemption on homes up to RM500k to end-2027. These widen access for the sub-RM500k buyer — useful, but aimed at exactly the segment that is <em>least</em> over-supplied. They do little for the RM500k-plus high-rise and SA inventory that constitutes the overhang. The result is a K-shaped market: genuine undersupply below RM300k where employment anchors exist; the healthiest take-up in the RM300k&ndash;500k band; and institutionally constrained demand above RM500k in high-rise formats. The secondary market's <strong>~79%</strong> share of transactions is the direct expression of buyers voting with their feet for where value, location and financing access intersect — and that intersection is rarely a new high-rise launch.</p>
       </div>
@@ -1023,6 +1033,22 @@
           {name:L('YoY %','年增率'),type:'bar',yAxisIndex:1,data:yoy,itemStyle:{color:lg('#e7d4a8','#cbb072'),borderRadius:[3,3,0,0]},barMaxWidth:24},
           {name:L('HPI (index)','房價指數'),type:'line',data:idx,smooth:true,symbol:'circle',symbolSize:4,lineStyle:{color:C.navy,width:3},itemStyle:{color:C.navy},areaStyle:{color:lg('rgba(13,34,68,.10)','rgba(13,34,68,0)')}}
         ]
+      });
+    })();
+
+    /* 8b · household debt to GDP, 2008–2025 */
+    (function(){ var c=mk('cHHDebt'); if(!c) return;
+      var yr=['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+      var v=[60.4,72.4,75.8,76.6,80.5,86.6,86.8,89.1,88.4,83.8,83.0,82.7,93.2,89.0,84.3,84.2,84.1,84.8];
+      c.setOption({
+        tooltip:Object.assign({},baseTip,{valueFormatter:function(x){return x+'%';}}),
+        grid:{left:8,right:16,top:16,bottom:6,containLabel:true},
+        xAxis:catAxis(yr,{boundaryGap:false,axisLabel:ax({fontSize:9.5,interval:2})}),
+        yAxis:valAxis({min:55,max:95,interval:10,axisLabel:ax({formatter:'{value}%'})}),
+        series:[{name:L('Household debt/GDP','家庭債務/GDP'),type:'line',data:v,smooth:true,symbol:'circle',symbolSize:4,lineStyle:{color:C.navy,width:2.6},itemStyle:{color:C.navy},
+          areaStyle:{color:lg('rgba(13,34,68,0.16)','rgba(13,34,68,0)')},
+          markPoint:{symbolSize:0,data:[{coord:['2020',93.2],value:'93.2%',label:{color:C.red,fontFamily:FONT,fontSize:10,fontWeight:700,position:'top'}}]},
+          markLine:{silent:true,symbol:'none',lineStyle:{color:C.amber,type:'dashed',width:1},label:{color:C.amber,fontFamily:FONT,fontSize:9,formatter:'85%',position:'insideEndTop'},data:[{yAxis:85}]}}]
       });
     })();
 
