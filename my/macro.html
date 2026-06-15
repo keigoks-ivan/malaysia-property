@@ -34,7 +34,8 @@
 .ev-year{font-size:10px;font-weight:700;letter-spacing:0.5px;font-family:Inter,sans-serif;margin-bottom:4px}
 .ev-title{font-size:13px;font-weight:600;color:var(--navy);font-family:Inter,sans-serif;margin-bottom:5px}
 .ev-desc{font-size:12px;color:var(--muted);line-height:1.55;font-family:Inter,sans-serif}
-body.zh .ev-desc,body.zh .ctx-sub,body.zh .chart-insight,body.zh .pivot-lede p,body.zh .narr{font-family:'Noto Sans TC',sans-serif}
+body.zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
+body.zh .ev-desc,body.zh .ctx-sub,body.zh .chart-insight,body.zh .pivot-lede p,body.zh .narr{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
 .chart-insight{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.6;font-family:Inter,sans-serif}
 .chart-insight strong{color:var(--navy)}
 .source-footer{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px}
@@ -580,7 +581,7 @@ var stInvest = [110.0,83.9,63.3,32.9,27.8];
 
 /* ---- chart infrastructure ---- */
 var C = {navy:'#0d2244',green:'#15803d',orange:'#a16207',red:'#b91c1c',blue:'#1d4ed8',muted:'#6b7a92',grid:'#ece5d4',gold:'#b8924a'};
-var baseText    = {color:C.muted,fontFamily:'Inter, sans-serif',fontSize:11};
+var baseText    = {color:C.muted,fontFamily:'Inter,"Noto Sans TC",sans-serif',fontSize:11};
 var baseTooltip = {trigger:'axis',backgroundColor:'#fff',borderColor:'#e5dfd0',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
 var baseLegend  = {top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
 function mkAxis(o){
@@ -596,21 +597,21 @@ var allCharts = [];
 /* phase overlays shared by charts 1 & 2 */
 function phaseAreas(isZh){
   return [
-    [{xAxis:'2008',itemStyle:{color:'rgba(107,114,128,0.10)'},label:{formatter:isZh?'GFC衝擊':'GFC Shock',color:'#6b7a92',fontSize:10,fontFamily:'Inter, sans-serif'}},{xAxis:'2009'}],
-    [{xAxis:'2010',itemStyle:{color:'rgba(22,163,74,0.07)'},  label:{formatter:isZh?'房產榮景':'Property Boom',color:C.green,fontSize:10,fontFamily:'Inter, sans-serif'}},{xAxis:'2014'}],
-    [{xAxis:'2015',itemStyle:{color:'rgba(217,119,6,0.07)'}, label:{formatter:isZh?'宏觀審慎冷卻':'Macro-Pru Cooling',color:C.orange,fontSize:10,fontFamily:'Inter, sans-serif'}},{xAxis:'2019'}],
-    [{xAxis:'2020',itemStyle:{color:'rgba(37,99,235,0.07)'},  label:{formatter:isZh?'COVID刺激':'COVID Stimulus',color:C.blue,fontSize:10,fontFamily:'Inter, sans-serif'}},{xAxis:'2021'}],
-    [{xAxis:'2022',itemStyle:{color:'rgba(220,38,38,0.07)'},  label:{formatter:isZh?'升息週期':'Rate Hikes',color:C.red,fontSize:10,fontFamily:'Inter, sans-serif'}},{xAxis:'2023'}],
-    [{xAxis:'2024',itemStyle:{color:'rgba(13,34,68,0.07)'},   label:{formatter:isZh?'轉向降息':'Easing Pivot',color:C.navy,fontSize:10,fontFamily:'Inter, sans-serif'}},{xAxis:'2026'}]
+    [{xAxis:'2008',itemStyle:{color:'rgba(107,114,128,0.10)'},label:{formatter:isZh?'GFC衝擊':'GFC Shock',color:'#6b7a92',fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2009'}],
+    [{xAxis:'2010',itemStyle:{color:'rgba(22,163,74,0.07)'},  label:{formatter:isZh?'房產榮景':'Property Boom',color:C.green,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2014'}],
+    [{xAxis:'2015',itemStyle:{color:'rgba(217,119,6,0.07)'}, label:{formatter:isZh?'宏觀審慎冷卻':'Macro-Pru Cooling',color:C.orange,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2019'}],
+    [{xAxis:'2020',itemStyle:{color:'rgba(37,99,235,0.07)'},  label:{formatter:isZh?'COVID刺激':'COVID Stimulus',color:C.blue,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2021'}],
+    [{xAxis:'2022',itemStyle:{color:'rgba(220,38,38,0.07)'},  label:{formatter:isZh?'升息週期':'Rate Hikes',color:C.red,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2023'}],
+    [{xAxis:'2024',itemStyle:{color:'rgba(13,34,68,0.07)'},   label:{formatter:isZh?'轉向降息':'Easing Pivot',color:C.navy,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2026'}]
   ];
 }
 function phaseLines(isZh){
   return [
-    {xAxis:'2009',label:{formatter:isZh?'OPR 2%低點':'OPR Low 2%',color:'#6b7a92',fontSize:10,fontFamily:'Inter, sans-serif',position:'end'},lineStyle:{color:'#6b7a92',type:'dashed',width:1}},
-    {xAxis:'2014',label:{formatter:isZh?'升息+審慎':'Hike+Macro-Pru',color:C.orange,fontSize:10,fontFamily:'Inter, sans-serif',position:'end'},lineStyle:{color:C.orange,type:'dashed',width:1}},
-    {xAxis:'2020',label:{formatter:isZh?'OPR歷史低點':'OPR Hist.Low',color:C.blue,fontSize:10,fontFamily:'Inter, sans-serif',position:'end'},lineStyle:{color:C.blue,type:'dashed',width:1}},
-    {xAxis:'2022',label:{formatter:isZh?'BNM首升息':'First Hike',color:C.red,fontSize:10,fontFamily:'Inter, sans-serif',position:'end'},lineStyle:{color:C.red,type:'dashed',width:1}},
-    {xAxis:'2025',label:{formatter:isZh?'五年首降':'First Cut',color:C.navy,fontSize:10,fontFamily:'Inter, sans-serif',position:'end'},lineStyle:{color:C.navy,type:'dashed',width:1.4}}
+    {xAxis:'2009',label:{formatter:isZh?'OPR 2%低點':'OPR Low 2%',color:'#6b7a92',fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'end'},lineStyle:{color:'#6b7a92',type:'dashed',width:1}},
+    {xAxis:'2014',label:{formatter:isZh?'升息+審慎':'Hike+Macro-Pru',color:C.orange,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'end'},lineStyle:{color:C.orange,type:'dashed',width:1}},
+    {xAxis:'2020',label:{formatter:isZh?'OPR歷史低點':'OPR Hist.Low',color:C.blue,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'end'},lineStyle:{color:C.blue,type:'dashed',width:1}},
+    {xAxis:'2022',label:{formatter:isZh?'BNM首升息':'First Hike',color:C.red,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'end'},lineStyle:{color:C.red,type:'dashed',width:1}},
+    {xAxis:'2025',label:{formatter:isZh?'五年首降':'First Cut',color:C.navy,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'end'},lineStyle:{color:C.navy,type:'dashed',width:1.4}}
   ];
 }
 
@@ -627,8 +628,8 @@ function initCharts(lang){
     grid:{left:50,right:60,top:40,bottom:30,containLabel:true},
     xAxis:mkAxis({type:'category',data:years,boundaryGap:false}),
     yAxis:[
-      mkAxis({type:'value',min:-2,max:16,interval:2,axisLabel:{formatter:'{value}%'},name:isZh?'%指標':'% Indicators',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter, sans-serif'}}),
-      mkAxis({type:'value',min:120,max:240,interval:20,axisLabel:{formatter:'{value}'},splitLine:{show:false},name:isZh?'MHPI':'MHPI',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter, sans-serif'}})
+      mkAxis({type:'value',min:-2,max:16,interval:2,axisLabel:{formatter:'{value}%'},name:isZh?'%指標':'% Indicators',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}}),
+      mkAxis({type:'value',min:120,max:240,interval:20,axisLabel:{formatter:'{value}'},splitLine:{show:false},name:isZh?'MHPI':'MHPI',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}})
     ],
     series:[
       {name:isZh?'OPR':'OPR',type:'line',data:oprRate,yAxisIndex:0,lineStyle:{color:C.navy,width:2.5},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5},
@@ -651,8 +652,8 @@ function initCharts(lang){
     grid:{left:50,right:60,top:40,bottom:30,containLabel:true},
     xAxis:mkAxis({type:'category',data:years,boundaryGap:true}),
     yAxis:[
-      mkAxis({type:'value',min:-8,max:16,interval:4,axisLabel:{formatter:'{value}%'},name:isZh?'%指標':'% Indicators',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter, sans-serif'}}),
-      mkAxis({type:'value',min:120,max:240,interval:20,axisLabel:{formatter:'{value}'},splitLine:{show:false},name:isZh?'MHPI':'MHPI',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter, sans-serif'}})
+      mkAxis({type:'value',min:-8,max:16,interval:4,axisLabel:{formatter:'{value}%'},name:isZh?'%指標':'% Indicators',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}}),
+      mkAxis({type:'value',min:120,max:240,interval:20,axisLabel:{formatter:'{value}'},splitLine:{show:false},name:isZh?'MHPI':'MHPI',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}})
     ],
     series:[
       {name:isZh?'GDP YoY%':'GDP YoY%',type:'bar',data:gdpBarData,yAxisIndex:0,barMaxWidth:18},
@@ -676,10 +677,10 @@ function initCharts(lang){
       {name:isZh?'家庭債務/GDP':'Household Debt/GDP',type:'line',data:hhDebtGDP,smooth:true,lineStyle:{color:C.navy,width:3},itemStyle:{color:C.navy},symbol:'circle',symbolSize:6,
        areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(13,34,68,0.16)'},{offset:1,color:'rgba(13,34,68,0)'}])},
        markLine:{silent:true,symbol:'none',data:[
-         {yAxis:85,label:{formatter:isZh?'~85% 高槓桿帶':'~85% high-leverage band',color:C.orange,fontSize:10,fontFamily:'Inter, sans-serif',position:'insideEndTop'},lineStyle:{color:C.orange,type:'dashed',width:1}}
+         {yAxis:85,label:{formatter:isZh?'~85% 高槓桿帶':'~85% high-leverage band',color:C.orange,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'insideEndTop'},lineStyle:{color:C.orange,type:'dashed',width:1}}
        ]},
        markPoint:{symbolSize:0,data:[
-         {coord:['2020',93.2],value:isZh?'COVID高峰 93.2%':'COVID peak 93.2%',label:{color:C.red,fontSize:10,fontWeight:700,fontFamily:'Inter, sans-serif',position:'top'}}
+         {coord:['2020',93.2],value:isZh?'COVID高峰 93.2%':'COVID peak 93.2%',label:{color:C.red,fontSize:10,fontWeight:700,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'top'}}
        ]}}
     ]
   });
@@ -694,8 +695,8 @@ function initCharts(lang){
     grid:{left:46,right:54,top:40,bottom:26,containLabel:true},
     xAxis:mkAxis({type:'category',data:ohYears,boundaryGap:true}),
     yAxis:[
-      mkAxis({type:'value',min:0,max:40000,interval:10000,axisLabel:{formatter:function(v){return (v/1000)+'k';}},name:isZh?'戶數':'Units',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter, sans-serif'}}),
-      mkAxis({type:'value',min:0,max:24,interval:6,axisLabel:{formatter:'RM{value}b'},splitLine:{show:false},name:isZh?'金額':'Value',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter, sans-serif'}})
+      mkAxis({type:'value',min:0,max:40000,interval:10000,axisLabel:{formatter:function(v){return (v/1000)+'k';}},name:isZh?'戶數':'Units',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}}),
+      mkAxis({type:'value',min:0,max:24,interval:6,axisLabel:{formatter:'RM{value}b'},splitLine:{show:false},name:isZh?'金額':'Value',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}})
     ],
     series:[
       {name:isZh?'滯銷戶數':'Overhang units',type:'bar',data:ohBars,yAxisIndex:0,barMaxWidth:34},
@@ -714,13 +715,14 @@ function initCharts(lang){
     yAxis:mkAxis({type:'category',data:isZh?stZH.slice().reverse():stEN.slice().reverse(),splitLine:{show:false}}),
     series:[
       {name:isZh?'核准投資':'Approved Investment',type:'bar',data:stInvest.slice().reverse().map(function(v,i){return {value:v,itemStyle:{color:stColors.slice().reverse()[i],borderRadius:[0,4,4,0]}};}),barMaxWidth:22,
-       label:{show:true,position:'right',formatter:'RM{c}b',color:C.muted,fontSize:10,fontFamily:'Inter, sans-serif'}}
+       label:{show:true,position:'right',formatter:'RM{c}b',color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}}
     ]
   });
 }
 
 function setLang(lang){
   document.body.classList.toggle('zh', lang==='zh');
+  document.documentElement.lang = lang==='zh' ? 'zh-Hant' : 'en';
   document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
   document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
   document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active', b.dataset.lang===lang);});
