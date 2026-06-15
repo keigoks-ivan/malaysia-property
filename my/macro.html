@@ -7,55 +7,72 @@
 <meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/kl-theme.css">
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <style>
-.dashboard{max-width:1080px;margin:0 auto;padding:28px 20px}
-.kpi-card,.chart-card,.summary-card,.micro-card,.data-table{background:var(--card)!important;border-color:var(--border)!important}
-.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
-@media(max-width:900px){.kpi-row{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:560px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
-.section-label{color:var(--gold-deep);font-weight:700;letter-spacing:.14em}
-.chart-card h3{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:600;color:var(--navy);font-size:15px}
-.cycle-bar{display:flex;gap:3px;border-radius:10px;overflow:hidden;margin-bottom:10px}
-.cycle-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 6px;position:relative;min-width:0;overflow:hidden}
-.cycle-seg .cs-title{font-size:9px;font-weight:700;color:#fff;font-family:Inter,sans-serif;letter-spacing:0.3px;text-align:center}
-.cycle-seg .cs-year{font-size:8px;color:rgba(255,255,255,0.78);font-family:Inter,sans-serif;text-align:center}
-.cycle-now{position:absolute;top:4px;right:5px;background:rgba(255,255,255,0.28);border-radius:3px;font-size:8px;font-weight:700;color:#fff;padding:1px 5px;font-family:Inter,sans-serif;letter-spacing:0.3px}
-.ctx-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-.ctx-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-sm)}
-.ctx-label{font-size:10px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--gold-deep);font-family:Inter,sans-serif;margin-bottom:6px}
-.ctx-val{font-size:19px;font-weight:700;color:var(--navy);font-family:'IBM Plex Mono','JetBrains Mono',monospace;margin-bottom:2px}
-.ctx-sub{font-size:11px;color:var(--muted);font-family:Inter,sans-serif;line-height:1.75}
-.ev-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px}
-.ev-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-sm)}
-.ev-year{font-size:10px;font-weight:700;letter-spacing:0.5px;font-family:Inter,sans-serif;margin-bottom:4px}
-.ev-title{font-size:13px;font-weight:600;color:var(--navy);font-family:Inter,sans-serif;margin-bottom:5px}
-.ev-desc{font-size:12px;color:var(--muted);line-height:1.85;font-family:Inter,sans-serif}
+/* ── lean rebuild — robust spacing + Traditional-Chinese safe ── */
+.wrap{max-width:880px;margin:0 auto;padding:30px 20px 10px}
 body.zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
-body.zh .section-label,body.zh .kpi-label,body.zh .ctx-label,body.zh .ev-title,body.zh .ev-year,body.zh .source-footer,body.zh .footer-disclaimer{line-height:1.7}
-body.zh li{line-height:2 !important}
-body.zh .ev-desc,body.zh .ctx-sub,body.zh .chart-insight,body.zh .pivot-lede p,body.zh .narr{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
-.chart-insight{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:11px 14px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.95;font-family:Inter,sans-serif}
-.chart-insight strong{color:var(--navy)}
-.source-footer{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px}
-/* — added components for the deepened build — */
-.pivot-lede{background:linear-gradient(135deg,#0d2244 0%,#173564 100%);border-radius:14px;padding:22px 26px;margin-bottom:26px;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
-.pivot-lede::after{content:'';position:absolute;top:-40%;right:-10%;width:240px;height:240px;background:radial-gradient(circle,rgba(184,146,74,.18),transparent 70%);pointer-events:none}
-.pivot-lede .pl-kick{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-light);font-family:Inter,sans-serif;margin-bottom:8px}
-.pivot-lede .pl-title{font-family:'Playfair Display','Noto Serif TC',serif;font-size:21px;font-weight:600;margin:0 0 11px;color:#fff;letter-spacing:-.01em}
-.pivot-lede p{font-size:13px;line-height:1.95;color:rgba(255,255,255,.87);margin:0;font-family:Inter,sans-serif;position:relative;z-index:1}
-.pivot-lede p + p{margin-top:10px}
-.pivot-lede strong{color:var(--gold-light);font-weight:600}
-.narr{font-size:12.5px;line-height:1.95;color:var(--text-soft);font-family:Inter,sans-serif;margin:0 0 18px}
-.narr strong{color:var(--navy)}
-.kl-band{background:linear-gradient(135deg,#fbf8f1,#fff);border:1px solid var(--border);border-left:4px solid var(--navy);border-radius:14px;padding:20px 24px;margin-bottom:26px;box-shadow:var(--shadow-sm)}
-.kl-band .ctx-grid{margin-bottom:14px}
-.divider{height:1px;background:var(--gold-line);margin:34px 0 28px;border:0}
-@media(max-width:640px){.ctx-grid{grid-template-columns:repeat(2,1fr)}.ev-grid{grid-template-columns:1fr}}
-@media(max-width:560px){.cycle-seg{padding:8px 2px}.cycle-seg .cs-title{font-size:8px}.cycle-seg .cs-year{font-size:7px;letter-spacing:-.2px}.cycle-now{font-size:7px;padding:1px 3px;right:3px}}
+/* generous leading everywhere so CJK never collides */
+.wrap, .wrap p, .wrap li, .lede, .pt li, .col li, .src{line-height:2.0}
+
+.pg-head{margin-bottom:22px}
+.pg-title{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:26px;letter-spacing:-.01em;margin:0 0 10px;line-height:1.3}
+.pg-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* snapshot */
+.snap{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:22px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 12px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:4px;min-width:0}
+.stat-lbl{font-size:10.5px;font-weight:600;letter-spacing:.04em;color:var(--gold-deep);text-transform:uppercase;line-height:1.45}
+body.zh .stat-lbl{text-transform:none;letter-spacing:0}
+.stat-num{font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:21px;font-weight:700;color:var(--navy);line-height:1.2}
+.stat-tag{font-size:10.5px;font-weight:600;line-height:1.5}
+.t-green{color:#15803d}.t-orange{color:#a16207}.t-red{color:#b91c1c}.t-blue{color:#1d4ed8}
+
+/* one-line conclusion */
+.lede{background:linear-gradient(135deg,#0d2244 0%,#173564 100%);color:#fff;border-radius:14px;padding:20px 24px;margin-bottom:30px;font-size:14px;box-shadow:var(--shadow-md)}
+.lede b{color:var(--gold-light);font-weight:600}
+.lede .lk{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+
+/* blocks */
+.blk{margin-bottom:34px}
+.blk h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:600;color:var(--navy);font-size:18px;margin:0 0 4px;line-height:1.35}
+.blk .sub{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:1.6}
+.chartbox{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 10px 10px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.chartbox .ch{height:300px;width:100%}
+.pt{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.pt li{position:relative;padding-left:18px;font-size:13px;color:var(--text-soft)}
+.pt li::before{content:'';position:absolute;left:0;top:13px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.pt li b{color:var(--navy);font-weight:600}
+.pt li.warn::before{background:#b91c1c}
+.pt li.good::before{background:#15803d}
+
+/* two-column 順風 / 風險 */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:34px}
+.col{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow-sm)}
+.col.up{border-top:3px solid #15803d}
+.col.dn{border-top:3px solid #b91c1c}
+.col h3{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px}
+.col.up h3{color:#15803d}.col.dn h3{color:#b91c1c}
+.col ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.col li{font-size:12.5px;color:var(--text-soft);padding-left:15px;position:relative}
+.col li::before{content:'';position:absolute;left:0;top:12px;width:5px;height:5px;border-radius:50%}
+.col.up li::before{background:#15803d}.col.dn li::before{background:#b91c1c}
+
+/* watch */
+.watch{background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:14px;padding:18px 22px;margin-bottom:26px}
+.watch h3{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 10px}
+.watch ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.watch li{font-size:12.5px;color:var(--text-soft);padding-left:16px;position:relative}
+.watch li::before{content:'▸';position:absolute;left:0;top:0;color:var(--gold-deep);font-size:11px;line-height:2}
+.watch li b{color:var(--navy);font-weight:600}
+
+.src{font-size:11px;color:var(--muted);background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:12px 16px;margin-bottom:8px}
+
+@media(max-width:760px){.snap{grid-template-columns:repeat(3,1fr)}.cols{grid-template-columns:1fr}.pg-title{font-size:22px}}
+@media(max-width:440px){.snap{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -81,454 +98,124 @@ body.zh .ev-desc,body.zh .ctx-sub,body.zh .chart-insight,body.zh .pivot-lede p,b
   </div>
 </nav>
 
-<main class="dashboard">
+<main class="wrap">
 
-  <!-- ── Page Header ── -->
-  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:20px">
-    <h1 class="page-title" style="margin:0">
-      <span class="lang-en">Malaysia — Macro × Property Cycle</span>
-      <span class="lang-zh" style="display:none">馬來西亞 — 總經 × 房產週期</span>
+  <!-- ── Header ── -->
+  <div class="pg-head">
+    <h1 class="pg-title">
+      <span class="lang-en">Malaysia — Macro × Property</span>
+      <span class="lang-zh" style="display:none">馬來西亞 · 總經 × 房產</span>
     </h1>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-      <span class="kpi-badge badge-blue"><span class="lang-en">19-Year View · 2008–2026</span><span class="lang-zh" style="display:none">19年視角 · 2008–2026</span></span>
-      <span class="kpi-badge badge-green"><span class="lang-en">OPR 2.75%</span><span class="lang-zh" style="display:none">OPR 2.75%</span></span>
-      <span class="kpi-badge badge-orange"><span class="lang-en">Updated: Jun 2026</span><span class="lang-zh" style="display:none">更新至：2026年6月</span></span>
+    <div class="pg-badges">
+      <span class="kpi-badge badge-green"><span class="lang-en">OPR 2.75% ↓</span><span class="lang-zh" style="display:none">OPR 2.75% ↓</span></span>
+      <span class="kpi-badge badge-blue"><span class="lang-en">2008–2026</span><span class="lang-zh" style="display:none">2008–2026</span></span>
+      <span class="kpi-badge badge-orange"><span class="lang-en">Updated Jun 2026</span><span class="lang-zh" style="display:none">更新至 2026年6月</span></span>
     </div>
   </div>
 
-  <!-- ── Cycle Position Tracker ── -->
-  <div class="chart-card" style="margin-bottom:24px;padding:20px 24px">
-    <div class="section-label" style="margin-bottom:14px">
-      <span class="lang-en">Where Are We in the Cycle?</span>
-      <span class="lang-zh" style="display:none">目前週期位置</span>
+  <!-- ── Snapshot ── -->
+  <div class="snap">
+    <div class="stat">
+      <div class="stat-lbl">OPR</div>
+      <div class="stat-num">2.75%</div>
+      <div class="stat-tag t-green"><span class="lang-en">↓ 1st cut/5yr</span><span class="lang-zh" style="display:none">↓ 五年首降</span></div>
     </div>
-    <div class="cycle-bar">
-      <div class="cycle-seg" style="flex:2;background:#6b7a92">
-        <div class="cs-title">GFC</div>
-        <div class="cs-year">08–09</div>
-      </div>
-      <div class="cycle-seg" style="flex:5;background:#15803d">
-        <div class="cs-title"><span class="lang-en">Boom</span><span class="lang-zh" style="display:none">榮景</span></div>
-        <div class="cs-year">10–14</div>
-      </div>
-      <div class="cycle-seg" style="flex:5;background:#a16207">
-        <div class="cs-title"><span class="lang-en">Cooling</span><span class="lang-zh" style="display:none">冷卻</span></div>
-        <div class="cs-year">15–19</div>
-      </div>
-      <div class="cycle-seg" style="flex:2;background:#1d4ed8">
-        <div class="cs-title">COVID</div>
-        <div class="cs-year">20–21</div>
-      </div>
-      <div class="cycle-seg" style="flex:2;background:#b91c1c">
-        <div class="cs-title"><span class="lang-en">Hikes</span><span class="lang-zh" style="display:none">升息</span></div>
-        <div class="cs-year">22–23</div>
-      </div>
-      <div class="cycle-seg" style="flex:3;background:#0d2244">
-        <div class="cs-title"><span class="lang-en">Easing</span><span class="lang-zh" style="display:none">降息</span></div>
-        <div class="cs-year">24–26</div>
-        <span class="cycle-now">▶ NOW</span>
-      </div>
+    <div class="stat">
+      <div class="stat-lbl"><span class="lang-en">GDP</span><span class="lang-zh" style="display:none">GDP</span></div>
+      <div class="stat-num">5.4%</div>
+      <div class="stat-tag t-green"><span class="lang-en">Q1 2026</span><span class="lang-zh" style="display:none">2026 Q1</span></div>
     </div>
-    <div style="display:flex;justify-content:flex-end">
-      <p style="margin:6px 0 0 0;font-size:11px;color:#6b7a92;font-family:Inter,sans-serif">
-        <span class="lang-en">OPR cut to 2.75% (Jul 2025, first cut in 5yr) — easing into a market at record prices, but with overhang swelling and KL prices soft</span>
-        <span class="lang-zh" style="display:none">OPR降至2.75%（2025年7月，五年首降）。資金成本走低，但價格已在歷史高位，滯銷量回升、吉隆坡均價走軟</span>
-      </p>
+    <div class="stat">
+      <div class="stat-lbl"><span class="lang-en">House Price Idx</span><span class="lang-zh" style="display:none">房價指數</span></div>
+      <div class="stat-num">235</div>
+      <div class="stat-tag t-green"><span class="lang-en">Record</span><span class="lang-zh" style="display:none">創高</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-lbl"><span class="lang-en">Inflation</span><span class="lang-zh" style="display:none">通膨</span></div>
+      <div class="stat-num">1.9%</div>
+      <div class="stat-tag t-green"><span class="lang-en">In target</span><span class="lang-zh" style="display:none">目標內</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-lbl"><span class="lang-en">Overhang</span><span class="lang-zh" style="display:none">完工滯銷</span></div>
+      <div class="stat-num">+32%</div>
+      <div class="stat-tag t-red"><span class="lang-en">Warning</span><span class="lang-zh" style="display:none">警訊</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-lbl"><span class="lang-en">Household Debt</span><span class="lang-zh" style="display:none">家庭債務</span></div>
+      <div class="stat-num">84.8%</div>
+      <div class="stat-tag t-orange"><span class="lang-en">of GDP · ceiling</span><span class="lang-zh" style="display:none">佔GDP · 近上限</span></div>
     </div>
   </div>
 
-  <!-- ── The 2025 Pivot (lede) ── -->
-  <div class="pivot-lede">
-    <div class="pl-kick"><span class="lang-en">The Regime Shift</span><span class="lang-zh" style="display:none">當前格局轉變</span></div>
-    <div class="pl-title"><span class="lang-en">The 2025 Easing Pivot</span><span class="lang-zh" style="display:none">2025年的降息轉向</span></div>
-    <p class="lang-en">After holding the Overnight Policy Rate at 3.00% for nearly three years, Bank Negara delivered its first cut in five years in July 2025, trimming the OPR by 25bp to <strong>2.75%</strong>. This was an insurance cut, not a distress signal: growth was still running above 5%, inflation sat comfortably below 2%, and the move was framed as pre-emptive support against external headwinds — chiefly the 2025 US tariff shock and a softening export pulse. BNM has held at 2.75% through May 2026 and signalled a neutral stance.</p>
-    <p class="lang-en">So the cycle has turned a corner. Borrowing costs are easing into a market where the headline house-price index is already at a record, yet the picture beneath it is split: the completed-unit overhang has swung back up <strong>+31.6%</strong>, and Kuala Lumpur's average transacted price is actually <strong>falling (−4.3% YoY)</strong>. Cheaper money is meeting a supply problem, not a shortage. The structural demand story — Johor's SEZ, the RTS Link, the data-centre build-out — is real, but it is concentrated, and policy has simultaneously doubled the foreign-buyer stamp duty to 8%.</p>
-    <p class="lang-zh" style="display:none">國行（BNM）把隔夜政策利率（OPR）按在3.00%將近三年後，2025年7月終於出手，五年來首度降息25個基點至<strong>2.75%</strong>。這一刀是預防性的保險式降息，不是危機訊號：當時經濟增長仍站穩5%以上，通膨舒服地壓在2%以下，國行也明言此舉旨在提前防範外部逆風，主要針對2025年美國關稅衝擊與走弱的出口動能。直到2026年5月，OPR都維持在2.75%，立場轉為中性。</p>
-    <p class="lang-zh" style="display:none">週期由此轉了個彎。資金成本開始走低，房價總指數雖已創歷史新高，底下卻是兩極分化：完工滯銷量（overhang）回升<strong>31.6%</strong>，吉隆坡平均成交價反而<strong>下跌（年減4.3%）</strong>。便宜的錢遇上的是供給過剩，不是供給短缺。柔佛特區、新柔捷運（RTS Link）、數據中心這條結構性需求主線確實存在，但高度集中；同一時間，政策又把外國買家印花稅一口氣調高到8%。</p>
+  <!-- ── One-line conclusion ── -->
+  <div class="lede">
+    <span class="lk"><span class="lang-en">Bottom line</span><span class="lang-zh" style="display:none">一句話結論</span></span>
+    <span class="lang-en">2025 was the pivot year: money got cheaper, growth held (<b>GDP +5.4%</b>) and the price index hit a record — yet the completed-home overhang swung back up <b>+32%</b> and Kuala Lumpur's average price actually fell. Cheaper money is meeting an oversupply, not a shortage. The structural demand — Johor's SEZ, data centres, record FDI — is real, but it is concentrated in Johor.</span>
+    <span class="lang-zh" style="display:none">2025年是轉向年：錢變便宜、經濟還穩（<b>GDP +5.4%</b>）、房價指數創高，但完工滯銷回升<b>32%</b>，吉隆坡均價反而下跌。便宜的錢遇到的是供給過剩，不是短缺。結構性需求（柔新特區、數據中心、創紀錄FDI）真實，卻高度集中在柔佛。</span>
   </div>
 
-  <!-- ── KPI Snapshot ── -->
-  <div class="section-label" style="margin-bottom:12px">
-    <span class="lang-en">Current Snapshot</span><span class="lang-zh" style="display:none">當前快照</span>
+  <!-- ── Block 1: Rates × Prices ── -->
+  <div class="blk">
+    <h2><span class="lang-en">Rates × House Prices</span><span class="lang-zh" style="display:none">利率週期 × 房價</span></h2>
+    <p class="sub"><span class="lang-en">OPR &amp; average lending rate vs the house-price index, 2008–2026</span><span class="lang-zh" style="display:none">OPR 與平均貸款利率 對 房價指數，2008–2026</span></p>
+    <div class="chartbox"><div id="chartRates" class="ch"></div></div>
+    <ul class="pt">
+      <li class="good"><span class="lang-en"><b>Jul 2025:</b> BNM's first cut in five years, to 2.75% — a pre-emptive insurance move against the US-tariff shock, not a recession signal.</span><span class="lang-zh" style="display:none"><b>2025年7月：</b>國行五年來首度降息至2.75%，是預防性的保險降息（防美國關稅），不是衰退訊號。</span></li>
+      <li><span class="lang-en">House prices lag rates by <b>12–18 months</b>, so this cut mainly feeds into 2026–2027.</span><span class="lang-zh" style="display:none">房價落後利率約<b>12到18個月</b>，這刀主要反映在2026到2027年。</span></li>
+      <li class="warn"><span class="lang-en">The gap between the OPR (2.75%) and the average mortgage rate (<b>4.56%</b>) stays wide — only part of the cut reaches buyers.</span><span class="lang-zh" style="display:none">OPR（2.75%）與平均房貸利率（<b>4.56%</b>）的利差仍寬，降息紅利只有一部分傳到買家。</span></li>
+      <li><span class="lang-en">The index hit a record in 2025 (avg <b>233</b>, Q4 <b>236.7</b>) — headline strong, but the market is split underneath.</span><span class="lang-zh" style="display:none">房價指數2025年創高（年均<b>233</b>、Q4達<b>236.7</b>），總體強，但底下分化。</span></li>
+    </ul>
   </div>
-  <div class="kpi-row" style="margin-bottom:10px">
-    <div class="kpi-card green">
-      <div class="kpi-label"><span class="lang-en">OPR</span><span class="lang-zh" style="display:none">隔夜政策利率</span></div>
-      <div class="kpi-value">2.75%</div>
-      <span class="kpi-badge badge-green"><span class="lang-en">−25bp Jul 2025</span><span class="lang-zh" style="display:none">2025年7月−25bp</span></span>
-    </div>
-    <div class="kpi-card green">
-      <div class="kpi-label"><span class="lang-en">House Price Index (MHPI)</span><span class="lang-zh" style="display:none">房價指數 MHPI</span></div>
-      <div class="kpi-value">235.2</div>
-      <span class="kpi-badge badge-green"><span class="lang-en">Q1 2026 · record</span><span class="lang-zh" style="display:none">2026 Q1 · 歷史新高</span></span>
-    </div>
-    <div class="kpi-card green">
-      <div class="kpi-label"><span class="lang-en">GDP Growth</span><span class="lang-zh" style="display:none">GDP成長</span></div>
-      <div class="kpi-value">5.4%</div>
-      <span class="kpi-badge badge-green"><span class="lang-en">Q1 2026</span><span class="lang-zh" style="display:none">2026 Q1</span></span>
-    </div>
-    <div class="kpi-card green">
-      <div class="kpi-label"><span class="lang-en">CPI</span><span class="lang-zh" style="display:none">通膨</span></div>
-      <div class="kpi-value">1.9%</div>
-      <span class="kpi-badge badge-green"><span class="lang-en">Apr 2026 · in target</span><span class="lang-zh" style="display:none">2026年4月 · 目標內</span></span>
-    </div>
-    <div class="kpi-card green">
-      <div class="kpi-label"><span class="lang-en">Unemployment</span><span class="lang-zh" style="display:none">失業率</span></div>
-      <div class="kpi-value">3.0%</div>
-      <span class="kpi-badge badge-green"><span class="lang-en">Near full employment</span><span class="lang-zh" style="display:none">接近完全就業</span></span>
-    </div>
-    <div class="kpi-card orange">
-      <div class="kpi-label"><span class="lang-en">Household Debt / GDP</span><span class="lang-zh" style="display:none">家庭債務/GDP</span></div>
-      <div class="kpi-value">84.8%</div>
-      <span class="kpi-badge badge-orange"><span class="lang-en">Jun 2025 · ceiling</span><span class="lang-zh" style="display:none">2025年6月 · 逼近上限</span></span>
-    </div>
+
+  <!-- ── Block 2: Overhang ── -->
+  <div class="blk">
+    <h2><span class="lang-en">Completed Overhang — the Supply Warning</span><span class="lang-zh" style="display:none">完工滯銷 · 供給警訊</span></h2>
+    <p class="sub"><span class="lang-en">Unsold completed residential — units &amp; RM value, 2019–2025</span><span class="lang-zh" style="display:none">完工未售住宅 · 戶數與金額，2019–2025</span></p>
+    <div class="chartbox"><div id="chartOverhang" class="ch"></div></div>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">Unsold completed homes jumped <b>+31.6%</b> in 2025 to <b>30,471 units (RM17.7bn)</b> — the clearest negative in the data.</span><span class="lang-zh" style="display:none">完工未售2025年暴增<b>31.6%</b>至<b>30,471戶（RM177億）</b>，是數據裡最明確的警訊。</span></li>
+      <li><span class="lang-en">~47% are condos; ~92% of Klang Valley overhang is high-rise; Johor holds ~<b>9,000</b> serviced-apartment units on top.</span><span class="lang-zh" style="display:none">約47%是公寓；巴生谷滯銷九成是高層；柔佛另有約<b>9,000戶</b>服務式公寓庫存。</span></li>
+      <li class="warn"><span class="lang-en">Kuala Lumpur's average price actually fell <b>−4.3% YoY</b> — the national soft spot, oversupplied at the top end.</span><span class="lang-zh" style="display:none">吉隆坡均價反而年減<b>4.3%</b>，是全國最弱、高端供過於求。</span></li>
+      <li class="good"><span class="lang-en">Demand is selective: affordable landed homes clear, while high-rise and pricey stock sticks.</span><span class="lang-zh" style="display:none">需求很挑：可負擔的有地住宅賣得動，高層與高價產品卡著。</span></li>
+    </ul>
   </div>
-  <div class="kpi-row" style="margin-bottom:16px">
-    <div class="kpi-card orange">
-      <div class="kpi-label"><span class="lang-en">Housing Loan Growth</span><span class="lang-zh" style="display:none">房貸成長</span></div>
-      <div class="kpi-value">6.3%</div>
-      <span class="kpi-badge badge-orange"><span class="lang-en">Aug 2025 · cooling</span><span class="lang-zh" style="display:none">2025年8月 · 降溫</span></span>
+
+  <!-- ── Tailwinds / Risks ── -->
+  <div class="cols">
+    <div class="col up">
+      <h3><span class="lang-en">Tailwinds</span><span class="lang-zh" style="display:none">順風</span></h3>
+      <ul>
+        <li><span class="lang-en">OPR cut + first-home stamp-duty exemption lift affordability</span><span class="lang-zh" style="display:none">OPR降息 + 首購印花稅豁免，提升可負擔性</span></li>
+        <li><span class="lang-en">Johor SEZ + RTS Link (Jan 2027) + data centres drive structural demand</span><span class="lang-zh" style="display:none">柔新特區 + RTS（2027年1月）+ 數據中心，撐起結構性需求</span></li>
+        <li><span class="lang-en">Record approved FDI RM426.7bn; ringgit recovered ~10%</span><span class="lang-zh" style="display:none">核准FDI創高RM4,267億；令吉回升約一成</span></li>
+        <li><span class="lang-en">Inflation under 2%, GDP resilient at +5.4%</span><span class="lang-zh" style="display:none">通膨低於2%，GDP韌性+5.4%</span></li>
+      </ul>
     </div>
-    <div class="kpi-card red">
-      <div class="kpi-label"><span class="lang-en">Resi. Overhang (units)</span><span class="lang-zh" style="display:none">完工滯銷（戶）</span></div>
-      <div class="kpi-value">30,471</div>
-      <span class="kpi-badge badge-red"><span class="lang-en">+31.6% YoY</span><span class="lang-zh" style="display:none">年增31.6%</span></span>
-    </div>
-    <div class="kpi-card green">
-      <div class="kpi-label"><span class="lang-en">MYR / USD</span><span class="lang-zh" style="display:none">令吉 / 美元</span></div>
-      <div class="kpi-value">4.06</div>
-      <span class="kpi-badge badge-green"><span class="lang-en">+10% vs 2024</span><span class="lang-zh" style="display:none">較2024升約10%</span></span>
-    </div>
-    <div class="kpi-card green">
-      <div class="kpi-label"><span class="lang-en">Approved FDI 2025</span><span class="lang-zh" style="display:none">2025核准投資</span></div>
-      <div class="kpi-value">RM427b</div>
-      <span class="kpi-badge badge-green"><span class="lang-en">Record · +11%</span><span class="lang-zh" style="display:none">歷史新高 · +11%</span></span>
-    </div>
-    <div class="kpi-card blue">
-      <div class="kpi-label"><span class="lang-en">Avg Lending Rate</span><span class="lang-zh" style="display:none">平均貸款利率</span></div>
-      <div class="kpi-value">4.56%</div>
-      <span class="kpi-badge badge-blue"><span class="lang-en">Mar 2026</span><span class="lang-zh" style="display:none">2026年3月</span></span>
-    </div>
-    <div class="kpi-card orange">
-      <div class="kpi-label"><span class="lang-en">M2 Growth</span><span class="lang-zh" style="display:none">M2貨幣成長</span></div>
-      <div class="kpi-value">3.7%</div>
-      <span class="kpi-badge badge-orange"><span class="lang-en">Jan 2026</span><span class="lang-zh" style="display:none">2026年1月</span></span>
+    <div class="col dn">
+      <h3><span class="lang-en">Risks</span><span class="lang-zh" style="display:none">風險</span></h3>
+      <ul>
+        <li><span class="lang-en">Household debt 84.8% of GDP caps mortgage-driven upside</span><span class="lang-zh" style="display:none">家庭債務佔GDP 84.8%，封住房貸驅動的上行</span></li>
+        <li><span class="lang-en">Overhang +31.6%; high-rise &amp; Johor serviced-apartment glut</span><span class="lang-zh" style="display:none">滯銷 +31.6%；高層與柔佛服務式公寓過剩</span></li>
+        <li><span class="lang-en">KL average price −4.3%; foreign stamp duty doubled to 8% (Jan 2026)</span><span class="lang-zh" style="display:none">吉隆坡均價 −4.3%；外國印花稅倍增至8%（2026年1月）</span></li>
+        <li><span class="lang-en">2025 export front-loading unwinds through 2026</span><span class="lang-zh" style="display:none">2025年出口前置效應，2026年逐步回吐</span></li>
+      </ul>
     </div>
   </div>
 
-  <!-- ── Historical Context Cards ── -->
-  <div class="ctx-grid">
-    <div class="ctx-card">
-      <div class="ctx-label"><span class="lang-en">OPR Range (18yr)</span><span class="lang-zh" style="display:none">OPR歷史區間</span></div>
-      <div class="ctx-val">1.75%–3.25%</div>
-      <div class="ctx-sub"><span class="lang-en">Low: 2020–21 · cut to 2.75% in 2025</span><span class="lang-zh" style="display:none">低點：2020至2021 · 2025年降至2.75%</span></div>
-    </div>
-    <div class="ctx-card">
-      <div class="ctx-label"><span class="lang-en">MHPI since 2008</span><span class="lang-zh" style="display:none">MHPI自2008累計</span></div>
-      <div class="ctx-val" style="color:#15803d">+81%</div>
-      <div class="ctx-sub"><span class="lang-en">130 → 235 · avg price ~RM503k (2025)</span><span class="lang-zh" style="display:none">130 → 235 · 均價約RM503k（2025）</span></div>
-    </div>
-    <div class="ctx-card">
-      <div class="ctx-label"><span class="lang-en">GDP Best / Worst</span><span class="lang-zh" style="display:none">GDP最佳/最差</span></div>
-      <div class="ctx-val">+9.0% / −5.5%</div>
-      <div class="ctx-sub"><span class="lang-en">Best: 2022 rebound · Worst: 2020 COVID</span><span class="lang-zh" style="display:none">最佳：2022反彈 · 最差：2020 COVID</span></div>
-    </div>
-    <div class="ctx-card">
-      <div class="ctx-label"><span class="lang-en">Household Debt Peak</span><span class="lang-zh" style="display:none">家庭債務高峰</span></div>
-      <div class="ctx-val" style="color:#a16207">93.2%</div>
-      <div class="ctx-sub"><span class="lang-en">2020 COVID peak → 84.8% now</span><span class="lang-zh" style="display:none">2020 COVID高峰 → 現84.8%</span></div>
-    </div>
+  <!-- ── Watch ── -->
+  <div class="watch">
+    <h3><span class="lang-en">What to Watch</span><span class="lang-zh" style="display:none">觀察重點</span></h3>
+    <ul>
+      <li><span class="lang-en"><b>Next BNM meeting · 9 Jul 2026</b> — market sees the OPR held at 2.75% through year-end.</span><span class="lang-zh" style="display:none"><b>下次國行利率會議 · 2026年7月9日</b> —— 市場預期OPR維持2.75%到年底。</span></li>
+      <li><span class="lang-en"><b>RTS Link · Jan 2027</b> — passenger service is the near-term Johor Bahru demand catalyst.</span><span class="lang-zh" style="display:none"><b>新柔捷運（RTS）· 2027年1月</b> —— 客運通車是新山需求的近期催化劑。</span></li>
+      <li><span class="lang-en"><b>Overhang trajectory</b> — whether 2026 extends the surge, or the rate cut + exemptions clear stock.</span><span class="lang-zh" style="display:none"><b>滯銷走勢</b> —— 2026年是續增，還是降息加豁免帶動去化。</span></li>
+    </ul>
   </div>
 
-  <!-- ── Chart 1: Monetary Cycle ── -->
-  <div class="section-label" style="margin-bottom:12px">
-    <span class="lang-en">Monetary Cycle × House Prices</span><span class="lang-zh" style="display:none">貨幣週期 × 房價</span>
-  </div>
-  <div class="chart-insight lang-en">
-    <strong>What to watch:</strong> House prices lag policy by 12–18 months. The 2020–21 OPR floor (1.75%) plus the M2 surge pre-loaded the 2022–24 recovery; the July-2025 cut to 2.75% now feeds into 2026–27. But note the gap between the OPR (2.75%) and the average lending rate (4.56%) — the spread stays wide, so the transmission to mortgage affordability is partial.
-  </div>
-  <div class="chart-insight lang-zh" style="display:none">
-    <strong>重點觀察：</strong>房價對利率向來慢半拍，通常落後12到18個月。2020到2021年OPR壓在1.75%的歷史低位、又碰上M2大幅放量，這股資金力道墊出了2022到2024年那波漲勢；2025年7月這次降到2.75%，效應大概要到2026、2027年才浮得出來。不過有一點要盯：OPR雖然降到2.75%，平均房貸利率還掛在4.56%，中間這段利差遲遲沒收窄，等於降息的甜頭只有一部分真正落到買房人手上。
-  </div>
-  <div class="chart-card" style="margin-bottom:28px">
-    <h3 style="margin-bottom:4px">
-      <span class="lang-en">OPR / Lending Rate / CPI / M2 vs MHPI (2008–2026)</span>
-      <span class="lang-zh" style="display:none">OPR / 貸款利率 / CPI / M2 vs MHPI（2008–2026）</span>
-    </h3>
-    <div id="chartMacroMonetary" style="height:440px"></div>
-  </div>
-
-  <!-- ── Chart 2: Real Economy ── -->
-  <div class="section-label" style="margin-bottom:12px">
-    <span class="lang-en">Real Economy × House Prices</span><span class="lang-zh" style="display:none">實體經濟 × 房價</span>
-  </div>
-  <div class="chart-insight lang-en">
-    <strong>What to watch:</strong> Growth is resilient (Q1 2026 GDP +5.4%, jobless rate ~3.0%, a multi-year low), which is the real floor under prices. But housing-loan growth has slowed to ~6% — well below the 2010–13 boom (14%) — so this is income-and-jobs support, not a credit-fuelled melt-up. Watch the 2026 export normalisation as 2025's tariff front-loading unwinds.
-  </div>
-  <div class="chart-insight lang-zh" style="display:none">
-    <strong>撐盤的是基本面：</strong>經濟底子夠硬（2026年第一季GDP +5.4%、失業率約3.0%、多年最低），這才是撐住房價的真正地基。但房貸成長已經慢到約6%，跟2010到2013年榮景時的14%差一大截，說明這波是靠就業和收入在撐，不是信貸吹出來的。接下來要留神2026年的出口：2025年為了趕在關稅生效前出貨，那股動能今年會回吐。
-  </div>
-  <div class="chart-card" style="margin-bottom:28px">
-    <h3 style="margin-bottom:4px">
-      <span class="lang-en">GDP / Unemployment / Housing Loans vs MHPI (2008–2026)</span>
-      <span class="lang-zh" style="display:none">GDP / 失業率 / 房貸成長 vs MHPI（2008–2026）</span>
-    </h3>
-    <div id="chartMacroReal" style="height:440px"></div>
-  </div>
-
-  <!-- ── Chart 3: Household Leverage ── -->
-  <div class="section-label" style="margin-bottom:12px">
-    <span class="lang-en">The Affordability Ceiling — Household Leverage</span><span class="lang-zh" style="display:none">可負擔性的天花板：家庭槓桿</span>
-  </div>
-  <div class="chart-insight lang-en">
-    <strong>Why it caps the cycle:</strong> Household debt hit 93.2% of GDP in the 2020 COVID slump (denominator effect) and has since normalised to ~84.8% — but that is still high by regional standards, and housing loans are ~61% of it. With the median debt-service ratio on new loans at 41%, the marginal buyer is stretched. This is the structural reason Malaysian prices grind rather than spike, even when rates fall. The offset: household financial assets are ~2.1× total debt and impaired-loan ratios sit near 1.1%, so the leverage is heavy but well-collateralised.
-  </div>
-  <div class="chart-insight lang-zh" style="display:none">
-    <strong>為什麼這條線壓住房價上檔：</strong>家庭債務在2020年那波衰退時一度衝到GDP的93.2%（分母縮水的效應），後來回到約84.8%，但放在區域裡看還是偏高，當中房貸就佔了六成。新批貸款的償債比（DSR）中位數已達41%，邊際買家其實被綁得很緊。這也是為什麼馬來西亞房價就算降息，多半也是磨著漲、很難一口氣噴出。反過來講也有底氣：家庭金融資產約是總負債的2.1倍，不良貸款比率才約1.1%，槓桿是重，但抵押夠扎實。
-  </div>
-  <div class="chart-card" style="margin-bottom:28px">
-    <h3 style="margin-bottom:4px">
-      <span class="lang-en">Household Debt-to-GDP (%) · 2013–2025</span>
-      <span class="lang-zh" style="display:none">家庭債務佔GDP（%）· 2013–2025</span>
-    </h3>
-    <div id="chartMacroLeverage" style="height:300px"></div>
-  </div>
-
-  <!-- ── Chart 4: Supply Overhang ── -->
-  <div class="section-label" style="margin-bottom:12px">
-    <span class="lang-en">The Supply Warning — Completed Overhang</span><span class="lang-zh" style="display:none">供給警訊：完工滯銷</span>
-  </div>
-  <div class="chart-insight lang-en">
-    <strong>The standout negative:</strong> Unsold completed homes were being worked down steadily to a 2024 low of 23,149 units (RM13.9bn) — then jumped <strong>+31.6%</strong> to 30,471 units (RM17.7bn) in 2025. Roughly 47% is condos/apartments, and ~92% of Klang Valley overhang is high-rise. Separately, the serviced-apartment glut (counted as commercial, not in these bars) is concentrated in Johor (~9,000 units). The read: demand is real but selective — affordable landed clears, while high-rise and pricey stock sticks.
-  </div>
-  <div class="chart-insight lang-zh" style="display:none">
-    <strong>最該擔心的是供給端：</strong>完工未售的住宅本來一路在去化，到2024年降到23,149戶（RM139億）的低點，2025年卻一口氣暴增<strong>31.6%</strong>，又彈回30,471戶（RM177億）。當中約47%是公寓與共管式住宅，巴生谷的滯銷更有約92%是高層產品。另外，服務式公寓（歸在商業類、不算進這張圖）的庫存集中在柔佛，約9,000戶。說穿了：需求是真的，但很挑，可負擔的有地住宅賣得動，高層和高價產品就卡在那。
-  </div>
-  <div class="chart-card" style="margin-bottom:28px">
-    <h3 style="margin-bottom:4px">
-      <span class="lang-en">Unsold Completed Residential — Units & RM Value (2019–2025)</span>
-      <span class="lang-zh" style="display:none">完工未售住宅：戶數與金額（2019–2025）</span>
-    </h3>
-    <div id="chartMacroOverhang" style="height:300px"></div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- ── KL Spotlight ── -->
-  <div class="section-label" style="margin-bottom:12px">
-    <span class="lang-en">Kuala Lumpur Spotlight</span><span class="lang-zh" style="display:none">吉隆坡焦點</span>
-  </div>
-  <div class="kl-band">
-    <div class="ctx-grid">
-      <div class="ctx-card">
-        <div class="ctx-label"><span class="lang-en">KL Avg House Price</span><span class="lang-zh" style="display:none">吉隆坡均價</span></div>
-        <div class="ctx-val" style="color:#b91c1c">RM805k</div>
-        <div class="ctx-sub"><span class="lang-en">−4.3% YoY · the national soft spot</span><span class="lang-zh" style="display:none">年減4.3% · 全國最弱</span></div>
-      </div>
-      <div class="ctx-card">
-        <div class="ctx-label"><span class="lang-en">KL Overhang</span><span class="lang-zh" style="display:none">吉隆坡滯銷</span></div>
-        <div class="ctx-val" style="color:#a16207">3,643</div>
-        <div class="ctx-sub"><span class="lang-en">units · RM3.16bn unsold</span><span class="lang-zh" style="display:none">戶 · RM31.6億未售</span></div>
-      </div>
-      <div class="ctx-card">
-        <div class="ctx-label"><span class="lang-en">KL Gross Yield</span><span class="lang-zh" style="display:none">吉隆坡毛租金回報</span></div>
-        <div class="ctx-val" style="color:#15803d">~4.9%</div>
-        <div class="ctx-sub"><span class="lang-en">avg rent RM2,901 · +6.1% YoY</span><span class="lang-zh" style="display:none">均租RM2,901 · 年增6.1%</span></div>
-      </div>
-      <div class="ctx-card">
-        <div class="ctx-label"><span class="lang-en">KL Approved Investment 2025</span><span class="lang-zh" style="display:none">吉隆坡核准投資2025</span></div>
-        <div class="ctx-val">RM63.3b</div>
-        <div class="ctx-sub"><span class="lang-en">#3 state · digital-economy led</span><span class="lang-zh" style="display:none">全國第3 · 數位經濟領軍</span></div>
-      </div>
-    </div>
-    <p class="narr lang-en" style="margin-bottom:0"><strong>The KL paradox:</strong> the national index is at a record, but KL's average transacted price is falling — a mix shift toward affordable stock plus genuine high-rise oversupply at the top end. Yet the floor is firm: rents are rising +6.1%, yields near 4.9% beat the deposit rate, and the digital-economy build-out (Microsoft's "Malaysia West" cloud region, AWS Cyberjaya) is adding skilled jobs across Greater KL. Knight Frank still projects <strong>+3–5% a year through 2028 for prime pockets</strong> (KLCC, Bangsar, Mont Kiara) on thin new supply. The MRT3 Circle Line is the next big TOD catalyst, but with construction now slipping to 2027 and operation to ~2028+, that uplift is a medium-term, not a today, story. Net: a stock-pickers' market, not a beta market.</p>
-    <p class="narr lang-zh" style="display:none;margin-bottom:0"><strong>吉隆坡的矛盾：</strong>全國指數創高，吉隆坡的平均成交價卻在跌。一部分是成交結構往可負擔產品傾斜，一部分是高端高層真的供過於求。但底盤很穩：租金年增6.1%、回報率近4.9%高於定存，數位經濟落地（微軟「Malaysia West」雲端區、AWS賽城）正為大吉隆坡增加高技能就業。萊坊（Knight Frank）仍預估精華地段（KLCC、孟沙、滿家樂）在新供給稀缺下<strong>到2028年每年漲3%至5%</strong>。MRT3環線是下一個TOD大催化劑，但動工已順延到2027年、通車約在2028年後，這份增值屬於中期題材，不是當下行情。一句話：這是選股的市場，不是買大盤的市場。</p>
-  </div>
-
-  <!-- ── Structural Catalysts ── -->
-  <div class="section-label" style="margin-bottom:12px">
-    <span class="lang-en">Structural Demand — Where the Money Is Going</span><span class="lang-zh" style="display:none">結構性需求：資金往哪裡去</span>
-  </div>
-  <div class="chart-insight lang-en">
-    <strong>The map matters:</strong> Malaysia drew a record RM426.7bn of approved investment in 2025 (+11%), and it is highly concentrated. Johor alone took RM110bn — the most of any state — on the back of the Johor-Singapore SEZ and the data-centre cluster, with Selangor and KL next. The three property markets in scope capture roughly 60% of national approved investment. This is the structural counterweight to the overhang.
-  </div>
-  <div class="chart-insight lang-zh" style="display:none">
-    <strong>錢往哪裡流才是重點：</strong>馬來西亞2025年核准投資衝上RM4,267億新高（+11%），而且高度集中。光柔佛一州就吃下RM1,100億，居全國之首，靠的就是柔新特區（JS-SEZ）和數據中心群聚；接著才是雪蘭莪和吉隆坡。本站盯的這三個市場，合計就佔了全國核准投資約六成。這股力道，正是用來對沖滯銷壓力的結構性後盾。
-  </div>
-  <div class="chart-card" style="margin-bottom:24px">
-    <h3 style="margin-bottom:4px">
-      <span class="lang-en">Approved Investment by State, 2025 (RM bn)</span>
-      <span class="lang-zh" style="display:none">2025各州核准投資（RM十億）</span>
-    </h3>
-    <div id="chartMacroState" style="height:260px"></div>
-  </div>
-  <div class="ev-grid">
-    <div class="ev-card" style="border-left:4px solid #0d2244">
-      <div class="ev-year" style="color:#0d2244"><span class="lang-en">JOHOR-SINGAPORE SEZ</span><span class="lang-zh" style="display:none">柔新經濟特區</span></div>
-      <div class="ev-title"><span class="lang-en">RM68bn Drawn in First 9 Months</span><span class="lang-zh" style="display:none">頭9個月吸資RM680億</span></div>
-      <div class="ev-desc"><span class="lang-en">Agreement signed Jan 2025; ~RM68bn (US$17.3bn) approved by 9M-2025, Singapore the top source. 5% corporate tax for up to 15yr, 15% flat tax for knowledge workers. Johor targets RM140bn investment in 2026. The single biggest demand driver for JB property.</span><span class="lang-zh" style="display:none">2025年1月簽署協議；至2025年首9個月已核准約RM680億（173億美元），新加坡為最大來源。企業稅低至5%、最長15年，知識型員工個稅統一15%。柔佛訂下2026年RM1,400億投資目標。這是新山房產最大的需求引擎。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #1d4ed8">
-      <div class="ev-year" style="color:#1d4ed8"><span class="lang-en">RTS LINK (JB ↔ SINGAPORE)</span><span class="lang-zh" style="display:none">新柔捷運 RTS Link</span></div>
-      <div class="ev-title"><span class="lang-en">Passenger Service Targeted Jan 2027</span><span class="lang-zh" style="display:none">客運目標2027年1月通車</span></div>
-      <div class="ev-desc"><span class="lang-en">4km cross-border rail, ~6-min ride, ~10,000 pax/hr each way. Systems works ~65% done; civil completion end-2026, revenue service Jan 2027. Aims to capture ~35% of ~350,000 daily Causeway crossers — a step-change for JB transit-linked demand.</span><span class="lang-zh" style="display:none">4公里跨境鐵路，車程約6分鐘，單向每小時約1萬人次。系統工程約完成65%；土建2026年底完工，2027年1月載客營運。目標吃下每日約35萬過境人潮中的約35%，將大幅改變新山沿線的軌道型需求。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #15803d">
-      <div class="ev-year" style="color:#15803d"><span class="lang-en">DATA CENTRES</span><span class="lang-zh" style="display:none">數據中心</span></div>
-      <div class="ev-title"><span class="lang-en">~US$34bn Over 4yr · SEA's #1 Hub</span><span class="lang-zh" style="display:none">4年吸資約340億美元 · 東南亞第一</span></div>
-      <div class="ev-desc"><span class="lang-en">Microsoft, Google, AWS, DayOne anchoring Johor & Selangor; Johor heading toward ~60% of national capacity by 2030. RM14.1bn approved in 2025 alone. Risk: power/water strain — the RP4 tariff rose to 45.62 sen/kWh and the government is curbing non-AI projects.</span><span class="lang-zh" style="display:none">微軟、Google、AWS、DayOne落腳柔佛與雪蘭莪；柔佛預計2030年將佔全國產能約六成。光2025年就核准RM141億。風險在電力與水：RP4電價已升至每度45.62仙，政府正限制非AI類的數據中心。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #a16207">
-      <div class="ev-year" style="color:#a16207"><span class="lang-en">FOREIGN BUYERS (MM2H)</span><span class="lang-zh" style="display:none">外國買家（MM2H）</span></div>
-      <div class="ev-title"><span class="lang-en">~5,972 Participants · Thin Uptake</span><span class="lang-zh" style="display:none">約5,972人 · 申辦仍偏冷</span></div>
-      <div class="ev-desc"><span class="lang-en">The relaunched three-tier MM2H (fixed deposit from US$150k, property typically from RM1m) had ~5,972 active participants by Aug 2025 — modest, as the financial bar is high. China leads, then Taiwan/HK/Singapore. A new SEZ pathway ties residency to Johor.</span><span class="lang-zh" style="display:none">改版的三級制MM2H（定存門檻自15萬美元起、購屋多自RM100萬起），至2025年8月約5,972名有效參與者，因財務門檻高而偏少。中國居首，其次台灣、香港、新加坡。新增的特區通道把居留與柔佛綁定。</span></div>
-    </div>
-  </div>
-
-  <!-- ── Policy & Macroprudential ── -->
-  <div class="section-label" style="margin-bottom:12px">
-    <span class="lang-en">Policy & Macroprudential — 2025/2026 Changes</span><span class="lang-zh" style="display:none">政策與宏觀審慎：2025/2026變動</span>
-  </div>
-  <div class="ev-grid">
-    <div class="ev-card" style="border-left:4px solid #b91c1c">
-      <div class="ev-year" style="color:#b91c1c"><span class="lang-en">EFF. 1 JAN 2026 · HEADWIND</span><span class="lang-zh" style="display:none">2026年1月1日生效 · 逆風</span></div>
-      <div class="ev-title"><span class="lang-en">Foreign Stamp Duty Doubled to 8%</span><span class="lang-zh" style="display:none">外國買家印花稅倍增至8%</span></div>
-      <div class="ev-desc"><span class="lang-en">Non-citizens (excl. PRs) now pay a flat 8% stamp duty on residential transfers, up from 4%. A direct cost on foreign demand, layered on top of state price floors (mostly ≥RM1m) and the 8% foreign-buyer LTV ceiling around 60–70%.</span><span class="lang-zh" style="display:none">非公民（永久居民除外）購買住宅的印花稅由4%調高為統一8%，直接墊高外資購屋成本，疊加在各州最低售價（多為RM100萬起）與外國買家約六至七成的貸款成數上限之上。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #15803d">
-      <div class="ev-year" style="color:#15803d"><span class="lang-en">TO 31 DEC 2027 · TAILWIND</span><span class="lang-zh" style="display:none">至2027年12月31日 · 順風</span></div>
-      <div class="ev-title"><span class="lang-en">First-Home Stamp Exemption Extended</span><span class="lang-zh" style="display:none">首購族印花稅豁免延長</span></div>
-      <div class="ev-desc"><span class="lang-en">100% stamp-duty exemption on the transfer and loan agreement for citizens buying a first home ≤RM500k, for SPAs executed through end-2027. Directly supports the affordable segment that is already clearing fastest. RPGT left unchanged (0% after 5-year hold for citizens).</span><span class="lang-zh" style="display:none">公民首次購買RM50萬以下住宅，買賣與貸款合約印花稅100%豁免，適用至2027年底前簽署的SPA。直接利多本已去化最快的可負擔區間。產業盈利稅（RPGT）維持不變（公民持有滿5年為0%）。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #a16207">
-      <div class="ev-year" style="color:#a16207"><span class="lang-en">SEP 2025 · SUBSIDY REFORM</span><span class="lang-zh" style="display:none">2025年9月 · 補貼改革</span></div>
-      <div class="ev-title"><span class="lang-en">RON95 Rationalisation (BUDI95)</span><span class="lang-zh" style="display:none">RON95油補合理化（BUDI95）</span></div>
-      <div class="ev-desc"><span class="lang-en">Targeted fuel subsidy: citizens get a lower price on up to 200 litres/month; higher-income and foreigners pay market rate. Gross savings ~RM5bn/yr. Inflation impact was mildly disinflationary (~−0.1pp) since most pay less — a key reason CPI stayed near 1.5–1.9%.</span><span class="lang-zh" style="display:none">針對性油補：公民每月200公升內享補貼價，高收入者與外國人付市價。毛節省約每年RM50億。對通膨反而略偏抑制（約−0.1個百分點），因多數人付得更少，這也是CPI得以維持在1.5%至1.9%附近的關鍵。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #1d4ed8">
-      <div class="ev-year" style="color:#1d4ed8"><span class="lang-en">JUL 2025–DEC 2026 · COST</span><span class="lang-zh" style="display:none">2025年7月–2026年12月 · 成本</span></div>
-      <div class="ev-title"><span class="lang-en">RP4 Electricity Tariff Up</span><span class="lang-zh" style="display:none">RP4電價上調</span></div>
-      <div class="ev-desc"><span class="lang-en">Peninsular base tariff raised to 45.62 sen/kWh under a new voltage-based structure that penalises heavy users. A cost headwind for energy-intensive data centres and for developers' build costs, and a swing factor for the inflation path into 2027.</span><span class="lang-zh" style="display:none">半島基本電價上調至每度45.62仙，採新的電壓分級結構，對大用電戶加價。對耗電的數據中心與發展商的建造成本構成壓力，也是2027年前通膨路徑的擺動因子。</span></div>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- ── Key Events Timeline ── -->
-  <div class="section-label" style="margin-bottom:16px">
-    <span class="lang-en">Key Cycle Events (2008–2026)</span><span class="lang-zh" style="display:none">關鍵週期事件（2008–2026）</span>
-  </div>
-  <div class="ev-grid">
-    <div class="ev-card" style="border-left:4px solid #6b7a92">
-      <div class="ev-year" style="color:#6b7a92"><span class="lang-en">2008–2009 · GFC SHOCK</span><span class="lang-zh" style="display:none">2008–2009 · GFC衝擊</span></div>
-      <div class="ev-title"><span class="lang-en">BNM Cuts OPR to 2.00%</span><span class="lang-zh" style="display:none">BNM將OPR降至2.00%</span></div>
-      <div class="ev-desc"><span class="lang-en">Three cuts from 3.50% as global trade collapses. GDP contracts −1.6% in 2009 — worst since the Asian Financial Crisis. MHPI dips but recovers quickly.</span><span class="lang-zh" style="display:none">全球貿易崩潰，BNM自3.50%三度降息。2009年GDP衰退1.6%，為亞洲金融危機以來最差。MHPI微跌後迅速反彈。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #15803d">
-      <div class="ev-year" style="color:#15803d"><span class="lang-en">2010–2013 · PROPERTY BOOM</span><span class="lang-zh" style="display:none">2010–2013 · 房產榮景</span></div>
-      <div class="ev-title"><span class="lang-en">ETP Drives M2 Surge to 14.6%</span><span class="lang-zh" style="display:none">ETP計劃推動M2達14.6%</span></div>
-      <div class="ev-desc"><span class="lang-en">The Economic Transformation Programme unleashes infrastructure spend; credit floods property. MHPI gains +34% in four years. Housing-loan growth peaks at 14% (2010).</span><span class="lang-zh" style="display:none">經濟轉型計劃（ETP）釋放基建支出，信貸湧入房產。MHPI四年累漲34%，房貸成長率於2010年達14%高峰。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #a16207">
-      <div class="ev-year" style="color:#a16207"><span class="lang-en">JUL 2014 · TIGHTENING BEGINS</span><span class="lang-zh" style="display:none">2014年7月 · 收緊開始</span></div>
-      <div class="ev-title"><span class="lang-en">BNM Hikes to 3.25% + TDSR/LTV Caps</span><span class="lang-zh" style="display:none">BNM升息至3.25%，收緊TDSR/LTV</span></div>
-      <div class="ev-desc"><span class="lang-en">Total Debt Service Ratio limits and tighter LTV rules curb speculation. The overhang starts building; MHPI growth decelerates sharply.</span><span class="lang-zh" style="display:none">政府實施TDSR限制與更嚴LTV，抑制投機。房產積壓開始累積，MHPI升速急劇放緩。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #a16207">
-      <div class="ev-year" style="color:#a16207"><span class="lang-en">APR 2015 · GST SHOCK</span><span class="lang-zh" style="display:none">2015年4月 · GST衝擊</span></div>
-      <div class="ev-title"><span class="lang-en">6% GST Raises Construction Costs</span><span class="lang-zh" style="display:none">6% GST推高建設成本</span></div>
-      <div class="ev-desc"><span class="lang-en">GST lifts input costs across the supply chain; developers pass them through and affordability deteriorates. An OPR cut to 3.00% in July 2016 gives partial relief.</span><span class="lang-zh" style="display:none">消費稅推高整條供應鏈成本，發展商轉嫁買家，可負擔性惡化。2016年7月OPR降至3.00%提供部分紓緩。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #1d4ed8">
-      <div class="ev-year" style="color:#1d4ed8"><span class="lang-en">2020 · COVID SHOCK</span><span class="lang-zh" style="display:none">2020年 · COVID衝擊</span></div>
-      <div class="ev-title"><span class="lang-en">4 Cuts → OPR Historic Low 1.75%</span><span class="lang-zh" style="display:none">4次降息 → OPR歷史低點1.75%</span></div>
-      <div class="ev-desc"><span class="lang-en">Economy contracts −5.5% — worst on record. Four consecutive cuts, plus PENJANA/PEMULIH stimulus and a loan moratorium. Household debt spikes to 93.2% of GDP on the GDP collapse.</span><span class="lang-zh" style="display:none">GDP衰退5.5%，史上最差。連降四次息，加上PENJANA/PEMULIH刺激與貸款延期。家庭債務因GDP塌陷飆至佔比93.2%。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #1d4ed8">
-      <div class="ev-year" style="color:#1d4ed8"><span class="lang-en">2021 · STIMULUS PEAK</span><span class="lang-zh" style="display:none">2021年 · 刺激高峰</span></div>
-      <div class="ev-title"><span class="lang-en">HOC Drives Volume, OPR Held at 1.75%</span><span class="lang-zh" style="display:none">HOC推升量能，OPR維持1.75%</span></div>
-      <div class="ev-desc"><span class="lang-en">The Home Ownership Campaign boosts transactions; GDP rebounds +3.3%. But COVID completions push the overhang to a then-record 36,863 units — the supply hangover that still echoes today.</span><span class="lang-zh" style="display:none">擁屋計劃（HOC）刺激交易量，GDP反彈3.3%。但疫情期間竣工把滯銷推到當時新高的36,863戶，這波供給後遺症至今仍有餘震。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #b91c1c">
-      <div class="ev-year" style="color:#b91c1c"><span class="lang-en">2022–2023 · RATE HIKE CYCLE</span><span class="lang-zh" style="display:none">2022–2023 · 升息週期</span></div>
-      <div class="ev-title"><span class="lang-en">5 Hikes: 1.75% → 3.00%</span><span class="lang-zh" style="display:none">5次升息：1.75% → 3.00%</span></div>
-      <div class="ev-desc"><span class="lang-en">BNM normalises against global inflation. Despite higher rates, MHPI accelerates (+7.5% in 2022) as pent-up demand and a weak ringgit draw foreign buyers.</span><span class="lang-zh" style="display:none">BNM因應全球通膨而正常化利率。儘管升息，MHPI仍加速（2022年+7.5%），積壓需求與弱令吉吸引外國買家。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #6b7a92">
-      <div class="ev-year" style="color:#6b7a92"><span class="lang-en">2024 · POLICY HOLD & RECORD FDI</span><span class="lang-zh" style="display:none">2024 · 政策按兵 · FDI創高</span></div>
-      <div class="ev-title"><span class="lang-en">OPR Steady at 3.00% All Year</span><span class="lang-zh" style="display:none">OPR全年維持3.00%</span></div>
-      <div class="ev-desc"><span class="lang-en">GDP firms to +5.1%; approved investment hits a then-record RM378.5bn. The Johor-Singapore SEZ agreement is signed (Jan 2025). Conditions set for the pivot to come.</span><span class="lang-zh" style="display:none">GDP回到+5.1%，核准投資創當時新高RM3,785億。柔新特區協議簽署（2025年1月）。為隨後的政策轉向鋪好條件。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #0d2244;background:linear-gradient(135deg,#fbf3df,#fff)">
-      <div class="ev-year" style="color:#0d2244"><span class="lang-en">JUL 2025 · EASING PIVOT ◀</span><span class="lang-zh" style="display:none">2025年7月 · 降息轉向 ◀</span></div>
-      <div class="ev-title"><span class="lang-en">First Cut in 5yr: OPR → 2.75%</span><span class="lang-zh" style="display:none">五年首降：OPR → 2.75%</span></div>
-      <div class="ev-desc"><span class="lang-en">A pre-emptive 25bp insurance cut against the 2025 US tariff shock and softer exports — not a recession response. Growth still +5.2% for 2025, CPI just 1.4%. Held at 2.75% through May 2026 with a neutral stance.</span><span class="lang-zh" style="display:none">針對2025年美國關稅衝擊與走弱出口的預防性保險式降息25個基點，並非衰退因應。2025年全年仍+5.2%，CPI僅1.4%。至2026年5月維持2.75%，立場中性。</span></div>
-    </div>
-    <div class="ev-card" style="border-left:4px solid #a16207;background:linear-gradient(135deg,#fbf3df,#fff)">
-      <div class="ev-year" style="color:#a16207"><span class="lang-en">2025–2026 · RECORDS & DIVERGENCE</span><span class="lang-zh" style="display:none">2025–2026 · 創高與分化</span></div>
-      <div class="ev-title"><span class="lang-en">Index at a High, but Cracks Below</span><span class="lang-zh" style="display:none">指數創高，底層出現裂縫</span></div>
-      <div class="ev-desc"><span class="lang-en">MHPI hits a record (236.7, Q4 2025) and approved FDI sets a record RM426.7bn — yet overhang jumps +31.6%, KL's average price falls −4.3%, and the foreign stamp duty doubles to 8% (Jan 2026). The RTS Link nears its Jan-2027 opening.</span><span class="lang-zh" style="display:none">MHPI創高（2025 Q4達236.7）、核准FDI創高RM4,267億，但滯銷暴增31.6%、吉隆坡均價跌4.3%、外國印花稅倍增至8%（2026年1月）。新柔捷運逼近2027年1月通車。</span></div>
-    </div>
-  </div>
-
-  <!-- ── Outlook Summary ── -->
-  <div class="summary-card" style="border-left-color:#15803d;margin-bottom:22px;padding:20px 24px">
-    <div style="font-size:12px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:#15803d;font-family:Inter,sans-serif;margin-bottom:10px">
-      <span class="lang-en">Current Cycle Outlook</span><span class="lang-zh" style="display:none">當前週期展望</span>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
-      <div>
-        <div style="font-size:12px;font-weight:600;color:#0d2244;font-family:Inter,sans-serif;margin-bottom:6px">
-          <span class="lang-en">Tailwinds</span><span class="lang-zh" style="display:none">順風因素</span>
-        </div>
-        <ul style="margin:0;padding-left:16px;font-size:12px;color:#6b7a92;line-height:1.9;font-family:Inter,sans-serif">
-          <li><span class="lang-en">OPR cut to 2.75% + first-home stamp exemption lift affordability</span><span class="lang-zh" style="display:none">OPR降至2.75%加首購印花豁免，提升可負擔性</span></li>
-          <li><span class="lang-en">Johor SEZ + RTS Link (Jan 2027) anchor cross-border demand</span><span class="lang-zh" style="display:none">柔佛特區與RTS（2027年1月）撐起跨境需求</span></li>
-          <li><span class="lang-en">Record FDI (RM426.7bn) + data centres lift Johor/Selangor jobs</span><span class="lang-zh" style="display:none">FDI創高RM4,267億，數據中心推升柔雪就業</span></li>
-          <li><span class="lang-en">Resilient GDP (+5.4%), inflation &lt;2%, ringgit recovered ~10%</span><span class="lang-zh" style="display:none">GDP韌性+5.4%、通膨低於2%、令吉回升約10%</span></li>
-        </ul>
-      </div>
-      <div>
-        <div style="font-size:12px;font-weight:600;color:#0d2244;font-family:Inter,sans-serif;margin-bottom:6px">
-          <span class="lang-en">Risks to Monitor</span><span class="lang-zh" style="display:none">風險監控</span>
-        </div>
-        <ul style="margin:0;padding-left:16px;font-size:12px;color:#6b7a92;line-height:1.9;font-family:Inter,sans-serif">
-          <li><span class="lang-en">Household debt/GDP ~84.8% caps mortgage-driven upside</span><span class="lang-zh" style="display:none">家庭債務/GDP約84.8%，封住房貸驅動的上行</span></li>
-          <li><span class="lang-en">Overhang +31.6%; high-rise & serviced-apt glut (esp. Johor)</span><span class="lang-zh" style="display:none">滯銷+31.6%，高層與服務式公寓過剩（柔佛尤甚）</span></li>
-          <li><span class="lang-en">KL average price falling −4.3%; oversupply at the top end</span><span class="lang-zh" style="display:none">吉隆坡均價跌4.3%，高端供過於求</span></li>
-          <li><span class="lang-en">8% foreign stamp duty + 2026 export normalisation drag</span><span class="lang-zh" style="display:none">8%外國印花稅，加上2026年出口正常化拖累</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── What to Watch ── -->
-  <div class="section-label" style="margin-bottom:12px">
-    <span class="lang-en">What to Watch — 2026/2027</span><span class="lang-zh" style="display:none">後續觀察：2026/2027</span>
-  </div>
-  <div class="ev-grid">
-    <div class="ev-card">
-      <div class="ev-year" style="color:#0d2244"><span class="lang-en">NEXT MPC · 9 JUL 2026</span><span class="lang-zh" style="display:none">下次MPC · 2026年7月9日</span></div>
-      <div class="ev-desc"><span class="lang-en">Consensus is for a hold at 2.75% through end-2026; a +25bp hike is only a tail-risk if inflation surprises high. No further cut expected. Remaining 2026 meetings: 9 Jul, 3 Sep, 5 Nov.</span><span class="lang-zh" style="display:none">市場共識為2.75%維持到2026年底；僅在通膨意外走高時才有+25bp升息的尾部風險，不預期再降息。2026剩餘會議：7/9、9/3、11/5。</span></div>
-    </div>
-    <div class="ev-card">
-      <div class="ev-year" style="color:#1d4ed8"><span class="lang-en">RTS LINK · JAN 2027</span><span class="lang-zh" style="display:none">新柔捷運 · 2027年1月</span></div>
-      <div class="ev-desc"><span class="lang-en">Passenger service opening is the near-term catalyst for transit-linked JB property. Trial running underway; watch for any slip in the civil-completion (end-2026) milestone.</span><span class="lang-zh" style="display:none">客運通車是新山軌道型房產的近期催化劑。試運行進行中，留意土建（2026年底）里程碑是否順延。</span></div>
-    </div>
-    <div class="ev-card">
-      <div class="ev-year" style="color:#a16207"><span class="lang-en">OVERHANG TRAJECTORY</span><span class="lang-zh" style="display:none">滯銷走勢</span></div>
-      <div class="ev-desc"><span class="lang-en">The key swing factor. Does 2026 extend the +31.6% surge, or does the OPR cut + stamp exemptions clear stock? Watch the high-rise and Johor serviced-apartment numbers in the next NAPIC report.</span><span class="lang-zh" style="display:none">最關鍵的擺動因子。2026年是延續31.6%的暴增，還是降息加印花豁免帶動去化？盯緊下份NAPIC報告中的高層與柔佛服務式公寓數字。</span></div>
-    </div>
-    <div class="ev-card">
-      <div class="ev-year" style="color:#15803d"><span class="lang-en">JS-SEZ & MRT3 MILESTONES</span><span class="lang-zh" style="display:none">柔新特區與MRT3里程碑</span></div>
-      <div class="ev-desc"><span class="lang-en">JS-SEZ blueprint (targeted Q1 2026) and Johor's RM140bn 2026 investment goal gauge the demand pipeline. For KL, MRT3 construction starting 2027 sets the timing of the next TOD re-rating (~2028+).</span><span class="lang-zh" style="display:none">柔新特區藍圖（目標2026 Q1）與柔佛2026年RM1,400億投資目標，可衡量需求管線。對吉隆坡而言，MRT3於2027年動工將決定下一輪TOD重估的時點（約2028年後）。</span></div>
-    </div>
-  </div>
-
-  <!-- ── Data Source Footer ── -->
-  <p class="source-footer">
-    <span class="lang-en">Sources: BNM (OPR decisions, Financial Stability Review H1-2025, Monthly Highlights & Statistics · bnm.gov.my), DOSM OpenDOSM (GDP Q1-2026, CPI Apr-2026, Labour Force Survey · open.dosm.gov.my), NAPIC/JPPH (Malaysian House Price Index to Q1-2026; Property Market Report 2025 overhang & transactions · napic.jpph.gov.my), MIDA (2025 approved investments), data.gov.my, MoF Budget 2026. MHPI annual points + latest Q1-2026 = 235.2; overhang figures are completed-residential only (serviced apartments/SOHO counted separately). Some sub-series cross-referenced via The Edge, The Star, Knight Frank.</span>
-    <span class="lang-zh" style="display:none">來源：BNM（OPR決策、2025上半年金融穩定報告、月度統計 · bnm.gov.my）、DOSM OpenDOSM（2026 Q1 GDP、2026年4月CPI、勞動力調查 · open.dosm.gov.my）、NAPIC/JPPH（馬來西亞房價指數至2026 Q1；2025年產業市場報告之滯銷與成交 · napic.jpph.gov.my）、MIDA（2025核准投資）、data.gov.my、財政部2026財案。MHPI年度點位加最新2026 Q1 = 235.2；滯銷僅計完工住宅（服務式公寓/SOHO另計）。部分子數列另經The Edge、The Star、Knight Frank交叉核對。</span>
+  <!-- ── Source ── -->
+  <p class="src">
+    <span class="lang-en">Sources: BNM (OPR, Financial Stability Review H1-2025), DOSM OpenDOSM (GDP Q1-2026, CPI Apr-2026), NAPIC/JPPH (House Price Index to Q1-2026; Property Market Report 2025 overhang), MIDA, data.gov.my. Overhang = completed residential only (serviced apartments / SOHO counted separately).</span>
+    <span class="lang-zh" style="display:none">資料來源：BNM（OPR、2025上半年金融穩定報告）、DOSM OpenDOSM（2026 Q1 GDP、2026年4月 CPI）、NAPIC/JPPH（房價指數至2026 Q1；2025年產業市場報告滯銷數據）、MIDA、data.gov.my。滯銷僅計完工住宅（服務式公寓／SOHO另計）。</span>
   </p>
 
 </main>
@@ -544,172 +231,64 @@ body.zh .ev-desc,body.zh .ctx-sub,body.zh .chart-insight,body.zh .pivot-lede p,b
 </footer>
 
 <script>
-/* ---- data (2008–2026, actuals from BNM / DOSM / NAPIC / MIDA; latest = Q1/Q2 2026) ---- */
+/* ── data (BNM / DOSM / NAPIC / MIDA; latest = Q1/Q2 2026) ── */
 var years = ['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'];
-
-/* NAPIC MHPI. Confirmed anchors: 2018=193.3, 2023=216.5, 2024 full-yr ~225 (+3.3%), 2025 full-yr avg 233.1 (+2.6%, Q4 record 236.7), Q1-2026=235.2 (latest). 2008–2017 trend-interpolated. */
-var hpi = [130.1,128.0,131.5,138.0,149.6,162.3,174.2,180.4,185.1,190.0,193.3,196.5,197.3,197.6,205.0,216.5,225.0,233.1,235.2];
-
-/* Chart 1: Monetary Cycle */
-/* BNM OPR year-end. 2024=3.00, 2025=2.75 (−25bp 9 Jul 2025, first cut in 5yr), 2026=2.75 (held thru May). */
-var oprRate = [3.25,2.00,2.75,3.00,3.00,3.00,3.25,3.25,3.00,3.00,3.25,3.00,1.75,1.75,2.75,3.00,3.00,2.75,2.75];
-/* BNM Average Lending Rate (data.gov.my). 2026=4.56 (Mar 2026). */
-var avgLendingRate = [6.08,5.08,5.00,4.92,4.79,4.65,4.59,4.57,4.53,4.61,4.93,4.81,3.89,3.37,3.91,5.32,5.28,4.82,4.56];
-/* DOSM CPI YoY% annual avg. 2024=1.8, 2025=1.4, 2026=1.9 (Apr, latest). */
-var cpiYoy = [5.5,0.6,1.6,3.2,1.7,2.1,3.1,2.1,2.1,3.8,1.0,0.7,-1.1,2.5,3.4,2.5,1.8,1.4,1.9];
-/* BNM M2 YoY%. 2024=3.7, 2025=4.2 (Dec), 2026=3.7 (Jan, latest). */
-var m2Growth = [10.5,7.7,7.4,14.6,8.9,7.4,7.5,3.4,3.2,5.1,8.9,3.5,4.5,6.3,4.3,5.9,3.7,4.2,3.7];
-
-/* Chart 2: Real Economy */
-/* DOSM real GDP. 2024=5.1, 2025=5.2 (final), 2026=5.4 (Q1, latest). */
-var gdpGrowth = [4.8,-1.6,7.2,5.3,5.5,4.7,6.0,5.1,4.4,5.8,4.8,4.4,-5.5,3.3,9.0,3.5,5.1,5.2,5.4];
-/* DOSM Labour Force Survey. 2024=3.2, 2025=3.0, 2026=3.0 (Apr). */
-var unemployRate = [3.3,3.7,3.3,3.1,3.0,3.1,2.9,3.1,3.4,3.4,3.3,3.3,4.5,4.6,3.9,3.4,3.2,3.0,3.0];
-/* BNM outstanding housing loans YoY%. 2025=6.3 (Aug), 2026=5.6 (Jan household-loan proxy). */
-var housingLoanGrowth = [12.0,8.0,14.0,13.0,11.0,10.7,9.5,9.0,10.1,8.5,8.0,7.5,7.1,6.5,5.4,5.6,7.2,6.3,5.6];
-
-/* Chart 3: Household debt-to-GDP (BNM FSR/AR, year-end). 2025=84.8 (H1, latest). */
-var levYears = ['2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
-var hhDebtGDP = [86.6,86.8,89.1,88.4,83.8,83.0,82.7,93.2,89.0,84.3,84.2,84.1,84.8];
-
-/* Chart 4: Unsold completed residential (NAPIC, full-year). */
+var oprRate         = [3.25,2.00,2.75,3.00,3.00,3.00,3.25,3.25,3.00,3.00,3.25,3.00,1.75,1.75,2.75,3.00,3.00,2.75,2.75];
+var avgLendingRate  = [6.08,5.08,5.00,4.92,4.79,4.65,4.59,4.57,4.53,4.61,4.93,4.81,3.89,3.37,3.91,5.32,5.28,4.82,4.56];
+var hpi             = [130.1,128.0,131.5,138.0,149.6,162.3,174.2,180.4,185.1,190.0,193.3,196.5,197.3,197.6,205.0,216.5,225.0,233.1,235.2];
 var ohYears = ['2019','2020','2021','2022','2023','2024','2025'];
 var ohUnits = [30664,29565,36863,27746,25816,23149,30471];
 var ohValue = [18.82,18.92,22.79,18.41,17.68,13.94,17.73];
 
-/* Chart 5: Approved investment by state, 2025 (MIDA, RM bn). */
-var stEN = ['Johor','Selangor','Kuala Lumpur','Penang','Kedah'];
-var stZH = ['柔佛','雪蘭莪','吉隆坡','檳城','吉打'];
-var stInvest = [110.0,83.9,63.3,32.9,27.8];
-
-/* ---- chart infrastructure ---- */
 var C = {navy:'#0d2244',green:'#15803d',orange:'#a16207',red:'#b91c1c',blue:'#1d4ed8',muted:'#6b7a92',grid:'#ece5d4',gold:'#b8924a'};
-var baseText    = {color:C.muted,fontFamily:'Inter,"Noto Sans TC",sans-serif',fontSize:11};
-var baseTooltip = {trigger:'axis',backgroundColor:'#fff',borderColor:'#e5dfd0',borderWidth:1,textStyle:{color:C.navy,fontSize:11,fontFamily:'Inter'}};
-var baseLegend  = {top:8,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8};
-function mkAxis(o){
-  var b={axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:baseText,splitLine:{lineStyle:{color:C.grid}}};
-  var r=Object.assign({},b,o||{});
-  if(o&&o.axisLabel) r.axisLabel=Object.assign({},baseText,o.axisLabel);
-  return r;
-}
-function dotTip(p){var s=p[0].name+'<br/>';p.forEach(function(x){if(x.value==null)return;s+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+x.color+';margin-right:4px"></span>'+x.seriesName+': '+x.value+'<br/>';});return s;}
+var FF = 'Inter,"Noto Sans TC",sans-serif';
+var baseText = {color:C.muted,fontFamily:FF,fontSize:11};
+var baseTip  = {trigger:'axis',backgroundColor:'#fff',borderColor:'#e5dfd0',borderWidth:1,textStyle:{color:C.navy,fontSize:12,fontFamily:FF}};
+function mkAxis(o){var b={axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:Object.assign({},baseText),splitLine:{lineStyle:{color:C.grid}}};var r=Object.assign({},b,o||{});if(o&&o.axisLabel)r.axisLabel=Object.assign({},baseText,o.axisLabel);return r;}
+function nameStyle(){return {color:C.muted,fontSize:10,fontFamily:FF};}
 
 var allCharts = [];
-
-/* phase overlays shared by charts 1 & 2 */
-function phaseAreas(isZh){
-  return [
-    [{xAxis:'2008',itemStyle:{color:'rgba(107,114,128,0.10)'},label:{formatter:isZh?'GFC衝擊':'GFC Shock',color:'#6b7a92',fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2009'}],
-    [{xAxis:'2010',itemStyle:{color:'rgba(22,163,74,0.07)'},  label:{formatter:isZh?'房產榮景':'Property Boom',color:C.green,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2014'}],
-    [{xAxis:'2015',itemStyle:{color:'rgba(217,119,6,0.07)'}, label:{formatter:isZh?'宏觀審慎冷卻':'Macro-Pru Cooling',color:C.orange,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2019'}],
-    [{xAxis:'2020',itemStyle:{color:'rgba(37,99,235,0.07)'},  label:{formatter:isZh?'COVID刺激':'COVID Stimulus',color:C.blue,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2021'}],
-    [{xAxis:'2022',itemStyle:{color:'rgba(220,38,38,0.07)'},  label:{formatter:isZh?'升息週期':'Rate Hikes',color:C.red,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2023'}],
-    [{xAxis:'2024',itemStyle:{color:'rgba(13,34,68,0.07)'},   label:{formatter:isZh?'轉向降息':'Easing Pivot',color:C.navy,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2026'}]
-  ];
-}
 
 function initCharts(lang){
   allCharts.length = 0;
   var isZh = lang === 'zh';
 
-  /* ── Chart 1: Monetary Cycle × MHPI ── */
-  var c1 = echarts.init(document.getElementById('chartMacroMonetary'));
+  /* ── Chart 1: Rates × Prices (clean, legend at bottom, no overlapping annotations) ── */
+  var c1 = echarts.init(document.getElementById('chartRates'));
   allCharts.push(c1);
   c1.setOption({
-    tooltip:Object.assign({},baseTooltip,{formatter:dotTip}),
-    legend:{bottom:2,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},
-    grid:{left:50,right:60,top:30,bottom:58,containLabel:true},
-    xAxis:mkAxis({type:'category',data:years,boundaryGap:false}),
+    tooltip:baseTip,
+    legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:9,itemHeight:9,itemGap:16},
+    grid:{left:8,right:8,top:24,bottom:42,containLabel:true},
+    xAxis:mkAxis({type:'category',data:years,boundaryGap:false,axisLabel:{interval:isZh?3:2}}),
     yAxis:[
-      mkAxis({type:'value',min:-2,max:16,interval:2,axisLabel:{formatter:'{value}%'},name:isZh?'%指標':'% Indicators',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}}),
-      mkAxis({type:'value',min:120,max:240,interval:20,axisLabel:{formatter:'{value}'},splitLine:{show:false},name:isZh?'MHPI':'MHPI',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}})
+      mkAxis({type:'value',min:0,max:7,interval:1,axisLabel:{formatter:'{value}%'},name:isZh?'利率':'Rate',nameTextStyle:nameStyle()}),
+      mkAxis({type:'value',min:120,max:240,interval:30,axisLabel:{formatter:'{value}'},splitLine:{show:false},name:isZh?'房價指數':'Price Idx',nameTextStyle:nameStyle()})
     ],
     series:[
-      {name:isZh?'OPR':'OPR',type:'line',data:oprRate,yAxisIndex:0,lineStyle:{color:C.navy,width:2.5},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5},
-      {name:isZh?'平均貸款利率':'Avg Lending Rate',type:'line',data:avgLendingRate,yAxisIndex:0,lineStyle:{color:C.blue,width:1.5},itemStyle:{color:C.blue},symbol:'circle',symbolSize:4},
-      {name:isZh?'CPI YoY%':'CPI YoY%',type:'line',data:cpiYoy,yAxisIndex:0,lineStyle:{color:C.orange,width:1.5},itemStyle:{color:C.orange},symbol:'circle',symbolSize:4},
-      {name:isZh?'M2 YoY%':'M2 YoY%',type:'line',data:m2Growth,yAxisIndex:0,lineStyle:{color:C.muted,width:1,type:'dashed'},itemStyle:{color:C.muted},symbol:'circle',symbolSize:4},
-      {name:isZh?'MHPI房價指數':'House Price Index',type:'line',data:hpi,yAxisIndex:1,lineStyle:{color:C.gold,width:3},itemStyle:{color:C.gold},symbol:'circle',symbolSize:5,
-       areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(184,146,74,0.14)'},{offset:1,color:'rgba(184,146,74,0)'}])},
-       markArea:{silent:true,label:{position:'insideTop',distance:3},data:phaseAreas(isZh)}}
+      {name:isZh?'OPR 政策利率':'OPR',type:'line',data:oprRate,yAxisIndex:0,lineStyle:{color:C.navy,width:2.6},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5},
+      {name:isZh?'平均房貸利率':'Avg lending rate',type:'line',data:avgLendingRate,yAxisIndex:0,lineStyle:{color:C.blue,width:1.6},itemStyle:{color:C.blue},symbol:'circle',symbolSize:4},
+      {name:isZh?'房價指數 MHPI':'House Price Index',type:'line',data:hpi,yAxisIndex:1,lineStyle:{color:C.gold,width:3},itemStyle:{color:C.gold},symbol:'circle',symbolSize:5,
+       areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(184,146,74,0.16)'},{offset:1,color:'rgba(184,146,74,0)'}])}}
     ]
   });
 
-  /* ── Chart 2: Real Economy × MHPI ── */
-  var c2 = echarts.init(document.getElementById('chartMacroReal'));
+  /* ── Chart 2: Overhang (bars + value line, 2025 highlighted) ── */
+  var c2 = echarts.init(document.getElementById('chartOverhang'));
   allCharts.push(c2);
-  var gdpBarData = gdpGrowth.map(function(v){return {value:v,itemStyle:{color:v>=0?C.blue:C.red,borderRadius:[3,3,0,0]}};});
+  var bars = ohUnits.map(function(v,i){return {value:v,itemStyle:{color:i===ohUnits.length-1?C.red:'#c9b48a',borderRadius:[4,4,0,0]}};});
   c2.setOption({
-    tooltip:Object.assign({},baseTooltip,{formatter:dotTip}),
-    legend:{bottom:2,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},
-    grid:{left:50,right:60,top:30,bottom:58,containLabel:true},
-    xAxis:mkAxis({type:'category',data:years,boundaryGap:true}),
-    yAxis:[
-      mkAxis({type:'value',min:-8,max:16,interval:4,axisLabel:{formatter:'{value}%'},name:isZh?'%指標':'% Indicators',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}}),
-      mkAxis({type:'value',min:120,max:240,interval:20,axisLabel:{formatter:'{value}'},splitLine:{show:false},name:isZh?'MHPI':'MHPI',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}})
-    ],
-    series:[
-      {name:isZh?'GDP YoY%':'GDP YoY%',type:'bar',data:gdpBarData,yAxisIndex:0,barMaxWidth:18},
-      {name:isZh?'失業率%':'Unemployment%',type:'line',data:unemployRate,yAxisIndex:0,lineStyle:{color:C.red,width:1.5},itemStyle:{color:C.red},symbol:'circle',symbolSize:4},
-      {name:isZh?'房貸成長%':'Housing Loan Growth%',type:'line',data:housingLoanGrowth,yAxisIndex:0,lineStyle:{color:C.orange,width:1.5},itemStyle:{color:C.orange},symbol:'circle',symbolSize:4},
-      {name:isZh?'MHPI房價指數':'House Price Index',type:'line',data:hpi,yAxisIndex:1,lineStyle:{color:C.gold,width:3},itemStyle:{color:C.gold},symbol:'circle',symbolSize:5,
-       areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(184,146,74,0.14)'},{offset:1,color:'rgba(184,146,74,0)'}])},
-       markArea:{silent:true,label:{position:'insideTop',distance:3},data:phaseAreas(isZh)}}
-    ]
-  });
-
-  /* ── Chart 3: Household debt-to-GDP ── */
-  var c3 = echarts.init(document.getElementById('chartMacroLeverage'));
-  allCharts.push(c3);
-  c3.setOption({
-    tooltip:Object.assign({},baseTooltip,{formatter:function(p){return p[0].name+'<br/><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+p[0].color+';margin-right:4px"></span>'+(isZh?'家庭債務/GDP':'Household Debt/GDP')+': '+p[0].value+'%';}}),
-    grid:{left:40,right:24,top:30,bottom:26,containLabel:true},
-    xAxis:mkAxis({type:'category',data:levYears,boundaryGap:false}),
-    yAxis:mkAxis({type:'value',min:78,max:96,interval:3,axisLabel:{formatter:'{value}%'}}),
-    series:[
-      {name:isZh?'家庭債務/GDP':'Household Debt/GDP',type:'line',data:hhDebtGDP,smooth:true,lineStyle:{color:C.navy,width:3},itemStyle:{color:C.navy},symbol:'circle',symbolSize:6,
-       areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(13,34,68,0.16)'},{offset:1,color:'rgba(13,34,68,0)'}])},
-       markLine:{silent:true,symbol:'none',data:[
-         {yAxis:85,label:{formatter:isZh?'~85% 高槓桿帶':'~85% high-leverage band',color:C.orange,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'insideEndTop'},lineStyle:{color:C.orange,type:'dashed',width:1}}
-       ]},
-       markPoint:{symbolSize:0,data:[
-         {coord:['2020',93.2],value:isZh?'COVID高峰 93.2%':'COVID peak 93.2%',label:{color:C.red,fontSize:10,fontWeight:700,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'top'}}
-       ]}}
-    ]
-  });
-
-  /* ── Chart 4: Overhang units + value ── */
-  var c4 = echarts.init(document.getElementById('chartMacroOverhang'));
-  allCharts.push(c4);
-  var ohBars = ohUnits.map(function(v,i){return {value:v,itemStyle:{color:i===ohUnits.length-1?C.red:'#c9b48a',borderRadius:[3,3,0,0]}};});
-  c4.setOption({
-    tooltip:Object.assign({},baseTooltip,{formatter:function(p){var s=p[0].name+'<br/>';p.forEach(function(x){var u=x.seriesType==='bar';s+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+x.color+';margin-right:4px"></span>'+x.seriesName+': '+(u?x.value.toLocaleString()+(isZh?' 戶':' units'):'RM'+x.value+'b')+'<br/>';});return s;}}),
-    legend:Object.assign({},baseLegend),
-    grid:{left:46,right:54,top:40,bottom:26,containLabel:true},
+    tooltip:Object.assign({},baseTip,{formatter:function(p){var s=p[0].name+'<br/>';p.forEach(function(x){if(x.value==null)return;var isBar=x.seriesType==='bar';s+='<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+x.color+';margin-right:5px"></span>'+x.seriesName+'：'+(isBar?Number(x.value).toLocaleString()+(isZh?' 戶':' units'):'RM'+x.value+'b')+'<br/>';});return s;}}),
+    legend:{bottom:0,textStyle:baseText,icon:'circle',itemWidth:9,itemHeight:9,itemGap:16},
+    grid:{left:8,right:8,top:24,bottom:42,containLabel:true},
     xAxis:mkAxis({type:'category',data:ohYears,boundaryGap:true}),
     yAxis:[
-      mkAxis({type:'value',min:0,max:40000,interval:10000,axisLabel:{formatter:function(v){return (v/1000)+'k';}},name:isZh?'戶數':'Units',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}}),
-      mkAxis({type:'value',min:0,max:24,interval:6,axisLabel:{formatter:'RM{value}b'},splitLine:{show:false},name:isZh?'金額':'Value',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}})
+      mkAxis({type:'value',min:0,max:40000,interval:10000,axisLabel:{formatter:function(v){return (v/1000)+'k';}},name:isZh?'戶數':'Units',nameTextStyle:nameStyle()}),
+      mkAxis({type:'value',min:0,max:24,interval:6,axisLabel:{formatter:'RM{value}b'},splitLine:{show:false},name:isZh?'金額':'Value',nameTextStyle:nameStyle()})
     ],
     series:[
-      {name:isZh?'滯銷戶數':'Overhang units',type:'bar',data:ohBars,yAxisIndex:0,barMaxWidth:34},
-      {name:isZh?'滯銷金額':'Overhang value',type:'line',data:ohValue,yAxisIndex:1,lineStyle:{color:C.navy,width:2.5},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5}
-    ]
-  });
-
-  /* ── Chart 5: Approved investment by state 2025 ── */
-  var c5 = echarts.init(document.getElementById('chartMacroState'));
-  allCharts.push(c5);
-  var stColors = [C.navy,'#173564','#1d4ed8','#6b7a92','#9aa7ba'];
-  c5.setOption({
-    tooltip:Object.assign({},baseTooltip,{formatter:function(p){return p[0].name+'<br/><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+p[0].color+';margin-right:4px"></span>RM'+p[0].value+'b';}}),
-    grid:{left:24,right:40,top:16,bottom:26,containLabel:true},
-    xAxis:mkAxis({type:'value',min:0,max:120,interval:30,axisLabel:{formatter:'RM{value}b'}}),
-    yAxis:mkAxis({type:'category',data:isZh?stZH.slice().reverse():stEN.slice().reverse(),splitLine:{show:false}}),
-    series:[
-      {name:isZh?'核准投資':'Approved Investment',type:'bar',data:stInvest.slice().reverse().map(function(v,i){return {value:v,itemStyle:{color:stColors.slice().reverse()[i],borderRadius:[0,4,4,0]}};}),barMaxWidth:22,
-       label:{show:true,position:'right',formatter:'RM{c}b',color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}}
+      {name:isZh?'滯銷戶數':'Overhang units',type:'bar',data:bars,yAxisIndex:0,barMaxWidth:38},
+      {name:isZh?'滯銷金額':'Overhang value',type:'line',data:ohValue,yAxisIndex:1,lineStyle:{color:C.navy,width:2.6},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5}
     ]
   });
 }
@@ -728,11 +307,8 @@ function setLang(lang){
 
 window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
 window.addEventListener('load',function(){
-  document.querySelectorAll('.lang-btn').forEach(function(b){
-    b.addEventListener('click',function(){setLang(b.dataset.lang);});
-  });
-  var lang='en';
-  try{lang=localStorage.getItem('lang')||'en';}catch(e){}
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.lang);});});
+  var lang='en';try{lang=localStorage.getItem('lang')||'en';}catch(e){}
   setLang(lang);
 });
 </script>
