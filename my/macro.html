@@ -7,21 +7,20 @@
 <meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/kl-theme.css">
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <style>
-/* ── macro rebuild — depth + robust CJK spacing ── */
+/* ── macro page — depth + robust CJK spacing ── */
 .wrap{max-width:900px;margin:0 auto;padding:30px 20px 10px}
 body.zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
-.wrap, .wrap p, .wrap li, .lede, .pt li, .col li, .src, .cat li{line-height:2.0}
+.wrap, .wrap p, .wrap li, .lede, .pt li, .col li, .src, .cat li, .narr-p, .concept p, .prop-take p{line-height:2.0}
 
 .pg-head{margin-bottom:22px}
 .pg-title{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:26px;letter-spacing:-.01em;margin:0 0 10px;line-height:1.3}
 .pg-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 
-/* snapshot */
 .snap{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:22px}
 .stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 12px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:4px;min-width:0}
 .stat-lbl{font-size:10.5px;font-weight:600;letter-spacing:.04em;color:var(--gold-deep);text-transform:uppercase;line-height:1.45}
@@ -30,12 +29,10 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
 .stat-tag{font-size:10.5px;font-weight:600;line-height:1.5}
 .t-green{color:#15803d}.t-orange{color:#a16207}.t-red{color:#b91c1c}.t-blue{color:#1d4ed8}
 
-/* one-line conclusion */
 .lede{background:linear-gradient(135deg,#0d2244 0%,#173564 100%);color:#fff;border-radius:14px;padding:20px 24px;margin-bottom:32px;font-size:14px;box-shadow:var(--shadow-md)}
 .lede b{color:var(--gold-light);font-weight:600}
 .lede .lk{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
 
-/* blocks */
 .blk{margin-bottom:34px}
 .blk h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:600;color:var(--navy);font-size:18px;margin:0 0 4px;line-height:1.35}
 .blk .sub{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:1.6}
@@ -45,22 +42,34 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
 .pt li{position:relative;padding-left:18px;font-size:13px;color:var(--text-soft)}
 .pt li::before{content:'';position:absolute;left:0;top:13px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
 .pt li b{color:var(--navy);font-weight:600}
-.pt li.warn::before{background:#b91c1c}
-.pt li.good::before{background:#15803d}
+.pt li.warn::before{background:#b91c1c}.pt li.good::before{background:#15803d}
 
-/* section heading rule */
-.sec-rule{display:flex;align-items:center;gap:12px;margin:6px 0 18px}
-.sec-rule h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:600;color:var(--navy);font-size:19px;margin:0;white-space:nowrap;line-height:1.3}
+.sec-rule{display:flex;align-items:center;gap:12px;margin:40px 0 18px}
+.sec-rule h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:21px;margin:0;white-space:nowrap;line-height:1.3}
 .sec-rule::after{content:'';flex:1;height:1px;background:var(--gold-line)}
 
-/* catalyst cards */
+/* structural narrative */
+.pull{font-family:'Playfair Display','Noto Serif TC',serif;font-size:17px;line-height:1.7;color:var(--navy);border-left:3px solid var(--gold);padding:3px 0 3px 16px;margin:0 0 18px;font-weight:600}
+.narr-p{font-size:13.5px;color:var(--text-soft);margin:0 0 16px}
+.narr-p b{color:var(--navy);font-weight:600}
+.mrow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:2px 0 24px}
+.m{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;min-width:0}
+.m .mn{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;color:var(--navy);line-height:1.2}
+.m .ml{font-size:10px;color:var(--muted);line-height:1.55;margin-top:4px}
+.concept{background:var(--bg-section);border:1px solid var(--gold-soft);border-radius:12px;padding:16px 20px;margin:2px 0 24px}
+.concept h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 8px}
+.concept p{font-size:12.5px;color:var(--text-soft);margin:0}
+.prop-take{background:linear-gradient(135deg,#0d2244,#173564);color:#fff;border-radius:14px;padding:18px 22px;margin:6px 0 30px;box-shadow:var(--shadow-md)}
+.prop-take .pk{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;display:block}
+.prop-take p{margin:0;font-size:13.5px;color:rgba(255,255,255,.9)}
+.prop-take b{color:var(--gold-light)}
+
 .cat{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
 .cat .c{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-sm)}
 .cat .c h4{font-size:12px;font-weight:700;color:var(--navy);margin:0 0 6px;line-height:1.4}
 .cat .c p{font-size:12px;color:var(--muted);margin:0;line-height:1.85}
 .cat .c p b{color:var(--navy);font-weight:600}
 
-/* two-column tailwinds / risks */
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:32px}
 .col{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow-sm)}
 .col.up{border-top:3px solid #15803d}.col.dn{border-top:3px solid #b91c1c}
@@ -71,7 +80,6 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
 .col li::before{content:'';position:absolute;left:0;top:12px;width:5px;height:5px;border-radius:50%}
 .col.up li::before{background:#15803d}.col.dn li::before{background:#b91c1c}
 
-/* watch */
 .watch{background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:14px;padding:18px 22px;margin-bottom:26px}
 .watch h3{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 10px}
 .watch ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
@@ -80,9 +88,10 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
 .watch li b{color:var(--navy);font-weight:600}
 
 .src{font-size:11px;color:var(--muted);background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:12px 16px;margin-bottom:8px}
+.src a{color:var(--gold-deep)}
 
-@media(max-width:760px){.snap{grid-template-columns:repeat(3,1fr)}.cols,.cat{grid-template-columns:1fr}.pg-title{font-size:22px}}
-@media(max-width:440px){.snap{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.snap,.mrow{grid-template-columns:repeat(3,1fr)}.cols,.cat{grid-template-columns:1fr}.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}}
+@media(max-width:440px){.snap,.mrow{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -125,36 +134,12 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
 
   <!-- ── Snapshot ── -->
   <div class="snap">
-    <div class="stat">
-      <div class="stat-lbl">OPR</div>
-      <div class="stat-num">2.75%</div>
-      <div class="stat-tag t-green"><span class="lang-en">↓ 1st cut/5yr</span><span class="lang-zh" style="display:none">↓ 五年首降</span></div>
-    </div>
-    <div class="stat">
-      <div class="stat-lbl">GDP</div>
-      <div class="stat-num">5.4%</div>
-      <div class="stat-tag t-green"><span class="lang-en">Q1 2026</span><span class="lang-zh" style="display:none">2026 Q1</span></div>
-    </div>
-    <div class="stat">
-      <div class="stat-lbl"><span class="lang-en">Inflation</span><span class="lang-zh" style="display:none">通膨</span></div>
-      <div class="stat-num">1.9%</div>
-      <div class="stat-tag t-green"><span class="lang-en">In target</span><span class="lang-zh" style="display:none">目標內</span></div>
-    </div>
-    <div class="stat">
-      <div class="stat-lbl"><span class="lang-en">Unemployment</span><span class="lang-zh" style="display:none">失業率</span></div>
-      <div class="stat-num">3.0%</div>
-      <div class="stat-tag t-green"><span class="lang-en">Multi-yr low</span><span class="lang-zh" style="display:none">多年低點</span></div>
-    </div>
-    <div class="stat">
-      <div class="stat-lbl"><span class="lang-en">House Price Idx</span><span class="lang-zh" style="display:none">房價指數</span></div>
-      <div class="stat-num">235</div>
-      <div class="stat-tag t-green"><span class="lang-en">Record</span><span class="lang-zh" style="display:none">創高</span></div>
-    </div>
-    <div class="stat">
-      <div class="stat-lbl"><span class="lang-en">Household Debt</span><span class="lang-zh" style="display:none">家庭債務</span></div>
-      <div class="stat-num">84.8%</div>
-      <div class="stat-tag t-orange"><span class="lang-en">of GDP · ceiling</span><span class="lang-zh" style="display:none">佔GDP · 近上限</span></div>
-    </div>
+    <div class="stat"><div class="stat-lbl">OPR</div><div class="stat-num">2.75%</div><div class="stat-tag t-green"><span class="lang-en">↓ 1st cut/5yr</span><span class="lang-zh" style="display:none">↓ 五年首降</span></div></div>
+    <div class="stat"><div class="stat-lbl">GDP</div><div class="stat-num">5.4%</div><div class="stat-tag t-green"><span class="lang-en">Q1 2026</span><span class="lang-zh" style="display:none">2026 Q1</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Inflation</span><span class="lang-zh" style="display:none">通膨</span></div><div class="stat-num">1.9%</div><div class="stat-tag t-green"><span class="lang-en">In target</span><span class="lang-zh" style="display:none">目標內</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Unemployment</span><span class="lang-zh" style="display:none">失業率</span></div><div class="stat-num">3.0%</div><div class="stat-tag t-green"><span class="lang-en">Multi-yr low</span><span class="lang-zh" style="display:none">多年低點</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">House Price Idx</span><span class="lang-zh" style="display:none">房價指數</span></div><div class="stat-num">235</div><div class="stat-tag t-green"><span class="lang-en">Record</span><span class="lang-zh" style="display:none">創高</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Household Debt</span><span class="lang-zh" style="display:none">家庭債務</span></div><div class="stat-num">84.8%</div><div class="stat-tag t-orange"><span class="lang-en">of GDP · ceiling</span><span class="lang-zh" style="display:none">佔GDP · 近上限</span></div></div>
   </div>
 
   <!-- ── One-line conclusion ── -->
@@ -164,7 +149,10 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     <span class="lang-zh" style="display:none">2025年是轉向年。國行按兵三年後把OPR降到<b>2.75%</b>，屬預防性的保險降息，當時經濟仍站穩5%以上、通膨壓在2%以下。但這波寬鬆，落在一個家庭槓桿逼近上限（<b>佔GDP 84.8%</b>）、吉隆坡均價反而下跌的市場。便宜的錢遇到的需求高度集中（柔新特區、數據中心、創紀錄FDI），不是全面普漲。</span>
   </div>
 
-  <!-- ── Chart 1: Monetary cycle ── -->
+  <!-- ════════ PART 1 · THE CYCLE ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Part 1 · The Cycle</span><span class="lang-zh" style="display:none">週期篇 · 我們在哪裡</span></h2></div>
+
+  <!-- Chart 1: Monetary -->
   <div class="blk">
     <h2><span class="lang-en">Monetary Cycle × House Prices</span><span class="lang-zh" style="display:none">貨幣週期 × 房價</span></h2>
     <p class="sub"><span class="lang-en">OPR · lending rate · CPI · M2 vs the house-price index, 2008–2026</span><span class="lang-zh" style="display:none">OPR · 貸款利率 · CPI · M2 對 房價指數，2008–2026</span></p>
@@ -177,7 +165,7 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     </ul>
   </div>
 
-  <!-- ── Chart 2: Real economy ── -->
+  <!-- Chart 2: Real economy -->
   <div class="blk">
     <h2><span class="lang-en">Real Economy × House Prices</span><span class="lang-zh" style="display:none">實體經濟 × 房價</span></h2>
     <p class="sub"><span class="lang-en">GDP · unemployment · housing-loan growth vs the house-price index, 2008–2026</span><span class="lang-zh" style="display:none">GDP · 失業率 · 房貸成長 對 房價指數，2008–2026</span></p>
@@ -189,7 +177,7 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     </ul>
   </div>
 
-  <!-- ── Chart 3: Household leverage ── -->
+  <!-- Chart 3: Household leverage -->
   <div class="blk">
     <h2><span class="lang-en">The Affordability Ceiling</span><span class="lang-zh" style="display:none">可負擔性的天花板</span></h2>
     <p class="sub"><span class="lang-en">Household debt as a share of GDP, 2013–2025</span><span class="lang-zh" style="display:none">家庭債務佔GDP比重，2013–2025</span></p>
@@ -201,31 +189,75 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     </ul>
   </div>
 
-  <!-- ── Structural demand ── -->
-  <div class="sec-rule">
-    <h2><span class="lang-en">Structural Demand — Where the Money Is Going</span><span class="lang-zh" style="display:none">結構性需求 · 資金往哪裡去</span></h2>
+  <!-- ════════ PART 2 · THE STRUCTURE ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Part 2 · The Structural Economy</span><span class="lang-zh" style="display:none">經濟結構篇 · 為什麼這影響房價</span></h2></div>
+
+  <p class="pull"><span class="lang-en">Somewhere on the road from commodities to chips, Malaysia's economy got stuck — and a stuck income story is, quietly, a capped house-price story.</span><span class="lang-zh" style="display:none">從商品走到晶片這條路，馬來西亞的經濟走到一半卡住了；而收入卡住，房價其實也就有了一道隱形的天花板。</span></p>
+
+  <p class="narr-p"><span class="lang-en">Malaysia's wealth has always come out of the ground. In the 1800s, rubber and tin pulled different peoples onto the peninsula and drew today's demographic and political map; later, palm oil and petroleum filled the treasury and bred a dependence on commodities. This century the bet is electronics and semiconductors. The trouble is that, somewhere on that road, the economy stalled.</span><span class="lang-zh" style="display:none">馬來西亞的財富，一直是從土地裡長出來的。十九世紀的橡膠與錫，把不同族群帶上這片半島，也鋪下了今天的人口與政治格局；後來是棕油與石油，撐起國庫，也養出對大宗商品的依賴。進入這個世紀，國家把賭注壓在電子與半導體上。問題是，從商品到晶片的這條路，它走到一半卡住了。</span></p>
+
+  <!-- metrics row -->
+  <div class="mrow">
+    <div class="m"><div class="mn">$11.9k</div><div class="ml"><span class="lang-en">GDP/capita · ⅓ of Korea</span><span class="lang-zh" style="display:none">人均GDP · 南韓的⅓</span></div></div>
+    <div class="m"><div class="mn">~1%</div><div class="ml"><span class="lang-en">R&D/GDP · Korea ~5%</span><span class="lang-zh" style="display:none">研發佔GDP · 南韓約5%</span></div></div>
+    <div class="m"><div class="mn">71%</div><div class="ml"><span class="lang-en">Exports/GDP</span><span class="lang-zh" style="display:none">出口佔GDP</span></div></div>
+    <div class="m"><div class="mn">40%</div><div class="ml"><span class="lang-en">E&E share of exports</span><span class="lang-zh" style="display:none">電子電機佔出口</span></div></div>
+    <div class="m"><div class="mn">64%</div><div class="ml"><span class="lang-en">Govt debt/GDP · cap 65%</span><span class="lang-zh" style="display:none">政府債務 · 上限65%</span></div></div>
+    <div class="m"><div class="mn">~40%</div><div class="ml"><span class="lang-en">GLCs of Bursa cap</span><span class="lang-zh" style="display:none">GLC佔馬股市值</span></div></div>
   </div>
+
+  <!-- Chart 5: the ceiling -->
   <div class="blk">
+    <h2><span class="lang-en">The Middle-Income Ceiling</span><span class="lang-zh" style="display:none">中等收入的天花板</span></h2>
+    <p class="sub"><span class="lang-en">GDP per capita, nominal US$, 2024 (World Bank)</span><span class="lang-zh" style="display:none">人均GDP（名目美元），2024（世界銀行）</span></p>
+    <div class="chartbox"><div id="chartCeiling" class="ch" style="height:280px"></div></div>
+    <p class="narr-p"><span class="lang-en">The "middle-income trap" is nowhere clearer than here. Malaysia reached upper-middle income in <b>1996</b>; nearly thirty years on, GDP per capita is about <b>US$11,900</b> — below China, a third of South Korea, a sixth of Singapore. It has the skeleton of an upper-middle economy but can't grow high-income muscle, sitting roughly <b>US$2,000 short</b> of the World Bank's high-income line. The cause isn't a mystery, it's choices: R&D is ~1% of GDP versus 5% in Korea, exports run over 70% of GDP with electronics ~40% of them, GLCs are ~40% of the stock market, and skilled talent keeps leaking out.</span><span class="lang-zh" style="display:none">經濟學家講的「中等收入陷阱」，在馬來西亞身上看得最清楚。它<b>1996年</b>就跨進中高收入，將近三十年過去，人均GDP約<b>1.19萬美元</b>，卡在中國之下、只有南韓的三分之一、新加坡的六分之一。它有一具中高收入國家的骨架，卻一直長不出高收入國家的肌肉，距世界銀行的高收入門檻還差約<b>兩千美元</b>。卡住的原因不神秘，是選擇：研發只佔GDP約1%，南韓是5%；出口佔GDP逾七成，電子電機又佔了四成；政府連結公司（GLC）佔馬股約四成市值；人才還在持續外流。</span></p>
+  </div>
+
+  <!-- Chart 6: ringgit -->
+  <div class="blk">
+    <h2><span class="lang-en">The Ringgit — a Long Slide, a Recent Bounce</span><span class="lang-zh" style="display:none">令吉 · 長貶之後的回彈</span></h2>
+    <p class="sub"><span class="lang-en">USD/MYR, approx. year-end (higher = weaker ringgit). Pegged at 3.80 in 1998–2005.</span><span class="lang-zh" style="display:none">美元兌令吉，約年底值（數字越高＝令吉越弱）。1998–2005釘住3.80。</span></p>
+    <div class="chartbox"><div id="chartRinggit" class="ch" style="height:300px"></div></div>
+    <p class="narr-p"><span class="lang-en">The ringgit is the thermometer of all this. Before the 1997 crisis a dollar bought ~<b>2.5</b> ringgit; afterwards it was pegged at <b>3.80</b> for seven years, then slid for a decade, hitting a <b>4.80</b> low in Feb 2024. In 2025, with capital returning, record exports and tighter fiscal policy, it rebounded to ~<b>4.05</b> — a four-year high. A weak ringgit long made Malaysian property "cheap" for foreigners, a quiet demand support; but the <b>8% foreign stamp duty</b> (2026) plus a firmer ringgit are shrinking that discount.</span><span class="lang-zh" style="display:none">令吉是這套結構的溫度計。1997年金融風暴前，一美元只換約<b>2.5</b>令吉；風暴後一度釘在<b>3.80</b>長達七年，之後一路走貶，2024年2月最弱見<b>4.80</b>。2025年隨外資回流、出口創高、財政紀律改善，令吉強彈回約<b>4.05</b>，是四年新高。弱令吉長期讓馬來西亞房產對外國買家「便宜」，是一股需求支撐；但2026年起<b>外國印花稅倍增到8%</b>、加上令吉回穩，這個折扣正在縮小。</span></p>
+  </div>
+
+  <!-- concept box -->
+  <div class="concept">
+    <h4><span class="lang-en">Concept · The Middle-Income Trap</span><span class="lang-zh" style="display:none">概念深掘 · 中等收入陷阱</span></h4>
+    <p><span class="lang-en">When wages grow too high to beat low-cost rivals but technology isn't high enough to compete with advanced economies, a country stalls in between. Escaping it takes productivity and innovation — which require sustained investment in R&D, education and institutional reform, not just cheap credit or another building boom.</span><span class="lang-zh" style="display:none">當一個國家的薪資已高到拚不過低成本對手，技術又還沒高到能跟先進國競爭，就會卡在中間。要突圍，靠的是生產力與創新，而那需要長期投資研發、教育與制度改革，不是靠便宜的信貸或再蓋一波房子就能解決。</span></p>
+  </div>
+
+  <!-- Chart 4: investment by state + catalysts -->
+  <div class="blk">
+    <h2><span class="lang-en">The Silicon Bet — Where the Money Goes</span><span class="lang-zh" style="display:none">半導體賭注 · 資金往哪裡去</span></h2>
     <p class="sub"><span class="lang-en">Approved investment by state, 2025 (RM bn) — a record RM426.7bn nationally, highly concentrated</span><span class="lang-zh" style="display:none">2025各州核准投資（RM十億）—— 全國創高RM4,267億，高度集中</span></p>
     <div class="chartbox"><div id="chartState" class="ch" style="height:260px"></div></div>
+    <p class="narr-p"><span class="lang-en">Malaysia isn't standing still. The 2024 National Semiconductor Strategy targets at least <b>RM500bn</b> of investment (phase one) and 60,000 trained engineers, pushing its ~<b>13%</b> share of global chip back-end higher. With the data-centre wave, this structural investment is concentrated in Johor, Penang, Selangor and KL — Johor alone took <b>RM110bn</b> of 2025's record approvals. The property read is direct: demand isn't a nationwide tide, it follows the chips and the servers into specific corridors.</span><span class="lang-zh" style="display:none">馬來西亞並沒有坐以待斃。2024年推出的國家半導體策略（NSS）喊出第一階段至少<b>5,000億令吉</b>投資、培訓六萬名工程師，要把全球封測（後段）約<b>13%</b>的市佔再往上推。配上數據中心熱潮，這波結構性投資高度集中在柔佛、檳城、雪蘭莪與吉隆坡；光柔佛就拿走2025年核准額中的<b>1,100億</b>。對房市的啟示很直接：需求不是全國普漲，而是跟著晶片和伺服器走，落在特定走廊。</span></p>
     <div class="cat">
       <div class="c">
         <h4><span class="lang-en">Johor–Singapore SEZ</span><span class="lang-zh" style="display:none">柔新經濟特區</span></h4>
-        <p><span class="lang-en">~<b>RM68bn</b> approved in the first 9 months of 2025; Johor took <b>RM110bn</b> of national investment — #1 state. Target: RM140bn in 2026.</span><span class="lang-zh" style="display:none">2025年首9個月核准約<b>RM680億</b>；柔佛全年吸資<b>RM1,100億</b>居全國之首。2026年目標RM1,400億。</span></p>
+        <p><span class="lang-en">~<b>RM68bn</b> approved in 9M-2025; Johor #1 state at RM110bn. 2026 target: RM140bn.</span><span class="lang-zh" style="display:none">2025年首9個月核准約<b>RM680億</b>；柔佛以RM1,100億居全國之首。2026目標RM1,400億。</span></p>
       </div>
       <div class="c">
         <h4><span class="lang-en">RTS Link (JB ↔ Singapore)</span><span class="lang-zh" style="display:none">新柔捷運 RTS Link</span></h4>
-        <p><span class="lang-en">Systems ~65% built; passenger service targeted <b>Jan 2027</b> — aims to capture ~35% of ~350k daily Causeway crossers.</span><span class="lang-zh" style="display:none">系統工程約完成65%；客運目標<b>2027年1月</b>通車，瞄準每日約35萬過境人潮的三成五。</span></p>
+        <p><span class="lang-en">Systems ~65% built; passenger service targeted <b>Jan 2027</b>.</span><span class="lang-zh" style="display:none">系統工程約完成65%；客運目標<b>2027年1月</b>通車。</span></p>
       </div>
       <div class="c">
         <h4><span class="lang-en">Data Centres</span><span class="lang-zh" style="display:none">數據中心</span></h4>
-        <p><span class="lang-en">~<b>US$34bn</b> drawn over four years (SEA's #1 hub); Johor heading toward ~60% of national capacity by 2030. Watch power/water limits.</span><span class="lang-zh" style="display:none">四年吸資約<b>340億美元</b>（東南亞第一）；柔佛預計2030年佔全國產能約六成。留意電力與水的限制。</span></p>
+        <p><span class="lang-en">~<b>US$34bn</b> over four years (SEA's #1 hub); Johor → ~60% of national capacity by 2030. Watch power/water limits.</span><span class="lang-zh" style="display:none">四年吸資約<b>340億美元</b>（東南亞第一）；柔佛2030年將佔全國產能約六成。留意電力與水的限制。</span></p>
       </div>
       <div class="c">
-        <h4><span class="lang-en">Foreign Buyers</span><span class="lang-zh" style="display:none">外國買家</span></h4>
-        <p><span class="lang-en">A headwind: foreign stamp duty doubled to <b>8%</b> (Jan 2026); MM2H uptake stays thin (~5,972 participants).</span><span class="lang-zh" style="display:none">逆風：外國買家印花稅倍增至<b>8%</b>（2026年1月）；MM2H申辦仍冷（約5,972人）。</span></p>
+        <h4><span class="lang-en">Petronas / Oil Fiscal Drag</span><span class="lang-zh" style="display:none">國油 · 財政依賴下滑</span></h4>
+        <p><span class="lang-en">Petronas FY2025 profit <b>RM45.4bn (−18%)</b>; its dividend to govt cut to RM20bn for 2026 — oil's fiscal cushion is thinning.</span><span class="lang-zh" style="display:none">國油2025財年獲利<b>RM454億（−18%）</b>；2026年上繳股息砍到RM200億，石油這塊財政緩衝正在變薄。</span></p>
       </div>
     </div>
+  </div>
+
+  <!-- property takeaway -->
+  <div class="prop-take">
+    <span class="pk"><span class="lang-en">The property takeaway</span><span class="lang-zh" style="display:none">對房產的結論</span></span>
+    <p><span class="lang-en">Stack the cycle on the structure: a near-term easing tailwind, a long-term income ceiling, and demand that is real but concentrated. So Malaysian property is a market for <b>picking the right location and product</b> — not one where buying anything rides a national tide.</span><span class="lang-zh" style="display:none">把週期面疊在結構面上看：短期有降息順風，長期有收入天花板，需求真實卻集中。所以馬來西亞房產是一個<b>「選對地點與產品」</b>的市場，不是「隨便買進就跟著大盤上漲」的市場。</span></p>
   </div>
 
   <!-- ── Tailwinds / Risks ── -->
@@ -242,10 +274,10 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     <div class="col dn">
       <h3><span class="lang-en">Risks</span><span class="lang-zh" style="display:none">風險</span></h3>
       <ul>
-        <li><span class="lang-en">Household debt 84.8% of GDP caps mortgage-driven upside</span><span class="lang-zh" style="display:none">家庭債務佔GDP 84.8%，封住房貸驅動的上行</span></li>
+        <li><span class="lang-en">Income ceiling + household debt 84.8% cap mortgage-driven upside</span><span class="lang-zh" style="display:none">收入天花板 + 家庭債務84.8%，封住房貸驅動的上行</span></li>
         <li><span class="lang-en">KL average price −4.3%; demand concentrated, not broad-based</span><span class="lang-zh" style="display:none">吉隆坡均價 −4.3%；需求集中，並非全面普漲</span></li>
         <li><span class="lang-en">8% foreign stamp duty (Jan 2026) a headwind for foreign demand</span><span class="lang-zh" style="display:none">8%外國印花稅（2026年1月），壓抑外資需求</span></li>
-        <li><span class="lang-en">2025 export front-loading unwinds through 2026</span><span class="lang-zh" style="display:none">2025年出口前置效應，2026年逐步回吐</span></li>
+        <li><span class="lang-en">Export concentration (E&E ~40%) exposes growth to US tariffs</span><span class="lang-zh" style="display:none">出口集中（電子電機約四成），讓成長暴露在美國關稅下</span></li>
       </ul>
     </div>
   </div>
@@ -256,14 +288,14 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     <ul>
       <li><span class="lang-en"><b>Next BNM meeting · 9 Jul 2026</b> — market sees the OPR held at 2.75% through year-end.</span><span class="lang-zh" style="display:none"><b>下次國行利率會議 · 2026年7月9日</b> —— 市場預期OPR維持2.75%到年底。</span></li>
       <li><span class="lang-en"><b>RTS Link · Jan 2027</b> — passenger service is the near-term Johor Bahru demand catalyst.</span><span class="lang-zh" style="display:none"><b>新柔捷運（RTS）· 2027年1月</b> —— 客運通車是新山需求的近期催化劑。</span></li>
-      <li><span class="lang-en"><b>JS-SEZ blueprint + Johor's RM140bn 2026 target</b> — the gauge of the demand pipeline.</span><span class="lang-zh" style="display:none"><b>柔新特區藍圖 + 柔佛2026年RM1,400億目標</b> —— 衡量需求管線的指標。</span></li>
+      <li><span class="lang-en"><b>High-income target 2030</b> — whether the semiconductor bet and reforms actually lift incomes is the long-run swing factor for housing.</span><span class="lang-zh" style="display:none"><b>2030高收入目標</b> —— 半導體賭注與改革能不能真正拉高收入，是房市長線的關鍵變數。</span></li>
     </ul>
   </div>
 
   <!-- ── Source ── -->
   <p class="src">
-    <span class="lang-en">Sources: BNM (OPR, Financial Stability Review H1-2025, monetary statistics), DOSM OpenDOSM (GDP Q1-2026, CPI Apr-2026, Labour Force Survey), NAPIC/JPPH (House Price Index to Q1-2026), MIDA (2025 approved investments), data.gov.my. Supply &amp; overhang detail is covered in the <a href="/my/report">Market Report</a>.</span>
-    <span class="lang-zh" style="display:none">資料來源：BNM（OPR、2025上半年金融穩定報告、貨幣統計）、DOSM OpenDOSM（2026 Q1 GDP、2026年4月 CPI、勞動力調查）、NAPIC/JPPH（房價指數至2026 Q1）、MIDA（2025核准投資）、data.gov.my。供給與滯銷細節見<a href="/my/report">市場報告</a>。</span>
+    <span class="lang-en">Sources: BNM (OPR, FSR H1-2025, exchange rates), DOSM OpenDOSM (GDP Q1-2026, CPI Apr-2026, LFS), NAPIC/JPPH (House Price Index to Q1-2026), MIDA (2025 approved investments, NSS), MATRADE (E&E exports), World Bank (GDP/capita, R&D, exports), MoF/Petronas. Ringgit waypoints are approx. year-end (peg 3.80 in 1998–2005). Supply &amp; overhang detail is in the <a href="/my/report">Market Report</a>.</span>
+    <span class="lang-zh" style="display:none">資料來源：BNM（OPR、2025上半年金融穩定報告、匯率）、DOSM OpenDOSM（2026 Q1 GDP、2026年4月 CPI、勞動力調查）、NAPIC/JPPH（房價指數至2026 Q1）、MIDA（2025核准投資、NSS）、MATRADE（電子電機出口）、世界銀行（人均GDP、研發、出口）、財政部／國油。令吉為約略年底值（1998–2005釘住3.80）。供給與滯銷細節見<a href="/my/report">市場報告</a>。</span>
   </p>
 
 </main>
@@ -273,13 +305,13 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     <span class="dot"></span><span class="dot"></span><span class="dot"></span>
   </div>
   <p class="footer-disclaimer">
-    <span class="lang-en"><strong>Independent analysis for reference only</strong> — not investment advice. Sources: BNM · DOSM · NAPIC · MIDA · data.gov.my. A project by InvestMQuest.</span>
-    <span class="lang-zh"><strong>獨立分析參考</strong>，不構成投資建議。資料來源：BNM · DOSM · NAPIC · MIDA · data.gov.my。InvestMQuest 製作。</span>
+    <span class="lang-en"><strong>Independent analysis for reference only</strong> — not investment advice. Sources: BNM · DOSM · NAPIC · MIDA · World Bank. A project by InvestMQuest.</span>
+    <span class="lang-zh"><strong>獨立分析參考</strong>，不構成投資建議。資料來源：BNM · DOSM · NAPIC · MIDA · 世界銀行。InvestMQuest 製作。</span>
   </p>
 </footer>
 
 <script>
-/* ── data (BNM / DOSM / NAPIC / MIDA; latest = Q1/Q2 2026) ── */
+/* ── data (BNM / DOSM / NAPIC / MIDA / World Bank; latest = Q1/Q2 2026) ── */
 var years = ['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'];
 var oprRate        = [3.25,2.00,2.75,3.00,3.00,3.00,3.25,3.25,3.00,3.00,3.25,3.00,1.75,1.75,2.75,3.00,3.00,2.75,2.75];
 var avgLendingRate = [6.08,5.08,5.00,4.92,4.79,4.65,4.59,4.57,4.53,4.61,4.93,4.81,3.89,3.37,3.91,5.32,5.28,4.82,4.56];
@@ -294,6 +326,13 @@ var hhDebtGDP = [86.6,86.8,89.1,88.4,83.8,83.0,82.7,93.2,89.0,84.3,84.2,84.1,84.
 var stEN = ['Johor','Selangor','Kuala Lumpur','Penang','Kedah'];
 var stZH = ['柔佛','雪蘭莪','吉隆坡','檳城','吉打'];
 var stInvest = [110.0,83.9,63.3,32.9,27.8];
+/* GDP per capita nominal US$, 2024 (World Bank) */
+var capEN = ['Singapore','S. Korea','China','Malaysia','Thailand','Vietnam'];
+var capZH = ['新加坡','南韓','中國','馬來西亞','泰國','越南'];
+var capGDP = [67707,36239,13122,11867,6573,4018];
+/* USD/MYR approx year-end; peg 3.80 (1998–2005) */
+var ryYears = ['1997','1999','2002','2005','2008','2013','2015','2020','2022','2023','2024','2025','2026'];
+var ryVals  = [2.50,3.80,3.80,3.80,3.30,3.20,3.90,4.10,4.40,4.55,4.47,4.05,4.06];
 
 var C = {navy:'#0d2244',green:'#15803d',orange:'#a16207',red:'#b91c1c',blue:'#1d4ed8',muted:'#6b7a92',grid:'#ece5d4',gold:'#b8924a'};
 var FF = 'Inter,"Noto Sans TC",sans-serif';
@@ -312,69 +351,68 @@ function initCharts(lang){
   var isZh = lang === 'zh';
   var yMHPI = mkAxis({type:'value',min:120,max:240,interval:30,axisLabel:{formatter:'{value}'},splitLine:{show:false},name:'MHPI',nameTextStyle:nameStyle()});
 
-  /* Chart 1 — monetary */
-  var c1 = echarts.init(document.getElementById('chartMon'));
-  allCharts.push(c1);
-  c1.setOption({
-    tooltip:Object.assign({},baseTip,{formatter:dotTip}),
-    legend:legB(),
-    grid:{left:6,right:6,top:22,bottom:56,containLabel:true},
+  var c1 = echarts.init(document.getElementById('chartMon')); allCharts.push(c1);
+  c1.setOption({tooltip:Object.assign({},baseTip,{formatter:dotTip}),legend:legB(),grid:{left:6,right:6,top:22,bottom:56,containLabel:true},
     xAxis:mkAxis({type:'category',data:years,boundaryGap:false,axisLabel:{interval:isZh?3:2}}),
-    yAxis:[mkAxis({type:'value',min:-2,max:16,interval:3,axisLabel:{formatter:'{value}%'},name:isZh?'%':'%',nameTextStyle:nameStyle()}),yMHPI],
+    yAxis:[mkAxis({type:'value',min:-2,max:16,interval:3,axisLabel:{formatter:'{value}%'},name:'%',nameTextStyle:nameStyle()}),yMHPI],
     series:[
       {name:'OPR',type:'line',data:oprRate,yAxisIndex:0,lineStyle:{color:C.navy,width:2.6},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5},
       {name:isZh?'平均貸款利率':'Lending rate',type:'line',data:avgLendingRate,yAxisIndex:0,lineStyle:{color:C.blue,width:1.5},itemStyle:{color:C.blue},symbol:'circle',symbolSize:3.5},
       {name:'CPI',type:'line',data:cpiYoy,yAxisIndex:0,lineStyle:{color:C.orange,width:1.5},itemStyle:{color:C.orange},symbol:'circle',symbolSize:3.5},
       {name:'M2',type:'line',data:m2Growth,yAxisIndex:0,lineStyle:{color:C.muted,width:1,type:'dashed'},itemStyle:{color:C.muted},symbol:'circle',symbolSize:3.5},
-      mhpiSeries(isZh)
-    ]
-  });
+      mhpiSeries(isZh)]});
 
-  /* Chart 2 — real economy */
-  var c2 = echarts.init(document.getElementById('chartReal'));
-  allCharts.push(c2);
+  var c2 = echarts.init(document.getElementById('chartReal')); allCharts.push(c2);
   var gdpBars = gdpGrowth.map(function(v){return {value:v,itemStyle:{color:v>=0?C.blue:C.red,borderRadius:[3,3,0,0]}};});
-  c2.setOption({
-    tooltip:Object.assign({},baseTip,{formatter:dotTip}),
-    legend:legB(),
-    grid:{left:6,right:6,top:22,bottom:56,containLabel:true},
+  c2.setOption({tooltip:Object.assign({},baseTip,{formatter:dotTip}),legend:legB(),grid:{left:6,right:6,top:22,bottom:56,containLabel:true},
     xAxis:mkAxis({type:'category',data:years,boundaryGap:true,axisLabel:{interval:isZh?3:2}}),
-    yAxis:[mkAxis({type:'value',min:-8,max:16,interval:4,axisLabel:{formatter:'{value}%'},name:isZh?'%':'%',nameTextStyle:nameStyle()}),yMHPI],
+    yAxis:[mkAxis({type:'value',min:-8,max:16,interval:4,axisLabel:{formatter:'{value}%'},name:'%',nameTextStyle:nameStyle()}),yMHPI],
     series:[
       {name:'GDP',type:'bar',data:gdpBars,yAxisIndex:0,barMaxWidth:16},
       {name:isZh?'失業率':'Unemployment',type:'line',data:unemployRate,yAxisIndex:0,lineStyle:{color:C.red,width:1.5},itemStyle:{color:C.red},symbol:'circle',symbolSize:3.5},
       {name:isZh?'房貸成長':'Housing loans',type:'line',data:housingLoan,yAxisIndex:0,lineStyle:{color:C.orange,width:1.5},itemStyle:{color:C.orange},symbol:'circle',symbolSize:3.5},
-      mhpiSeries(isZh)
-    ]
-  });
+      mhpiSeries(isZh)]});
 
-  /* Chart 3 — household leverage */
-  var c3 = echarts.init(document.getElementById('chartLev'));
-  allCharts.push(c3);
-  c3.setOption({
-    tooltip:Object.assign({},baseTip,{formatter:function(p){return p[0].name+'<br/><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+p[0].color+';margin-right:5px"></span>'+(isZh?'家庭債務/GDP':'Household debt/GDP')+'：'+p[0].value+'%';}}),
+  var c3 = echarts.init(document.getElementById('chartLev')); allCharts.push(c3);
+  c3.setOption({tooltip:Object.assign({},baseTip,{formatter:function(p){return p[0].name+'<br/><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+p[0].color+';margin-right:5px"></span>'+(isZh?'家庭債務/GDP':'Household debt/GDP')+'：'+p[0].value+'%';}}),
     grid:{left:6,right:10,top:26,bottom:26,containLabel:true},
     xAxis:mkAxis({type:'category',data:levYears,boundaryGap:false}),
     yAxis:mkAxis({type:'value',min:78,max:96,interval:3,axisLabel:{formatter:'{value}%'}}),
     series:[{name:isZh?'家庭債務/GDP':'Household debt/GDP',type:'line',data:hhDebtGDP,smooth:true,lineStyle:{color:C.navy,width:3},itemStyle:{color:C.navy},symbol:'circle',symbolSize:6,
       areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(13,34,68,0.16)'},{offset:1,color:'rgba(13,34,68,0)'}])},
       markLine:{silent:true,symbol:'none',data:[{yAxis:85,label:{formatter:isZh?'~85% 高槓桿帶':'~85% high-leverage',color:C.orange,fontSize:10,fontFamily:FF,position:'insideEndTop'},lineStyle:{color:C.orange,type:'dashed',width:1}}]},
-      markPoint:{symbolSize:0,data:[{coord:['2020',93.2],value:isZh?'COVID高峰 93.2%':'COVID peak 93.2%',label:{color:C.red,fontSize:10,fontWeight:700,fontFamily:FF,position:'top'}}]}}]
-  });
+      markPoint:{symbolSize:0,data:[{coord:['2020',93.2],value:isZh?'COVID高峰 93.2%':'COVID peak 93.2%',label:{color:C.red,fontSize:10,fontWeight:700,fontFamily:FF,position:'top'}}]}}]});
 
-  /* Chart 4 — approved investment by state */
-  var c4 = echarts.init(document.getElementById('chartState'));
-  allCharts.push(c4);
+  /* Chart 5 — middle-income ceiling */
+  var c5 = echarts.init(document.getElementById('chartCeiling')); allCharts.push(c5);
+  var capNames = (isZh?capZH:capEN).slice().reverse();
+  var capData = capGDP.slice().reverse().map(function(v,i){var name=capNames[i];var isMY=(name==='Malaysia'||name==='馬來西亞');return {value:v,itemStyle:{color:isMY?C.gold:'#9aa7ba',borderRadius:[0,4,4,0]}};});
+  c5.setOption({tooltip:Object.assign({},baseTip,{formatter:function(p){return p[0].name+'<br/><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+p[0].color+';margin-right:5px"></span>US$'+Number(p[0].value).toLocaleString();}}),
+    grid:{left:6,right:54,top:8,bottom:24,containLabel:true},
+    xAxis:mkAxis({type:'value',min:0,max:70000,interval:20000,axisLabel:{formatter:function(v){return '$'+(v/1000)+'k';}}}),
+    yAxis:mkAxis({type:'category',data:capNames,splitLine:{show:false}}),
+    series:[{type:'bar',data:capData,barMaxWidth:22,label:{show:true,position:'right',formatter:function(d){return '$'+(d.value/1000).toFixed(1)+'k';},color:C.muted,fontSize:10,fontFamily:FF}}]});
+
+  /* Chart 6 — ringgit */
+  var c6 = echarts.init(document.getElementById('chartRinggit')); allCharts.push(c6);
+  c6.setOption({tooltip:Object.assign({},baseTip,{formatter:function(p){return p[0].name+'<br/><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+p[0].color+';margin-right:5px"></span>USD/MYR：'+p[0].value;}}),
+    grid:{left:6,right:14,top:26,bottom:26,containLabel:true},
+    xAxis:mkAxis({type:'category',data:ryYears,boundaryGap:false}),
+    yAxis:mkAxis({type:'value',min:2,max:5,interval:0.5,axisLabel:{formatter:'{value}'}}),
+    series:[{name:'USD/MYR',type:'line',data:ryVals,smooth:false,lineStyle:{color:C.navy,width:2.6},itemStyle:{color:C.navy},symbol:'circle',symbolSize:5,
+      areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(13,34,68,0.14)'},{offset:1,color:'rgba(13,34,68,0)'}])},
+      markArea:{silent:true,itemStyle:{color:'rgba(184,146,74,0.12)'},label:{formatter:isZh?'釘住 3.80':'Peg 3.80',color:C.gold,fontSize:10,fontFamily:FF,position:'insideTop'},data:[[{xAxis:'1999'},{xAxis:'2005'}]]}}]});
+
+  /* Chart 4 — investment by state */
+  var c4 = echarts.init(document.getElementById('chartState')); allCharts.push(c4);
   var names = (isZh?stZH:stEN).slice().reverse();
   var cols = [C.navy,'#173564',C.blue,C.muted,'#9aa7ba'].reverse();
-  c4.setOption({
-    tooltip:Object.assign({},baseTip,{formatter:function(p){return p[0].name+'<br/><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+p[0].color+';margin-right:5px"></span>RM'+p[0].value+'b';}}),
+  c4.setOption({tooltip:Object.assign({},baseTip,{formatter:function(p){return p[0].name+'<br/><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+p[0].color+';margin-right:5px"></span>RM'+p[0].value+'b';}}),
     grid:{left:6,right:42,top:10,bottom:24,containLabel:true},
     xAxis:mkAxis({type:'value',min:0,max:120,interval:30,axisLabel:{formatter:'RM{value}b'}}),
     yAxis:mkAxis({type:'category',data:names,splitLine:{show:false}}),
-    series:[{name:isZh?'核准投資':'Approved investment',type:'bar',data:stInvest.slice().reverse().map(function(v,i){return {value:v,itemStyle:{color:cols[i],borderRadius:[0,4,4,0]}};}),barMaxWidth:24,
-      label:{show:true,position:'right',formatter:'RM{c}b',color:C.muted,fontSize:10,fontFamily:FF}}]
-  });
+    series:[{type:'bar',data:stInvest.slice().reverse().map(function(v,i){return {value:v,itemStyle:{color:cols[i],borderRadius:[0,4,4,0]}};}),barMaxWidth:24,
+      label:{show:true,position:'right',formatter:'RM{c}b',color:C.muted,fontSize:10,fontFamily:FF}}]});
 }
 
 function setLang(lang){
