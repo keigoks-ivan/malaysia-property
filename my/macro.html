@@ -20,7 +20,7 @@
 .section-label{color:var(--gold-deep);font-weight:700;letter-spacing:.14em}
 .chart-card h3{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:600;color:var(--navy);font-size:15px}
 .cycle-bar{display:flex;gap:3px;border-radius:10px;overflow:hidden;margin-bottom:10px}
-.cycle-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 6px;position:relative}
+.cycle-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 6px;position:relative;min-width:0;overflow:hidden}
 .cycle-seg .cs-title{font-size:9px;font-weight:700;color:#fff;font-family:Inter,sans-serif;letter-spacing:0.3px;text-align:center}
 .cycle-seg .cs-year{font-size:8px;color:rgba(255,255,255,0.78);font-family:Inter,sans-serif;text-align:center}
 .cycle-now{position:absolute;top:4px;right:5px;background:rgba(255,255,255,0.28);border-radius:3px;font-size:8px;font-weight:700;color:#fff;padding:1px 5px;font-family:Inter,sans-serif;letter-spacing:0.3px}
@@ -53,6 +53,7 @@ body.zh .ev-desc,body.zh .ctx-sub,body.zh .chart-insight,body.zh .pivot-lede p,b
 .kl-band .ctx-grid{margin-bottom:14px}
 .divider{height:1px;background:var(--gold-line);margin:34px 0 28px;border:0}
 @media(max-width:640px){.ctx-grid{grid-template-columns:repeat(2,1fr)}.ev-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.cycle-seg{padding:8px 2px}.cycle-seg .cs-title{font-size:8px}.cycle-seg .cs-year{font-size:7px;letter-spacing:-.2px}.cycle-now{font-size:7px;padding:1px 3px;right:3px}}
 </style>
 </head>
 <body>
@@ -117,11 +118,11 @@ body.zh .ev-desc,body.zh .ctx-sub,body.zh .chart-insight,body.zh .pivot-lede p,b
         <div class="cs-year">20–21</div>
       </div>
       <div class="cycle-seg" style="flex:2;background:#b91c1c">
-        <div class="cs-title"><span class="lang-en">Rate Hike</span><span class="lang-zh" style="display:none">升息</span></div>
+        <div class="cs-title"><span class="lang-en">Hikes</span><span class="lang-zh" style="display:none">升息</span></div>
         <div class="cs-year">22–23</div>
       </div>
       <div class="cycle-seg" style="flex:3;background:#0d2244">
-        <div class="cs-title"><span class="lang-en">Easing Pivot</span><span class="lang-zh" style="display:none">轉向降息</span></div>
+        <div class="cs-title"><span class="lang-en">Easing</span><span class="lang-zh" style="display:none">降息</span></div>
         <div class="cs-year">24–26</div>
         <span class="cycle-now">▶ NOW</span>
       </div>
@@ -605,15 +606,6 @@ function phaseAreas(isZh){
     [{xAxis:'2024',itemStyle:{color:'rgba(13,34,68,0.07)'},   label:{formatter:isZh?'轉向降息':'Easing Pivot',color:C.navy,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}},{xAxis:'2026'}]
   ];
 }
-function phaseLines(isZh){
-  return [
-    {xAxis:'2009',label:{formatter:isZh?'OPR 2%低點':'OPR Low 2%',color:'#6b7a92',fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'end'},lineStyle:{color:'#6b7a92',type:'dashed',width:1}},
-    {xAxis:'2014',label:{formatter:isZh?'升息+審慎':'Hike+Macro-Pru',color:C.orange,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'end'},lineStyle:{color:C.orange,type:'dashed',width:1}},
-    {xAxis:'2020',label:{formatter:isZh?'OPR歷史低點':'OPR Hist.Low',color:C.blue,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'end'},lineStyle:{color:C.blue,type:'dashed',width:1}},
-    {xAxis:'2022',label:{formatter:isZh?'BNM首升息':'First Hike',color:C.red,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'end'},lineStyle:{color:C.red,type:'dashed',width:1}},
-    {xAxis:'2025',label:{formatter:isZh?'五年首降':'First Cut',color:C.navy,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif',position:'end'},lineStyle:{color:C.navy,type:'dashed',width:1.4}}
-  ];
-}
 
 function initCharts(lang){
   allCharts.length = 0;
@@ -624,8 +616,8 @@ function initCharts(lang){
   allCharts.push(c1);
   c1.setOption({
     tooltip:Object.assign({},baseTooltip,{formatter:dotTip}),
-    legend:Object.assign({},baseLegend),
-    grid:{left:50,right:60,top:40,bottom:30,containLabel:true},
+    legend:{bottom:2,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},
+    grid:{left:50,right:60,top:30,bottom:58,containLabel:true},
     xAxis:mkAxis({type:'category',data:years,boundaryGap:false}),
     yAxis:[
       mkAxis({type:'value',min:-2,max:16,interval:2,axisLabel:{formatter:'{value}%'},name:isZh?'%指標':'% Indicators',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}}),
@@ -638,7 +630,7 @@ function initCharts(lang){
       {name:isZh?'M2 YoY%':'M2 YoY%',type:'line',data:m2Growth,yAxisIndex:0,lineStyle:{color:C.muted,width:1,type:'dashed'},itemStyle:{color:C.muted},symbol:'circle',symbolSize:4},
       {name:isZh?'MHPI房價指數':'House Price Index',type:'line',data:hpi,yAxisIndex:1,lineStyle:{color:C.gold,width:3},itemStyle:{color:C.gold},symbol:'circle',symbolSize:5,
        areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(184,146,74,0.14)'},{offset:1,color:'rgba(184,146,74,0)'}])},
-       markArea:{silent:true,data:phaseAreas(isZh)},markLine:{silent:true,symbol:'none',data:phaseLines(isZh)}}
+       markArea:{silent:true,label:{position:'insideTop',distance:3},data:phaseAreas(isZh)}}
     ]
   });
 
@@ -648,8 +640,8 @@ function initCharts(lang){
   var gdpBarData = gdpGrowth.map(function(v){return {value:v,itemStyle:{color:v>=0?C.blue:C.red,borderRadius:[3,3,0,0]}};});
   c2.setOption({
     tooltip:Object.assign({},baseTooltip,{formatter:dotTip}),
-    legend:Object.assign({},baseLegend),
-    grid:{left:50,right:60,top:40,bottom:30,containLabel:true},
+    legend:{bottom:2,textStyle:baseText,icon:'circle',itemWidth:8,itemHeight:8},
+    grid:{left:50,right:60,top:30,bottom:58,containLabel:true},
     xAxis:mkAxis({type:'category',data:years,boundaryGap:true}),
     yAxis:[
       mkAxis({type:'value',min:-8,max:16,interval:4,axisLabel:{formatter:'{value}%'},name:isZh?'%指標':'% Indicators',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:'Inter,"Noto Sans TC",sans-serif'}}),
@@ -661,7 +653,7 @@ function initCharts(lang){
       {name:isZh?'房貸成長%':'Housing Loan Growth%',type:'line',data:housingLoanGrowth,yAxisIndex:0,lineStyle:{color:C.orange,width:1.5},itemStyle:{color:C.orange},symbol:'circle',symbolSize:4},
       {name:isZh?'MHPI房價指數':'House Price Index',type:'line',data:hpi,yAxisIndex:1,lineStyle:{color:C.gold,width:3},itemStyle:{color:C.gold},symbol:'circle',symbolSize:5,
        areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(184,146,74,0.14)'},{offset:1,color:'rgba(184,146,74,0)'}])},
-       markArea:{silent:true,data:phaseAreas(isZh)},markLine:{silent:true,symbol:'none',data:phaseLines(isZh)}}
+       markArea:{silent:true,label:{position:'insideTop',distance:3},data:phaseAreas(isZh)}}
     ]
   });
 
