@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Airbnb / STRA — KL Short-Term Rental | Malaysia Property Monitor</title>
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/kl-theme.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+/* ── airbnb (tabbed) — shares macro/report navy-gold chrome ── */
+.wrap{max-width:920px;margin:0 auto;padding:26px 20px 10px}
+body.zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
+.wrap p,.wrap li{line-height:1.95}
+
+/* header */
+.pg-head{margin-bottom:16px}
+.pg-title{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:26px;letter-spacing:-.01em;margin:0 0 8px;line-height:1.3}
+.pg-sub{font-size:13px;color:var(--muted);margin:0 0 12px;line-height:1.7;max-width:760px}
+.pg-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* tabs */
+.tabwrap{position:sticky;top:52px;z-index:90;background:rgba(247,243,234,.94);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);margin:0 -20px 22px;padding:8px 20px 0;border-bottom:1px solid var(--border)}
+.tabs{display:flex;gap:2px;max-width:920px;margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:inherit;font-size:13px;font-weight:600;padding:9px 13px 10px;cursor:pointer;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.2;transition:color .15s}
+.tab .t-k{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);opacity:.7}
+.tab:hover{color:var(--navy)}
+.tab.active{color:var(--navy);border-bottom-color:var(--gold)}
+.tab.active .t-k{opacity:1}
+.panel{display:none}
+.panel.active{display:block;animation:abfade .28s ease}
+@keyframes abfade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* lede / sections */
+.lede{background:linear-gradient(135deg,#0d2244 0%,#173564 100%);color:#fff;border-radius:14px;padding:20px 24px;margin:6px 0 26px;font-size:13.5px;line-height:1.95;box-shadow:var(--shadow-md)}
+.lede b,.lede strong{color:var(--gold-light);font-weight:600}
+.lede .lk{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+.sec-rule{display:flex;align-items:center;gap:12px;margin:34px 0 16px}
+.sec-rule h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:20px;margin:0;white-space:nowrap;line-height:1.3}
+.sec-rule::after{content:'';flex:1;height:1px;background:var(--gold-line)}
+.sub-h{font-family:'Playfair Display','Noto Serif TC',serif;color:var(--navy);font-size:15.5px;font-weight:600;margin:24px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--border-light)}
+.sub-h.bare{border:none;padding:0;margin:18px 0 6px;font-size:14.5px}
+.pull{font-family:'Playfair Display','Noto Serif TC',serif;font-size:16px;line-height:1.7;color:var(--navy);border-left:3px solid var(--gold);padding:3px 0 3px 16px;margin:0 0 16px;font-weight:600}
+.p{font-size:13px;color:var(--text-soft);margin:0 0 14px;line-height:1.95}
+.p b,.p strong{color:var(--navy);font-weight:600}
+.p a{color:var(--gold-deep);font-weight:600}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:14px 0;box-shadow:var(--shadow-sm)}
+.card>:first-child{margin-top:0}.card>:last-child{margin-bottom:0}
+.chartbox{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 14px 8px;box-shadow:var(--shadow-sm);margin:14px 0}
+.chartbox .kick{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin:2px 4px 2px}
+.chartbox h3{font-size:13.5px;font-weight:700;color:var(--navy);margin:2px 4px 2px}
+.chartbox .csub{font-size:11px;color:var(--muted);margin:0 4px 8px;line-height:1.6}
+.chart{width:100%;height:240px}
+.chart.tall{height:300px}
+.cgrid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.cgrid2{grid-template-columns:1fr}}
+
+/* snapshot stats */
+.snap{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:6px 0 22px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 12px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:4px;min-width:0}
+.stat-lbl{font-size:10px;font-weight:600;letter-spacing:.03em;color:var(--gold-deep);text-transform:uppercase;line-height:1.4}
+body.zh .stat-lbl{text-transform:none;letter-spacing:0}
+.stat-num{font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:19px;font-weight:700;color:var(--navy);line-height:1.2}
+.stat-tag{font-size:10px;font-weight:600;line-height:1.5}
+.t-green{color:#15803d}.t-orange{color:#a16207}.t-red{color:#b91c1c}.t-blue{color:#1d4ed8}
+.mrow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:6px 0 18px}
+.m{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 13px;min-width:0;text-align:center}
+.m .mn{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;color:var(--navy);line-height:1.2}
+.m .ml{font-size:10.5px;color:var(--muted);line-height:1.5;margin-top:4px}
+.m .md{font-size:9.5px;color:#aabdd4;margin-top:2px}
+.m .mn.neg{color:#b91c1c}.m .mn.pos{color:#15803d}.m .mn.gold{color:var(--gold-deep)}
+
+/* tables */
+.atbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;margin:14px 0;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.atbl thead th{background:linear-gradient(135deg,#0d2244,#173564);color:var(--gold-light);text-align:left;padding:10px 12px;font-weight:600;font-size:11.5px;letter-spacing:.01em;vertical-align:bottom}
+.atbl td{padding:9px 12px;border-top:1px solid var(--border-light);vertical-align:top;color:var(--text-soft);line-height:1.7}
+.atbl tbody tr:nth-child(even){background:var(--bg-card-alt)}
+.atbl td b,.atbl td strong{color:var(--navy);font-weight:600}
+.atbl .num{font-family:'IBM Plex Mono',monospace;color:var(--navy);font-weight:500}
+.atbl.center td{text-align:center}.atbl.center td.lbl{text-align:left}
+.atbl td.lbl{background:var(--bg-section);font-weight:600;color:var(--navy)}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0}
+.tscroll .atbl{margin:0;min-width:600px}
+
+/* tags / pills */
+.tag{display:inline-block;padding:1px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;line-height:1.7}
+.tag.pos{background:var(--positive-bg);color:var(--positive)}
+.tag.neg{background:var(--negative-bg);color:var(--negative)}
+.tag.warn{background:var(--gold-bg);color:var(--gold-deep)}
+.pill{display:inline-block;background:var(--accent-light);border-radius:6px;padding:1px 7px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--navy);font-weight:600;margin:0 1px}
+
+/* callouts */
+.cl{border-radius:12px;padding:14px 18px;margin:16px 0;font-size:12.5px;line-height:1.9;color:var(--text-soft)}
+.cl b,.cl strong{color:var(--navy);font-weight:600}
+.cl-info{background:var(--accent-light);border-left:3px solid var(--neutral)}
+.cl-warn{background:var(--gold-bg);border:1px solid var(--gold-soft);border-left:3px solid var(--gold-deep)}
+.cl-warn h4{color:var(--gold-deep);margin:0 0 6px;font-size:13.5px;font-weight:700}
+.cl ul{margin:6px 0 0;padding-left:20px}.cl li{margin:4px 0}
+
+/* lists */
+.pt{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:9px}
+.pt li{position:relative;padding-left:18px;font-size:12.5px;color:var(--text-soft);line-height:1.85}
+.pt li::before{content:'';position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.pt li b{color:var(--navy);font-weight:600}
+.pt li.warn::before{background:#b91c1c}.pt li.good::before{background:#15803d}
+
+/* timeline */
+.tl{border-left:2px solid var(--gold);margin:14px 0 14px 8px}
+.tl .ev{position:relative;padding:1px 0 15px 24px}
+.tl .ev:last-child{padding-bottom:0}
+.tl .ev::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid var(--card);box-shadow:0 0 0 1px var(--gold-soft)}
+.tl .date{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--gold-deep);font-size:12.5px}
+.tl .ev p{margin:2px 0 0;font-size:12.5px;color:var(--text-soft);line-height:1.8}
+
+/* numbered flow */
+.flow{counter-reset:step;margin:14px 0}
+.flow .step{position:relative;padding:1px 0 16px 44px;border-left:2px solid var(--gold-soft);margin-left:15px}
+.flow .step:last-child{border-left-color:transparent;padding-bottom:0}
+.flow .step::before{counter-increment:step;content:counter(step);position:absolute;left:-15px;top:-3px;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#0d2244,#173564);color:var(--gold-light);font-family:'IBM Plex Mono',monospace;font-weight:600;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:var(--shadow-sm)}
+.flow .step h4{margin:0 0 3px;color:var(--navy);font-size:13px;font-weight:700;line-height:1.4}
+.flow .step p{margin:0;font-size:12.5px;color:var(--text-soft);line-height:1.8}
+
+/* risk matrix */
+.rmx{width:100%;border-collapse:separate;border-spacing:5px;font-size:11.5px;margin:10px 0}
+.rmx th{color:var(--gold-deep);font-weight:700;font-size:11px;padding:4px;text-align:center}
+.rmx td{text-align:center;font-weight:600;padding:11px 8px;border-radius:8px;line-height:1.35;color:#fff}
+.rmx td.lbl{background:var(--bg-section);color:var(--navy);text-align:left;font-weight:700}
+.rmx .sev-h{background:#b3322a}.rmx .sev-m{background:#a16207}.rmx .sev-l{background:#2f8050}
+
+/* verdict */
+.verdict{border-radius:14px;padding:17px 22px;margin:16px 0;box-shadow:var(--shadow-sm)}
+.verdict .vt{font-size:19px;font-weight:700;line-height:1.2;font-family:'Playfair Display','Noto Serif TC',serif}
+.verdict .vs{font-size:13px;margin-top:7px;line-height:1.85}
+.verdict .vs b{font-weight:700}
+.v-go{background:var(--positive-bg);border:1px solid #bbf7d0}.v-go .vt,.v-go .vs{color:#166534}
+.v-cond{background:var(--gold-bg);border:1px solid var(--gold-soft)}.v-cond .vt,.v-cond .vs{color:var(--gold-deep)}
+.v-no{background:var(--negative-bg);border:1px solid #f1c9c5}.v-no .vt,.v-no .vs{color:#991b1b}
+
+/* model / two-up cards */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.mcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow-sm)}
+.mcard h4{margin:0 0 8px;color:var(--navy);font-size:14px;font-weight:700}
+.mcard p{margin:6px 0;font-size:12.5px;color:var(--text-soft);line-height:1.8}
+.mcard ul{margin:6px 0 0;padding-left:18px}.mcard li{font-size:12.5px;color:var(--text-soft);line-height:1.75;margin:4px 0}
+
+/* tier bars */
+.tier{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:12.5px}
+.tier .nm{width:120px;flex-shrink:0;color:var(--text-soft);font-weight:600}
+.tier .bar{flex:1;background:var(--bg-section);border-radius:6px;height:20px;overflow:hidden}
+.tier .fill{height:100%;border-radius:6px}
+.tier .pc{width:52px;flex-shrink:0;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:12.5px;color:var(--navy)}
+
+/* concept box */
+.concept{background:var(--bg-section);border:1px solid var(--gold-soft);border-radius:12px;padding:15px 18px;margin:14px 0}
+.concept h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 8px}
+.concept p{font-size:12.5px;color:var(--text-soft);margin:0 0 8px;line-height:1.85}
+.concept p:last-child{margin-bottom:0}.concept p b{color:var(--navy);font-weight:600}
+
+/* prop-take navy banner */
+.take{background:linear-gradient(135deg,#0d2244,#173564);color:#fff;border-radius:14px;padding:18px 22px;margin:14px 0;box-shadow:var(--shadow-md)}
+.take .pk{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;display:block}
+.take p{margin:0 0 10px;font-size:13px;color:rgba(255,255,255,.92);line-height:1.9}
+.take p:last-child{margin-bottom:0}.take b{color:var(--gold-light)}
+
+/* decision matrix */
+.dmx{width:100%;border-collapse:separate;border-spacing:5px;font-size:12px;margin:10px 0}
+.dmx th{font-weight:700;color:var(--gold-deep);text-align:center;font-size:11.5px;padding:4px}
+.dmx td.lbl{background:var(--bg-section);color:var(--navy);font-weight:700;text-align:left;padding:8px 10px;border-radius:8px;font-size:11.5px}
+.dmx td{text-align:center;padding:8px 6px;border-radius:8px;background:var(--card);border:1px solid var(--border)}
+
+/* source */
+.src{font-size:11px;color:var(--muted);line-height:1.7;margin:6px 4px 0}
+.src a{color:var(--gold-deep)}
+.fnote{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:16px 18px;margin:24px 0 8px;font-size:11.5px;color:var(--muted);line-height:1.85}
+.fnote b{color:var(--text-soft)}
+
+/* calculator */
+.calc-presets{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 16px}
+.preset{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:6px 13px;font-size:12px;font-family:inherit;color:var(--navy);cursor:pointer;font-weight:600;transition:all .15s}
+.preset:hover{border-color:var(--gold);background:var(--gold-bg)}
+.vbanner{border-radius:14px;padding:18px 22px;margin-bottom:18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;box-shadow:var(--shadow-sm)}
+.vbanner .vb-l{flex:1 1 220px}
+.vbanner .vb-k{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.vbanner .vb-t{font-size:25px;font-weight:700;line-height:1.15;font-family:'Playfair Display','Noto Serif TC',serif}
+.vbanner .vb-s{font-size:13px;margin-top:5px;line-height:1.7}
+.vbanner .vb-r{text-align:right}
+.vbanner .vb-rk{font-size:11px;opacity:.82}
+.vbanner .vb-rv{font-family:'IBM Plex Mono',monospace;font-size:27px;font-weight:700}
+.vbanner .vb-rp{font-family:'IBM Plex Mono',monospace;font-size:12.5px;opacity:.85}
+.calc-field{margin-bottom:15px}
+.calc-field .cf-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:3px}
+.calc-field label{font-size:12.5px;font-weight:600;color:var(--text-soft)}
+.calc-field .cf-val{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--gold-deep);white-space:nowrap}
+.calc-field input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer;height:22px;margin:0}
+.calc-field .cf-hint{font-size:11px;color:var(--muted);margin-top:1px;line-height:1.5}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:0 30px}
+.breakdown{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:620px){.breakdown{grid-template-columns:1fr}}
+.bcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow-sm)}
+.bcard .bh{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:10px}
+.brow{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0;gap:10px}
+.brow .k{font-size:12px;color:var(--muted)}
+.brow .v{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--text-soft);white-space:nowrap}
+.brow.bold .k{font-size:12.5px;color:var(--navy);font-weight:700}
+.brow.bold .v{font-size:12.5px;color:var(--navy);font-weight:700}
+.brow.big .v{font-size:18px;font-weight:700}
+.brow .v.pos{color:#15803d}.brow .v.neg{color:#b91c1c}.brow .v.mut{color:var(--muted)}
+.bdiv{border-top:1px solid var(--border-light);margin:8px 0}
+.statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+@media(max-width:620px){.statrow{grid-template-columns:repeat(2,1fr)}}
+.cstat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;box-shadow:var(--shadow-sm)}
+.cstat .cv{font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:700;line-height:1.2;color:var(--navy)}
+.cstat .cv.pos{color:#15803d}.cstat .cv.neg{color:#b91c1c}
+.cstat .cl2{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+
+@media(max-width:760px){.snap{grid-template-columns:repeat(3,1fr)}.mrow{grid-template-columns:repeat(2,1fr)}.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}.tabwrap{top:48px}.vbanner .vb-r{text-align:left}}
+@media(max-width:440px){.snap{grid-template-columns:repeat(2,1fr)}.statrow{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/kl-check">
+      <span class="brand-mark">K</span>
+      <span class="brand-text">
+        <span class="brand-name">KL Property Check</span>
+        <span class="brand-by">by InvestMQuest</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="/kl-check"><span class="lang-en">Scorecards</span><span class="lang-zh">評分卡</span></a>
+      <a class="nav-link" href="/my/report"><span class="lang-en">Market Report</span><span class="lang-zh">市場報告</span></a>
+      <a class="nav-link" href="/my/macro"><span class="lang-en">Macro</span><span class="lang-zh">總經</span></a>
+      <a class="nav-link active" href="/my/airbnb"><span class="lang-en">Airbnb / STRA</span><span class="lang-zh">短租</span></a>
+      <div class="lang-btns">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ── Header ── -->
+  <div class="pg-head">
+    <h1 class="pg-title">
+      <span class="lang-en">Kuala Lumpur — Airbnb &amp; Short-Term Rental</span>
+      <span class="lang-zh" style="display:none">吉隆坡 · Airbnb 與短租（STRA）</span>
+    </h1>
+    <p class="pg-sub">
+      <span class="lang-en">Policy structure · KL market data · operating models &amp; risk · operator feasibility · an interactive STR-vs-long-let calculator. A short-term residential accommodation (STRA) deep-dive centred on Kuala Lumpur.</span>
+      <span class="lang-zh" style="display:none">政策結構 · KL 市場數據 · 經營模式與風險 · 業者可行性 · 互動式「短租 vs 長租」試算器。以吉隆坡為核心的短租住宿（STRA）深度專章。</span>
+    </p>
+    <div class="pg-badges">
+      <span class="kpi-badge badge-orange"><span class="lang-en">National STRA guideline pending</span><span class="lang-zh" style="display:none">國家 STRA 指引待頒</span></span>
+      <span class="kpi-badge badge-blue"><span class="lang-en">DBKL SOP live · Apr 2026</span><span class="lang-zh" style="display:none">DBKL SOP 已上路 · 2026/4</span></span>
+      <span class="kpi-badge badge-green"><span class="lang-en">Updated Jun 2026</span><span class="lang-zh" style="display:none">更新至 2026年6月</span></span>
+    </div>
+  </div>
+
+  <!-- ── Tab bar ── -->
+  <div class="tabwrap">
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-tab="overview"><span class="t-k">01</span><span class="lang-en">Overview</span><span class="lang-zh" style="display:none">總覽</span></button>
+      <button class="tab" data-tab="policy"><span class="t-k">02</span><span class="lang-en">Policy</span><span class="lang-zh" style="display:none">政策框架</span></button>
+      <button class="tab" data-tab="market"><span class="t-k">03</span><span class="lang-en">KL Market</span><span class="lang-zh" style="display:none">KL 市場</span></button>
+      <button class="tab" data-tab="ops"><span class="t-k">04</span><span class="lang-en">Operations</span><span class="lang-zh" style="display:none">營運與風險</span></button>
+      <button class="tab" data-tab="feasibility"><span class="t-k">05</span><span class="lang-en">Feasibility</span><span class="lang-zh" style="display:none">業者可行性</span></button>
+      <button class="tab" data-tab="models"><span class="t-k">06</span><span class="lang-en">Models</span><span class="lang-zh" style="display:none">經營模式</span></button>
+      <button class="tab" data-tab="calculator"><span class="t-k">07</span><span class="lang-en">Calculator</span><span class="lang-zh" style="display:none">試算器</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════ TAB 01 · OVERVIEW ════════════════ -->
+  <section class="panel active" id="panel-overview">
+
+    <div class="lede">
+      <span class="lk"><span class="lang-en">The one-line read</span><span class="lang-zh" style="display:none">一句話總覽</span></span>
+      <span class="lang-en">In 2026 KL, Airbnb is no longer a "list-it-and-collect" side hustle — it is a small lodging business whose entire risk is decided <b>before you enter</b>, by two things: the property's <b>land title</b> and the stance of its <b>management corporation (MC)</b>. There is no single law banning short-term rental; the country is moving from "no national law, every state on its own" toward a <b>unified national planning guideline (GPP) + local-authority licensing</b>. But whatever the policy does, the <b>strata by-law is the layer that overrides everything</b>. Pick the right building and the rest is execution; pick the wrong one and the best operator still nets RM0.</span>
+      <span class="lang-zh" style="display:none">在 2026 年的 KL，Airbnb <b>不再是「掛上網收錢」的副業，而是一門需要當小型住宿生意來經營的事</b>。它的風險，在你<b>進場前</b>就被兩件事決定了：樓盤的<b>地契</b>，與管理機構（<b>MC</b>）的態度。沒有任何單一法律禁止短租；全國正從「無全國法、各自為政」邁向「<b>國家統一規劃指引（GPP）＋ 地方政府發牌</b>」。但無論政策怎麼走，<b>分層地契的 MC 細則，永遠是凌駕一切的那一層</b>。選對樓盤，後面都是執行；選錯樓盤，再會營運都是 RM0。</span>
+    </div>
+
+    <!-- snapshot -->
+    <div class="snap">
+      <div class="stat"><div class="stat-lbl"><span class="lang-en">Active KL listings</span><span class="lang-zh" style="display:none">KL 活躍房源</span></div><div class="stat-num">~16k</div><div class="stat-tag t-red"><span class="lang-en">+216% YoY</span><span class="lang-zh" style="display:none">年增 216%</span></div></div>
+      <div class="stat"><div class="stat-lbl"><span class="lang-en">Median occupancy</span><span class="lang-zh" style="display:none">入住率中位</span></div><div class="stat-num">~33%</div><div class="stat-tag t-orange"><span class="lang-en">K-shaped split</span><span class="lang-zh" style="display:none">K 型分化</span></div></div>
+      <div class="stat"><div class="stat-lbl"><span class="lang-en">Average ADR</span><span class="lang-zh" style="display:none">平均房價 ADR</span></div><div class="stat-num">RM237</div><div class="stat-tag t-blue"><span class="lang-en">≈ US$50</span><span class="lang-zh" style="display:none">約 US$50</span></div></div>
+      <div class="stat"><div class="stat-lbl"><span class="lang-en">Entire-home</span><span class="lang-zh" style="display:none">整套出租占比</span></div><div class="stat-num">~91%</div><div class="stat-tag t-blue"><span class="lang-en">mostly hi-rise</span><span class="lang-zh" style="display:none">多為高層</span></div></div>
+      <div class="stat"><div class="stat-lbl"><span class="lang-en">Licensed</span><span class="lang-zh" style="display:none">持牌比例</span></div><div class="stat-num">~0%</div><div class="stat-tag t-orange"><span class="lang-en">transition window</span><span class="lang-zh" style="display:none">過渡期紅利</span></div></div>
+      <div class="stat"><div class="stat-lbl"><span class="lang-en">KL guest spend '24</span><span class="lang-zh" style="display:none">KL 旅客消費 '24</span></div><div class="stat-num">RM440m</div><div class="stat-tag t-green"><span class="lang-en">39% of MY Airbnb</span><span class="lang-zh" style="display:none">占全馬 39%</span></div></div>
+    </div>
+
+    <!-- charts -->
+    <div class="cgrid2">
+      <div class="chartbox">
+        <div class="kick"><span class="lang-en">Occupancy distribution</span><span class="lang-zh" style="display:none">入住率分布</span></div>
+        <h3><span class="lang-en">A K-shaped, winner-take-all market</span><span class="lang-zh" style="display:none">贏家通吃的 K 型市場</span></h3>
+        <div class="csub"><span class="lang-en">Active-listing occupancy by tier (AirROI). The median listing sits at ~⅓; the bottom quartile is near-idle.</span><span class="lang-zh" style="display:none">活躍房源入住率分層（AirROI）。中位房源僅約三分之一，後段近乎閒置。</span></div>
+        <div class="chart" id="cKocc"></div>
+      </div>
+      <div class="chartbox">
+        <div class="kick"><span class="lang-en">Supply surge</span><span class="lang-zh" style="display:none">供給暴增</span></div>
+        <h3><span class="lang-en">Listings more than tripled in a year</span><span class="lang-zh" style="display:none">房源一年暴增逾兩倍</span></h3>
+        <div class="csub"><span class="lang-en">KL active listings (AirROI). Demand has, for now, outrun a +216% supply jump — but the margin is thinning.</span><span class="lang-zh" style="display:none">KL 活躍房源（AirROI）。需求暫時跑贏 +216% 的供給暴增，但安全邊際正在變薄。</span></div>
+        <div class="chart" id="cKsupply"></div>
+      </div>
+    </div>
+
+    <!-- synthesis matrix -->
+    <div class="sec-rule"><h2><span class="lang-en">The whole thing on one page</span><span class="lang-zh" style="display:none">一頁看懂全局</span></h2></div>
+    <p class="p"><span class="lang-en">Where short-term rental is safe in KL maps onto two axes: the building's <b>land title</b> and what its <b>MC has decided</b>. Everything in the deeper tabs is an elaboration of this grid.</span><span class="lang-zh" style="display:none">在 KL，短租安不安全，落在兩條軸上：樓盤的<b>地契</b>，與<b>MC 的決定</b>。後面每一個分頁，都是這張表的展開。</span></p>
+
+    <div class="tscroll">
+      <table class="atbl center">
+        <thead><tr>
+          <th class="lbl"></th>
+          <th><span class="lang-en">Commercial / Serviced title</span><span class="lang-zh" style="display:none">商業 / Serviced 地契</span></th>
+          <th><span class="lang-en">Pure residential title</span><span class="lang-zh" style="display:none">純住宅地契</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="lbl"><span class="lang-en">MC already allows</span><span class="lang-zh" style="display:none">MC 已允許</span></td>
+            <td><span class="tag pos">🟢 <span class="lang-en">Safest</span><span class="lang-zh" style="display:none">最安全</span></span></td>
+            <td><span class="tag warn">🟡 <span class="lang-en">OK — check zoning</span><span class="lang-zh" style="display:none">可，須查 zoning</span></span></td></tr>
+          <tr><td class="lbl"><span class="lang-en">MC has not decided</span><span class="lang-zh" style="display:none">MC 未表態</span></td>
+            <td><span class="tag warn">🟡 <span class="lang-en">Confirm no ban at AGM</span><span class="lang-zh" style="display:none">先在 AGM 確認無禁令</span></span></td>
+            <td><span class="tag neg">🔴 <span class="lang-en">High risk — may be banned</span><span class="lang-zh" style="display:none">高風險，恐被封殺</span></span></td></tr>
+          <tr><td class="lbl"><span class="lang-en">MC has banned</span><span class="lang-zh" style="display:none">MC 已禁止</span></td>
+            <td><span class="tag neg">🔴 <span class="lang-en">Not allowed</span><span class="lang-zh" style="display:none">不可</span></span></td>
+            <td><span class="tag neg">🔴 <span class="lang-en">Not allowed</span><span class="lang-zh" style="display:none">不可</span></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cl cl-warn">
+      <h4>⚠ <span class="lang-en">The single most-overlooked layer</span><span class="lang-zh" style="display:none">最常被忽略的一層</span></h4>
+      <span class="lang-en">Even if the state has no law and DBKL lets you register, <b>your building's MC can kill short-term rental with a single by-law</b>. The 2020 Federal Court ruling <em>Innab Salil v Verve Suites Mont' Kiara</em> confirmed owners may ban STR by special resolution — and it is lawful. This is the layer most analyses miss, and the most fatal.</span>
+      <span class="lang-zh" style="display:none">即使州政府沒立法、即使 DBKL 准你登記，<b>你的公寓管理機構（MC）仍可用一條 by-law 直接封殺短租</b>。2020 年終審判決 <em>Innab Salil v Verve Suites Mont' Kiara</em> 確立：業主以特別決議禁短租為合法。這是政策分析最容易被忽略、卻最致命的一層。</span>
+    </div>
+
+    <!-- what each tab covers -->
+    <div class="sec-rule"><h2><span class="lang-en">What each tab covers</span><span class="lang-zh" style="display:none">各分頁導覽</span></h2></div>
+    <div class="grid2">
+      <div class="mcard"><h4>02 · <span class="lang-en">Policy</span><span class="lang-zh" style="display:none">政策框架</span></h4><p><span class="lang-en">Why there is no single law: the four-layer regulatory stack, the national GPP timeline, the courts' decisive rulings, a 13-state + FT comparison, federal tax, and six global models KL can borrow from.</span><span class="lang-zh" style="display:none">為何沒有單一法律：四層監管堆疊、國家 GPP 時間軸、司法定調、13 州＋聯邦直轄區對照、聯邦稅務，與六種可借鏡的全球模式。</span></p></div>
+      <div class="mcard"><h4>03 · <span class="lang-en">KL Market</span><span class="lang-zh" style="display:none">KL 市場</span></h4><p><span class="lang-en">DBKL's stance and the plot-ratio loophole; market size, ADR, the K-curve and real yields; the investment-product-vs-housing tension; and the three most likely policy paths.</span><span class="lang-zh" style="display:none">DBKL 立場與 plot ratio 漏洞；規模、ADR、K 曲線與真實報酬；投資商品 vs 居住需求的張力；以及三條最可能的政策路徑。</span></p></div>
+      <div class="mcard"><h4>04 · <span class="lang-en">Operations &amp; Risk</span><span class="lang-zh" style="display:none">營運與風險</span></h4><p><span class="lang-en">Self-managed vs co-host, the eight-step path from zero to listed, three-layer compliance, and a probability × impact risk matrix with mitigations.</span><span class="lang-zh" style="display:none">自管 vs 代管、從零到出租的八步流程、三層合規，與「機率 × 衝擊」風險矩陣及對策。</span></p></div>
+      <div class="mcard"><h4>05 · <span class="lang-en">Feasibility</span><span class="lang-zh" style="display:none">業者可行性</span></h4><p><span class="lang-en">Two ways to go pro — co-host company vs owner-operator of multiple units — with unit economics, scale thresholds and a Go / No-Go verdict for each.</span><span class="lang-zh" style="display:none">兩條規模化路徑——代管公司 vs 自有多套房東——的單位經濟、規模門檻，與各自的 Go / No-Go 判定。</span></p></div>
+      <div class="mcard"><h4>06 · <span class="lang-en">Models</span><span class="lang-zh" style="display:none">經營模式</span></h4><p><span class="lang-en">Nine operating models with unit economics &amp; KL-fit, the common automation tech stack, what to borrow from Bali / Dubai / Lisbon, and the optimal KL playbook.</span><span class="lang-zh" style="display:none">九種經營模式的單位經濟與 KL 適配、共通自動化技術堆疊、峇里／杜拜／里斯本可借鏡之處，與 KL 最優打法。</span></p></div>
+    </div>
+
+    <p class="src"><span class="lang-en">Sources: AirROI (2026-02–04), Airbtics (2025-10 / 2026-02), AirDNA, Bamboo Routes (2026-01), iQI Global (2026-01), The Star (2026-05-24). Occupancy ranges differ by methodology (whether semi-dormant listings are included).</span><span class="lang-zh" style="display:none">資料：AirROI（2026-02～04）、Airbtics（2025-10／2026-02）、AirDNA、Bamboo Routes（2026-01）、iQI Global（2026-01）、The Star（2026-05-24）。入住率區間因口徑而異（是否計入半睡眠房源）。</span></p>
+
+  </section>
+
+  <!-- ════════════════ TAB 02 · POLICY ════════════════ -->
+  <section class="panel" id="panel-policy">
+
+    <div class="lede">
+      <span class="lk"><span class="lang-en">Policy in one breath</span><span class="lang-zh" style="display:none">政策一句話</span></span>
+      <span class="lang-en">Malaysia is a federation: <b>tourism is federal, housing is state, enforcement is local</b> — so no single law can govern short-term rental. Every host is bound by <b>four stacked layers at once, and all four must clear</b>. 2026 is the defining year: the federal PLANMalaysia STRA guideline (GPP) is drafted and awaiting Cabinet; Selangor has proposed a 180-day cap; Penang stays the strictest; Johor and most states remain laissez-faire. But the <b>strata MC by-law overrides them all</b>.</span>
+      <span class="lang-zh" style="display:none">馬來西亞是聯邦制：<b>旅遊歸聯邦、房屋歸州、地方政府執行</b>——因此沒有任何單一法律能一統短租。每個房東同時受<b>四層監管約束，缺一不可</b>。2026 是定調年：聯邦 PLANMalaysia 的 STRA 指引（GPP）已草擬、待內閣通過；雪蘭莪提出 180 天上限；檳城維持最嚴；柔佛與多數州仍放任。但<b>分層地契的 MC 細則，凌駕這一切</b>。</span>
+    </div>
+
+    <div class="sec-rule"><h2>§1 · <span class="lang-en">Four-layer regulatory stack</span><span class="lang-zh" style="display:none">四層監管堆疊</span></h2></div>
+    <p class="p"><span class="lang-en">Three powers sit at different levels of government, so a host clears four layers — <b>all must comply</b>.</span><span class="lang-zh" style="display:none">三權分屬不同層級，房東須過四層——<b>全部合規，缺一不可</b>。</span></p>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th style="width:24%"><span class="lang-en">Layer</span><span class="lang-zh" style="display:none">層級</span></th><th style="width:28%"><span class="lang-en">Authority</span><span class="lang-zh" style="display:none">主管機關</span></th><th><span class="lang-en">Core content</span><span class="lang-zh" style="display:none">核心內容</span></th></tr></thead>
+      <tbody>
+        <tr><td><b>① <span class="lang-en">State rules</span><span class="lang-zh" style="display:none">州政府規則</span></b></td><td><span class="lang-en">State govt / EXCO</span><span class="lang-zh" style="display:none">各州政府 / EXCO</span></td><td><span class="lang-en">Some states require a tourism-accommodation licence (Penang, Sarawak, Langkawi…)</span><span class="lang-zh" style="display:none">部分州要求旅遊住宿牌照（檳城、砂拉越、Langkawi 等）</span></td></tr>
+        <tr><td><b>② <span class="lang-en">Local authority (PBT)</span><span class="lang-zh" style="display:none">地方政府（PBT）</span></b></td><td>DBKL / MPPP / MBPJ…</td><td><span class="lang-en">Zoning, registration, licensing, guest registration, fire safety</span><span class="lang-zh" style="display:none">分區（zoning）、登記、發牌、訪客登記、消防</span></td></tr>
+        <tr><td><b>③ <span class="lang-en">Strata by-law</span><span class="lang-zh" style="display:none">分層管理細則</span></b></td><td><span class="lang-en">MC / JMB</span><span class="lang-zh" style="display:none">管理機構 MC / JMB</span></td><td><span class="tag neg"><span class="lang-en">Overrides</span><span class="lang-zh" style="display:none">凌駕層</span></span> <span class="lang-en">Can directly ban or restrict STR regardless of state law</span><span class="lang-zh" style="display:none">可直接禁止或限制短租，不論州法</span></td></tr>
+        <tr><td><b>④ <span class="lang-en">Federal tax</span><span class="lang-zh" style="display:none">聯邦稅務</span></b></td><td>LHDN / <span class="lang-en">Customs (SST)</span><span class="lang-zh" style="display:none">關稅局 SST</span></td><td><span class="lang-en">Income-tax class, SST, tourism tax (TTx)</span><span class="lang-zh" style="display:none">所得稅分類、SST、旅遊稅（TTx）</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="cl cl-warn">
+      <h4>⚠ <span class="lang-en">The one rule above all: the MC by-law overrides everything</span><span class="lang-zh" style="display:none">最關鍵的一條：MC 細則凌駕一切</span></h4>
+      <span class="lang-en">Even with no state law and a DBKL registration, <b>your MC can shut STR down with one by-law</b>. <em>Innab Salil v Verve Suites Mont' Kiara</em> (2020, Federal Court) confirmed an owners' special resolution banning STR is lawful.</span>
+      <span class="lang-zh" style="display:none">即使州政府沒立法、即使 DBKL 准你登記，<b>你的 MC 仍可用一條 by-law 封殺短租</b>。<em>Innab Salil v Verve Suites Mont' Kiara</em>（2020 終審）確立：業主以特別決議禁短租為合法。</span>
+    </div>
+
+    <div class="sec-rule"><h2>§2 · <span class="lang-en">The national framework</span><span class="lang-zh" style="display:none">國家統一框架</span></h2></div>
+    <p class="p"><span class="lang-en">The Ministry of Housing &amp; Local Government (KPKT), via PLANMalaysia, has drafted a <b>unified STRA planning guideline (GPP)</b> — a <b>reference baseline</b> for every local authority, covering stays under six months. <span class="src" style="display:inline">(The Star, 2025-11-22 / 2025-08-19)</span></span><span class="lang-zh" style="display:none">房屋與地方政府部（KPKT）透過 PLANMalaysia 已草擬一套<b>「STRA 統一規劃指引」（GPP）</b>，定位為全國各地方政府的<b>參考基準</b>，涵蓋租期少於六個月的住宿。<span class="src" style="display:inline">（The Star, 2025-11-22／2025-08-19）</span></span></p>
+    <div class="grid2">
+      <div class="mcard"><h4><span class="lang-en">Known direction of the draft</span><span class="lang-zh" style="display:none">草案核心方向</span></h4>
+        <ul>
+          <li><b><span class="lang-en">Licensing</span><span class="lang-zh" style="display:none">發牌制</span></b>：<span class="lang-en">hosts register with the local authority — "identifiable, accountable".</span><span class="lang-zh" style="display:none">房東向地方政府登記領牌，讓房東「可被識別、可被追責」。</span></li>
+          <li><b><span class="lang-en">Permitted categories</span><span class="lang-zh" style="display:none">允許類別界定</span></b>：<span class="lang-en">which residential property may be let short-term.</span><span class="lang-zh" style="display:none">明確哪類住宅可作短租。</span></li>
+          <li><b><span class="lang-en">Safety &amp; fire</span><span class="lang-zh" style="display:none">安全與消防</span></b>，<span class="lang-en">stay-length norms.</span><span class="lang-zh" style="display:none">標準與住宿時長規範。</span></li>
+          <li><b><span class="lang-en">Nuisance handling</span><span class="lang-zh" style="display:none">擾鄰處理</span></b> <span class="lang-en">&amp; enforcement powers (noise, safety, long-tenant displacement).</span><span class="lang-zh" style="display:none">機制與執法權（噪音、安全、長租被排擠）。</span></li>
+          <li><span class="lang-en">Companion: Tourism Industry Act 1992 amendment (licensing, insurance, platform registration, a tourism tribunal), tabled late-2025 to early-2026.</span><span class="lang-zh" style="display:none">配套：旅遊業法令 1992 修法（牌照、保險、平台登記、旅遊法庭），2025 末至 2026 初提呈國會。</span></li>
+        </ul>
+      </div>
+      <div class="mcard"><h4><span class="lang-en">Approval path &amp; timeline</span><span class="lang-zh" style="display:none">審批路徑與時間軸</span></h4>
+        <div class="tl">
+          <div class="ev"><div class="date">2024</div><p><span class="lang-en">First announcement of a national STRA framework.</span><span class="lang-zh" style="display:none">首次宣布將建立 STRA 國家框架。</span></p></div>
+          <div class="ev"><div class="date">2025-08</div><p><span class="lang-en">PLANMalaysia finishes the draft; KPKT + MOTAC to table it to Cabinet.</span><span class="lang-zh" style="display:none">PLANMalaysia 完成草擬，將由 KPKT 與旅遊部（MOTAC）共同提呈內閣。</span></p></div>
+          <div class="ev"><div class="date">2025-11</div><p><span class="lang-en">Confirmed as a reference baseline; GPP handed to MOTAC.</span><span class="lang-zh" style="display:none">確認為地方政府參考基準；GPP 已交 MOTAC。</span></p></div>
+          <div class="ev"><div class="date">2026-01</div><p><span class="lang-en">Officials: framework "expected early 2026"; exact effective date still open.</span><span class="lang-zh" style="display:none">官員：框架「可望於 2026 年初公布」；生效確切時點仍未定。</span></p></div>
+          <div class="ev"><div class="date"><span class="lang-en">Next</span><span class="lang-zh" style="display:none">下一步</span></div><p><span class="lang-en">Cabinet → NCLG coordinates the states → local authorities license &amp; enforce.</span><span class="lang-zh" style="display:none">內閣審議 → 全國地方政府理事會（NCLG）協調各州 → 地方政府發牌執行。</span></p></div>
+        </div>
+      </div>
+    </div>
+    <div class="cl cl-info"><b><span class="lang-en">Read:</span><span class="lang-zh" style="display:none">定調判斷：</span></b> <span class="lang-en">The GPP is a <b>"guideline", not a law</b> — no automatic force; it hands the states a common template that local authorities then apply with existing licensing powers. So post-2026 stays <b>"one national direction + different state speeds and strictness"</b>, not a single national rule.</span><span class="lang-zh" style="display:none">GPP 是<b>「指引」而非「法律」</b>，不自動具強制力，而是給各州統一模板，再由地方政府以既有發牌權落地。所以 2026 之後仍是<b>「全國一致的方向 + 各州不同的落地速度與嚴格度」</b>，不會一刀切。</span></div>
+
+    <div class="sec-rule"><h2>§3 · <span class="lang-en">The decisive court rulings</span><span class="lang-zh" style="display:none">司法定調</span></h2></div>
+    <p class="p"><span class="lang-en">The 2025 Court of Appeal decision <em>Wawasan Raya v MARC Service Residence MC</em> ([2025] 4 MLRA 1) gave the clearest guidance yet:</span><span class="lang-zh" style="display:none">2025 年上訴庭 <em>Wawasan Raya v MARC Service Residence MC</em>（[2025] 4 MLRA 1）為長年爭議提供迄今最清晰的指引：</span></p>
+    <ul class="pt">
+      <li class="good"><span class="tag pos"><span class="lang-en">STR is not illegal</span><span class="lang-zh" style="display:none">短租不違法</span></span> <span class="lang-en">Neither the SMA 2013 nor regulations prohibit it — "not forbidden = permitted".</span><span class="lang-zh" style="display:none">分層管理法（SMA 2013）與法規均無明文禁止；「法無禁止即為許可」。</span></li>
+      <li class="warn"><span class="tag warn"><span class="lang-en">But can be restricted</span><span class="lang-zh" style="display:none">但可被合法限制</span></span> <span class="lang-en">Only via a <b>valid statutory mechanism (a properly passed special-resolution by-law)</b> — not a developer's DMC/house-rule clause, which is void under s.148 if it conflicts with the SMA.</span><span class="lang-zh" style="display:none">必須透過<b>正式法定機制（有效通過的特別決議 by-law）</b>，而非開發商在 DMC／house rules 裡的私約條款（與 SMA 抵觸者依第 148 條無效）。</span></li>
+      <li><span class="lang-en">The MC's statutory powers (s.59) <b>do not extend to regulating individual-unit use</b> — a house rule alone cannot ban STR; a special resolution is needed.</span><span class="lang-zh" style="display:none">MC 法定權力（第 59 條）<b>不及於規範個別單位的使用</b>——單靠 house rule 不足以禁短租，須走特別決議。</span></li>
+    </ul>
+    <p class="p"><span class="lang-en"><b>Practical meaning:</b> "Can an MC ban STR?" → <b>"Yes, but it must follow the right procedure."</b> A ban properly passed by special resolution remains valid and enforceable (including commercial-title buildings). <span class="src" style="display:inline">RDS Law Partners (2025-11-24); Malay Mail (2026-01-11).</span></span><span class="lang-zh" style="display:none"><b>實務意涵：</b>「MC 能不能禁短租」＝「能，但要走對程序」。已正確通過特別決議的禁令依然有效且可強制執行（含商業地契建築）。<span class="src" style="display:inline">資料：RDS Law Partners（2025-11-24）、Malay Mail（2026-01-11）。</span></span></p>
+
+    <div class="sec-rule"><h2>§4 · <span class="lang-en">State-by-state stance</span><span class="lang-zh" style="display:none">各州態度對照</span></h2></div>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th style="width:16%"><span class="lang-en">State / City</span><span class="lang-zh" style="display:none">州／城市</span></th><th style="width:15%"><span class="lang-en">Licence?</span><span class="lang-zh" style="display:none">需牌照？</span></th><th><span class="lang-en">Core stance</span><span class="lang-zh" style="display:none">核心態度</span></th></tr></thead>
+      <tbody>
+        <tr><td><b><span class="lang-en">Penang</span><span class="lang-zh" style="display:none">檳城</span></b></td><td><span class="tag neg"><span class="lang-en">Yes — strictest</span><span class="lang-zh" style="display:none">是（最嚴）</span></span></td><td><span class="lang-en">Strictest nationally. Private hi-rise STR effectively banned on the island; only commercial-title buildings with JMB consent may operate. Register + fire + MC written consent + tourism tax; fines up to RM2,000. Complaint-driven.</span><span class="lang-zh" style="display:none">全國最嚴。島內私人高層實質禁短租，僅商業地契經 JMB 同意可營運。須登記、消防、MC 書面同意、旅遊稅；違規最高 RM2,000。投訴驅動執法。</span></td></tr>
+        <tr><td><b><span class="lang-en">Sarawak</span><span class="lang-zh" style="display:none">砂拉越</span></b></td><td><span class="tag warn"><span class="lang-en">Yes — clearest</span><span class="lang-zh" style="display:none">是（最清晰）</span></span></td><td><span class="lang-en">Most defined, easiest to follow. Own Tourism Act: all STR licensed, meets facility standards, annual renewal. Downside: slow (weeks).</span><span class="lang-zh" style="display:none">法制最明確、最好遵循。自有旅遊業法令，所有短租須領牌、達設施標準、年度續牌。缺點是流程慢（數週）。</span></td></tr>
+        <tr><td><b><span class="lang-en">Kuala Lumpur</span><span class="lang-zh" style="display:none">吉隆坡</span></b> · DBKL</td><td><span class="tag warn"><span class="lang-en">Register</span><span class="lang-zh" style="display:none">須登記</span></span></td><td><span class="lang-en">Guidelines but no dedicated law; enforced via building &amp; commercial-licensing powers. Register + MC/JMB consent; prefers commercial/mixed title; most residential MCs have restrictive by-laws. <b>Serviced residences generally allowed.</b></span><span class="lang-zh" style="display:none">有指引但未入專法，以既有建築與商業發牌權執法。須登記、MC／JMB 同意；偏好商業／混合地契；多數住宅 MC 已立 by-law 限制。<b>Serviced residence 普遍允許。</b></span></td></tr>
+        <tr><td><b><span class="lang-en">Selangor</span><span class="lang-zh" style="display:none">雪蘭莪</span></b></td><td><span class="tag warn"><span class="lang-en">None yet — tightening</span><span class="lang-zh" style="display:none">無（將收緊）</span></span></td><td><span class="lang-en">No state regulation today, but proposing the most significant reform (see §4.2). MC by-law is the main constraint.</span><span class="lang-zh" style="display:none">目前無州級監管，但已提出最具指標性的改革（見 §4.2）。MC by-law 為主要限制。</span></td></tr>
+        <tr><td><b><span class="lang-en">Sabah · Melaka · Langkawi</span><span class="lang-zh" style="display:none">沙巴 · 馬六甲 · Langkawi</span></b></td><td><span class="tag warn"><span class="lang-en">Partial</span><span class="lang-zh" style="display:none">部分</span></span></td><td><span class="lang-en">Homestay schemes need registration; tourism-hotspot enforcement uneven. Langkawi has its own LADA licensing. Tourism taxes already in place.</span><span class="lang-zh" style="display:none">Homestay 計畫須登記；旅遊熱點執法不一。Langkawi 有 LADA 獨立發牌。已有旅遊稅。</span></td></tr>
+        <tr><td><b><span class="lang-en">Johor</span><span class="lang-zh" style="display:none">柔佛</span></b></td><td><span class="tag pos"><span class="lang-en">None</span><span class="lang-zh" style="display:none">無</span></span></td><td><span class="lang-en">Least regulated. Local councils may introduce rules; MC by-law still applies. Active around JB on RTS-link &amp; Iskandar demand.</span><span class="lang-zh" style="display:none">最不受監管。地方議會或將引入規則；MC by-law 仍適用。新山因新柔 RTS 與依斯干達需求活躍。</span></td></tr>
+        <tr><td><b><span class="lang-en">Perak, N. Sembilan, Pahang, Terengganu, Kelantan, Perlis</span><span class="lang-zh" style="display:none">霹靂、森美蘭、彭亨、登嘉樓、吉蘭丹、玻璃市</span></b></td><td><span class="tag pos"><span class="lang-en">None</span><span class="lang-zh" style="display:none">無</span></span></td><td><span class="lang-en">Minimal regulation; limited enforcement. Some tourism taxes; rural homestay schemes exist. Small STR markets.</span><span class="lang-zh" style="display:none">監管極少、執法有限；部分有旅遊稅、鄉村 homestay 計畫。短租市場小。</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="src"><span class="lang-en">Source: PropCashflow state guide (2026-02-21); Malay Mail / Yahoo (2026-01). Fees/rules in a complaint-driven environment; verify with each council's latest notice.</span><span class="lang-zh" style="display:none">資料：PropCashflow 州別指南（2026-02-21）；Malay Mail／Yahoo（2026-01）。費用與規則為投訴驅動環境下的公開資訊，以各地方議會最新公告為準。</span></p>
+
+    <div class="card">
+      <div class="sub-h bare">4.2 · <span class="lang-en">Selangor — the bellwether state reform (from 2026)</span><span class="lang-zh" style="display:none">雪蘭莪：最具指標性的州級改革（2026 起）</span></div>
+      <ul class="pt">
+        <li><b><span class="lang-en">180-day annual cap</span><span class="lang-zh" style="display:none">180 天年度上限</span></b>：<span class="lang-en">platforms may operate only half the year; full-year needs planning permission. Originally from Jan 2026.</span><span class="lang-zh" style="display:none">短租平台每年僅能營運半年；全年營運須申請規劃許可延長。原訂 2026 年 1 月起。</span></li>
+        <li><b><span class="lang-en">State-wide sustainability fee</span><span class="lang-zh" style="display:none">全州永續費</span></b>：<span class="lang-en">from 2026-01-01 on all paid lodging (hotels, homestay, Airbnb), kept low.</span><span class="lang-zh" style="display:none">2026-01-01 起對所有付費住宿（旅館、homestay、Airbnb）徵收，刻意壓低。</span></li>
+        <li><span class="lang-en">But conditional: final decision awaits the federal STRA guideline, then full study before the state assembly.</span><span class="lang-zh" style="display:none">但有前提：最終決定須等聯邦 STRA 指引出爐、完整研究後再提交州議會。</span></li>
+      </ul>
+      <div class="cl cl-info" style="margin-bottom:0"><b><span class="lang-en">Why it matters:</span><span class="lang-zh" style="display:none">為何重要：</span></b> <span class="lang-en">If enacted, Selangor becomes one of the first states with explicit STRA policy and a likely national template. The 180-day logic — splitting "residential STR" from "year-round commercial lodging" — echoes Penang's "commercial title for full-year" and is the framework's most probable direction.</span><span class="lang-zh" style="display:none">若落地，雪州將成為首批執行明確 STRA 政策的州，可能成為全國範本。180 天的核心邏輯——把「住宅短租」與「全年商業住宿」切開——呼應檳城「商業地契才可全年」，也是國家框架最可能的方向。</span></div>
+    </div>
+
+    <div class="sec-rule"><h2>§5 · <span class="lang-en">Federal tax</span><span class="lang-zh" style="display:none">聯邦稅務</span></h2></div>
+    <p class="p"><span class="lang-en">The most-misunderstood layer. STR is often classed by LHDN as <b>§4(a) business income</b>, not §4(d) passive rent — turning on letting frequency, services provided, staff, scale and active marketing.</span><span class="lang-zh" style="display:none">最多房東誤解的一層。短租常被 LHDN 歸為<b>第 4(a) 條營業所得</b>，而非第 4(d) 條被動租金——判定看出租頻率、是否提供服務、雇人、規模與是否積極行銷。</span></p>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th style="width:30%"><span class="lang-en">Item</span><span class="lang-zh" style="display:none">項目</span></th><th><span class="lang-en">Passive rent §4(d)</span><span class="lang-zh" style="display:none">被動租金 §4(d)</span></th><th><span class="lang-en">Business §4(a)</span><span class="lang-zh" style="display:none">營業所得 §4(a)</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="lang-en">Deductions</span><span class="lang-zh" style="display:none">扣除額</span></td><td><span class="lang-en">Repairs, insurance, assessment, interest only</span><span class="lang-zh" style="display:none">限維修、保險、地稅、利息等</span></td><td><span class="lang-en">Broader business expenses</span><span class="lang-zh" style="display:none">可扣更廣的營業費用</span></td></tr>
+        <tr><td><span class="lang-en">Losses</span><span class="lang-zh" style="display:none">虧損</span></td><td><span class="lang-en">Not offsettable against other income</span><span class="lang-zh" style="display:none">不可抵其他所得</span></td><td><span class="lang-en">Offsettable</span><span class="lang-zh" style="display:none">可抵其他所得</span></td></tr>
+        <tr><td><span class="lang-en">SSM registration</span><span class="lang-zh" style="display:none">SSM 商業登記</span></td><td><span class="lang-en">Not needed</span><span class="lang-zh" style="display:none">不需</span></td><td><span class="lang-en">May be required</span><span class="lang-zh" style="display:none">可能須登記</span></td></tr>
+      </tbody>
+    </table></div>
+    <ul class="pt">
+      <li><b>SST</b>：<span class="lang-en">gross STR &gt; <span class="pill">RM500,000</span>/yr (~7–10 units) must register, 6% on nightly takings. Non-registration: up to RM30,000 or 2 years.</span><span class="lang-zh" style="display:none">年短租毛收逾 <span class="pill">RM500,000</span>（約 7–10 套）須登記，按夜租收 6%。未登記罰最高 RM30,000 或監禁 2 年。</span></li>
+      <li><b><span class="lang-en">Tourism tax (TTx)</span><span class="lang-zh" style="display:none">旅遊稅（TTx）</span></b>：<span class="lang-en"><span class="pill">RM10</span>/room/night on foreign guests (Malaysians &amp; PRs exempt). Since 2023, platforms (DPSP) collect &amp; remit.</span><span class="lang-zh" style="display:none">對外籍旅客每房每晚 <span class="pill">RM10</span>（大馬人與 PR 免）。2023 起平台（DPSP）代收代繳。</span></li>
+      <li><b><span class="lang-en">Non-compliance cost</span><span class="lang-zh" style="display:none">非合規成本</span></b>：<span class="lang-en">under-reporting penalties of 100–300% of tax due; LHDN now cross-matches platform data.</span><span class="lang-zh" style="display:none">漏報罰款可達應補稅 100–300%；LHDN 已加強比對平台資料。</span></li>
+    </ul>
+    <p class="src"><span class="lang-en">Source: PropCashflow (citing Income Tax Act 1967, Service Tax Act 2018, Tourism Tax Act 2017). General information, not tax advice.</span><span class="lang-zh" style="display:none">資料：PropCashflow（引 Income Tax Act 1967、Service Tax Act 2018、Tourism Tax Act 2017）。一般資訊，非稅務建議。</span></p>
+
+    <div class="sec-rule"><h2>§6 · <span class="lang-en">Six global models KL can borrow</span><span class="lang-zh" style="display:none">六種可借鏡的全球模式</span></h2></div>
+    <p class="p"><span class="lang-en">Cities have already run the experiment. The tools are similar — <b>licensing, day caps, primary-residence rules, zoning, platform tax collection, platform data verification</b> — what differs is the mix. The six most relevant to KL, with a "KL fit" rating:</span><span class="lang-zh" style="display:none">全球城市已試過一輪。工具大同小異——<b>登記發牌、天數上限、主要住居要求、分區、平台代收稅、平台資料驗證</b>——差別在組合。以下挑出對 KL 最有參照價值的六種，並標「KL 適配度」：</span></p>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th style="width:18%"><span class="lang-en">Model</span><span class="lang-zh" style="display:none">模式</span></th><th><span class="lang-en">Core mechanism &amp; cities</span><span class="lang-zh" style="display:none">核心機制與代表城市</span></th><th style="width:14%"><span class="lang-en">KL fit</span><span class="lang-zh" style="display:none">KL 適配</span></th></tr></thead>
+      <tbody>
+        <tr><td><b>① <span class="lang-en">Zoning / title split</span><span class="lang-zh" style="display:none">分區 / 地契分流</span></b></td><td><span class="lang-en">Pure-residential zones banned/limited; commercial-hotel title runs year-round. Japan (use-zones), Bangkok (30-day hotel law), Turkey.</span><span class="lang-zh" style="display:none">住宅純區禁或限；商業／旅館地契才可全年。日本（用途地域）、曼谷（旅館法 30 天）、土耳其。</span></td><td><span class="tag pos"><span class="lang-en">Highest</span><span class="lang-zh" style="display:none">最高</span></span> <span class="lang-en">— KL's plot-ratio reality already implies it</span><span class="lang-zh" style="display:none">— 正是 KL plot-ratio 現實的對應解</span></td></tr>
+        <tr><td><b>② <span class="lang-en">Platform data verification</span><span class="lang-zh" style="display:none">平台資料驗證</span></b></td><td><span class="lang-en">Platforms must verify a licence no., block illegal listings, report bookings/tax. NYC (Local Law 18), EU Reg 2024/1028.</span><span class="lang-zh" style="display:none">平台須驗證登記號、阻擋非法刊登、回報訂房與稅務。紐約（LL18）、歐盟 Reg 2024/1028。</span></td><td><span class="tag pos"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></span> <span class="lang-en">— the TIA amendment is heading here</span><span class="lang-zh" style="display:none">— 旅遊業法令修法正往這走</span></td></tr>
+        <tr><td><b>③ <span class="lang-en">Platform tax collection</span><span class="lang-zh" style="display:none">平台代收稅</span></b></td><td><span class="lang-en">Lodging/sales tax auto-collected by the platform, aligned with hotel tax. US states, EU, NYC.</span><span class="lang-zh" style="display:none">住宿／銷售稅由平台自動代收代繳，與旅館稅對齊。美國多州、歐盟、紐約。</span></td><td><span class="tag pos"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></span> <span class="lang-en">— MY already does it for TTx (DPSP)</span><span class="lang-zh" style="display:none">— 馬國 2023 已對旅遊稅做平台代收</span></td></tr>
+        <tr><td><b>④ <span class="lang-en">Day caps</span><span class="lang-zh" style="display:none">天數上限</span></b></td><td><span class="lang-en">X nights/yr, then extra permit or long-let. Japan 180, Amsterdam 30, Paris 120, London 90.</span><span class="lang-zh" style="display:none">每年限營運 X 天，超過須許可或轉長租。日本 180、阿姆斯特丹 30、巴黎 120、倫敦 90。</span></td><td><span class="tag warn"><span class="lang-en">Medium</span><span class="lang-zh" style="display:none">中</span></span> <span class="lang-en">— Selangor already at 180</span><span class="lang-zh" style="display:none">— 雪州已採 180 天</span></td></tr>
+        <tr><td><b>⑤ <span class="lang-en">Primary-residence rule</span><span class="lang-zh" style="display:none">主要住居要求</span></b></td><td><span class="lang-en">Only your own home may be let; investors excluded. SF, LA (120), Toronto, Paris.</span><span class="lang-zh" style="display:none">只准出租自住房，投資客被排除。舊金山、洛杉磯（120）、多倫多、巴黎。</span></td><td><span class="tag neg"><span class="lang-en">Low</span><span class="lang-zh" style="display:none">低</span></span> <span class="lang-en">— clashes with KL's investor-led market</span><span class="lang-zh" style="display:none">— 與 KL 投資導向市場衝突</span></td></tr>
+        <tr><td><b>⑥ <span class="lang-en">Outright ban / sunset</span><span class="lang-zh" style="display:none">全面禁 / 落日</span></b></td><td><span class="lang-en">Singapore (3-month min = de-facto ban), Barcelona (all licences gone by 2028), NYC.</span><span class="lang-zh" style="display:none">新加坡（最短住 3 個月＝實質禁）、巴塞隆納（2028 牌照全廢）、紐約。</span></td><td><span class="tag neg"><span class="lang-en">Not advised</span><span class="lang-zh" style="display:none">不建議</span></span> <span class="lang-en">— conflicts with VM2026</span><span class="lang-zh" style="display:none">— 與 VM2026 矛盾</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="take">
+      <span class="pk"><span class="lang-en">Best mix for KL</span><span class="lang-zh" style="display:none">給 KL 的最佳組合</span></span>
+      <p><span class="lang-en">Skip the tools that fight KL's market structure (outright ban, primary-residence). Adopt <b>title split (①) + platform data verification (②) + platform tax collection (③) + a soft day cap (④, residential title only)</b>. This protects legal operation for serviced residences / commercial titles, pulls residential-block nuisance and tax leakage into a formal frame, and keeps enforcement cheap — because verification and tax collection sit on the platforms, not on inspectors chasing hosts.</span><span class="lang-zh" style="display:none">跳過與市場結構衝突的工具（全面禁、主要住居），採<b>「地契分流（①）＋ 平台資料驗證（②）＋ 平台代收稅（③）＋ 溫和天數上限（④，僅針對純住宅）」</b>四件套。既保住 serviced residence／商業地契的合法營運空間，又把住宅樓的擾鄰與逃漏稅收進正規框架，且執法成本最低——驗證與收稅都壓在平台身上，不靠人力查房東。</span></p>
+    </div>
+    <p class="src"><span class="lang-en">Sources: Stayful (2025-11 global-ban map), Minut (2026 US/EU guides), Japan RE Analytics / AirHost (minpaku), Hosthub, Local Housing Solutions (NYC). Japan: 2018 law cut Airbnb listings ~80% overnight; ~80% of condo rules ban minpaku — the same MC-override seen in KL.</span><span class="lang-zh" style="display:none">資料：Stayful（2025-11 全球禁令地圖）、Minut（2026 US/EU 指南）、Japan RE Analytics／AirHost（minpaku）、Hosthub、Local Housing Solutions（紐約）。日本：2018 法一上路 Airbnb 房源一夜砍約 80%；約 80% 公寓規約禁 minpaku——與 KL 的 MC 凌駕現象一致。</span></p>
+
+  </section>
+
+  <!-- ════════════════ TAB 03 · KL MARKET ════════════════ -->
+  <section class="panel" id="panel-market">
+
+    <div class="lede">
+      <span class="lk"><span class="lang-en">KL in one line</span><span class="lang-zh" style="display:none">KL 一句話</span></span>
+      <span class="lang-en">KL is Malaysia's largest, most mature, most liquid STR market — and where the policy contradiction is sharpest: <b>no dedicated law bans it, but unlicensed residential-zone STR is not allowed, while commercial-title buildings are barely controllable</b>. That gap comes from a 20-year planning loophole (plot-ratio arbitrage). To read KL, separate two layers: the <b>market data</b> and the <b>title structure</b>.</span>
+      <span class="lang-zh" style="display:none">吉隆坡是全馬最大、最成熟、流動性最高的短租市場，也是政策矛盾最尖銳的地方：<b>沒有專法禁止，但住宅區未經許可不准、商業地契卻幾乎管不了</b>。這個落差，源自延續二十年的規劃漏洞（plot ratio 套利）。理解 KL，必須把「市場數據」與「地契結構」兩層分開看。</span>
+    </div>
+
+    <div class="sec-rule"><h2><span class="lang-en">DBKL's stance &amp; three gates</span><span class="lang-zh" style="display:none">DBKL 立場與三道閘門</span></h2></div>
+    <ul class="pt">
+      <li class="warn"><span class="tag neg"><span class="lang-en">Residential zones: not allowed</span><span class="lang-zh" style="display:none">住宅區原則不准</span></span> <span class="lang-en">DBKL is explicit: STR in residential zones is not permitted without licensing under specific conditions. Legal basis is the 2016 Commercial Licensing By-laws — running a business needs a premise licence; breach up to RM2,000 or 1 year, +RM200/day if continuing.</span><span class="lang-zh" style="display:none">DBKL 明確表態：住宅分區短租未經發牌不被允許。法源是《2016 年商業執照附則》——任何商業活動須領 business premise licence，違者最高罰 RM2,000 或監禁一年，持續每日加罰 RM200。</span></li>
+      <li class="warn"><span class="tag warn"><span class="lang-en">SOP exists (Apr 2026)</span><span class="lang-zh" style="display:none">已有 SOP（2026/4）</span></span> <span class="lang-en">DBKL confirmed an STR SOP for developers, JMBs and MCs. This puts STR into a "recognised compliance frame" — <b>not a green light</b>; it gives MCs a clearer basis to set rules and act.</span><span class="lang-zh" style="display:none">DBKL 證實已有針對開發商、JMB、MC 的短租 SOP。這把短租納入「被承認的合規框架」，<b>不是放行綠燈</b>——而是給管理機構更清楚的依據去設規則、監督。</span></li>
+      <li><span class="tag neg"><span class="lang-en">Commercial title = the real green light</span><span class="lang-zh" style="display:none">商業地契才真正放行</span></span> <span class="lang-en">Wawasan Raya (2025 CoA) hinged on a title stating "high-rise commercial, for serviced apartment use" — <b>the title overrides house rules</b>. So what can legally and stably run STR in KL is serviced residence / commercial-title buildings.</span><span class="lang-zh" style="display:none">2025 上訴庭 Wawasan Raya 案點出：該建築地契載明「高層商業、供 serviced apartment 用」，<b>地契用途凌駕 house rules</b>。所以 KL 真正能合法、穩定做短租的，是 serviced residence／商業地契建築。</span></li>
+    </ul>
+    <div class="cl cl-warn">
+      <h4>⚠ <span class="lang-en">The 20-year planning loophole: plot-ratio arbitrage</span><span class="lang-zh" style="display:none">二十年的規劃漏洞：plot ratio 套利</span></h4>
+      <span class="lang-en">The Star (2026-05) named the root: <b>residential plot-ratio caps at 1:6, but city-centre commercial title reaches 1:10</b>. By classifying a project as "Serviced Residence" on commercial title, a developer can (1) build higher density, (2) escape the Housing Development Act, and (3) <b>not be lawfully stopped from commercial activity (incl. STR) inside</b>. The result: a flood of "micro-unit shadow hotels" aimed at investors and foreign buyers. The proposed fix is at approval: reclassify serviced residences with most units below 600 sqft as commercial hotels — triggering hotel licensing, fire, commercial tax and tourism tax.</span>
+      <span class="lang-zh" style="display:none">The Star（2026-05）點破問題的根：<b>住宅容積率上限 1:6，市中心商業地契卻可達 1:10</b>。開發商把案子歸為「Serviced Residence」蓋在商業地契上，就能 (1) 蓋更高密度、(2) 不受房屋發展法（HDA）約束、(3) <b>無法被合法阻止在樓內進行商業活動（含短租）</b>。於是市場出現大量「微型單位影子旅館」。建議的根本解方在審批端：把多數單位低於 600 sqft 的 serviced residence 重分類為商業旅館，觸發旅館發牌、消防、商業稅與旅遊稅。</span>
+    </div>
+
+    <div class="sec-rule"><h2><span class="lang-en">What the market looks like</span><span class="lang-zh" style="display:none">市場現在的長相</span></h2></div>
+    <div class="mrow">
+      <div class="m"><div class="mn">~16,000</div><div class="ml"><span class="lang-en">active listings</span><span class="lang-zh" style="display:none">活躍房源</span></div><div class="md"><span class="lang-en">AirROI · +216% YoY</span><span class="lang-zh" style="display:none">AirROI · 年增 216%</span></div></div>
+      <div class="m"><div class="mn gold">33–60%</div><div class="ml"><span class="lang-en">occupancy (median)</span><span class="lang-zh" style="display:none">入住率（中位）</span></div><div class="md"><span class="lang-en">wide by methodology</span><span class="lang-zh" style="display:none">口徑差異大</span></div></div>
+      <div class="m"><div class="mn">RM237</div><div class="ml"><span class="lang-en">average ADR</span><span class="lang-zh" style="display:none">平均房價 ADR</span></div><div class="md"><span class="lang-en">Airbtics (~US$50)</span><span class="lang-zh" style="display:none">Airbtics（約 US$50）</span></div></div>
+      <div class="m"><div class="mn">~91%</div><div class="ml"><span class="lang-en">entire-home</span><span class="lang-zh" style="display:none">整套出租占比</span></div><div class="md"><span class="lang-en">mostly hi-rise</span><span class="lang-zh" style="display:none">多為高層公寓</span></div></div>
+    </div>
+
+    <div class="cgrid2">
+      <div class="chartbox">
+        <div class="kick"><span class="lang-en">Methodology gap</span><span class="lang-zh" style="display:none">口徑差異</span></div>
+        <h3><span class="lang-en">Occupancy depends on who's counting</span><span class="lang-zh" style="display:none">入住率取決於誰在算</span></h3>
+        <div class="csub"><span class="lang-en">AirROI counts the whole market incl. semi-dormant listings; Airbtics counts "typical active". The truth is a range.</span><span class="lang-zh" style="display:none">AirROI 計入半睡眠房源（市場全體）；Airbtics 取「典型活躍房源」。真相是一個區間。</span></div>
+        <div class="chart" id="cKsource"></div>
+      </div>
+      <div class="chartbox">
+        <div class="kick"><span class="lang-en">Monthly gross income</span><span class="lang-zh" style="display:none">月毛收入</span></div>
+        <h3><span class="lang-en">Reality of the returns</span><span class="lang-zh" style="display:none">收益現實</span></h3>
+        <div class="csub"><span class="lang-en">Bamboo Routes / iQI (H1 2026). Net margin 25–45%; break-even ~35–40% occupancy (≈10–12 booked nights/mo).</span><span class="lang-zh" style="display:none">Bamboo Routes／iQI（2026 上半年）。淨利率 25–45%；損益兩平約 35–40% 入住（月需約 10–12 晚）。</span></div>
+        <div class="chart" id="cKincome"></div>
+      </div>
+    </div>
+
+    <div class="sub-h"><span class="lang-en">A K-shaped split — winner takes all</span><span class="lang-zh" style="display:none">極端 K 型分化——贏家通吃</span></div>
+    <div class="card">
+      <div class="tier"><span class="nm"><span class="lang-en">Top 10%</span><span class="lang-zh" style="display:none">頂尖 10%</span></span><span class="bar"><span class="fill" style="width:82%;background:linear-gradient(90deg,#cda85f,#b8924a)"></span></span><span class="pc">80%+</span></div>
+      <div class="tier"><span class="nm"><span class="lang-en">Top 25%</span><span class="lang-zh" style="display:none">前 25%</span></span><span class="bar"><span class="fill" style="width:59%;background:linear-gradient(90deg,#234a86,#0d2244)"></span></span><span class="pc">59%</span></div>
+      <div class="tier"><span class="nm"><span class="lang-en">Median</span><span class="lang-zh" style="display:none">中位數</span></span><span class="bar"><span class="fill" style="width:33%;background:#a16207"></span></span><span class="pc">~33%</span></div>
+      <div class="tier"><span class="nm"><span class="lang-en">Bottom 25%</span><span class="lang-zh" style="display:none">後 25%</span></span><span class="bar"><span class="fill" style="width:14%;background:#b91c1c"></span></span><span class="pc">14%</span></div>
+      <p class="src" style="margin-top:10px"><span class="lang-en">AirROI. Location, building, reviews and operating quality decide everything. The median listing fills only ⅓ of nights; the bottom quartile is near-idle. Most new hosts over-estimate which tier they will land in.</span><span class="lang-zh" style="display:none">AirROI。位置、樓盤、評價與營運品質決定一切。中位房源僅約三分之一入住，後段 1/4 幾近閒置。多數新手房東高估自己會落在哪一段。</span></p>
+    </div>
+
+    <div class="sub-h"><span class="lang-en">Demand structure &amp; hotspots</span><span class="lang-zh" style="display:none">需求結構與熱點</span></div>
+    <ul class="pt">
+      <li><b><span class="lang-en">Guests</span><span class="lang-zh" style="display:none">客源</span></b>：<span class="lang-en">~¼ international; the single largest source is domestic Malaysian. Peaks Jun–Jul &amp; Dec; trough May.</span><span class="lang-zh" style="display:none">約 1/4 為國際旅客，最大單一來源是大馬本地客。旺季 6–7 月、12 月，淡季 5 月。</span></li>
+      <li><b><span class="lang-en">Hot zones</span><span class="lang-zh" style="display:none">熱區</span></b>：<span class="lang-en">KLCC, Bukit Bintang, the TRX corridor, KL Sentral / Brickfields — drawing both expat long-lets and tourists.</span><span class="lang-zh" style="display:none">KLCC、Bukit Bintang、TRX 走廊、KL Sentral／Brickfields——同時吸引外籍長租與旅客。</span></li>
+      <li><b><span class="lang-en">Macro tailwind</span><span class="lang-zh" style="display:none">宏觀推力</span></b>：<span class="lang-en">Visit Malaysia 2026; Airbnb estimates ~RM440m KL guest spend in 2024 (39% of MY Airbnb spend). Prices still below Singapore / Hong Kong.</span><span class="lang-zh" style="display:none">Visit Malaysia 2026；Airbnb 自估 2024 年光 KL 旅客消費約 RM4.4 億，占全馬 39%。價格仍低於新加坡、香港。</span></li>
+    </ul>
+
+    <div class="sec-rule"><h2><span class="lang-en">The structural contradiction</span><span class="lang-zh" style="display:none">結構性矛盾</span></h2></div>
+    <p class="p"><span class="lang-en">A lot of strata stock was <b>sold on "investment, flexibility, yield"</b>, but once people move in, residents (who want quiet and security) and investor-owners (who want yield) clash directly — crowded lifts, visitor churn, common-area wear, security gaps.</span><span class="lang-zh" style="display:none">大量 strata 房源當初是以「投資、彈性、收益」為賣點賣出的，但住進去之後，住戶（求安寧、安全）與投資業主（求收益）利益直接衝突——電梯壅塞、訪客流動、公共區耗損、保全破口。</span></p>
+    <p class="p"><span class="lang-en">Meanwhile KL has a serious overhang: ~<b>44,794 unsold residential units</b> (The Star), prices decoupled from local wages, yet developers keep launching micro-unit towers aimed at foreign investors. As one commentator put it: this is no longer producing <b>housing</b>, but "financial products that look like apartments." That is the political pressure behind tightening.</span><span class="lang-zh" style="display:none">同時 KL 住宅市場存在嚴重 overhang：約 <b>44,794 個住宅單位滯銷</b>（The Star），價格與本地薪資脫鉤，開發商卻仍推針對外國投資客的微型單位塔樓。評論直言：這已不是在生產「住房」，而是在生產「長得像公寓的金融商品」。這正是政策收緊的政治壓力來源。</span></p>
+
+    <div class="sec-rule"><h2><span class="lang-en">Three most likely paths</span><span class="lang-zh" style="display:none">三條最可能的路徑</span></h2></div>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th style="width:26%"><span class="lang-en">Scenario</span><span class="lang-zh" style="display:none">情境</span></th><th style="width:12%"><span class="lang-en">Prob.</span><span class="lang-zh" style="display:none">機率</span></th><th><span class="lang-en">Content &amp; impact</span><span class="lang-zh" style="display:none">內容與影響</span></th></tr></thead>
+      <tbody>
+        <tr><td><b>① <span class="lang-en">Title-based bifurcation</span><span class="lang-zh" style="display:none">地契分流固化</span></b><br><span class="src" style="display:inline"><span class="lang-en">base case</span><span class="lang-zh" style="display:none">基準情境</span></span></td><td><span class="tag pos"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></span></td><td><span class="lang-en">After GPP + DBKL SOP land, legality splits by title: <b>serviced/commercial can license &amp; continue; pure residential needs permission, effectively limited</b>. Natural extension of Wawasan Raya + plot-ratio reality. Positive for commercial-title holders.</span><span class="lang-zh" style="display:none">GPP + DBKL SOP 落地後，合法性沿地契分流：<b>serviced／商業地契可發牌續做；純住宅須許可、實質受限</b>。是 Wawasan Raya 判決 + plot ratio 現實的自然延伸。對商業地契持有人偏正面。</span></td></tr>
+        <tr><td><b>② <span class="lang-en">Micro-unit reclassification</span><span class="lang-zh" style="display:none">微型單位重分類</span></b><br><span class="src" style="display:inline"><span class="lang-en">policy upgrade</span><span class="lang-zh" style="display:none">政策升級</span></span></td><td><span class="tag warn"><span class="lang-en">Medium</span><span class="lang-zh" style="display:none">中</span></span></td><td><span class="lang-en">If The Star's proposal is adopted, DBKL reclassifies &lt;600 sqft serviced residences as commercial hotels → hotel licensing, fire, commercial &amp; tourism tax. <b>Not retroactive</b>, but closes the "shadow-hotel beats a real hotel" arbitrage and curbs future supply.</span><span class="lang-zh" style="display:none">若採納 The Star 建議，DBKL 在審批端把 &lt;600 sqft 的 serviced residence 重分類為商業旅館 → 觸發旅館發牌、消防、商業稅、旅遊稅。<b>不溯及既有單位</b>，但堵住「蓋影子旅館比正規旅館更賺」的套利，壓抑未來新供給。</span></td></tr>
+        <tr><td><b>③ <span class="lang-en">Follow Selangor's 180-day cap</span><span class="lang-zh" style="display:none">跟進雪州 180 天上限</span></b><br><span class="src" style="display:inline"><span class="lang-en">tail</span><span class="lang-zh" style="display:none">尾部</span></span></td><td><span class="tag neg"><span class="lang-en">Low–Med</span><span class="lang-zh" style="display:none">低–中</span></span></td><td><span class="lang-en">If Selangor's model proves workable and enters the national template, DBKL could cap days or require registration for residential-title STR. Biggest hit to pure-residential investors; limited for commercial titles.</span><span class="lang-zh" style="display:none">若雪州 180 天模式被證可行並寫入國家範本，DBKL 可能對住宅地契短租設天數上限或登記制。對純住宅投資客衝擊最大，對商業地契有限。</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="cl cl-info"><b><span class="lang-en">KL summary:</span><span class="lang-zh" style="display:none">KL 走向總結：</span></b> <span class="lang-en">the direction is not prohibition but <b>"normalisation along the title line"</b> — pushing STR off residential blocks toward commercial / serviced titles, formalised with licensing, tax and fire. Supply may slow under overhang + reclassification pressure, while demand (VM2026, tourism recovery, digital nomads) holds. The result is <b>sharper stratification: the right building gets more valuable, the wrong one stays trapped in long-let pricing.</b></span><span class="lang-zh" style="display:none">方向不是禁絕，而是<b>「沿地契分流的規範化」</b>——把短租從住宅樓推向商業／serviced 地契，並用發牌、稅、消防把它正規化。供給端因 overhang 與重分類壓力可能放緩，需求端（VM2026、旅客回升、數位游牧）持續支撐。結果是<b>市場分層加劇：對的樓盤更值錢，錯的樓盤被困在長租定價。</b></span></div>
+
+    <div class="sub-h"><span class="lang-en">Practical takeaways for KL buyers</span><span class="lang-zh" style="display:none">對 KL 買方的實務結論</span></div>
+    <div class="grid2">
+      <div class="mcard"><h4 style="color:#15803d"><span class="lang-en">Relatively safe</span><span class="lang-zh" style="display:none">相對安全</span></h4>
+        <ul>
+          <li><span class="lang-en">Commercial / serviced title with an MC by-law that <b>explicitly allows</b> STR</span><span class="lang-zh" style="display:none">商業／serviced 地契，且 MC by-law 明文允許短租</span></li>
+          <li><span class="lang-en">Core demand belt (KLCC, Bukit Bintang, TRX, KL Sentral)</span><span class="lang-zh" style="display:none">核心需求帶（KLCC、Bukit Bintang、TRX、KL Sentral）</span></li>
+          <li><span class="lang-en">2-bed, good view, self check-in — avoid the 1-bed red ocean (57%)</span><span class="lang-zh" style="display:none">2 房、好景觀、自助入住——避開最激烈的 1 房紅海（占 57%）</span></li>
+          <li><span class="lang-en">Landed (not strata-bound) performed well in 2026</span><span class="lang-zh" style="display:none">landed（不受 strata 禁令約束）2026 表現亮眼</span></li>
+        </ul>
+      </div>
+      <div class="mcard"><h4 style="color:#b91c1c"><span class="lang-en">High risk / avoid</span><span class="lang-zh" style="display:none">高風險 / 避免</span></h4>
+        <ul>
+          <li><span class="lang-en">Pure-residential title with an MC that's undecided or may ban</span><span class="lang-zh" style="display:none">純住宅地契，MC 未表態或可能立禁令</span></li>
+          <li><span class="lang-en">Yields modelled on "headline ADR × 80–90% occupancy" sales talk</span><span class="lang-zh" style="display:none">純靠「起價、80–90% 入住率」的銷售話術估算收益</span></li>
+          <li><span class="lang-en">Treating STR as passive income — it's a K-market; mid/back fills only 14–33%</span><span class="lang-zh" style="display:none">把短租當被動收入——KL 是 K 型市場，中後段僅 14–33% 入住</span></li>
+          <li><span class="lang-en">Operating on a residential policy with no commercial liability cover</span><span class="lang-zh" style="display:none">無商業責任險的住宅險裸奔營運</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="src"><span class="lang-en">Sources: AirROI (2026-02–04), Airbtics (2025-10 / 2026-02), AirDNA / MarketMinder, Bamboo Routes (2026-01), iQI Global (2026-01), The Star "KL's short-term rental crisis" (2026-05-24), Yahoo News "KL Airbnb Rules in Condos" (2026-04-23), JY Ko, RDS Law Partners.</span><span class="lang-zh" style="display:none">資料：AirROI（2026-02～04）、Airbtics（2025-10／2026-02）、AirDNA／MarketMinder、Bamboo Routes（2026-01）、iQI Global（2026-01）、The Star「KL's short-term rental crisis」（2026-05-24）、Yahoo News（2026-04-23）、JY Ko、RDS Law Partners。</span></p>
+
+  </section>
+
+  <!-- ════════════════ TAB 04 · OPERATIONS & RISK ════════════════ -->
+  <section class="panel" id="panel-ops">
+
+    <div class="lede">
+      <span class="lk"><span class="lang-en">Operating in one line</span><span class="lang-zh" style="display:none">營運一句話</span></span>
+      <span class="lang-en">In 2026 KL, Airbnb is no longer "list it and collect" — it's a small lodging business. <b>The operation itself isn't hard; the risk is fully decided by two things settled before you enter: the building's title and the MC's stance.</b> Pick right and the rest is execution; pick wrong and the best operator nets RM0. This tab splits in two: how it actually runs, then where the landmines are.</span>
+      <span class="lang-zh" style="display:none">在 2026 年的 KL，Airbnb 不再是「掛上網收錢」的副業，而是一門需要當小型住宿生意來經營的事。<b>運作上不難，難在風險全部集中在你進場前就已決定的兩件事——樓盤的地契、與 MC 的態度。</b>選對樓盤，後面都是執行；選錯樓盤，再會營運都是 RM0。本分頁分兩半：先講「怎麼運作」，再講「會踩什麼雷」。</span>
+    </div>
+
+    <div class="sec-rule"><h2><span class="lang-en">Part A · How it runs</span><span class="lang-zh" style="display:none">Part A · 經營方式</span></h2></div>
+    <div class="sub-h"><span class="lang-en">A1 · Two models: self-managed vs co-host</span><span class="lang-zh" style="display:none">A1 · 兩種模式：自管 vs 委託代管</span></div>
+    <div class="grid2">
+      <div class="mcard"><h4>① <span class="lang-en">Self-managed</span><span class="lang-zh" style="display:none">自管（self-managed）</span></h4>
+        <p><span class="lang-en">You handle listing, pricing, guests, cleaning schedule, restocking, repairs.</span><span class="lang-zh" style="display:none">自己處理刊登、定價、客務、清潔排程、補貨、維修。</span></p>
+        <p><span class="tag pos"><span class="lang-en">Pro</span><span class="lang-zh" style="display:none">優</span></span> <span class="lang-en">No commission; highest net margin (saves 18–25% of gross).</span><span class="lang-zh" style="display:none">不抽成，淨利率最高（可省 18–25% 毛收入）。</span></p>
+        <p><span class="tag neg"><span class="lang-en">Con</span><span class="lang-zh" style="display:none">缺</span></span> <span class="lang-en">The owner's time is a hidden cost; a 2am lockout or leak is hard to fix from abroad.</span><span class="lang-zh" style="display:none">業主的時間是隱形成本；人不在當地時很難即時處理半夜鎖門、漏水。</span></p>
+        <p><b><span class="lang-en">Suits:</span><span class="lang-zh" style="display:none">適合：</span></b> <span class="lang-en">hosts in KL, single unit, cost-minimisers.</span><span class="lang-zh" style="display:none">人在 KL、單套、想壓成本的房東。</span></p>
+      </div>
+      <div class="mcard"><h4>② <span class="lang-en">Full co-host</span><span class="lang-zh" style="display:none">全代管（co-host）</span></h4>
+        <p><span class="lang-en">A management company runs the day-to-day; you receive a net statement.</span><span class="lang-zh" style="display:none">交給代管公司處理日常，你只收淨收益報表。</span></p>
+        <p><span class="tag pos"><span class="lang-en">Pro</span><span class="lang-zh" style="display:none">優</span></span> <span class="lang-en">Truly passive; the only realistic option for a remote owner.</span><span class="lang-zh" style="display:none">真正被動；遠端業主唯一可行解。</span></p>
+        <p><span class="tag neg"><span class="lang-en">Con</span><span class="lang-zh" style="display:none">缺</span></span> <span class="lang-en">Fee of <span class="pill">15–25%</span> of gross eats much of the profit.</span><span class="lang-zh" style="display:none">抽成 <span class="pill">15–25%</span> 毛收入，吃掉相當部分利潤。</span></p>
+        <p><b><span class="lang-en">Suits:</span><span class="lang-zh" style="display:none">適合：</span></b> <span class="lang-en">absentee, multi-unit, allocation-not-job owners.</span><span class="lang-zh" style="display:none">不在地、多套、把它當配置而非主業者。</span></p>
+      </div>
+    </div>
+    <div class="cl cl-info"><b><span class="lang-en">For a remote owner:</span><span class="lang-zh" style="display:none">對遠端業主：</span></b> <span class="lang-en">for an owner who doesn't live in KL, self-managing is basically impractical — a 2am lock failure, a leak, a guard blocking a guest all need a local hand. For absentee hosts, <b>whether a reliable local manager can be found is itself the precondition for the whole business</b> — the same logic as Japan's minpaku requiring non-resident owners to appoint a local manager.</span><span class="lang-zh" style="display:none">業主若不長住 KL，自管基本不切實際——半夜的鎖門故障、漏水、保全擋客都需要在地的手。對非在地房東，<b>能否找到可靠的在地代管，本身就是這門生意能否成立的前提</b>，這跟日本 minpaku 規定非自住者必須委任在地管理業者是同一道理。</span></div>
+
+    <div class="sub-h"><span class="lang-en">A2 · From zero to listed — eight steps</span><span class="lang-zh" style="display:none">A2 · 從零到出租的完整流程（八步）</span></div>
+    <div class="flow">
+      <div class="step"><h4><span class="lang-en">Check title &amp; MC by-law (the life-or-death first step)</span><span class="lang-zh" style="display:none">查地契與 MC 細則（決定生死的第一步）</span></h4><p><span class="lang-en">Confirm in writing: (1) commercial/serviced or pure residential; (2) any MC ban or minimum-stay rule. <b>Verbal assurances from agents or guards count for nothing — it must be in the house rules.</b></span><span class="lang-zh" style="display:none">要書面確認：(1) 地契是商業／serviced 還是純住宅；(2) MC by-law 有無禁短租或設最短住宿。<b>口頭保證（仲介、保全）一律不算，必須白紙黑字寫在 house rules 裡。</b></span></p></div>
+      <div class="step"><h4><span class="lang-en">Confirm DBKL / local registration need</span><span class="lang-zh" style="display:none">確認 DBKL／地方層級登記需求</span></h4><p><span class="lang-en">Residential zones need licensing; since Apr 2026 DBKL has an STR SOP for developers/JMBs/MCs. Confirm which path applies to your building.</span><span class="lang-zh" style="display:none">KL 住宅分區未經發牌不准；2026 年 4 月起 DBKL 已有針對開發商／JMB／MC 的短租 SOP。確認你的樓盤適用哪套程序。</span></p></div>
+      <div class="step"><h4><span class="lang-en">Business registration &amp; tax setup</span><span class="lang-zh" style="display:none">商業登記與稅務設定</span></h4><p><span class="lang-en">"Quietly doing it" no longer works. Multi-unit → register with SSM; file with LHDN (often §4(a) business income); confirm tourism tax (platform-collected) and the SST threshold (RM500k gross/yr).</span><span class="lang-zh" style="display:none">「悄悄做」已不現實。多套需向 SSM 登記；向 LHDN 報稅（多套常被歸營業所得 §4(a)）；確認旅遊稅（平台代收）與 SST 門檻（年毛收 RM50 萬以上）。</span></p></div>
+      <div class="step"><h4><span class="lang-en">Insure with commercial liability cover</span><span class="lang-zh" style="display:none">投保商業責任險</span></h4><p><span class="lang-en">Standard home insurance won't cover STR operation. Need commercial + public liability (≥RM1m), budget ~<span class="pill">RM1,500–3,000/yr</span>.</span><span class="lang-zh" style="display:none">標準住宅險不保短租營運。需商業責任險＋公共責任險（≥RM100 萬），預算約 <span class="pill">RM1,500–3,000/年</span>。</span></p></div>
+      <div class="step"><h4><span class="lang-en">Furnish &amp; fit-out (decides your K-tier)</span><span class="lang-zh" style="display:none">裝修與配置（決定你落在 K 型的哪一段）</span></h4><p><span class="lang-en">~91% of KL listings are entire-home. Good view, modern fit-out, self check-in are the entry ticket to the top quartile. A 2-bed beats the 1-bed red ocean (57%).</span><span class="lang-zh" style="display:none">KL 約 91% 房源是整套出租。好景觀、現代裝潢、自助入住是進入「前 25%」的門檻。2 房比 1 房（占 57% 紅海）競爭少、房價高。</span></p></div>
+      <div class="step"><h4><span class="lang-en">List &amp; price dynamically</span><span class="lang-zh" style="display:none">刊登與動態定價</span></h4><p><span class="lang-en">Multi-platform (Airbnb / Agoda Homes / Booking); use dynamic pricing for peaks (Jun–Jul, Dec) and troughs (May). Set house rules &amp; conduct norms.</span><span class="lang-zh" style="display:none">多平台上架（Airbnb／Agoda Homes／Booking）；用動態定價抓旺季（6–7 月、12 月）與淡季（5 月）。設好房屋守則與訪客行為規範。</span></p></div>
+      <div class="step"><h4><span class="lang-en">Build the ops chain: cleaning, keys, restock, repair</span><span class="lang-zh" style="display:none">建立營運鏈：清潔、鑰匙、補貨、維修</span></h4><p><span class="lang-en">Schedule a clean/sanitise per checkout, smart-lock/key handover, restocking, a fast repair contact. The SOP core is turnaround between checkout and next check-in.</span><span class="lang-zh" style="display:none">排定每次退房的清潔與消毒、密碼鎖／鑰匙交接、備品補貨、快速維修聯絡人。SOP 的核心是「退房到下一次入住之間」的周轉效率。</span></p></div>
+      <div class="step"><h4><span class="lang-en">Keep the management office &amp; neighbours onside</span><span class="lang-zh" style="display:none">與管理處＋鄰居維持關係</span></h4><p><span class="lang-en">Proactively share guest info (the Registration of Guests Act requires it). Neighbours are your eyes when you're away — and the most likely to complain.</span><span class="lang-zh" style="display:none">主動告知管理處訪客資訊（Registration of Guests Act 要求登記住客）。鄰居是你不在場時的眼睛，也是最可能投訴你的人。</span></p></div>
+    </div>
+
+    <div class="sub-h"><span class="lang-en">A3 · Three-layer compliance (all required)</span><span class="lang-zh" style="display:none">A3 · 三層合規（缺一不可）</span></div>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th style="width:22%"><span class="lang-en">Layer</span><span class="lang-zh" style="display:none">層級</span></th><th style="width:32%"><span class="lang-en">What you do</span><span class="lang-zh" style="display:none">你要做的</span></th><th><span class="lang-en">Cost of not doing it</span><span class="lang-zh" style="display:none">不做的後果</span></th></tr></thead>
+      <tbody>
+        <tr><td><b>① <span class="lang-en">Title + MC</span><span class="lang-zh" style="display:none">地契 + MC</span></b></td><td><span class="lang-en">Written confirmation STR is allowed; follow min-stay etc. house rules</span><span class="lang-zh" style="display:none">書面確認允許短租；遵守最短住宿等 house rules</span></td><td><span class="lang-en">MC can ban &amp; fine by special resolution; breach can stop operation</span><span class="lang-zh" style="display:none">MC 可依特別決議禁止並罰款；違規可致禁營運</span></td></tr>
+        <tr><td><b>② DBKL / <span class="lang-en">local</span><span class="lang-zh" style="display:none">地方</span></b></td><td><span class="lang-en">Register per SOP, business licence, guest registration, fire</span><span class="lang-zh" style="display:none">依 SOP 登記、商業執照、訪客登記、消防</span></td><td><span class="lang-en">2016 Commercial Licensing By-laws: up to RM2,000, +RM200/day</span><span class="lang-zh" style="display:none">《2016 商業執照附則》最高罰 RM2,000、持續每日 RM200</span></td></tr>
+        <tr><td><b>③ <span class="lang-en">Federal tax</span><span class="lang-zh" style="display:none">聯邦稅務</span></b></td><td><span class="lang-en">LHDN filing, tourism tax, SST (above threshold)</span><span class="lang-zh" style="display:none">LHDN 報稅、旅遊稅、SST（超門檻）</span></td><td><span class="lang-en">Under-report penalty 100–300%; SST non-registration up to RM30,000</span><span class="lang-zh" style="display:none">漏報罰應補稅 100–300%；SST 未登記最高 RM30,000</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="src"><span class="lang-en">Note: KL has no city-wide minimum-stay or annual day cap; the real constraint is at building level. Many KL listings already adopt 30+ night minimums — a host adaptation to MC enforcement, not a municipal rule.</span><span class="lang-zh" style="display:none">註：KL 目前無全市最短住宿或年度天數上限，真正的約束在樓盤層級。大量 KL 房源已自行採 30 晚以上最短住宿，是房東因應 MC 執法的調適，而非市政強制。</span></p>
+
+    <div class="sec-rule"><h2><span class="lang-en">Part B · Risk</span><span class="lang-zh" style="display:none">Part B · 風險分析</span></h2></div>
+    <div class="sub-h"><span class="lang-en">B1 · Risk matrix (probability × impact)</span><span class="lang-zh" style="display:none">B1 · 風險矩陣（機率 × 衝擊）</span></div>
+    <div class="tscroll"><table class="rmx">
+      <thead><tr><th><span class="lang-en">Impact ＼ Prob.</span><span class="lang-zh" style="display:none">衝擊 ＼ 機率</span></th><th><span class="lang-en">Low</span><span class="lang-zh" style="display:none">低機率</span></th><th><span class="lang-en">Medium</span><span class="lang-zh" style="display:none">中機率</span></th><th><span class="lang-en">High</span><span class="lang-zh" style="display:none">高機率</span></th></tr></thead>
+      <tbody>
+        <tr><td class="lbl"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高衝擊</span></td>
+          <td class="sev-m"><span class="lang-en">Blanket ban on residential STR</span><span class="lang-zh" style="display:none">政策一刀切禁住宅短租</span></td>
+          <td class="sev-h"><span class="lang-en">MC bans / building repositions</span><span class="lang-zh" style="display:none">MC 立禁令／樓盤定位漂移</span></td>
+          <td class="sev-h"><span class="lang-en">Occupancy stays below break-even</span><span class="lang-zh" style="display:none">入住率長期低於損益兩平</span></td></tr>
+        <tr><td class="lbl"><span class="lang-en">Medium</span><span class="lang-zh" style="display:none">中衝擊</span></td>
+          <td class="sev-l"><span class="lang-en">Major guest-loss / security event</span><span class="lang-zh" style="display:none">重大客損／治安事件</span></td>
+          <td class="sev-m"><span class="lang-en">Reclassed to business income + back-tax</span><span class="lang-zh" style="display:none">稅務重歸營業所得＋補稅</span></td>
+          <td class="sev-m"><span class="lang-en">Supply surge compresses ADR &amp; returns</span><span class="lang-zh" style="display:none">供給暴增壓縮房價與報酬</span></td></tr>
+        <tr><td class="lbl"><span class="lang-en">Low</span><span class="lang-zh" style="display:none">低衝擊</span></td>
+          <td class="sev-l"><span class="lang-en">Platform policy / fee change</span><span class="lang-zh" style="display:none">平台政策／抽成調整</span></td>
+          <td class="sev-l"><span class="lang-en">Individual neighbour complaint</span><span class="lang-zh" style="display:none">鄰居個別投訴</span></td>
+          <td class="sev-m"><span class="lang-en">Seasonal cash-flow swings</span><span class="lang-zh" style="display:none">季節性淡季現金流波動</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="src"><span class="lang-en">Red = priority, amber = monitor, green = tolerable.</span><span class="lang-zh" style="display:none">紅＝優先處理，黃＝需監測，綠＝可承受。</span></p>
+
+    <div class="sub-h"><span class="lang-en">B2 · High risks, unpacked</span><span class="lang-zh" style="display:none">B2 · 高風險逐項拆解</span></div>
+    <div class="card">
+      <p class="pull">🔴 <span class="lang-en">Risk 1 · MC ban / repositioning drift (most fatal)</span><span class="lang-zh" style="display:none">風險 1 · MC 立禁令／樓盤定位漂移（最致命）</span></p>
+      <p class="p"><span class="lang-en">Wawasan Raya (2025) confirmed STR isn't illegal but a special-resolution MC ban is lawful and enforceable. Verve Suites once passed a full ban 96:4. The subtler risk is "repositioning drift": many KL buildings were sold to investors on "hotel-style flexibility &amp; yield", but as strata governance matures, owner-occupiers can push the building residential — and the yield story collapses. Late entrants carry the most risk.</span><span class="lang-zh" style="display:none">2025 上訴庭 Wawasan Raya 案確認：短租不違法，但 MC 以特別決議通過的禁令合法且可強制執行。Verve Suites 曾以 96:4 通過全面禁短租。更隱蔽的風險是「定位漂移」——很多 KL 樓盤當初以「飯店式彈性、收益」賣給投資客，但 strata 治理成熟後，住戶可能把樓盤推向住宅化，原本的收益故事就此瓦解。晚進場者風險最大。</span></p>
+      <p class="p"><b><span class="lang-en">Mitigation:</span><span class="lang-zh" style="display:none">對策：</span></b> <span class="lang-en">check AGM/EGM records for ban proposals before buying; read the resident mix (more owner-occupiers = lower STR tolerance); prefer buildings already run as STR assets; attend MC meetings.</span><span class="lang-zh" style="display:none">進場前查 AGM/EGM 紀錄有無禁令提案；看住戶結構（自住戶多容忍度低）；優先選「本就以投資／serviced 為主、已運作為短租資產」的樓盤；參與 MC 會議掌握風向。</span></p>
+      <p class="pull">🔴 <span class="lang-en">Risk 2 · Occupancy below break-even (most common)</span><span class="lang-zh" style="display:none">風險 2 · 入住率長期低於損益兩平（最常見）</span></p>
+      <p class="p"><span class="lang-en">KL is K-shaped: top 10% fill 80%+, median ~33%, bottom 25% only 14%. <b>Most new hosts over-estimate their tier.</b> Good-looking gross doesn't beat long-let net: a unit that long-lets at RM2,800 might gross RM4,000–4,500 in peak season, but after cleaning, guest service, platform fees, furniture depreciation, utilities and more frequent repairs, net often can't keep up.</span><span class="lang-zh" style="display:none">KL 是 K 型市場：頂尖 10% 入住 80%+，中位數約 33%，後段 25% 只有 14%。<b>多數新手房東高估自己會落在哪一段。</b>毛收入好看不代表淨收益贏長租——一個長租 RM2,800 的單位，短租旺季毛收衝到 RM4,000–4,500 看似誘人，但扣掉清潔、客務、平台費、傢俱折舊、水電與更頻繁的維修後，淨收益常常追不上。</span></p>
+      <p class="p"><b><span class="lang-en">Mitigation:</span><span class="lang-zh" style="display:none">對策：</span></b> <span class="lang-en">model with conservative occupancy (assume mid/back tier); require net at least 30% above long-let before bothering; chase the top quartile (view / 2-bed / self check-in); diversify booking sources across platforms.</span><span class="lang-zh" style="display:none">用保守入住率（假設自己是中後段）試算；確認淨收益至少比長租多 30% 以上才值得折騰；選好景觀／2 房／自助入住擠進前 25%；多平台分散訂房來源。</span></p>
+      <p class="pull">🟠 <span class="lang-en">Risk 3 · Policy tightening (structural, slow, certain)</span><span class="lang-zh" style="display:none">風險 3 · 政策收緊（結構性、緩慢但確定）</span></p>
+      <p class="p"><span class="lang-en">The national GPP is coming, heading toward licensing; the TIA 1992 amendment adds platform registration and a tribunal. Base case is "split by title" — serviced/commercial can license &amp; continue, pure residential is limited. Tail risk: KL follows Selangor's 180-day cap. <b>Mitigation:</b> holding commercial/serviced title is the best policy hedge; formalise early (register, file, insure) so when the frame lands you're already compliant — and can absorb the demand freed by cleared-out grey listings.</span><span class="lang-zh" style="display:none">國家 STRA 框架（GPP）即將落地，方向是發牌制；旅遊業法令 1992 修法擬納入平台登記與旅遊法庭。基準是「沿地契分流」——serviced／商業地契可發牌續做，純住宅受限。尾部風險是 KL 跟進雪州 180 天上限。<b>對策：</b>持有商業／serviced 地契是最好的政策避險；把營運提前正規化（登記、報稅、保險），框架落地時你已合規，反而能吃下被清掉的灰色房源讓出的需求。</span></p>
+    </div>
+
+    <div class="sub-h"><span class="lang-en">B3 · Medium &amp; operating risks</span><span class="lang-zh" style="display:none">B3 · 中風險與營運風險</span></div>
+    <ul class="pt">
+      <li><b><span class="lang-en">Reclassed to business income:</span><span class="lang-zh" style="display:none">稅務重歸營業所得：</span></b> <span class="lang-en">multi-unit + hired cleaners + active marketing → LHDN almost certainly §4(a). Use the right tax structure from day one.</span><span class="lang-zh" style="display:none">多套＋雇清潔＋積極行銷 → LHDN 幾乎必然歸 §4(a)。一開始就用對的稅務架構，諮詢稅務顧問。</span></li>
+      <li><b><span class="lang-en">Supply surge:</span><span class="lang-zh" style="display:none">供給暴增：</span></b> <span class="lang-en">listings tripled in a year; the high-supply zones (Bukit Bintang, KLCC, Mont Kiara) are most competitive and most enforced. Build a moat on quality &amp; reviews, don't price-war.</span><span class="lang-zh" style="display:none">KL 房源一年暴增逾兩倍；高供給區（武吉免登、KLCC、Mont Kiara）競爭最激烈、執法最嚴。靠品質與評價建護城河，別打價格戰。</span></li>
+      <li><b><span class="lang-en">Seasonality:</span><span class="lang-zh" style="display:none">季節性現金流：</span></b> <span class="lang-en">peaks (Jun–Jul, Dec) vs trough (May). Flex pricing in low season, long-stay discounts, keep a cash buffer.</span><span class="lang-zh" style="display:none">旺季（6–7 月、12 月）與淡季（5 月）落差大。淡季彈性定價、延長住宿折扣、保留現金緩衝。</span></li>
+      <li><b><span class="lang-en">Security &amp; visitor friction:</span><span class="lang-zh" style="display:none">保全與訪客管理摩擦：</span></b> <span class="lang-en">MCs can restrict pool/gym use, charge or gate guest access — straight into bad reviews. Pick access-friendly buildings; pre-register guests.</span><span class="lang-zh" style="display:none">MC 可限制訪客使用泳池健身房、要求付費、卡門禁卡——直接造成壞評價。選門禁友善的樓盤；事前報備住客。</span></li>
+      <li><b><span class="lang-en">Wear &amp; repair:</span><span class="lang-zh" style="display:none">傢俱損耗與維修：</span></b> <span class="lang-en">fast turnover means far higher depreciation/repair than long-let. Durable fit-out, a repair budget, deposit + Airbnb cover.</span><span class="lang-zh" style="display:none">短租周轉快，折舊與維修頻率遠高於長租。選耐用配置、編列維修預算、押金與 Airbnb 保障並用。</span></li>
+      <li><b><span class="lang-en">Reputation (building level):</span><span class="lang-zh" style="display:none">聲譽風險（樓盤層級）：</span></b> <span class="lang-en">frequent noise/trash/abuse complaints damage the whole tower's vibe and resale. Screen guests strictly, set conduct rules, avoid party groups.</span><span class="lang-zh" style="display:none">若樓內頻繁引發噪音、垃圾、設施濫用投訴，整棟樓的氛圍與轉售價都受損。嚴格篩客、設行為守則、避免接派對團。</span></li>
+    </ul>
+    <div class="cl cl-warn">
+      <h4>⚠ <span class="lang-en">Most-overlooked: reading "there's an SOP" as "fully greenlit"</span><span class="lang-zh" style="display:none">最容易被忽略：把「有 SOP」誤讀成「全面放行」</span></h4>
+      <span class="lang-en">In 2026 DBKL confirmed an STR SOP, and many read it as "the government approved it." The opposite: an SOP means an administrative &amp; governance frame now exists — good for compliant owners, but it also <b>strengthens the MC's power to control, monitor and penalise</b>. The question shifts from "can I list?" to "in this building, this MC, this enforcement risk — should I?"</span>
+      <span class="lang-zh" style="display:none">2026 年 DBKL 確認有短租 SOP，很多人解讀成「政府准了」。恰恰相反——SOP 的存在意味有了一套行政與治理框架，這對合規業主有利，但也<b>強化了樓盤管理機構控制、監督、處罰的能力</b>。問題已從「我能不能上架」變成「在這棟樓、這個管理處、這種執法風險下，我該不該上架」。</span>
+    </div>
+
+    <div class="sec-rule"><h2><span class="lang-en">Decision anchors for a remote owner</span><span class="lang-zh" style="display:none">給遠端業主的決策錨點</span></h2></div>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th style="width:32%"><span class="lang-en">Question</span><span class="lang-zh" style="display:none">問題</span></th><th><span class="lang-en">Verdict</span><span class="lang-zh" style="display:none">判斷</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="lang-en">Where's the difficulty?</span><span class="lang-zh" style="display:none">這門生意難在哪？</span></td><td><span class="lang-en">Not the operation — picking the building before entry. ~80% of risk is set at the title + MC moment.</span><span class="lang-zh" style="display:none">不難在營運，難在「進場前選樓盤」。風險 80% 在地契與 MC 那一刻就決定。</span></td></tr>
+        <tr><td><span class="lang-en">Viable for a remote owner?</span><span class="lang-zh" style="display:none">遠端業主可行嗎？</span></td><td><span class="lang-en">Yes, but <b>must go full co-host</b>, and price in the 15–25% fee. Self-managing is unrealistic from abroad.</span><span class="lang-zh" style="display:none">可行，但<b>必須走全代管</b>，且把 15–25% 抽成算進報酬。自管對不在地者不現實。</span></td></tr>
+        <tr><td><span class="lang-en">Best building to buy?</span><span class="lang-zh" style="display:none">最該買什麼樓盤？</span></td><td><span class="lang-en">Commercial/serviced title, MC explicitly allows STR, core demand belt, 2-bed good view, access-friendly.</span><span class="lang-zh" style="display:none">商業／serviced 地契、MC 明文允許、核心需求帶、2 房好景觀、門禁友善。</span></td></tr>
+        <tr><td><span class="lang-en">Does policy favour me?</span><span class="lang-zh" style="display:none">政策走向對我有利嗎？</span></td><td><span class="lang-en">If commercial/serviced + formalised early → the framework landing is a tailwind (you absorb freed demand).</span><span class="lang-zh" style="display:none">若持商業／serviced 地契＋提前正規化 → 框架落地反而是順風（吃下灰色房源讓出的需求）。</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="cl cl-info"><b><span class="lang-en">Three signals to monitor:</span><span class="lang-zh" style="display:none">最關鍵三個監測指標：</span></b> <span class="lang-en">(1) your MC's AGM — any ban/day-cap proposal → reassess exit or switch to long-let; (2) actual occupancy vs break-even — two straight quarters below long-let → switch; (3) national STRA frame / DBKL licensing detail — pure-residential title placed under restriction → re-price the asset.</span><span class="lang-zh" style="display:none">(1) 你樓盤 MC 的 AGM 動向——出現禁短租或設天數上限的提案 → 立即評估退出或轉長租；(2) 實際入住率 vs 損益兩平——連續 2 季低於打平長租 → 改長租；(3) 國家 STRA 框架／DBKL 發牌細則——純住宅地契被列入受限 → 重估資產定位。</span></div>
+    <p class="src"><span class="lang-en">Sources: iQI Global "Starting an Airbnb in Malaysia 2026" (2026-01-29), iProperty.com.my (2026-02-10), Yahoo News "KL Airbnb Rules in Condos" (2026-04-23), Bamboo Routes (2026-01-13), RDS Law Partners (Wawasan Raya, 2025-11), LazyHost (co-host example).</span><span class="lang-zh" style="display:none">資料：iQI Global「Starting an Airbnb in Malaysia 2026」（2026-01-29）、iProperty.com.my（2026-02-10）、Yahoo News（2026-04-23）、Bamboo Routes（2026-01-13）、RDS Law Partners（Wawasan Raya 2025-11）、LazyHost（代管服務範例）。</span></p>
+
+  </section>
+
+  <!-- ════════════════ TAB 05 · FEASIBILITY ════════════════ -->
+  <section class="panel" id="panel-feasibility">
+
+    <div class="lede">
+      <span class="lk"><span class="lang-en">Going pro in one line</span><span class="lang-zh" style="display:none">當業者一句話</span></span>
+      <span class="lang-en">"Being an operator" and "being a retail host" are different businesses. Two scaling paths: <b>(A) a co-host company</b> — owns no property, earns a fee managing others'; <b>(B) an owner-operator</b> — buys/holds multiple units and runs them. Their verdicts diverge: A is a <b>low-capital, high-labour, red-ocean</b> service business; B is a <b>high-capital asset play where scale amplifies legal &amp; concentration risk</b>.</span>
+      <span class="lang-zh" style="display:none">「當業者」和「當散戶房東」是兩門不同的生意。兩種規模化路徑：<b>(A) 代管公司</b>——不持有房產，靠抽成幫別人經營；<b>(B) 自有多套房東</b>——買或持有多單位自己經營。結論很不一樣：A 是<b>低資本、高勞力、紅海競爭</b>的服務業；B 是<b>高資本、規模放大法規與集中度風險</b>的資產生意。</span>
+    </div>
+
+    <div class="sec-rule"><h2>§0 · <span class="lang-en">The real shape of KL's operator market</span><span class="lang-zh" style="display:none">KL 業者市場的真實長相</span></h2></div>
+    <div class="mrow">
+      <div class="m"><div class="mn">~16–22K</div><div class="ml"><span class="lang-en">KL active listings</span><span class="lang-zh" style="display:none">KL 活躍房源</span></div></div>
+      <div class="m"><div class="mn neg">~0%</div><div class="ml"><span class="lang-en">hold an STR licence</span><span class="lang-zh" style="display:none">持短租牌照比例</span></div></div>
+      <div class="m"><div class="mn">88 / 289 / 632</div><div class="ml"><span class="lang-en">top operators' unit counts</span><span class="lang-zh" style="display:none">頭部業者管理數（前三）</span></div></div>
+      <div class="m"><div class="mn gold">8–25%</div><div class="ml"><span class="lang-en">co-host fee range</span><span class="lang-zh" style="display:none">代管抽成區間</span></div></div>
+    </div>
+    <ul class="pt">
+      <li><b><span class="lang-en">Highly fragmented, but heads have formed.</span><span class="lang-zh" style="display:none">市場高度分散、頭部已成形。</span></b> <span class="lang-en">Most "operators" are small teams running 20–30 units; but scale players exist — Chan (632), Cobnb (289), Relax Stay (265); top co-host Steven S H runs 88 at 88% occupancy. New entrants fight for guests from zero.</span><span class="lang-zh" style="display:none">多數「業者」其實是管 20–30 套的小團隊；但已有 Chan（632 套）、Cobnb（289）、Relax Stay（265）這類規模玩家，頭部 co-host 如 Steven S H 管 88 套、入住率 88%。新進者要從零搶客。</span></li>
+      <li><b><span class="lang-en">Near-zero licensing — a transition dividend.</span><span class="lang-zh" style="display:none">幾乎零牌照、是過渡期紅利。</span></b> <span class="lang-en">Of 22,159 KL listings, ~0% hold an STR licence. No rules yet = low barrier now, but once the frame lands, grey operators get washed out.</span><span class="lang-zh" style="display:none">22,159 個 KL 房源中持短租牌照者約 0%。法規未到位＝目前低門檻，但框架一落地，靠灰色操作的業者會被洗掉。</span></li>
+      <li><b><span class="lang-en">Fees compressed.</span><span class="lang-zh" style="display:none">抽成被壓低。</span></b> <span class="lang-en">From MasterHost's 8% to a typical 15–25%, competition has thinned the pure-fee model's margin — the core constraint on Model A.</span><span class="lang-zh" style="display:none">從 MasterHost 的 8% 起到一般 15–25%，競爭已把純抽成模式的利潤壓薄——這對模式 A 是核心制約。</span></li>
+    </ul>
+    <p class="src"><span class="lang-en">Sources: Airbtics (2025-10 KL manager list, 2025-07 listing stats), MasterHost (from 8%), AirROI.</span><span class="lang-zh" style="display:none">資料：Airbtics（2025-10 KL 管理公司榜、2025-07 房源統計）、MasterHost（8% 起）、AirROI。</span></p>
+
+    <div class="sec-rule"><h2>§A · <span class="lang-en">Model A — co-host company</span><span class="lang-zh" style="display:none">模式 A — 代管公司</span></h2></div>
+    <p class="p"><span class="lang-en">You own no property; you earn a <b>fee (15–25% of gross) + add-on service fees</b> running listings, photography, pricing, guests, cleaning, key handover, repairs, insurance/licensing advice. In essence a <b>light-asset, labour-heavy service business</b> — property management + outsourced hotel front desk.</span><span class="lang-zh" style="display:none">你不持有房產，靠<b>抽成（15–25% 毛收入）+ 加值服務費</b>替屋主經營：刊登、攝影、定價、客務、清潔排程、鑰匙交接、維修協調、保險與發牌諮詢。本質是<b>輕資產、重勞力的服務業</b>，類似物業管理＋飯店前台外包。</span></p>
+    <div class="grid2">
+      <div class="mcard"><h4><span class="lang-en">Unit economics (per unit / month)</span><span class="lang-zh" style="display:none">單位經濟試算（每套/月）</span></h4>
+        <table class="atbl" style="margin:6px 0 0">
+          <tbody>
+            <tr><td><span class="lang-en">Unit gross</span><span class="lang-zh" style="display:none">該套毛收入</span></td><td class="num">~RM4,500</td></tr>
+            <tr><td><span class="lang-en">You take 20%</span><span class="lang-zh" style="display:none">你抽 20%</span></td><td class="num">RM900</td></tr>
+            <tr><td><span class="lang-en">− cleaning labour</span><span class="lang-zh" style="display:none">− 清潔人力</span></td><td class="num">−RM250</td></tr>
+            <tr><td><span class="lang-en">− guest svc / system</span><span class="lang-zh" style="display:none">− 客務／系統分攤</span></td><td class="num">−RM150</td></tr>
+            <tr><td><b><span class="lang-en">Net contribution</span><span class="lang-zh" style="display:none">每套淨貢獻</span></b></td><td class="num"><b>~RM500</b></td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:11px;color:var(--muted);margin-top:6px"><span class="lang-en">ADR RM280 × 55% occ; ~55% margin pre-scale.</span><span class="lang-zh" style="display:none">ADR RM280 × 55% 入住；毛利率約 55%（規模化前）。</span></p>
+      </div>
+      <div class="chartbox" style="margin:0">
+        <div class="kick"><span class="lang-en">Scale is the only path</span><span class="lang-zh" style="display:none">規模是唯一的路</span></div>
+        <h3><span class="lang-en">Net contribution vs units managed</span><span class="lang-zh" style="display:none">淨貢獻 vs 管理套數</span></h3>
+        <div class="csub"><span class="lang-en">At ~RM500/unit, a team costing RM15k–25k/mo needs ~30–50 units just to break even.</span><span class="lang-zh" style="display:none">單套 ~RM500，月開銷 RM15k–25k 的團隊需約 30–50 套才打平。</span></div>
+        <div class="chart" id="cKscale"></div>
+      </div>
+    </div>
+    <div class="cl cl-info"><b><span class="lang-en">Scale is the only path.</span><span class="lang-zh" style="display:none">規模是唯一的路。</span></b> <span class="lang-en">At ~RM500/unit/mo, a team (incl. you) costing RM15,000–25,000/mo needs <b>~30–50 units to break even</b>. Under 10 units is a side hustle; 30+ starts to look like a business; heads need 80–600 for real scale economies (shared cleaning crews, systems, brand).</span><span class="lang-zh" style="display:none">單套淨貢獻 ~RM500/月，要養活一個團隊（含你自己）月需 RM15,000–25,000 開銷，<b>損益兩平約需 30–50 套</b>。10 套以下是副業，30 套以上才像生意，頭部要 80–600 套才有真正的規模經濟（共用清潔隊、系統、品牌）。</span></div>
+    <div class="sub-h bare"><span class="lang-en">Entry barrier &amp; startup cost</span><span class="lang-zh" style="display:none">進場門檻與啟動成本</span></div>
+    <ul class="pt">
+      <li><b><span class="lang-en">Capital: low.</span><span class="lang-zh" style="display:none">資本：低。</span></b> <span class="lang-en">No property — mainly SSM registration, a PMS, cleaning kit, marketing, early staff. ~RM30,000–80,000 to start.</span><span class="lang-zh" style="display:none">不買房，主要是 SSM 公司登記、PMS 系統、清潔設備、行銷與初期人力。啟動約 RM30,000–80,000。</span></li>
+      <li><b><span class="lang-en">Capability: high.</span><span class="lang-zh" style="display:none">能力門檻：高。</span></b> <span class="lang-en">The hard part is doing three things at once: <b>winning owners (B2B sales) + delighting guests (B2C service) + running the ground op</b>. Owner acquisition is the bottleneck.</span><span class="lang-zh" style="display:none">難的不是註冊，是<b>同時做好「招屋主（B2B 銷售）+ 顧好房客（B2C 服務）+ 管好現場（營運）」三件事</b>。獲客（簽約屋主）是最大瓶頸。</span></li>
+      <li><b><span class="lang-en">Regulation:</span><span class="lang-zh" style="display:none">法規：</span></b> <span class="lang-en">multi-unit needs SSM; pros are moving onto the TOUREX national registry. MOTAC licensing isn't mandatory for individual STR yet, but "professional operators" will be a standardisation target.</span><span class="lang-zh" style="display:none">多套經營須 SSM 登記；專業業者已開始走 TOUREX 國家登記系統。MOTAC 牌照對個人短租目前非強制，但「專業 operator」會被視為標準化對象。</span></li>
+    </ul>
+    <div class="verdict v-cond">
+      <div class="vt"><span class="lang-en">Model A verdict: conditionally viable</span><span class="lang-zh" style="display:none">模式 A 判定：有條件可行</span></div>
+      <div class="vs"><span class="lang-en">Low technical/capital barrier, but a <b>labour-intensive red-ocean service business, not passive income</b>. Viable only if you can keep winning owners past 30–50 units, build cleaning/system scale economies, and are willing to do B2B sales &amp; ops yourself. For anyone chasing "zero interaction, automated, systematised" — this business runs against that grain.</span><span class="lang-zh" style="display:none">技術與資本門檻低，但這是<b>勞力密集的紅海服務業，不是被動收入</b>。可行的前提是：你能持續獲客到 30–50 套以上、建立清潔與系統的規模經濟、且願意親自做 B2B 銷售與營運。對追求「零人際互動、自動化、系統化」的人——這門生意本質與之相悖。</span></div>
+    </div>
+
+    <div class="sec-rule"><h2>§B · <span class="lang-en">Model B — owner-operator (multi-unit)</span><span class="lang-zh" style="display:none">模式 B — 自有多套房東</span></h2></div>
+    <p class="p"><span class="lang-en">You <b>buy or hold multiple units</b> and run STR yourself (or outsourced). In essence a <b>heavy-asset property + lodging business</b> earning three ways: STR cash flow, capital appreciation, leverage. Feasibility turns not on operation but on <b>capital efficiency and concentration risk</b>.</span><span class="lang-zh" style="display:none">你<b>買或持有多個單位</b>，自己（或委外）經營短租。本質是<b>重資產的房地產＋住宿營運生意</b>，賺三塊錢：短租現金流、長期資本增值、槓桿放大。可行性的核心不在營運，而在<b>資本效率與風險集中度</b>。</span></p>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th><span class="lang-en">Scale</span><span class="lang-zh" style="display:none">規模</span></th><th><span class="lang-en">Capital (down-payment est.)</span><span class="lang-zh" style="display:none">資本投入（自備款估）</span></th><th><span class="lang-en">Net cash flow/mo (optimistic)</span><span class="lang-zh" style="display:none">月淨現金流（樂觀）</span></th><th><span class="lang-en">Key risk</span><span class="lang-zh" style="display:none">關鍵風險</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="lang-en">1 unit (RM1m)</span><span class="lang-zh" style="display:none">1 套（RM100 萬）</span></td><td class="num">~RM300k+</td><td class="num">RM2,000–2,800</td><td><span class="lang-en">Single point: one MC ban stops everything</span><span class="lang-zh" style="display:none">單點風險：MC 一禁全停</span></td></tr>
+        <tr><td><span class="lang-en">3 units</span><span class="lang-zh" style="display:none">3 套</span></td><td class="num">~RM900k+</td><td class="num">RM6,000–8,400</td><td><span class="lang-en">Concentration: same tower/area hit together</span><span class="lang-zh" style="display:none">集中度：同樓／同區一起被波及</span></td></tr>
+        <tr><td><span class="lang-en">5+ units (operator)</span><span class="lang-zh" style="display:none">5+ 套（operator）</span></td><td class="num">RM1.5m+</td><td class="num">RM10,000+</td><td><span class="lang-en">LHDN business income; SST above RM500k gross</span><span class="lang-zh" style="display:none">被 LHDN 歸營業所得；超 RM50 萬毛收須 SST</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="p"><span class="lang-en">Benchmark: the same unit long-let nets ~<b>3.5–5.5% (KLCC)</b>. To clearly beat long-let, STR must sustain high occupancy — and KL is K-shaped, so keeping <b>several</b> units in the top tier at once is far harder than one.</span><span class="lang-zh" style="display:none">對照基準：同單位長租淨報酬約 <b>3.5–5.5%（KLCC）</b>。短租要明顯打贏長租，得維持高入住率，且 KL 是 K 型市場——多套同時維持頂段表現的難度，遠高於一套。</span></p>
+    <div class="verdict v-no">
+      <div class="vt"><span class="lang-en">Model B verdict: scaling purely for STR — not advised</span><span class="lang-zh" style="display:none">模式 B 判定：純為短租而擴張——不建議</span></div>
+      <div class="vs"><span class="lang-en">Putting capital into "many units purely to run Airbnb" is a high-risk, low-efficiency allocation: capital-intensive, illiquid, K-market makes multi-unit top-tier hard, and scale amplifies legal &amp; tax burden. <b>The saner version:</b> hold a few quality commercial/serviced-title units where STR is just one way to use the asset — not the reason to expand. You can switch back to long-let anytime; the title itself is the hedge.</span><span class="lang-zh" style="display:none">把資本壓在「多套純為跑 Airbnb」是高風險低效配置：資本密集、流動性差、K 型市場讓多套難同時頂段、且多套放大稅務與合規風險。<b>更合理的版本</b>是：持有少數商業／serviced 地契優質單位，短租只是「資產的其中一種使用方式」，而非擴張的理由——隨時可切回長租，地契本身就是避險。</span></div>
+    </div>
+
+    <div class="sec-rule"><h2>§C · <span class="lang-en">Two models compared</span><span class="lang-zh" style="display:none">兩模式對照</span></h2></div>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th style="width:24%"><span class="lang-en">Dimension</span><span class="lang-zh" style="display:none">維度</span></th><th><span class="lang-en">A · Co-host company</span><span class="lang-zh" style="display:none">A · 代管公司</span></th><th><span class="lang-en">B · Owner-operator</span><span class="lang-zh" style="display:none">B · 自有多套</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="lang-en">Capital barrier</span><span class="lang-zh" style="display:none">資本門檻</span></td><td><span class="tag pos"><span class="lang-en">Low</span><span class="lang-zh" style="display:none">低</span></span> RM30k–80k</td><td><span class="tag neg"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></span> <span class="lang-en">from RM1m/unit</span><span class="lang-zh" style="display:none">RM100 萬/套起</span></td></tr>
+        <tr><td><span class="lang-en">Labour intensity</span><span class="lang-zh" style="display:none">勞力強度</span></td><td><span class="tag neg"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></span> <span class="lang-en">ops-heavy, hard to passive</span><span class="lang-zh" style="display:none">重營運、難被動</span></td><td><span class="tag warn"><span class="lang-en">Medium</span><span class="lang-zh" style="display:none">中</span></span> <span class="lang-en">outsourceable but supervised</span><span class="lang-zh" style="display:none">可委外但要監督</span></td></tr>
+        <tr><td><span class="lang-en">Scale threshold</span><span class="lang-zh" style="display:none">規模門檻</span></td><td><span class="lang-en">30–50 units to break even</span><span class="lang-zh" style="display:none">30–50 套才打平</span></td><td><span class="lang-en">3–5 units to "operator" level</span><span class="lang-zh" style="display:none">3–5 套進 operator 級</span></td></tr>
+        <tr><td><span class="lang-en">Main risk</span><span class="lang-zh" style="display:none">主要風險</span></td><td><span class="lang-en">red ocean, acquisition, owner churn</span><span class="lang-zh" style="display:none">紅海、獲客、屋主流失</span></td><td><span class="lang-en">concentration, tax, policy, liquidity</span><span class="lang-zh" style="display:none">集中度、稅務、政策、流動性</span></td></tr>
+        <tr><td><span class="lang-en">When frame lands</span><span class="lang-zh" style="display:none">政策框架落地</span></td><td><span class="tag pos"><span class="lang-en">Tailwind</span><span class="lang-zh" style="display:none">順風</span></span> <span class="lang-en">compliant ones harvest grey listings</span><span class="lang-zh" style="display:none">合規者收割灰色房源</span></td><td><span class="tag warn"><span class="lang-en">Depends on title</span><span class="lang-zh" style="display:none">看地契</span></span> <span class="lang-en">commercial hedged; residential hit</span><span class="lang-zh" style="display:none">商業避險、純住宅受衝擊</span></td></tr>
+        <tr><td><span class="lang-en">Passive?</span><span class="lang-zh" style="display:none">是否被動</span></td><td><span class="tag neg"><span class="lang-en">No</span><span class="lang-zh" style="display:none">否</span></span></td><td><span class="tag warn"><span class="lang-en">Semi (if outsourced)</span><span class="lang-zh" style="display:none">委外後半被動</span></span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="cl cl-warn">
+      <h4>⚠ <span class="lang-en">The shared fatal precondition</span><span class="lang-zh" style="display:none">共同的致命前提</span></h4>
+      <span class="lang-en">Both models rest on "the building is legal and the MC allows STR." The 2025 CoA confirmed an MC can lawfully ban STR by special resolution; the 2026 DBKL SOP strengthened MC control. In Model A, an owner's building getting banned = you lose that income; in Model B, your own building getting banned = the asset is trapped in long-let pricing. <b>This is the single point of failure both businesses share.</b></span>
+      <span class="lang-zh" style="display:none">無論做哪一種，所有報酬都建立在「樓盤合法且 MC 允許短租」之上。2025 上訴庭已確認 MC 可依特別決議合法禁短租；2026 DBKL SOP 也強化了管理機構的控制與處罰能力。模式 A 的屋主樓盤被禁＝你失去那筆收入；模式 B 自己樓盤被禁＝資產被困在長租定價。<b>這是兩門生意共同的單點故障。</b></span>
+    </div>
+    <div class="sub-h"><span class="lang-en">Advice by starting point</span><span class="lang-zh" style="display:none">給不同起點的人的建議</span></div>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th style="width:32%"><span class="lang-en">Your starting point</span><span class="lang-zh" style="display:none">你的起點</span></th><th><span class="lang-en">Suggested path</span><span class="lang-zh" style="display:none">建議路徑</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="lang-en">Want to start up, limited capital, can run ops</span><span class="lang-zh" style="display:none">想創業、資本有限、能跑營運</span></td><td><span class="lang-en">Model A, but nail down owner acquisition first; under 30 units, keep the day job as validation.</span><span class="lang-zh" style="display:none">模式 A，但先想清楚獲客來源；30 套以下別辭職，當作驗證。</span></td></tr>
+        <tr><td><span class="lang-en">Have capital, want asset allocation</span><span class="lang-zh" style="display:none">已有資本、要資產配置</span></td><td><span class="lang-en">Don't expand for STR; buy a few quality commercial/serviced units, STR as an option not a goal.</span><span class="lang-zh" style="display:none">不為短租而擴張；買少數商業／serviced 地契優質單位，短租當選項而非目的。</span></td></tr>
+        <tr><td><span class="lang-en">Want passive, systematised, zero-interaction</span><span class="lang-zh" style="display:none">追求被動、系統化、零人際</span></td><td><span class="lang-en">Neither fits — A is labour-heavy, B needs supervision; better to hold one quality asset on long-let or co-host.</span><span class="lang-zh" style="display:none">兩者都不符——A 重勞力、B 重監督；不如持有單一優質資產走長租或委外代管。</span></td></tr>
+        <tr><td><span class="lang-en">Remote owner (not living in KL)</span><span class="lang-zh" style="display:none">遠端業主（不長住 KL）</span></td><td><span class="lang-en">Self-running either is hard; the pragmatic move is to be "Model A's customer" — hand the unit to a reliable co-host.</span><span class="lang-zh" style="display:none">自營任一模式都難；最務實是當「模式 A 的客戶」，把單位交給可靠代管。</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="src"><span class="lang-en">Sources: Airbtics (KL manager list 2025-10, listing stats 2025-07), MasterHost (from 8%), Cobnb / LazyHost, iHousing "MOTAC License 2026" (2026-02), Bamboo Routes (2026-01), TRX KLCC Property (KLCC yields 2026-03), RDS Law Partners (Wawasan Raya 2025-11), Yahoo News (2026-04).</span><span class="lang-zh" style="display:none">資料：Airbtics（KL 管理公司榜 2025-10、房源統計 2025-07）、MasterHost（8% 起）、Cobnb／LazyHost、iHousing「MOTAC License 2026」（2026-02）、Bamboo Routes（2026-01）、TRX KLCC Property（KLCC 報酬率 2026-03）、RDS Law Partners（Wawasan Raya 2025-11）、Yahoo News（2026-04）。</span></p>
+
+  </section>
+
+  <!-- ════════════════ TAB 06 · MODELS ════════════════ -->
+  <section class="panel" id="panel-models">
+
+    <div class="lede">
+      <span class="lk"><span class="lang-en">Models in one line</span><span class="lang-zh" style="display:none">模式一句話</span></span>
+      <span class="lang-en">By 2026 the global consensus is settled: short-term rental is <b>no longer passive income or a side hustle — it's a thin-margin, detail-driven service business</b>. Before copying a model, read its unit economics. KL's two structural features decide what's copyable: <b>(1) a K-shaped market</b> (top listings eat, the rest scrape by) and <b>(2) strata/MC override + a shift toward licensing</b>. What transfers are models that win on <b>differentiation, operating professionalism and less dependence on pure nightly rental</b> — not models that win by gaming loopholes or chasing volume.</span>
+      <span class="lang-zh" style="display:none">2026 年全球共識已經很清楚：短租<b>不再是被動收入或側業，而是一門薄利、講究營運細節的服務業</b>。抄模式之前，先看懂單位經濟。KL 的兩大結構特徵決定了什麼抄得動：<b>(1) K 型市場</b>（頂尖吃肉、中後段喝湯）、<b>(2) strata/MC 凌駕＋法規走向發牌制</b>。真正能套用的，是靠<b>差異化、營運專業度、降低對純夜租依賴</b>取勝的模式，而非靠鑽空子、衝量的模式。</span>
+    </div>
+
+    <div class="sec-rule"><h2>§0 · <span class="lang-en">The shared foundation: an automation tech stack</span><span class="lang-zh" style="display:none">共通底層：自動化技術堆疊</span></h2></div>
+    <p class="p"><span class="lang-en">Whatever the model, "still doing it by hand" in 2026 means losing. A standard stack cuts daily per-unit management from ~4 hours to ~45 minutes and captures 15–25% more revenue via dynamic pricing. This is the common ground for every model below.</span><span class="lang-zh" style="display:none">不管哪種模式，2026 年「還在手動做」就是被淘汰。一套標準技術堆疊能把每套日常管理時間從約 4 小時壓到約 45 分鐘、靠動態定價多抓 15–25% 營收。這是以下所有模式的共同地基。</span></p>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th style="width:22%"><span class="lang-en">Category</span><span class="lang-zh" style="display:none">工具類別</span></th><th style="width:30%"><span class="lang-en">Representative tools</span><span class="lang-zh" style="display:none">代表工具</span></th><th><span class="lang-en">Function</span><span class="lang-zh" style="display:none">作用</span></th></tr></thead>
+      <tbody>
+        <tr><td><b><span class="lang-en">Smart lock (top priority)</span><span class="lang-zh" style="display:none">智慧鎖（最優先）</span></b></td><td>Yale Assure 2 / Schlage Encode+ / igloohome</td><td><span class="lang-en">Self check-in, unique auto-generated code per guest, auto-expires at checkout. ~RM700–1,500 each.</span><span class="lang-zh" style="display:none">自助入住、每位房客唯一密碼自動生成、退房自動失效。約 RM700–1,500/把。</span></td></tr>
+        <tr><td><b><span class="lang-en">PMS hub</span><span class="lang-zh" style="display:none">PMS 中樞</span></b></td><td>Hospitable (from $40/mo) / Hostaway (20+ units)</td><td><span class="lang-en">Multi-platform calendar sync, auto-messaging, no double-bookings.</span><span class="lang-zh" style="display:none">多平台日曆同步、自動訊息、避免重複訂房。</span></td></tr>
+        <tr><td><b><span class="lang-en">Dynamic pricing</span><span class="lang-zh" style="display:none">動態定價</span></b></td><td>PriceLabs ($20/listing) / Beyond</td><td><span class="lang-en">Auto-prices by demand, season, competitors, events.</span><span class="lang-zh" style="display:none">依需求、季節、競品、活動自動調價。</span></td></tr>
+        <tr><td><b><span class="lang-en">Cleaning ops</span><span class="lang-zh" style="display:none">清潔調度</span></b></td><td>Turno / Doinn / TIDY</td><td><span class="lang-en">Auto-schedule cleans on checkout, checklists.</span><span class="lang-zh" style="display:none">退房自動排清潔、查核清單。</span></td></tr>
+        <tr><td><b><span class="lang-en">Noise monitoring</span><span class="lang-zh" style="display:none">噪音監測</span></b></td><td>Minut / NoiseAware</td><td><span class="lang-en">Prevent party complaints — a survival tool for KL MC relations.</span><span class="lang-zh" style="display:none">防派對投訴——對 KL 的 MC 關係是保命工具。</span></td></tr>
+        <tr><td><b><span class="lang-en">AI automation</span><span class="lang-zh" style="display:none">AI 自動化</span></b></td><td>Make.com + GPT</td><td><span class="lang-en">Auto-workflows e.g. thank-you + review request 24h post-checkout.</span><span class="lang-zh" style="display:none">退房 24h 後自動寄感謝＋評價邀請等工作流。</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="src"><span class="lang-en">Cost: 1-unit basic stack (PMS+pricing+lock) ~US$60–80/mo (1–3% of gross); 5 units ~US$250–350/mo; 10+ units US$500–1,200/mo. Sources: 10XBNB, PriceLabs, Guesty, GleamSync (2026).</span><span class="lang-zh" style="display:none">成本：單套基本堆疊（PMS＋定價＋智慧鎖）約 US$60–80/月（佔毛收 1–3%）；5 套約 US$250–350/月；10 套以上 US$500–1,200/月。資料：10XBNB、PriceLabs、Guesty、GleamSync（2026）。</span></p>
+    <div class="cl cl-info"><b><span class="lang-en">Why this matters for a remote owner:</span><span class="lang-zh" style="display:none">對遠端業主的意義：</span></b> <span class="lang-en">this stack is the concrete realisation of "zero-interaction, automated, systematised". Smart lock + PMS auto-codes + noise monitoring mean an absentee owner never hands over keys or takes a 2am call. <b>The maturity of the tech stack is what decides whether remote operation is feasible at all.</b></span><span class="lang-zh" style="display:none">這套堆疊正是「零人際、自動化、系統化」哲學的具體實現。智慧鎖＋PMS 自動發碼＋噪音監測，讓遠端業主不必親自交鑰匙、不必半夜接電話。<b>技術堆疊的成熟度，決定了遠端經營到底可不可行。</b></span></div>
+
+    <div class="sec-rule"><h2>§1 · <span class="lang-en">Nine models at a glance</span><span class="lang-zh" style="display:none">九模式總覽</span></h2></div>
+    <div class="tscroll"><table class="atbl">
+      <thead><tr><th style="width:20%"><span class="lang-en">Model</span><span class="lang-zh" style="display:none">模式</span></th><th><span class="lang-en">KL fit</span><span class="lang-zh" style="display:none">適配</span></th><th><span class="lang-en">Capital</span><span class="lang-zh" style="display:none">資本</span></th><th><span class="lang-en">Passive?</span><span class="lang-zh" style="display:none">被動度</span></th><th><span class="lang-en">Proof city</span><span class="lang-zh" style="display:none">對標城市</span></th><th><span class="lang-en">Core edge</span><span class="lang-zh" style="display:none">核心競爭力</span></th></tr></thead>
+      <tbody>
+        <tr><td><b>1 <span class="lang-en">Co-host</span><span class="lang-zh" style="display:none">代管</span></b></td><td><span class="tag warn"><span class="lang-en">Med</span><span class="lang-zh" style="display:none">中</span></span></td><td><span class="lang-en">Low</span><span class="lang-zh" style="display:none">低</span></td><td><span class="lang-en">Low</span><span class="lang-zh" style="display:none">低</span></td><td>KL (Chan 632)</td><td><span class="lang-en">Acquisition + ops scale</span><span class="lang-zh" style="display:none">獲客＋營運規模</span></td></tr>
+        <tr><td><b>2 <span class="lang-en">Arbitrage</span><span class="lang-zh" style="display:none">包租轉租</span></b></td><td><span class="tag neg"><span class="lang-en">Low</span><span class="lang-zh" style="display:none">低</span></span></td><td><span class="lang-en">Low</span><span class="lang-zh" style="display:none">低</span></td><td><span class="lang-en">Low</span><span class="lang-zh" style="display:none">低</span></td><td><span class="lang-en">US operators</span><span class="lang-zh" style="display:none">美國</span></td><td><span class="lang-en">Sales funnel + hospitality</span><span class="lang-zh" style="display:none">銷售漏斗＋hospitality</span></td></tr>
+        <tr><td><b>3 <span class="lang-en">Owner-multi</span><span class="lang-zh" style="display:none">自有多套</span></b></td><td><span class="tag neg"><span class="lang-en">Low</span><span class="lang-zh" style="display:none">低</span></span></td><td><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></td><td><span class="lang-en">Med</span><span class="lang-zh" style="display:none">中</span></td><td>—</td><td><span class="lang-en">Capital + title</span><span class="lang-zh" style="display:none">資本＋地契</span></td></tr>
+        <tr><td><b>4 <span class="lang-en">Mid-term</span><span class="lang-zh" style="display:none">中長住</span></b></td><td><span class="tag pos"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></span></td><td><span class="lang-en">Low–Mid</span><span class="lang-zh" style="display:none">低中</span></td><td><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></td><td>Dubai / Denver</td><td><span class="lang-en">Avoid law &amp; K-market, stable guests</span><span class="lang-zh" style="display:none">避法規/K型、穩定客</span></td></tr>
+        <tr><td><b>5 <span class="lang-en">Work-ready</span><span class="lang-zh" style="display:none">work-ready 住居</span></b></td><td><span class="tag pos"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></span></td><td><span class="lang-en">Med</span><span class="lang-zh" style="display:none">中</span></td><td><span class="lang-en">Med</span><span class="lang-zh" style="display:none">中</span></td><td>Lisbon / CDMX</td><td><span class="lang-en">Scenario differentiation lifts ADR</span><span class="lang-zh" style="display:none">場景差異化拉 ADR</span></td></tr>
+        <tr><td><b>6 <span class="lang-en">Themed boutique</span><span class="lang-zh" style="display:none">主題精品</span></b></td><td><span class="tag pos"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></span></td><td><span class="lang-en">Med</span><span class="lang-zh" style="display:none">中</span></td><td><span class="lang-en">Med</span><span class="lang-zh" style="display:none">中</span></td><td><span class="lang-en">Global (Airbnb '26)</span><span class="lang-zh" style="display:none">全球（Airbnb '26）</span></td><td><span class="lang-en">Design + story + algorithm</span><span class="lang-zh" style="display:none">設計＋故事＋演算法</span></td></tr>
+        <tr><td><b>7 <span class="lang-en">Co-living</span><span class="lang-zh" style="display:none">共居</span></b></td><td><span class="tag warn"><span class="lang-en">Med</span><span class="lang-zh" style="display:none">中</span></span></td><td><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></td><td><span class="lang-en">Med</span><span class="lang-zh" style="display:none">中</span></td><td>Lisbon / HK / SG</td><td><span class="lang-en">Community + scale</span><span class="lang-zh" style="display:none">社群＋規模</span></td></tr>
+        <tr><td><b>8 <span class="lang-en">Branded aparthotel</span><span class="lang-zh" style="display:none">品牌公寓</span></b></td><td><span class="tag warn"><span class="lang-en">Med</span><span class="lang-zh" style="display:none">中</span></span></td><td><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></td><td><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></td><td>Hilton / Airbnb '26</td><td><span class="lang-en">Compliance + brand + scale</span><span class="lang-zh" style="display:none">合規＋品牌＋規模</span></td></tr>
+        <tr><td><b>9 <span class="lang-en">Development / early-bird</span><span class="lang-zh" style="display:none">開發／早鳥</span></b></td><td><span class="tag neg"><span class="lang-en">Low</span><span class="lang-zh" style="display:none">低</span></span></td><td><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></td><td>—</td><td>Bali</td><td><span class="lang-en">Lower entry cost</span><span class="lang-zh" style="display:none">壓低進場成本</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="chartbox">
+      <div class="kick"><span class="lang-en">Positioning</span><span class="lang-zh" style="display:none">定位</span></div>
+      <h3><span class="lang-en">Where each model sits — capital × passivity × KL-fit</span><span class="lang-zh" style="display:none">九模式定位 — 資本 × 被動度 × KL 適配</span></h3>
+      <div class="csub"><span class="lang-en">Green = high KL fit, amber = medium, red = low. The sweet spot for a remote owner is upper-left: low capital, high passivity, high fit.</span><span class="lang-zh" style="display:none">綠＝KL 適配高，黃＝中，紅＝低。遠端業主的甜蜜點在左上：低資本、高被動、高適配。</span></div>
+      <div class="chart tall" id="cKmodels"></div>
+    </div>
+
+    <div class="sec-rule"><h2>§2 · <span class="lang-en">The direction KL should pursue (high-fit)</span><span class="lang-zh" style="display:none">KL 最該走的方向（高適配）</span></h2></div>
+    <div class="mcard">
+      <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--gold-deep);font-weight:600;letter-spacing:.04em">DUBAI · DENVER</span><span class="tag pos"><span class="lang-en">KL fit: High</span><span class="lang-zh" style="display:none">適配：高</span></span></div>
+      <h4>4 · <span class="lang-en">Mid-term stays (30 nights+) — the best defence</span><span class="lang-zh" style="display:none">中長住（30 晚+）——最佳防禦</span></h4>
+      <p><span class="lang-en">Shift the product from "nightly hotel substitute" to "flexible living". Dubai leaned on monthly/mid-term as its main full-year revenue strategy through the 2026 demand shock; Airbnb's 28-night+ long stays are now ~20% of bookings, precisely a response to tightening law.</span><span class="lang-zh" style="display:none">把產品從「夜租旅館替代」轉成「彈性住居」。杜拜在 2026 需求衝擊時把中長住變成全年主要收入策略；Airbnb 全球 28 晚以上長住已佔近 20% 訂房，正是因應趨嚴法規。</span></p>
+      <ul>
+        <li><b><span class="lang-en">Avoids MC / policy friction:</span><span class="lang-zh" style="display:none">避 MC／政策摩擦：</span></b> <span class="lang-en">most MCs tolerate 30-night+ far more (not "nuisance STR"); unaffected if a day cap is set. Many KL listings already self-adopt 30-night minimums.</span><span class="lang-zh" style="display:none">30 晚以上多數 MC 容忍度高得多（不算擾鄰短租）；政策設天數上限時不受影響。很多 KL 房源已自行採 30 晚最短住宿。</span></li>
+        <li><b><span class="lang-en">Avoids the K-market knife-fight:</span><span class="lang-zh" style="display:none">避 K 型廝殺：</span></b> <span class="lang-en">stable mid-term beats low-season vacancy on nightly.</span><span class="lang-zh" style="display:none">穩定中住客＞淡季空置的夜租。</span></li>
+        <li><b><span class="lang-en">Guests:</span><span class="lang-zh" style="display:none">客源：</span></b> <span class="lang-en">digital nomads, expat professionals, medical tourism, cross-border business — KL's English fluency &amp; sub-Singapore cost already suit this.</span><span class="lang-zh" style="display:none">數位游牧、外派專業、醫療旅遊、跨國商務——KL 英語通用、成本低於星港，本就適合。</span></li>
+      </ul>
+      <p style="font-size:12px;color:var(--muted);margin:6px 0 0"><span class="lang-en">Ops: weight Furnished-Finder-style mid-term platforms + Booking.com over pure Airbnb; lower cleaning frequency, lower wear, steadier net margin.</span><span class="lang-zh" style="display:none">營運：用 Furnished-Finder 式中住平台 + Booking.com 權重高於純 Airbnb；清潔頻率低、損耗低、淨利率反而更穩。</span></p>
+    </div>
+    <div class="grid2">
+      <div class="mcard">
+        <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:4px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--gold-deep);font-weight:600;letter-spacing:.04em">LISBON · CDMX</span><span class="tag pos"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></span></div>
+        <h4>5 · <span class="lang-en">Work-ready nomad living</span><span class="lang-zh" style="display:none">work-ready 數位游牧住居</span></h4>
+        <p><span class="lang-en">The RentRemote / Anyplace / Flatio play: 30 days+, furnished &amp; all-in (utilities/wifi), a real desk with dual 4K monitors + ergonomic chair, transparent pricing, no deposit, screening + trust mechanisms.</span><span class="lang-zh" style="display:none">RentRemote／Anyplace／Flatio 玩法：30 天起、含家具水電網、雙 4K 螢幕＋人體工學椅辦公位、透明定價、無押金、審查＋信任機制。</span></p>
+        <p><b><span class="lang-en">KL:</span><span class="lang-zh" style="display:none">KL 落地：</span></b> <span class="lang-en">fitting out "work-ready" lifts ADR &amp; stay length into the top tier. Pair with the Bangsar South / KL Sentral tech-expat clusters &amp; existing co-working scene. Essentially "model 4 + a work scenario".</span><span class="lang-zh" style="display:none">把單位配成 work-ready 可明顯拉高 ADR 與住宿天數，擠進 K 型前段。結合 Bangsar South、KL Sentral 科技/外派聚落與既有共享辦公生態。本質是「模式 4 中長住 + 工作場景差異化」。</span></p>
+      </div>
+      <div class="mcard">
+        <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:4px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--gold-deep);font-weight:600;letter-spacing:.04em">GLOBAL · AIRBNB '26</span><span class="tag pos"><span class="lang-en">High</span><span class="lang-zh" style="display:none">高</span></span></div>
+        <h4>6 · <span class="lang-en">Themed / design boutique</span><span class="lang-zh" style="display:none">主題精品 / 設計差異化</span></h4>
+        <p><span class="lang-en">Airbnb's 2026 "anti-hotel" strategy leans on uniqueness hotels can't match, segmenting guests into three personas (Escapee / Trendsetter / Esthete). Design &amp; story become the keys to the algorithm and a price premium.</span><span class="lang-zh" style="display:none">Airbnb 2026 廣告明確走「反飯店」——主打 hotels can't 的獨特性，分三種旅客人格（Escapee／Trendsetter／Esthete）。設計與故事成為演算法與溢價的關鍵。</span></p>
+        <p><b><span class="lang-en">KL:</span><span class="lang-zh" style="display:none">KL 落地：</span></b> <span class="lang-en">a single-unit boutique route — turn a great-view Bukit Bintang / KLCC unit into a strongly identified "destination" to jump straight into the top 10%. Story-led listings, pro photography, a direct-booking site at 5+ units. Avoid over-saturated themes (Barbie, Harry Potter) — find local distinctiveness.</span><span class="lang-zh" style="display:none">適合單套精品路線——把武吉免登／KLCC 的好景觀單位做成有強烈設計識別的「destination」，直接卡前 10%。故事化刊登、專業攝影、5 套以上做直訂網站。避開已氾濫的主題（Barbie、Harry Potter），找在地差異化。</span></p>
+      </div>
+    </div>
+
+    <div class="sec-rule"><h2>§3 · <span class="lang-en">Scale / institutional models</span><span class="lang-zh" style="display:none">規模化／制度化模式</span></h2></div>
+    <div class="grid2">
+      <div class="mcard">
+        <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:4px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--gold-deep);font-weight:600;letter-spacing:.04em">LISBON · HK · SG</span><span class="tag warn"><span class="lang-en">Med</span><span class="lang-zh" style="display:none">中</span></span></div>
+        <h4>7 · <span class="lang-en">Co-living</span><span class="lang-zh" style="display:none">共居</span></h4>
+        <p><span class="lang-en">Whole floors/buildings fitted as "individual lease + all-in pricing + shared kitchen/lounge/co-working", selling community &amp; convenience. Mid-term-leaning, so low MC/policy friction. KL already has Komune Living (Bangsar South). High capital &amp; ops barrier — operator-grade; needs a whole floor/building for community scale economics.</span><span class="lang-zh" style="display:none">整層/整棟配成「個人租約＋全包定價＋共用廚房客廳＋共享辦公」，賣社群與便利。偏中長住，MC/政策摩擦低。KL 已有 Komune Living（Bangsar South）。資本與營運門檻高，適合 operator 級；需整棟或整層才有社群規模經濟。</span></p>
+      </div>
+      <div class="mcard">
+        <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:4px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--gold-deep);font-weight:600;letter-spacing:.04em">HILTON · AIRBNB · GREYSTAR</span><span class="tag warn"><span class="lang-en">Med · the institutional fix</span><span class="lang-zh" style="display:none">中 · 制度化解法</span></span></div>
+        <h4>8 · <span class="lang-en">Branded aparthotel conversion</span><span class="lang-zh" style="display:none">品牌公寓轉換 / aparthotel</span></h4>
+        <p><span class="lang-en">The 2026 megatrend: even Hilton launched "The Apartments" to plug "Airbnb's friction (deposits, cleaning, keys)", folding ~50 unsold units in a multi-unit tower into a hotel system with 24h service &amp; weekly cleaning; Airbnb itself listed boutique/independent hotels in summer 2026.</span><span class="lang-zh" style="display:none">2026 大趨勢：連 Hilton 都推「The Apartments」填補「Airbnb 的摩擦（押金、清潔、鑰匙）」，把樓裡 50 個未售單位整批納入飯店體系、24 小時服務、每週清潔；Airbnb 自己也在 2026 夏季把精品/獨立旅館上架。</span></p>
+        <p><b><span class="lang-en">Why KL-relevant:</span><span class="lang-zh" style="display:none">KL 為何相關：</span></b> <span class="lang-en">this is the <b>formalised exit</b> for KL's "plot-ratio loophole + serviced-residence shadow hotels". Rather than retail hosts secretly running STR in residential blocks, run a whole serviced residence as a branded aparthotel — hotel licence, commercial &amp; tourism tax, 24h service. Combined with Airbnb-Friendly-building partnerships (already 750+ US buildings / 200k units; UK via Greystar), it institutionalises "the building approves STR from day one" — directly solving KL's biggest single-point MC risk.</span><span class="lang-zh" style="display:none">這正是 KL「plot ratio 漏洞＋serviced residence 影子旅館」的<b>正規化出路</b>：與其讓散戶在住宅樓偷做，不如把整棟 serviced residence 以品牌 aparthotel 正規營運——拿飯店發牌、繳商業稅、收旅遊稅、有 24h 服務。配合 Airbnb-friendly 建築合作（美國已逾 750 棟、20 萬戶；英國與 Greystar 合作），把「樓盤一開始就核准短租」制度化，直接解決 KL 最大的 MC 單點風險。</span></p>
+      </div>
+    </div>
+
+    <div class="sec-rule"><h2>§4 · <span class="lang-en">What NOT to copy in KL</span><span class="lang-zh" style="display:none">抄不動的模式</span></h2></div>
+    <div class="grid2">
+      <div class="mcard">
+        <h4>2 · <span class="lang-en">Rental arbitrage (lease &amp; sublet)</span><span class="lang-zh" style="display:none">包租轉租 arbitrage</span></h4>
+        <p><span class="lang-en">No buying — long-lease a unit, sublet short-term on the spread. The lowest-capital entry globally (US$5k–15k/unit, mostly furniture), but in 2026 it's gone from "easy money" to a thin-margin service business. Real per-unit P&amp;L on a US case:</span><span class="lang-zh" style="display:none">不買房，長租租下、轉短租賺價差。全球最低資本進場（每套 US$5k–15k，傢俱佔七八成），但 2026 已從躺賺變薄利服務業。美國案例單套月損益：</span></p>
+        <table class="atbl" style="margin:6px 0">
+          <tbody>
+            <tr><td><span class="lang-en">Gross (20 nts × nightly)</span><span class="lang-zh" style="display:none">毛收入（20 晚 × 夜租）</span></td><td class="num">3,000</td></tr>
+            <tr><td><span class="lang-en">− long-let rent</span><span class="lang-zh" style="display:none">− 長租租金</span></td><td class="num">−2,000</td></tr>
+            <tr><td><span class="lang-en">− platform / cleaning / utilities</span><span class="lang-zh" style="display:none">− 平台／清潔／水電</span></td><td class="num">−410</td></tr>
+            <tr><td><b><span class="lang-en">Net / unit / mo</span><span class="lang-zh" style="display:none">單套月淨</span></b></td><td class="num"><b>≈ 590</b></td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin:4px 0 0"><span class="lang-en">Gross must be 2.5–3.2× the rent; net margin 15–35%. Scale is a sales funnel: pitch ~50 landlords/wk to sign 1–3.</span><span class="lang-zh" style="display:none">短租毛收須是租金的 2.5–3.2×；淨利率 15–35%。規模是銷售漏斗：一週 pitch 約 50 個房東才簽 1–3 套。</span></p>
+      </div>
+      <div class="mcard">
+        <h4 style="color:#b91c1c">⚠ <span class="lang-en">Why arbitrage &amp; pure-volume fail in KL</span><span class="lang-zh" style="display:none">為何 arbitrage／純衝量在 KL 行不通</span></h4>
+        <p><span class="lang-en">Arbitrage needs two preconditions KL breaks: (1) <b>written landlord consent to sublet</b> — most KL MCs ban STR even for owners, so landlords won't agree; (2) <b>regulatory stability</b> — KL is heading to licensing &amp; Selangor's 180-day cap, so "lease intact but income cut by law" risk is high. Asset-less volume operators fall first when policy tightens.</span><span class="lang-zh" style="display:none">arbitrage 兩個致命前提在 KL 都不成立：(1) <b>須房東書面同意轉租</b>——KL 多數 MC 連屋主自己都禁短租，房東更不會同意；(2) <b>須法規穩定</b>——KL 正走向發牌制、雪州已設 180 天上限，「租約還在、收入卻被法規切斷」風險極高。無資產的衝量者會在政策收緊時最先倒下。</span></p>
+        <p><span class="lang-en">Bangkok's low ADR (~US$49/night, ~US$12k/yr) is the reminder: chasing volume in a low-price market simply doesn't pay. KL has also passed the "secretly do it" stage — the 2026 DBKL SOP, more enforcement and bolder neighbour complaints make stealth unviable.</span><span class="lang-zh" style="display:none">曼谷的低 ADR（約 US$49/晚、年收約 US$12K）也提醒：衝量在低單價市場根本不划算。KL 也已過了「偷做」階段——2026 DBKL 有 SOP、執法增加、鄰居更敢投訴，悄悄做已不現實。</span></p>
+      </div>
+    </div>
+    <p class="src"><span class="lang-en">Models 1 &amp; 3 (co-host, owner-multi) are deep-dived in the Feasibility tab. Model 9 (development/early-bird): in Bali, supply surged and Canggu median occupancy fell to 43%, pushing smart money to self-build (saves 30–40%); KL is hi-rise strata so direct self-build doesn't apply, but buying an off-plan / early-bird serviced residence lowers entry cost (raises completion risk — be careful).</span><span class="lang-zh" style="display:none">模式 1、3（代管、自有多套）已在「業者可行性」分頁深拆。模式 9（開發／早鳥）：峇里因供給暴增、Canggu 中位入住率跌到 43%，聰明錢轉向自建（省 30–40%）；KL 是高層 strata、不能自建，但可買 off-plan／早鳥折扣的 serviced residence 壓低進場成本（放大交屋風險，須謹慎）。</span></p>
+
+    <div class="take">
+      <span class="pk"><span class="lang-en">The optimal KL playbook</span><span class="lang-zh" style="display:none">KL 最優打法</span></span>
+      <p><span class="lang-en">Stack <b>mid-term (4) + work-ready or themed differentiation (5/6) + a fully-loaded automation stack (§0)</b> — low passive cost, dodges the MC / policy / K-market triple risk, and still squeezes into the top tier. To scale, move toward <b>branded aparthotel (8) + Airbnb-friendly building partnerships</b>, making compliance &amp; brand the moat. <b>Avoid pure volume — arbitrage (2) and pure multi-unit (3) — they're the first to fall under KL's regulatory and market structure.</b> This is exactly the convergence of Lisbon, Dubai and the US under tightening law: it rides VM2026 demand while sidestepping KL's three deadliest risks.</span><span class="lang-zh" style="display:none">把<b>中長住（4）＋ work-ready 或主題差異化（5/6）＋ 滿配自動化技術堆疊（§0）</b>疊起來——低被動成本、避開 MC／政策／K 型三大風險、又能擠進前段。要規模化，往<b>品牌公寓 aparthotel（8）＋ Airbnb-friendly 建築合作</b>走，把合規與品牌做成護城河。<b>避開純衝量——arbitrage（2）、純多套（3）——在 KL 的法規與市場結構下，那是最先倒下的玩法。</b>這正好是全球趨嚴法規下里斯本、杜拜、美國的共同收斂方向：既順 VM2026 旅遊需求，又避開 KL 最致命的三大風險。</span></p>
+    </div>
+    <div class="cl cl-warn">
+      <h4>⚠ <span class="lang-en">Three cross-model iron rules for 2026</span><span class="lang-zh" style="display:none">三個跨模式的 2026 鐵律</span></h4>
+      <ul>
+        <li><b><span class="lang-en">Not passive income.</span><span class="lang-zh" style="display:none">不是被動收入。</span></b> <span class="lang-en">Whatever the model, it's a thin-margin, detail-driven service business; hospitality is the only moat you can't copy.</span><span class="lang-zh" style="display:none">無論哪種模式，本質都是薄利、講細節的服務業；hospitality 是唯一抄不走的護城河。</span></li>
+        <li><b><span class="lang-en">Automation is the foundation, not a bonus.</span><span class="lang-zh" style="display:none">自動化是地基不是加分。</span></b> <span class="lang-en">Smart lock + PMS + dynamic pricing + noise monitoring — not having them in 2026 means being out-competed.</span><span class="lang-zh" style="display:none">智慧鎖＋PMS＋動態定價＋噪音監測，2026 不裝就是被淘汰。</span></li>
+        <li><b><span class="lang-en">KL's single point of failure is always title + MC.</span><span class="lang-zh" style="display:none">KL 的單點故障永遠是地契＋MC。</span></b> <span class="lang-en">Every model's return rests on it — model 8's whole value is institutionalising this risk away.</span><span class="lang-zh" style="display:none">所有模式的報酬都建立在此——模式 8 的價值正在於把這個風險制度化解決。</span></li>
+      </ul>
+    </div>
+    <p class="src"><span class="lang-en">Sources: Hostfully / New Silver / 10XBNB / AirROI / AirDNA / Touchstay (arbitrage economics 2026), 10XBNB / PriceLabs / Guesty / GleamSync (automation stack 2026), RentalScaleUp (Airbnb 2026 ad &amp; persona strategy), Hospitality Design (Hilton The Apartments), Airbnb News (summer 2026 boutique-hotel listing), Turno / RedAwning, Anteya / Sherwoods (Bali / Dubai ops), Flatio / Anyplace / RentRemote (nomad living), Airbtics (KL manager list).</span><span class="lang-zh" style="display:none">資料：Hostfully／New Silver／10XBNB／AirROI／AirDNA／Touchstay（arbitrage 經濟 2026）、10XBNB／PriceLabs／Guesty／GleamSync（自動化技術堆疊 2026）、RentalScaleUp（Airbnb 2026 廣告與人格策略）、Hospitality Design（Hilton The Apartments）、Airbnb News（2026 夏季精品旅館上架）、Turno／RedAwning、Anteya／Sherwoods（峇里／杜拜營運）、Flatio／Anyplace／RentRemote（數位游牧住居）、Airbtics（KL 管理公司榜）。</span></p>
+
+  </section>
+
+  <!-- ════════════════ TAB 07 · CALCULATOR ════════════════ -->
+  <section class="panel" id="panel-calculator">
+    <div id="calcRoot">
+      <div class="pg-head" style="margin-bottom:10px">
+        <div class="kick" style="font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:4px">KL · SERVICED RESIDENCE · STR vs <span class="lang-en">LONG-LET</span><span class="lang-zh" style="display:none">長租</span></div>
+        <h2 style="font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:23px;margin:0 0 4px;line-height:1.3"><span class="lang-en">Is Airbnb a good business in KL?</span><span class="lang-zh" style="display:none">吉隆坡 Airbnb 是門好生意嗎？</span></h2>
+        <p class="pg-sub" style="margin:0"><span class="lang-en">Drag the sliders with your own numbers. Defaults = a real 2026 core-KL serviced residence.</span><span class="lang-zh" style="display:none">拉動下方滑桿用你自己的數字試算。預設值＝ 2026 年核心區 serviced residence 實況。</span></p>
+      </div>
+
+      <!-- presets -->
+      <div class="calc-presets" id="calcPresets"></div>
+
+      <!-- verdict banner -->
+      <div class="vbanner" id="calcVerdict"></div>
+
+      <!-- inputs -->
+      <div class="card">
+        <div class="sub-h bare" style="margin-top:0"><span class="lang-en">Your numbers</span><span class="lang-zh" style="display:none">你的數字</span></div>
+        <div class="calc-grid">
+          <div>
+            <div class="calc-field">
+              <div class="cf-top"><label><span class="lang-en">Purchase price</span><span class="lang-zh" style="display:none">購入價</span></label><span class="cf-val" id="cv-price"></span></div>
+              <input id="in-price" type="range" min="500000" max="3000000" step="50000" oninput="calcSet('price',this.value)">
+              <div class="cf-hint"><span class="lang-en">Foreigner KL floor ~RM1m</span><span class="lang-zh" style="display:none">外國人 KL 最低門檻約 RM100 萬</span></div>
+            </div>
+            <div class="calc-field">
+              <div class="cf-top"><label><span class="lang-en">Size</span><span class="lang-zh" style="display:none">坪數</span></label><span class="cf-val" id="cv-sqft"></span></div>
+              <input id="in-sqft" type="range" min="350" max="1500" step="10" oninput="calcSet('sqft',this.value)">
+            </div>
+            <div class="calc-field">
+              <div class="cf-top"><label><span class="lang-en">Airbnb ADR</span><span class="lang-zh" style="display:none">Airbnb 平均房價 ADR</span></label><span class="cf-val" id="cv-adr"></span></div>
+              <input id="in-adr" type="range" min="120" max="600" step="10" oninput="calcSet('adr',this.value)">
+              <div class="cf-hint"><span class="lang-en">Core typical RM220–380; top RM400+</span><span class="lang-zh" style="display:none">核心區典型 RM220–380；頂尖可達 RM400+</span></div>
+            </div>
+            <div class="calc-field">
+              <div class="cf-top"><label><span class="lang-en">Occupancy</span><span class="lang-zh" style="display:none">入住率</span></label><span class="cf-val" id="cv-occ"></span></div>
+              <input id="in-occ" type="range" min="10" max="90" step="1" oninput="calcSet('occ',this.value)">
+              <div class="cf-hint" id="cf-hint-occ"></div>
+            </div>
+          </div>
+          <div>
+            <div class="calc-field">
+              <div class="cf-top"><label><span class="lang-en">Long-let rent (benchmark)</span><span class="lang-zh" style="display:none">長租月租金（對照組）</span></label><span class="cf-val" id="cv-ltRent"></span></div>
+              <input id="in-ltRent" type="range" min="1500" max="9000" step="100" oninput="calcSet('ltRent',this.value)">
+              <div class="cf-hint"><span class="lang-en">700 sqft core 2-bed ~RM3,000–3,500</span><span class="lang-zh" style="display:none">700 sqft 核心區 2 房約 RM3,000–3,500</span></div>
+            </div>
+            <div class="calc-field">
+              <div class="cf-top"><label><span class="lang-en">Co-host / mgmt fee</span><span class="lang-zh" style="display:none">代管／共管費</span></label><span class="cf-val" id="cv-mgmtPct"></span></div>
+              <input id="in-mgmtPct" type="range" min="0" max="30" step="1" oninput="calcSet('mgmtPct',this.value)">
+              <div class="cf-hint"><span class="lang-en">Pro co-host fee; self-managed = 0</span><span class="lang-zh" style="display:none">專業 co-host 抽成；自管填 0</span></div>
+            </div>
+            <div class="calc-field">
+              <div class="cf-top"><label><span class="lang-en">Service charge</span><span class="lang-zh" style="display:none">管理費（service charge）</span></label><span class="cf-val" id="cv-maint"></span></div>
+              <input id="in-maint" type="range" min="0.2" max="1.0" step="0.05" oninput="calcSet('maint',this.value)">
+              <div class="cf-hint"><span class="lang-en">Serviced residence usually RM0.4–0.6</span><span class="lang-zh" style="display:none">serviced residence 常見 RM0.4–0.6</span></div>
+            </div>
+            <div class="calc-field">
+              <div class="cf-top"><label><span class="lang-en">Furnishing amortised</span><span class="lang-zh" style="display:none">傢俱／裝修攤提</span></label><span class="cf-val" id="cv-furnish"></span></div>
+              <input id="in-furnish" type="range" min="0" max="2500" step="50" oninput="calcSet('furnish',this.value)">
+              <div class="cf-hint"><span class="lang-en">One-off fit-out spread over ~3 yrs</span><span class="lang-zh" style="display:none">一次性裝潢分 ~3 年攤到每月</span></div>
+            </div>
+            <div class="calc-field">
+              <div class="cf-top"><label><span class="lang-en">Other fixed (utilities/wifi/clean/insure)</span><span class="lang-zh" style="display:none">其他固定（水電網清潔保險）</span></label><span class="cf-val" id="cv-otherFixed"></span></div>
+              <input id="in-otherFixed" type="range" min="0" max="2000" step="50" oninput="calcSet('otherFixed',this.value)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- breakdown + stats -->
+      <div class="breakdown" id="calcBreak"></div>
+      <div class="statrow" id="calcStats"></div>
+
+      <!-- reality check -->
+      <div class="cl cl-info">
+        <b><span class="lang-en">How to read this — three truths</span><span class="lang-zh" style="display:none">怎麼讀這張表 — 三個關鍵真相</span></b>
+        <ul>
+          <li><b><span class="lang-en">Occupancy is the crux.</span><span class="lang-zh" style="display:none">入住率是命門。</span></b> <span class="lang-en">KL is K-shaped: top 10% fill 80%+, median ~33%, bottom 25% only 14%. Try the "Market median" preset — it usually drops to "worse than long-let".</span><span class="lang-zh" style="display:none">KL 是 K 型市場：頂尖 10% 入住 80%+，中位數約 33%，後段 25% 只有 14%。試「市場中位數」preset，多半會跌到「不如做長租」。</span></li>
+          <li><b><span class="lang-en">Clear the title &amp; MC gate first.</span><span class="lang-zh" style="display:none">先過地契與 MC 那關。</span></b> <span class="lang-en">This assumes your building is <em>legal and MC-allowed</em> for STR. On a pure-residential title or a banned MC, this whole table is void — any yield is RM0.</span><span class="lang-zh" style="display:none">本試算假設你的樓盤<em>合法且 MC 允許</em>短租。純住宅地契或 MC 已立禁令者，這張表完全不成立——再高的報酬率都是 RM0。</span></li>
+          <li><b><span class="lang-en">Cash flow only — no tax, no your time.</span><span class="lang-zh" style="display:none">這只算現金流，沒算稅與你的時間。</span></b> <span class="lang-en">Multi-unit is often classed as business income by LHDN; self-managing makes your time a hidden cost.</span><span class="lang-zh" style="display:none">多套經營常被 LHDN 歸營業所得；自管的話你的時間就是隱形成本。</span></li>
+        </ul>
+      </div>
+      <p class="src"><span class="lang-en">Basis: AirROI / Airbtics / AirDNA (2026 KL occupancy &amp; ADR), PropertyGuru / Mudah (2026-06 core-area price &amp; rent), Bamboo Routes / iQI (2026 yields). A cash-flow tool only — excludes mortgage interest, capital gains, stamp duty and income tax; not investment advice.</span><span class="lang-zh" style="display:none">資料基準：AirROI／Airbtics／AirDNA（2026 KL 入住率與 ADR）、PropertyGuru／Mudah（2026-06 核心區售價與租金）、Bamboo Routes／iQI（2026 收益實況）。本工具為現金流試算，不含房貸利息、資本利得、印花稅與所得稅，亦非投資建議。</span></p>
+    </div>
+
+    <script>
+    /* ───────── STR-vs-long-let calculator (ported from KL_Airbnb_Calculator) ───────── */
+    var calc = {price:1000000,sqft:700,adr:280,occ:55,ltRent:3200,mgmtPct:20,maint:0.45,furnish:800,otherFixed:700};
+    var calcPresets = [
+      {nEn:'Top 10% (KLCC 2BR)',nZh:'頂尖 10%（KLCC 2房）',adr:380,occ:75,ltRent:4500,mgmtPct:20},
+      {nEn:'Core typical (Bukit Bintang)',nZh:'核心區典型（武吉免登）',adr:280,occ:55,ltRent:3200,mgmtPct:20},
+      {nEn:'Market median',nZh:'市場中位數',adr:220,occ:33,ltRent:2800,mgmtPct:22},
+      {nEn:'Bottom 25%',nZh:'後段 25%',adr:170,occ:18,ltRent:2400,mgmtPct:22}
+    ];
+    function rm(n){return 'RM '+Math.round(n).toLocaleString('en-MY');}
+    function rm1(n){return (Math.round(n*10)/10).toLocaleString('en-MY');}
+    function pc(n){return (Math.round(n*10)/10)+'%';}
+    function calcCompute(){
+      var s=calc;
+      var nights=30.4*(s.occ/100);
+      var grossMo=s.adr*nights;
+      var platformFee=grossMo*0.03;
+      var mgmtFee=grossMo*(s.mgmtPct/100);
+      var serviceCharge=s.maint*s.sqft;
+      var strOpex=platformFee+mgmtFee+serviceCharge+s.furnish+s.otherFixed;
+      var strNetMo=grossMo-strOpex;
+      var strNetYr=strNetMo*12;
+      var strYield=strNetYr/s.price*100;
+      var ltOther=150;
+      var ltNetMo=s.ltRent-serviceCharge-ltOther;
+      var ltNetYr=ltNetMo*12;
+      var ltYield=ltNetYr/s.price*100;
+      var deltaYr=strNetYr-ltNetYr;
+      var deltaPct=ltNetYr!==0?deltaYr/Math.abs(ltNetYr)*100:0;
+      var fixed=serviceCharge+s.furnish+s.otherFixed;
+      var variable=1-0.03-s.mgmtPct/100;
+      var breakevenOcc=variable>0?((ltNetMo+fixed)/variable)/s.adr/30.4*100:999;
+      return {nights:nights,grossMo:grossMo,platformFee:platformFee,mgmtFee:mgmtFee,serviceCharge:serviceCharge,
+        strNetMo:strNetMo,strNetYr:strNetYr,strYield:strYield,ltNetMo:ltNetMo,ltNetYr:ltNetYr,ltYield:ltYield,
+        deltaYr:deltaYr,deltaPct:deltaPct,breakevenOcc:breakevenOcc};
+    }
+    function calcSet(k,v){ calc[k]=parseFloat(v); renderCalc(); }
+    function calcPreset(p){ calc.adr=p.adr; calc.occ=p.occ; calc.ltRent=p.ltRent; calc.mgmtPct=p.mgmtPct; syncCalcInputs(); renderCalc(); }
+    function syncCalcInputs(){
+      Object.keys(calc).forEach(function(k){ var el=document.getElementById('in-'+k); if(el) el.value=calc[k]; });
+    }
+    function renderCalc(){
+      var root=document.getElementById('calcRoot'); if(!root) return;
+      var zh=document.body.classList.contains('zh');
+      var T=function(en,cn){return zh?cn:en;};
+      var m=calcCompute(), s=calc;
+      // value chips
+      var setv=function(id,t){var e=document.getElementById(id); if(e) e.textContent=t;};
+      setv('cv-price',rm(s.price)); setv('cv-sqft',s.sqft+' sqft'); setv('cv-adr',rm(s.adr));
+      setv('cv-occ',s.occ+' %'); setv('cv-ltRent',rm(s.ltRent)); setv('cv-mgmtPct',s.mgmtPct+' %');
+      setv('cv-maint',s.maint.toFixed(2)+T(' /sqft/mo',' /sqft/月')); setv('cv-furnish',rm(s.furnish)); setv('cv-otherFixed',rm(s.otherFixed));
+      var oh=document.getElementById('cf-hint-occ'); if(oh) oh.textContent=T('Break-even occupancy (to match long-let): ~','損益兩平入住率（打平長租）：約 ')+pc(m.breakevenOcc);
+      // presets
+      var pr=document.getElementById('calcPresets');
+      if(pr && !pr.dataset.built){ pr.dataset.built='1'; }
+      if(pr){ pr.innerHTML=''; calcPresets.forEach(function(p){ var b=document.createElement('button'); b.className='preset'; b.textContent=T(p.nEn,p.nZh); b.onclick=function(){calcPreset(p);}; pr.appendChild(b); }); }
+      // verdict
+      var v;
+      if(m.strNetMo<0) v={t:T('Loss-making','賠錢生意'),s:T('STR monthly net is negative — worse than even long-let.','STR 月淨現金流為負，連長租都不如。'),tone:'v-no',col:'#991b1b'};
+      else if(m.deltaYr<=0) v={t:T('Worse than long-let','不如做長租'),s:T('After all the effort, STR net still loses to long-let. Just collect rent.','STR 折騰半天，淨收益還輸長租。穩穩收租更划算。'),tone:'v-no',col:'#991b1b'};
+      else if(m.deltaPct<30) v={t:T('Marginal','邊際生意'),s:T('STR beats long-let only a little — the extra work &amp; risk may not be worth it.','STR 只比長租多賺一點，多出的工夫與風險未必值得。'),tone:'v-cond',col:'#a16207'};
+      else if(m.deltaPct<70) v={t:T('Worth it','還算划算'),s:T('STR clearly beats long-let, but you take on operations &amp; regulatory risk.','STR 明顯優於長租，但需投入營運與承擔法規風險。'),tone:'v-go',col:'#166534'};
+      else v={t:T('Good business','好生意'),s:T('STR is well ahead of long-let — provided the building allows STR and you hold occupancy.','STR 大幅領先長租，前提是樓盤允許短租且你能維持入住率。'),tone:'v-go',col:'#15803d'};
+      var vb=document.getElementById('calcVerdict');
+      if(vb){ vb.className='vbanner '+v.tone;
+        vb.innerHTML='<div class="vb-l"><div class="vb-k">'+T('Verdict','判定')+'</div><div class="vb-t">'+v.t+'</div><div class="vb-s">'+v.s+'</div></div>'+
+          '<div class="vb-r"><div class="vb-rk">'+T('STR extra vs long-let (yr)','STR 比長租多賺（年）')+'</div>'+
+          '<div class="vb-rv">'+(m.deltaYr>=0?'+':'')+rm(m.deltaYr)+'</div>'+
+          '<div class="vb-rp">'+(m.deltaYr>=0?'+':'')+rm1(m.deltaPct)+'% '+T('vs long-let net','vs 長租淨收')+'</div></div>';
+        var col=v.col; vb.querySelectorAll('div').forEach(function(d){d.style.color=col;});
+      }
+      // breakdown
+      var bk=document.getElementById('calcBreak');
+      if(bk){
+        var row=function(k,val,cls){return '<div class="brow'+(cls&&cls.indexOf('bold')>-1?' bold':'')+(cls&&cls.indexOf('big')>-1?' big':'')+'"><span class="k">'+k+'</span><span class="v'+(cls&&cls.indexOf('neg')>-1?' neg':'')+(cls&&cls.indexOf('pos')>-1?' pos':'')+(cls&&cls.indexOf('mut')>-1?' mut':'')+'">'+val+'</span></div>';};
+        var air='<div class="bcard"><div class="bh">🏨 '+T('Airbnb STR (mo)','Airbnb 短租（月）')+'</div>'+
+          row(T('Gross','毛收入')+' ('+rm1(m.nights)+T(' nts × ',' 晚 × ')+rm(s.adr)+')',rm(m.grossMo),'bold')+
+          row('− '+T('Platform fee 3%','平台費 3%'),'−'+rm(m.platformFee),'neg')+
+          row('− '+T('Co-host ','代管 ')+s.mgmtPct+'%','−'+rm(m.mgmtFee),'neg')+
+          row('− '+T('Service charge','管理費'),'−'+rm(m.serviceCharge),'neg')+
+          row('− '+T('Furnishing amort','傢俱攤提'),'−'+rm(s.furnish),'neg')+
+          row('− '+T('Other fixed','其他固定'),'−'+rm(s.otherFixed),'neg')+
+          '<div class="bdiv"></div>'+
+          row(T('Net cash flow / mo','月淨現金流'),rm(m.strNetMo),'bold big '+(m.strNetMo>=0?'pos':'neg'))+'</div>';
+        var lt='<div class="bcard"><div class="bh">🔑 '+T('Long-let (mo)','長租（月）')+'</div>'+
+          row(T('Monthly rent','月租金'),rm(s.ltRent),'bold')+
+          row('− '+T('Service charge','管理費'),'−'+rm(m.serviceCharge),'neg')+
+          row('− '+T('Misc (agent amort etc.)','雜項（代租攤提等）'),'−RM 150','neg')+
+          '<div style="height:78px"></div><div class="bdiv"></div>'+
+          row(T('Net cash flow / mo','月淨現金流'),rm(m.ltNetMo),'bold big pos')+'</div>';
+        bk.innerHTML=air+lt;
+      }
+      // stats
+      var st=document.getElementById('calcStats');
+      if(st){
+        var cstat=function(v2,l,tone){return '<div class="cstat"><div class="cv'+(tone?' '+tone:'')+'">'+v2+'</div><div class="cl2">'+l+'</div></div>';};
+        st.innerHTML=
+          cstat(pc(m.strYield),T('STR net yield','STR 淨報酬率'),m.strYield>=m.ltYield?'pos':'neg')+
+          cstat(pc(m.ltYield),T('Long-let net yield','長租淨報酬率'),'')+
+          cstat(rm(m.strNetYr),T('STR net / yr','STR 年淨收'),m.strNetYr>=0?'pos':'neg')+
+          cstat(pc(m.breakevenOcc),T('Break-even occ','損益兩平入住率'),s.occ>=m.breakevenOcc?'pos':'neg');
+      }
+    }
+    function initCalc(){ syncCalcInputs(); renderCalc(); }
+    </script>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-ornament"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  <p class="footer-disclaimer">
+    <span class="lang-en"><strong>Disclaimer.</strong> This page compiles STRA policy, KL market data and operating considerations from public sources as of June 2026. It is not legal, tax or investment advice. The national STRA framework is still in draft; effective dates and final wording follow official announcements. Before acting, verify with DBKL, your building's MC and qualified tax/legal advisers.</span>
+    <span class="lang-zh" style="display:none"><strong>免責聲明。</strong>本頁彙整截至 2026 年 6 月的公開 STRA 政策、KL 市場數據與經營考量，不構成法律、稅務或投資建議。國家 STRA 框架仍在草案階段，生效時點與最終條文以官方公告為準。實際決策前，請向 DBKL、樓盤 MC 管理處與專業稅務／法律顧問查證。</span>
+  </p>
+  <p><a href="/kl-check">← <span class="lang-en">Back to KL Property Check</span><span class="lang-zh" style="display:none">回 KL Property Check</span></a></p>
+</footer>
+
+<script>
+/* ───────── chart engine (reused from /my/report) ───────── */
+var C = {navy:'#0d2244',navyMid:'#234a86',gold:'#b8924a',goldHi:'#cda85f',goldLight:'#d4b576',
+         green:'#15803d',amber:'#a16207',red:'#b91c1c',blue:'#1d4ed8',muted:'#6b7a92',
+         grid:'#ece5d4',track:'#e5dfd0',text:'#0c1521'};
+var FONT = "Inter, 'Noto Sans TC', sans-serif";
+function ax(o){return Object.assign({color:C.muted,fontFamily:FONT,fontSize:11},o||{});}
+function lg(a,b){return new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:a},{offset:1,color:b}]);}
+var baseTip = {trigger:'axis',backgroundColor:'#fff',borderColor:C.track,borderWidth:1,padding:[8,11],
+               textStyle:{color:C.navy,fontSize:11,fontFamily:FONT},
+               extraCssText:'box-shadow:0 8px 24px rgba(13,34,68,.10);border-radius:8px'};
+function catAxis(d,o){return Object.assign({type:'category',data:d,boundaryGap:true,axisLine:{lineStyle:{color:C.track}},axisTick:{show:false},axisLabel:ax({fontSize:10})},o||{});}
+function valAxis(o){return Object.assign({type:'value',axisLine:{show:false},axisTick:{show:false},splitLine:{lineStyle:{color:C.grid,type:'dashed'}},axisLabel:ax()},o||{});}
+
+var allCharts = [];
+function mk(id){var el=document.getElementById(id); if(!el) return null; var c=echarts.init(el); allCharts.push(c); return c;}
+
+function initAllCharts(lang){
+  allCharts.forEach(function(c){ if(c) c.dispose(); });
+  allCharts = [];
+  var zh = lang === 'zh';
+  var L = function(en,cn){ return zh ? cn : en; };
+
+  /* Overview · occupancy K-curve */
+  (function(){ var c=mk('cKocc'); if(!c) return;
+    var cats=[L('Top 10%','頂尖 10%'),L('Top 25%','前 25%'),L('Median','中位數'),L('Bottom 25%','後 25%')];
+    var v=[82,59,33,14];
+    var cols=[lg(C.goldHi,C.gold),lg(C.navyMid,C.navy),C.amber,lg('#d66b5e','#b91c1c')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(x){return x+'%';}}),
+      grid:{left:8,right:38,top:10,bottom:6,containLabel:true},
+      xAxis:valAxis({max:100,axisLabel:ax({formatter:'{value}%'})}),
+      yAxis:catAxis(cats,{inverse:true,axisLabel:ax({fontSize:10.5})}),
+      series:[{type:'bar',data:v.map(function(x,i){return {value:x,itemStyle:{color:cols[i],borderRadius:[0,5,5,0]}};}),barMaxWidth:24,
+        label:{show:true,position:'right',color:C.navy,fontFamily:FONT,fontSize:11,fontWeight:700,formatter:'{c}%'}}]
+    });
+  })();
+
+  /* Overview · supply surge */
+  (function(){ var c=mk('cKsupply'); if(!c) return;
+    var yr=['2023','2024','2025',L('2026 (now)','2026（現在）')];
+    var v=[3200,5063,11500,16000];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(x){return (x/1000).toFixed(1)+'k';}}),
+      grid:{left:8,right:16,top:18,bottom:6,containLabel:true},
+      xAxis:catAxis(yr,{axisLabel:ax({fontSize:10})}),
+      yAxis:valAxis({axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),
+      series:[{type:'bar',data:v.map(function(x,i){return {value:x,itemStyle:{color:i===v.length-1?lg(C.goldHi,C.gold):lg(C.navyMid,C.navy),borderRadius:[5,5,0,0]}};}),barMaxWidth:46,
+        label:{show:true,position:'top',color:C.navy,fontFamily:FONT,fontSize:10.5,fontWeight:600,formatter:function(p){return (p.value/1000).toFixed(p.value>=10000?0:1)+'k';}}}]
+    });
+  })();
+
+  /* KL Market · occupancy by data source */
+  (function(){ var c=mk('cKsource'); if(!c) return;
+    var cats=['AirROI','AirDNA','Airbtics'];
+    var v=[33.9,51,60];
+    var sub=[L('whole market','市場全體'),L('mid','中段'),L('typical active','典型活躍')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){return cats[p.dataIndex]+' · '+sub[p.dataIndex]+'<br/>'+p.value+'%';}}),
+      grid:{left:8,right:40,top:10,bottom:6,containLabel:true},
+      xAxis:valAxis({max:70,axisLabel:ax({formatter:'{value}%'})}),
+      yAxis:catAxis(cats,{inverse:true,axisLabel:ax({fontSize:10.5})}),
+      series:[{type:'bar',data:v.map(function(x,i){return {value:x,itemStyle:{color:i===0?lg('#d6a25f',C.amber):lg(C.navyMid,C.navy),borderRadius:[0,5,5,0]}};}),barMaxWidth:22,
+        label:{show:true,position:'right',color:C.navy,fontFamily:FONT,fontSize:11,fontWeight:700,formatter:'{c}%'}}]
+    });
+  })();
+
+  /* KL Market · monthly gross income tiers */
+  (function(){ var c=mk('cKincome'); if(!c) return;
+    var cats=[L('Market avg','市場平均'),L('80% band (lo–hi)','80% 區間'),L('KLCC / BB top','KLCC / 武吉免登 頂尖')];
+    var lo=[1800,1200,5000], hi=[2300,4500,8000];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){var i=p.dataIndex;return cats[i]+'<br/>RM'+lo[i].toLocaleString()+' – RM'+hi[i].toLocaleString();}}),
+      grid:{left:8,right:30,top:10,bottom:6,containLabel:true},
+      xAxis:valAxis({max:9000,axisLabel:ax({formatter:function(v){return 'RM'+(v/1000)+'k';}})}),
+      yAxis:catAxis(cats,{inverse:true,axisLabel:ax({fontSize:10})}),
+      series:[
+        {type:'bar',stack:'x',data:lo,itemStyle:{color:'transparent'},silent:true},
+        {type:'bar',stack:'x',data:cats.map(function(_,i){return {value:hi[i]-lo[i],itemStyle:{color:i===2?lg(C.goldHi,C.gold):lg(C.navyMid,C.navy),borderRadius:5}};}),barMaxWidth:20,
+          label:{show:true,position:'right',color:C.navy,fontFamily:FONT,fontSize:9.5,fontWeight:600,formatter:function(p){var i=p.dataIndex;return 'RM'+(lo[i]/1000).toFixed(lo[i]%1000?1:0)+'–'+(hi[i]/1000).toFixed(hi[i]%1000?1:0)+'k';}}}
+      ]
+    });
+  })();
+
+  /* Feasibility · co-host scale economics */
+  (function(){ var c=mk('cKscale'); if(!c) return;
+    var cats=['10','30','50','80','200',L('600 (head)','600（頭部）')];
+    var net=[5,15,25,46,130,420];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{formatter:function(ps){var p=ps[0];return p.axisValue+L(' units','套')+'<br/>'+L('net contrib ~RM','淨貢獻 ~RM')+(p.value*1000).toLocaleString()+'/mo';}}),
+      grid:{left:8,right:18,top:24,bottom:24,containLabel:true},
+      xAxis:catAxis(cats,{name:L('units managed','管理套數'),nameLocation:'middle',nameGap:26,nameTextStyle:{color:C.muted,fontFamily:FONT,fontSize:10},axisLabel:ax({fontSize:9.5})}),
+      yAxis:valAxis({axisLabel:ax({formatter:function(v){return 'RM'+v+'k';}})}),
+      series:[{type:'bar',data:net.map(function(x,i){return {value:x,itemStyle:{color:i<2?lg('#d66b5e','#b91c1c'):(i<3?lg('#d6a25f',C.amber):lg(C.navyMid,C.navy)),borderRadius:[5,5,0,0]}};}),barMaxWidth:34,
+        label:{show:true,position:'top',color:C.navy,fontFamily:FONT,fontSize:9.5,fontWeight:600,formatter:function(p){return 'RM'+p.value+'k';}},
+        markLine:{silent:true,symbol:'none',data:[{yAxis:20}],lineStyle:{color:C.red,width:1.2,type:'dashed'},
+          label:{show:true,position:'insideEndTop',color:C.red,fontFamily:FONT,fontSize:9,formatter:L('~breakeven (team opex)','約損益兩平（團隊開銷）')}}}]
+    });
+  })();
+
+  /* Models · positioning scatter (capital × passivity × KL-fit) */
+  (function(){ var c=mk('cKmodels'); if(!c) return;
+    var hi=C.green, md=C.gold, lo=C.red;
+    var data=[
+      {n:'1 '+L('Co-host','代管'),x:1.8,y:1.6,f:md},
+      {n:'2 '+L('Arbitrage','包租轉租'),x:1.2,y:1.3,f:lo},
+      {n:'3 '+L('Owner-multi','自有多套'),x:4.4,y:3.0,f:lo},
+      {n:'4 '+L('Mid-term','中長住'),x:2.2,y:4.5,f:hi},
+      {n:'5 '+L('Work-ready','work-ready'),x:3.0,y:3.4,f:hi},
+      {n:'6 '+L('Themed','主題精品'),x:3.2,y:2.7,f:hi},
+      {n:'7 '+L('Co-living','共居'),x:4.1,y:3.3,f:md},
+      {n:'8 '+L('Aparthotel','品牌公寓'),x:4.6,y:4.2,f:md},
+      {n:'9 '+L('Development','開發早鳥'),x:4.3,y:1.9,f:lo}
+    ];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){return p.data.n+'<br/>'+L('capital','資本')+' '+p.value[0].toFixed(1)+' · '+L('passivity','被動')+' '+p.value[1].toFixed(1);}}),
+      grid:{left:14,right:18,top:14,bottom:34,containLabel:true},
+      xAxis:Object.assign(valAxis({min:0,max:5.2,axisLabel:ax({show:false})}),{name:L('capital intensity →','資本密度 →'),nameLocation:'middle',nameGap:12,nameTextStyle:{color:C.muted,fontFamily:FONT,fontSize:10},splitLine:{show:false}}),
+      yAxis:Object.assign(valAxis({min:0,max:5,axisLabel:ax({show:false})}),{name:L('passivity →','被動度 →'),nameLocation:'middle',nameGap:6,nameTextStyle:{color:C.muted,fontFamily:FONT,fontSize:10},splitLine:{show:false}}),
+      series:[{type:'scatter',symbolSize:13,labelLayout:{hideOverlap:true},
+        data:data.map(function(d){return {value:[d.x,d.y],n:d.n,
+          itemStyle:{color:d.f,borderColor:'#fff',borderWidth:1.5},
+          label:{show:true,position:d.x>3.5?'left':'right',distance:5,formatter:d.n,color:C.navy,fontFamily:FONT,fontSize:10,fontWeight:600}};})}]
+    });
+  })();
+}
+
+/* ───────── tabs ───────── */
+function showTab(name){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active', t.dataset.tab===name);});
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active', p.id==='panel-'+name);});
+  try{localStorage.setItem('ab_tab',name);}catch(e){}
+  // charts in a just-shown panel were init'd at 0px; resize now that they're visible
+  setTimeout(function(){ allCharts.forEach(function(c){ if(c) c.resize(); }); },0);
+  window.scrollTo({top:0,behavior:'auto'});
+}
+
+/* ───────── language ───────── */
+var curLang = 'en';
+function setLang(lang){
+  curLang = lang;
+  document.body.classList.toggle('zh', lang==='zh');
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  try{localStorage.setItem('lang',lang);}catch(e){}
+  initAllCharts(lang);
+  if(typeof renderCalc==='function') renderCalc();
+}
+
+window.addEventListener('load', function(){
+  document.querySelectorAll('.tab').forEach(function(t){ t.addEventListener('click', function(){ showTab(t.dataset.tab); }); });
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.addEventListener('click', function(){ setLang(b.dataset.lang); }); });
+  var tab='overview'; try{ tab=localStorage.getItem('ab_tab')||'overview'; }catch(e){}
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active', t.dataset.tab===tab);});
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active', p.id==='panel-'+tab);});
+  var lang='en'; try{ lang=localStorage.getItem('lang')||'en'; }catch(e){}
+  setLang(lang);
+  if(typeof initCalc==='function') initCalc();
+});
+window.addEventListener('resize', function(){ allCharts.forEach(function(c){ if(c) c.resize(); }); });
+</script>
+
+</body>
+</html>
