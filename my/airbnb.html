@@ -59,6 +59,10 @@ body.zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif
 .chartbox .csub{font-size:11px;color:var(--muted);margin:0 4px 8px;line-height:1.6}
 .chart{width:100%;height:240px}
 .chart.tall{height:300px}
+.mkey{display:flex;flex-wrap:wrap;gap:6px 13px;margin:8px 6px 2px;font-size:11.5px;color:var(--text-soft)}
+.mkey .mk{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.mkey b{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;flex-shrink:0}
+.mkey b.hi{background:#15803d}.mkey b.md{background:#b8924a}.mkey b.lo{background:#b91c1c}
 .cgrid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:760px){.cgrid2{grid-template-columns:1fr}}
 
@@ -843,6 +847,17 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
       <h3><span class="lang-en">Where each model sits — capital × passivity × KL-fit</span><span class="lang-zh" style="display:none">九模式定位 — 資本 × 被動度 × KL 適配</span></h3>
       <div class="csub"><span class="lang-en">Green = high KL fit, amber = medium, red = low. The sweet spot for a remote owner is upper-left: low capital, high passivity, high fit.</span><span class="lang-zh" style="display:none">綠＝KL 適配高，黃＝中，紅＝低。遠端業主的甜蜜點在左上：低資本、高被動、高適配。</span></div>
       <div class="chart tall" id="cKmodels"></div>
+      <div class="mkey">
+        <span class="mk"><b class="md">1</b><span class="lang-en">Co-host</span><span class="lang-zh" style="display:none">代管</span></span>
+        <span class="mk"><b class="lo">2</b><span class="lang-en">Arbitrage</span><span class="lang-zh" style="display:none">包租轉租</span></span>
+        <span class="mk"><b class="lo">3</b><span class="lang-en">Owner-multi</span><span class="lang-zh" style="display:none">自有多套</span></span>
+        <span class="mk"><b class="hi">4</b><span class="lang-en">Mid-term</span><span class="lang-zh" style="display:none">中長住</span></span>
+        <span class="mk"><b class="hi">5</b><span class="lang-en">Work-ready</span><span class="lang-zh" style="display:none">work-ready</span></span>
+        <span class="mk"><b class="hi">6</b><span class="lang-en">Themed</span><span class="lang-zh" style="display:none">主題精品</span></span>
+        <span class="mk"><b class="md">7</b><span class="lang-en">Co-living</span><span class="lang-zh" style="display:none">共居</span></span>
+        <span class="mk"><b class="md">8</b><span class="lang-en">Aparthotel</span><span class="lang-zh" style="display:none">品牌公寓</span></span>
+        <span class="mk"><b class="lo">9</b><span class="lang-en">Development</span><span class="lang-zh" style="display:none">開發早鳥</span></span>
+      </div>
     </div>
 
     <div class="sec-rule"><h2>§2 · <span class="lang-en">The direction KL should pursue (high-fit)</span><span class="lang-zh" style="display:none">KL 最該走的方向（高適配）</span></h2></div>
@@ -1229,29 +1244,29 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Models · positioning scatter (capital × passivity × KL-fit) */
+  /* Models · positioning scatter (capital × passivity × KL-fit) — numbered dots, key sits below in HTML */
   (function(){ var c=mk('cKmodels'); if(!c) return;
     var hi=C.green, md=C.gold, lo=C.red;
-    var data=[
-      {n:'1 '+L('Co-host','代管'),x:1.8,y:1.6,f:md},
-      {n:'2 '+L('Arbitrage','包租轉租'),x:1.2,y:1.3,f:lo},
-      {n:'3 '+L('Owner-multi','自有多套'),x:4.4,y:3.0,f:lo},
-      {n:'4 '+L('Mid-term','中長住'),x:2.2,y:4.5,f:hi},
-      {n:'5 '+L('Work-ready','work-ready'),x:3.0,y:3.4,f:hi},
-      {n:'6 '+L('Themed','主題精品'),x:3.2,y:2.7,f:hi},
-      {n:'7 '+L('Co-living','共居'),x:4.1,y:3.3,f:md},
-      {n:'8 '+L('Aparthotel','品牌公寓'),x:4.6,y:4.2,f:md},
-      {n:'9 '+L('Development','開發早鳥'),x:4.3,y:1.9,f:lo}
+    var pts=[
+      {i:1,n:L('Co-host','代管'),x:1.7,y:1.7,f:md},
+      {i:2,n:L('Arbitrage','包租轉租'),x:1.0,y:0.9,f:lo},
+      {i:3,n:L('Owner-multi','自有多套'),x:4.5,y:2.7,f:lo},
+      {i:4,n:L('Mid-term','中長住'),x:2.0,y:4.5,f:hi},
+      {i:5,n:L('Work-ready','work-ready'),x:2.9,y:3.6,f:hi},
+      {i:6,n:L('Themed','主題精品'),x:3.3,y:2.6,f:hi},
+      {i:7,n:L('Co-living','共居'),x:4.0,y:3.7,f:md},
+      {i:8,n:L('Aparthotel','品牌公寓'),x:4.8,y:4.5,f:md},
+      {i:9,n:L('Development','開發早鳥'),x:4.4,y:1.6,f:lo}
     ];
     c.setOption({
-      tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){return p.data.n+'<br/>'+L('capital','資本')+' '+p.value[0].toFixed(1)+' · '+L('passivity','被動')+' '+p.value[1].toFixed(1);}}),
-      grid:{left:14,right:18,top:14,bottom:34,containLabel:true},
+      tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){return p.data.nm+'<br/>'+L('capital','資本')+' '+p.value[0].toFixed(1)+' · '+L('passivity','被動')+' '+p.value[1].toFixed(1);}}),
+      grid:{left:18,right:20,top:16,bottom:30,containLabel:true},
       xAxis:Object.assign(valAxis({min:0,max:5.2,axisLabel:ax({show:false})}),{name:L('capital intensity →','資本密度 →'),nameLocation:'middle',nameGap:12,nameTextStyle:{color:C.muted,fontFamily:FONT,fontSize:10},splitLine:{show:false}}),
       yAxis:Object.assign(valAxis({min:0,max:5,axisLabel:ax({show:false})}),{name:L('passivity →','被動度 →'),nameLocation:'middle',nameGap:6,nameTextStyle:{color:C.muted,fontFamily:FONT,fontSize:10},splitLine:{show:false}}),
-      series:[{type:'scatter',symbolSize:13,labelLayout:{hideOverlap:true},
-        data:data.map(function(d){return {value:[d.x,d.y],n:d.n,
+      series:[{type:'scatter',symbolSize:23,
+        data:pts.map(function(d){return {value:[d.x,d.y],nm:d.i+' '+d.n,
           itemStyle:{color:d.f,borderColor:'#fff',borderWidth:1.5},
-          label:{show:true,position:d.x>3.5?'left':'right',distance:5,formatter:d.n,color:C.navy,fontFamily:FONT,fontSize:10,fontWeight:600}};})}]
+          label:{show:true,position:'inside',formatter:''+d.i,color:'#fff',fontFamily:FONT,fontSize:11,fontWeight:700}};})}]
     });
   })();
 }
