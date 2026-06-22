@@ -89,6 +89,15 @@ body.zh .hd label{text-transform:none;letter-spacing:0}
 .impress .sec-h .n{background:linear-gradient(135deg,var(--gold),var(--gold-deep))}
 .impress .ta{min-height:88px;background:#fff;border-color:var(--gold-light);font-size:15px}
 
+.autoscore{display:flex;align-items:center;gap:16px;background:radial-gradient(ellipse 60% 80% at 100% 0%,rgba(184,146,74,.18),transparent 60%),linear-gradient(135deg,var(--navy-deep),var(--navy-mid));color:#fff;border-radius:12px;padding:13px 18px;margin-bottom:12px}
+.autoscore .as-num{font-family:'IBM Plex Mono',monospace;font-weight:700;line-height:1;color:var(--gold-light);white-space:nowrap}
+.autoscore .as-num span:first-child{font-size:38px}
+.autoscore .as-max{font-size:15px!important;color:#c9b896;margin-left:2px}
+.autoscore .as-lbl{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--gold-light);text-transform:uppercase}
+body.zh .autoscore .as-lbl{text-transform:none;letter-spacing:0}
+.autoscore .as-sub{font-size:11.5px;color:#9fb0c8;margin-top:3px}
+.autoscore .as-gate{font-size:11.5px;margin-top:5px;font-weight:600;line-height:1.4}
+.autoscore .as-gate.ok{color:#86efac}.autoscore .as-gate.warn{color:#fca5a5}
 .scorebox{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
 .scorebox .sb{flex:1 1 200px}
 .rate-wrap{display:flex;align-items:center;gap:12px}
@@ -197,9 +206,17 @@ body.zh .hd label{text-transform:none;letter-spacing:0}
   <!-- score + verdict -->
   <div class="sec">
     <div class="sec-h"><span class="n">E</span><span class="lang-en">Overall</span><span class="lang-zh">總評</span></div>
+    <div class="autoscore">
+      <div class="as-num"><span id="asNum">–</span><span class="as-max">/10</span></div>
+      <div class="as-meta">
+        <div class="as-lbl"><span class="lang-en">Auto base score</span><span class="lang-zh">基本分（依點選自動）</span></div>
+        <div class="as-sub" id="asSub"><span class="lang-en">tap to start</span><span class="lang-zh">填越多越準</span></div>
+        <div class="as-gate" id="asGate"></div>
+      </div>
+    </div>
     <div class="scorebox">
       <div class="sb">
-        <label class="lab first"><span class="lang-en">Rating</span><span class="lang-zh">評分</span></label>
+        <label class="lab first"><span class="lang-en">Final rating (auto-filled, adjustable)</span><span class="lang-zh">最終評分（自動帶基本分，可微調）</span></label>
         <div class="rate-wrap"><input id="f_rating" type="range" min="0" max="10" step="0.5" value="0"><span class="rate-out" id="rateOut">– / 10</span></div>
       </div>
       <div class="sb">
@@ -228,6 +245,7 @@ body.zh .hd label{text-transform:none;letter-spacing:0}
 (function(){
   var ST = (typeof window.__VIEWING_STATE__ === 'object') ? window.__VIEWING_STATE__ : null;
   var EXPORTED = !!ST;
+  var ratingManual = false;
   function qp(k){ try{ return new URLSearchParams(location.search).get(k); }catch(e){ return null; } }
 
   /* option sets: [value, tone(g/y/r), zh, en] */
@@ -306,17 +324,19 @@ body.zh .hd label{text-transform:none;letter-spacing:0}
     textEls().forEach(function(el){ if(el.id) o[el.id]=el.value; });
     var v=document.querySelector('input[name=verdict]:checked'); o._verdict = v?v.value:'';
     document.querySelectorAll('.chips[data-grp]').forEach(function(g){ var s=g.querySelector('.chip.sel'); o['c_'+g.dataset.grp]= s?s.dataset.v:''; });
+    o._ratingManual = ratingManual;
     return o;
   }
   function applyState(o){
     if(!o) return;
+    ratingManual = !!o._ratingManual;
     textEls().forEach(function(el){ if(el.id && o[el.id]!==undefined) el.value=o[el.id]; });
     if(o._verdict){ var v=document.querySelector('input[name=verdict][value="'+o._verdict+'"]'); if(v) v.checked=true; }
     document.querySelectorAll('.chips[data-grp]').forEach(function(g){
       var want=o['c_'+g.dataset.grp];
       g.querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('sel', !!want && c.dataset.v===want); });
     });
-    refreshRate();
+    refreshRate(); refreshScore();
   }
 
   /* ---- persistence ---- */
@@ -325,6 +345,28 @@ body.zh .hd label{text-transform:none;letter-spacing:0}
   function save(){ if(EXPORTED) return; storeKey=keyFor(); clearTimeout(saveTimer); saveTimer=setTimeout(function(){ try{ localStorage.setItem(storeKey, JSON.stringify(collect())); var n=document.getElementById('saveNote'); n.textContent=document.body.classList.contains('zh')?'已自動暫存 ✓':'Auto-saved ✓'; n.classList.add('on'); }catch(e){} },350); }
 
   function refreshRate(){ var r=document.getElementById('f_rating'),o=document.getElementById('rateOut'); o.textContent=(parseFloat(r.value)>0?r.value:'–')+' / 10'; }
+
+  /* auto base score from the visible mode's tap ratings (good=10, ok=6, poor=2) */
+  function computeScore(){
+    var off=document.body.classList.contains('mode-offplan');
+    var jbox=off?'#judge-o':'#judge-c', gbox=off?'#gate-o':'#gate-c';
+    var pts={g:10,y:6,r:2}, sum=0,n=0,tot=0;
+    document.querySelectorAll(jbox+' .chips[data-grp]').forEach(function(g){ tot++; var s=g.querySelector('.chip.sel'); if(s){ var t=s.classList.contains('g')?'g':s.classList.contains('r')?'r':'y'; sum+=pts[t]; n++; } });
+    var gr=0,ga=0,gt=0;
+    document.querySelectorAll(gbox+' .chips[data-grp]').forEach(function(g){ gt++; var s=g.querySelector('.chip.sel'); if(s){ ga++; if(s.classList.contains('r')) gr++; } });
+    return {base:n?sum/n:null,n:n,tot:tot,gr:gr,ga:ga,gt:gt};
+  }
+  function refreshScore(){
+    var r=computeScore(), zh=document.body.classList.contains('zh');
+    var num=document.getElementById('asNum'), sub=document.getElementById('asSub'), gate=document.getElementById('asGate');
+    if(!num) return;
+    num.textContent = r.base!=null ? r.base.toFixed(1) : '–';
+    sub.textContent = r.n===0 ? (zh?'填越多越準':'tap to start') : (zh?('已填 '+r.n+'/'+r.tot+' 項'):('filled '+r.n+'/'+r.tot));
+    if(r.gr>0){ gate.className='as-gate warn'; gate.textContent = zh?('⚠ '+r.gr+' 項必確認亮紅燈'):('⚠ '+r.gr+' red must-confirm'); }
+    else if(r.gt>0 && r.ga===r.gt){ gate.className='as-gate ok'; gate.textContent = zh?'✓ 必確認皆過':'✓ must-confirm all clear'; }
+    else { gate.className='as-gate'; gate.textContent=''; }
+    if(!ratingManual && r.base!=null){ var sl=document.getElementById('f_rating'); sl.value=(Math.round(r.base*2)/2); refreshRate(); }
+  }
 
   /* ---- mode + lang ---- */
   function setMode(m){ document.body.classList.toggle('mode-offplan', m==='offplan'); document.body.classList.toggle('mode-completed', m!=='offplan'); document.querySelectorAll('#modetog button').forEach(function(b){ b.classList.toggle('on', b.dataset.mode===m); }); }
@@ -347,9 +389,9 @@ body.zh .hd label{text-transform:none;letter-spacing:0}
   /* ---- events (delegated) ---- */
   document.addEventListener('click', function(e){
     var chip=e.target.closest('.chip');
-    if(chip){ var grp=chip.closest('.chips'); grp.querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('sel', c===chip); }); save(); return; }
-    var mb=e.target.closest('#modetog button'); if(mb){ setMode(mb.dataset.mode); save(); return; }
-    var lb=e.target.closest('.lang-btn'); if(lb){ setLang(lb.dataset.lang); return; }
+    if(chip){ var grp=chip.closest('.chips'); grp.querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('sel', c===chip); }); refreshScore(); save(); return; }
+    var mb=e.target.closest('#modetog button'); if(mb){ setMode(mb.dataset.mode); refreshScore(); save(); return; }
+    var lb=e.target.closest('.lang-btn'); if(lb){ setLang(lb.dataset.lang); refreshScore(); return; }
   });
   document.getElementById('btnExport').addEventListener('click', exportHTML);
   document.getElementById('btnPrint').addEventListener('click', function(){ window.print(); });
@@ -360,9 +402,9 @@ body.zh .hd label{text-transform:none;letter-spacing:0}
     document.querySelectorAll('.chip.sel').forEach(function(c){ c.classList.remove('sel'); });
     var v=document.querySelector('input[name=verdict]:checked'); if(v) v.checked=false;
     if(storeKey){ try{ localStorage.removeItem(storeKey); }catch(e){} }
-    refreshRate();
+    ratingManual=false; refreshRate(); refreshScore();
   });
-  document.addEventListener('input', function(e){ if(e.target.id==='f_rating') refreshRate(); save(); });
+  document.addEventListener('input', function(e){ if(e.target.id==='f_rating'){ ratingManual=true; refreshRate(); } save(); });
 
   /* ---- init ---- */
   render();
@@ -378,6 +420,7 @@ body.zh .hd label{text-transform:none;letter-spacing:0}
     var df=document.getElementById('f_date'); if(!df.value){ var d=new Date(); df.value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
     refreshRate();
   }
+  refreshScore();
 })();
 </script>
 </body>
