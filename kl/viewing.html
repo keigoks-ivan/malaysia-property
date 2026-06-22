@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viewing Checklist · 看房紀錄 | KL Property Check</title>
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f3ea;--bg-soft:#fbf8f1;--card:#fff;--text:#0c1521;--text-soft:#2a3a52;--muted:#6b7a92;--border:#e5dfd0;--border-soft:#efe9da;--navy:#0d2244;--navy-mid:#173564;--navy-deep:#081832;--gold:#b8924a;--gold-deep:#8f6d2c;--gold-light:#d4b576;--gold-bg:#fbf3df;--green:#15803d;--green-bg:#eafaef;--amber:#a16207;--red:#b91c1c;--red-bg:#fbeceb;--shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);--shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:'Inter','Noto Sans TC',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(184,146,74,.10),transparent 60%),radial-gradient(ellipse 60% 40% at 100% 100%,rgba(13,34,68,.04),transparent 60%);background-attachment:fixed;padding-bottom:74px}
+body.zh{font-family:'Noto Sans TC','PingFang TC',sans-serif}
+.lang-zh{display:none}
+body.zh .lang-en{display:none}
+body.zh .lang-zh{display:inline}
+body.mode-completed .only-offplan{display:none}
+body.mode-offplan .only-completed{display:none}
+
+.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:900px;margin:0 auto;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy),var(--navy-mid));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18)}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:14px;font-weight:700;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-btns{display:inline-flex;background:var(--bg-soft);border:1px solid var(--border);border-radius:999px;padding:3px}
+.lang-btn{padding:5px 11px;border:none;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--muted);font-family:inherit;letter-spacing:.03em}
+.lang-btn.active{background:var(--navy);color:#fff;box-shadow:0 1px 4px rgba(13,34,68,.18)}
+
+.wrap{max-width:900px;margin:0 auto;padding:20px 16px}
+
+.hd{background:radial-gradient(ellipse 60% 80% at 100% 0%,rgba(184,146,74,.16),transparent 60%),linear-gradient(180deg,var(--navy-deep),var(--navy) 75%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:16px;padding:16px 18px;margin-bottom:16px;box-shadow:var(--shadow-md)}
+.hd .k{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-light);margin-bottom:9px}
+.modetog{display:inline-flex;background:rgba(255,255,255,.07);border:1px solid rgba(212,181,118,.3);border-radius:999px;padding:3px;margin-bottom:11px}
+.modetog button{font-family:inherit;font-size:12px;font-weight:700;padding:6px 16px;border:none;border-radius:999px;color:#c9b896;background:transparent;cursor:pointer;display:flex;gap:5px}
+.modetog button.on{background:var(--gold);color:var(--navy-deep)}
+.htop{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.htop .hb{flex:1 1 220px;min-width:0}.htop .hd2{flex:0 0 auto}
+.hd label{display:block;font-size:10px;font-weight:600;letter-spacing:.04em;color:#c9b896;margin-bottom:4px;text-transform:uppercase}
+body.zh .hd label{text-transform:none;letter-spacing:0}
+.hd input{width:100%;font-family:inherit;background:rgba(255,255,255,.06);border:1px solid rgba(212,181,118,.3);border-radius:8px;color:#fff;padding:9px 11px;font-size:16px}
+.hd input:focus{outline:none;border-color:var(--gold-light);background:rgba(255,255,255,.1)}
+.hd .pname{font-family:'Noto Serif TC','Playfair Display',serif;font-size:21px;font-weight:700;color:#f7eed3;background:transparent;border:none;border-bottom:1px solid rgba(212,181,118,.3);border-radius:0;padding:4px 2px}
+.hd .hint{font-size:11px;color:#9fb0c8;margin-top:10px;line-height:1.6}
+
+.sec{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:13px 15px;margin-bottom:12px;box-shadow:var(--shadow-sm)}
+.sec-h{font-family:'Playfair Display','Noto Serif TC',serif;font-size:15px;font-weight:700;color:var(--navy);margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.sec-h .n{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--navy),var(--navy-mid));width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center}
+
+.must{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.must .fld{background:var(--bg-soft);border:1px solid var(--border);border-radius:9px;padding:6px 9px}
+.must .fld.s2{grid-column:span 2}.must .fld.s3{grid-column:span 3}
+.must .l{font-size:9.5px;color:var(--muted);font-weight:600;margin-bottom:2px}
+.must input{width:100%;border:none;background:transparent;font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;color:var(--navy);padding:1px 0}
+.must input:focus{outline:none}
+@media(max-width:520px){.must{grid-template-columns:1fr 1fr}}
+
+.subl{font-size:9.5px;font-weight:700;letter-spacing:.09em;color:var(--gold-deep);text-transform:uppercase;margin:11px 0 3px;padding-top:8px;border-top:1px dashed var(--border)}
+.subl.first{margin-top:0;padding-top:0;border-top:none}
+.jrow{display:flex;align-items:center;gap:9px;margin:5px 0;flex-wrap:wrap}
+.jrow .jl{flex:1 1 130px;font-size:12.5px;font-weight:600;color:var(--text-soft)}
+.chips{display:flex;gap:5px;flex:0 0 auto}
+.chip{min-width:32px;height:30px;padding:0 9px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);background:var(--bg-soft);font-size:12.5px;font-weight:700;color:#abb6c4;cursor:pointer;font-family:inherit;transition:all .12s}
+.chip:hover{border-color:var(--gold-light)}
+.chip.sel.g{background:var(--green-bg);border-color:#86efac;color:var(--green)}
+.chip.sel.y{background:var(--gold-bg);border-color:var(--gold-light);color:var(--gold-deep)}
+.chip.sel.r{background:var(--red-bg);border-color:#fca5a5;color:var(--red)}
+
+.gate{background:var(--gold-bg);border:1px solid var(--gold-light)}
+.gate .gh{font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--gold-deep);margin-bottom:6px}
+.gate .jrow{border-bottom:1px solid rgba(184,146,74,.15);padding-bottom:6px}
+.gate .jrow:last-child{border-bottom:none}
+
+.ta{width:100%;font-family:inherit;font-size:15px;color:var(--text);background:var(--bg-soft);border:1px solid var(--border);border-radius:9px;padding:9px 11px;min-height:54px;resize:vertical;line-height:1.6}
+.ta:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,146,74,.12)}
+.lab{font-size:12px;font-weight:600;color:var(--text-soft);margin:9px 0 4px;display:block}
+.lab.first{margin-top:0}
+.flag .ta{border-left:3px solid var(--red)}
+
+.impress{background:linear-gradient(180deg,#fffdf7,var(--gold-bg));border:1px solid var(--gold-light)}
+.impress .sec-h .n{background:linear-gradient(135deg,var(--gold),var(--gold-deep))}
+.impress .ta{min-height:88px;background:#fff;border-color:var(--gold-light);font-size:15px}
+
+.scorebox{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.scorebox .sb{flex:1 1 200px}
+.rate-wrap{display:flex;align-items:center;gap:12px}
+.rate-wrap input[type=range]{flex:1;accent-color:var(--gold);height:26px}
+.rate-out{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:18px;color:var(--navy);min-width:58px;text-align:right}
+.verdict{display:flex;gap:7px;flex-wrap:wrap}
+.verdict label{flex:1 1 90px;display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;font-size:13px;font-weight:700;color:var(--text-soft);background:var(--bg-soft)}
+.verdict input{accent-color:var(--gold);width:16px;height:16px}
+.verdict label.go:has(input:checked){border-color:var(--green);background:var(--green-bg);color:var(--green)}
+.verdict label.maybe:has(input:checked){border-color:var(--gold);background:var(--gold-bg);color:var(--gold-deep)}
+.verdict label.pass:has(input:checked){border-color:var(--red);background:var(--red-bg);color:var(--red)}
+
+.toolbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--border);box-shadow:0 -4px 16px rgba(13,34,68,.07)}
+.toolbar-inner{max-width:900px;margin:0 auto;padding:10px 16px;display:flex;gap:9px;align-items:center}
+.tbtn{font-family:inherit;font-size:13px;font-weight:600;border-radius:10px;padding:10px 14px;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text-soft);white-space:nowrap}
+.tbtn:hover{border-color:var(--gold);color:var(--gold-deep)}
+.tbtn.primary{background:linear-gradient(135deg,var(--navy),var(--navy-mid));color:#fff;border-color:var(--navy);flex:1;box-shadow:0 2px 8px rgba(13,34,68,.2)}
+.tbtn.primary:hover{color:var(--gold-light)}
+.tbtn.ghost{color:var(--muted)}
+.savenote{font-size:11px;color:var(--muted);margin-left:auto;white-space:nowrap}
+.savenote.on{color:var(--green)}
+.foot{text-align:center;font-size:11px;color:var(--muted);line-height:1.7;padding:6px 4px 0}
+
+@media(max-width:680px){.savenote{display:none}.toolbar-inner{padding:9px 12px;gap:7px}.tbtn{padding:11px 10px;font-size:12.5px}}
+@media print{body{background:#fff;padding:0}.nav,.toolbar,.lang-btns,.back-link,.hd .hint,.modetog button:not(.on){display:none!important}.hd{background:var(--navy);border-radius:0;box-shadow:none}.sec{box-shadow:none;break-inside:avoid;border-color:#ccc}.chip:not(.sel){opacity:.35}}
+</style>
+</head>
+<body class="mode-completed">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/kl-check">
+      <span class="brand-mark">K</span>
+      <span class="brand-text"><span class="brand">KL Property Check</span><span class="brand-by">by InvestMQuest</span></span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/kl-check">← <span class="lang-en">Scorecards</span><span class="lang-zh">評分卡</span></a>
+      <div class="lang-btns"><button class="lang-btn active" data-lang="en">EN</button><button class="lang-btn" data-lang="zh">中文</button></div>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="hd">
+    <div class="k"><span class="lang-en">On-site Viewing Checklist</span><span class="lang-zh">現場看房紀錄表</span></div>
+    <div class="modetog" id="modetog">
+      <button data-mode="completed" class="on"><span class="lang-en">Completed</span><span class="lang-zh">成屋</span></button>
+      <button data-mode="offplan"><span class="lang-en">Off-plan</span><span class="lang-zh">預售屋</span></button>
+    </div>
+    <div class="htop">
+      <div class="hb">
+        <label><span class="lang-en">Project / Building</span><span class="lang-zh">建案／樓盤</span></label>
+        <input class="pname" id="f_building" type="text" placeholder="e.g. Sunway Velocity 3">
+      </div>
+      <div class="hd2">
+        <label><span class="lang-en">Date</span><span class="lang-zh">看房日期</span></label>
+        <input id="f_date" type="date" style="font-size:15px">
+      </div>
+    </div>
+    <p class="hint"><span class="lang-en">Tap to rate, fill what matters — auto-saved in this browser. Tap <b>Export HTML</b> for a filled copy to keep.</span><span class="lang-zh">點選評分、填關鍵欄位——自動暫存在本機。按 <b>匯出 HTML</b> 下載填好的副本留存。</span></p>
+  </div>
+
+  <!-- basics (shared) -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">A</span><span class="lang-en">Basics</span><span class="lang-zh">基本資料</span></div>
+    <div class="must" id="must-common"></div>
+    <div class="must only-completed" id="must-c" style="margin-top:8px"></div>
+    <div class="must only-offplan" id="must-o" style="margin-top:8px"></div>
+  </div>
+
+  <!-- judge (mode-specific) -->
+  <div class="sec only-completed">
+    <div class="sec-h"><span class="n">B</span><span class="lang-en">Quick read — tap each</span><span class="lang-zh">一眼判斷（點選）</span></div>
+    <div id="judge-c"></div>
+  </div>
+  <div class="sec only-offplan">
+    <div class="sec-h"><span class="n">B</span><span class="lang-en">Quick read — show gallery</span><span class="lang-zh">一眼判斷（示範中心）</span></div>
+    <div id="judge-o"></div>
+  </div>
+
+  <!-- gate (mode-specific) -->
+  <div class="sec gate only-completed">
+    <div class="gh">⚠ <span class="lang-en">Must confirm</span><span class="lang-zh">必確認</span></div>
+    <div id="gate-c"></div>
+  </div>
+  <div class="sec gate only-offplan">
+    <div class="gh">⚠ <span class="lang-en">Off-plan must-confirm (any 🔴 = caution)</span><span class="lang-zh">預售屋必確認（任何 🔴 = 慎重）</span></div>
+    <div id="gate-o"></div>
+  </div>
+
+  <!-- flags + notes -->
+  <div class="sec flag">
+    <div class="sec-h"><span class="n">C</span>🚩 <span class="lang-en">Red flags / to confirm</span><span class="lang-zh">紅旗／待確認</span></div>
+    <textarea class="ta" id="f_redflag"></textarea>
+    <label class="lab"><span class="lang-en">Notes</span><span class="lang-zh">備註</span></label>
+    <textarea class="ta" id="f_note"></textarea>
+  </div>
+
+  <!-- impressions (the personal reflection) -->
+  <div class="sec impress">
+    <div class="sec-h"><span class="n">D</span>💭 <span class="lang-en">My impressions after viewing</span><span class="lang-zh">看完感想</span></div>
+    <textarea class="ta" id="f_impression" placeholder=""></textarea>
+  </div>
+
+  <!-- score + verdict -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">E</span><span class="lang-en">Overall</span><span class="lang-zh">總評</span></div>
+    <div class="scorebox">
+      <div class="sb">
+        <label class="lab first"><span class="lang-en">Rating</span><span class="lang-zh">評分</span></label>
+        <div class="rate-wrap"><input id="f_rating" type="range" min="0" max="10" step="0.5" value="0"><span class="rate-out" id="rateOut">– / 10</span></div>
+      </div>
+      <div class="sb">
+        <label class="lab first"><span class="lang-en">Verdict</span><span class="lang-zh">結論</span></label>
+        <div class="verdict">
+          <label class="go"><input type="radio" name="verdict" value="go"><span class="only-completed"><span class="lang-en">Pursue</span><span class="lang-zh">進場</span></span><span class="only-offplan"><span class="lang-en">Reserve</span><span class="lang-zh">落訂</span></span></label>
+          <label class="maybe"><input type="radio" name="verdict" value="maybe"><span class="lang-en">Revisit</span><span class="lang-zh">再看</span></label>
+          <label class="pass"><input type="radio" name="verdict" value="pass"><span class="lang-en">Pass</span><span class="lang-zh">放棄</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="foot"><span class="lang-en">Personal viewing notes — not professional advice. Verify title, MC by-laws, SPA terms, charges and defects independently before acting.</span><span class="lang-zh">個人看房紀錄，非專業建議。地契、MC 細則、SPA 條款、管理費與瑕疵請自行查證後再行動。</span></p>
+</div>
+
+<div class="toolbar"><div class="toolbar-inner">
+  <button class="tbtn ghost" id="btnClear"><span class="lang-en">Clear</span><span class="lang-zh">清除</span></button>
+  <button class="tbtn" id="btnPrint"><span class="lang-en">Print</span><span class="lang-zh">列印</span></button>
+  <button class="tbtn primary" id="btnExport">📋 <span class="lang-en">Export HTML</span><span class="lang-zh">匯出 HTML</span></button>
+  <span class="savenote" id="saveNote"></span>
+</div></div>
+
+<!--VIEWING_STATE_SLOT-->
+<script>
+(function(){
+  var ST = (typeof window.__VIEWING_STATE__ === 'object') ? window.__VIEWING_STATE__ : null;
+  var EXPORTED = !!ST;
+  function qp(k){ try{ return new URLSearchParams(location.search).get(k); }catch(e){ return null; } }
+
+  /* option sets: [value, tone(g/y/r), zh, en] */
+  var GBP=[['good','g','好','Good'],['ok','y','中','OK'],['poor','r','差','Poor']];
+  var NLH=[['none','g','無','None'],['minor','y','輕','Minor'],['serious','r','重','Heavy']];
+  var SML=[['small','g','小','Sm'],['med','y','中','Med'],['large','r','大','Lg']];
+  var YNQ=[['yes','g','是','Yes'],['unsure','y','待查','?'],['no','r','否','No']];
+  var TITLE=[['comm','g','商業','Comm'],['mixed','y','混合','Mixed'],['resi','r','住宅','Resi']];
+  var CLEAN=[['clean','g','無','Clean'],['check','y','待查','Check'],['issue','r','有','Issue']];
+  var LMH=[['low','g','少','Low'],['mid','y','中','Mid'],['high','r','多','High']];
+  var IM=[['indiv','g','indiv','Indiv'],['master','r','master','Master']];
+  var HDA=[['hda','g','有 HDA','HDA'],['none','r','無·商業','None·comm']];
+  var PAY=[['1090','g','10:90','10:90'],['prog','y','漸進','Prog'],['dibs','y','DIBS','DIBS']];
+  var PARK=[['incl','g','含','Incl'],['sep','r','另計','Sep']];
+  var FEE=[['low','g','低','Low'],['mid','y','中','Mid'],['high','r','高','High']];
+
+  function chipRow(id,zh,en,opts){
+    var b=opts.map(function(o){return '<button type="button" class="chip '+o[1]+'" data-v="'+o[0]+'"><span class="lang-zh">'+o[2]+'</span><span class="lang-en">'+o[3]+'</span></button>';}).join('');
+    return '<div class="jrow"><span class="jl"><span class="lang-zh">'+zh+'</span><span class="lang-en">'+en+'</span></span><div class="chips" data-grp="'+id+'">'+b+'</div></div>';
+  }
+  function sub(zh,en,first){return '<div class="subl'+(first?' first':'')+'"><span class="lang-zh">'+zh+'</span><span class="lang-en">'+en+'</span></div>';}
+  function fld(id,zh,en,span){return '<div class="fld'+(span?' s'+span:'')+'"><div class="l"><span class="lang-zh">'+zh+'</span><span class="lang-en">'+en+'</span></div><input id="'+id+'" type="text"></div>';}
+
+  function render(){
+    document.getElementById('must-common').innerHTML =
+      fld('f_unit','單位編號','Unit no.')+fld('f_price','開價 RM','Asking RM')+fld('f_psf','psf','psf')+
+      fld('f_size','面積 sqft','Size sqft')+fld('f_layout','格局','Layout',2);
+    document.getElementById('must-c').innerHTML =
+      fld('f_age','屋齡/交屋年','Age / VP yr')+fld('f_sc','管理費 psf','Svc charge psf')+fld('f_facing','朝向','Facing');
+    document.getElementById('must-o').innerHTML =
+      fld('f_vp','預計交屋 VP','Est. VP')+fld('f_takeup','銷售率','Take-up')+fld('f_payt','付款方案','Payment');
+
+    document.getElementById('judge-c').innerHTML =
+      sub('地段環境','Location & surroundings',1)+
+      chipRow('loc_amenity','地段機能','Location & amenities',GBP)+chipRow('loc_transit','交通／步行','Transit & walk',GBP)+
+      chipRow('loc_noise','噪音／環境','Noise & surroundings',GBP)+chipRow('loc_safety','治安觀感','Safety feel',GBP)+
+      sub('單位狀況','Unit condition')+
+      chipRow('u_light','採光／通風','Light & ventilation',GBP)+chipRow('u_view','景觀','View',GBP)+
+      chipRow('u_damp','漏水／壁癌','Leaks & damp',NLH)+chipRow('u_kbw','廚衛／窗／隔音','Kitchen·bath·windows',GBP)+
+      chipRow('u_water','水壓／訊號','Water & signal',GBP)+chipRow('u_layout','格局實用／公設比','Layout efficiency',GBP)+
+      sub('建築 · 管理 · 價格','Building · mgmt · price')+
+      chipRow('b_lobby','大廳／外觀／公設','Lobby & facilities',GBP)+chipRow('b_mgmt','管理品質／門禁','Mgmt & access',GBP)+
+      chipRow('b_park','停車','Parking',GBP)+chipRow('p_price','價格 vs 成交','Price vs comps',GBP)+chipRow('p_str','短租可行','STR viable',GBP);
+    document.getElementById('gate-c').innerHTML =
+      chipRow('g_mcstr','MC 允許短租？','MC allows STR?',YNQ)+chipRow('g_title','地契類型','Title type',TITLE)+
+      chipRow('g_arrears','欠費／sinking fund','Arrears / sinking',CLEAN)+chipRow('g_supply','同棟在售／出租量','Units competing',LMH)+
+      chipRow('g_warranty','瑕疵保固','Defect warranty',YNQ);
+
+    document.getElementById('judge-o').innerHTML =
+      sub('開發商','Developer',1)+
+      chipRow('d_strength','開發商財力／實力','Developer strength',GBP)+chipRow('d_track','交屋準時紀錄','On-time delivery record',GBP)+
+      chipRow('d_quality','品質／口碑','Build quality & rep',GBP)+chipRow('d_past','同區既往案','Past projects nearby',GBP)+
+      sub('進度 · 規格','Progress · spec')+
+      chipRow('s_progress','工程進度／動工','Construction progress',GBP)+chipRow('s_showgap','示範屋 vs 交屋落差','Show-unit gap',SML)+
+      chipRow('s_spec','建材 spec／品牌','Materials spec',GBP)+chipRow('s_ceiling','天花高度','Ceiling height',GBP)+
+      chipRow('s_layout','平面圖／實用率','Floor plan efficiency',GBP)+chipRow('s_facility','公設規劃','Facilities plan',GBP)+
+      chipRow('s_density','棟距／單位密度','Density',GBP)+
+      sub('價格 · 短租','Price · STR')+
+      chipRow('op_new','起價 vs 周邊新案','Launch vs new',GBP)+chipRow('op_resale','起價 vs 周邊成交','Launch vs resale',GBP)+
+      chipRow('op_rebate','rebate／折扣力度','Rebate & discount',GBP)+chipRow('op_str','短租定位／yield','STR & yield',GBP);
+    document.getElementById('gate-o').innerHTML =
+      chipRow('og_title','地契 individual / master','Individual / master title',IM)+chipRow('og_hda','HDA 保護（住）／無（商）','HDA protection',HDA)+
+      chipRow('og_lad','SPA 有 LAD 遲交賠償？','LAD clause in SPA?',YNQ)+chipRow('og_pay','付款 10:90／漸進／DIBS','Payment scheme',PAY)+
+      chipRow('og_rebate','rebate／家具 含？','Rebate / furnishing incl?',YNQ)+chipRow('og_park','車位 另計？','Parking separate?',PARK)+
+      chipRow('og_abandon','開發商爛尾／遲交史？','Abandonment / delay history?',CLEAN)+chipRow('og_mgmtfee','完工後管理費預估','Est. service charge',FEE)+
+      chipRow('og_loan','外國人 RM1m 門檻／貸款','Foreign threshold & loan',YNQ);
+  }
+
+  /* ---- state ---- */
+  function textEls(){ return document.querySelectorAll('input[type=text],input[type=date],textarea,input[type=range]'); }
+  function collect(){
+    var o={ _mode: document.body.classList.contains('mode-offplan')?'offplan':'completed', _lang: document.body.classList.contains('zh')?'zh':'en' };
+    textEls().forEach(function(el){ if(el.id) o[el.id]=el.value; });
+    var v=document.querySelector('input[name=verdict]:checked'); o._verdict = v?v.value:'';
+    document.querySelectorAll('.chips[data-grp]').forEach(function(g){ var s=g.querySelector('.chip.sel'); o['c_'+g.dataset.grp]= s?s.dataset.v:''; });
+    return o;
+  }
+  function applyState(o){
+    if(!o) return;
+    textEls().forEach(function(el){ if(el.id && o[el.id]!==undefined) el.value=o[el.id]; });
+    if(o._verdict){ var v=document.querySelector('input[name=verdict][value="'+o._verdict+'"]'); if(v) v.checked=true; }
+    document.querySelectorAll('.chips[data-grp]').forEach(function(g){
+      var want=o['c_'+g.dataset.grp];
+      g.querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('sel', !!want && c.dataset.v===want); });
+    });
+    refreshRate();
+  }
+
+  /* ---- persistence ---- */
+  function keyFor(){ var b=(document.getElementById('f_building').value||'').trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'')||'kl'; return 'viewing2_'+b; }
+  var saveTimer=null, storeKey=null;
+  function save(){ if(EXPORTED) return; storeKey=keyFor(); clearTimeout(saveTimer); saveTimer=setTimeout(function(){ try{ localStorage.setItem(storeKey, JSON.stringify(collect())); var n=document.getElementById('saveNote'); n.textContent=document.body.classList.contains('zh')?'已自動暫存 ✓':'Auto-saved ✓'; n.classList.add('on'); }catch(e){} },350); }
+
+  function refreshRate(){ var r=document.getElementById('f_rating'),o=document.getElementById('rateOut'); o.textContent=(parseFloat(r.value)>0?r.value:'–')+' / 10'; }
+
+  /* ---- mode + lang ---- */
+  function setMode(m){ document.body.classList.toggle('mode-offplan', m==='offplan'); document.body.classList.toggle('mode-completed', m!=='offplan'); document.querySelectorAll('#modetog button').forEach(function(b){ b.classList.toggle('on', b.dataset.mode===m); }); }
+  function setLang(l){ document.body.classList.toggle('zh', l==='zh'); document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.lang===l); }); try{ localStorage.setItem('lang',l); }catch(e){} }
+
+  /* ---- export ---- */
+  function exportHTML(){
+    var state=collect();
+    var clone=document.documentElement.cloneNode(true);
+    ['must-common','must-c','must-o','judge-c','judge-o','gate-c','gate-o'].forEach(function(id){ var el=clone.querySelector('#'+id); if(el) el.innerHTML=''; });
+    var html='<!DOCTYPE html>\n'+clone.outerHTML;
+    html=html.replace('<!--VIEWING_STATE_SLOT-->','<script>window.__VIEWING_STATE__='+JSON.stringify(state).replace(/<\//g,'<\\/')+';<\/script>');
+    var name=(document.getElementById('f_building').value||'KL').trim().replace(/[^\w一-鿿\- ]/g,'').replace(/\s+/g,'-')||'KL';
+    var d=document.getElementById('f_date').value||'view';
+    var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+    a.download='看房_'+name+'_'+d+'.html'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); },1500);
+  }
+
+  /* ---- events (delegated) ---- */
+  document.addEventListener('click', function(e){
+    var chip=e.target.closest('.chip');
+    if(chip){ var grp=chip.closest('.chips'); grp.querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('sel', c===chip); }); save(); return; }
+    var mb=e.target.closest('#modetog button'); if(mb){ setMode(mb.dataset.mode); save(); return; }
+    var lb=e.target.closest('.lang-btn'); if(lb){ setLang(lb.dataset.lang); return; }
+  });
+  document.getElementById('btnExport').addEventListener('click', exportHTML);
+  document.getElementById('btnPrint').addEventListener('click', function(){ window.print(); });
+  document.getElementById('btnClear').addEventListener('click', function(){
+    var zh=document.body.classList.contains('zh');
+    if(!confirm(zh?'清除這份看房表的所有內容？':'Clear all entries?')) return;
+    textEls().forEach(function(el){ el.value = el.id==='f_rating'?0:''; });
+    document.querySelectorAll('.chip.sel').forEach(function(c){ c.classList.remove('sel'); });
+    var v=document.querySelector('input[name=verdict]:checked'); if(v) v.checked=false;
+    if(storeKey){ try{ localStorage.removeItem(storeKey); }catch(e){} }
+    refreshRate();
+  });
+  document.addEventListener('input', function(e){ if(e.target.id==='f_rating') refreshRate(); save(); });
+
+  /* ---- init ---- */
+  render();
+  if(EXPORTED){
+    setLang(ST._lang||'en'); setMode(ST._mode||'completed'); applyState(ST); refreshRate();
+  } else {
+    var l=qp('lang'); if(l!=='en'&&l!=='zh'){ try{ l=localStorage.getItem('lang'); }catch(e){} } setLang(l==='zh'?'zh':'en');
+    var mode=qp('mode'); if(mode!=='offplan'&&mode!=='completed') mode='completed'; setMode(mode);
+    var bq=qp('b')||qp('building'); if(bq) document.getElementById('f_building').value=bq;
+    storeKey=keyFor();
+    var saved=null; try{ saved=JSON.parse(localStorage.getItem(storeKey)||'null'); }catch(e){}
+    if(saved){ applyState(saved); setMode(saved._mode||mode); if(saved._lang) setLang(saved._lang); }
+    var df=document.getElementById('f_date'); if(!df.value){ var d=new Date(); df.value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+    refreshRate();
+  }
+})();
+</script>
+</body>
+</html>
