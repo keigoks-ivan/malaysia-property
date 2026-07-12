@@ -101,8 +101,8 @@ body.zh .mtbl th{text-transform:none;letter-spacing:0}
   <!-- US band chart -->
   <div class="blk">
     <h2><span class="lang-en">The US on the Clock, 1975–2025</span><span class="lang-zh" style="display:none">美國上鐘，1975–2025</span></h2>
-    <p class="sub"><span class="lang-en">Three synced layers, one x-axis. Top: FHFA house-price YoY with phase bands (legend above; blank = no phase). Middle: the tension score 0–4 — hover any quarter to see which of the four components triggered. Bottom: mortgage-credit YoY with the FL1 state shaded (green = rising, red = falling) and ignition/extinction confirmations marked. The dashed line at 2000Q1 splits training from the one-shot test. Every quarter is in the <a href="/data/framework-backtest.json">JSON</a>.</span><span class="lang-zh" style="display:none">三層同步、共用一條 x 軸。上層：FHFA 房價年增率與相位色帶（圖例在上方；空白＝無相位）。中層：張力分數 0–4，滑到任一季可見四個分項各自是否觸發。下層：房貸信貸年增率，FL1 狀態鋪底（綠＝上行、紅＝下行），點火／熄火確認點有標記。2000Q1 虛線分開訓練期與一次性測試期。每一季都在 <a href="/data/framework-backtest.json">JSON</a>。</span></p>
-    <div class="chartbox"><div id="chartUSBand" class="ch" style="height:600px"></div></div>
+    <p class="sub"><span class="lang-en">Three synced layers, one x-axis. Top: FHFA house-price YoY with phase bands — <b>a blank (white) column means "no phase"</b>: none of the four phase rules fired that quarter (tension below 2, price not in overheat range, credit not falling). Middle: the four tension components as lamps — vacancy, months-supply, gap, valuation — lit gold in the quarters each one triggered, so you can see which components carried the score. Bottom: mortgage-credit YoY with the FL1 state shaded (green = rising, red = falling) and ignition/extinction confirmations marked. The dashed line at 2000Q1 splits training from the one-shot test. Every quarter is in the <a href="/data/framework-backtest.json">JSON</a>.</span><span class="lang-zh" style="display:none">三層同步、共用一條 x 軸。上層：FHFA 房價年增率與相位色帶——<b>空白（白色）代表「無相位」</b>：當季四條相位規則都沒觸發（張力低於 2、房價未達過熱區間、信貸未下行）。中層：張力的四個分項做成燈條——空置、月供給、缺口、估值——各分項觸發的季度亮金燈，一眼看出張力是靠哪幾項撐起來的。下層：房貸信貸年增率，FL1 狀態鋪底（綠＝上行、紅＝下行），點火／熄火確認點有標記。2000Q1 虛線分開訓練期與一次性測試期。每一季都在 <a href="/data/framework-backtest.json">JSON</a>。</span></p>
+    <div class="chartbox"><div id="chartUSBand" class="ch" style="height:660px"></div></div>
     <p class="narr-p"><span class="lang-en">Read the test half against history. The clock sat in <b>overheat continuously from 2003Q4 to 2006Q2</b> — the structure that could never be tuned to fire in training lit up at national scale in the one episode that mattered, then flipped to <b>cooling at 2006Q3, two quarters before the price peak</b> (FHFA hard top 2007Q1) and stayed there through the crash. It re-entered <b>primed only at 2013Q1</b>, three quarters after the 2012Q2 bottom: it confirmed the recovery rather than anticipating it. Through 2016–2018 and 2021–2023 it showed overheat with benign outcomes — overheat is a state, not a countdown. In 2022–24 the FHFA index never actually turned (YoY fell from 17% to about 3%), and the clock printed cooling from 2023Q2. Today, <b>2026Q1 reads: no phase — zero tension components lit, credit rising</b>, the same ignition-on-no-tension shape the v2 freeze flagged.</span><span class="lang-zh" style="display:none">拿測試那一半對歷史讀。時鐘從 <b>2003Q4 到 2006Q2 連續處於過熱</b>——訓練期怎麼調都點不亮的結構，在唯一要緊的那一段於全國尺度亮了，然後 <b>2006Q3 翻成降溫，比價格頂早兩季</b>（FHFA 硬頂 2007Q1），並一路維持到崩盤結束。它 <b>2013Q1 才回到蓄勢</b>，比 2012Q2 的底晚三季：它確認了復甦，而不是預判。2016–2018 與 2021–2023 顯示過熱但結果溫和——過熱是狀態，不是倒數計時。2022–24 FHFA 指數其實沒有轉折（年增率從 17% 降到約 3%），時鐘從 2023Q2 起打出降溫。今天，<b>2026Q1 讀數：無相位——張力分項零個亮、信貸上行</b>，正是 v2 凍結表標記過的「無張力點火」形狀。</span></p>
     <p class="narr-p"><span class="lang-en"><b>Is this just house prices predicting house prices? No, and the panel now shows why.</b> The tension score (middle layer) is built from four series that contain no price momentum: homeowner vacancy (Census HVS), months-supply of new homes (Census), the ten-year formation-minus-completions gap (Census/FRED), and a valuation ratio whose numerator is the only place the price level enters (against per-capita income, BEA). The hand (bottom layer) is mortgage credit from the Fed's Z.1, not prices. Price YoY itself enters exactly one rule — the overheat trigger — and is otherwise the thing being predicted, drawn in the top layer only so the phases can be judged against it.</span><span class="lang-zh" style="display:none"><b>這是不是用房價預測房價？不是，面板現在直接展示原因。</b>張力分數（中層）由四條不含價格動能的序列組成：自住空置率（普查局 HVS）、新屋月供給（普查局）、十年家庭形成減完工缺口（普查局／FRED），以及估值比——價格水準唯一進入分子的地方（分母是 BEA 人均所得）。指針（下層）是 Fed Z.1 的房貸信貸，不是價格。房價年增率本身只進一條規則（過熱觸發），其餘時候它是被預測的對象，畫在上層只是為了讓相位對著它接受檢驗。</span></p>
   </div>
@@ -223,33 +223,37 @@ function initCharts(lang){
   var phN={primed:isZh?'蓄勢':'primed',ignition:isZh?'引爆':'ignition',overheat:isZh?'過熱':'overheat',cooling:isZh?'降溫':'cooling',none:isZh?'無相位':'none'};
   var compN=isZh?['空置','月供給','缺口','估值']:['vacancy','months-supply','gap','valuation'];
   var divLine=function(pos){return {silent:true,symbol:'none',data:[{xAxis:'2000Q1',label:{formatter:pos?(isZh?'← 訓練｜測試 →':'← train | test →'):'',color:C.navy,fontSize:10,fontWeight:700,fontFamily:FF,position:'insideEndTop'},lineStyle:{color:C.navy,type:'dashed',width:1.2}}]};};
-  var legendCols={primed:'#b8924a',ignition:'#15803d',overheat:'#b91c1c',cooling:'#1d4ed8'};
+  var legendCols={primed:'#b8924a',ignition:'#15803d',overheat:'#b91c1c',cooling:'#1d4ed8',none:'#d6cfc0'};
   var dummy=Object.keys(legendCols).map(function(p){return {name:phN[p],type:'line',data:[],xAxisIndex:0,yAxisIndex:0,itemStyle:{color:legendCols[p]},lineStyle:{color:legendCols[p]}};});
+  /* middle layer: four component lamps (vacancy / months-supply / gap / valuation) x 205 quarters */
+  var lampRows=isZh?['估值','缺口','月供給','空置']:['valuation','gap','months-supply','vacancy']; // bottom→top
+  var usheat=[]; for(var hi=0;hi<uscomp.length;hi++){var cc=uscomp[hi]||[0,0,0,0]; usheat.push([hi,3,cc[0]]); usheat.push([hi,2,cc[1]]); usheat.push([hi,1,cc[2]]); usheat.push([hi,0,cc[3]]);}
+  var LAMPI=dummy.length+1; // series index of the heatmap (dummy… + HPI + lamps)
   cb.setOption({
+    visualMap:{show:false,type:'piecewise',dimension:2,seriesIndex:LAMPI,pieces:[{value:0,color:'rgba(184,146,74,0.06)'},{value:1,color:'#c1912f'}]},
     legend:{top:0,textStyle:{color:C.muted,fontFamily:FF,fontSize:11},icon:'roundRect',itemWidth:14,itemHeight:8,itemGap:14,data:Object.keys(legendCols).map(function(p){return phN[p];})},
     axisPointer:{link:[{xAxisIndex:'all'}],lineStyle:{color:C.gold,width:1}},
     tooltip:Object.assign({},baseTip,{trigger:'axis',axisPointer:{type:'line'},formatter:function(ps){
-      var i=ps[0].dataIndex; var q=usq[i];
+      var i=usq.indexOf(ps[0].axisValue); if(i<0)i=ps[0].dataIndex; var q=usq[i];
       var c=uscomp[i]||[0,0,0,0];
       var comps=compN.map(function(n,j){return n+(c[j]?' ✓':' ✗');}).join(' · ');
       var st=usfl[i]==='r'?(isZh?'上行':'rising'):(usfl[i]==='f'?(isZh?'下行':'falling'):'–');
       return '<b>'+q+'</b> · '+phN[usphase[i]]+'<br/>'+(isZh?'房價年增 ':'HPI YoY ')+(usyoy[i]==null?'–':usyoy[i]+'%')+
         '<br/>'+(isZh?'張力 ':'tension ')+ust[i]+'/4：'+comps+
         '<br/>'+(isZh?'信貸年增 ':'credit YoY ')+(uscred[i]==null?'–':uscred[i]+'%')+'（FL1 '+st+'）';}}),
-    grid:[{left:6,right:14,top:34,height:'34%',containLabel:true},
-          {left:6,right:14,top:'48%',height:'14%',containLabel:true},
-          {left:6,right:14,top:'68%',height:'22%',containLabel:true}],
+    grid:[{left:6,right:14,top:34,height:'30%',containLabel:true},
+          {left:6,right:14,top:'46%',height:'22%',containLabel:true},
+          {left:6,right:14,top:'75%',height:'19%',containLabel:true}],
     xAxis:[mkAxis({type:'category',data:usq,boundaryGap:false,gridIndex:0,axisLabel:{show:false}}),
-           mkAxis({type:'category',data:usq,boundaryGap:false,gridIndex:1,axisLabel:{show:false}}),
+           mkAxis({type:'category',data:usq,boundaryGap:true,gridIndex:1,axisLabel:{show:false},splitLine:{show:false}}),
            mkAxis({type:'category',data:usq,boundaryGap:false,gridIndex:2,axisLabel:{interval:19}})],
     yAxis:[mkAxis({type:'value',min:-10,max:20,interval:10,gridIndex:0,axisLabel:{formatter:'{value}%'},name:isZh?'FHFA 年增':'FHFA YoY',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:FF}}),
-           mkAxis({type:'value',min:0,max:4,interval:2,gridIndex:1,name:isZh?'張力 0–4':'tension 0–4',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:FF}}),
+           mkAxis({type:'category',data:lampRows,gridIndex:1,axisTick:{show:false},splitLine:{show:false},axisLine:{show:false},axisLabel:{color:C.muted,fontSize:9.5,fontFamily:FF}}),
            mkAxis({type:'value',min:-10,max:20,interval:10,gridIndex:2,axisLabel:{formatter:'{value}%'},name:isZh?'信貸年增':'credit YoY',nameTextStyle:{color:C.muted,fontSize:10,fontFamily:FF}})],
     series:dummy.concat([
       {name:'HPI',type:'line',xAxisIndex:0,yAxisIndex:0,data:usyoy,symbol:'none',lineStyle:{color:C.navy,width:2},
        markArea:{silent:true,label:{show:false},data:usbands},markLine:divLine(true)},
-      {name:'tension',type:'line',step:'end',xAxisIndex:1,yAxisIndex:1,data:ust,symbol:'none',lineStyle:{color:C.gold,width:2},
-       areaStyle:{color:'rgba(184,146,74,0.12)'},markLine:divLine(false)},
+      {name:'lamps',type:'heatmap',xAxisIndex:1,yAxisIndex:1,data:usheat,itemStyle:{borderWidth:0},progressive:0,markLine:divLine(false)},
       {name:'credit',type:'line',xAxisIndex:2,yAxisIndex:2,data:uscred,symbol:'none',lineStyle:{color:C.blue,width:2},
        markArea:{silent:true,label:{show:false},data:usflbands},markLine:divLine(false),
        markPoint:{symbolSize:9,data:usconf.map(function(m){return {coord:[m[0], m[1]==='ign'?16:-6],symbol:m[1]==='ign'?'triangle':'pin',symbolRotate:m[1]==='ign'?0:180,itemStyle:{color:m[1]==='ign'?'#15803d':'#b91c1c'},label:{show:false}};})}}
