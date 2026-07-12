@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>REITs vs Physical Property — Malaysia Calculator | Malaysia Property Monitor</title>
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/kl-theme.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+.wrap{max-width:960px;margin:0 auto;padding:26px 20px 10px}
+body.zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
+.wrap p,.wrap li{line-height:1.9}
+
+/* header */
+.pg-head{margin-bottom:16px}
+.pg-title{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:26px;letter-spacing:-.01em;margin:0 0 8px;line-height:1.3}
+.pg-sub{font-size:13px;color:var(--muted);margin:0 0 12px;line-height:1.7;max-width:800px}
+.pg-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* lede / sections */
+.lede{background:linear-gradient(135deg,#0d2244 0%,#173564 100%);color:#fff;border-radius:14px;padding:20px 24px;margin:6px 0 24px;font-size:13.5px;line-height:1.9;box-shadow:var(--shadow-md)}
+.lede b,.lede strong{color:var(--gold-light);font-weight:600}
+.lede .lk{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+.sec-rule{display:flex;align-items:center;gap:12px;margin:34px 0 14px}
+.sec-rule h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:20px;margin:0;white-space:nowrap;line-height:1.3}
+.sec-rule::after{content:'';flex:1;height:1px;background:var(--gold-line)}
+.sub-h{font-family:'Playfair Display','Noto Serif TC',serif;color:var(--navy);font-size:15px;font-weight:600;margin:20px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--border-light)}
+.sub-h.bare{border:none;padding:0;margin:16px 0 6px}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:14px 0;box-shadow:var(--shadow-sm)}
+.card>:first-child{margin-top:0}.card>:last-child{margin-bottom:0}
+.chartbox{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 14px 8px;box-shadow:var(--shadow-sm);margin:14px 0}
+.chartbox .kick{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin:2px 4px 2px}
+.chartbox h3{font-size:13.5px;font-weight:700;color:var(--navy);margin:2px 4px 2px}
+.chartbox .csub{font-size:11px;color:var(--muted);margin:0 4px 8px;line-height:1.6}
+.chart{width:100%;height:300px}
+
+/* segmented controls */
+.ctrlwrap{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:14px 0;box-shadow:var(--shadow-sm)}
+.ctrlrow{display:flex;flex-wrap:wrap;gap:16px 26px;align-items:flex-end;margin:0 0 6px}
+.ctrl{min-width:0}
+.ctrl-lbl{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:6px;display:block}
+body.zh .ctrl-lbl{text-transform:none;letter-spacing:0}
+.seg{display:inline-flex;background:var(--bg-soft,#f4f0e6);border:1px solid var(--border);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:none;background:transparent;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--muted);padding:7px 13px;border-radius:8px;cursor:pointer;transition:all .15s;line-height:1.2}
+.seg button.active{background:var(--navy);color:#fff;box-shadow:0 1px 4px rgba(13,34,68,.18)}
+.seg button:disabled{opacity:.32;cursor:not-allowed}
+.seg.big button{padding:9px 18px;font-size:13.5px}
+.numin{font-family:'IBM Plex Mono',monospace;font-size:14.5px;font-weight:700;color:var(--navy);border:1px solid var(--border);border-radius:9px;padding:8px 12px;width:160px;background:var(--card)}
+select.numin{width:auto;cursor:pointer}
+.badge30{display:inline-flex;align-items:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:14px;color:#fff;background:var(--red);border-radius:9px;padding:8px 14px}
+.ctrl-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5}
+.ctrl-note.warn{color:var(--red)}
+
+/* advanced sliders */
+details.adv{margin:14px 0}
+details.adv>summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--navy);padding:11px 16px;background:var(--bg-section);border:1px solid var(--border);border-radius:12px;list-style:none;display:flex;align-items:center;gap:8px}
+details.adv>summary::-webkit-details-marker{display:none}
+details.adv>summary::before{content:'▸';color:var(--gold-deep);font-size:11px;transition:transform .15s}
+details.adv[open]>summary::before{transform:rotate(90deg)}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:2px 30px;margin-top:14px}
+.calc-field{margin-bottom:13px}
+.calc-field .cf-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:3px}
+.calc-field label{font-size:12.5px;font-weight:600;color:var(--text-soft)}
+.calc-field .cf-val{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--gold-deep);white-space:nowrap}
+.calc-field input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer;height:22px;margin:0}
+.calc-field .cf-hint{font-size:11px;color:var(--muted);margin-top:1px;line-height:1.5}
+
+/* KPI row */
+.kpigrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+@media(max-width:720px){.kpigrid{grid-template-columns:repeat(2,1fr)}}
+.kpibox{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px 15px;box-shadow:var(--shadow-sm);position:relative}
+.kpibox.win{border-color:var(--gold);box-shadow:0 0 0 1.5px var(--gold),var(--shadow-sm)}
+.kpibox .kl2{font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;line-height:1.4}
+body.zh .kpibox .kl2{text-transform:none;letter-spacing:0}
+.kpibox .kv2{font-family:'IBM Plex Mono',monospace;font-size:21px;font-weight:700;color:var(--navy);margin-top:7px;line-height:1.15}
+.kpibox .kv2.pos{color:#15803d}.kpibox .kv2.neg{color:#b91c1c}
+.kpibox .ks2{font-size:10.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+.winbadge{position:absolute;top:11px;right:11px;font-size:9px;font-weight:800;letter-spacing:.08em;color:#fff;background:var(--gold);border-radius:20px;padding:3px 8px}
+
+/* breakdown table */
+.atbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;margin:0;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm);min-width:520px}
+.atbl thead th{background:linear-gradient(135deg,#0d2244,#173564);color:var(--gold-light);text-align:left;padding:10px 12px;font-weight:600;font-size:11.5px}
+.atbl td{padding:8px 12px;border-top:1px solid var(--border-light);vertical-align:top;color:var(--text-soft);line-height:1.6}
+.atbl tbody tr:nth-child(even){background:var(--bg-card-alt,#faf7ef)}
+.atbl td b{color:var(--navy);font-weight:600}
+.atbl .num{font-family:'IBM Plex Mono',monospace;color:var(--navy);font-weight:500;text-align:right;white-space:nowrap}
+.atbl td.lbl{font-weight:600;color:var(--navy)}
+.atbl tr.sum td{background:var(--bg-section);font-weight:700;color:var(--navy)}
+.atbl tr.sum .num{color:var(--navy)}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0}
+
+/* callouts */
+.cl{border-radius:12px;padding:14px 18px;margin:14px 0;font-size:12.5px;line-height:1.85;color:var(--text-soft)}
+.cl b,.cl strong{color:var(--navy);font-weight:600}
+.cl-info{background:var(--accent-light,#eef3f9);border-left:3px solid var(--neutral,#1d4ed8)}
+.cl-warn{background:var(--gold-bg);border:1px solid var(--gold-soft);border-left:3px solid var(--gold-deep)}
+.cl-warn h4{color:var(--gold-deep);margin:0 0 6px;font-size:13px;font-weight:700}
+.cl-red{background:var(--negative-bg);border-left:3px solid var(--negative)}
+.cl-red h4{color:var(--negative);margin:0 0 6px;font-size:13px;font-weight:700}
+.cl h4{display:flex;align-items:center;gap:7px}
+
+/* source / footer */
+.src{font-size:11px;color:var(--muted);line-height:1.7;margin:6px 4px 0}
+.src a{color:var(--gold-deep)}
+.fnote{background:var(--bg-soft,#f6f2e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 18px;margin:22px 0 8px;font-size:11.5px;color:var(--muted);line-height:1.8}
+.fnote b{color:var(--text-soft)}
+.fnote ul{margin:8px 0 0;padding-left:18px}.fnote li{margin:3px 0}
+
+@media(max-width:760px){.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}.chart{height:260px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/kl-check">
+      <span class="brand-mark">K</span>
+      <span class="brand-text">
+        <span class="brand-name">KL Property Check</span>
+        <span class="brand-by">by InvestMQuest</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="/kl-check"><span class="lang-en">Scorecards</span><span class="lang-zh">評分卡</span></a>
+      <a class="nav-link" href="/my/report"><span class="lang-en">Market Report</span><span class="lang-zh">市場報告</span></a>
+      <a class="nav-link" href="/my/macro"><span class="lang-en">Macro</span><span class="lang-zh">總經</span></a>
+      <a class="nav-link" href="/my/airbnb"><span class="lang-en">Airbnb / STRA</span><span class="lang-zh">短租</span></a>
+      <a class="nav-link active" href="/my/reit-vs-direct"><span class="lang-en">REITs vs Property</span><span class="lang-zh">REIT vs 房產</span></a>
+      <div class="lang-btns">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ── Header ── -->
+  <div class="pg-head">
+    <h1 class="pg-title">
+      <span class="lang-en">REITs vs Physical Property — Malaysia</span>
+      <span class="lang-zh" style="display:none">馬來西亞 · REITs vs 實體房產</span>
+    </h1>
+    <p class="pg-sub">
+      <span class="lang-en">Put the <b>same money</b> into a KL rental condo or into an M-REIT portfolio, then run both forward year-by-year with <b>every real tax and fee</b> — MOT stamp duty, RPGT, rental income tax, and the landmark <b>YA2026 REIT dividend-tax reform</b>. Switch between Local and Foreigner to see how the rules bite differently.</span>
+      <span class="lang-zh" style="display:none">把<b>同一筆錢</b>投入 KL 出租公寓，或投入一籃子 M-REIT，逐年模擬，含<b>全部真實稅費</b>——MOT 印花稅、RPGT、租金所得稅，以及重磅的 <b>YA2026 REIT 配息稅改</b>。切換本國人／外國人，看規則如何對兩者差別課稅。</span>
+    </p>
+    <div class="pg-badges">
+      <span class="kpi-badge badge-red"><span class="lang-en">YA2026 REIT tax reform</span><span class="lang-zh" style="display:none">YA2026 REIT 稅改</span></span>
+      <span class="kpi-badge badge-orange"><span class="lang-en">Foreigner 8% stamp · Budget 2026</span><span class="lang-zh" style="display:none">外國人 8% 印花稅 · Budget 2026</span></span>
+      <span class="kpi-badge badge-blue"><span class="lang-en">OPR 2.75%</span><span class="lang-zh" style="display:none">OPR 2.75%</span></span>
+      <span class="kpi-badge badge-green"><span class="lang-en">Updated 12 Jul 2026</span><span class="lang-zh" style="display:none">更新至 2026/7/12</span></span>
+    </div>
+  </div>
+
+  <!-- ── Method lede ── -->
+  <div class="lede">
+    <span class="lk"><span class="lang-en">The method — equal-outlay comparison</span><span class="lang-zh" style="display:none">方法論 · 等額出資比較法</span></span>
+    <span class="lang-en">A fair fight needs equal money in. So the REIT path <b>mirrors every cash outflow</b> of the property path: the same total at Year 0 (down payment + all buy-in fees goes into REITs), and whenever the property bleeds a negative-cash-flow year, the REIT path <b>tops up the same amount</b>. Property surpluses roll into a fixed-deposit side-pocket; REIT dividends are reinvested after tax (DRIP). At the end: property = net sale proceeds (after loan, selling costs and RPGT) + the deposit pot; REIT = portfolio value minus a one-off sell fee (no capital-gains tax). Terminal net worth and IRR are reported for both.</span>
+    <span class="lang-zh" style="display:none">公平比較需要投入相同的錢。因此 REIT 路徑<b>鏡射實體路徑的每一筆現金流出</b>：Year 0 投入同額（頭期款＋全部買入費用同額買 REIT），實體每逢淨現金流為負的年度，REIT 路徑<b>同年同額加碼</b>。實體的正現金流滾入定存側袋；REIT 配息稅後再投入（DRIP）。期末：實體＝房屋淨售款（扣餘貸、賣出成本與 RPGT）＋定存累積；REIT＝持倉市值扣一次性賣出費（無資本利得稅）。兩路徑各輸出期末淨值與 IRR。</span>
+  </div>
+
+  <!-- ════════ INPUT CONTROLS ════════ -->
+  <div class="ctrlwrap">
+    <div class="ctrlrow">
+      <div class="ctrl">
+        <span class="ctrl-lbl"><span class="lang-en">Buyer</span><span class="lang-zh" style="display:none">買家身份</span></span>
+        <div class="seg big" id="segId">
+          <button data-v="local" class="active"><span class="lang-en">Local</span><span class="lang-zh" style="display:none">本國人</span></button>
+          <button data-v="foreigner"><span class="lang-en">Foreigner</span><span class="lang-zh" style="display:none">外國人</span></button>
+        </div>
+      </div>
+      <div class="ctrl">
+        <span class="ctrl-lbl"><span class="lang-en">Hold period</span><span class="lang-zh" style="display:none">持有期</span></span>
+        <div class="seg" id="segYears">
+          <button data-v="5">5</button>
+          <button data-v="10" class="active">10</button>
+          <button data-v="15">15</button>
+          <button data-v="20">20</button>
+        </div>
+      </div>
+      <div class="ctrl">
+        <span class="ctrl-lbl"><span class="lang-en">Leverage</span><span class="lang-zh" style="display:none">槓桿</span></span>
+        <div class="seg" id="segLev">
+          <button data-v="0"><span class="lang-en">All cash</span><span class="lang-zh" style="display:none">全現金</span></button>
+          <button data-v="70" class="active">70% LTV</button>
+          <button data-v="90">90% LTV</button>
+        </div>
+        <div class="ctrl-note warn" id="levNote" style="display:none"><span class="lang-en">Foreigner mortgages typically cap near 70% LTV.</span><span class="lang-zh" style="display:none">外國人房貸實務上限約 70% LTV。</span></div>
+      </div>
+    </div>
+    <div class="ctrlrow">
+      <div class="ctrl">
+        <span class="ctrl-lbl"><span class="lang-en">Property price</span><span class="lang-zh" style="display:none">房價</span></span>
+        <input id="inPrice" class="numin" type="number" min="300000" max="6000000" step="50000" value="800000">
+        <div class="ctrl-note" id="priceNote" style="display:none"><span class="lang-en">KL foreigner purchase floor RM1,000,000 — raised automatically.</span><span class="lang-zh" style="display:none">KL 外國人最低購買門檻 RM1,000,000——已自動抬高。</span></div>
+      </div>
+      <div class="ctrl" id="ctrlTax">
+        <span class="ctrl-lbl"><span class="lang-en">Marginal income-tax rate</span><span class="lang-zh" style="display:none">邊際所得稅率</span></span>
+        <select id="inTax" class="numin">
+          <option value="0">0%</option>
+          <option value="8">8%</option>
+          <option value="13">13%</option>
+          <option value="21">21%</option>
+          <option value="24" selected>24%</option>
+          <option value="30">30%</option>
+        </select>
+      </div>
+      <div class="ctrl" id="ctrlTaxFixed" style="display:none">
+        <span class="ctrl-lbl"><span class="lang-en">Tax rate (non-resident)</span><span class="lang-zh" style="display:none">稅率（非居民）</span></span>
+        <span class="badge30">30%</span>
+      </div>
+      <div class="ctrl">
+        <span class="ctrl-lbl"><span class="lang-en">REIT dividend-tax regime</span><span class="lang-zh" style="display:none">REIT 配息稅制</span></span>
+        <div class="seg" id="segRegime">
+          <button data-v="new" class="active"><span class="lang-en">YA2026 new</span><span class="lang-zh" style="display:none">YA2026 新制</span></button>
+          <button data-v="old"><span class="lang-en">Old 10%</span><span class="lang-zh" style="display:none">舊制 10%</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- advanced assumptions -->
+    <details class="adv">
+      <summary><span class="lang-en">Advanced assumptions (rates, growth, vacancy…)</span><span class="lang-zh" style="display:none">進階假設（殖利率、增值、空置…）</span></summary>
+      <div class="calc-grid">
+        <div>
+          <div class="calc-field">
+            <div class="cf-top"><label><span class="lang-en">Gross rental yield</span><span class="lang-zh" style="display:none">毛租金殖利率</span></label><span class="cf-val" id="v-grossYield"></span></div>
+            <input id="s-grossYield" type="range" min="3" max="7" step="0.1" value="5.0">
+          </div>
+          <div class="calc-field">
+            <div class="cf-top"><label><span class="lang-en">Property price growth / yr</span><span class="lang-zh" style="display:none">房價年增率</span></label><span class="cf-val" id="v-priceGrowth"></span></div>
+            <input id="s-priceGrowth" type="range" min="-2" max="6" step="0.1" value="2.0">
+          </div>
+          <div class="calc-field">
+            <div class="cf-top"><label><span class="lang-en">Vacancy rate</span><span class="lang-zh" style="display:none">空置率</span></label><span class="cf-val" id="v-vacancy"></span></div>
+            <input id="s-vacancy" type="range" min="0" max="20" step="1" value="8"></div>
+            <div class="cf-hint"><span class="lang-en">8% ≈ one empty month a year</span><span class="lang-zh" style="display:none">8% ≈ 每年約空置 1 個月</span></div>
+        </div>
+        <div>
+          <div class="calc-field">
+            <div class="cf-top"><label><span class="lang-en">REIT dividend yield</span><span class="lang-zh" style="display:none">REIT 配息殖利率</span></label><span class="cf-val" id="v-reitYield"></span></div>
+            <input id="s-reitYield" type="range" min="4" max="7.5" step="0.1" value="5.5">
+          </div>
+          <div class="calc-field">
+            <div class="cf-top"><label><span class="lang-en">REIT price growth / yr</span><span class="lang-zh" style="display:none">REIT 價格年增率</span></label><span class="cf-val" id="v-reitGrowth"></span></div>
+            <input id="s-reitGrowth" type="range" min="-2" max="6" step="0.1" value="1.5">
+          </div>
+        </div>
+        <div>
+          <div class="calc-field">
+            <div class="cf-top"><label><span class="lang-en">Mortgage rate</span><span class="lang-zh" style="display:none">房貸利率</span></label><span class="cf-val" id="v-mortgageRate"></span></div>
+            <input id="s-mortgageRate" type="range" min="3.5" max="5.5" step="0.1" value="4.2">
+            <div class="cf-hint" id="rateHint"><span class="lang-en">Foreigner mode adds +0.3ppt automatically.</span><span class="lang-zh" style="display:none">外國人模式自動 +0.3ppt。</span></div>
+          </div>
+          <div class="calc-field">
+            <div class="cf-top"><label><span class="lang-en">Fixed-deposit rate (idle cash)</span><span class="lang-zh" style="display:none">定存利率（閒置現金）</span></label><span class="cf-val" id="v-fdRate"></span></div>
+            <input id="s-fdRate" type="range" min="2" max="4.5" step="0.1" value="3.0">
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ════════ KPI ROW ════════ -->
+  <div class="kpigrid" id="kpiRow"></div>
+
+  <!-- ════════ CHART 1 — wealth curve ════════ -->
+  <div class="chartbox">
+    <div class="kick"><span class="lang-en">Liquidation net worth over time</span><span class="lang-zh" style="display:none">逐年變現淨值</span></div>
+    <h3><span class="lang-en">Two paths, same money in</span><span class="lang-zh" style="display:none">兩條路徑，投入同一筆錢</span></h3>
+    <div class="csub"><span class="lang-en">Net worth if you liquidated at the end of each year: property = net sale proceeds after loan, selling costs &amp; RPGT + deposit side-pocket; REIT = portfolio value less a one-off sell fee.</span><span class="lang-zh" style="display:none">在每年年底變現的淨值：實體＝扣餘貸、賣出成本與 RPGT 後淨售款＋定存側袋；REIT＝持倉市值扣一次性賣出費。</span></div>
+    <div class="chart" id="chartWealth"></div>
+  </div>
+
+  <!-- ════════ CHART 2 — cost breakdown ════════ -->
+  <div class="chartbox">
+    <div class="kick"><span class="lang-en">Where the money leaks</span><span class="lang-zh" style="display:none">錢從哪裡漏掉</span></div>
+    <h3><span class="lang-en">Lifetime cost &amp; tax drag — the two paths compared</span><span class="lang-zh" style="display:none">全期成本與稅負拖累——兩路徑對比</span></h3>
+    <div class="csub"><span class="lang-en">Total RM paid across the whole hold in fees and taxes. Physical property carries many more cost layers than a REIT.</span><span class="lang-zh" style="display:none">整個持有期支付的費用與稅金總額（RM）。實體房產的成本層遠多於 REIT。</span></div>
+    <div class="chart" id="chartCost" style="height:260px"></div>
+  </div>
+
+  <!-- ════════ DETAIL TABLE ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Line-by-line</span><span class="lang-zh" style="display:none">逐項明細</span></h2></div>
+  <div class="tscroll">
+    <table class="atbl" id="detailTbl">
+      <thead><tr>
+        <th><span class="lang-en">Item</span><span class="lang-zh" style="display:none">項目</span></th>
+        <th style="text-align:right"><span class="lang-en">Physical property (RM)</span><span class="lang-zh" style="display:none">實體房產（RM）</span></th>
+        <th style="text-align:right"><span class="lang-en">M-REIT (RM)</span><span class="lang-zh" style="display:none">M-REIT（RM）</span></th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- ════════ INSIGHTS ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Three things the rules just changed</span><span class="lang-zh" style="display:none">規則剛剛改變的三件事</span></h2></div>
+
+  <div class="cl cl-red">
+    <h4>🏛️ <span class="lang-en">YA2026: the REIT 10% shield is gone</span><span class="lang-zh" style="display:none">YA2026：REIT 10% 保護傘落日</span></h4>
+    <span class="lang-en">Until 2025, M-REIT distributions to individuals were taxed at a <b>final 10% withholding</b>. From YA2026 that sunset kicks in: <b>residents fold REIT income into progressive tax at their marginal rate</b> (so a 30%-bracket local now pays 30%, not 10%), and <b>non-residents jump to 30%</b> (from 10%). Flip the "Old 10%" toggle above to see exactly how much this reform costs <span id="ins1Local"></span></span>
+    <span class="lang-zh" style="display:none">2025 年以前，M-REIT 配息給個人採 <b>10% 最終扣繳</b>。自 YA2026 起落日：<b>居民須將 REIT 所得併入綜所稅按邊際稅率課</b>（30% 級距的本國人現在課 30%，不再是 10%），<b>非居民則從 10% 跳到 30%</b>。切上方「舊制 10%」對照，看這次稅改實際成本 <span id="ins1LocalZh"></span></span>
+  </div>
+
+  <div class="cl cl-warn">
+    <h4>🌏 <span class="lang-en">The foreigner triple-tax</span><span class="lang-zh" style="display:none">外國人三重稅</span></h4>
+    <span class="lang-en">A non-resident buying KL bricks faces three compounding hits: an <b>8% flat MOT stamp duty</b> at entry (Budget 2026, vs a local's ~3%), <b>rental income taxed at a flat 30%</b> with no relief band, and <b>RPGT that never falls below 10%</b> — even after 6+ years. The shorter the hold, the more the 8% entry fee alone can swamp any gain. On the current inputs the foreigner's entry stamp duty is <span id="ins2Stamp"></span>.</span>
+    <span class="lang-zh" style="display:none">非居民買 KL 實體房產面對三重疊加打擊：進場一次性 <b>8% MOT 印花稅</b>（Budget 2026，本國人約 3%）、<b>租金固定 30% 課稅</b>且無寬減級距、<b>RPGT 永不低於 10%</b>——即使持有滿 6 年以上。持有期越短，光是 8% 進場費就足以吃掉全部增值。以目前輸入，外國人進場印花稅為 <span id="ins2StampZh"></span>。</span>
+  </div>
+
+  <div class="cl cl-info">
+    <h4>⛰️ <span class="lang-en">The RPGT Year-6 cliff (locals)</span><span class="lang-zh" style="display:none">RPGT 第 6 年懸崖（本國人）</span></h4>
+    <span class="lang-en">For citizens &amp; PRs, RPGT is <b>15% at Year 5 but 0% from Year 6</b>. Selling one year too early can hand the government a five-figure cheque for nothing. Set Buyer = Local and toggle 5 vs 10 years: at these inputs, holding past the Year-6 line changes the property's RPGT bill by <span id="ins3Rpgt"></span>.</span>
+    <span class="lang-zh" style="display:none">對公民與永久居民，RPGT <b>第 5 年為 15%，第 6 年起降為 0%</b>。早賣一年，可能白白開一張五位數的支票給政府。把買家設為本國人、切換 5 年與 10 年：以目前輸入，跨過第 6 年這條線，實體房產的 RPGT 稅單相差 <span id="ins3RpgtZh"></span>。</span>
+  </div>
+
+  <!-- ════════ SOURCES ════════ -->
+  <div class="fnote">
+    <b><span class="lang-en">Sources &amp; assumptions</span><span class="lang-zh" style="display:none">來源與假設</span></b>
+    <ul>
+      <li><span class="lang-en"><b>REIT dividend tax (YA2026):</b> LHDN Practice Note No. 2/2026; KPMG TaxNewsFlash (May 2026); The Edge Malaysia — 10% final withholding sunsets; residents taxed at marginal rate, non-residents 30%.</span><span class="lang-zh" style="display:none"><b>REIT 配息稅（YA2026）：</b>LHDN Practice Note No. 2/2026；KPMG TaxNewsFlash（2026/5）；The Edge Malaysia——10% 最終扣繳落日，居民按邊際稅率、非居民 30%。</span></li>
+      <li><span class="lang-en"><b>RPGT rates:</b> LHDN (hasil.gov.my), current schedule from 1 Jan 2022. Citizens/PR 30/30/30/20/15/0%; foreigners 30% Y1–5, 10% Y6+. Schedule 4 exemption = higher of RM10,000 or 10% of gain.</span><span class="lang-zh" style="display:none"><b>RPGT 稅率：</b>LHDN（hasil.gov.my）2022/1/1 起現行表。公民／PR 30/30/30/20/15/0%；外國人 Y1–5 為 30%、Y6+ 為 10%。Sch 4 免稅額＝RM10,000 或利得 10% 取高。</span></li>
+      <li><span class="lang-en"><b>Foreigner 8% stamp duty:</b> Budget 2026 (announced Oct 2025, effective 1 Jan 2026), flat 8% MOT for non-citizen individuals &amp; foreign companies.</span><span class="lang-zh" style="display:none"><b>外國人 8% 印花稅：</b>Budget 2026（2025/10 公布，2026/1/1 生效），非公民個人與外國公司單一 8% MOT。</span></li>
+      <li><span class="lang-en"><b>Local MOT stamp:</b> 1% first RM100k / 2% RM100k–500k / 3% RM500k–1m / 4% above RM1m. Non-resident rental income: LHDN Form M, flat 30%.</span><span class="lang-zh" style="display:none"><b>本國人 MOT 印花稅：</b>首 10 萬 1%／10–50 萬 2%／50–100 萬 3%／逾 100 萬 4%。非居民租金所得：LHDN Form M，固定 30%。</span></li>
+      <li><span class="lang-en"><b>Legal fees:</b> Solicitors' Remuneration Order 2023 scale (1.25% first RM500k, 1.0% next 500k, 0.8% next 2m, ~0.6% above 3m). Agent fee 3% + 8% SST.</span><span class="lang-zh" style="display:none"><b>律師費：</b>Solicitors' Remuneration Order 2023 scale（首 50 萬 1.25%、次 50 萬 1.0%、次 200 萬 0.8%、逾 300 萬約 0.6%）。仲介費 3% ＋ 8% SST。</span></li>
+      <li><span class="lang-en"><b>Market defaults:</b> OPR 2.75% (BNM, held May 2026); effective mortgage 3.8–5.6% → 4.2% default. M-REIT 2026 yields: KLCC ~5.1%, IGB ~4.4%, Sunway ~4.7%, Pavilion ~6%, Axis ~5–6.5% → 5.5% default. KL condo gross yield ~4.2–5.2% (data/markets-summary.json &amp; prices.json) → 5.0%. KL hi-rise 2025Q3 −4.3% YoY (NAPIC) → conservative 2.0% price growth.</span><span class="lang-zh" style="display:none"><b>市場預設值：</b>OPR 2.75%（BNM，2026/5 維持）；有效房貸 3.8–5.6% → 預設 4.2%。M-REIT 2026 殖利率：KLCC ~5.1%、IGB ~4.4%、Sunway ~4.7%、Pavilion ~6%、Axis ~5–6.5% → 預設 5.5%。KL 公寓毛殖利率 ~4.2–5.2%（data/markets-summary.json、prices.json）→ 5.0%。KL 高層 2025Q3 年減 4.3%（NAPIC）→ 保守房價年增 2.0%。</span></li>
+    </ul>
+    <p style="margin:10px 0 0"><span class="lang-en"><b>Modelling notes.</b> Mortgage assumes a 30-year amortising tenure; the remaining balance is repaid on sale. Fixed-deposit interest is treated as tax-free for both buyers (a simplification — resident individual FD interest is exempt; non-resident treatment is left aside). Rental losses can't offset other income or carry forward. The lifetime once-only owner-occupier RPGT exemption is <b>not</b> applied (investment case). Loan legal/valuation fees are estimates. IRR uses the raw cash-flow series (income taken as cash, not reinvested); terminal net worth includes the deposit side-pocket / DRIP. This is an educational model, not tax or investment advice — confirm every figure with a licensed adviser.</span><span class="lang-zh" style="display:none"><b>模型說明。</b>房貸假設 30 年攤還期，賣出時清償餘額。定存利息對兩種買家皆視為免稅（簡化——居民個人定存利息免稅；非居民另計，此處略）。租金虧損不得抵其他所得、不得結轉。不套用一生一次自住 RPGT 免稅（投資情境）。貸款律師／估價費為估算。IRR 採原始現金流序列（income 視為現金、不再投資）；期末淨值含定存側袋／DRIP。本工具為教育性模型，非稅務或投資建議——每項數字請向持牌顧問查證。</span></p>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-ornament"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  <p class="footer-disclaimer">
+    <span class="lang-en"><strong>Disclaimer.</strong> This calculator compiles Malaysian property and REIT tax rules from public sources as of July 2026. It is not legal, tax or investment advice. Tax rates, thresholds and effective dates follow official announcements and may change. Before acting, verify with LHDN and qualified tax/legal advisers.</span>
+    <span class="lang-zh" style="display:none"><strong>免責聲明。</strong>本計算器彙整截至 2026 年 7 月的馬來西亞房產與 REIT 稅務規則，取自公開來源，不構成法律、稅務或投資建議。稅率、門檻與生效時點以官方公告為準，可能變動。實際決策前，請向 LHDN 與專業稅務／法律顧問查證。</span>
+  </p>
+  <p><a href="/my/airbnb">← <span class="lang-en">KL Airbnb / STRA calculator</span><span class="lang-zh" style="display:none">KL Airbnb／短租試算器</span></a></p>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   DEFAULTS — all model constants in one place, with sources
+   ═══════════════════════════════════════════════════════════════ */
+var DEFAULTS = {
+  // ── prices & thresholds ──
+  priceLocal:        800000,   // KL condo default (repo prices.json)
+  foreignerFloor:    1000000,  // KL foreigner min purchase (Selangor/KL threshold)
+  // ── market assumptions (advanced sliders) ──
+  grossYield:        5.0,      // % — KL condo gross yield ~4.2–5.2 (markets-summary.json)
+  priceGrowth:       2.0,      // % — conservative; KL hi-rise 2025Q3 −4.3% YoY (NAPIC)
+  reitYield:         5.5,      // % — M-REIT 2026 blend (KLCC/IGB/Sunway/Pavilion/Axis)
+  reitGrowth:        1.5,      // % — modest unit-price appreciation
+  mortgageRate:      4.2,      // % — effective 3.8–5.6, OPR 2.75 (BNM May 2026)
+  foreignerRatePremium: 0.3,   // ppt added to mortgage rate for foreigners
+  vacancy:           8.0,      // % — ~1 empty month/yr
+  fdRate:            3.0,      // % — fixed deposit for idle cash
+  marginalRate:      24,       // % — default resident bracket
+  loanTenureYears:   30,       // mortgage amortising tenure (estimate)
+  // ── property holding cost rates (of current market value / yr) ──
+  mgmtRate:          0.0055,   // 0.55% mgmt + sinking fund (≈RM0.35 psf/mo, estimate)
+  assessRate:        0.0020,   // 0.20% assessment + quit rent
+  insuranceRate:     0.0005,   // 0.05% fire insurance
+  repairsPctRent:    0.05,     // 5% of gross rent
+  lettingPctRent:    0.05,     // 5% of gross rent (renewal/letting agent)
+  // ── property transaction cost rates ──
+  loanStampRate:     0.005,    // 0.5% loan agreement stamp duty
+  loanLegalRate:     0.008,    // 0.8% loan legal (SRO scale ×~0.8, estimate)
+  valuationRate:     0.002,    // 0.2% valuation
+  valuationCap:      2000,     // RM cap (estimate)
+  stateConsentFee:   1500,     // RM — foreigner state consent (varies by state, estimate)
+  agentFeeRate:      0.03,     // 3% selling agent fee
+  sstRate:           0.08,     // 8% SST on agent fee
+  foreignerStamp:    0.08,     // 8% flat MOT (Budget 2026)
+  rpgtExemptMin:     10000,    // RM Schedule 4 exemption floor
+  rpgtExemptPct:     0.10,     // or 10% of gain, whichever higher
+  // ── REIT transaction cost ──
+  reitComm:          0.0010,   // 0.10% brokerage
+  reitClear:         0.0003,   // 0.03% Bursa clearing (cap RM1,000)
+  reitClearCap:      1000,
+  reitStamp:         0.0010,   // 0.10% contract stamp (cap RM1,000)
+  reitStampCap:      1000
+};
+
+/* ═══════════════ PURE ENGINE ═══════════════ */
+// Local MOT stamp duty — tiered
+function motStampLocal(p){
+  var d=0, rem=p;
+  var t1=Math.min(rem,100000); d+=t1*0.01; rem-=t1;
+  if(rem>0){var t2=Math.min(rem,400000); d+=t2*0.02; rem-=t2;}
+  if(rem>0){var t3=Math.min(rem,500000); d+=t3*0.03; rem-=t3;}
+  if(rem>0){d+=rem*0.04;}
+  return d;
+}
+// SRO 2023 legal-fee scale (buyer/seller)
+function legalFee(a){
+  var fee=0, rem=a;
+  var t1=Math.min(rem,500000); fee+=t1*0.0125; rem-=t1;
+  if(rem>0){var t2=Math.min(rem,500000); fee+=t2*0.010; rem-=t2;}
+  if(rem>0){var t3=Math.min(rem,2000000); fee+=t3*0.008; rem-=t3;}
+  if(rem>0){fee+=rem*0.006;}
+  return Math.max(fee,500);
+}
+function reitBuyCost(amt){
+  if(amt<=0) return 0;
+  return amt*DEFAULTS.reitComm + Math.min(amt*DEFAULTS.reitClear,DEFAULTS.reitClearCap) + Math.min(amt*DEFAULTS.reitStamp,DEFAULTS.reitStampCap);
+}
+function reitSellCost(amt){ return reitBuyCost(amt); }
+// RPGT rate by holding year & identity
+function rpgtRate(year, foreigner){
+  if(foreigner){ return year<=5 ? 0.30 : 0.10; }
+  if(year<=3) return 0.30;
+  if(year===4) return 0.20;
+  if(year===5) return 0.15;
+  return 0; // Y6+
+}
+// mortgage: 30yr amortising; return per-year interest + balance
+function mortgage(L, annualRatePct, tenureYears){
+  var out={payment:0, yearInterest:[], yearPrincipal:[], balance:[]};
+  if(L<=0){ for(var y=0;y<=20;y++){out.yearInterest[y]=0;out.yearPrincipal[y]=0;out.balance[y]=0;} return out; }
+  var i=annualRatePct/100/12, n=tenureYears*12;
+  var M=L*i/(1-Math.pow(1+i,-n));
+  out.payment=M;
+  var bal=L; out.balance[0]=L;
+  for(var y=1;y<=20;y++){
+    var yi=0, yp=0;
+    for(var m=0;m<12;m++){
+      var interest=bal*i; var principal=M-interest;
+      yi+=interest; yp+=principal; bal-=principal;
+      if(bal<0) bal=0;
+    }
+    out.yearInterest[y]=yi; out.yearPrincipal[y]=yp; out.balance[y]=bal;
+  }
+  return out;
+}
+function npv(rate,cf){ var s=0; for(var i=0;i<cf.length;i++) s+=cf[i]/Math.pow(1+rate,i); return s; }
+function irr(cf){
+  var lo=-0.95, hi=1.0, flo=npv(lo,cf), fhi=npv(hi,cf), tries=0;
+  while(flo*fhi>0 && tries<60){ hi+=0.5; fhi=npv(hi,cf); tries++; }
+  if(flo*fhi>0) return NaN;
+  for(var k=0;k<200;k++){
+    var mid=(lo+hi)/2, fm=npv(mid,cf);
+    if(Math.abs(fm)<1e-4) return mid;
+    if(flo*fm<0){hi=mid;fhi=fm;} else {lo=mid;flo=fm;}
+  }
+  return (lo+hi)/2;
+}
+
+/* ── the whole scenario ── */
+function computeScenario(S){
+  var D=DEFAULTS;
+  var foreigner = S.identity==='foreigner';
+  var N=S.years;
+  var price = foreigner ? Math.max(S.price, D.foreignerFloor) : S.price;
+  var ltv = foreigner && S.leverage>70 ? 70 : S.leverage;
+  var L = price*ltv/100;
+  var down = price - L;
+  var mRate = S.mortgageRate + (foreigner ? D.foreignerRatePremium : 0);
+
+  // ── buy-in costs ──
+  var motStamp = foreigner ? price*D.foreignerStamp : motStampLocal(price);
+  var buyerLegal = legalFee(price);
+  var loanStamp = L*D.loanStampRate;
+  var loanLegal = L*D.loanLegalRate;
+  var valuation = Math.min(price*D.valuationRate, D.valuationCap);
+  var consent = foreigner ? D.stateConsentFee : 0;
+  var buyInCosts = motStamp + buyerLegal + loanStamp + loanLegal + valuation + consent;
+  var outlay0 = down + buyInCosts; // Year-0 cash out
+
+  // ── mortgage schedule ──
+  var mort = mortgage(L, mRate, D.loanTenureYears);
+  var annualPayment = mort.payment*12;
+
+  // rental tax rate & reit div tax rate
+  var rentTaxRate = foreigner ? 0.30 : S.marginalRate/100;
+  var reitDivRate;
+  if(S.regime==='old'){ reitDivRate = 0.10; }
+  else { reitDivRate = foreigner ? 0.30 : S.marginalRate/100; }
+
+  // ── REIT init ──
+  var reitInvest0 = outlay0;
+  var reitBuy0 = reitBuyCost(reitInvest0);
+  var Vw = reitInvest0 - reitBuy0;  // wealth path (with DRIP)
+  var Vi = reitInvest0 - reitBuy0;  // irr path (dividends taken as cash)
+  var reitCF = [-reitInvest0];
+  var reitBuyRate = D.reitComm + D.reitClear + D.reitStamp; // ~0.23% for DRIP/injections
+  var reitDivTaxTotal=0, reitTxnTotal=reitBuy0;
+
+  // ── physical accumulators ──
+  var g = S.priceGrowth/100;
+  var fd=0; // deposit side-pocket
+  var physCF=[-outlay0];
+  var holdOpexTotal=0, interestTotal=0, rentTaxTotal=0;
+  var series={years:[0], phys:[], reit:[]};
+
+  // year-0 liquidation net worth (mark-to-market)
+  (function(){
+    var sellCosts0 = price*D.agentFeeRate*(1+D.sstRate) + legalFee(price);
+    series.phys.push(price - L - sellCosts0); // RPGT ~0 at yr0
+    series.reit.push(Vw - reitSellCost(Vw));
+  })();
+
+  var netSaleProceeds=0, saleAgent=0, saleLegal=0, rpgt=0, remainLoan=0, salePrice=0;
+
+  for(var t=1;t<=N;t++){
+    var pv = price*Math.pow(1+g,t-1);          // market value at start of year t
+    var grossRent = pv*(S.grossYield/100);
+    var vacLoss = grossRent*(S.vacancy/100);
+    var effRent = grossRent - vacLoss;
+    var mgmt = pv*D.mgmtRate;
+    var assess = pv*D.assessRate;
+    var insurance = pv*D.insuranceRate;
+    var repairs = grossRent*D.repairsPctRent;
+    var letting = grossRent*D.lettingPctRent;
+    var opex = mgmt+assess+insurance+repairs+letting;
+    var interest = mort.yearInterest[t];
+
+    // rental income tax
+    var taxable = effRent - (interest + mgmt + assess + insurance + repairs + letting);
+    var rentTax = taxable>0 ? taxable*rentTaxRate : 0;
+
+    // physical net operating cash flow
+    var netCF = effRent - opex - annualPayment - rentTax;
+
+    holdOpexTotal+=opex; interestTotal+=interest; rentTaxTotal+=rentTax;
+
+    // deposit side-pocket (positive CF rolls in; negative = external injection)
+    fd*=(1+S.fdRate/100);
+    var inj=0;
+    if(netCF>0) fd+=netCF; else inj=-netCF;
+
+    // ── REIT mirror ──
+    var divW = Vw*(S.reitYield/100);
+    var divI = Vi*(S.reitYield/100);
+    var divNetW = divW*(1-reitDivRate);
+    var divNetI = divI*(1-reitDivRate);
+    reitDivTaxTotal += divW*reitDivRate;
+    Vw*=(1+S.reitGrowth/100); Vi*=(1+S.reitGrowth/100);
+    // DRIP into wealth path
+    var dripCost = divNetW*reitBuyRate; reitTxnTotal+=dripCost;
+    Vw += divNetW - dripCost;
+    // mirror injection into both paths
+    if(inj>0){ var ic=inj*reitBuyRate; reitTxnTotal+=ic*2; Vw+=inj-ic; Vi+=inj-ic; }
+
+    // physical raw CF (for IRR)
+    var physFlow = netCF;
+    // reit raw CF: receives divNetI as cash, injects inj
+    var reitFlow = divNetI - inj;
+
+    // ── terminal / sale at year t ──
+    salePrice = price*Math.pow(1+g,t);
+    saleAgent = salePrice*D.agentFeeRate*(1+D.sstRate);
+    saleLegal = legalFee(salePrice);
+    var sellCosts = saleAgent+saleLegal;
+    remainLoan = mort.balance[t];
+    var buyIncidental = motStamp + buyerLegal;      // RPGT deductible acquisition cost
+    var sellIncidental = sellCosts;
+    var chargeableGain = salePrice - price - buyIncidental - sellIncidental;
+    var waiver = Math.max(D.rpgtExemptMin, chargeableGain*D.rpgtExemptPct);
+    var netGain = Math.max(0, chargeableGain - waiver);
+    rpgt = netGain*rpgtRate(t, foreigner);
+    netSaleProceeds = salePrice - remainLoan - sellCosts - rpgt;
+
+    // liquidation net worth curve
+    series.years.push(t);
+    series.phys.push(netSaleProceeds + fd);
+    var reitSell = reitSellCost(Vw);
+    series.reit.push(Vw - reitSell);
+
+    // record raw CF (final year adds terminal)
+    if(t===N){
+      physCF.push(physFlow + netSaleProceeds);
+      var reitTermIrr = Vi - reitSellCost(Vi);
+      reitCF.push(reitFlow + reitTermIrr);
+    } else {
+      physCF.push(physFlow);
+      reitCF.push(reitFlow);
+    }
+  }
+
+  var physTerminal = netSaleProceeds + fd;
+  var reitTerminal = Vw - reitSellCost(Vw);
+  var physIRR = irr(physCF);
+  var reitIRR = irr(reitCF);
+
+  return {
+    foreigner:foreigner, price:price, ltv:ltv, down:down, loan:L, mRate:mRate,
+    motStamp:motStamp, buyerLegal:buyerLegal, loanStamp:loanStamp, loanLegal:loanLegal,
+    valuation:valuation, consent:consent, buyInCosts:buyInCosts, outlay0:outlay0,
+    holdOpexTotal:holdOpexTotal, interestTotal:interestTotal, rentTaxTotal:rentTaxTotal,
+    saleAgent:saleAgent, saleLegal:saleLegal, rpgt:rpgt, remainLoan:remainLoan,
+    salePrice:salePrice, netSaleProceeds:netSaleProceeds, fdFinal:fd,
+    reitInvest0:reitInvest0, reitTxnTotal:reitTxnTotal, reitDivTaxTotal:reitDivTaxTotal,
+    physTerminal:physTerminal, reitTerminal:reitTerminal, physIRR:physIRR, reitIRR:reitIRR,
+    series:series, rentTaxRate:rentTaxRate, reitDivRate:reitDivRate
+  };
+}
+
+/* ═══════════════ STATE + UI ═══════════════ */
+var S = {identity:'local', years:10, leverage:70, marginalRate:24, price:800000,
+  grossYield:5.0, priceGrowth:2.0, reitYield:5.5, reitGrowth:1.5, mortgageRate:4.2,
+  vacancy:8, fdRate:3.0, regime:'new'};
+var curLang='en';
+var LAST=null;
+
+function rm(n){ if(!isFinite(n)) return '—'; return 'RM '+Math.round(n).toLocaleString('en-MY'); }
+function rmM(n){ if(!isFinite(n)) return '—'; if(Math.abs(n)>=1e6) return 'RM '+(n/1e6).toFixed(2)+'M'; return 'RM '+Math.round(n).toLocaleString('en-MY'); }
+function pct(n){ if(!isFinite(n)) return '—'; return (n*100).toFixed(1)+'%'; }
+function T(en,zh){ return curLang==='zh'?zh:en; }
+
+function segSet(id, key, val, isNum){
+  document.querySelectorAll('#'+id+' button').forEach(function(b){ b.classList.toggle('active', b.dataset.v===val); });
+  S[key] = isNum ? parseFloat(val) : val;
+}
+
+function syncControls(){
+  // identity-dependent UI
+  var foreigner = S.identity==='foreigner';
+  document.getElementById('ctrlTax').style.display = foreigner?'none':'';
+  document.getElementById('ctrlTaxFixed').style.display = foreigner?'':'none';
+  // leverage 90 disabled for foreigner
+  var lev90 = document.querySelector('#segLev button[data-v="90"]');
+  lev90.disabled = foreigner;
+  document.getElementById('levNote').style.display = foreigner?'':'none';
+  if(foreigner && S.leverage>70){ S.leverage=70; document.querySelectorAll('#segLev button').forEach(function(b){b.classList.toggle('active',b.dataset.v==='70');}); }
+  // price floor for foreigner
+  var pin=document.getElementById('inPrice');
+  if(foreigner && S.price<DEFAULTS.foreignerFloor){ S.price=DEFAULTS.foreignerFloor; pin.value=DEFAULTS.foreignerFloor; }
+  document.getElementById('priceNote').style.display = (foreigner)?'':'none';
+}
+
+function render(){
+  syncControls();
+  var m=computeScenario(S); LAST=m;
+  var physWin = m.physTerminal >= m.reitTerminal;
+
+  // ── KPI ──
+  var kpi=document.getElementById('kpiRow');
+  var wLbl=T('WINNER','勝出');
+  kpi.innerHTML=
+    '<div class="kpibox'+(physWin?' win':'')+'">'+(physWin?'<span class="winbadge">'+wLbl+'</span>':'')+
+      '<div class="kl2">'+T('Physical property','實體房產')+'</div>'+
+      '<div class="kv2">'+rmM(m.physTerminal)+'</div>'+
+      '<div class="ks2">'+T('terminal net worth','期末淨值')+'</div></div>'+
+    '<div class="kpibox'+(!physWin?' win':'')+'">'+(!physWin?'<span class="winbadge">'+wLbl+'</span>':'')+
+      '<div class="kl2">'+T('M-REIT portfolio','M-REIT 組合')+'</div>'+
+      '<div class="kv2">'+rmM(m.reitTerminal)+'</div>'+
+      '<div class="ks2">'+T('terminal net worth','期末淨值')+'</div></div>'+
+    '<div class="kpibox">'+
+      '<div class="kl2">'+T('Physical IRR','實體 IRR')+'</div>'+
+      '<div class="kv2 '+(m.physIRR>=0?'pos':'neg')+'">'+pct(m.physIRR)+'</div>'+
+      '<div class="ks2">'+T('annualised return','年化報酬')+'</div></div>'+
+    '<div class="kpibox">'+
+      '<div class="kl2">'+T('REIT IRR','REIT IRR')+'</div>'+
+      '<div class="kv2 '+(m.reitIRR>=0?'pos':'neg')+'">'+pct(m.reitIRR)+'</div>'+
+      '<div class="ks2">'+T('annualised return','年化報酬')+'</div></div>';
+
+  // ── detail table ──
+  var tb=document.querySelector('#detailTbl tbody');
+  var row=function(lbl,pv,rv,cls){ return '<tr'+(cls?' class="'+cls+'"':'')+'><td class="lbl">'+lbl+'</td><td class="num">'+pv+'</td><td class="num">'+rv+'</td></tr>'; };
+  var dash='—';
+  var html='';
+  html+=row('<b>'+T('Year-0 cash out','Year 0 出資')+'</b>', '<b>'+rm(m.outlay0)+'</b>', '<b>'+rm(m.reitInvest0)+'</b>','sum');
+  html+=row(T('· MOT stamp duty','· MOT 印花稅'), rm(m.motStamp), dash);
+  html+=row(T('· Buyer legal fee','· 買方律師費'), rm(m.buyerLegal), dash);
+  html+=row(T('· Loan stamp + legal','· 貸款印花＋律師'), rm(m.loanStamp+m.loanLegal), dash);
+  html+=row(T('· Valuation'+(m.consent?' + state consent':''),'· 估價'+(m.consent?'＋州同意書':'')), rm(m.valuation+m.consent), dash);
+  html+=row(T('· Down payment','· 頭期款'), rm(m.down), dash);
+  html+=row(T('· REIT buy fee','· REIT 買入費'), dash, rm(reitBuyCost(m.reitInvest0)));
+  html+=row('<b>'+T('Holding-period costs','持有期成本')+'</b>','','','sum');
+  html+=row(T('Operating costs (mgmt/tax/insure/repair)','營運成本（管理／稅費／保險／修繕）'), rm(m.holdOpexTotal), dash);
+  html+=row(T('Mortgage interest','房貸利息'), rm(m.interestTotal), dash);
+  html+=row(T('Rental income tax','租金所得稅')+' ('+(m.rentTaxRate*100).toFixed(0)+'%)', rm(m.rentTaxTotal), dash);
+  html+=row(T('REIT dividend tax','REIT 配息稅')+' ('+(m.reitDivRate*100).toFixed(0)+'%)', dash, rm(m.reitDivTaxTotal));
+  html+=row(T('REIT transaction costs','REIT 交易成本'), dash, rm(m.reitTxnTotal));
+  html+=row('<b>'+T('Exit (Year '+S.years+')','出場（第 '+S.years+' 年）')+'</b>','','','sum');
+  html+=row(T('Sale price','售價'), rm(m.salePrice), dash);
+  html+=row(T('Selling agent + legal','賣出仲介＋律師'), '−'+rm(m.saleAgent+m.saleLegal), dash);
+  html+=row(T('RPGT','RPGT'), '−'+rm(m.rpgt), T('none (no CGT)','無（免資本利得稅）'));
+  html+=row(T('Loan repaid','清償餘貸'), '−'+rm(m.remainLoan), dash);
+  html+=row(T('Deposit side-pocket','定存側袋'), '+'+rm(m.fdFinal), dash);
+  html+=row('<b>'+T('Terminal net worth','期末淨值')+'</b>','<b>'+rm(m.physTerminal)+'</b>','<b>'+rm(m.reitTerminal)+'</b>','sum');
+  tb.innerHTML=html;
+
+  // ── insight numbers ──
+  // ins1: cost of reform for high-bracket local
+  (function(){
+    var deltaTxt;
+    if(!m.foreigner){
+      var mNew=computeScenario(Object.assign({},S,{regime:'new'}));
+      var mOld=computeScenario(Object.assign({},S,{regime:'old'}));
+      var d=mNew.reitTerminal - mOld.reitTerminal;
+      deltaTxt = (d<0?'−':'+')+rm(Math.abs(d)).replace('RM ','RM ')+T(' in REIT terminal worth for you.',' 的 REIT 期末淨值。');
+    } else {
+      deltaTxt = T('(switch to Local to size this on your own bracket).','（切到本國人以你自己的級距估算）。');
+    }
+    var e1=document.getElementById('ins1Local'); if(e1) e1.textContent=curLang==='en'?deltaTxt:'';
+    var e1z=document.getElementById('ins1LocalZh'); if(e1z) e1z.textContent=curLang==='zh'?deltaTxt:'';
+  })();
+  // ins2: foreigner stamp
+  (function(){
+    var mf=m.foreigner?m:computeScenario(Object.assign({},S,{identity:'foreigner'}));
+    var txt=rm(mf.motStamp)+T(' (8% of '+rmM(mf.price)+')',T('（'+rmM(mf.price)+' 的 8%）','（'+rmM(mf.price)+' 的 8%）'));
+    var e=document.getElementById('ins2Stamp'); if(e) e.textContent=curLang==='en'?rm(mf.motStamp)+' (8% of '+rmM(mf.price)+')':'';
+    var ez=document.getElementById('ins2StampZh'); if(ez) ez.textContent=curLang==='zh'?rm(mf.motStamp)+'（'+rmM(mf.price)+' 的 8%）':'';
+  })();
+  // ins3: RPGT Y5 vs Y10 for local
+  (function(){
+    var base=Object.assign({},S,{identity:'local'});
+    var m5=computeScenario(Object.assign({},base,{years:5}));
+    var m10=computeScenario(Object.assign({},base,{years:10}));
+    var d=m5.rpgt - m10.rpgt; // Y5 has 15%, Y10 has 0
+    var txt=rm(Math.abs(d));
+    var e=document.getElementById('ins3Rpgt'); if(e) e.textContent=curLang==='en'?txt+' (RM'+Math.round(m5.rpgt).toLocaleString('en-MY')+' at Y5 vs RM0 at Y6+)':'';
+    var ez=document.getElementById('ins3RpgtZh'); if(ez) ez.textContent=curLang==='zh'?txt+'（第 5 年 RM'+Math.round(m5.rpgt).toLocaleString('en-MY')+' vs 第 6 年起 RM0）':'';
+  })();
+
+  drawCharts();
+}
+
+/* ═══════════════ CHARTS ═══════════════ */
+var C={navy:'#0d2244',navyMid:'#234a86',gold:'#b8924a',goldHi:'#cda85f',green:'#15803d',
+  amber:'#a16207',red:'#b91c1c',blue:'#1d4ed8',muted:'#6b7a92',grid:'#ece5d4',track:'#e5dfd0',text:'#0c1521'};
+var FONT="Inter, 'Noto Sans TC', sans-serif";
+function ax(o){ return Object.assign({color:C.muted,fontFamily:FONT,fontSize:11},o||{}); }
+var baseTip={backgroundColor:'#fff',borderColor:C.track,borderWidth:1,padding:[8,11],
+  textStyle:{color:C.navy,fontSize:11,fontFamily:FONT},
+  extraCssText:'box-shadow:0 8px 24px rgba(13,34,68,.10);border-radius:8px'};
+function fmtRM(v){ if(Math.abs(v)>=1e6) return 'RM'+(v/1e6).toFixed(1)+'M'; if(Math.abs(v)>=1e3) return 'RM'+Math.round(v/1e3)+'K'; return 'RM'+Math.round(v); }
+var allCharts=[];
+function mk(id){ var el=document.getElementById(id); if(!el) return null; var c=echarts.init(el); allCharts.push(c); return c; }
+
+function drawCharts(){
+  allCharts.forEach(function(c){ if(c) c.dispose(); });
+  allCharts=[];
+  if(!LAST) return;
+  var m=LAST, s=m.series;
+
+  // ── Chart 1: wealth curve ──
+  var c1=mk('chartWealth');
+  if(c1){
+    c1.setOption({
+      tooltip:Object.assign({trigger:'axis',valueFormatter:function(v){return fmtRM(v);}},baseTip),
+      legend:{top:2,textStyle:ax(),icon:'roundRect',itemWidth:12,itemHeight:6,
+        data:[T('Physical property','實體房產'),T('M-REIT','M-REIT')]},
+      grid:{left:8,right:16,top:38,bottom:24,containLabel:true},
+      xAxis:{type:'category',boundaryGap:false,data:s.years.map(function(y){return T('Yr','第')+y+(curLang==='zh'?' 年':'');}),
+        axisLine:{lineStyle:{color:C.track}},axisTick:{show:false},axisLabel:ax({fontSize:10})},
+      yAxis:{type:'value',axisLine:{show:false},axisTick:{show:false},
+        splitLine:{lineStyle:{color:C.grid,type:'dashed'}},axisLabel:ax({formatter:function(v){return fmtRM(v);}})},
+      series:[
+        {name:T('Physical property','實體房產'),type:'line',smooth:true,symbol:'circle',symbolSize:5,
+          data:s.phys.map(function(v){return Math.round(v);}),lineStyle:{width:2.5,color:C.navy},itemStyle:{color:C.navy},
+          areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(13,34,68,.14)'},{offset:1,color:'rgba(13,34,68,0)'}])}},
+        {name:T('M-REIT','M-REIT'),type:'line',smooth:true,symbol:'circle',symbolSize:5,
+          data:s.reit.map(function(v){return Math.round(v);}),lineStyle:{width:2.5,color:C.gold},itemStyle:{color:C.gold}}
+      ]
+    });
+  }
+
+  // ── Chart 2: cost breakdown (horizontal stacked) ──
+  var c2=mk('chartCost');
+  if(c2){
+    var phys={
+      buy:m.buyInCosts, hold:m.holdOpexTotal, interest:m.interestTotal,
+      rentTax:m.rentTaxTotal, sell:m.saleAgent+m.saleLegal, rpgt:m.rpgt
+    };
+    var reit={ txn:m.reitTxnTotal, divTax:m.reitDivTaxTotal };
+    var cats=[T('M-REIT','M-REIT'), T('Physical','實體房產')];
+    var comps=[
+      {name:T('Buy fees & stamp','買入費＋印花'),col:C.navy,   d:[0, phys.buy]},
+      {name:T('Holding costs','持有成本'),      col:C.navyMid, d:[0, phys.hold]},
+      {name:T('Mortgage interest','房貸利息'),  col:C.blue,    d:[0, phys.interest]},
+      {name:T('Rental tax','租金稅'),           col:C.amber,   d:[0, phys.rentTax]},
+      {name:T('Selling fees','賣出費'),          col:C.gold,    d:[0, phys.sell]},
+      {name:T('RPGT','RPGT'),                    col:C.red,     d:[0, phys.rpgt]},
+      {name:T('REIT txn cost','REIT 交易費'),    col:C.goldHi,  d:[reit.txn, 0]},
+      {name:T('Dividend tax','配息稅'),          col:C.green,   d:[reit.divTax, 0]}
+    ];
+    c2.setOption({
+      tooltip:Object.assign({trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v?fmtRM(v):'';}},baseTip),
+      legend:{top:2,textStyle:ax({fontSize:10}),icon:'circle',itemWidth:8,itemHeight:8,type:'scroll',width:'90%'},
+      grid:{left:8,right:24,top:56,bottom:8,containLabel:true},
+      xAxis:{type:'value',axisLine:{show:false},axisTick:{show:false},splitLine:{lineStyle:{color:C.grid,type:'dashed'}},axisLabel:ax({formatter:function(v){return fmtRM(v);}})},
+      yAxis:{type:'category',data:cats,axisLine:{lineStyle:{color:C.track}},axisTick:{show:false},axisLabel:ax({fontWeight:600})},
+      series:comps.map(function(cp,i){ return {name:cp.name,type:'bar',stack:'x',data:cp.d,itemStyle:{color:cp.col,borderRadius:i===0||i===comps.length-1?[0,0,0,0]:[0,0,0,0]},barMaxWidth:44}; })
+    });
+  }
+}
+
+/* ═══════════════ WIRING ═══════════════ */
+function setLang(lang){
+  curLang=lang;
+  document.body.classList.toggle('zh', lang==='zh');
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  try{localStorage.setItem('lang',lang);}catch(e){}
+  render();
+}
+
+var advMap={grossYield:['%',1],priceGrowth:['%',1],vacancy:['%',0],reitYield:['%',1],reitGrowth:['%',1],mortgageRate:['%',1],fdRate:['%',1]};
+function syncAdvChips(){
+  Object.keys(advMap).forEach(function(k){
+    var el=document.getElementById('v-'+k); if(!el) return;
+    var dec=advMap[k][1]; el.textContent=(S[k].toFixed(dec))+advMap[k][0];
+    if(k==='mortgageRate' && S.identity==='foreigner') el.textContent+=' → '+(S.mortgageRate+DEFAULTS.foreignerRatePremium).toFixed(1)+'%';
+  });
+}
+
+window.addEventListener('load', function(){
+  // segmented controls
+  document.querySelectorAll('#segId button').forEach(function(b){ b.addEventListener('click',function(){ segSet('segId','identity',b.dataset.v,false); syncAdvChips(); render(); }); });
+  document.querySelectorAll('#segYears button').forEach(function(b){ b.addEventListener('click',function(){ segSet('segYears','years',b.dataset.v,true); render(); }); });
+  document.querySelectorAll('#segLev button').forEach(function(b){ b.addEventListener('click',function(){ if(b.disabled) return; segSet('segLev','leverage',b.dataset.v,true); render(); }); });
+  document.querySelectorAll('#segRegime button').forEach(function(b){ b.addEventListener('click',function(){ segSet('segRegime','regime',b.dataset.v,false); render(); }); });
+  // price & tax
+  document.getElementById('inPrice').addEventListener('input',function(){ S.price=parseFloat(this.value)||0; render(); });
+  document.getElementById('inTax').addEventListener('change',function(){ S.marginalRate=parseFloat(this.value); render(); });
+  // advanced sliders
+  Object.keys(advMap).forEach(function(k){
+    var el=document.getElementById('s-'+k); if(!el) return;
+    el.addEventListener('input',function(){ S[k]=parseFloat(this.value); syncAdvChips(); render(); });
+  });
+  // language
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.addEventListener('click',function(){ setLang(b.dataset.lang); }); });
+
+  syncAdvChips();
+  var lang='en'; try{ lang=localStorage.getItem('lang')||'en'; }catch(e){}
+  setLang(lang);
+});
+window.addEventListener('resize', function(){ allCharts.forEach(function(c){ if(c) c.resize(); }); });
+</script>
+
+</body>
+</html>
