@@ -10,7 +10,7 @@
 
 ## 部署
 - Repo: github.com/keigoks-ivan/malaysia-property
-- 網站: myproperty.investmquest.com（Cloudflare Pages 自動 deploy）
+- 網站：myproperty.investmquest.com（Cloudflare Pages 自動 deploy）
 - Push 到 main 後約 1-2 分鐘生效
 
 ## 現行站點結構（2026-07，站已收斂為 KL/MY 專站）
