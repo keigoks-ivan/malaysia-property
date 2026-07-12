@@ -6066,6 +6066,1124 @@
     }
    ],
    "scoring_due": "2029-07"
+  },
+  "us_pilot": {
+   "strategy": "US single-market depth pilot. Train 1975-1999 (only place where tuning is allowed, fully logged) -> freeze -> test 2000-2025 exactly once. Test period NOT touched in Phase A.",
+   "data_sources": {
+    "price": "FHFA all-transactions HPI, FRED USSTHPI, 1975Q1- (Case-Shiller CSUSHPINSA 1987- retained as cross-check)",
+    "volume": "Census new one-family houses sold HSN1F (NAR history unavailable on FRED, disclosed) + months supply MSACSR",
+    "credit": "Z.1 home mortgage liabilities HHMSDODNS, quarterly YoY",
+    "rates": "MORTGAGE30US; real = minus CPIAUCSL YoY",
+    "supply_stock": "HOUST, COMPUTSA, TTLHH (census-break caveat carried over), homeowner vacancy RHVRUSQ156N (fixes the v2 gross-vacancy defect)",
+    "cohort": "UN WPP 2024 ages 25-39 (auxiliary series, not in the tension score)",
+    "valuation": "USSTHPI / per-capita nominal disposable income (A229RC0Q052SBEA) - basis declared; median-income series only starts 1984, so DPI per capita chosen for full-sample uniformity"
+   },
+   "structure_frozen": {
+    "tension_score": "0-4: homeowner vacancy <= P_low pctile of trailing 40q; months supply <= P_low pctile; 10-yr cumulative (formation-completions) > 0; valuation < trailing-40q median. Components with <32 of 40 quarters available score 0 (early-sample valuation windows)",
+    "FL1_state": "credit YoY local extremes (+/-4q, dedup 4q), confirmation at extreme+2q; state machine: rising from trough-confirmation, falling from peak-confirmation",
+    "phases": "precedence fixed: overheat > ignition > primed > cooling. overheat = hpi YoY >= P_hi pctile (40q) AND valuation > K2 x trailing median; ignition = tension >= K1 and credit rising; primed = tension >= K1 and credit not rising; cooling = credit falling",
+    "annual_inputs": "gap uses annual values held constant within the year (declared, not interpolation)"
+   },
+   "tuning_log": {
+    "grid": "K1 in {2,3}, P_low in {20,30,40}, P_hi in {70,80}, K2 in {1.0,1.05,1.10} = 36 trials, all recorded",
+    "objective": "A = median fwd-12q return (primed+ignition) minus (overheat+cooling), judgments to 1996Q4; B = +5 if 1988-89 mode phase is overheat, +5 if 1992-94 mode is primed/cooling; C = -100 if phase coverage < 50%. Ties broken by first-in-grid order (most permissive config)",
+    "trials": [
+     {
+      "K1": 2,
+      "P_low": 20,
+      "P_hi": 70,
+      "K2": 1.0,
+      "A_sep": 2.95,
+      "B_hist": 5,
+      "coverage": 0.74,
+      "score": 7.95,
+      "n_primed_ign": 31,
+      "n_over_cool": 32
+     },
+     {
+      "K1": 2,
+      "P_low": 20,
+      "P_hi": 70,
+      "K2": 1.05,
+      "A_sep": 2.95,
+      "B_hist": 5,
+      "coverage": 0.74,
+      "score": 7.95,
+      "n_primed_ign": 31,
+      "n_over_cool": 32
+     },
+     {
+      "K1": 2,
+      "P_low": 20,
+      "P_hi": 70,
+      "K2": 1.1,
+      "A_sep": 2.95,
+      "B_hist": 5,
+      "coverage": 0.74,
+      "score": 7.95,
+      "n_primed_ign": 31,
+      "n_over_cool": 32
+     },
+     {
+      "K1": 2,
+      "P_low": 20,
+      "P_hi": 80,
+      "K2": 1.0,
+      "A_sep": 2.95,
+      "B_hist": 5,
+      "coverage": 0.74,
+      "score": 7.95,
+      "n_primed_ign": 31,
+      "n_over_cool": 32
+     },
+     {
+      "K1": 2,
+      "P_low": 20,
+      "P_hi": 80,
+      "K2": 1.05,
+      "A_sep": 2.95,
+      "B_hist": 5,
+      "coverage": 0.74,
+      "score": 7.95,
+      "n_primed_ign": 31,
+      "n_over_cool": 32
+     },
+     {
+      "K1": 2,
+      "P_low": 20,
+      "P_hi": 80,
+      "K2": 1.1,
+      "A_sep": 2.95,
+      "B_hist": 5,
+      "coverage": 0.74,
+      "score": 7.95,
+      "n_primed_ign": 31,
+      "n_over_cool": 32
+     },
+     {
+      "K1": 2,
+      "P_low": 30,
+      "P_hi": 70,
+      "K2": 1.0,
+      "A_sep": 0.87,
+      "B_hist": 5,
+      "coverage": 0.76,
+      "score": 5.87,
+      "n_primed_ign": 37,
+      "n_over_cool": 27
+     },
+     {
+      "K1": 2,
+      "P_low": 30,
+      "P_hi": 70,
+      "K2": 1.05,
+      "A_sep": 0.87,
+      "B_hist": 5,
+      "coverage": 0.76,
+      "score": 5.87,
+      "n_primed_ign": 37,
+      "n_over_cool": 27
+     },
+     {
+      "K1": 2,
+      "P_low": 30,
+      "P_hi": 70,
+      "K2": 1.1,
+      "A_sep": 0.87,
+      "B_hist": 5,
+      "coverage": 0.76,
+      "score": 5.87,
+      "n_primed_ign": 37,
+      "n_over_cool": 27
+     },
+     {
+      "K1": 2,
+      "P_low": 30,
+      "P_hi": 80,
+      "K2": 1.0,
+      "A_sep": 0.87,
+      "B_hist": 5,
+      "coverage": 0.76,
+      "score": 5.87,
+      "n_primed_ign": 37,
+      "n_over_cool": 27
+     },
+     {
+      "K1": 2,
+      "P_low": 30,
+      "P_hi": 80,
+      "K2": 1.05,
+      "A_sep": 0.87,
+      "B_hist": 5,
+      "coverage": 0.76,
+      "score": 5.87,
+      "n_primed_ign": 37,
+      "n_over_cool": 27
+     },
+     {
+      "K1": 2,
+      "P_low": 30,
+      "P_hi": 80,
+      "K2": 1.1,
+      "A_sep": 0.87,
+      "B_hist": 5,
+      "coverage": 0.76,
+      "score": 5.87,
+      "n_primed_ign": 37,
+      "n_over_cool": 27
+     },
+     {
+      "K1": 2,
+      "P_low": 40,
+      "P_hi": 70,
+      "K2": 1.0,
+      "A_sep": 0.85,
+      "B_hist": 5,
+      "coverage": 0.78,
+      "score": 5.85,
+      "n_primed_ign": 41,
+      "n_over_cool": 25
+     },
+     {
+      "K1": 2,
+      "P_low": 40,
+      "P_hi": 70,
+      "K2": 1.05,
+      "A_sep": 0.85,
+      "B_hist": 5,
+      "coverage": 0.78,
+      "score": 5.85,
+      "n_primed_ign": 41,
+      "n_over_cool": 25
+     },
+     {
+      "K1": 2,
+      "P_low": 40,
+      "P_hi": 70,
+      "K2": 1.1,
+      "A_sep": 0.85,
+      "B_hist": 5,
+      "coverage": 0.78,
+      "score": 5.85,
+      "n_primed_ign": 41,
+      "n_over_cool": 25
+     },
+     {
+      "K1": 2,
+      "P_low": 40,
+      "P_hi": 80,
+      "K2": 1.0,
+      "A_sep": 0.85,
+      "B_hist": 5,
+      "coverage": 0.78,
+      "score": 5.85,
+      "n_primed_ign": 41,
+      "n_over_cool": 25
+     },
+     {
+      "K1": 2,
+      "P_low": 40,
+      "P_hi": 80,
+      "K2": 1.05,
+      "A_sep": 0.85,
+      "B_hist": 5,
+      "coverage": 0.78,
+      "score": 5.85,
+      "n_primed_ign": 41,
+      "n_over_cool": 25
+     },
+     {
+      "K1": 2,
+      "P_low": 40,
+      "P_hi": 80,
+      "K2": 1.1,
+      "A_sep": 0.85,
+      "B_hist": 5,
+      "coverage": 0.78,
+      "score": 5.85,
+      "n_primed_ign": 41,
+      "n_over_cool": 25
+     },
+     {
+      "K1": 3,
+      "P_low": 30,
+      "P_hi": 70,
+      "K2": 1.0,
+      "A_sep": -1.83,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.17,
+      "n_primed_ign": 19,
+      "n_over_cool": 37
+     },
+     {
+      "K1": 3,
+      "P_low": 30,
+      "P_hi": 70,
+      "K2": 1.05,
+      "A_sep": -1.83,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.17,
+      "n_primed_ign": 19,
+      "n_over_cool": 37
+     },
+     {
+      "K1": 3,
+      "P_low": 30,
+      "P_hi": 70,
+      "K2": 1.1,
+      "A_sep": -1.83,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.17,
+      "n_primed_ign": 19,
+      "n_over_cool": 37
+     },
+     {
+      "K1": 3,
+      "P_low": 30,
+      "P_hi": 80,
+      "K2": 1.0,
+      "A_sep": -1.83,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.17,
+      "n_primed_ign": 19,
+      "n_over_cool": 37
+     },
+     {
+      "K1": 3,
+      "P_low": 30,
+      "P_hi": 80,
+      "K2": 1.05,
+      "A_sep": -1.83,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.17,
+      "n_primed_ign": 19,
+      "n_over_cool": 37
+     },
+     {
+      "K1": 3,
+      "P_low": 30,
+      "P_hi": 80,
+      "K2": 1.1,
+      "A_sep": -1.83,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.17,
+      "n_primed_ign": 19,
+      "n_over_cool": 37
+     },
+     {
+      "K1": 3,
+      "P_low": 40,
+      "P_hi": 70,
+      "K2": 1.0,
+      "A_sep": -1.95,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.05,
+      "n_primed_ign": 21,
+      "n_over_cool": 35
+     },
+     {
+      "K1": 3,
+      "P_low": 40,
+      "P_hi": 70,
+      "K2": 1.05,
+      "A_sep": -1.95,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.05,
+      "n_primed_ign": 21,
+      "n_over_cool": 35
+     },
+     {
+      "K1": 3,
+      "P_low": 40,
+      "P_hi": 70,
+      "K2": 1.1,
+      "A_sep": -1.95,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.05,
+      "n_primed_ign": 21,
+      "n_over_cool": 35
+     },
+     {
+      "K1": 3,
+      "P_low": 40,
+      "P_hi": 80,
+      "K2": 1.0,
+      "A_sep": -1.95,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.05,
+      "n_primed_ign": 21,
+      "n_over_cool": 35
+     },
+     {
+      "K1": 3,
+      "P_low": 40,
+      "P_hi": 80,
+      "K2": 1.05,
+      "A_sep": -1.95,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.05,
+      "n_primed_ign": 21,
+      "n_over_cool": 35
+     },
+     {
+      "K1": 3,
+      "P_low": 40,
+      "P_hi": 80,
+      "K2": 1.1,
+      "A_sep": -1.95,
+      "B_hist": 5,
+      "coverage": 0.58,
+      "score": 3.05,
+      "n_primed_ign": 21,
+      "n_over_cool": 35
+     },
+     {
+      "K1": 3,
+      "P_low": 20,
+      "P_hi": 70,
+      "K2": 1.0,
+      "A_sep": -2.18,
+      "B_hist": 5,
+      "coverage": 0.53,
+      "score": 2.82,
+      "n_primed_ign": 12,
+      "n_over_cool": 39
+     },
+     {
+      "K1": 3,
+      "P_low": 20,
+      "P_hi": 70,
+      "K2": 1.05,
+      "A_sep": -2.18,
+      "B_hist": 5,
+      "coverage": 0.53,
+      "score": 2.82,
+      "n_primed_ign": 12,
+      "n_over_cool": 39
+     },
+     {
+      "K1": 3,
+      "P_low": 20,
+      "P_hi": 70,
+      "K2": 1.1,
+      "A_sep": -2.18,
+      "B_hist": 5,
+      "coverage": 0.53,
+      "score": 2.82,
+      "n_primed_ign": 12,
+      "n_over_cool": 39
+     },
+     {
+      "K1": 3,
+      "P_low": 20,
+      "P_hi": 80,
+      "K2": 1.0,
+      "A_sep": -2.18,
+      "B_hist": 5,
+      "coverage": 0.53,
+      "score": 2.82,
+      "n_primed_ign": 12,
+      "n_over_cool": 39
+     },
+     {
+      "K1": 3,
+      "P_low": 20,
+      "P_hi": 80,
+      "K2": 1.05,
+      "A_sep": -2.18,
+      "B_hist": 5,
+      "coverage": 0.53,
+      "score": 2.82,
+      "n_primed_ign": 12,
+      "n_over_cool": 39
+     },
+     {
+      "K1": 3,
+      "P_low": 20,
+      "P_hi": 80,
+      "K2": 1.1,
+      "A_sep": -2.18,
+      "B_hist": 5,
+      "coverage": 0.53,
+      "score": 2.82,
+      "n_primed_ign": 12,
+      "n_over_cool": 39
+     }
+    ],
+    "chosen": {
+     "K1": 2,
+     "P_low": 20,
+     "P_hi": 70,
+     "K2": 1.0
+    },
+    "honest_notes": [
+     "OVERHEAT NEVER FIRES in training under any grid config: the P_hi/K2 columns are degenerate (identical scores across K2). The national FHFA index dilutes the bicoastal late-80s boom and the valuation ratio stayed below its trailing median, so the overheat structure cannot describe the 1988-89 episode at national level. Structure is frozen per spec; recorded as a known limitation going into the test period.",
+     "B scored 5 of 10: the 1992-94 stagnation check passed (mode primed/cooling), the 1988-89 overheat check failed.",
+     "1989Q1-1989Q4 mislabelled primed immediately before the 1990 top - a training-period wrong-way signal, recorded.",
+     "What the chosen config does describe correctly: cooling through 1979Q3-1982Q3 (the rate-shock pullback), primed 1982Q4 -> ignition 1983Q3 (the recovery), primed/ignition through 1992-1998 (the long early-90s repair and late-90s upturn)."
+    ]
+   },
+   "training_results": {
+    "phase_fwd12_diagnostics": {
+     "none": {
+      "n": 25,
+      "median": 32.3,
+      "q1": 16.2,
+      "q3": 40.4
+     },
+     "cooling": {
+      "n": 32,
+      "median": 12.1,
+      "q1": 9.4,
+      "q3": 13.1
+     },
+     "primed": {
+      "n": 14,
+      "median": 9.5,
+      "q1": 8.4,
+      "q3": 14.6
+     },
+     "ignition": {
+      "n": 17,
+      "median": 18.7,
+      "q1": 14.8,
+      "q3": 19.6
+     }
+    },
+    "separation_A_pp": 2.95,
+    "coverage": 0.74,
+    "timeline_compact": "1975-1979Q2 none/warmup | 1979Q3-1982Q3 cooling | 1982Q4 primed -> 1983Q3-1986Q1 ignition | 1986-1987 mixed | 1987Q4-1988 cooling | 1989 primed (wrong-way, noted) | 1990-1991 cooling | 1992-1995 primed/ignition | 1996Q3-1999 ignition/primed"
+   },
+   "phase_status": "Phase A complete: data + training calibration + tuning log. AWAITING REVIEW. Test period 2000-2025 will be run exactly once after approval; results published regardless of outcome, no second pass.",
+   "test_period": {
+    "one_shot_declaration": "The 2000-2025 test period was run EXACTLY ONCE on 2026-07-12 with the frozen config (K1=2, P_low=20, P_hi=70, K2=1.0). This test set is now consumed: any future rule revision must declare test contamination and cannot re-use this period as out-of-sample evidence.",
+    "scorecard": {
+     "c_coverage": {
+      "value": 0.87,
+      "threshold": "fail if <0.50",
+      "verdict": "PASS"
+     },
+     "a_phase_separation_fwd12q": {
+      "primary_nominal": {
+       "up_group_median_primed_ignition": 19.0,
+       "down_group_median_overheat_cooling": 15.2,
+       "separation_pp": 3.8,
+       "n": [
+        18,
+        66
+       ],
+       "by_phase": {
+        "primed": {
+         "n": 8,
+         "median": 39.9,
+         "q1": 31.5,
+         "q3": 41.0
+        },
+        "ignition": {
+         "n": 10,
+         "median": 16.9
+        },
+        "overheat": {
+         "n": 42,
+         "median": 19.0
+        },
+        "cooling": {
+         "n": 24,
+         "median": -7.9,
+         "q1": -13.1,
+         "q3": 2.3
+        },
+        "none": {
+         "n": 9,
+         "median": 16.0
+        }
+       },
+       "verdict": "WEAK on the union metric (+3.8pp): the up-group edge is diluted because overheat quarters (n=42) still returned +19% median. The separation that IS strong is cooling vs everything: cooling median -7.9% (q1 -13.1) against +16% to +40% for all other phases. The clock is better at saying get out than pick the moment."
+      },
+      "supplementary_real_cpi_deflated": {
+       "up_med": 13.2,
+       "dn_med": 8.7,
+       "separation_pp": 4.5,
+       "by_phase_median": {
+        "primed": 19.6,
+        "ignition": 12.1,
+        "overheat": 9.9,
+        "cooling": -13.0,
+        "none": 12.3
+       },
+       "note": "supplementary disclosure, not the primary metric (training used nominal); ordering identical, cooling gap widens"
+      }
+     },
+     "b_turn_detection": {
+      "top_2006_07": {
+       "fhfa_hard_top": "2007Q1 (Test 6 dating rule)",
+       "clock_switch": "cooling onset 2006Q3",
+       "lead": "+2 quarters AHEAD",
+       "verdict": "HIT"
+      },
+      "bottom_2011_12": {
+       "fhfa_hard_bottom": "2012Q2",
+       "clock_switch": "first primed 2013Q1 (ignition 2014Q1)",
+       "lead": "-3 quarters LATE (-7 for ignition)",
+       "verdict": "MISS/LAG - the clock confirmed the bottom, it did not anticipate it"
+      },
+      "freeze_2022": {
+       "note": "FHFA national nominal never produced a hard or soft price top in 2022-24 (YoY fell 17%->~3% but not below 2%), so there is no price turn to measure against. Against the event (the 2022Q3 mortgage-rate shock) the clock reached cooling 2023Q2, roughly 3 quarters after; it also flickered overheat 2024Q1 and cooling again 2024Q2-Q4.",
+       "verdict": "PARTIAL/AMBIGUOUS - recorded as-is"
+      }
+     },
+     "tracked_limitation_overheat_at_bubble": {
+      "question": "training could never light overheat; what did the clock show at the 2004-06 bubble top?",
+      "answer": "OVERHEAT LIT CONTINUOUSLY 2003Q4-2006Q2 (valuation above trailing median with K2=1.0 and YoY >=70th pctile), then flipped to cooling 2006Q3, two quarters before the price top. The single most important observation of the test: the structure that was untunable in training (a degenerate parameter) fired correctly at national scale in the one episode that mattered.",
+      "caveat": "this is the overheat rule's FIRST and ONLY validation - one episode; K2=1.0 was chosen by tie-break, not by training evidence. And overheat is a state, not a timer: it stayed lit for 10 quarters before the top in 2003-06, and lit again 2016-2018 and 2021-2023 with benign outcomes."
+     },
+     "current_reading_2026Q1": {
+      "phase": "none",
+      "tension": 0,
+      "credit": "rising",
+      "note": "zero tension components lit (vacancy and months-supply off lows, gap negative, valuation above median) while credit rises - consistent with the v2 freeze finding of ignition-on-negative-tension. The pilot rules also give the US no phase today."
+     }
+    },
+    "test_phases_quarterly": {
+     "2000Q1": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2000Q2": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2000Q3": {
+      "t": 2,
+      "ph": "primed",
+      "st": "falling"
+     },
+     "2000Q4": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "falling"
+     },
+     "2001Q1": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2001Q2": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2001Q3": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2001Q4": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2002Q1": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2002Q2": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2002Q3": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2002Q4": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2003Q1": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2003Q2": {
+      "t": 1,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2003Q3": {
+      "t": 1,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2003Q4": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2004Q1": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "falling"
+     },
+     "2004Q2": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "falling"
+     },
+     "2004Q3": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "falling"
+     },
+     "2004Q4": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "falling"
+     },
+     "2005Q1": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2005Q2": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2005Q3": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2005Q4": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2006Q1": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2006Q2": {
+      "t": 0,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2006Q3": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2006Q4": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2007Q1": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2007Q2": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2007Q3": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2007Q4": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2008Q1": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2008Q2": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2008Q3": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2008Q4": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2009Q1": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2009Q2": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2009Q3": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2009Q4": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2010Q1": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2010Q2": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2010Q3": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2010Q4": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2011Q1": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2011Q2": {
+      "t": 1,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2011Q3": {
+      "t": 1,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2011Q4": {
+      "t": 1,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2012Q1": {
+      "t": 1,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2012Q2": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2012Q3": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2012Q4": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2013Q1": {
+      "t": 2,
+      "ph": "primed",
+      "st": "falling"
+     },
+     "2013Q2": {
+      "t": 1,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2013Q3": {
+      "t": 1,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2013Q4": {
+      "t": 1,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2014Q1": {
+      "t": 2,
+      "ph": "ignition",
+      "st": "rising"
+     },
+     "2014Q2": {
+      "t": 3,
+      "ph": "ignition",
+      "st": "rising"
+     },
+     "2014Q3": {
+      "t": 3,
+      "ph": "ignition",
+      "st": "rising"
+     },
+     "2014Q4": {
+      "t": 3,
+      "ph": "ignition",
+      "st": "rising"
+     },
+     "2015Q1": {
+      "t": 4,
+      "ph": "ignition",
+      "st": "rising"
+     },
+     "2015Q2": {
+      "t": 3,
+      "ph": "ignition",
+      "st": "rising"
+     },
+     "2015Q3": {
+      "t": 3,
+      "ph": "ignition",
+      "st": "rising"
+     },
+     "2015Q4": {
+      "t": 3,
+      "ph": "ignition",
+      "st": "rising"
+     },
+     "2016Q1": {
+      "t": 2,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2016Q2": {
+      "t": 2,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2016Q3": {
+      "t": 3,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2016Q4": {
+      "t": 2,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2017Q1": {
+      "t": 2,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2017Q2": {
+      "t": 2,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2017Q3": {
+      "t": 2,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2017Q4": {
+      "t": 2,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2018Q1": {
+      "t": 2,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2018Q2": {
+      "t": 2,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2018Q3": {
+      "t": 2,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2018Q4": {
+      "t": 2,
+      "ph": "ignition",
+      "st": "rising"
+     },
+     "2019Q1": {
+      "t": 2,
+      "ph": "primed",
+      "st": "falling"
+     },
+     "2019Q2": {
+      "t": 2,
+      "ph": "primed",
+      "st": "falling"
+     },
+     "2019Q3": {
+      "t": 2,
+      "ph": "primed",
+      "st": "falling"
+     },
+     "2019Q4": {
+      "t": 2,
+      "ph": "primed",
+      "st": "falling"
+     },
+     "2020Q1": {
+      "t": 2,
+      "ph": "overheat",
+      "st": "falling"
+     },
+     "2020Q2": {
+      "t": 3,
+      "ph": "primed",
+      "st": "falling"
+     },
+     "2020Q3": {
+      "t": 3,
+      "ph": "primed",
+      "st": "falling"
+     },
+     "2020Q4": {
+      "t": 3,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2021Q1": {
+      "t": 3,
+      "ph": "ignition",
+      "st": "rising"
+     },
+     "2021Q2": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2021Q3": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2021Q4": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2022Q1": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2022Q2": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "rising"
+     },
+     "2022Q3": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "falling"
+     },
+     "2022Q4": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "falling"
+     },
+     "2023Q1": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "falling"
+     },
+     "2023Q2": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2023Q3": {
+      "t": 1,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2023Q4": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2024Q1": {
+      "t": 1,
+      "ph": "overheat",
+      "st": "falling"
+     },
+     "2024Q2": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2024Q3": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2024Q4": {
+      "t": 0,
+      "ph": "cooling",
+      "st": "falling"
+     },
+     "2025Q1": {
+      "t": 0,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2025Q2": {
+      "t": 0,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2025Q3": {
+      "t": 0,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2025Q4": {
+      "t": 0,
+      "ph": "none",
+      "st": "rising"
+     },
+     "2026Q1": {
+      "t": 0,
+      "ph": "none",
+      "st": "rising"
+     }
+    },
+    "honest_summary": "One-shot verdict: the pilot PARTIALLY passes. Coverage 87% (pass). Turn detection 1 hit (2006 top, +2q lead), 1 miss (2011-12 bottom, 3-7q late), 1 ambiguous (2022 freeze, no price turn to score). Phase separation weak on the pre-declared union metric (+3.8pp nominal, +4.5pp real) but strong and clean on the cooling side (-7.9% vs +16~40% everything else). The clock as calibrated is an exit instrument, not an entry timer. Rules now frozen and contaminated for this period; next step per strategy is transplant to market #2 (Taiwan) rather than re-tuning."
+   }
   }
  },
  "test5_full_matrix": [
