@@ -1,0 +1,634 @@
+{
+ "meta": {
+  "title": "Universal five-factor framework backtest — phase 1 dataset",
+  "period": "2010–2024",
+  "built": "2026-07-12",
+  "iron_rules": [
+   "every number carries a source",
+   "no interpolation; unverifiable cells excluded and disclosed",
+   "ranks and patterns only, no point estimates",
+   "scoring rules defined before application"
+  ],
+  "method_notes": [
+   "HPI rule: 2024 avg ÷ 2010 avg − 1 on BIS nominal quarterly (TW: Sinyi Q4/Q4)",
+   "Drawdown: two rules computed; headline = max drawdown in 2021Q1–2024Q4. The first rule (peak = max in 2021–2023 window) hid drawdowns for markets that recovered to new highs inside the window (AU); the switch is a window-artifact fix made before correlations were interpreted, both variants stored",
+   "Test 2 sample rule: numeric floating-rate stock shares only (IMF Table A5 + RBA + HKMA); JP variant excluded because BOJ never tightened in 2022–23, so the treatment was not applied"
+  ]
+ },
+ "markets": [
+  {
+   "code": "US",
+   "name": "United States",
+   "hpi_2010_2024": {
+    "value_pct": 130.2,
+    "rule": "BIS nominal residential property index: 2024 quarterly avg ÷ 2010 quarterly avg − 1",
+    "source": "BIS residential property statistics via FRED QUSN628BIS",
+    "url": "https://fred.stlouisfed.org/series/QUSN628BIS"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 5.54,
+    "period": "2010–2024",
+    "source": "World Bank FM.LBL.BMNY.ZG",
+    "url": "https://data.worldbank.org/indicator/FM.LBL.BMNY.ZG"
+   },
+   "real_policy_rate_avg": {
+    "value_pct": -1.33,
+    "policy_avg": 1.251,
+    "cpi_avg": 2.58,
+    "period": "2010–2024 monthly avg",
+    "source": "BIS central bank policy rates (WS_CBPOL bulk) − World Bank CPI FP.CPI.TOTL.ZG",
+    "url": "https://data.bis.org/topics/CBPOL",
+    "note": null
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "max_drawdown_pct": -0.5,
+    "peak": "2022-04-01",
+    "trough": "2022-07-01",
+    "rule": "max peak-to-trough decline in BIS nominal quarterly index, window 2021Q1–2024Q4",
+    "source": "computed from BIS via FRED QUSN628BIS"
+   },
+   "floating_share": {
+    "value_pct": 4.7,
+    "basis": "stock 2022Q4",
+    "source": "IMF WP/2025/024 Table A5 (100 − fixed-rate stock share)",
+    "url": "https://www.imf.org/-/media/files/publications/wp/2025/english/wpiea2025024-print-pdf.pdf"
+   }
+  },
+  {
+   "code": "GB",
+   "name": "United Kingdom",
+   "hpi_2010_2024": {
+    "value_pct": 66.0,
+    "rule": "BIS nominal residential property index: 2024 quarterly avg ÷ 2010 quarterly avg − 1",
+    "source": "BIS residential property statistics via FRED QGBN628BIS",
+    "url": "https://fred.stlouisfed.org/series/QGBN628BIS"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 3.39,
+    "period": "2010–2024",
+    "source": "World Bank FM.LBL.BMNY.ZG",
+    "url": "https://data.worldbank.org/indicator/FM.LBL.BMNY.ZG"
+   },
+   "real_policy_rate_avg": {
+    "value_pct": -1.69,
+    "policy_avg": 1.116,
+    "cpi_avg": 2.81,
+    "period": "2010–2024 monthly avg",
+    "source": "BIS central bank policy rates (WS_CBPOL bulk) − World Bank CPI FP.CPI.TOTL.ZG",
+    "url": "https://data.bis.org/topics/CBPOL",
+    "note": null
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "max_drawdown_pct": -3.6,
+    "peak": "2022-10-01",
+    "trough": "2024-01-01",
+    "rule": "max peak-to-trough decline in BIS nominal quarterly index, window 2021Q1–2024Q4",
+    "source": "computed from BIS via FRED QGBN628BIS"
+   },
+   "floating_share": {
+    "value_pct": 14.5,
+    "basis": "stock 2022Q4",
+    "source": "IMF WP/2025/024 Table A5 (100 − fixed-rate stock share)",
+    "url": "https://www.imf.org/-/media/files/publications/wp/2025/english/wpiea2025024-print-pdf.pdf"
+   }
+  },
+  {
+   "code": "AU",
+   "name": "Australia",
+   "hpi_2010_2024": {
+    "value_pct": 92.7,
+    "rule": "BIS nominal residential property index: 2024 quarterly avg ÷ 2010 quarterly avg − 1",
+    "source": "BIS residential property statistics via FRED QAUN628BIS",
+    "url": "https://fred.stlouisfed.org/series/QAUN628BIS"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 7.44,
+    "period": "2010–2024",
+    "source": "World Bank FM.LBL.BMNY.ZG",
+    "url": "https://data.worldbank.org/indicator/FM.LBL.BMNY.ZG"
+   },
+   "real_policy_rate_avg": {
+    "value_pct": -0.29,
+    "policy_avg": 2.394,
+    "cpi_avg": 2.68,
+    "period": "2010–2024 monthly avg",
+    "source": "BIS central bank policy rates (WS_CBPOL bulk) − World Bank CPI FP.CPI.TOTL.ZG",
+    "url": "https://data.bis.org/topics/CBPOL",
+    "note": null
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "max_drawdown_pct": -6.4,
+    "peak": "2022-04-01",
+    "trough": "2023-01-01",
+    "rule": "max peak-to-trough decline in BIS nominal quarterly index, window 2021Q1–2024Q4",
+    "source": "computed from BIS via FRED QAUN628BIS"
+   },
+   "floating_share": {
+    "value_pct": 60.0,
+    "basis": "stock est. from RBA: fixed share peaked at almost 40% in early 2022",
+    "source": "RBA SMP Feb-2023 Box A",
+    "url": "https://www.rba.gov.au/publications/smp/2023/feb/box-a-mortgage-interest-payments-in-advanced-economies.html"
+   }
+  },
+  {
+   "code": "NZ",
+   "name": "New Zealand",
+   "hpi_2010_2024": {
+    "value_pct": 133.9,
+    "rule": "BIS nominal residential property index: 2024 quarterly avg ÷ 2010 quarterly avg − 1",
+    "source": "BIS residential property statistics via FRED QNZN628BIS",
+    "url": "https://fred.stlouisfed.org/series/QNZN628BIS"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 6.65,
+    "period": "2010–2024 (12 available yrs)",
+    "source": "World Bank FM.LBL.BMNY.ZG",
+    "url": "https://data.worldbank.org/indicator/FM.LBL.BMNY.ZG"
+   },
+   "real_policy_rate_avg": {
+    "value_pct": 0.0,
+    "policy_avg": 2.482,
+    "cpi_avg": 2.48,
+    "period": "2010–2024 monthly avg",
+    "source": "BIS central bank policy rates (WS_CBPOL bulk) − World Bank CPI FP.CPI.TOTL.ZG",
+    "url": "https://data.bis.org/topics/CBPOL",
+    "note": null
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "max_drawdown_pct": -14.0,
+    "peak": "2021-10-01",
+    "trough": "2023-04-01",
+    "rule": "max peak-to-trough decline in BIS nominal quarterly index, window 2021Q1–2024Q4",
+    "source": "computed from BIS via FRED QNZN628BIS"
+   },
+   "floating_share": {
+    "value_pct": 59.4,
+    "basis": "stock 2022Q4; fixed = >12m fixation",
+    "source": "IMF WP/2025/024 Table A5 (100 − fixed-rate stock share)",
+    "url": "https://www.imf.org/-/media/files/publications/wp/2025/english/wpiea2025024-print-pdf.pdf"
+   }
+  },
+  {
+   "code": "CA",
+   "name": "Canada",
+   "hpi_2010_2024": {
+    "value_pct": 112.8,
+    "rule": "BIS nominal residential property index: 2024 quarterly avg ÷ 2010 quarterly avg − 1",
+    "source": "BIS residential property statistics via FRED QCAN628BIS",
+    "url": "https://fred.stlouisfed.org/series/QCAN628BIS"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 7.44,
+    "period": "2010–2023 avg monthly YoY",
+    "source": "OECD M3 via FRED MABMM301CAM189S",
+    "url": "https://fred.stlouisfed.org/series/MABMM301CAM189S"
+   },
+   "real_policy_rate_avg": {
+    "value_pct": -0.87,
+    "policy_avg": 1.444,
+    "cpi_avg": 2.31,
+    "period": "2010–2024 monthly avg",
+    "source": "BIS central bank policy rates (WS_CBPOL bulk) − World Bank CPI FP.CPI.TOTL.ZG",
+    "url": "https://data.bis.org/topics/CBPOL",
+    "note": null
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "max_drawdown_pct": -16.7,
+    "peak": "2022-01-01",
+    "trough": "2024-10-01",
+    "rule": "max peak-to-trough decline in BIS nominal quarterly index, window 2021Q1–2024Q4",
+    "source": "computed from BIS via FRED QCAN628BIS"
+   },
+   "floating_share": {
+    "value_pct": 36.1,
+    "basis": "stock 2022Q4",
+    "source": "IMF WP/2025/024 Table A5 (100 − fixed-rate stock share)",
+    "url": "https://www.imf.org/-/media/files/publications/wp/2025/english/wpiea2025024-print-pdf.pdf"
+   }
+  },
+  {
+   "code": "JP",
+   "name": "Japan",
+   "hpi_2010_2024": {
+    "value_pct": 38.6,
+    "rule": "BIS nominal residential property index: 2024 quarterly avg ÷ 2010 quarterly avg − 1",
+    "source": "BIS residential property statistics via FRED QJPN628BIS",
+    "url": "https://fred.stlouisfed.org/series/QJPN628BIS"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 2.85,
+    "period": "2010–2024",
+    "source": "World Bank FM.LBL.BMNY.ZG",
+    "url": "https://data.worldbank.org/indicator/FM.LBL.BMNY.ZG"
+   },
+   "real_policy_rate_avg": {
+    "value_pct": -0.9,
+    "policy_avg": -0.036,
+    "cpi_avg": 0.86,
+    "period": "2010–2024 monthly avg",
+    "source": "BIS central bank policy rates (WS_CBPOL bulk) − World Bank CPI FP.CPI.TOTL.ZG",
+    "url": "https://data.bis.org/topics/CBPOL",
+    "note": "JP: BIS series covers 140 of 180 months (no single policy rate pre-2013); not interpolated"
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "max_drawdown_pct": -1.2,
+    "peak": "2024-07-01",
+    "trough": "2024-10-01",
+    "rule": "max peak-to-trough decline in BIS nominal quarterly index, window 2021Q1–2024Q4",
+    "source": "computed from BIS via FRED QJPN628BIS"
+   },
+   "floating_share": {
+    "value_pct": 74.0,
+    "basis": "stock 2022Q1",
+    "source": "IMF WP/2025/024 Table A5 (100 − fixed-rate stock share)",
+    "url": "https://www.imf.org/-/media/files/publications/wp/2025/english/wpiea2025024-print-pdf.pdf"
+   }
+  },
+  {
+   "code": "KR",
+   "name": "Korea",
+   "hpi_2010_2024": {
+    "value_pct": 42.5,
+    "rule": "BIS nominal residential property index: 2024 quarterly avg ÷ 2010 quarterly avg − 1",
+    "source": "BIS residential property statistics via FRED QKRN628BIS",
+    "url": "https://fred.stlouisfed.org/series/QKRN628BIS"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 6.75,
+    "period": "2010–2024",
+    "source": "World Bank FM.LBL.BMNY.ZG",
+    "url": "https://data.worldbank.org/indicator/FM.LBL.BMNY.ZG"
+   },
+   "real_policy_rate_avg": {
+    "value_pct": -0.02,
+    "policy_avg": 2.065,
+    "cpi_avg": 2.08,
+    "period": "2010–2024 monthly avg",
+    "source": "BIS central bank policy rates (WS_CBPOL bulk) − World Bank CPI FP.CPI.TOTL.ZG",
+    "url": "https://data.bis.org/topics/CBPOL",
+    "note": null
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "max_drawdown_pct": -7.7,
+    "peak": "2022-07-01",
+    "trough": "2024-04-01",
+    "rule": "max peak-to-trough decline in BIS nominal quarterly index, window 2021Q1–2024Q4",
+    "source": "computed from BIS via FRED QKRN628BIS"
+   },
+   "floating_share": {
+    "value_pct": 65.1,
+    "basis": "stock 2022Q4",
+    "source": "IMF WP/2025/024 Table A5 (100 − fixed-rate stock share)",
+    "url": "https://www.imf.org/-/media/files/publications/wp/2025/english/wpiea2025024-print-pdf.pdf"
+   }
+  },
+  {
+   "code": "SG",
+   "name": "Singapore",
+   "hpi_2010_2024": {
+    "value_pct": 55.1,
+    "rule": "BIS nominal residential property index: 2024 quarterly avg ÷ 2010 quarterly avg − 1",
+    "source": "BIS residential property statistics via FRED QSGN628BIS",
+    "url": "https://fred.stlouisfed.org/series/QSGN628BIS"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 6.21,
+    "period": "2010–2020 only",
+    "source": "World Bank FM.LBL.BMNY.ZG",
+    "url": "https://data.worldbank.org/indicator/FM.LBL.BMNY.ZG"
+   },
+   "real_policy_rate_avg": {
+    "status": "excluded",
+    "reason": "SG: no policy interest rate (MAS operates an exchange-rate regime)"
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "max_drawdown_pct": -0.7,
+    "peak": "2024-04-01",
+    "trough": "2024-07-01",
+    "rule": "max peak-to-trough decline in BIS nominal quarterly index, window 2021Q1–2024Q4",
+    "source": "computed from BIS via FRED QSGN628BIS"
+   },
+   "floating_share": {
+    "status": "annotated_only",
+    "note": ">90% of NEW loans SORA-pegged (flow basis, not stock) — excluded from stock-based Spearman",
+    "source": "MAS data via market reports"
+   }
+  },
+  {
+   "code": "HK",
+   "name": "Hong Kong SAR",
+   "hpi_2010_2024": {
+    "value_pct": 97.9,
+    "rule": "BIS nominal residential property index: 2024 quarterly avg ÷ 2010 quarterly avg − 1",
+    "source": "BIS residential property statistics via FRED QHKN628BIS",
+    "url": "https://fred.stlouisfed.org/series/QHKN628BIS"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 7.02,
+    "period": "2010–2024",
+    "source": "World Bank FM.LBL.BMNY.ZG",
+    "url": "https://data.worldbank.org/indicator/FM.LBL.BMNY.ZG"
+   },
+   "real_policy_rate_avg": {
+    "value_pct": -1.03,
+    "policy_avg": 1.64,
+    "cpi_avg": 2.67,
+    "period": "2010–2024 monthly avg",
+    "source": "BIS central bank policy rates (WS_CBPOL bulk) − World Bank CPI FP.CPI.TOTL.ZG",
+    "url": "https://data.bis.org/topics/CBPOL",
+    "note": null
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "max_drawdown_pct": -27.0,
+    "peak": "2021-07-01",
+    "trough": "2024-10-01",
+    "rule": "max peak-to-trough decline in BIS nominal quarterly index, window 2021Q1–2024Q4",
+    "source": "computed from BIS via FRED QHKN628BIS"
+   },
+   "floating_share": {
+    "value_pct": 100.0,
+    "basis": "HKMA: mortgage rates set off HIBOR or Prime, both floating",
+    "source": "HKMA (qualitative: all mortgage pricing floats on HIBOR/Prime)",
+    "url": "https://www.hkma.gov.hk/eng/smart-consumers/mortgages/"
+   }
+  },
+  {
+   "code": "TW",
+   "name": "Taiwan",
+   "hpi_2010_2024": {
+    "value_pct": 124.7,
+    "rule": "Sinyi index 2010Q4=75.41 → 2024Q4=169.46 (Q4/Q4; only clean public vintage)",
+    "source": "Sinyi Housing Price Index via NCCU Real Estate Research Center",
+    "url": "https://rer.nccu.edu.tw/article/detail/2210058784414"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 5.38,
+    "period": "2010–2024, 180 monthly obs",
+    "source": "CBC 貨幣總計數 M2(日平均)年增率",
+    "url": "https://www.cbc.gov.tw/public/data/economic/statistics/key/ms.pdf"
+   },
+   "real_policy_rate_avg": {
+    "status": "excluded",
+    "reason": "TW: not in BIS CBPOL; CBC discount-rate average not independently verified — excluded rather than estimated"
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "status": "excluded",
+    "reason": "not in BIS panel; Sinyi annual Q4 vintage too coarse for peak-trough"
+   },
+   "floating_share": {
+    "status": "excluded",
+    "reason": "no clean official stock share found (TH, TW)"
+   }
+  },
+  {
+   "code": "TH",
+   "name": "Thailand",
+   "hpi_2010_2024": {
+    "value_pct": 78.1,
+    "rule": "BIS nominal residential property index: 2024 quarterly avg ÷ 2010 quarterly avg − 1",
+    "source": "BIS residential property statistics via FRED QTHN628BIS",
+    "url": "https://fred.stlouisfed.org/series/QTHN628BIS"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 6.3,
+    "period": "2010–2024",
+    "source": "World Bank FM.LBL.BMNY.ZG",
+    "url": "https://data.worldbank.org/indicator/FM.LBL.BMNY.ZG"
+   },
+   "real_policy_rate_avg": {
+    "value_pct": 0.14,
+    "policy_avg": 1.74,
+    "cpi_avg": 1.6,
+    "period": "2010–2024 monthly avg",
+    "source": "BIS central bank policy rates (WS_CBPOL bulk) − World Bank CPI FP.CPI.TOTL.ZG",
+    "url": "https://data.bis.org/topics/CBPOL",
+    "note": null
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "max_drawdown_pct": -0.8,
+    "peak": "2023-10-01",
+    "trough": "2024-01-01",
+    "rule": "max peak-to-trough decline in BIS nominal quarterly index, window 2021Q1–2024Q4",
+    "source": "computed from BIS via FRED QTHN628BIS"
+   },
+   "floating_share": {
+    "status": "excluded",
+    "reason": "no clean official stock share found (TH, TW)"
+   }
+  },
+  {
+   "code": "MY",
+   "name": "Malaysia",
+   "hpi_2010_2024": {
+    "value_pct": 125.1,
+    "rule": "BIS nominal residential property index: 2024 quarterly avg ÷ 2010 quarterly avg − 1",
+    "source": "BIS residential property statistics via FRED QMYN628BIS",
+    "url": "https://fred.stlouisfed.org/series/QMYN628BIS",
+    "crosscheck": "BIS MY series is compiled from NAPIC MHPI (2010=100 → ~225 in 2024); site pages use the same NAPIC lineage"
+   },
+   "broad_money_avg_growth": {
+    "value_pct": 5.91,
+    "period": "2010–2024",
+    "source": "World Bank FM.LBL.BMNY.ZG",
+    "url": "https://data.worldbank.org/indicator/FM.LBL.BMNY.ZG"
+   },
+   "real_policy_rate_avg": {
+    "value_pct": 0.79,
+    "policy_avg": 2.811,
+    "cpi_avg": 2.02,
+    "period": "2010–2024 monthly avg",
+    "source": "BIS central bank policy rates (WS_CBPOL bulk) − World Bank CPI FP.CPI.TOTL.ZG",
+    "url": "https://data.bis.org/topics/CBPOL",
+    "note": null
+   },
+   "supply_proxy": {
+    "status": "pending",
+    "note": "Caldera–Johansson (2013) / BIS QR Dec-2024 elasticities exist only as charts in retrieved documents; numeric table not verified in phase 1 — column left empty, no interpolation"
+   },
+   "drawdown_2021_2024": {
+    "max_drawdown_pct": -0.2,
+    "peak": "2021-04-01",
+    "trough": "2021-07-01",
+    "rule": "max peak-to-trough decline in BIS nominal quarterly index, window 2021Q1–2024Q4",
+    "source": "computed from BIS via FRED QMYN628BIS"
+   },
+   "floating_share": {
+    "status": "annotated_only",
+    "note": "predominantly floating (SBR/OPR-linked, 1:1 pass-through by design); official stock % not published — shown as annotation, excluded from Spearman",
+    "source": "BNM SBR framework",
+    "url": "https://www.bnm.gov.my/"
+   }
+  }
+ ],
+ "tests": {
+  "test1_money_vs_price": {
+   "spearman_m2_vs_hpi": {
+    "rho": 0.147,
+    "n": 12
+   },
+   "spearman_realrate_vs_hpi": {
+    "rho": 0.188,
+    "n": 10,
+    "expected_sign": "negative",
+    "observed": "positive — hypothesis NOT supported"
+   },
+   "spearman_composite_vs_hpi": {
+    "rho": 0.224,
+    "n": 10,
+    "composite": "z(M2 growth) − z(real policy rate)"
+   },
+   "verdict": "FAIL/WEAK: money variables alone do not rank 2010–2024 nominal house-price growth across the 12 markets (rho ≈ 0.15–0.22). Largest wrong-way points: MY (highest real rate, near-top price growth), KR (high M2, near-bottom growth), HK (lowest real rate, mid growth). Supports the framework only in its full form: money without the institutional/supply terms has no cross-sectional ranking power."
+  },
+  "test2_downside_stickiness": {
+   "spearman_floating_vs_mdd": {
+    "rho": -0.429,
+    "n": 8
+   },
+   "spearman_excl_JP": {
+    "rho": -0.679,
+    "n": 7,
+    "reason": "BOJ did not tighten; natural experiment condition absent"
+   },
+   "verdict": "SUPPORTED (moderate): among markets that actually tightened, higher floating-rate share ranks with deeper 2021–24 nominal drawdowns (rho −0.68, n=7). MY annotation: predominantly floating yet max drawdown −0.2% — the institutional-stickiness residual (HDA, developer holding) the framework predicts.",
+   "drawdowns_used": {
+    "CA": -16.7,
+    "JP": -1.2,
+    "KR": -7.7,
+    "NZ": -14.0,
+    "GB": -3.6,
+    "US": -0.5,
+    "AU": -6.4,
+    "HK": -27.0
+   }
+  },
+  "test3_corridor_vs_index": {
+   "pairs": [
+    {
+     "pair": "Austin vs US",
+     "source": "Zillow ZHVI metro CSV (raw), computed",
+     "url": "https://files.zillowstatic.com/research/public_csvs/zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv",
+     "numbers": {
+      "austin_run_feb2020_jun2022_pct": 71.2,
+      "austin_peak_to_dec2024_pct": -19.1,
+      "austin_2019_12_to_2024_12_pct": 40.7,
+      "us_2019_12_to_2024_12_pct": 46.9,
+      "us_max_drawdown_pct": "≈0 (monthly ZHVI never fell >2%)"
+     },
+     "read": "corridor overshoots both ways; by end-2024 Austin cumulatively UNDERperforms the national index"
+    },
+    {
+     "pair": "Hsinchu vs Taipei (TW)",
+     "source": "JCIC mortgage data via Great Home news (10-year city table)",
+     "url": "https://www.great-home.com.tw/News/Detail.aspx?Num=4644",
+     "numbers": {
+      "hsinchu_county_2015q3_2024q3_pct": 103,
+      "hsinchu_city_pct": 71,
+      "taipei_city_pct": 7
+     },
+     "read": "science-park corridor +103% vs capital-city core +7% over the same period, same source"
+    },
+    {
+     "pair": "Johor/Penang corridor vs MY national",
+     "status": "partial",
+     "numbers": {
+      "my_national_2019_2024_pct": 14.8,
+      "jb_rts_corridor_2025_single_year_pct": 20.8
+     },
+     "source": "BIS/NAPIC (national, computed 2019 avg→2024 avg); NAPIC via site Market Report (corridor)",
+     "note": "state-level 5-yr NAPIC series to be assembled in phase 2; corridor number is single-year, basis differs — flagged"
+    }
+   ]
+  },
+  "test4_foreign_tax_ratchet": {
+   "type": "documented event timeline (no estimation)",
+   "events": [
+    {
+     "market": "SG",
+     "timeline": "ABSD foreigners: Dec 2011 10% → Jan 2013 15% → Jul 2018 20% → Dec 2021 30% → Apr 2023 60%",
+     "source": "IRAS",
+     "url": "https://www.iras.gov.sg/taxes/stamp-duty/for-property/buying-or-acquiring-property/additional-buyer%27s-stamp-duty-(absd)"
+    },
+    {
+     "market": "CA",
+     "timeline": "BC foreign buyers tax Aug 2016 15% → Feb 2018 20%; federal foreign-buyer purchase ban from Jan 2023",
+     "source": "BC government; Prohibition on the Purchase of Residential Property by Non-Canadians Act",
+     "url": "https://www2.gov.bc.ca/gov/content/taxes/property-taxes/property-transfer-tax/additional-property-transfer-tax"
+    },
+    {
+     "market": "AU",
+     "timeline": "state foreign-purchaser surcharges 7–8% phased in from 2016 (NSW, VIC, QLD)",
+     "source": "state revenue offices",
+     "url": "https://www.revenue.nsw.gov.au/taxes-duties-levies-royalties/transfer-duty/surcharge-purchaser-duty"
+    },
+    {
+     "market": "NZ",
+     "timeline": "foreign-buyer purchase ban (existing homes) from Oct 2018",
+     "source": "Overseas Investment Amendment Act 2018",
+     "url": "https://www.legislation.govt.nz/act/public/2018/0025/latest/whole.html"
+    },
+    {
+     "market": "UK",
+     "timeline": "non-resident SDLT surcharge +2% from Apr 2021",
+     "source": "HMRC",
+     "url": "https://www.gov.uk/guidance/rates-of-stamp-duty-land-tax-for-non-uk-residents"
+    },
+    {
+     "market": "MY",
+     "timeline": "foreign flat MOT stamp rate 4% from 2024 → 8% from 2026",
+     "source": "MOF Budget 2024 / Budget 2026 (site: my/macro chartRatchet)",
+     "url": "https://belanjawan.mof.gov.my/"
+    },
+    {
+     "market": "HK",
+     "timeline": "BSD 15% on non-PR buyers from Oct 2012 → ALL residential stamp duties scrapped Feb 2024 (reverse case: ratchet reversed when fiscal reliance flipped)",
+     "source": "HKSAR 2024-25 Budget",
+     "url": "https://www.budget.gov.hk/2024/eng/budget.html"
+    }
+   ]
+  }
+ }
+}

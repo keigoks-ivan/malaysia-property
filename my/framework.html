@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Framework Backtest | Malaysia Property Monitor</title>
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/kl-theme.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+.wrap{max-width:900px;margin:0 auto;padding:30px 20px 10px}
+body.zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
+.wrap, .wrap p, .wrap li, .lede, .pt li, .src, .narr-p{line-height:2.0}
+.pg-head{margin-bottom:22px}
+.pg-title{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:26px;letter-spacing:-.01em;margin:0 0 10px;line-height:1.3}
+.pg-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.lede{background:linear-gradient(135deg,#0d2244 0%,#173564 100%);color:#fff;border-radius:14px;padding:20px 24px;margin-bottom:32px;font-size:14px;box-shadow:var(--shadow-md)}
+.lede b{color:var(--gold-light);font-weight:600}
+.lede .lk{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+.blk{margin-bottom:34px}
+.blk h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:600;color:var(--navy);font-size:18px;margin:0 0 4px;line-height:1.35}
+.blk .sub{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:1.6}
+.sec-rule{display:flex;align-items:center;gap:12px;margin:40px 0 18px}
+.sec-rule h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:21px;margin:0;white-space:nowrap;line-height:1.3}
+.sec-rule::after{content:'';flex:1;height:1px;background:var(--gold-line)}
+.pull{font-family:'Playfair Display','Noto Serif TC',serif;font-size:17px;line-height:1.7;color:var(--navy);border-left:3px solid var(--gold);padding:3px 0 3px 16px;margin:0 0 18px;font-weight:600}
+.narr-p{font-size:13.5px;color:var(--text-soft);margin:0 0 16px}
+.narr-p b{color:var(--navy);font-weight:600}
+.chartbox{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 10px 10px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.chartbox .ch{height:340px;width:100%}
+.pt{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.pt li{position:relative;padding-left:18px;font-size:13px;color:var(--text-soft)}
+.pt li::before{content:'';position:absolute;left:0;top:13px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.pt li b{color:var(--navy);font-weight:600}
+.pt li.warn::before{background:#b91c1c}.pt li.good::before{background:#15803d}
+.mrow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:2px 0 24px}
+.m{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;min-width:0}
+.m .mn{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;color:var(--navy);line-height:1.2}
+.m .ml{font-size:10px;color:var(--muted);line-height:1.55;margin-top:4px}
+.m .mn.neg{color:#b91c1c}.m .mn.pos{color:#15803d}
+.sysmap{background:var(--bg-section);border:1px solid var(--gold-soft);border-radius:14px;padding:20px 16px;margin:4px 0 14px}
+.sys-flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:7px;justify-content:center}
+.sys-chip{flex:1 1 130px;min-width:120px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 11px;box-shadow:var(--shadow-sm)}
+.sys-chip.root{border-left:3px solid var(--gold)}
+.sys-chip b{display:block;font-size:11.5px;color:var(--navy);font-weight:700;line-height:1.4}
+.sys-chip i{display:block;font-style:normal;font-size:10px;color:var(--muted);line-height:1.5;margin-top:3px}
+.sys-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gold-deep);font-size:14px;font-weight:700;white-space:nowrap}
+@media(max-width:680px){.sys-arrow{flex-basis:100%;transform:rotate(90deg);font-size:12px;margin:1px 0}.sys-chip{flex:1 1 44%}}
+.mtbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 10px}
+.mtbl{min-width:680px;width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.mtbl th{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--gold-deep);text-align:left;padding:10px 14px;border-bottom:2px solid var(--gold-soft);background:var(--bg-section)}
+body.zh .mtbl th{text-transform:none;letter-spacing:0}
+.mtbl td{font-size:12px;color:var(--text-soft);padding:9px 14px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.7}
+.mtbl tr:last-child td{border-bottom:none}
+.mtbl td.who{font-weight:700;color:var(--navy);white-space:nowrap}
+.mtbl td b{color:var(--navy);font-weight:600}
+.mtbl tr.hl td{background:var(--gold-bg)}
+.src{font-size:11px;color:var(--muted);background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:12px 16px;margin-bottom:8px}
+.src a{color:var(--gold-deep)}
+@media(max-width:760px){.mrow{grid-template-columns:repeat(3,1fr)}.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}}
+@media(max-width:440px){.mrow{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/kl-check">
+      <span class="brand-mark">K</span>
+      <span class="brand-text">
+        <span class="brand-name">KL Property Check</span>
+        <span class="brand-by">by InvestMQuest</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="/kl-check"><span class="lang-en">Scorecards</span><span class="lang-zh">評分卡</span></a>
+      <a class="nav-link" href="/my/report"><span class="lang-en">Market Report</span><span class="lang-zh">市場報告</span></a>
+      <a class="nav-link" href="/my/macro"><span class="lang-en">Macro</span><span class="lang-zh">總經</span></a>
+      <a class="nav-link active" href="/my/framework"><span class="lang-en">Framework</span><span class="lang-zh">框架回測</span></a>
+      <a class="nav-link" href="/my/reit-vs-direct"><span class="lang-en">REITs vs Property</span><span class="lang-zh">REIT vs 房產</span></a>
+      <div class="lang-btns">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ── Header ── -->
+  <div class="pg-head">
+    <h1 class="pg-title">
+      <span class="lang-en">The Framework Backtest — Five Factors, Twelve Markets</span>
+      <span class="lang-zh" style="display:none">通用框架回測 · 五因子 × 十二市場</span>
+    </h1>
+    <div class="pg-badges">
+      <span class="kpi-badge badge-blue"><span class="lang-en">2010–2024</span><span class="lang-zh" style="display:none">2010–2024</span></span>
+      <span class="kpi-badge badge-green"><span class="lang-en">Ranks only, no point estimates</span><span class="lang-zh" style="display:none">只測排序，不測點位</span></span>
+      <span class="kpi-badge badge-orange"><span class="lang-en">Updated Jul 2026</span><span class="lang-zh" style="display:none">更新至 2026年7月</span></span>
+    </div>
+  </div>
+
+  <!-- ── Bottom line ── -->
+  <div class="lede">
+    <span class="lk"><span class="lang-en">Bottom line</span><span class="lang-zh" style="display:none">一句話結論</span></span>
+    <span class="lang-en">We generalised this site's Malaysia analysis into a five-factor framework and ran four falsifiable tests on twelve markets with real data. The most valuable finding is a failure: <b>money variables alone have no power to rank 2010–2024 house-price growth across markets</b> (Spearman ρ ≈ 0.15, and the real-rate sign comes out wrong). The framework survives only in its full form, where institutions and supply multiply the money term — and the tests below check that this is not just an excuse.</span>
+    <span class="lang-zh" style="display:none">我們把本站的馬來西亞分析一般化成五因子框架，用真實數據對十二個市場跑了四個可證偽測試。最有價值的發現是一個「不成立」：<b>單靠貨幣變數，完全排不出 2010–2024 各市場的房價漲幅順序</b>（Spearman ρ 約 0.15，實際利率甚至方向相反）。框架只有在完整形式下成立：制度與供給必須乘在貨幣項上。而下面的測試，就是在檢驗這句話不只是藉口。</span>
+  </div>
+
+  <!-- ── Method declaration ── -->
+  <div class="blk">
+    <h2><span class="lang-en">Method, Declared Up Front</span><span class="lang-zh" style="display:none">方法宣言，先講清楚</span></h2>
+    <ul class="pt">
+      <li><span class="lang-en"><b>Ranks and patterns only.</b> We test whether variables order the twelve markets correctly (Spearman rank correlation), never point estimates.</span><span class="lang-zh" style="display:none"><b>只測排序與型態。</b>我們檢驗變數能不能排對十二個市場的順序（Spearman 排名相關），不做點位預測。</span></li>
+      <li><span class="lang-en"><b>Rules defined before application.</b> Index rules, drawdown windows and sample rules were fixed before the correlations were read; the one mid-course rule change (a drawdown window artifact) is disclosed with both variants stored.</span><span class="lang-zh" style="display:none"><b>打分規則先定義後套用。</b>指數換算、回撤視窗與樣本規則在讀相關係數之前就定好；唯一一次中途改規則（回撤視窗假象）已揭露，兩套數字都保存。</span></li>
+      <li><span class="lang-en"><b>Real data or nothing.</b> Every number carries a source (BIS, FRED, World Bank, IMF, official statistics first). Where a clean figure could not be verified, the market is excluded from that test and the exclusion is shown. Nothing is interpolated.</span><span class="lang-zh" style="display:none"><b>只用實際資料。</b>每個數字都帶出處（BIS、FRED、世界銀行、IMF、官方統計優先）。查不到乾淨數字的市場，從該測試剔除並揭露，絕不內插。</span></li>
+      <li><span class="lang-en"><b>Check us.</b> All raw values, sources, rules and exclusions are in <a href="/data/framework-backtest.json">data/framework-backtest.json</a>.</span><span class="lang-zh" style="display:none"><b>歡迎核對。</b>所有原始數值、來源、規則與剔除清單都在 <a href="/data/framework-backtest.json">data/framework-backtest.json</a>。</span></li>
+    </ul>
+  </div>
+
+  <!-- ── The equation ── -->
+  <div class="blk">
+    <h2><span class="lang-en">The Equation Being Tested</span><span class="lang-zh" style="display:none">被檢驗的那條式子</span></h2>
+    <p class="sub"><span class="lang-en">The general form of the model built for Malaysia in the <a href="/my/macro">Macro page</a>, Part 4</span><span class="lang-zh" style="display:none">即<a href="/my/macro">總經頁</a>第四篇為馬來西亞建的模型，一般化之後的形式</span></p>
+    <div class="sysmap">
+      <div class="sys-flow">
+        <div class="sys-chip root"><b><span class="lang-en">Nominal price path</span><span class="lang-zh" style="display:none">名目房價路徑</span></b><i><span class="lang-en">what we rank</span><span class="lang-zh" style="display:none">被排序的對象</span></i></div>
+        <div class="sys-arrow">=</div>
+        <div class="sys-chip"><b><span class="lang-en">Monetary setting</span><span class="lang-zh" style="display:none">貨幣環境</span></b><i><span class="lang-en">real rate × credit structure</span><span class="lang-zh" style="display:none">實際利率 × 信貸結構</span></i></div>
+        <div class="sys-arrow">×</div>
+        <div class="sys-chip"><b><span class="lang-en">Effective demand</span><span class="lang-zh" style="display:none">有效需求</span></b><i><span class="lang-en">income × demography × credit filter</span><span class="lang-zh" style="display:none">收入 × 人口 × 信貸過濾器</span></i></div>
+        <div class="sys-arrow">×</div>
+        <div class="sys-chip"><b><span class="lang-en">Supply elasticity</span><span class="lang-zh" style="display:none">供給彈性</span></b><i><span class="lang-en">who can build</span><span class="lang-zh" style="display:none">誰蓋得出來</span></i></div>
+        <div class="sys-arrow">×</div>
+        <div class="sys-chip"><b><span class="lang-en">Political institutions</span><span class="lang-zh" style="display:none">政治制度</span></b><i><span class="lang-en">who is protected, who is taxed</span><span class="lang-zh" style="display:none">保護誰、稅誰</span></i></div>
+        <div class="sys-arrow">×</div>
+        <div class="sys-chip"><b><span class="lang-en">Money-substitute demand</span><span class="lang-zh" style="display:none">貨幣替代需求</span></b><i><span class="lang-en">property as a store of value</span><span class="lang-zh" style="display:none">房子作為保值載體</span></i></div>
+      </div>
+    </div>
+    <p class="narr-p"><span class="lang-en">The one-line version is "money sets the water level, institutions decide where the water flows". Test 1 checks the first half of that sentence on its own. Tests 2 to 4 check three specific, independent predictions of the second half, so that the multipliers cannot become an all-purpose excuse.</span><span class="lang-zh" style="display:none">一句話版本是「貨幣決定水位，制度決定水流向哪」。Test 1 單獨檢驗前半句。Test 2 到 4 檢驗後半句的三個具體、彼此獨立的預測，讓那些乘數沒有機會變成萬用藉口。</span></p>
+  </div>
+
+  <!-- ── Master data table ── -->
+  <div class="blk">
+    <h2><span class="lang-en">The Dataset — Twelve Markets, 2010–2024</span><span class="lang-zh" style="display:none">數據總表 · 十二市場，2010–2024</span></h2>
+    <p class="sub"><span class="lang-en">HPI = BIS nominal index, 2024 avg ÷ 2010 avg (TW: Sinyi Q4/Q4). Money = broad-money average annual growth. Real rate = average policy rate − average CPI. Drawdown = max nominal peak-to-trough, 2021Q1–2024Q4. Floating = floating-rate mortgage stock share. Full sources in the <a href="/data/framework-backtest.json">JSON</a>.</span><span class="lang-zh" style="display:none">房價＝BIS 名目指數，2024 年均 ÷ 2010 年均（台灣＝信義指數 Q4／Q4）。貨幣＝廣義貨幣年均增速。實際利率＝政策利率均值 − CPI 均值。回撤＝2021Q1–2024Q4 名目最大峰谷。浮動＝浮動利率房貸存量佔比。完整來源見 <a href="/data/framework-backtest.json">JSON</a>。</span></p>
+    <div class="mtbl-wrap">
+    <table class="mtbl">
+      <thead><tr>
+        <th><span class="lang-en">Market</span><span class="lang-zh" style="display:none">市場</span></th>
+        <th><span class="lang-en">HPI 10–24</span><span class="lang-zh" style="display:none">房價 10–24</span></th>
+        <th><span class="lang-en">Money avg</span><span class="lang-zh" style="display:none">貨幣均增</span></th>
+        <th><span class="lang-en">Real rate</span><span class="lang-zh" style="display:none">實際利率</span></th>
+        <th><span class="lang-en">Drawdown 21–24</span><span class="lang-zh" style="display:none">回撤 21–24</span></th>
+        <th><span class="lang-en">Floating %</span><span class="lang-zh" style="display:none">浮動佔比</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="who">US</td><td>+130.2%</td><td>5.54%</td><td>−1.33%</td><td>−0.5%</td><td>4.7</td></tr>
+        <tr><td class="who">GB</td><td>+66.0%</td><td>3.39%</td><td>−1.69%</td><td>−3.6%</td><td>14.5</td></tr>
+        <tr><td class="who">AU</td><td>+92.7%</td><td>7.44%</td><td>−0.29%</td><td>−6.4%</td><td><span class="lang-en">~60 (RBA est.)</span><span class="lang-zh" style="display:none">約 60（RBA 推得）</span></td></tr>
+        <tr><td class="who">NZ</td><td>+133.9%</td><td><span class="lang-en">6.65% (12 yrs)</span><span class="lang-zh" style="display:none">6.65%（12 年）</span></td><td>0.00%</td><td>−14.0%</td><td>59.4</td></tr>
+        <tr><td class="who">CA</td><td>+112.8%</td><td><span class="lang-en">7.44% (10–23)</span><span class="lang-zh" style="display:none">7.44%（10–23）</span></td><td>−0.87%</td><td>−16.7%</td><td>36.1</td></tr>
+        <tr><td class="who">JP</td><td>+38.6%</td><td>2.85%</td><td><span class="lang-en">−0.90% (partial)</span><span class="lang-zh" style="display:none">−0.90%（部分月份）</span></td><td>−1.2%</td><td>74.0</td></tr>
+        <tr><td class="who">KR</td><td>+42.5%</td><td>6.75%</td><td>−0.02%</td><td>−7.7%</td><td>65.1</td></tr>
+        <tr><td class="who">SG</td><td>+55.1%</td><td><span class="lang-en">6.21% (10–20)</span><span class="lang-zh" style="display:none">6.21%（10–20）</span></td><td><span class="lang-en">excluded — no policy rate (FX regime)</span><span class="lang-zh" style="display:none">剔除——無政策利率（匯率制）</span></td><td>−0.7%</td><td><span class="lang-en">flow only — annotated</span><span class="lang-zh" style="display:none">僅流量——註記</span></td></tr>
+        <tr><td class="who">HK</td><td>+97.9%</td><td>7.02%</td><td>−1.03%</td><td>−27.0%</td><td><span class="lang-en">~100 (HKMA)</span><span class="lang-zh" style="display:none">約 100（HKMA）</span></td></tr>
+        <tr><td class="who">TW</td><td><span class="lang-en">+124.7% (Sinyi)</span><span class="lang-zh" style="display:none">+124.7%（信義）</span></td><td><span class="lang-en">5.38% (CBC)</span><span class="lang-zh" style="display:none">5.38%（央行）</span></td><td><span class="lang-en">excluded — not verified</span><span class="lang-zh" style="display:none">剔除——未驗證</span></td><td><span class="lang-en">excluded</span><span class="lang-zh" style="display:none">剔除</span></td><td><span class="lang-en">excluded</span><span class="lang-zh" style="display:none">剔除</span></td></tr>
+        <tr><td class="who">TH</td><td>+78.1%</td><td>6.30%</td><td>+0.14%</td><td>−0.8%</td><td><span class="lang-en">excluded</span><span class="lang-zh" style="display:none">剔除</span></td></tr>
+        <tr class="hl"><td class="who">MY</td><td>+125.1%</td><td>5.91%</td><td><b>+0.79%</b></td><td><b>−0.2%</b></td><td><span class="lang-en">predominantly floating — annotated</span><span class="lang-zh" style="display:none">幾乎全浮動——註記</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sub"><span class="lang-en">The supply-elasticity column is missing entirely: the published estimates (Caldera–Johansson 2013; BIS QR Dec 2024) exist in our retrieved documents only as charts, not verifiable tables, so the column is left empty rather than approximated. See Limitations.</span><span class="lang-zh" style="display:none">供給彈性一欄整欄從缺：既有估計（Caldera–Johansson 2013；BIS 季報 2024/12）在我們取得的文件裡只以圖表形式存在、沒有可核對的數值表，所以整欄留空、不做近似。詳見「限制」節。</span></p>
+  </div>
+
+  <!-- ════════ TEST 1 ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Test 1 · Money vs the Price Ranking — It Fails</span><span class="lang-zh" style="display:none">Test 1 · 貨幣 vs 房價排名 —— 不成立</span></h2></div>
+
+  <p class="pull"><span class="lang-en">This is the headline result of the whole study, and it is a negative one: money alone explains almost nothing about which markets rose most.</span><span class="lang-zh" style="display:none">這是整份研究的頭條結果，而且是個否定的結果：單看貨幣，幾乎解釋不了哪個市場漲得多。</span></p>
+
+  <div class="blk">
+    <h2><span class="lang-en">Method and Result</span><span class="lang-zh" style="display:none">方法與結果</span></h2>
+    <p class="narr-p"><span class="lang-en">Hypothesis (written before computing): markets with faster broad-money growth and lower average real policy rates should rank higher on 2010–2024 nominal house-price growth. Result: Spearman ρ between money growth and price growth is <b>+0.147</b> (n=12). Between the average real policy rate and price growth it is <b>+0.188</b> (n=10) — the hypothesis needs a negative sign, so this is not weak support, it is the wrong direction. A composite score, z(money growth) − z(real rate), reaches only +0.224.</span><span class="lang-zh" style="display:none">假設（計算前寫定）：廣義貨幣增速越快、平均實際政策利率越低的市場，2010–2024 名目房價漲幅排名應該越前。結果：貨幣增速對房價漲幅的 Spearman ρ 是 <b>+0.147</b>（n=12）；平均實際利率對房價漲幅是 <b>+0.188</b>（n=10）。假設要求負號，所以這不是「支持力道弱」，是方向錯了。複合分數 z(貨幣增速)−z(實際利率) 也只有 +0.224。</span></p>
+    <div class="chartbox"><div id="chartT1" class="ch" style="height:320px"></div></div>
+    <p class="narr-p"><span class="lang-en">The scatter shows why. Korea had the second-fastest money growth and nearly the lowest price growth (macroprudential caps did the filtering). Malaysia had the <b>highest average real policy rate in the sample (+0.79%)</b> and still posted near-top price growth. Hong Kong had the loosest real money conditions and only mid-table growth. Whatever ranked these markets, it was not the monetary dial.</span><span class="lang-zh" style="display:none">散點圖說明了原因。南韓的貨幣增速全樣本第二快，房價漲幅卻幾乎墊底（宏觀審慎上限做了過濾）。馬來西亞的<b>平均實際政策利率全樣本最高（+0.79%）</b>，漲幅卻在最前段。香港的實質貨幣條件最鬆，漲幅只在中段。真正替這些市場排序的，不是貨幣那顆旋鈕。</span></p>
+    <p class="narr-p"><span class="lang-en"><b>What this does and does not mean.</b> It kills the standalone claim that "money sets the water level" across markets. It is consistent with the full framework, where credit filters, supply and institutions multiply the money term. But we state the risk honestly: once multipliers are allowed, almost any outcome can be rationalised, and the framework becomes hard to falsify. That is exactly why Tests 2 to 4 exist — each checks one multiplier against an independent prediction, on its own data.</span><span class="lang-zh" style="display:none"><b>這代表什麼、不代表什麼。</b>它否定了「貨幣決定水位」作為單獨命題在跨市場層面的成立。它與框架的完整形式相容：信貸過濾器、供給與制度乘在貨幣項上。但風險要誠實講：一旦允許乘數，幾乎任何結果都能被合理化，框架就變得難以被證偽。這正是 Test 2 到 4 存在的理由：每一個都用獨立資料，檢驗一個乘數的一項獨立預測。</span></p>
+  </div>
+
+  <!-- ════════ TEST 2 ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Test 2 · Downside Stickiness in 2022–23</span><span class="lang-zh" style="display:none">Test 2 · 2022–23 緊縮下的下檔黏性</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The Natural Experiment</span><span class="lang-zh" style="display:none">一場天然實驗</span></h2>
+    <p class="narr-p"><span class="lang-en">The 2022–23 global tightening hit every market with roughly the same shock. Prediction (written first): the higher the floating-rate share of the mortgage stock, the deeper the nominal drawdown. Drawdown rule: maximum nominal peak-to-trough on the BIS quarterly index, window 2021Q1–2024Q4. One disclosed rule change: our first window rule ("peak = max within 2021–2023") hid the drawdown of any market that fell and then recovered to new highs inside the window (Australia), so we switched to standard max-drawdown; both variants are stored in the JSON.</span><span class="lang-zh" style="display:none">2022–23 的全球緊縮，用大致相同的力道打到每個市場。預測（先寫）：房貸存量的浮動利率佔比越高，名目回撤越深。回撤規則：BIS 季度指數在 2021Q1–2024Q4 視窗內的最大峰谷。一次已揭露的規則變更：第一版視窗規則（「峰＝2021–2023 窗內最大值」）會把窗內先跌後創高的市場（澳洲）判成零回撤，所以改用標準最大回撤；兩套數字都存在 JSON 裡。</span></p>
+    <div class="chartbox"><div id="chartT2" class="ch" style="height:300px"></div></div>
+    <p class="narr-p"><span class="lang-en"><b>Result: supported, with a disclosed sample rule.</b> On the eight markets with a numeric floating share, ρ = <b>−0.429</b>. Japan, however, never applied the treatment: the BOJ did not tighten in 2022–23, so a 74%-floating market saw no rate shock. Excluding Japan on that pre-stated ground, ρ = <b>−0.679</b> (n=7) — a clear ranking in the predicted direction. The extremes behave: the US (4.7% floating) barely dipped, Hong Kong (all floating) fell 27%.</span><span class="lang-zh" style="display:none"><b>結果：成立，附帶一條已揭露的樣本規則。</b>八個有數值浮動佔比的市場，ρ = <b>−0.429</b>。但日本根本沒有接受「處置」：BOJ 在 2022–23 沒有緊縮，所以一個 74% 浮動的市場沒有經歷利率衝擊。依這條事先陳述的理由剔除日本後，ρ = <b>−0.679</b>（n=7），排序方向清楚符合預測。兩個極端都對：美國（浮動 4.7%）幾乎沒跌，香港（幾乎全浮動）跌了 27%。</span></p>
+    <p class="narr-p"><span class="lang-en"><b>The Malaysia residual.</b> Malaysia is annotated, not scored: its mortgages are predominantly floating (SBR is pegged 1:1 to the OPR) but no official stock percentage is published. On the prediction, a floating-rate market that got 125bp of hikes should have fallen visibly. Its maximum drawdown was <b>−0.2%</b>. That gap is the institutional stickiness the Malaysia pages describe: the Housing Development Act structure and developer holding behaviour absorb the shock in volumes and unsold stock instead of prices.</span><span class="lang-zh" style="display:none"><b>馬來西亞殘差。</b>馬來西亞是註記點，不入計分：它的房貸幾乎全浮動（SBR 與 OPR 一比一連動），但沒有官方存量佔比可用。照預測，一個吃了 125 個基點升息的浮動利率市場應該明顯下跌，它的最大回撤卻是 <b>−0.2%</b>。這道缺口，就是本站馬來西亞各頁描述的制度性黏性：《房屋發展法》結構與發展商的持有行為，把衝擊吸收在成交量與滯銷餘屋裡，而不是價格裡。</span></p>
+  </div>
+
+  <!-- ════════ TEST 3 ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Test 3 · Corridor vs Index, Inside Countries</span><span class="lang-zh" style="display:none">Test 3 · 國內離散：走廊 vs 大盤</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Three Real Pairs</span><span class="lang-zh" style="display:none">三組真實配對</span></h2>
+    <p class="narr-p"><span class="lang-en">Prediction: industrial corridors explain dispersion inside a country, in both directions — they overshoot up and they overshoot down. Two pairs have clean same-source series; the Malaysian pair is disclosed as partial.</span><span class="lang-zh" style="display:none">預測：產業走廊解釋一國之內的離散，而且是雙向的：上行超漲，下行也超跌。兩組配對有乾淨的同源序列；馬來西亞那組以「部分」揭露。</span></p>
+    <div class="chartbox"><div id="chartT3" class="ch" style="height:280px"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en"><b>Austin vs the US</b> (Zillow ZHVI, computed from the raw file): Austin rose <b>+71.2%</b> from Feb 2020 to its June 2022 peak, then fell <b>−19.1%</b> to Dec 2024, while the national index never drew down more than ~2%. Net result 2019–2024: Austin <b>+40.7%</b>, US <b>+46.9%</b> — after the round trip, the corridor <b>underperforms</b> the index it was supposed to beat.</span><span class="lang-zh" style="display:none"><b>Austin 對 美國大盤</b>（Zillow ZHVI，原始檔自算）：Austin 從 2020 年 2 月到 2022 年 6 月的高點漲了 <b>+71.2%</b>，之後跌 <b>−19.1%</b> 到 2024 年 12 月；全國指數同期回撤不到約 2%。2019–2024 淨結果：Austin <b>+40.7%</b>、美國 <b>+46.9%</b>。一趟來回之後，走廊反而<b>輸給</b>它本來要贏的大盤。</span></li>
+      <li><span class="lang-en"><b>Hsinchu vs Taipei</b> (JCIC mortgage data, same source, 2015Q3–2024Q3): the science-park corridor rose <b>+103%</b> (Hsinchu County; Hsinchu City +71%) while the capital-city core rose <b>+7%</b>. A fourteen-to-one gap inside one country, produced by one industry.</span><span class="lang-zh" style="display:none"><b>新竹 對 台北</b>（聯徵中心房貸資料，同一來源，2015Q3–2024Q3）：科學園區走廊漲了 <b>+103%</b>（新竹縣；新竹市 +71%），首都核心只漲 <b>+7%</b>。同一個國家裡十四倍的差距，由一個產業製造出來。</span></li>
+      <li><span class="lang-en"><b>Johor corridor vs Malaysia national — partial.</b> The national index rose +14.8% over 2019–2024 (BIS/NAPIC); the JB RTS corridor printed +20.8% in 2025 alone (NAPIC, via the <a href="/my/report">Market Report</a>). The bases differ (five-year vs single-year), so this pair is shown in the table only, not charted, until the state-level NAPIC series is assembled.</span><span class="lang-zh" style="display:none"><b>柔佛走廊 對 馬來西亞大盤——部分。</b>全國指數 2019–2024 漲 +14.8%（BIS／NAPIC）；新山 RTS 走廊光 2025 一年就 +20.8%（NAPIC，見<a href="/my/report">市場報告</a>）。兩者口徑不同（五年 對 單年），所以這組只列表、不入圖，等州級 NAPIC 序列補齊。</span></li>
+    </ul>
+    <p class="narr-p"><span class="lang-en"><b>Result: supported, with the honest half attached.</b> Corridors do explain intra-country dispersion. But Austin shows the same mechanism running in reverse: corridor exposure is leverage on an industry, not a one-way ticket. That cuts directly against reading Johor's corridor as guaranteed outperformance.</span><span class="lang-zh" style="display:none"><b>結果：成立，並附上誠實的另一半。</b>走廊確實解釋國內離散。但 Austin 展示了同一個機制反著跑的樣子：走廊曝險是對單一產業的槓桿，不是單程票。這直接打在「柔佛走廊必然跑贏」這種讀法上。</span></p>
+  </div>
+
+  <!-- ════════ TEST 4 ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Test 4 · The Foreign-Buyer Tax Ratchet</span><span class="lang-zh" style="display:none">Test 4 · 外資稅棘輪</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">A Documented Timeline, No Estimation</span><span class="lang-zh" style="display:none">純文件時間軸，不含任何估計</span></h2>
+    <p class="narr-p"><span class="lang-en">Prediction: foreign-buyer taxes ratchet in one direction, and the direction tracks fiscal pressure. Below are the documented steps, each with an official source in the <a href="/data/framework-backtest.json">JSON</a>.</span><span class="lang-zh" style="display:none">預測：外資稅只往一個方向走，而方向跟著財政壓力。以下是有文件可查的每一步，官方出處都在 <a href="/data/framework-backtest.json">JSON</a> 裡。</span></p>
+    <div class="mtbl-wrap">
+    <table class="mtbl">
+      <thead><tr>
+        <th><span class="lang-en">Market</span><span class="lang-zh" style="display:none">市場</span></th>
+        <th><span class="lang-en">Timeline</span><span class="lang-zh" style="display:none">時間軸</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="who">SG</td><td><span class="lang-en">ABSD on foreigners: 2011 10% → 2013 15% → 2018 20% → 2021 30% → 2023 <b>60%</b></span><span class="lang-zh" style="display:none">外國人 ABSD：2011 年 10% → 2013 年 15% → 2018 年 20% → 2021 年 30% → 2023 年 <b>60%</b></span></td></tr>
+        <tr><td class="who">CA</td><td><span class="lang-en">BC foreign-buyer tax 2016 15% → 2018 20%; national purchase ban from 2023</span><span class="lang-zh" style="display:none">卑詩省外國買家稅 2016 年 15% → 2018 年 20%；2023 年起全國禁購</span></td></tr>
+        <tr><td class="who">AU</td><td><span class="lang-en">State surcharges 7–8% phased in from 2016 (NSW, VIC, QLD)</span><span class="lang-zh" style="display:none">各州附加稅 7–8%，2016 年起分批上路（新南威爾斯、維多利亞、昆士蘭）</span></td></tr>
+        <tr><td class="who">NZ</td><td><span class="lang-en">Purchase ban on existing homes from 2018</span><span class="lang-zh" style="display:none">2018 年起禁購成屋</span></td></tr>
+        <tr><td class="who">UK</td><td><span class="lang-en">Non-resident SDLT surcharge +2% from 2021</span><span class="lang-zh" style="display:none">2021 年起非居民印花稅附加 +2%</span></td></tr>
+        <tr class="hl"><td class="who">MY</td><td><span class="lang-en">Flat foreign MOT rate 4% from 2024 → <b>8%</b> from 2026</span><span class="lang-zh" style="display:none">外國人單一 MOT 稅率 2024 年起 4% → 2026 年起 <b>8%</b></span></td></tr>
+        <tr><td class="who">HK</td><td><span class="lang-en"><b>The reverse case:</b> BSD 15% from 2012 → all residential stamp duties scrapped Feb 2024, after prices had fallen ~27% and land-sale revenue collapsed</span><span class="lang-zh" style="display:none"><b>反向案例：</b>2012 年起 BSD 15% → 2024 年 2 月全數撤銷，背景是房價已跌約 27%、賣地收入崩落</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="narr-p"><span class="lang-en"><b>Result: the pattern holds, including in reverse.</b> Six jurisdictions only ever tightened, each escalation arriving with a fiscal or housing-politics squeeze. Hong Kong is the exception that supports the mechanism: when the fiscal dependence flipped (a property slump gutting government revenue), the ratchet ran backwards. The driver looks fiscal, not ideological — which is what the Malaysia pages assume when they treat the 8% as a milestone rather than an endpoint.</span><span class="lang-zh" style="display:none"><b>結果：型態成立，連反向都成立。</b>六個轄區只緊不鬆，每一次加碼都伴隨財政或住房政治的壓力。香港是「支持機制的例外」：當財政依賴反轉（房市下行掏空政府收入），棘輪就倒著轉。驅動力看起來是財政的，不是意識形態的。這正是馬來西亞各頁把 8% 當里程碑、而非終點來處理時所依據的假設。</span></p>
+  </div>
+
+  <!-- ── What this says about Malaysia ── -->
+  <div class="sec-rule"><h2><span class="lang-en">What the Framework Says About Malaysia</span><span class="lang-zh" style="display:none">這個框架對馬來西亞說了什麼</span></h2></div>
+
+  <div class="blk">
+    <p class="narr-p"><span class="lang-en">Put Malaysia back into the twelve-market coordinate system and it is a genuine outlier three times over. It posted near-top price growth (+125%) with the sample's <b>highest</b> average real policy rate — money cannot explain its rise. It carries a floating-rate mortgage stock yet recorded a <b>−0.2%</b> maximum drawdown through the global tightening — markets cannot explain its downside either. And its foreign-buyer tax sits early on a ratchet whose later steps (Singapore's 60%, outright bans) are documented in this table. Every one of those anomalies points at the same place: institutions, not money, set both the ceiling and the floor. That is the Malaysia thesis of this site, now located on a map instead of asserted.</span><span class="lang-zh" style="display:none">把馬來西亞放回十二市場座標系，它是三重異常值。它用全樣本<b>最高</b>的平均實際政策利率，跑出前段的漲幅（+125%），貨幣解釋不了它的上行。它的房貸幾乎全浮動，卻在全球緊縮裡只有 <b>−0.2%</b> 的最大回撤，市場邏輯也解釋不了它的下檔。而它的外資稅，正站在一條棘輪的早段，後面的階梯（新加坡的 60%、直接禁購）都寫在上面那張表裡。三個異常指向同一個地方：定住天花板和地板的都是制度，不是貨幣。這就是本站的馬來西亞論點，只是現在它被放在一張地圖上，而不是用說的。</span></p>
+  </div>
+
+  <!-- ── Limitations ── -->
+  <div class="blk">
+    <h2><span class="lang-en">Limitations, Stated Plainly</span><span class="lang-zh" style="display:none">限制，照實列出</span></h2>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en"><b>The supply column is empty.</b> The equation's supply-elasticity term was never scored: published estimates were only available to us as charts, not verifiable tables, so no market has a supply value. Test 1's failure could partly be supply doing the ranking — we cannot show that yet.</span><span class="lang-zh" style="display:none"><b>供給欄是空的。</b>式子裡的供給彈性項從頭到尾沒被計分：既有估計我們只取得圖表、沒有可核對的數值表，所以沒有任何市場有供給值。Test 1 的不成立，有一部分可能正是供給在排序，這一點目前無法展示。</span></li>
+      <li class="warn"><span class="lang-en"><b>Small sample, mixed vintages.</b> Twelve markets is enough for ranks, not for significance claims. Several cells cover shorter periods (SG money to 2020, CA to 2023, NZ 12 of 15 years) and floating shares are a 2022 snapshot. All flagged in the table and the JSON.</span><span class="lang-zh" style="display:none"><b>樣本小、口徑混齡。</b>十二個市場夠做排序，不夠做顯著性宣告。若干欄位期間較短（新加坡貨幣到 2020、加拿大到 2023、紐西蘭 15 年中的 12 年），浮動佔比是 2022 年的快照。表格與 JSON 均有標註。</span></li>
+      <li class="warn"><span class="lang-en"><b>Narrative overfit risk.</b> A framework with multipliers can rationalise anything after the fact. Our defence is procedural, not rhetorical: rules before results, disclosed exclusions, a headline test we let fail in public, and raw data at <a href="/data/framework-backtest.json">data/framework-backtest.json</a>.</span><span class="lang-zh" style="display:none"><b>敘事過擬合風險。</b>帶乘數的框架，事後什麼都能圓。我們的防線是程序性的，不是修辭性的：規則先於結果、剔除全揭露、頭條測試當眾放它不成立、原始數據放在 <a href="/data/framework-backtest.json">data/framework-backtest.json</a>。</span></li>
+      <li><span class="lang-en"><b>Institutional breaks are not modelled.</b> Regime changes (HK 2024 scrapping its duties, Korea's macroprudential cycle) enter only as narrative. A longer event-study treatment is future work.</span><span class="lang-zh" style="display:none"><b>制度斷裂未建模。</b>制度轉向（香港 2024 撤稅、南韓的宏觀審慎週期）目前只以敘事處理。更完整的 event study 是後續工作。</span></li>
+    </ul>
+  </div>
+
+  <!-- ── Source ── -->
+  <p class="src">
+    <span class="lang-en">Sources: BIS residential property statistics (nominal, quarterly, via FRED series Q**N628BIS); BIS central bank policy rates (WS_CBPOL bulk download, monthly averages computed); World Bank broad money growth (FM.LBL.BMNY.ZG) and CPI (FP.CPI.TOTL.ZG); OECD M3 via FRED (Canada); CBC Taiwan monetary aggregates (M2 daily-average YoY, 180 monthly observations); Sinyi Housing Price Index via NCCU Real Estate Research Center (Taiwan); IMF Working Paper 2025/024 Table A5 (fixed/floating mortgage stock shares, 2022); RBA Statement on Monetary Policy Feb 2023 Box A (Australia); HKMA (Hong Kong mortgage pricing); Zillow ZHVI raw metro file (Austin/US, computed); JCIC via Great Home (Hsinchu/Taipei); NAPIC (Malaysia); IRAS, BC government, state revenue offices, NZ legislation, HMRC, MOF Malaysia, HKSAR Budget 2024–25 (tax timeline). Every value, period, rule and exclusion: <a href="/data/framework-backtest.json">data/framework-backtest.json</a>.</span>
+    <span class="lang-zh" style="display:none">資料來源：BIS 住宅物業統計（名目、季度，經 FRED 系列 Q**N628BIS）；BIS 央行政策利率（WS_CBPOL 整檔下載、自算月均）；世界銀行廣義貨幣增速（FM.LBL.BMNY.ZG）與 CPI（FP.CPI.TOTL.ZG）；OECD M3 經 FRED（加拿大）；台灣央行貨幣總計數（M2 日平均年增率，180 個月觀測值）；信義房價指數（經政大不動產研究中心）；IMF 工作論文 2025/024 表 A5（固定／浮動房貸存量佔比，2022）；RBA 2023 年 2 月貨幣政策聲明 Box A（澳洲）；HKMA（香港房貸定價）；Zillow ZHVI 原始都會檔（Austin／美國，自算）；聯徵中心經大家房屋（新竹／台北）；NAPIC（馬來西亞）；IRAS、卑詩省政府、澳洲各州稅局、紐西蘭法案、HMRC、馬來西亞財政部、香港 2024–25 年度預算案（稅務時間軸）。每個數值、期間、規則與剔除：<a href="/data/framework-backtest.json">data/framework-backtest.json</a>。</span>
+  </p>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-ornament" aria-hidden="true">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+  <p class="footer-disclaimer">
+    <span class="lang-en"><strong>Independent analysis for reference only</strong> — not investment advice. Sources: BIS · FRED · World Bank · IMF · official statistics. A project by InvestMQuest.</span>
+    <span class="lang-zh"><strong>獨立分析參考</strong>，不構成投資建議。資料來源：BIS · FRED · 世界銀行 · IMF · 各國官方統計。InvestMQuest 製作。</span>
+  </p>
+</footer>
+
+<script>
+/* ── data (see /data/framework-backtest.json for sources) ── */
+/* [broad money avg growth %, HPI total % 2010-2024, code] */
+var t1pts = [
+  [5.54,130.2,'US'],[3.39,66.0,'GB'],[7.44,92.7,'AU'],[6.65,133.9,'NZ'],
+  [7.44,112.8,'CA'],[2.85,38.6,'JP'],[6.75,42.5,'KR'],[6.21,55.1,'SG'],
+  [7.02,97.9,'HK'],[6.30,78.1,'TH'],[5.91,125.1,'MY'],[5.38,124.7,'TW']
+];
+/* [floating share % (stock), max drawdown % 2021Q1-2024Q4, code] */
+var t2pts = [
+  [4.7,-0.5,'US'],[14.5,-3.6,'GB'],[36.1,-16.7,'CA'],[59.4,-14.0,'NZ'],
+  [60.0,-6.4,'AU'],[65.1,-7.7,'KR'],[74.0,-1.2,'JP'],[100.0,-27.0,'HK']
+];
+/* corridor pairs: [corridor %, benchmark %] */
+var t3names = {en:['Austin vs US\n2019–2024 net','Hsinchu Cty vs Taipei\n2015Q3–2024Q3'],zh:['Austin 對 美國\n2019–2024 淨值','新竹縣 對 台北市\n2015Q3–2024Q3']};
+var t3corr = [40.7,103];
+var t3bench = [46.9,7];
+
+var C = {navy:'#0d2244',green:'#15803d',orange:'#a16207',red:'#b91c1c',blue:'#1d4ed8',muted:'#6b7a92',grid:'#ece5d4',gold:'#b8924a'};
+var FF = 'Inter,"Noto Sans TC",sans-serif';
+var baseText = {color:C.muted,fontFamily:FF,fontSize:11};
+var baseTip  = {trigger:'item',backgroundColor:'#fff',borderColor:'#e5dfd0',borderWidth:1,textStyle:{color:C.navy,fontSize:12,fontFamily:FF}};
+function legB(){return {bottom:0,textStyle:baseText,icon:'circle',itemWidth:9,itemHeight:9,itemGap:14};}
+function nameStyle(){return {color:C.muted,fontSize:10,fontFamily:FF};}
+function mkAxis(o){var b={axisLine:{lineStyle:{color:C.grid}},axisTick:{show:false},axisLabel:Object.assign({},baseText),splitLine:{lineStyle:{color:C.grid}}};var r=Object.assign({},b,o||{});if(o&&o.axisLabel)r.axisLabel=Object.assign({},baseText,o.axisLabel);return r;}
+function scatterData(pts){
+  return pts.map(function(p){
+    var isMY=p[2]==='MY';
+    return {value:[p[0],p[1]],name:p[2],symbolSize:isMY?14:9,
+      itemStyle:{color:isMY?C.gold:C.navy},
+      label:{show:true,position:'top',formatter:p[2],color:isMY?C.gold:C.muted,fontSize:isMY?11:9.5,fontWeight:isMY?700:600,fontFamily:FF}};
+  });
+}
+
+var allCharts = [];
+function initCharts(lang){
+  allCharts.length = 0;
+  var isZh = lang === 'zh';
+
+  /* chartT1 — money growth vs house-price growth, 12 markets */
+  var c1 = echarts.init(document.getElementById('chartT1')); allCharts.push(c1);
+  c1.setOption({tooltip:Object.assign({},baseTip,{formatter:function(p){return p.name+'<br/>'+(isZh?'貨幣均增 ':'Money avg ')+p.value[0]+'%<br/>'+(isZh?'房價 10–24 ':'HPI 10–24 ')+'+'+p.value[1]+'%';}}),
+    grid:{left:6,right:20,top:30,bottom:34,containLabel:true},
+    xAxis:mkAxis({type:'value',min:2,max:8,interval:1,axisLabel:{formatter:'{value}%'},name:isZh?'廣義貨幣年均增速':'broad money avg growth',nameLocation:'middle',nameGap:26,nameTextStyle:nameStyle()}),
+    yAxis:mkAxis({type:'value',min:0,max:150,interval:30,axisLabel:{formatter:'+{value}%'},name:isZh?'房價總漲幅':'HPI total',nameTextStyle:nameStyle()}),
+    series:[{type:'scatter',data:scatterData(t1pts)}]});
+
+  /* chartT2 — floating share vs max drawdown, 8 numeric markets (MY annotated in text) */
+  var c2 = echarts.init(document.getElementById('chartT2')); allCharts.push(c2);
+  c2.setOption({tooltip:Object.assign({},baseTip,{formatter:function(p){return p.name+'<br/>'+(isZh?'浮動佔比 ':'Floating ')+p.value[0]+'%<br/>'+(isZh?'最大回撤 ':'Max drawdown ')+p.value[1]+'%';}}),
+    grid:{left:6,right:20,top:30,bottom:34,containLabel:true},
+    xAxis:mkAxis({type:'value',min:0,max:105,interval:25,axisLabel:{formatter:'{value}%'},name:isZh?'浮動利率房貸存量佔比':'floating-rate mortgage stock share',nameLocation:'middle',nameGap:26,nameTextStyle:nameStyle()}),
+    yAxis:mkAxis({type:'value',min:-30,max:2,interval:8,axisLabel:{formatter:'{value}%'},name:isZh?'最大回撤 21–24':'max drawdown 21–24',nameTextStyle:nameStyle()}),
+    series:[{type:'scatter',data:scatterData(t2pts)}]});
+
+  /* chartT3 — corridor vs benchmark, two clean same-source pairs */
+  var c3 = echarts.init(document.getElementById('chartT3')); allCharts.push(c3);
+  var nm = isZh?t3names.zh:t3names.en;
+  c3.setOption({tooltip:Object.assign({},baseTip,{trigger:'axis',formatter:function(p){var s=p[0].name.replace('\n',' · ')+'<br/>';p.forEach(function(x){s+='<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+x.color+';margin-right:5px"></span>'+x.seriesName+'：+'+x.value+'%<br/>';});return s;}}),
+    legend:legB(),grid:{left:6,right:10,top:16,bottom:56,containLabel:true},
+    xAxis:mkAxis({type:'category',data:nm,axisLabel:{interval:0,fontSize:10,lineHeight:14}}),
+    yAxis:mkAxis({type:'value',min:0,max:110,interval:25,axisLabel:{formatter:'+{value}%'}}),
+    series:[
+      {name:isZh?'走廊':'Corridor',type:'bar',data:t3corr,itemStyle:{color:C.gold,borderRadius:[3,3,0,0]},barMaxWidth:46,
+       label:{show:true,position:'top',formatter:'+{c}%',color:C.navy,fontSize:10.5,fontWeight:700,fontFamily:FF}},
+      {name:isZh?'對照基準':'Benchmark',type:'bar',data:t3bench,itemStyle:{color:'#9aa7ba',borderRadius:[3,3,0,0]},barMaxWidth:46,
+       label:{show:true,position:'top',formatter:'+{c}%',color:C.muted,fontSize:10.5,fontWeight:700,fontFamily:FF}}]});
+}
+
+function setLang(lang){
+  document.body.classList.toggle('zh', lang==='zh');
+  document.documentElement.lang = lang==='zh' ? 'zh-Hant' : 'en';
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active', b.dataset.lang===lang);});
+  try{localStorage.setItem('lang',lang);}catch(e){}
+  allCharts.forEach(function(c){if(c)c.dispose();});
+  allCharts=[];
+  initCharts(lang);
+}
+
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+window.addEventListener('load',function(){
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.lang);});});
+  var lang='en';try{lang=localStorage.getItem('lang')||'en';}catch(e){}
+  setLang(lang);
+});
+</script>
+</body>
+</html>
