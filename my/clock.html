@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Property Clock | Malaysia Property Monitor</title>
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/kl-theme.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+.wrap{max-width:900px;margin:0 auto;padding:30px 20px 10px}
+body.zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
+.wrap, .wrap p, .wrap li, .lede, .pt li, .src, .narr-p{line-height:2.0}
+.pg-head{margin-bottom:22px}
+.pg-title{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:26px;letter-spacing:-.01em;margin:0 0 10px;line-height:1.3}
+.pg-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.lede{background:linear-gradient(135deg,#0d2244 0%,#173564 100%);color:#fff;border-radius:14px;padding:20px 24px;margin-bottom:32px;font-size:14px;box-shadow:var(--shadow-md)}
+.lede b{color:var(--gold-light);font-weight:600}
+.lede .lk{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+.blk{margin-bottom:34px}
+.blk h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:600;color:var(--navy);font-size:18px;margin:0 0 4px;line-height:1.35}
+.blk .sub{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:1.6}
+.sec-rule{display:flex;align-items:center;gap:12px;margin:40px 0 18px}
+.sec-rule h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:21px;margin:0;white-space:nowrap;line-height:1.3}
+.sec-rule::after{content:'';flex:1;height:1px;background:var(--gold-line)}
+.pull{font-family:'Playfair Display','Noto Serif TC',serif;font-size:17px;line-height:1.7;color:var(--navy);border-left:3px solid var(--gold);padding:3px 0 3px 16px;margin:0 0 18px;font-weight:600}
+.narr-p{font-size:13.5px;color:var(--text-soft);margin:0 0 16px}
+.narr-p b{color:var(--navy);font-weight:600}
+.chartbox{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 10px 10px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.chartbox .ch{height:340px;width:100%}
+.pt{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.pt li{position:relative;padding-left:18px;font-size:13px;color:var(--text-soft)}
+.pt li::before{content:'';position:absolute;left:0;top:13px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.pt li b{color:var(--navy);font-weight:600}
+.pt li.warn::before{background:#b91c1c}.pt li.good::before{background:#15803d}
+.mtbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 10px}
+.mtbl{min-width:680px;width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.mtbl th{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--gold-deep);text-align:left;padding:10px 14px;border-bottom:2px solid var(--gold-soft);background:var(--bg-section)}
+body.zh .mtbl th{text-transform:none;letter-spacing:0}
+.mtbl td{font-size:12px;color:var(--text-soft);padding:9px 14px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.7}
+.mtbl tr:last-child td{border-bottom:none}
+.mtbl td.who{font-weight:700;color:var(--navy);white-space:nowrap}
+.mtbl td b{color:var(--navy);font-weight:600}
+.mtbl tr.hl td{background:var(--gold-bg)}
+.mtbl tr.dim td{color:#a7b1c2}
+.mtbl tr.dim td.who{color:#a7b1c2}
+.spd{display:inline-block;padding:1px 8px;border-radius:8px;font-size:10px;font-weight:700;color:#fff}
+.spd.fast{background:#b91c1c}.spd.slow{background:#0d2244}.spd.na{background:#c2cad6;color:#5a6b82}
+.lock{font-size:12px}
+.src{font-size:11px;color:var(--muted);background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:12px 16px;margin-bottom:8px}
+.src a{color:var(--gold-deep)}
+@media(max-width:760px){.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/kl-check">
+      <span class="brand-mark">K</span>
+      <span class="brand-text">
+        <span class="brand-name">KL Property Check</span>
+        <span class="brand-by">by InvestMQuest</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="/kl-check"><span class="lang-en">Scorecards</span><span class="lang-zh">評分卡</span></a>
+      <a class="nav-link" href="/my/report"><span class="lang-en">Market Report</span><span class="lang-zh">市場報告</span></a>
+      <a class="nav-link" href="/my/macro"><span class="lang-en">Macro</span><span class="lang-zh">總經</span></a>
+      <a class="nav-link" href="/my/framework"><span class="lang-en">Framework</span><span class="lang-zh">框架回測</span></a>
+      <a class="nav-link active" href="/my/clock"><span class="lang-en">Clock</span><span class="lang-zh">時鐘</span></a>
+      <div class="lang-btns">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <div class="pg-head">
+    <h1 class="pg-title">
+      <span class="lang-en">The Property Clock — Twelve Markets, One Dial</span>
+      <span class="lang-zh" style="display:none">房地產時鐘 · 十二市場一座鐘</span>
+    </h1>
+    <div class="pg-badges">
+      <span class="kpi-badge badge-blue"><span class="lang-en">Frozen Jul 2026</span><span class="lang-zh" style="display:none">2026年7月凍結</span></span>
+      <span class="kpi-badge badge-green"><span class="lang-en">Rule-driven, sourced</span><span class="lang-zh" style="display:none">規則驅動 · 帶來源</span></span>
+      <span class="kpi-badge badge-orange"><span class="lang-en">Annual update + major events</span><span class="lang-zh" style="display:none">年更＋大事件更新</span></span>
+    </div>
+  </div>
+
+  <div class="lede">
+    <span class="lk"><span class="lang-en">The honest headline</span><span class="lang-zh" style="display:none">誠實的頭條</span></span>
+    <span class="lang-en">This dial is the visual output of the <b>framework backtests</b>: every position is computed by pre-registered rules from the <a href="/data/framework-backtest.json" style="color:#e8d5ae">frozen 2026 table</a>, not drawn by opinion. And in July 2026 the mechanical answer is stark: <b>no market qualifies for any running phase</b>. Four markets are locked (US, JP, TW, MY), seven have insufficient inputs, and the UK sits one point short of the primed bar with credit already ignited. The most important thing this clock can say is that <b>some markets do not go around</b>.</span>
+    <span class="lang-zh" style="display:none">這座鐘面是<b>框架回測</b>的視覺輸出層：每個位置都由預註冊規則從<a href="/data/framework-backtest.json" style="color:#e8d5ae">2026 凍結表</a>算出，不是憑觀點畫的。而 2026 年 7 月的機械答案很直白：<b>沒有任何市場符合任何運轉相位</b>。四個市場被鎖住（US、JP、TW、MY），七個市場輸入不足，英國離蓄勢門檻差一分、信貸已點火。這座鐘最重要的一句話是：<b>有些市場不走</b>。</span>
+  </div>
+
+  <!-- dial -->
+  <div class="blk">
+    <h2><span class="lang-en">The Dial — July 2026</span><span class="lang-zh" style="display:none">鐘面 · 2026 年 7 月</span></h2>
+    <p class="sub"><span class="lang-en">Four phases grown from the transmission chain (not the Merrill quadrants). Hover an arc for its entry rule. Locked markets are shown in the hub: their hands do not move.</span><span class="lang-zh" style="display:none">四個相位從傳導鏈長出（不是美林象限直搬）。滑過弧段可見進入規則。被鎖住的市場列在錶芯：它們的指針不動。</span></p>
+    <div class="chartbox"><div id="chartDial" class="ch" style="height:380px"></div></div>
+    <p class="sub"><span class="lang-en">Speed ring legend (from Test 2 stickiness): <span class="spd fast">fast clock</span> floating-rate share &gt;50% — phase shifts in quarters; <span class="spd slow">slow clock</span> fixed-rate or institutionally sticky — phase shifts in years; <span class="spd na">n/a</span> no verified share. With no market currently placed on the dial, the speed grouping is shown per market in the table below.</span><span class="lang-zh" style="display:none">轉速環圖例（取自 Test 2 黏性分組）：<span class="spd fast">快鐘</span> 浮動佔比 &gt;50%，相位以季切換；<span class="spd slow">慢鐘</span> 固定利率或制度黏性，相位以年切換；<span class="spd na">無資料</span> 無可驗證佔比。目前鐘面上沒有市場落位，轉速分組改列於下表。</span></p>
+  </div>
+
+  <!-- placement rules -->
+  <div class="blk">
+    <h2><span class="lang-en">Placement Rules, Fixed in Advance</span><span class="lang-zh" style="display:none">擺放規則，事先寫死</span></h2>
+    <ul class="pt">
+      <li><span class="lang-en"><b>6→9 Primed:</b> slow layer ≥ +2 and FL1 ≤ 0 (tension built, credit not yet ignited). Angle ∝ slow score: +2 sits at 7 o'clock, +3 at 8:30.</span><span class="lang-zh" style="display:none"><b>6→9 蓄勢：</b>慢層 ≥ +2 且 FL1 ≤ 0（張力足、信貸未點火）。角度 ∝ 慢層分數：+2 在 7 點、+3 在 8 點半。</span></li>
+      <li><span class="lang-en"><b>9→12 Ignition:</b> slow layer ≥ +2 and FL1 = +1. Angle ∝ quarters since credit ignition, 0–8 mapped linearly.</span><span class="lang-zh" style="display:none"><b>9→12 引爆：</b>慢層 ≥ +2 且 FL1 = +1。角度 ∝ 信貸點火後經過的季數，0–8 季線性映射。</span></li>
+      <li><span class="lang-en"><b>12→3 Overheat:</b> broad price rally + affordability stretch + an active policy ratchet (Test 4 event flags). Angle ∝ number of ratchet strikes.</span><span class="lang-zh" style="display:none"><b>12→3 過熱：</b>價格普漲＋可負擔性拉伸＋政策棘輪已啟動（Test 4 事件旗標）。角度 ∝ 棘輪打擊次數。</span></li>
+      <li><span class="lang-en"><b>3→6 Cooling:</b> FL1 = −1 (credit extinction). Angle ∝ drawdown progress against the market's own typical historical drawdown; for sticky markets whose typical drawdown is ≈0, momentum disappearance substitutes.</span><span class="lang-zh" style="display:none"><b>3→6 降溫：</b>FL1 = −1（信貸熄火）。角度 ∝ 峰後跌幅佔該市場歷史典型回撤的比例；黏性市場典型回撤 ≈0，改以增速消失代替。</span></li>
+      <li class="warn"><span class="lang-en"><b>Locked:</b> slow layer ≤ −1, or extreme institutional damping (the TW/MY type from Test 6). Lock icon, no hand movement.</span><span class="lang-zh" style="display:none"><b>焊住：</b>慢層 ≤ −1，或制度阻尼極強（Test 6 的 TW／MY 型）。上鎖圖示，指針不動。</span></li>
+    </ul>
+  </div>
+
+  <!-- market table -->
+  <div class="blk">
+    <h2><span class="lang-en">Twelve Markets, One Line Each</span><span class="lang-zh" style="display:none">十二市場，各一行</span></h2>
+    <p class="sub"><span class="lang-en">Slow layer and class from the <a href="/my/framework#v2freeze">frozen 2026 table</a>; stickiness from <a href="/my/framework#t2">Test 2</a>; the welded flag from <a href="/my/framework#t6">Test 6</a>. Grey rows = insufficient inputs, not placed on the dial.</span><span class="lang-zh" style="display:none">慢層與分類取自<a href="/my/framework#v2freeze">2026 凍結表</a>；黏性取自 <a href="/my/framework#t2">Test 2</a>；焊住旗標取自 <a href="/my/framework#t6">Test 6</a>。灰列＝輸入不足，不上鐘面。</span></p>
+    <div class="mtbl-wrap">
+    <table class="mtbl">
+      <thead><tr>
+        <th><span class="lang-en">Market</span><span class="lang-zh" style="display:none">市場</span></th>
+        <th><span class="lang-en">Phase</span><span class="lang-zh" style="display:none">相位</span></th>
+        <th><span class="lang-en">Slow</span><span class="lang-zh" style="display:none">慢層</span></th>
+        <th>FL1</th>
+        <th><span class="lang-en">Speed</span><span class="lang-zh" style="display:none">轉速</span></th>
+        <th><span class="lang-en">One line</span><span class="lang-zh" style="display:none">一句話</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="who">US</td><td><span class="lock">🔒</span> <span class="lang-en">locked</span><span class="lang-zh" style="display:none">焊住</span></td><td>−2</td><td>+1</td><td><span class="spd slow"><span class="lang-en">slow</span><span class="lang-zh" style="display:none">慢鐘</span></span></td><td><span class="lang-en">Credit ignited (2025) on negative tension; the rules give no phase for that combination. Data to 2026Q1.</span><span class="lang-zh" style="display:none">負張力上信貸點火（2025）；規則不給這個組合相位。資料至 2026Q1。</span></td></tr>
+        <tr><td class="who">GB</td><td><span class="lang-en">off-dial (below bar)</span><span class="lang-zh" style="display:none">未達門檻（不上鐘）</span></td><td>+1</td><td>+1</td><td><span class="spd slow"><span class="lang-en">slow</span><span class="lang-zh" style="display:none">慢鐘</span></span></td><td><span class="lang-en">One point short of primed; credit ignited 2024. The nearest thing to a 9-o'clock candidate. Data to 2026-05.</span><span class="lang-zh" style="display:none">離蓄勢差一分；信貸 2024 年點火。最接近 9 點候選的市場。資料至 2026-05。</span></td></tr>
+        <tr class="dim"><td class="who">AU</td><td><span class="lang-en">not placed</span><span class="lang-zh" style="display:none">不擺位</span></td><td>0*</td><td>N/A</td><td><span class="spd fast"><span class="lang-en">fast</span><span class="lang-zh" style="display:none">快鐘</span></span></td><td><span class="lang-en">Insufficient inputs (SL1 only).</span><span class="lang-zh" style="display:none">輸入不足（僅 SL1）。</span></td></tr>
+        <tr class="dim"><td class="who">NZ</td><td><span class="lang-en">not placed</span><span class="lang-zh" style="display:none">不擺位</span></td><td>−1*</td><td>N/A</td><td><span class="spd fast"><span class="lang-en">fast</span><span class="lang-zh" style="display:none">快鐘</span></span></td><td><span class="lang-en">Insufficient inputs.</span><span class="lang-zh" style="display:none">輸入不足。</span></td></tr>
+        <tr class="dim"><td class="who">CA</td><td><span class="lang-en">not placed</span><span class="lang-zh" style="display:none">不擺位</span></td><td>0*</td><td>N/A</td><td><span class="spd slow"><span class="lang-en">slow</span><span class="lang-zh" style="display:none">慢鐘</span></span></td><td><span class="lang-en">Insufficient inputs.</span><span class="lang-zh" style="display:none">輸入不足。</span></td></tr>
+        <tr><td class="who">JP</td><td><span class="lock">🔒</span> <span class="lang-en">locked</span><span class="lang-zh" style="display:none">焊住</span></td><td>−1</td><td>N/A</td><td><span class="spd fast"><span class="lang-en">fast</span><span class="lang-zh" style="display:none">快鐘</span></span></td><td><span class="lang-en">Capped in calibration and in the freeze; the one market v2 has classified correctly throughout.</span><span class="lang-zh" style="display:none">校準與凍結都封頂；v2 全程分類正確的唯一市場。</span></td></tr>
+        <tr class="dim"><td class="who">KR</td><td><span class="lang-en">not placed</span><span class="lang-zh" style="display:none">不擺位</span></td><td>−1*</td><td>N/A</td><td><span class="spd fast"><span class="lang-en">fast</span><span class="lang-zh" style="display:none">快鐘</span></span></td><td><span class="lang-en">Insufficient inputs; cohort −7.5%.</span><span class="lang-zh" style="display:none">輸入不足；年齡層 −7.5%。</span></td></tr>
+        <tr class="dim"><td class="who">SG</td><td><span class="lang-en">not placed</span><span class="lang-zh" style="display:none">不擺位</span></td><td>0*</td><td>N/A</td><td><span class="spd na">n/a</span></td><td><span class="lang-en">Insufficient inputs; floating share is flow-basis only.</span><span class="lang-zh" style="display:none">輸入不足；浮動佔比僅流量口徑。</span></td></tr>
+        <tr class="dim"><td class="who">HK</td><td><span class="lang-en">not placed</span><span class="lang-zh" style="display:none">不擺位</span></td><td>−1*</td><td>N/A</td><td><span class="spd fast"><span class="lang-en">fast</span><span class="lang-zh" style="display:none">快鐘</span></span></td><td><span class="lang-en">Insufficient inputs; cohort −20.9%, the panel's deepest.</span><span class="lang-zh" style="display:none">輸入不足；年齡層 −20.9%，全面板最深。</span></td></tr>
+        <tr><td class="who">TW</td><td><span class="lock">🔒</span> <span class="lang-en">locked · welded</span><span class="lang-zh" style="display:none">焊住</span></td><td>−1</td><td>N/A</td><td><span class="spd na">n/a</span></td><td><span class="lang-en">Zero hard turns in the entire official index (Test 6); cohort −11%. The hand does not move; the volume is the turn.</span><span class="lang-zh" style="display:none">官方指數全史零硬轉折（Test 6）；年齡層 −11%。指針不動，量本身就是轉折。</span></td></tr>
+        <tr class="dim"><td class="who">TH</td><td><span class="lang-en">not placed</span><span class="lang-zh" style="display:none">不擺位</span></td><td>−1*</td><td>N/A</td><td><span class="spd na">n/a</span></td><td><span class="lang-en">Insufficient inputs.</span><span class="lang-zh" style="display:none">輸入不足。</span></td></tr>
+        <tr class="hl"><td class="who">MY</td><td><span class="lock">🔒</span> <span class="lang-en">locked · welded</span><span class="lang-zh" style="display:none">焊住</span></td><td><span class="lang-en">0* (1 of 3)</span><span class="lang-zh" style="display:none">0*（三缺二）</span></td><td>N/A</td><td><span class="spd fast"><span class="lang-en">fast†</span><span class="lang-zh" style="display:none">快鐘†</span></span></td><td><span class="lang-en">27 years without a single 8% turn (Test 6): welded by institutions, not by data. † floating by design (SBR), share unpublished. Cohort momentum now +1.9%, below the bar.</span><span class="lang-zh" style="display:none">27 年沒有一次 8% 轉折（Test 6）：是制度把它焊住，不是資料。† 制度上全浮動（SBR），官方佔比未發布。年齡層動能已降至 +1.9%，低於門檻。</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="sub"><span class="lang-en">* slow-layer value shown for reference; fewer than two components computable, so no hard class is issued.</span><span class="lang-zh" style="display:none">＊慢層數值僅供參考；可算分項不足兩項，不發硬判定。</span></p>
+  </div>
+
+  <!-- honesty -->
+  <div class="blk">
+    <h2><span class="lang-en">What This Clock Does and Does Not Claim</span><span class="lang-zh" style="display:none">這座鐘承諾什麼、不承諾什麼</span></h2>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en"><b>Positions, not rotation.</b> Every position is rule-computed, but the phase framework itself has not been historically validated as a rotation model. The dial shows where markets stand; it does not promise they move clockwise.</span><span class="lang-zh" style="display:none"><b>呈現位置，不承諾順時針。</b>每個位置都由規則算出，但相位框架本身未經歷史驗證為輪動模型。鐘面顯示市場站在哪裡，不承諾它們會順時針走。</span></li>
+      <li><span class="lang-en"><b>The three parts carry different grades of evidence, stated plainly.</b> The hand (credit) is the only link validated by the backtests: it led price at 8 of 10 turns, median +2.5 quarters (Test 6). The height (slow layer) has one moderate cross-sectional calibration in an easing window (ρ=+0.44) plus the capped-side rank result (0.75); its positive side is unproven. The speed ring (stickiness) is moderately validated (ρ=−0.68 excluding Japan, Test 2).</span><span class="lang-zh" style="display:none"><b>三個零件的證據強度不同，如實分級。</b>指針（信貸）是回測裡唯一驗證過的環節：10 個轉折裡 8 個領先價格、中位 +2.5 季（Test 6）。高度（慢層）只有放水期一次中等橫斷面校準（ρ=+0.44）加封頂端排名結果（0.75）；正面端未經證明。轉速環（黏性）為中度驗證（剔日本後 ρ=−0.68，Test 2）。</span></li>
+      <li><span class="lang-en"><b>Missing data stays grey.</b> Markets that fail the input threshold are greyed and not placed, per the frozen N/A matrix. Data cut-offs are noted per market in the table.</span><span class="lang-zh" style="display:none"><b>缺資料就灰顯。</b>未達輸入門檻的市場灰顯、不擺位，依凍結表的 N/A 矩陣。各市場資料截止日期標注於表內。</span></li>
+    </ul>
+    <p class="narr-p"><span class="lang-en"><b>Update cadence:</b> annual (each July, with the freeze-scoring cycle), plus ad-hoc updates on major events (a policy-ratchet strike, a credit-turn confirmation). This is not a live dashboard. Method and all raw inputs: <a href="/my/framework">the framework backtest</a> and <a href="/data/framework-backtest.json">data/framework-backtest.json</a>.</span><span class="lang-zh" style="display:none"><b>更新節奏：</b>年更（每年 7 月，隨凍結對答案週期），大事件（政策棘輪打擊、信貸轉折確認）另行更新。這不是即時儀表板。方法與全部原始輸入：<a href="/my/framework">框架回測頁</a>與 <a href="/data/framework-backtest.json">data/framework-backtest.json</a>。</span></p>
+  </div>
+
+  <p class="src">
+    <span class="lang-en">Inputs: v2 frozen table July 2026 (SL1 = UN WPP 2024 projections 2026–2031; SL2 = FRED TTLHH/COMPUTSA/ETOTALUSQ176N; SL3 = documented vacancy and property-tax constants; FL1 = FRED HHMSDODNS and BoE LPMVTXK credit turns); stickiness = IMF WP/2025/024 Table A5, RBA, HKMA (Test 2). Every value, rule and exclusion: <a href="/data/framework-backtest.json">data/framework-backtest.json</a>. Independent analysis, not investment advice.</span>
+    <span class="lang-zh" style="display:none">輸入：2026 年 7 月 v2 凍結表（SL1＝UN WPP 2024 對 2026–2031 的預測；SL2＝FRED TTLHH／COMPUTSA／ETOTALUSQ176N；SL3＝已查證的空置率與持有稅常數；FL1＝FRED HHMSDODNS 與 BoE LPMVTXK 信貸轉折）；黏性＝IMF WP/2025/024 表 A5、RBA、HKMA（Test 2）。每個數值、規則與剔除：<a href="/data/framework-backtest.json">data/framework-backtest.json</a>。獨立分析，不構成投資建議。</span>
+  </p>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-ornament" aria-hidden="true">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+  <p class="footer-disclaimer">
+    <span class="lang-en"><strong>Independent analysis for reference only</strong> — not investment advice. A project by InvestMQuest.</span>
+    <span class="lang-zh"><strong>獨立分析參考</strong>，不構成投資建議。InvestMQuest 製作。</span>
+  </p>
+</footer>
+
+<script>
+var C = {navy:'#0d2244',green:'#15803d',orange:'#a16207',red:'#b91c1c',blue:'#1d4ed8',muted:'#6b7a92',grid:'#ece5d4',gold:'#b8924a'};
+var FF = 'Inter,"Noto Sans TC",sans-serif';
+var baseTip = {backgroundColor:'#fff',borderColor:'#e5dfd0',borderWidth:1,textStyle:{color:C.navy,fontSize:12,fontFamily:FF}};
+
+var allCharts = [];
+function initCharts(lang){
+  allCharts.length = 0;
+  var isZh = lang === 'zh';
+
+  /* chartDial — four phase arcs + locked hub; no market currently qualifies for a phase (frozen Jul 2026) */
+  var cd = echarts.init(document.getElementById('chartDial')); allCharts.push(cd);
+  var phases = [
+    {name:isZh?'12→3 過熱':'12→3 Overheat', def:isZh?'普漲＋可負擔拉伸＋棘輪啟動。目前：無市場':'broad rally + affordability stretch + active ratchet. Currently: none', color:'rgba(185,28,28,0.16)', border:'#b91c1c'},
+    {name:isZh?'3→6 降溫':'3→6 Cooling', def:isZh?'FL1 = −1（信貸熄火）。目前：無市場':'FL1 = −1 (credit extinction). Currently: none', color:'rgba(29,78,216,0.14)', border:'#1d4ed8'},
+    {name:isZh?'6→9 蓄勢':'6→9 Primed', def:isZh?'慢層 ≥ +2 且 FL1 ≤ 0。目前：無市場':'slow ≥ +2 and FL1 ≤ 0. Currently: none', color:'rgba(184,146,74,0.18)', border:'#b8924a'},
+    {name:isZh?'9→12 引爆':'9→12 Ignition', def:isZh?'慢層 ≥ +2 且 FL1 = +1。目前：無市場（GB 差一分）':'slow ≥ +2 and FL1 = +1. Currently: none (GB one point short)', color:'rgba(21,128,61,0.14)', border:'#15803d'}
+  ];
+  cd.setOption({
+    tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){return '<b>'+p.name+'</b><br/>'+phases[p.dataIndex].def;}}),
+    series:[{type:'pie',startAngle:90,clockwise:true,radius:['58%','82%'],center:['50%','52%'],
+      label:{show:true,position:'inside',fontSize:11,fontWeight:700,fontFamily:FF,color:C.navy,formatter:'{b}'},
+      itemStyle:{borderColor:'#fff',borderWidth:2},
+      emphasis:{scale:false},
+      data:phases.map(function(ph){return {name:ph.name,value:25,itemStyle:{color:ph.color,borderColor:ph.border,borderWidth:1.5}};})}],
+    graphic:[
+      {type:'text',left:'center',top:'44%',style:{text:'🔒',font:'26px sans-serif',textAlign:'center'}},
+      {type:'text',left:'center',top:'53%',style:{text:'US · JP · TW · MY',font:'700 13px '+FF,fill:'#0d2244',textAlign:'center'}},
+      {type:'text',left:'center',top:'59%',style:{text:isZh?'焊住／上鎖（指針不動）':'locked (hands do not move)',font:'10px '+FF,fill:'#6b7a92',textAlign:'center'}},
+      {type:'text',left:'center',top:'8%',style:{text:'12',font:'700 12px '+FF,fill:'#6b7a92',textAlign:'center'}},
+      {type:'text',left:'center',bottom:'2%',style:{text:'6',font:'700 12px '+FF,fill:'#6b7a92',textAlign:'center'}}
+    ]});
+}
+
+function setLang(lang){
+  document.body.classList.toggle('zh', lang==='zh');
+  document.documentElement.lang = lang==='zh' ? 'zh-Hant' : 'en';
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active', b.dataset.lang===lang);});
+  try{localStorage.setItem('lang',lang);}catch(e){}
+  allCharts.forEach(function(c){if(c)c.dispose();});
+  allCharts=[];
+  initCharts(lang);
+}
+
+window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
+window.addEventListener('load',function(){
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.lang);});});
+  var lang='en';try{lang=localStorage.getItem('lang')||'en';}catch(e){}
+  setLang(lang);
+});
+</script>
+</body>
+</html>
