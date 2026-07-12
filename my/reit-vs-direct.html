@@ -175,8 +175,10 @@ body.zh .kpibox .kl2{text-transform:none;letter-spacing:0}
         <span class="ctrl-lbl"><span class="lang-en">Buyer</span><span class="lang-zh" style="display:none">買家身份</span></span>
         <div class="seg big" id="segId">
           <button data-v="local" class="active"><span class="lang-en">Local</span><span class="lang-zh" style="display:none">本國人</span></button>
-          <button data-v="foreigner"><span class="lang-en">Foreigner</span><span class="lang-zh" style="display:none">外國人</span></button>
+          <button data-v="resident"><span class="lang-en">Foreign tax-resident</span><span class="lang-zh" style="display:none">外國人・稅務居民</span></button>
+          <button data-v="foreigner"><span class="lang-en">Foreign non-resident</span><span class="lang-zh" style="display:none">外國人・非居民</span></button>
         </div>
+        <div class="ctrl-note" id="residentNote" style="display:none"><span class="lang-en">Tax resident = 182+ days/yr in Malaysia. Rental &amp; REIT income shift to progressive rates, but the 8% stamp duty, foreigner RPGT (30%/10%) and RM1M floor follow citizenship — MM2H holders included; only Malaysian PRs get citizen rates.</span><span class="lang-zh" style="display:none">稅務居民＝每年在馬來西亞住滿 182 天。租金與 REIT 配息改按累進稅率課稅，但 8% 印花稅、外國人 RPGT（30%／10%）與 RM1M 門檻看的是國籍——MM2H 持有人也不豁免；只有馬來西亞 PR 適用本國人級距。</span></div>
       </div>
       <div class="ctrl">
         <span class="ctrl-lbl"><span class="lang-en">Hold period</span><span class="lang-zh" style="display:none">持有期</span></span>
@@ -459,13 +461,15 @@ function irr(cf){
 /* ── the whole scenario ── */
 function computeScenario(S){
   var D=DEFAULTS;
-  var foreigner = S.identity==='foreigner';
+  // 國籍面（印花稅/RPGT/門檻/融資）看 citizenship；稅務面（租稅/REIT 配息）看 182 天稅務居民身份
+  var foreigner = S.identity!=='local';
+  var nonResident = S.identity==='foreigner';
   var N=S.years;
   var price = foreigner ? Math.max(S.price, D.foreignerFloor) : S.price;
   var ltv = foreigner && S.leverage>70 ? 70 : S.leverage;
   var L = price*ltv/100;
   var down = price - L;
-  var mRate = S.mortgageRate + (foreigner ? D.foreignerRatePremium : 0);
+  var mRate = S.mortgageRate + (nonResident ? D.foreignerRatePremium : 0); // 稅務居民多有本地收入，貸款利率貼近本國人
 
   // ── buy-in costs ──
   var motStamp = foreigner ? price*D.foreignerStamp : motStampLocal(price);
@@ -481,11 +485,11 @@ function computeScenario(S){
   var mort = mortgage(L, mRate, D.loanTenureYears);
   var annualPayment = mort.payment*12;
 
-  // rental tax rate & reit div tax rate
-  var rentTaxRate = foreigner ? 0.30 : S.marginalRate/100;
+  // rental tax rate & reit div tax rate — 看稅務居民身份，不看國籍
+  var rentTaxRate = nonResident ? 0.30 : S.marginalRate/100;
   var reitDivRate;
   if(S.regime==='old'){ reitDivRate = 0.10; }
-  else { reitDivRate = foreigner ? 0.30 : S.marginalRate/100; }
+  else { reitDivRate = nonResident ? 0.30 : S.marginalRate/100; }
 
   // ── REIT init ──
   var reitInvest0 = outlay0;
@@ -594,7 +598,7 @@ function computeScenario(S){
   var reitIRR = irr(reitCF);
 
   return {
-    foreigner:foreigner, price:price, ltv:ltv, down:down, loan:L, mRate:mRate,
+    foreigner:foreigner, nonResident:nonResident, price:price, ltv:ltv, down:down, loan:L, mRate:mRate,
     motStamp:motStamp, buyerLegal:buyerLegal, loanStamp:loanStamp, loanLegal:loanLegal,
     valuation:valuation, consent:consent, buyInCosts:buyInCosts, outlay0:outlay0,
     holdOpexTotal:holdOpexTotal, interestTotal:interestTotal, rentTaxTotal:rentTaxTotal,
@@ -625,9 +629,11 @@ function segSet(id, key, val, isNum){
 
 function syncControls(){
   // identity-dependent UI
-  var foreigner = S.identity==='foreigner';
-  document.getElementById('ctrlTax').style.display = foreigner?'none':'';
-  document.getElementById('ctrlTaxFixed').style.display = foreigner?'':'none';
+  var foreigner = S.identity!=='local';           // 國籍面
+  var nonResident = S.identity==='foreigner';     // 稅務面
+  document.getElementById('ctrlTax').style.display = nonResident?'none':'';
+  document.getElementById('ctrlTaxFixed').style.display = nonResident?'':'none';
+  document.getElementById('residentNote').style.display = S.identity==='resident'?'':'none';
   // leverage 90 disabled for foreigner
   var lev90 = document.querySelector('#segLev button[data-v="90"]');
   lev90.disabled = foreigner;
@@ -696,13 +702,13 @@ function render(){
   // ins1: cost of reform for high-bracket local
   (function(){
     var deltaTxt;
-    if(!m.foreigner){
+    if(!m.nonResident){
       var mNew=computeScenario(Object.assign({},S,{regime:'new'}));
       var mOld=computeScenario(Object.assign({},S,{regime:'old'}));
       var d=mNew.reitTerminal - mOld.reitTerminal;
       deltaTxt = (d<0?'−':'+')+rm(Math.abs(d)).replace('RM ','RM ')+T(' in REIT terminal worth for you.',' 的 REIT 期末淨值。');
     } else {
-      deltaTxt = T('(switch to Local to size this on your own bracket).','（切到本國人以你自己的級距估算）。');
+      deltaTxt = T('(switch to Local or tax-resident to size this on your own bracket).','（切到本國人或稅務居民以你自己的級距估算）。');
     }
     var e1=document.getElementById('ins1Local'); if(e1) e1.textContent=curLang==='en'?deltaTxt:'';
     var e1z=document.getElementById('ins1LocalZh'); if(e1z) e1z.textContent=curLang==='zh'?deltaTxt:'';
