@@ -50,7 +50,27 @@ body.zh .mtbl th{text-transform:none;letter-spacing:0}
 .mtbl tr.dim td.who{color:#a7b1c2}
 .src{font-size:11px;color:var(--muted);background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:12px 16px;margin-bottom:8px}
 .src a{color:var(--gold-deep)}
-@media(max-width:760px){.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}}
+/* judgement panel */
+.judge{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 22px 18px;box-shadow:var(--shadow-md);margin-bottom:20px;border-top:4px solid var(--gold)}
+.judge .jlab{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 10px}
+body.zh .judge .jlab{letter-spacing:.04em}
+.jphase{font-family:'Playfair Display','Noto Serif TC',serif;font-size:26px;font-weight:700;line-height:1.2;margin:0 0 6px}
+.jread{font-size:13.5px;color:var(--text-soft);line-height:1.85;margin:0 0 12px}
+.jread b{color:var(--navy);font-weight:600}
+.jrow{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.jchip{font-size:12px;font-weight:600;color:var(--navy);background:var(--bg-section);border:1px solid var(--border-soft);border-radius:999px;padding:5px 13px}
+.jchip b{color:var(--gold-deep)}
+.jhist{font-size:13px;color:var(--text-soft);line-height:1.85;background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:11px 15px;margin:0 0 6px}
+.jhist b{color:var(--navy);font-weight:700}
+.jhist .apx{font-size:11px;color:var(--muted)}
+.cells4{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0 2px}
+.cell4{border-left:3px solid var(--gold);border-radius:0 10px 10px 0;background:var(--bg-soft);padding:10px 13px}
+.cell4 .c4n{font-size:13px;font-weight:700;margin:0 0 3px}
+.cell4 .c4d{font-size:11.5px;color:var(--muted);line-height:1.6;margin:0 0 5px}
+.cell4 .c4s{font-size:11.5px;color:var(--text-soft);font-weight:600}
+.cell4 .c4s b{font-weight:700}
+.m22{margin:6px 0 2px}
+@media(max-width:760px){.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}.jphase{font-size:22px}.cells4{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -86,71 +106,124 @@ body.zh .mtbl th{text-transform:none;letter-spacing:0}
       <span class="lang-zh" style="display:none">房地產時鐘 · 美國試點，五十年重播</span>
     </h1>
     <div class="pg-badges">
-      <span class="kpi-badge badge-blue"><span class="lang-en">Train 1975–99 · Test 2000–25</span><span class="lang-zh" style="display:none">訓練 1975–99 · 測試 2000–25</span></span>
-      <span class="kpi-badge badge-green"><span class="lang-en">Test period used once</span><span class="lang-zh" style="display:none">測試期已用一次</span></span>
+      <span class="kpi-badge badge-blue"><span class="lang-en">Reading rule: credit × tension (2×2)</span><span class="lang-zh" style="display:none">判讀規則：信貸 × 張力（2×2）</span></span>
+      <span class="kpi-badge badge-orange"><span class="lang-en">US recompute = descriptive, not out-of-sample</span><span class="lang-zh" style="display:none">美國重算＝描述性，非樣本外</span></span>
+      <span class="kpi-badge badge-green"><span class="lang-en">OOS validation → Taiwan next</span><span class="lang-zh" style="display:none">樣本外驗證 → 下一站台灣</span></span>
       <span class="kpi-badge badge-orange"><span class="lang-en">Updated Jul 2026</span><span class="lang-zh" style="display:none">更新至 2026年7月</span></span>
     </div>
   </div>
 
   <div class="lede">
-    <span class="lk"><span class="lang-en">The strategy, and the score</span><span class="lang-zh" style="display:none">策略與成績</span></span>
-    <span class="lang-en">Strategy pivot: instead of twelve empty dials, this is now <b>one clock whose hand actually sweeps</b> — press play and the pointer walks fifty years of US history, quarter by quarter, 1975 to 2026. The rules behind it were tuned on US data from <b>1975–1999 only</b>, frozen, and then run <b>exactly once</b> over 2000–2025. The score, published as-is: coverage 87% (pass); the 2006 top was called <b>two quarters early</b>; the 2011–12 bottom was missed by three; phase separation is weak on the entry side but clean on the exit side — <b>cooling quarters returned −7.9% median over the next three years against +16% to +40% for everything else</b>. As calibrated, this is an exit instrument, not an entry timer. Other markets wait below until the ruleset earns its transplant.</span>
-    <span class="lang-zh" style="display:none">策略轉向：不再是十二個空鐘面，而是<b>一座指針真的會掃的鐘</b>——按下播放，指針就逐季走過五十年美國歷史，1975 到 2026。背後的規則只用<b>1975–1999 的美國資料</b>調參，凍結後對 2000–2025 <b>只跑一次</b>。成績原樣公佈：覆蓋率 87%（過關）；2006 年頂部<b>提前兩季</b>叫出；2011–12 年底部晚了三季；相位分離在進場端偏弱、在出場端乾淨——<b>降溫季往後三年中位報酬 −7.9%，對照其他所有相位的 +16% 到 +40%</b>。以目前的校準，這是出場儀器，不是進場計時器。其他市場列在下方等待名單，等這套規則掙到移植資格。</span>
+    <span class="lk"><span class="lang-en">A cleaner reading rule</span><span class="lang-zh" style="display:none">更乾淨的判讀規則</span></span>
+    <span class="lang-en">The single-signal machine — five phases, one of them a dead-centre "no phase" that swallowed too many quarters — is retired. In its place, <b>one 2×2 read</b>: <b>credit direction</b> (mortgage credit rising or falling) crossed with <b>tension</b> (the loaded-spring score — cheap and tight, or pricey and loose). Both axes were already validated; the cross gives <b>every quarter a cell, no blanks</b> (bar the early warm-up before credit data begins). Four corners: <b>Primed·Recovery</b>, <b>Trough·Reset</b>, <b>Overheat·Late</b>, <b>Cooling·Downturn</b>. <b>Blunt honesty up front:</b> the US test set was already spent on the old rule, so re-scoring the 2×2 on the same 1975–2026 US data is a <b>descriptive re-calibration, not an out-of-sample test</b> — the real validation moves to Taiwan next. Read the history below as evidence, and the 2×2 up top as the current call.</span>
+    <span class="lang-zh" style="display:none">單訊號機——五個相位，其中一個是把太多季吞進去的「無相位」正中央——退役。取而代之的是<b>一張 2×2 判讀</b>：<b>信貸方向</b>（房貸信貸上行或下行）交叉<b>張力</b>（上緊彈簧的分數——便宜又緊，或貴又鬆）。兩個軸都已驗證過；交叉之後<b>每一季都落進一格、沒有空白</b>（只有信貸資料開始前的早期暖機除外）。四個角：<b>蓄勢·復甦</b>、<b>打底·重置</b>、<b>過熱·晚週期</b>、<b>降溫·下行</b>。<b>先把話說白：</b>美國測試集已經花在舊規則上了，因此把 2×2 拿回同一段 1975–2026 美國資料重算，是<b>描述性重新校準，不是樣本外測試</b>——真正的驗證下一站移到台灣。下面的歷史當證據讀，最上面的 2×2 才是當下的判讀。</span>
   </div>
+
+  <!-- TOP: plain-language reading panel -->
+  <div class="judge">
+    <p class="jlab"><span class="lang-en">The reading right now · 2026Q1</span><span class="lang-zh" style="display:none">現在的判讀 · 2026Q1</span></p>
+    <p class="jphase curPhase">—</p>
+    <p class="jread">
+      <span class="lang-en">Mortgage credit has turned back on while tension sits at <b>0 of 4</b> — the spring is slack: homes are not cheap, supply is not tight, and credit is re-expanding into that. That is the <b>late-cycle, re-acceleration</b> corner — not a recovery off a cheap base, but a push on an already-full market.</span>
+      <span class="lang-zh" style="display:none">房貸信貸重新開啟，而張力停在 <b>0／4</b>——彈簧鬆的：房子不便宜、供給不緊，信貸卻往裡面重新擴張。這是<b>晚週期、再加速</b>的那一格——不是從便宜基底反彈的復甦，而是對一個已經滿載的市場再推一把。</span>
+    </p>
+    <div class="jrow">
+      <span class="jchip"><span class="lang-en">Credit: </span><span class="lang-zh" style="display:none">信貸：</span><b><span class="lang-en">rising</span><span class="lang-zh" style="display:none">上行</span></b></span>
+      <span class="jchip"><span class="lang-en">Tension: </span><span class="lang-zh" style="display:none">張力：</span><b>0/4</b></span>
+      <span class="jchip"><span class="lang-en">Move: </span><span class="lang-zh" style="display:none">走勢：</span><b><span class="lang-en">Cooling·Downturn → Overheat·Late</span><span class="lang-zh" style="display:none">降溫·下行 → 過熱·晚週期</span></b></span>
+    </div>
+    <p class="jhist">
+      <span class="lang-en">Historical echo: across US history, quarters in this cell saw a <b>3-year forward nominal return with a median of <span class="jpMed">—</span></b> (n=<span class="jpN">—</span>, range <span class="jpMin">—</span> to <span class="jpMax">—</span>). <span class="apx">Forward returns approximated by compounding FHFA (USSTHPI) year-on-year; exact at the 4/12-quarter horizon up to rounding. Descriptive re-calibration on a spent test set — not a forward bet.</span></span>
+      <span class="lang-zh" style="display:none">歷史對照：綜觀美國歷史，落在此格的季度，其後 <b>3 年名目報酬中位 <span class="jpMed">—</span></b>（n=<span class="jpN">—</span>，範圍 <span class="jpMin">—</span> ～ <span class="jpMax">—</span>）。<span class="apx">前向報酬以 FHFA（USSTHPI）年增率複利近似；在 4／12 季水平上除四捨五入外為精確值。這是在已花掉的測試集上做描述性重新校準——不是對未來下注。</span></span>
+    </p>
+    <div class="cells4">
+      <div class="cell4" style="border-color:#15803d">
+        <p class="c4n" style="color:#15803d"><span class="lang-en">Primed · Recovery</span><span class="lang-zh" style="display:none">蓄勢·復甦</span></p>
+        <p class="c4d"><span class="lang-en">credit rising × tension high — cheap, tight, credit turning on: the loaded-spring entry setup</span><span class="lang-zh" style="display:none">信貸上行 × 張力高——便宜、緊、信貸開啟：上緊彈簧的進場配置</span></p>
+        <p class="c4s"><span class="lang-en">3y median </span><span class="lang-zh" style="display:none">其後3年中位 </span><b class="med-recovery">—</b> · n=<span class="n-recovery">—</span></p>
+      </div>
+      <div class="cell4" style="border-color:#a16207">
+        <p class="c4n" style="color:#a16207"><span class="lang-en">Trough · Reset</span><span class="lang-zh" style="display:none">打底·重置</span></p>
+        <p class="c4d"><span class="lang-en">credit falling × tension high — credit still off but valuations and supply have reset to cheap/tight: bottoming</span><span class="lang-zh" style="display:none">信貸下行 × 張力高——信貸仍縮，但估值與供給已重置到便宜／緊：打底</span></p>
+        <p class="c4s"><span class="lang-en">3y median </span><span class="lang-zh" style="display:none">其後3年中位 </span><b class="med-reset">—</b> · n=<span class="n-reset">—</span></p>
+      </div>
+      <div class="cell4" style="border-color:#b91c1c">
+        <p class="c4n" style="color:#b91c1c"><span class="lang-en">Overheat · Late</span><span class="lang-zh" style="display:none">過熱·晚週期</span></p>
+        <p class="c4d"><span class="lang-en">credit rising × tension low — credit expanding into an already pricey, loose market: late-cycle push (here now)</span><span class="lang-zh" style="display:none">信貸上行 × 張力低——信貸擴張進入已偏貴、偏鬆的市場：晚週期推升（現在在此）</span></p>
+        <p class="c4s"><span class="lang-en">3y median </span><span class="lang-zh" style="display:none">其後3年中位 </span><b class="med-late">—</b> · n=<span class="n-late">—</span></p>
+      </div>
+      <div class="cell4" style="border-color:#1d4ed8">
+        <p class="c4n" style="color:#1d4ed8"><span class="lang-en">Cooling · Downturn</span><span class="lang-zh" style="display:none">降溫·下行</span></p>
+        <p class="c4d"><span class="lang-en">credit falling × tension low — credit contracting with no cheapness cushion: the weakest corner</span><span class="lang-zh" style="display:none">信貸下行 × 張力低——信貸收縮、又沒有便宜當緩衝：最弱的一格</span></p>
+        <p class="c4s"><span class="lang-en">3y median </span><span class="lang-zh" style="display:none">其後3年中位 </span><b class="med-downturn">—</b> · n=<span class="n-downturn">—</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2×2 judgement visual -->
+  <div class="blk">
+    <h2><span class="lang-en">The 2×2 — Where the US Stands, and How It Got Here</span><span class="lang-zh" style="display:none">2×2 · 美國站在哪、怎麼走到這</span></h2>
+    <p class="sub"><span class="lang-en">Two validated axes, four corners. Horizontal: <b>mortgage-credit direction</b> (rising left, falling right). Vertical: <b>tension</b> — the loaded-spring score (high/cheap-tight on top, low/pricey-loose on the bottom). Every quarter lands in exactly one cell. The glowing dot is <b>2026Q1 — you are here</b>; the gold trail is the last eight quarters, so you can see the market walk from <b>Cooling·Downturn</b> into <b>Overheat·Late</b> as credit switched back on with tension still at zero. Each cell carries its own history: the median 3-year forward nominal return of every past quarter that sat there.</span><span class="lang-zh" style="display:none">兩個已驗證的軸、四個角。橫軸：<b>房貸信貸方向</b>（左上行、右下行）。縱軸：<b>張力</b>——上緊彈簧的分數（上方高／便宜緊，下方低／貴鬆）。每一季剛好落在一格。發光的點是 <b>2026Q1——你在這</b>；金色軌跡是最近八季，看得到市場在信貸重新開啟、張力仍為零之際，從<b>降溫·下行</b>走進<b>過熱·晚週期</b>。每一格都帶著自己的歷史：過去落在該格所有季度的 3 年前向名目報酬中位。</span></p>
+    <div class="chartbox"><div id="m22" class="m22"></div></div>
+    <p class="narr-p" style="font-size:12.5px"><span class="lang-en"><b>How to read it:</b> the corner is a <b>state</b>, not a countdown. Notice the forward-return medians barely separate on this nominal, boom-heavy sample — the honest signal is not "green good, red bad" but the <b>downside</b>: Cooling·Downturn carries the only clearly negative quartile and the worst single outcome, and Overheat·Late still has a materially negative worst case. The cross tells you which risk you are exposed to, not a guaranteed number.</span><span class="lang-zh" style="display:none"><b>怎麼讀：</b>角落是一種<b>狀態</b>，不是倒數。注意在這個名目、偏多頭的樣本上，各格前向報酬中位幾乎分不開——誠實的訊號不是「綠好紅壞」，而是<b>下檔</b>：降溫·下行是唯一明確為負的四分位、也含最差單一結果，過熱·晚週期的最差情況也仍明顯為負。交叉告訴你暴露在哪一種風險，不是保證的數字。</span></p>
+  </div>
+
+  <!-- evidence divider -->
+  <div class="sec-rule"><h2><span class="lang-en">The Evidence Below — History, Not the Call</span><span class="lang-zh" style="display:none">以下是證據 · 歷史，不是判讀本身</span></h2></div>
+  <p class="narr-p" style="margin-top:-4px"><span class="lang-en">The two charts that follow are the same 2×2 phases shown as history: a fifty-year animated clock and a flat instrument panel. They are evidence for the corners above, not a second opinion — same rule, same four colours. The main call is the 2×2.</span><span class="lang-zh" style="display:none">接下來兩張圖，是把上面同一套 2×2 相位攤成歷史來看：一座五十年動畫時鐘，和一片攤平的儀表板。它們是上面四格的證據，不是第二種意見——同一套規則、同樣四色。主要判讀看 2×2。</span></p>
 
   <!-- US clock: polar + timeline -->
   <div class="blk">
     <h2><span class="lang-en">The Clock — Fifty Years on One Hand</span><span class="lang-zh" style="display:none">時鐘 · 一根指針掃過五十年</span></h2>
-    <p class="sub"><span class="lang-en">One market, one hand. Press play and the pointer sweeps every quarter from 1975 to 2026. Four quadrants, clockwise: <b>12→3 overheat</b>, <b>3→6 cooling</b>, <b>6→9 primed</b>, <b>9→12 ignition</b>. The longer a phase lasts, the farther the hand travels inside its quadrant. <b>Dead centre means no phase</b> — the hand is unwound, which is exactly where 2026 sits today. A gold comet-tail trails the last eight quarters; the faint ring of dots is all 205 quarters at once, five cycles overlaid. Drag the slider to any quarter; the dashed split in the flat view below is 2000Q1, where training ends and the one-shot test begins.</span><span class="lang-zh" style="display:none">一個市場，一根指針。按播放，指針就逐季從 1975 掃到 2026。四象限，順時針：<b>12→3 過熱</b>、<b>3→6 降溫</b>、<b>6→9 蓄勢</b>、<b>9→12 引爆</b>。某一相位持續越久，指針在該象限內掃得越遠。<b>正中央代表無相位</b>——指針未上弦，而 2026 今天正落在那裡。金色彗星尾拖著最近八季；淡淡的點環是 205 季一次疊在一起，五輪循環的軌跡。拖曳滑桿可跳到任一季；下方攤平圖裡的虛線是 2000Q1，訓練在此結束、一次性測試在此開始。</span></p>
+    <p class="sub"><span class="lang-en">The same 2×2 wrapped into a dial. One market, one hand — press play and the pointer sweeps every quarter from 1975 to 2026. Four quadrants, clockwise: <b>12→3 Overheat·Late</b>, <b>3→6 Cooling·Downturn</b>, <b>6→9 Trough·Reset</b>, <b>9→12 Primed·Recovery</b>. The longer a corner lasts, the farther the hand travels inside its quadrant. <b>Dead centre is only the warm-up</b> — the quarters before mortgage-credit data begins (pre-1979Q3); every quarter after that carries a corner. A gold comet-tail trails the last eight quarters; the faint ring of dots is all 205 quarters at once, five cycles overlaid. Drag the slider to any quarter; the dashed split in the flat view below is 2000Q1, where the old train/test boundary sat.</span><span class="lang-zh" style="display:none">把同一張 2×2 捲成鐘面。一個市場、一根指針——按播放，指針就逐季從 1975 掃到 2026。四象限，順時針：<b>12→3 過熱·晚週期</b>、<b>3→6 降溫·下行</b>、<b>6→9 打底·重置</b>、<b>9→12 蓄勢·復甦</b>。某一格持續越久，指針在該象限內掃得越遠。<b>正中央只有暖機</b>——房貸信貸資料開始前（1979Q3 之前）的那些季；其後每一季都帶著一格。金色彗星尾拖著最近八季；淡淡的點環是 205 季一次疊在一起，五輪循環的軌跡。拖曳滑桿可跳到任一季；下方攤平圖裡的虛線是 2000Q1，即舊訓練／測試分界所在。</span></p>
     <div class="chartbox"><div id="chartClock" class="ch" style="height:460px"></div></div>
-    <p class="narr-p" style="font-size:12.5px"><span class="lang-en"><b>How to read it:</b> the hand's <b>angle</b> is the phase (which quadrant) and how far it has advanced through that phase; its <b>length is fixed</b> — this is a state dial, not a magnitude gauge. The centre readout updates every frame with the quarter, phase, tension (0–4) and credit direction. This is a trajectory through history, not a forecast: the hand only ever traces what already happened.</span><span class="lang-zh" style="display:none"><b>怎麼讀：</b>指針的<b>角度</b>是相位（哪個象限）與在該相位內推進了多少；指針<b>長度固定</b>——這是狀態盤，不是幅度計。中央讀數每一幀更新當季、相位、張力（0–4）與信貸方向。這是一條穿過歷史的軌跡，不是預測：指針只描已經發生的事。</span></p>
+    <p class="narr-p" style="font-size:12.5px"><span class="lang-en"><b>How to read it:</b> the hand's <b>angle</b> is the corner (which quadrant) and how far it has advanced through it; its <b>length is fixed</b> — this is a state dial, not a magnitude gauge. The centre readout updates every frame with the quarter, corner, tension (0–4) and credit direction. This is a trajectory through history, not a forecast: the hand only ever traces what already happened.</span><span class="lang-zh" style="display:none"><b>怎麼讀：</b>指針的<b>角度</b>是相位（哪個象限）與在該格內推進了多少；指針<b>長度固定</b>——這是狀態盤，不是幅度計。中央讀數每一幀更新當季、相位、張力（0–4）與信貸方向。這是一條穿過歷史的軌跡，不是預測：指針只描已經發生的事。</span></p>
   </div>
 
   <!-- US band chart (flat companion) -->
   <div class="blk">
     <h2><span class="lang-en">The Flat View — The Same History Uncoiled</span><span class="lang-zh" style="display:none">攤平版 · 同一段歷史攤直來看</span></h2>
-    <p class="sub"><span class="lang-en"><b>The clock above is this chart rolled into a circle</b> — the timeline's hand corresponds to one quarter here, and a phase's arc is a coloured band below. Three synced layers, one x-axis. Top: FHFA house-price YoY with phase bands — <b>a blank (white) column means "no phase"</b>: none of the four phase rules fired that quarter (tension below 2, price not in overheat range, credit not falling). Middle: the four tension components as lamps — vacancy, months-supply, gap, valuation — lit gold in the quarters each one triggered, so you can see which components carried the score. Bottom: mortgage-credit YoY with the FL1 state shaded (green = rising, red = falling) and ignition/extinction confirmations marked. The dashed line at 2000Q1 splits training from the one-shot test. Every quarter is in the <a href="/data/framework-backtest.json">JSON</a>.</span><span class="lang-zh" style="display:none">三層同步、共用一條 x 軸。上層：FHFA 房價年增率與相位色帶——<b>空白（白色）代表「無相位」</b>：當季四條相位規則都沒觸發（張力低於 2、房價未達過熱區間、信貸未下行）。中層：張力的四個分項做成燈條——空置、月供給、缺口、估值——各分項觸發的季度亮金燈，一眼看出張力是靠哪幾項撐起來的。下層：房貸信貸年增率，FL1 狀態鋪底（綠＝上行、紅＝下行），點火／熄火確認點有標記。2000Q1 虛線分開訓練期與一次性測試期。每一季都在 <a href="/data/framework-backtest.json">JSON</a>。</span></p>
+    <p class="sub"><span class="lang-en"><b>The clock above is this chart rolled into a circle</b> — the timeline's hand corresponds to one quarter here, and a corner's run is a coloured band below. Three synced layers, one x-axis. Top: FHFA house-price YoY with the 2×2 bands (green Primed·Recovery, amber Trough·Reset, red Overheat·Late, blue Cooling·Downturn) — <b>a blank column is only the warm-up</b> before mortgage-credit data begins. Middle: the four tension components as lamps — vacancy, months-supply, gap, valuation — lit gold in the quarters each one triggered, so you can see which components carried the score (the Y-axis of the 2×2). Bottom: mortgage-credit YoY with the FL1 state shaded (green = rising, red = falling) — that shading <b>is the X-axis of the 2×2</b>. The dashed line at 2000Q1 marks the old train/test boundary. Every quarter is in the <a href="/data/framework-backtest.json">JSON</a>.</span><span class="lang-zh" style="display:none">三層同步、共用一條 x 軸。上層：FHFA 房價年增率與 2×2 色帶（綠＝蓄勢·復甦、琥珀＝打底·重置、紅＝過熱·晚週期、藍＝降溫·下行）——<b>空白欄只有暖機</b>：房貸信貸資料開始前的那幾季。中層：張力的四個分項做成燈條——空置、月供給、缺口、估值——各分項觸發的季度亮金燈，一眼看出張力靠哪幾項撐起（即 2×2 的縱軸）。下層：房貸信貸年增率，FL1 狀態鋪底（綠＝上行、紅＝下行）——這片鋪底<b>就是 2×2 的橫軸</b>。2000Q1 虛線標舊訓練／測試分界。每一季都在 <a href="/data/framework-backtest.json">JSON</a>。</span></p>
     <div class="chartbox"><div id="chartUSBand" class="ch" style="height:660px"></div></div>
-    <p class="narr-p"><span class="lang-en">Read the test half against history. The clock sat in <b>overheat continuously from 2003Q4 to 2006Q2</b> — the structure that could never be tuned to fire in training lit up at national scale in the one episode that mattered, then flipped to <b>cooling at 2006Q3, two quarters before the price peak</b> (FHFA hard top 2007Q1) and stayed there through the crash. It re-entered <b>primed only at 2013Q1</b>, three quarters after the 2012Q2 bottom: it confirmed the recovery rather than anticipating it. Through 2016–2018 and 2021–2023 it showed overheat with benign outcomes — overheat is a state, not a countdown. In 2022–24 the FHFA index never actually turned (YoY fell from 17% to about 3%), and the clock printed cooling from 2023Q2. Today, <b>2026Q1 reads: no phase — zero tension components lit, credit rising</b>, the same ignition-on-no-tension shape the v2 freeze flagged.</span><span class="lang-zh" style="display:none">拿測試那一半對歷史讀。時鐘從 <b>2003Q4 到 2006Q2 連續處於過熱</b>——訓練期怎麼調都點不亮的結構，在唯一要緊的那一段於全國尺度亮了，然後 <b>2006Q3 翻成降溫，比價格頂早兩季</b>（FHFA 硬頂 2007Q1），並一路維持到崩盤結束。它 <b>2013Q1 才回到蓄勢</b>，比 2012Q2 的底晚三季：它確認了復甦，而不是預判。2016–2018 與 2021–2023 顯示過熱但結果溫和——過熱是狀態，不是倒數計時。2022–24 FHFA 指數其實沒有轉折（年增率從 17% 降到約 3%），時鐘從 2023Q2 起打出降溫。今天，<b>2026Q1 讀數：無相位——張力分項零個亮、信貸上行</b>，正是 v2 凍結表標記過的「無張力點火」形狀。</span></p>
-    <p class="narr-p"><span class="lang-en"><b>Is this just house prices predicting house prices? No, and the panel now shows why.</b> The tension score (middle layer) is built from four series that contain no price momentum: homeowner vacancy (Census HVS), months-supply of new homes (Census), the ten-year formation-minus-completions gap (Census/FRED), and a valuation ratio whose numerator is the only place the price level enters (against per-capita income, BEA). The hand (bottom layer) is mortgage credit from the Fed's Z.1, not prices. Price YoY itself enters exactly one rule — the overheat trigger — and is otherwise the thing being predicted, drawn in the top layer only so the phases can be judged against it.</span><span class="lang-zh" style="display:none"><b>這是不是用房價預測房價？不是，面板現在直接展示原因。</b>張力分數（中層）由四條不含價格動能的序列組成：自住空置率（普查局 HVS）、新屋月供給（普查局）、十年家庭形成減完工缺口（普查局／FRED），以及估值比——價格水準唯一進入分子的地方（分母是 BEA 人均所得）。指針（下層）是 Fed Z.1 的房貸信貸，不是價格。房價年增率本身只進一條規則（過熱觸發），其餘時候它是被預測的對象，畫在上層只是為了讓相位對著它接受檢驗。</span></p>
+    <p class="narr-p"><span class="lang-en">Read the corners against history. The 2006–07 bubble ran as <b>Overheat·Late</b> (credit expanding into a pricey, loose market) right up to <b>2006Q2, then flipped to Cooling·Downturn at 2006Q3</b> as credit turned down — two quarters ahead of the FHFA hard top (2007Q1) — and stayed blue through the crash: the credit axis still catches the top. The 2011–13 bottom churned through Cooling·Downturn and back, printed <b>Trough·Reset at 2013Q1</b> (still-contracting credit over cheap, tight fundamentals) and only reached <b>Primed·Recovery in 2014</b> once credit and tension both turned up. The COVID cycle is the cleanest full loop: <b>Trough·Reset (2020Q1–Q3) → Primed·Recovery (2020Q4–2021Q1) → Overheat·Late (2021Q2–2022Q2) → Cooling·Downturn (2022Q3–2024Q4)</b>. Then credit switched back on with tension still at zero, and 2025Q1 stepped straight back into <b>Overheat·Late — where 2026Q1 sits today</b>.</span><span class="lang-zh" style="display:none">拿四格對歷史讀。2006–07 泡沫以<b>過熱·晚週期</b>運行（信貸擴張進入偏貴、偏鬆的市場），一路到 <b>2006Q2，然後 2006Q3 隨信貸轉下翻成降溫·下行</b>——比 FHFA 硬頂（2007Q1）早兩季——並一路藍到崩盤結束：信貸軸仍舊抓住頂部。2011–13 的底在降溫·下行間來回，<b>2013Q1 打出打底·重置</b>（信貸仍收縮、基本面已便宜緊），要到 <b>2014 年信貸與張力同時翻上，才進蓄勢·復甦</b>。COVID 這輪是最乾淨的一整圈：<b>打底·重置（2020Q1–Q3）→ 蓄勢·復甦（2020Q4–2021Q1）→ 過熱·晚週期（2021Q2–2022Q2）→ 降溫·下行（2022Q3–2024Q4）</b>。接著信貸在張力仍為零時重新開啟，2025Q1 直接踏回<b>過熱·晚週期——2026Q1 今天正落在此</b>。</span></p>
+    <p class="narr-p"><span class="lang-en"><b>Is this just house prices predicting house prices? No, and the panel shows why.</b> Neither 2×2 axis is price momentum. The tension score (middle layer, the vertical axis) is built from four series with no price in them: homeowner vacancy (Census HVS), months-supply of new homes (Census), the ten-year formation-minus-completions gap (Census/FRED), and a valuation ratio whose numerator is the only place the price level enters at all (against per-capita income, BEA). The credit direction (bottom layer, the horizontal axis) is mortgage credit from the Fed's Z.1. Price YoY is drawn in the top layer purely as the thing being judged against — it does not define either axis.</span><span class="lang-zh" style="display:none"><b>這是不是用房價預測房價？不是，面板直接展示原因。</b>2×2 的兩個軸都不是價格動能。張力分數（中層、縱軸）由四條不含價格的序列組成：自住空置率（普查局 HVS）、新屋月供給（普查局）、十年家庭形成減完工缺口（普查局／FRED），以及估值比——價格水準唯一進入分子的地方（分母是 BEA 人均所得）。信貸方向（下層、橫軸）是 Fed Z.1 的房貸信貸。房價年增率畫在上層純粹是被對照的對象——它不定義任何一個軸。</span></p>
   </div>
 
   <!-- scorecard -->
   <div class="blk">
-    <h2><span class="lang-en">The One-Shot Scorecard</span><span class="lang-zh" style="display:none">一次性成績單</span></h2>
-    <p class="sub"><span class="lang-en">Three metrics pre-defined before the test was run. The primary return metric stays nominal (training used nominal); a CPI-deflated version is attached as supplementary disclosure. This test period is now consumed: any future rule revision must declare test contamination.</span><span class="lang-zh" style="display:none">三項指標在跑測試前就預先定義。報酬主指標維持名目（訓練期用名目）；CPI 平減版作為補充揭露附上。本測試期已被消耗：未來任何規則修訂都必須聲明測試污染。</span></p>
+    <h2><span class="lang-en">The 2×2, Corner by Corner — Descriptive, Not a Test</span><span class="lang-zh" style="display:none">2×2 逐格看 · 描述性，不是測試</span></h2>
+    <p class="sub"><span class="lang-en">Every US quarter since credit data begins (1979Q3), grouped by its 2×2 corner, with the 3-year forward nominal return of each. <b>Read this as description, not a score.</b> The old single-signal rule already spent the 2000–2025 test window once; the 2×2 is a new reading rule re-computed over the same 1975–2026 US data, so these numbers are a re-calibration, not out-of-sample evidence. All figures are live from the arrays below; forward returns approximate FHFA (USSTHPI) by compounding YoY (exact at the 12-quarter horizon up to rounding).</span><span class="lang-zh" style="display:none">自信貸資料起（1979Q3）以來每一個美國季度，按其 2×2 格分組，附上各自的 3 年前向名目報酬。<b>這是描述、不是成績。</b>舊的單訊號規則已把 2000–2025 測試窗花掉一次；2×2 是在同一段 1975–2026 美國資料上重算的新判讀規則，所以這些數字是重新校準，不是樣本外證據。所有數字都由下方陣列即時計算；前向報酬以 FHFA（USSTHPI）年增率複利近似（在 12 季水平上除四捨五入外為精確值）。</span></p>
     <div class="mtbl-wrap">
     <table class="mtbl">
       <thead><tr>
-        <th><span class="lang-en">Metric</span><span class="lang-zh" style="display:none">指標</span></th>
-        <th><span class="lang-en">Result</span><span class="lang-zh" style="display:none">結果</span></th>
-        <th><span class="lang-en">Verdict</span><span class="lang-zh" style="display:none">裁決</span></th>
+        <th><span class="lang-en">2×2 corner</span><span class="lang-zh" style="display:none">2×2 格</span></th>
+        <th><span class="lang-en">Quarters (n)</span><span class="lang-zh" style="display:none">季數 (n)</span></th>
+        <th><span class="lang-en">3y fwd median</span><span class="lang-zh" style="display:none">3年前向中位</span></th>
+        <th><span class="lang-en">Range (worst → best)</span><span class="lang-zh" style="display:none">範圍（最差 → 最好）</span></th>
       </tr></thead>
       <tbody>
-        <tr><td class="who"><span class="lang-en">(a) Phase → forward 12q returns</span><span class="lang-zh" style="display:none">(a) 相位 → 前向 12 季報酬</span></td>
-            <td><span class="lang-en">Union metric weak: primed+ignition +19.0% vs overheat+cooling +15.2% (+3.8pp; real +4.5pp, supplementary). By phase: primed +39.9 (n=8), overheat +19.0 (n=42), <b>cooling −7.9 (n=24, Q1 −13.1)</b>.</span><span class="lang-zh" style="display:none">合併指標偏弱：蓄勢+引爆 +19.0% 對 過熱+降溫 +15.2%（+3.8pp；實質 +4.5pp，補充揭露）。分相位：蓄勢 +39.9（n=8）、過熱 +19.0（n=42）、<b>降溫 −7.9（n=24，Q1 −13.1）</b>。</span></td>
-            <td><span class="lang-en">～ weak on entry, clean on exit</span><span class="lang-zh" style="display:none">～ 進場弱，出場乾淨</span></td></tr>
-        <tr><td class="who"><span class="lang-en">(b) Three known turns</span><span class="lang-zh" style="display:none">(b) 三個已知轉折</span></td>
-            <td><span class="lang-en">2006–07 top: cooling from 2006Q3, <b>+2q ahead</b> of the 2007Q1 hard top. 2011–12 bottom: primed 2013Q1, <b>3q late</b> (ignition 7q late). 2022 freeze: no price turn ever printed to score against; cooling arrived 2023Q2, about 3q after the rate shock.</span><span class="lang-zh" style="display:none">2006–07 頂：2006Q3 降溫，<b>領先硬頂（2007Q1）兩季</b>。2011–12 底：2013Q1 蓄勢，<b>晚三季</b>（引爆晚七季）。2022 凍結：價格從未轉折、無從打分；降溫 2023Q2 到，約晚利率衝擊三季。</span></td>
-            <td><span class="lang-en">1 hit · 1 miss · 1 unscorable</span><span class="lang-zh" style="display:none">1 中 · 1 失 · 1 無從評分</span></td></tr>
-        <tr><td class="who"><span class="lang-en">(c) Coverage</span><span class="lang-zh" style="display:none">(c) 覆蓋率</span></td>
-            <td><b>87%</b><span class="lang-en"> of test quarters carry a phase (fail line: 50%)</span><span class="lang-zh" style="display:none"> 的測試季有相位（不及格線 50%）</span></td>
-            <td><span class="lang-en">✓ pass</span><span class="lang-zh" style="display:none">✓ 過關</span></td></tr>
-        <tr class="hl"><td class="who"><span class="lang-en">Tracked limitation</span><span class="lang-zh" style="display:none">追蹤中的已知限制</span></td>
-            <td><span class="lang-en">Training could never light overheat (degenerate parameter). In test it lit continuously 2003Q4–2006Q2 and flipped ahead of the top. That is the overheat rule's first and only validation: one episode, with K2=1.0 chosen by tie-break, and it also stayed lit through 2016–18 and 2021–23 without a bust.</span><span class="lang-zh" style="display:none">訓練期過熱怎麼調都點不亮（參數簡併）。測試期它 2003Q4–2006Q2 連續亮起、並在頂前翻轉。這是過熱規則第一次也是唯一一次驗證：只有一個事件，K2=1.0 還是靠平手規則選的；而且它在 2016–18、2021–23 也亮著卻沒有崩盤。</span></td>
-            <td><span class="lang-en">reported as-is</span><span class="lang-zh" style="display:none">照登</span></td></tr>
+        <tr><td class="who"><span style="color:#15803d">■</span> <span class="lang-en">Primed · Recovery</span><span class="lang-zh" style="display:none">蓄勢·復甦</span></td>
+            <td class="n-recovery">—</td><td><b class="med-recovery">—</b></td><td class="rng-recovery">—</td></tr>
+        <tr><td class="who"><span style="color:#a16207">■</span> <span class="lang-en">Trough · Reset</span><span class="lang-zh" style="display:none">打底·重置</span></td>
+            <td class="n-reset">—</td><td><b class="med-reset">—</b></td><td class="rng-reset">—</td></tr>
+        <tr class="hl"><td class="who"><span style="color:#b91c1c">■</span> <span class="lang-en">Overheat · Late <span style="font-weight:400;color:var(--muted)">(now)</span></span><span class="lang-zh" style="display:none">過熱·晚週期 <span style="font-weight:400;color:var(--muted)">（現在）</span></span></td>
+            <td class="n-late">—</td><td><b class="med-late">—</b></td><td class="rng-late">—</td></tr>
+        <tr><td class="who"><span style="color:#1d4ed8">■</span> <span class="lang-en">Cooling · Downturn</span><span class="lang-zh" style="display:none">降溫·下行</span></td>
+            <td class="n-downturn">—</td><td><b class="med-downturn">—</b></td><td class="rng-downturn">—</td></tr>
       </tbody>
     </table>
     </div>
-    <p class="narr-p"><span class="lang-en"><b>One-shot verdict: a partial pass.</b> The clock earned one specific, valuable property: when it says cooling, the next three years have been bad. It did not earn entry-timing authority. Per the strategy, the next step is transplanting the frozen ruleset to market #2, not re-tuning it on this data, which is now burned.</span><span class="lang-zh" style="display:none"><b>一次性裁決：部分通過。</b>這座鐘掙到了一項具體而值錢的性質：當它說降溫，接下來三年都不好過。它沒有掙到進場擇時的權威。按策略，下一步是把凍結規則移植到第二個市場，而不是在這份已燒掉的資料上重調。</span></p>
+    <p class="narr-p"><span class="lang-en"><b>What the corners actually separate.</b> On this nominal, boom-heavy US sample the medians cluster in the mid-teens — the cross is <b>not</b> a return-ranking machine, and it would be dishonest to sell it as one. Where it does separate is <b>downside</b>: Cooling·Downturn holds the only clearly negative lower quartile and the worst single three-year outcome, while the two credit-rising corners rarely printed a bad three years. So the useful read is defensive — the corner tells you which tail you are exposed to. And the honest caveat stands above everything: <b>these are descriptions of a spent US sample, not a forward test.</b> The forward test is the transplant to Taiwan.</span><span class="lang-zh" style="display:none"><b>四格真正分得開的是什麼。</b>在這個名目、偏多頭的美國樣本上，中位都擠在十幾趴——這個交叉<b>不是</b>報酬排序機，把它當排序機賣是不誠實的。它真正分得開的是<b>下檔</b>：降溫·下行握有唯一明確為負的下四分位、以及最差的單一三年結果，而兩個信貸上行的格子幾乎不曾打出糟糕的三年。所以有用的讀法是防禦性的——格子告訴你暴露在哪一條尾巴。而那句誠實的但書凌駕一切：<b>這些是對一份已花掉的美國樣本的描述，不是前向測試。</b>前向測試是移植到台灣那一步。</span></p>
   </div>
 
-  <!-- frozen rules -->
+  <!-- the rule -->
   <div class="blk">
-    <h2><span class="lang-en">The Frozen Ruleset</span><span class="lang-zh" style="display:none">凍結的規則</span></h2>
+    <h2><span class="lang-en">The Rule — Two Validated Axes</span><span class="lang-zh" style="display:none">規則 · 兩個已驗證的軸</span></h2>
     <ul class="pt">
-      <li><span class="lang-en"><b>Tension score (0–4):</b> homeowner vacancy in its bottom 20th percentile (trailing 10y) · months-supply bottom 20th percentile · 10-year formation-minus-completions gap positive · valuation (price ÷ per-capita disposable income) below its 10-year median.</span><span class="lang-zh" style="display:none"><b>張力分數（0–4）：</b>自住空置率處於自身十年最低 20 分位 · 月供給最低 20 分位 · 十年（家庭形成−完工）缺口為正 · 估值（房價÷人均可支配所得）低於十年中位。</span></li>
-      <li><span class="lang-en"><b>Phases (precedence fixed):</b> overheat = price YoY ≥70th percentile and valuation above its median; ignition = tension ≥2 and mortgage-credit growth rising (Test 6 turn rule); primed = tension ≥2, credit not rising; cooling = credit falling. Parameters K1=2, P_low=20, P_hi=70, K2=1.0, tuned only on 1975–1999; the 36-trial grid and objective are logged in the <a href="/data/framework-backtest.json">JSON</a>.</span><span class="lang-zh" style="display:none"><b>相位（優先序固定）：</b>過熱＝價格年增 ≥70 分位且估值高於中位；引爆＝張力 ≥2 且房貸增速上行（Test 6 轉折規則）；蓄勢＝張力 ≥2、信貸未上行；降溫＝信貸下行。參數 K1=2、P_low=20、P_hi=70、K2=1.0，只在 1975–1999 調出；36 組網格與目標函數記錄在 <a href="/data/framework-backtest.json">JSON</a>。</span></li>
+      <li><span class="lang-en"><b>Y — tension (0–4, the loaded spring):</b> homeowner vacancy in its bottom 20th percentile (trailing 10y) · months-supply bottom 20th percentile · 10-year formation-minus-completions gap positive · valuation (price ÷ per-capita disposable income) below its 10-year median. <b>High</b> = tension ≥ 2 (cheap and tight); <b>low</b> = below 2 (pricey and loose). Boundary K1=2 is unchanged from the frozen tuning — not a new knob.</span><span class="lang-zh" style="display:none"><b>Y — 張力（0–4，上緊的彈簧）：</b>自住空置率處於自身十年最低 20 分位 · 月供給最低 20 分位 · 十年（家庭形成−完工）缺口為正 · 估值（房價÷人均可支配所得）低於十年中位。<b>高</b>＝張力 ≥ 2（便宜又緊）；<b>低</b>＝低於 2（貴又鬆）。邊界 K1=2 沿用凍結時的調參——不是新旋鈕。</span></li>
+      <li><span class="lang-en"><b>X — credit direction (FL1):</b> mortgage credit (Fed Z.1) rising or falling, the same state series that led 8 of 10 price turns in the frozen work. <b>Rising</b> = left column, <b>falling</b> = right.</span><span class="lang-zh" style="display:none"><b>X — 信貸方向（FL1）：</b>房貸信貸（Fed Z.1）上行或下行，就是凍結研究裡領先 10 個價格轉折中 8 個的那條狀態序列。<b>上行</b>＝左欄，<b>下行</b>＝右欄。</span></li>
+      <li><span class="lang-en"><b>The four corners:</b> rising × high = <b style="color:#15803d">Primed·Recovery</b>; falling × high = <b style="color:#a16207">Trough·Reset</b>; rising × low = <b style="color:#b91c1c">Overheat·Late</b>; falling × low = <b style="color:#1d4ed8">Cooling·Downturn</b>. Every quarter with credit data lands in exactly one — no precedence stack, no "no-phase" gap.</span><span class="lang-zh" style="display:none"><b>四個角：</b>上行 × 高＝<b style="color:#15803d">蓄勢·復甦</b>；下行 × 高＝<b style="color:#a16207">打底·重置</b>；上行 × 低＝<b style="color:#b91c1c">過熱·晚週期</b>；下行 × 低＝<b style="color:#1d4ed8">降溫·下行</b>。每一個有信貸資料的季度剛好落一格——沒有優先序堆疊，也沒有「無相位」的缺口。</span></li>
+      <li class="good"><span class="lang-en"><b>What changed, and what didn't.</b> The old single-signal machine (overheat / ignition / primed / cooling / no-phase, with K2, P_low, P_hi) is <b>retired for this reading</b> — it left too many blank quarters and stacked fragile precedence. The two ingredients survive; only the combination is new. The v2 twelve-market freeze on the <a href="/my/framework#v2freeze">framework page</a> is <b>untouched and still frozen</b> — it gets scored in 2029 on its own terms. Two rulesets coexist by design: v2 is a frozen bet, this 2×2 is the working reading tool.</span><span class="lang-zh" style="display:none"><b>變了什麼、沒變什麼。</b>舊的單訊號機（過熱／引爆／蓄勢／降溫／無相位，帶 K2、P_low、P_hi）在此判讀中<b>退役</b>——它留下太多空白季、又堆疊脆弱的優先序。兩樣原料都保留，只有組合方式是新的。<a href="/my/framework#v2freeze">框架頁</a>的 v2 十二市場凍結表<b>原封不動、仍然凍結</b>——2029 年照它自己的條件對答案。兩套規則刻意並存：v2 是一注凍結的賭，這張 2×2 是實際在用的判讀工具。</span></li>
     </ul>
   </div>
 
@@ -181,17 +254,17 @@ body.zh .mtbl th{text-transform:none;letter-spacing:0}
   <div class="blk">
     <h2><span class="lang-en">What This Clock Does and Does Not Claim</span><span class="lang-zh" style="display:none">這座鐘承諾什麼、不承諾什麼</span></h2>
     <ul class="pt">
-      <li class="warn"><span class="lang-en"><b>A trajectory, not a prediction.</b> The hand sweeps 1975–2026 — things that already happened. Phases are rule-computed states; the framework is not validated as a rotation model. It shows where the US has stood, not where the next quarter goes.</span><span class="lang-zh" style="display:none"><b>是軌跡，不是預測。</b>指針掃的是 1975–2026——已經發生的事。相位是規則算出的狀態，框架未被驗證為輪動模型。它顯示美國站過哪裡，不承諾下一季往哪走。</span></li>
-      <li><span class="lang-en"><b>Dead centre = no phase, and that is a state.</b> When none of the four rules fire, the hand unwinds to the middle. 2026Q1 sits there now — zero tension components lit, credit rising — the same ignition-on-no-tension shape the v2 freeze flagged. The centre is a reading, not a malfunction.</span><span class="lang-zh" style="display:none"><b>正中央＝無相位，而那是一種狀態。</b>四條規則都沒觸發時，指針就收回中心。2026Q1 現在正落在那裡——張力分項零個亮、信貸上行——正是 v2 凍結表標記過的「無張力點火」形狀。中心是讀數，不是故障。</span></li>
-      <li><span class="lang-en"><b>Trained on 1975–99, tested once — a partial pass.</b> The rules were tuned only on 1975–1999, frozen, then scored once over 2000–2025 on 2026-07-12. Cooling earned a real property (−7.9% median over the next three years — a validated exit instrument); the credit hand led 8 of 10 turns (+2.5q median). Entry phases (primed, ignition) and the overheat rule (one confirming episode) remain unproven for timing. The test set is now burned: any revision must declare contamination.</span><span class="lang-zh" style="display:none"><b>1975–99 訓練、只測一次——部分通過。</b>規則只在 1975–1999 調參、凍結，再於 2026-07-12 對 2000–2025 只跑一次評分。降溫掙到一項真性質（往後三年中位 −7.9%——一具已驗證的出場儀器）；信貸指針 10 個轉折領先 8 個（中位 +2.5 季）。進場相位（蓄勢、引爆）與過熱規則（僅一個確認事件）的擇時能力仍未證明。測試集現在已燒掉：任何修訂都必須聲明污染。</span></li>
-      <li><span class="lang-en"><b>US-only. Do not re-tune before transplant.</b> This dial is calibrated to the US alone. The frozen ruleset must not be re-fitted on this burned data; the next honest validation comes from a second market or a future period — which is what the bench above is waiting on.</span><span class="lang-zh" style="display:none"><b>美國專屬。移植前不得重調。</b>這座盤只對美國校準。凍結規則不得在這份已燒掉的資料上重新擬合；下一次誠實的驗證只能來自第二個市場或未來的時間——這正是上面候補席在等的事。</span></li>
+      <li class="warn"><span class="lang-en"><b>The US recompute is descriptive, not out-of-sample.</b> This is the one that matters. The 2000–2025 window was already spent scoring the old single-signal rule; re-computing the 2×2 over the same 1975–2026 data is a <b>re-calibration on a burned test set</b>, so every corner statistic above describes the past — it is not evidence the rule works forward. The genuine out-of-sample test is the transplant to <b>Taiwan</b>, next in line.</span><span class="lang-zh" style="display:none"><b>美國的重算是描述性，不是樣本外。</b>這條最要緊。2000–2025 那段窗已經花在舊的單訊號規則上；把 2×2 拿回同一段 1975–2026 資料重算，是<b>在已燒掉的測試集上重新校準</b>，所以上面每一格統計都是在描述過去——它不是規則能向前有效的證據。真正的樣本外測試，是移植到<b>台灣</b>，下一站。</span></li>
+      <li class="warn"><span class="lang-en"><b>A position, not a prediction.</b> The 2×2 and the clock show 1975–2026 — things that already happened. Corners are rule-computed states; the framework is not validated as a rotation model. It shows where the US stands, not where the next quarter goes.</span><span class="lang-zh" style="display:none"><b>是位置，不是預測。</b>2×2 與時鐘顯示的是 1975–2026——已經發生的事。四格是規則算出的狀態，框架未被驗證為輪動模型。它顯示美國站在哪，不承諾下一季往哪走。</span></li>
+      <li><span class="lang-en"><b>Every quarter has a reading now — no more "no phase".</b> The old rule left the dial dead-centre whenever nothing fired; the 2×2 removes that gap. The only blank is the <b>18-quarter warm-up</b> (1975Q1–1979Q2) before mortgage-credit data begins. 2026Q1 reads <b>Overheat·Late</b>: credit rising into a zero-tension market.</span><span class="lang-zh" style="display:none"><b>現在每一季都有讀數——不再有「無相位」。</b>舊規則只要沒觸發就把指針晾在正中央；2×2 拿掉了那個缺口。唯一的空白是信貸資料開始前的 <b>18 季暖機</b>（1975Q1–1979Q2）。2026Q1 讀數為<b>過熱·晚週期</b>：信貸上行、進入張力為零的市場。</span></li>
+      <li><span class="lang-en"><b>The v2 twelve-market freeze is untouched.</b> The clock now uses the updated 2×2 reading rule; the v2 frozen bet stays frozen on the <a href="/my/framework#v2freeze">framework page</a> and is scored in 2029 regardless. Two rulesets coexist by design — do not read this page's corners back into the v2 table.</span><span class="lang-zh" style="display:none"><b>v2 十二市場凍結表原封不動。</b>時鐘現在用的是更新後的 2×2 判讀規則；v2 那注凍結的賭仍凍在<a href="/my/framework#v2freeze">框架頁</a>，2029 年照樣對答案。兩套規則刻意並存——別把本頁的四格讀回 v2 表裡。</span></li>
     </ul>
     <p class="narr-p"><span class="lang-en"><b>Update cadence:</b> quarterly for the US reading (new FRED data), annual for the structure, ad-hoc on major events. Method and all raw inputs: <a href="/my/framework">the framework backtest</a> and <a href="/data/framework-backtest.json">data/framework-backtest.json</a>.</span><span class="lang-zh" style="display:none"><b>更新節奏：</b>美國讀數季更（隨 FRED 資料）、結構年檢、大事件另行更新。方法與全部原始輸入：<a href="/my/framework">框架回測頁</a>與 <a href="/data/framework-backtest.json">data/framework-backtest.json</a>。</span></p>
   </div>
 
   <p class="src">
-    <span class="lang-en">Pilot inputs: FRED USSTHPI (price), HSN1F + MSACSR (volume and months-supply), HHMSDODNS (Z.1 mortgage credit), MORTGAGE30US − CPIAUCSL (real rate), HOUST/COMPUTSA/TTLHH (supply stock, census-break caveat), RHVRUSQ156N (homeowner vacancy), A229RC0Q052SBEA (income denominator); UN WPP 2024 (cohort, auxiliary). Tuning log, quarterly phases and the one-shot declaration: <a href="/data/framework-backtest.json">data/framework-backtest.json</a>. Independent analysis, not investment advice.</span>
-    <span class="lang-zh" style="display:none">試點輸入：FRED USSTHPI（價格）、HSN1F＋MSACSR（量與月供給）、HHMSDODNS（Z.1 房貸信貸）、MORTGAGE30US − CPIAUCSL（實際利率）、HOUST／COMPUTSA／TTLHH（供給存量，普查斷點警語）、RHVRUSQ156N（自住空置率）、A229RC0Q052SBEA（所得分母）；UN WPP 2024（世代，輔助）。調參紀錄、逐季相位與一次性聲明：<a href="/data/framework-backtest.json">data/framework-backtest.json</a>。獨立分析，不構成投資建議。</span>
+    <span class="lang-en">Pilot inputs: FRED USSTHPI (price), HSN1F + MSACSR (volume and months-supply), HHMSDODNS (Z.1 mortgage credit), MORTGAGE30US − CPIAUCSL (real rate), HOUST/COMPUTSA/TTLHH (supply stock, census-break caveat), RHVRUSQ156N (homeowner vacancy), A229RC0Q052SBEA (income denominator); UN WPP 2024 (cohort, auxiliary). The 2×2 reading rule and its axes are computed on this page; the underlying tuning log and quarterly instrument series live in <a href="/data/framework-backtest.json">data/framework-backtest.json</a>. Forward returns approximate FHFA (USSTHPI) by compounding published YoY. Independent analysis, not investment advice.</span>
+    <span class="lang-zh" style="display:none">試點輸入：FRED USSTHPI（價格）、HSN1F＋MSACSR（量與月供給）、HHMSDODNS（Z.1 房貸信貸）、MORTGAGE30US − CPIAUCSL（實際利率）、HOUST／COMPUTSA／TTLHH（供給存量，普查斷點警語）、RHVRUSQ156N（自住空置率）、A229RC0Q052SBEA（所得分母）；UN WPP 2024（世代，輔助）。2×2 判讀規則與其座標軸在本頁計算；底層調參紀錄與逐季儀器序列見 <a href="/data/framework-backtest.json">data/framework-backtest.json</a>。前向報酬以 FHFA（USSTHPI）公佈年增率複利近似。獨立分析，不構成投資建議。</span>
   </p>
 
 </main>
@@ -214,8 +287,6 @@ function mkAxis(o){var b={axisLine:{lineStyle:{color:C.grid}},axisTick:{show:fal
 
 var usq = ["1975Q1", "1975Q2", "1975Q3", "1975Q4", "1976Q1", "1976Q2", "1976Q3", "1976Q4", "1977Q1", "1977Q2", "1977Q3", "1977Q4", "1978Q1", "1978Q2", "1978Q3", "1978Q4", "1979Q1", "1979Q2", "1979Q3", "1979Q4", "1980Q1", "1980Q2", "1980Q3", "1980Q4", "1981Q1", "1981Q2", "1981Q3", "1981Q4", "1982Q1", "1982Q2", "1982Q3", "1982Q4", "1983Q1", "1983Q2", "1983Q3", "1983Q4", "1984Q1", "1984Q2", "1984Q3", "1984Q4", "1985Q1", "1985Q2", "1985Q3", "1985Q4", "1986Q1", "1986Q2", "1986Q3", "1986Q4", "1987Q1", "1987Q2", "1987Q3", "1987Q4", "1988Q1", "1988Q2", "1988Q3", "1988Q4", "1989Q1", "1989Q2", "1989Q3", "1989Q4", "1990Q1", "1990Q2", "1990Q3", "1990Q4", "1991Q1", "1991Q2", "1991Q3", "1991Q4", "1992Q1", "1992Q2", "1992Q3", "1992Q4", "1993Q1", "1993Q2", "1993Q3", "1993Q4", "1994Q1", "1994Q2", "1994Q3", "1994Q4", "1995Q1", "1995Q2", "1995Q3", "1995Q4", "1996Q1", "1996Q2", "1996Q3", "1996Q4", "1997Q1", "1997Q2", "1997Q3", "1997Q4", "1998Q1", "1998Q2", "1998Q3", "1998Q4", "1999Q1", "1999Q2", "1999Q3", "1999Q4", "2000Q1", "2000Q2", "2000Q3", "2000Q4", "2001Q1", "2001Q2", "2001Q3", "2001Q4", "2002Q1", "2002Q2", "2002Q3", "2002Q4", "2003Q1", "2003Q2", "2003Q3", "2003Q4", "2004Q1", "2004Q2", "2004Q3", "2004Q4", "2005Q1", "2005Q2", "2005Q3", "2005Q4", "2006Q1", "2006Q2", "2006Q3", "2006Q4", "2007Q1", "2007Q2", "2007Q3", "2007Q4", "2008Q1", "2008Q2", "2008Q3", "2008Q4", "2009Q1", "2009Q2", "2009Q3", "2009Q4", "2010Q1", "2010Q2", "2010Q3", "2010Q4", "2011Q1", "2011Q2", "2011Q3", "2011Q4", "2012Q1", "2012Q2", "2012Q3", "2012Q4", "2013Q1", "2013Q2", "2013Q3", "2013Q4", "2014Q1", "2014Q2", "2014Q3", "2014Q4", "2015Q1", "2015Q2", "2015Q3", "2015Q4", "2016Q1", "2016Q2", "2016Q3", "2016Q4", "2017Q1", "2017Q2", "2017Q3", "2017Q4", "2018Q1", "2018Q2", "2018Q3", "2018Q4", "2019Q1", "2019Q2", "2019Q3", "2019Q4", "2020Q1", "2020Q2", "2020Q3", "2020Q4", "2021Q1", "2021Q2", "2021Q3", "2021Q4", "2022Q1", "2022Q2", "2022Q3", "2022Q4", "2023Q1", "2023Q2", "2023Q3", "2023Q4", "2024Q1", "2024Q2", "2024Q3", "2024Q4", "2025Q1", "2025Q2", "2025Q3", "2025Q4", "2026Q1"];
 var usyoy = [null, null, null, null, 4.9, 7.5, 8.7, 7.8, 10.4, 10.9, 11.7, 14.7, 14.4, 13.6, 14.6, 13.5, 15.1, 14.5, 13.3, 12.4, 9.4, 7.7, 8.3, 6.4, 5.1, 5.6, 4.3, 2.8, 1.0, 1.2, -1.8, 3.8, 7.8, 6.6, 9.3, 5.4, 4.3, 4.4, 4.5, 4.7, 4.6, 4.7, 5.4, 5.7, 6.3, 6.9, 6.9, 7.3, 7.3, 6.8, 6.4, 5.4, 5.0, 5.5, 5.3, 5.6, 5.3, 4.6, 5.7, 5.6, 5.0, 4.0, 2.4, 1.2, 1.5, 1.7, 1.3, 3.1, 3.1, 2.3, 3.3, 2.4, 1.7, 2.7, 2.3, 2.6, 3.2, 2.9, 2.5, 1.5, 1.5, 2.5, 3.7, 4.6, 5.2, 3.6, 2.5, 2.5, 2.2, 2.9, 3.8, 4.4, 5.1, 5.1, 5.2, 5.1, 4.6, 5.1, 5.1, 4.9, 5.8, 6.1, 6.5, 7.1, 7.7, 7.7, 7.4, 7.1, 6.0, 6.1, 6.5, 6.7, 6.5, 6.0, 5.5, 7.0, 7.4, 8.6, 11.1, 10.3, 11.1, 11.9, 11.1, 11.2, 10.5, 8.1, 5.8, 4.5, 3.3, 2.2, 0.2, -1.1, -2.2, -4.6, -6.6, -7.2, -5.8, -5.9, -5.3, -5.2, -7.0, -5.4, -1.9, -1.8, -3.4, -4.3, -4.5, -3.3, -1.6, -0.3, 0.3, 0.6, 2.2, 4.2, 4.3, 4.3, 4.6, 5.0, 5.1, 5.1, 5.4, 5.1, 5.0, 5.0, 4.8, 5.1, 5.5, 5.4, 5.2, 5.6, 5.3, 5.4, 6.1, 5.7, 5.4, 4.9, 4.6, 4.4, 4.5, 5.1, 5.1, 4.4, 4.9, 6.3, 7.6, 12.4, 16.6, 18.0, 19.4, 20.4, 15.8, 10.8, 7.6, 4.0, 4.1, 5.3, 6.2, 5.6, 4.9, 5.5, 4.8, 3.9, 3.4, 3.4, 3.4];
-var usphase = ["none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "primed", "primed", "primed", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "primed", "none", "none", "none", "none", "none", "cooling", "cooling", "cooling", "cooling", "cooling", "primed", "primed", "primed", "primed", "cooling", "none", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "primed", "cooling", "primed", "primed", "primed", "primed", "ignition", "ignition", "ignition", "ignition", "primed", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "none", "ignition", "ignition", "ignition", "primed", "primed", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "none", "cooling", "cooling", "primed", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "none", "none", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "cooling", "none", "none", "none", "none", "cooling", "cooling", "cooling", "primed", "none", "none", "none", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "ignition", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "ignition", "primed", "primed", "primed", "primed", "overheat", "primed", "primed", "overheat", "ignition", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "overheat", "cooling", "cooling", "cooling", "overheat", "cooling", "cooling", "cooling", "none", "none", "none", "none", "none"];
-var usbands = [[{xAxis:'1979Q3',itemStyle:{color:'rgba(29,78,216,0.13)'}},{xAxis:'1982Q3'}],[{xAxis:'1982Q4',itemStyle:{color:'rgba(184,146,74,0.20)'}},{xAxis:'1983Q2'}],[{xAxis:'1983Q3',itemStyle:{color:'rgba(21,128,61,0.16)'}},{xAxis:'1986Q1'}],[{xAxis:'1986Q2',itemStyle:{color:'rgba(184,146,74,0.20)'}},{xAxis:'1986Q2'}],[{xAxis:'1987Q4',itemStyle:{color:'rgba(29,78,216,0.13)'}},{xAxis:'1988Q4'}],[{xAxis:'1989Q1',itemStyle:{color:'rgba(184,146,74,0.20)'}},{xAxis:'1989Q4'}],[{xAxis:'1990Q1',itemStyle:{color:'rgba(29,78,216,0.13)'}},{xAxis:'1990Q1'}],[{xAxis:'1990Q3',itemStyle:{color:'rgba(29,78,216,0.13)'}},{xAxis:'1991Q4'}],[{xAxis:'1992Q1',itemStyle:{color:'rgba(184,146,74,0.20)'}},{xAxis:'1992Q1'}],[{xAxis:'1992Q2',itemStyle:{color:'rgba(29,78,216,0.13)'}},{xAxis:'1992Q2'}],[{xAxis:'1992Q3',itemStyle:{color:'rgba(184,146,74,0.20)'}},{xAxis:'1993Q2'}],[{xAxis:'1993Q3',itemStyle:{color:'rgba(21,128,61,0.16)'}},{xAxis:'1994Q2'}],[{xAxis:'1994Q3',itemStyle:{color:'rgba(184,146,74,0.20)'}},{xAxis:'1994Q3'}],[{xAxis:'1994Q4',itemStyle:{color:'rgba(29,78,216,0.13)'}},{xAxis:'1996Q1'}],[{xAxis:'1996Q3',itemStyle:{color:'rgba(21,128,61,0.16)'}},{xAxis:'1997Q1'}],[{xAxis:'1997Q2',itemStyle:{color:'rgba(184,146,74,0.20)'}},{xAxis:'1997Q3'}],[{xAxis:'1997Q4',itemStyle:{color:'rgba(21,128,61,0.16)'}},{xAxis:'1999Q3'}],[{xAxis:'2000Q1',itemStyle:{color:'rgba(29,78,216,0.13)'}},{xAxis:'2000Q2'}],[{xAxis:'2000Q3',itemStyle:{color:'rgba(184,146,74,0.20)'}},{xAxis:'2000Q3'}],[{xAxis:'2000Q4',itemStyle:{color:'rgba(185,28,28,0.14)'}},{xAxis:'2003Q1'}],[{xAxis:'2003Q4',itemStyle:{color:'rgba(185,28,28,0.14)'}},{xAxis:'2006Q2'}],[{xAxis:'2006Q3',itemStyle:{color:'rgba(29,78,216,0.13)'}},{xAxis:'2011Q1'}],[{xAxis:'2012Q2',itemStyle:{color:'rgba(29,78,216,0.13)'}},{xAxis:'2012Q4'}],[{xAxis:'2013Q1',itemStyle:{color:'rgba(184,146,74,0.20)'}},{xAxis:'2013Q1'}],[{xAxis:'2014Q1',itemStyle:{color:'rgba(21,128,61,0.16)'}},{xAxis:'2015Q4'}],[{xAxis:'2016Q1',itemStyle:{color:'rgba(185,28,28,0.14)'}},{xAxis:'2018Q3'}],[{xAxis:'2018Q4',itemStyle:{color:'rgba(21,128,61,0.16)'}},{xAxis:'2018Q4'}],[{xAxis:'2019Q1',itemStyle:{color:'rgba(184,146,74,0.20)'}},{xAxis:'2019Q4'}],[{xAxis:'2020Q1',itemStyle:{color:'rgba(185,28,28,0.14)'}},{xAxis:'2020Q1'}],[{xAxis:'2020Q2',itemStyle:{color:'rgba(184,146,74,0.20)'}},{xAxis:'2020Q3'}],[{xAxis:'2020Q4',itemStyle:{color:'rgba(185,28,28,0.14)'}},{xAxis:'2020Q4'}],[{xAxis:'2021Q1',itemStyle:{color:'rgba(21,128,61,0.16)'}},{xAxis:'2021Q1'}],[{xAxis:'2021Q2',itemStyle:{color:'rgba(185,28,28,0.14)'}},{xAxis:'2023Q1'}],[{xAxis:'2023Q2',itemStyle:{color:'rgba(29,78,216,0.13)'}},{xAxis:'2023Q4'}],[{xAxis:'2024Q1',itemStyle:{color:'rgba(185,28,28,0.14)'}},{xAxis:'2024Q1'}],[{xAxis:'2024Q2',itemStyle:{color:'rgba(29,78,216,0.13)'}},{xAxis:'2024Q4'}]];
 var usflbands = [[{xAxis:'1979Q3',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'1983Q2'}],[{xAxis:'1983Q3',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'1986Q1'}],[{xAxis:'1986Q2',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'1986Q2'}],[{xAxis:'1986Q3',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'1987Q3'}],[{xAxis:'1987Q4',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'1990Q1'}],[{xAxis:'1990Q2',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'1990Q2'}],[{xAxis:'1990Q3',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'1993Q2'}],[{xAxis:'1993Q3',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'1994Q2'}],[{xAxis:'1994Q3',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'1996Q1'}],[{xAxis:'1996Q2',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'1997Q1'}],[{xAxis:'1997Q2',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'1997Q3'}],[{xAxis:'1997Q4',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'1999Q4'}],[{xAxis:'2000Q1',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'2000Q4'}],[{xAxis:'2001Q1',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'2003Q4'}],[{xAxis:'2004Q1',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'2004Q4'}],[{xAxis:'2005Q1',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'2006Q2'}],[{xAxis:'2006Q3',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'2011Q1'}],[{xAxis:'2011Q2',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'2012Q1'}],[{xAxis:'2012Q2',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'2013Q1'}],[{xAxis:'2013Q2',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'2018Q4'}],[{xAxis:'2019Q1',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'2020Q3'}],[{xAxis:'2020Q4',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'2022Q2'}],[{xAxis:'2022Q3',itemStyle:{color:'rgba(185,28,28,0.09)'}},{xAxis:'2024Q4'}],[{xAxis:'2025Q1',itemStyle:{color:'rgba(21,128,61,0.10)'}},{xAxis:'2026Q1'}]];
 var ust = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 2, 3, 3, 3, 3, 3, 3, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 2, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 3, 3, 3, 4, 3, 3, 3, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
 var uscomp = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 1, 1, 1], [0, 1, 1, 1], [0, 1, 1, 1], [0, 0, 1, 1], [0, 1, 1, 1], [0, 1, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [1, 1, 0, 1], [0, 0, 0, 1], [0, 1, 0, 1], [1, 1, 0, 1], [1, 1, 0, 1], [1, 1, 0, 1], [1, 1, 0, 1], [1, 1, 0, 1], [1, 1, 0, 1], [1, 0, 0, 1], [1, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 1, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 1, 0, 1], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 0], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 1, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 1, 1], [1, 0, 1, 1], [1, 0, 1, 1], [1, 0, 1, 1], [1, 1, 1, 1], [1, 0, 1, 1], [1, 0, 1, 1], [1, 0, 1, 1], [1, 0, 1, 0], [1, 0, 1, 0], [1, 1, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 1], [1, 1, 1, 0], [1, 1, 1, 0], [1, 1, 0, 1], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [0, 0, 0, 0], [1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
@@ -223,40 +294,116 @@ var uscred = [8.96, 8.65, 8.55, 9.48, 10.89, 11.52, 12.35, 12.63, 13.16, 14.59, 
 var usfl = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "f", "r", "r", "r", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "r", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "r", "r", "r", "r", "f", "f", "f", "f", "f", "f", "f", "r", "r", "r", "r", "f", "f", "r", "r", "r", "r", "r", "r", "r", "r", "r", "f", "f", "f", "f", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "f", "f", "f", "f", "r", "r", "r", "r", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "r", "r", "r", "r", "f", "f", "f", "f", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "r", "f", "f", "f", "f", "f", "f", "f", "r", "r", "r", "r", "r", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f", "f", "f", "r", "r", "r", "r", "r"];
 var usconf = [["1979Q3", "ext"], ["1983Q3", "ign"], ["1986Q2", "ext"], ["1986Q3", "ign"], ["1987Q4", "ext"], ["1989Q2", "ext"], ["1990Q2", "ign"], ["1990Q3", "ext"], ["1993Q3", "ign"], ["1994Q3", "ext"], ["1996Q2", "ign"], ["1997Q2", "ext"], ["1997Q4", "ign"], ["2000Q1", "ext"], ["2001Q1", "ign"], ["2004Q1", "ext"], ["2005Q1", "ign"], ["2006Q3", "ext"], ["2011Q2", "ign"], ["2012Q2", "ext"], ["2013Q2", "ign"], ["2019Q1", "ext"], ["2020Q4", "ign"], ["2022Q3", "ext"], ["2025Q1", "ign"]];
 
+/* ===== 2x2 judgement rule: single source of truth (credit direction X tension) ===== */
+var PH = {
+  recovery:{col:'#15803d', en:'Primed · Recovery', zh:'蓄勢·復甦'},
+  reset:   {col:'#a16207', en:'Trough · Reset',    zh:'打底·重置'},
+  late:    {col:'#b91c1c', en:'Overheat · Late',   zh:'過熱·晚週期'},
+  downturn:{col:'#1d4ed8', en:'Cooling · Downturn',zh:'降溫·下行'},
+  warmup:  {col:'#9aa7bb', en:'Warm-up',               zh:'暖機'}
+};
+function phaseOf(i){
+  if(usfl[i]==null) return 'warmup';
+  var hi = ust[i]>=2, r = usfl[i]==='r';
+  if(r&&hi) return 'recovery';
+  if(!r&&hi) return 'reset';
+  if(r&&!hi) return 'late';
+  return 'downturn';
+}
+var usph = usq.map(function(_,i){return phaseOf(i);});
+/* forward 3-year (12q) nominal return, FHFA YoY compounded (exact at 12q multiple up to YoY rounding) */
+function fwd12(i){ if(i+12>=usq.length) return null; var a=usyoy[i+4],b=usyoy[i+8],c=usyoy[i+12]; if(a==null||b==null||c==null) return null; return ((1+a/100)*(1+b/100)*(1+c/100)-1)*100; }
+function median(a){ if(!a.length) return null; a=a.slice().sort(function(x,y){return x-y;}); var n=a.length; return n%2?a[(n-1)/2]:(a[n/2-1]+a[n/2])/2; }
+function fwdStats(pp){ var v=[]; for(var i=0;i<usq.length;i++){ if(usph[i]===pp){ var f=fwd12(i); if(f!=null) v.push(f); } } if(!v.length) return {n:0}; return {n:v.length, med:median(v), mn:Math.min.apply(null,v), mx:Math.max.apply(null,v)}; }
+var FS = {}; ['recovery','reset','late','downturn'].forEach(function(pp){FS[pp]=fwdStats(pp);});
+var CUR = usq.length-1, CURPH = usph[CUR];
+function fmtPc(x){ return (x>=0?'+':'−')+Math.abs(x).toFixed(1)+'%'; }
+function hexA(hex,a){ var n=parseInt(hex.slice(1),16); return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')'; }
+function fillJudge(isZh){
+  var L=isZh?'zh':'en';
+  document.querySelectorAll('.curPhase').forEach(function(e){ e.textContent=PH[CURPH][L]; e.style.color=PH[CURPH].col; });
+  var s=FS[CURPH], setAll=function(cls,txt){ document.querySelectorAll('.'+cls).forEach(function(e){e.textContent=txt;}); };
+  if(s.n){ setAll('jpMed',fmtPc(s.med)); setAll('jpN',s.n); setAll('jpMin',fmtPc(s.mn)); setAll('jpMax',fmtPc(s.mx)); }
+  ['recovery','reset','late','downturn'].forEach(function(pp){ var f=FS[pp]; setAll('med-'+pp, f.n?fmtPc(f.med):'—'); setAll('n-'+pp, f.n||0); setAll('rng-'+pp, f.n?(fmtPc(f.mn)+' → '+fmtPc(f.mx)):'—'); });
+  var el=document.getElementById('m22'); if(el) el.innerHTML=build22(isZh);
+}
+function build22(isZh){
+  var W=560,H=452, x0=112,x1=540,y0=56,y1=386, mx=(x0+x1)/2, my=(y0+y1)/2, cw=mx-x0, chh=my-y0;
+  var CEN={recovery:[(x0+mx)/2,(y0+my)/2],reset:[(mx+x1)/2,(y0+my)/2],late:[(x0+mx)/2,(my+y1)/2],downturn:[(mx+x1)/2,(my+y1)/2]};
+  var order=[['recovery',x0,y0],['reset',mx,y0],['late',x0,my],['downturn',mx,my]];
+  var meaning={
+    recovery:isZh?'便宜·緊·信貸開啟':'cheap · tight · credit on',
+    reset:isZh?'信貸仍縮·估值已重置':'credit off · valuations reset',
+    late:isZh?'已貴·鬆·信貸再擴':'pricey · loose · credit re-expanding',
+    downturn:isZh?'信貸縮·無便宜緩衝':'credit off · no cushion'
+  };
+  function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="max-width:600px;display:block;margin:0 auto" font-family="Inter,Noto Sans TC,sans-serif">';
+  order.forEach(function(o){
+    var p=o[0],x=o[1],y=o[2],c=PH[p].col,cur=(p===CURPH), f=FS[p], tx=x+cw/2;
+    svg+='<rect x="'+x+'" y="'+y+'" width="'+cw+'" height="'+chh+'" rx="10" fill="'+hexA(c,cur?0.16:0.07)+'" stroke="'+hexA(c,cur?0.9:0.4)+'" stroke-width="'+(cur?2.2:1)+'"/>';
+    svg+='<text x="'+tx+'" y="'+(y+34)+'" text-anchor="middle" font-size="15" font-weight="700" fill="'+c+'">'+esc(PH[p][isZh?'zh':'en'])+'</text>';
+    svg+='<text x="'+tx+'" y="'+(y+53)+'" text-anchor="middle" font-size="10.5" fill="#6b7a92">'+esc(meaning[p])+'</text>';
+    svg+='<text x="'+tx+'" y="'+(y+chh-30)+'" text-anchor="middle" font-size="10" fill="#8b95a6">'+(isZh?'其後3年中位':'3y fwd median')+'</text>';
+    svg+='<text x="'+tx+'" y="'+(y+chh-11)+'" text-anchor="middle" font-size="16" font-weight="700" fill="'+c+'">'+(f.n?fmtPc(f.med):'—')+'<tspan font-size="10" font-weight="500" fill="#8b95a6"> · n='+(f.n||0)+'</tspan></text>';
+  });
+  svg+='<text x="'+((x0+mx)/2)+'" y="'+(y1+26)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#0d2244">'+(isZh?'信貸上行':'credit rising')+'</text>';
+  svg+='<text x="'+((mx+x1)/2)+'" y="'+(y1+26)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#0d2244">'+(isZh?'信貸下行':'credit falling')+'</text>';
+  var yt=(y0+my)/2, yb=(my+y1)/2;
+  svg+='<text x="26" y="'+yt+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0d2244" transform="rotate(-90 26 '+yt+')">'+(isZh?'張力高·便宜緊':'tension high · cheap/tight')+'</text>';
+  svg+='<text x="26" y="'+yb+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0d2244" transform="rotate(-90 26 '+yb+')">'+(isZh?'張力低·貴鬆':'tension low · pricey/loose')+'</text>';
+  var pts=[], runP=null, run=0;
+  for(var i=usq.length-8;i<usq.length;i++){ var p=usph[i]; if(p===runP)run++; else{runP=p;run=0;} var c=CEN[p]||CEN.late; var ox=((run%3)-1)*15, oy=(Math.floor(run/3))*15-8; pts.push([c[0]+ox,c[1]+oy]); }
+  var path=pts.map(function(pt,k){return (k?'L':'M')+pt[0].toFixed(1)+' '+pt[1].toFixed(1);}).join(' ');
+  svg+='<defs><marker id="ah22" markerWidth="9" markerHeight="9" refX="5.5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8a6d2f"/></marker></defs>';
+  svg+='<path d="'+path+'" fill="none" stroke="#b8924a" stroke-width="2" stroke-opacity="0.55" marker-end="url(#ah22)"/>';
+  pts.forEach(function(pt,k){ if(k<pts.length-1) svg+='<circle cx="'+pt[0].toFixed(1)+'" cy="'+pt[1].toFixed(1)+'" r="'+(3+k*0.4).toFixed(1)+'" fill="#b8924a" fill-opacity="'+(0.22+0.09*k).toFixed(2)+'"/>'; });
+  var last=pts[pts.length-1];
+  svg+='<circle cx="'+last[0].toFixed(1)+'" cy="'+last[1].toFixed(1)+'" r="15" fill="none" stroke="#b8924a" stroke-opacity="0.4" stroke-width="1.5"/>';
+  svg+='<circle cx="'+last[0].toFixed(1)+'" cy="'+last[1].toFixed(1)+'" r="9" fill="#b8924a" stroke="#fff" stroke-width="2"/>';
+  svg+='<text x="'+last[0].toFixed(1)+'" y="'+(last[1]-19).toFixed(1)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#0d2244">'+(isZh?'你在這 ':'you are here ')+usq[usq.length-1]+'</text>';
+  svg+='<text x="'+pts[0][0].toFixed(1)+'" y="'+(pts[0][1]+23).toFixed(1)+'" text-anchor="middle" font-size="9.5" fill="#8b95a6">'+usq[usq.length-8]+'</text>';
+  svg+='</svg>';
+  return svg;
+}
+
 var allCharts = [];
 function initCharts(lang){
   allCharts.length = 0;
   var isZh = lang === 'zh';
-  var phN={primed:isZh?'蓄勢':'primed',ignition:isZh?'引爆':'ignition',overheat:isZh?'過熱':'overheat',cooling:isZh?'降溫':'cooling',none:isZh?'無相位':'none'};
+  var phN = {}; Object.keys(PH).forEach(function(p){phN[p]=PH[p][isZh?'zh':'en'];});
 
-  /* chartClock — polar clock with 205-frame timeline: the hand sweeps 1975→2026 */
+  /* top judgement panel + 2x2 visual: single source of truth */
+  fillJudge(isZh);
+
+  /* chartClock -- polar clock: the hand sweeps 1975->2026 through the 2x2 corners */
   var cl = echarts.init(document.getElementById('chartClock')); allCharts.push(cl);
-  var QS={overheat:0,cooling:90,primed:180,ignition:270,none:0};
-  var phCol={overheat:'#b91c1c',cooling:'#1d4ed8',primed:'#b8924a',ignition:'#15803d',none:'#9aa7bb'};
-  var seg=new Array(usphase.length);
-  for(var s=0;s<usphase.length;){var e=s;while(e<usphase.length&&usphase[e]===usphase[s])e++;var L=e-s;for(var k=s;k<e;k++)seg[k]=L>1?(k-s)/L:0;s=e;}
+  var QS={late:0,downturn:90,reset:180,recovery:270,warmup:0};
+  var phCol={late:PH.late.col,downturn:PH.downturn.col,reset:PH.reset.col,recovery:PH.recovery.col,warmup:'#9aa7bb'};
+  var seg=new Array(usph.length);
+  for(var s=0;s<usph.length;){var e=s;while(e<usph.length&&usph[e]===usph[s])e++;var L=e-s;for(var k=s;k<e;k++)seg[k]=L>1?(k-s)/L:0;s=e;}
   var RAD=0.72;
-  var angOf=function(i){return QS[usphase[i]]+seg[i]*90;};
-  var radOf=function(i){return usphase[i]==='none'?0:RAD;};
+  var angOf=function(i){return QS[usph[i]]+seg[i]*90;};
+  var radOf=function(i){return usph[i]==='warmup'?0:RAD;};
   var ptOf=function(i){return [radOf(i),angOf(i)];};
   var IDX2000=usq.indexOf('2000Q1');
-  var clbg=[]; for(var bi=0;bi<usphase.length;bi++){ if(usphase[bi]==='none')continue; clbg.push({value:ptOf(bi),itemStyle:{color:phCol[usphase[bi]],opacity:0.14}}); }
+  var clbg=[]; for(var bi=0;bi<usph.length;bi++){ if(usph[bi]==='warmup')continue; clbg.push({value:ptOf(bi),itemStyle:{color:phCol[usph[bi]],opacity:0.14}}); }
   var cllbl=[
-    {value:[0.99,45],name:phN.overheat,label:{color:phCol.overheat}},
-    {value:[0.99,135],name:phN.cooling,label:{color:phCol.cooling}},
-    {value:[0.99,225],name:phN.primed,label:{color:phCol.primed}},
-    {value:[0.99,315],name:phN.ignition,label:{color:phCol.ignition}}
+    {value:[0.99,45],name:phN.late,label:{color:phCol.late}},
+    {value:[0.99,135],name:phN.downturn,label:{color:phCol.downturn}},
+    {value:[0.99,225],name:phN.reset,label:{color:phCol.reset}},
+    {value:[0.99,315],name:phN.recovery,label:{color:phCol.recovery}}
   ];
   var clframes=[];
-  for(var fi=0;fi<usphase.length;fi++){
-    var isN=usphase[fi]==='none';
+  for(var fi=0;fi<usph.length;fi++){
+    var isN=usph[fi]==='warmup';
     var head=ptOf(fi);
     var hand=isN?[]:[[0,angOf(fi)],[RAD,angOf(fi)]];
     var t0=Math.max(0,fi-7),tl=[],td=[];
     for(var tj=t0;tj<=fi;tj++){var pp=ptOf(tj);tl.push(pp); if(tj<fi){var frc=(tj-t0+1)/(fi-t0+1); td.push({value:pp,itemStyle:{color:C.gold,opacity:0.10+0.5*frc},symbolSize:3+3*frc});}}
-    var era=fi<IDX2000?(isZh?'訓練期 1975–99':'Train 1975–99'):(isZh?'測試期 2000–25 · 已用一次':'Test 2000–25 · used once');
+    var era=fi<IDX2000?(isZh?'訓練期 1975–99':'Train 1975–99'):(isZh?'測試期 2000–25 · 舊規則':'Test 2000–25 · old rule');
     var cr=usfl[fi]==='r'?(isZh?'信貸上行':'credit rising'):(usfl[fi]==='f'?(isZh?'信貸下行':'credit falling'):(isZh?'信貸 —':'credit —'));
-    var sub=phN[usphase[fi]]+' · '+(isZh?'張力 ':'tension ')+ust[fi]+'/4\n'+cr+'\n'+era;
+    var sub=phN[usph[fi]]+' · '+(isZh?'張力 ':'tension ')+ust[fi]+'/4\n'+cr+'\n'+era;
     clframes.push({title:{text:usq[fi],subtext:sub},series:[{},{},{data:hand},{data:tl},{data:td},{data:isN?[]:[{value:head,itemStyle:{color:C.gold}}]}]});
   }
   cl.setOption({
@@ -275,7 +422,7 @@ function initCharts(lang){
       angleAxis:{type:'value',min:0,max:360,interval:90,startAngle:90,clockwise:true,
         axisLine:{show:true,lineStyle:{color:'#e5dcc8'}},axisTick:{show:false},axisLabel:{show:false},
         splitLine:{show:true,lineStyle:{color:'#ece3d1'}},
-        splitArea:{show:true,areaStyle:{color:['rgba(185,28,28,0.05)','rgba(29,78,216,0.05)','rgba(184,146,74,0.06)','rgba(21,128,61,0.05)']}}},
+        splitArea:{show:true,areaStyle:{color:['rgba(185,28,28,0.05)','rgba(29,78,216,0.05)','rgba(161,98,7,0.06)','rgba(21,128,61,0.05)']}}},
       radiusAxis:{type:'value',min:0,max:1.06,axisLine:{show:false},axisTick:{show:false},axisLabel:{show:false},splitLine:{show:false}},
       series:[
         {name:'bg',type:'scatter',coordinateSystem:'polar',data:clbg,symbolSize:4,z:2,silent:true},
@@ -289,16 +436,18 @@ function initCharts(lang){
     options:clframes
   });
 
-  /* chartUSBand — three-layer instrument panel: price+phases / tension / credit+FL1 */
+  /* chartUSBand -- three-layer instrument panel: price+corners / tension / credit+FL1 */
   var cb = echarts.init(document.getElementById('chartUSBand')); allCharts.push(cb);
   var compN=isZh?['空置','月供給','缺口','估值']:['vacancy','months-supply','gap','valuation'];
   var divLine=function(pos){return {silent:true,symbol:'none',data:[{xAxis:'2000Q1',label:{formatter:pos?(isZh?'← 訓練｜測試 →':'← train | test →'):'',color:C.navy,fontSize:10,fontWeight:700,fontFamily:FF,position:'insideEndTop'},lineStyle:{color:C.navy,type:'dashed',width:1.2}}]};};
-  var legendCols={primed:'#b8924a',ignition:'#15803d',overheat:'#b91c1c',cooling:'#1d4ed8',none:'#d6cfc0'};
+  /* rebuild the top-layer phase bands from usph (single source of truth); warmup = blank */
+  var phTint={recovery:'rgba(21,128,61,0.16)',reset:'rgba(161,98,7,0.18)',late:'rgba(185,28,28,0.14)',downturn:'rgba(29,78,216,0.13)'};
+  var usbands=[]; for(var bs=0;bs<usph.length;){var be=bs;while(be<usph.length&&usph[be]===usph[bs])be++; if(usph[bs]!=='warmup'){usbands.push([{xAxis:usq[bs],itemStyle:{color:phTint[usph[bs]]}},{xAxis:usq[be-1]}]);} bs=be;}
+  var legendCols={recovery:PH.recovery.col,reset:PH.reset.col,late:PH.late.col,downturn:PH.downturn.col};
   var dummy=Object.keys(legendCols).map(function(p){return {name:phN[p],type:'line',data:[],xAxisIndex:0,yAxisIndex:0,itemStyle:{color:legendCols[p]},lineStyle:{color:legendCols[p]}};});
-  /* middle layer: four component lamps (vacancy / months-supply / gap / valuation) x 205 quarters */
-  var lampRows=isZh?['估值','缺口','月供給','空置']:['valuation','gap','months-supply','vacancy']; // bottom→top
+  var lampRows=isZh?['估值','缺口','月供給','空置']:['valuation','gap','months-supply','vacancy'];
   var usheat=[]; for(var hi=0;hi<uscomp.length;hi++){var cc=uscomp[hi]||[0,0,0,0]; usheat.push([hi,3,cc[0]]); usheat.push([hi,2,cc[1]]); usheat.push([hi,1,cc[2]]); usheat.push([hi,0,cc[3]]);}
-  var LAMPI=dummy.length+1; // series index of the heatmap (dummy… + HPI + lamps)
+  var LAMPI=dummy.length+1;
   cb.setOption({
     visualMap:{show:false,type:'piecewise',dimension:2,seriesIndex:LAMPI,pieces:[{value:0,color:'rgba(184,146,74,0.06)'},{value:1,color:'#c1912f'}]},
     legend:{top:0,textStyle:{color:C.muted,fontFamily:FF,fontSize:11},icon:'roundRect',itemWidth:14,itemHeight:8,itemGap:14,data:Object.keys(legendCols).map(function(p){return phN[p];})},
@@ -308,7 +457,7 @@ function initCharts(lang){
       var c=uscomp[i]||[0,0,0,0];
       var comps=compN.map(function(n,j){return n+(c[j]?' ✓':' ✗');}).join(' · ');
       var st=usfl[i]==='r'?(isZh?'上行':'rising'):(usfl[i]==='f'?(isZh?'下行':'falling'):'–');
-      return '<b>'+q+'</b> · '+phN[usphase[i]]+'<br/>'+(isZh?'房價年增 ':'HPI YoY ')+(usyoy[i]==null?'–':usyoy[i]+'%')+
+      return '<b>'+q+'</b> · '+phN[usph[i]]+'<br/>'+(isZh?'房價年增 ':'HPI YoY ')+(usyoy[i]==null?'–':usyoy[i]+'%')+
         '<br/>'+(isZh?'張力 ':'tension ')+ust[i]+'/4：'+comps+
         '<br/>'+(isZh?'信貸年增 ':'credit YoY ')+(uscred[i]==null?'–':uscred[i]+'%')+'（FL1 '+st+'）';}}),
     grid:[{left:6,right:14,top:34,height:'30%',containLabel:true},
