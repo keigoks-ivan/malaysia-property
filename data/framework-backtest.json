@@ -1793,6 +1793,291 @@
      "reading": "Same flood, different boats: the 2020-21 rise ranks best on young-cohort momentum (rho +0.44; NZ top on both, JP/HK/TH bottom), ahead of money growth (+0.29) and the real rate (-0.12, right sign, negligible). Taiwan is the clear wrong-way point (cohort shrinking, prices +22%), suggesting a money-substitute demand channel the slow variables do not carry. First calibration of the v2 slow layer: moderate, not strong."
     }
    }
+  },
+  "test6_turn_sequencing": {
+   "question": "At verifiable historical turning points, does the transmission chain credit -> volume -> price hold, with what lead, and does stickiness (Test 2) shape the post-top price path?",
+   "rules_as_applied": {
+    "hard_top": "local max (strictly above previous 4 and at-or-above next 4 quarters) followed by a decline of >=8% within 12 quarters, on the nominal quarterly index",
+    "hard_bottom": "local min preceded by a >=8% decline from the prior peak and followed by a >=8% rise within 12 quarters",
+    "soft_top": "first quarter with price YoY < 2% where YoY exceeded 8% within the previous 8 quarters (8-quarter lookback is an implementation constant, declared); deduplicated within 8 quarters",
+    "volume_turn": "YoY of the 4-quarter moving average of volume changes sign and holds the new sign for >=2 quarters",
+    "credit_turn": "local peak/trough of mortgage-stock YoY over a +/-4-quarter window, deduplicated within 4 quarters",
+    "lead": "price turn quarter minus nearest same-direction volume/credit turn within +/-12 quarters, SIGNED. Disclosure: the first implementation matched only non-negative leads (a bias toward confirming leads); it was corrected to signed nearest-match before results were interpreted, and the signed version is the only one reported"
+   },
+   "sources": {
+    "prices": "BIS via FRED (US/GB/NZ/MY, full history); TW = MOI national housing price index, official quarterly PDF 114Q4, parsed 2012Q3-2025Q4 (https://pip.moi.gov.tw/Upload/CustomFile/Doc/114Q4住宅價格指數統計成果.pdf)",
+    "volume_US": "Census new one-family houses sold, FRED HSN1F (1963-). DISCLOSED SUBSTITUTION: SPEC O named NAR existing-home sales, whose history is no longer on FRED; the Census series is the fixed replacement",
+    "volume_GB": "HM Land Registry UK HPI SalesVolume, monthly 2005-2024 (spec named HMRC; HMLR is the official transaction count in hand, disclosed)",
+    "credit_US": "FRED HHMSDODNS home mortgage liabilities, quarterly 1946-",
+    "credit_GB": "BoE IADB LPMVTXK lending secured on dwellings amounts outstanding, monthly 1994-",
+    "excluded": "NZ volume (REINZ/RBNZ not retrievable), TW and MY quarterly volume and credit (annual only) - so TW/MY/NZ carry turn dating but no lead measurement"
+   },
+   "turns": {
+    "US": {
+     "hard_tops": [
+      "2006Q1"
+     ],
+     "hard_bottoms": [
+      "2011Q1"
+     ],
+     "soft_tops": [
+      "1982Q3",
+      "1990Q4",
+      "2006Q4"
+     ],
+     "vol_leads_signed": [
+      {
+       "turn": "2006Q1",
+       "kind": "top",
+       "lead_q": -1
+      },
+      {
+       "turn": "1990Q4",
+       "kind": "top",
+       "lead_q": 5
+      },
+      {
+       "turn": "2006Q4",
+       "kind": "top",
+       "lead_q": 2
+      },
+      {
+       "turn": "2011Q1",
+       "kind": "bottom",
+       "lead_q": -4
+      }
+     ],
+     "credit_leads_signed": [
+      {
+       "turn": "2006Q1",
+       "kind": "top",
+       "lead_q": 0
+      },
+      {
+       "turn": "1990Q4",
+       "kind": "top",
+       "lead_q": 3
+      },
+      {
+       "turn": "2006Q4",
+       "kind": "top",
+       "lead_q": 3
+      },
+      {
+       "turn": "2011Q1",
+       "kind": "bottom",
+       "lead_q": 1
+      }
+     ],
+     "path_8q": {
+      "2006Q1 hard": -14.3,
+      "1982Q3 soft": 10.1,
+      "1990Q4 soft": -0.4,
+      "2006Q4 soft": -24.7
+     }
+    },
+    "GB": {
+     "hard_tops": [
+      "1989Q3",
+      "2007Q3"
+     ],
+     "hard_bottoms": [
+      "2009Q1",
+      "2012Q1"
+     ],
+     "soft_tops": [
+      "1982Q1",
+      "1990Q2",
+      "2008Q2",
+      "2010Q4",
+      "2023Q2"
+     ],
+     "vol_leads_signed": [
+      {
+       "turn": "2007Q3",
+       "kind": "top",
+       "lead_q": -1
+      },
+      {
+       "turn": "2008Q2",
+       "kind": "top",
+       "lead_q": 2
+      },
+      {
+       "turn": "2010Q4",
+       "kind": "top",
+       "lead_q": -1
+      },
+      {
+       "turn": "2023Q2",
+       "kind": "top",
+       "lead_q": 4
+      },
+      {
+       "turn": "2009Q1",
+       "kind": "bottom",
+       "lead_q": -4
+      },
+      {
+       "turn": "2012Q1",
+       "kind": "bottom",
+       "lead_q": 0
+      }
+     ],
+     "credit_leads_signed": [
+      {
+       "turn": "2007Q3",
+       "kind": "top",
+       "lead_q": 2
+      },
+      {
+       "turn": "2008Q2",
+       "kind": "top",
+       "lead_q": 5
+      },
+      {
+       "turn": "2010Q4",
+       "kind": "top",
+       "lead_q": -8
+      },
+      {
+       "turn": "2023Q2",
+       "kind": "top",
+       "lead_q": 7
+      },
+      {
+       "turn": "2009Q1",
+       "kind": "bottom",
+       "lead_q": -3
+      },
+      {
+       "turn": "2012Q1",
+       "kind": "bottom",
+       "lead_q": 4
+      }
+     ],
+     "path_8q": {
+      "1989Q3 hard": -4.5,
+      "2007Q3 hard": -13.5,
+      "1982Q1 soft": 22.2,
+      "1990Q2 soft": -4.6,
+      "2008Q2 soft": -6.7,
+      "2010Q4 soft": -0.3,
+      "2023Q2 soft": 2.3
+     }
+    },
+    "TW": {
+     "hard_tops": [],
+     "hard_bottoms": [],
+     "soft_tops": [
+      "2015Q4",
+      "2025Q2"
+     ],
+     "path_8q": {
+      "2015Q4 soft": 1.0
+     }
+    },
+    "MY": {
+     "hard_tops": [
+      "1997Q2"
+     ],
+     "hard_bottoms": [
+      "1999Q1"
+     ],
+     "soft_tops": [
+      "1997Q3"
+     ],
+     "path_8q": {
+      "1997Q2 hard": -14.5,
+      "1997Q3 soft": -11.2
+     }
+    },
+    "NZ": {
+     "hard_tops": [
+      "2007Q4",
+      "2021Q4"
+     ],
+     "hard_bottoms": [],
+     "soft_tops": [
+      "1998Q1",
+      "2008Q2",
+      "2022Q3"
+     ],
+     "path_8q": {
+      "2007Q4 hard": -4.0,
+      "2021Q4 hard": -11.3,
+      "1998Q1 soft": 1.3,
+      "2008Q2 soft": -0.0,
+      "2022Q3 soft": -5.0
+     }
+    }
+   },
+   "lead_distributions": {
+    "volume_to_price": {
+     "signed_leads": [
+      -4,
+      -4,
+      -1,
+      -1,
+      -1,
+      0,
+      2,
+      2,
+      4,
+      5
+     ],
+     "median": -0.5,
+     "share_leading": "5/10",
+     "reading": "volume-leads-price does NOT hold as a general rule under the 4-quarter-MA dating; the smoothing eats the lead at hard tops. Leads concentrate at soft tops (US 1990Q4 +5, GB 2023Q2 +4)"
+    },
+    "credit_to_price": {
+     "signed_leads": [
+      -8,
+      -3,
+      0,
+      1,
+      2,
+      3,
+      3,
+      4,
+      5,
+      7
+     ],
+     "median": 2.5,
+     "share_leading": "8/10",
+     "reading": "credit is the only link in the chain that holds: mortgage-stock YoY peaked at or before 8 of 10 price turns (US 2006Q1 lead 0, GB 2007Q3 +2; bottoms US 2011Q1 +1, GB 2012Q1 +4). If one builds a property clock, the hand is credit, not volume"
+    }
+   },
+   "zero_hard_turns_finding": {
+    "TW": "zero hard tops and zero hard bottoms over the full official index (2012Q3-2025Q4); the 2014-16 episode registers only as a soft top (2015Q4) with +1.0% price path 8 quarters on",
+    "MY": "27 years without a single 8% drawdown since the Asian Financial Crisis (last hard top 1997Q2, last bottom 1999Q1); the 2012-13 deceleration took ~24 quarters to travel from >8% YoY to <2%, outrunning the 8-quarter lookback, so no soft top triggers",
+    "reading": "this is a finding, not a defect: in sticky/institutionally damped markets the top takes the form of volume and momentum disappearing while the price barely moves - consistent with the Test 2 stickiness grouping. Volume is not a leading indicator of price there; volume IS the turn"
+   },
+   "top_shape_8q": {
+    "hard_tops": {
+     "US 2006Q1": -14.3,
+     "GB 2007Q3": -13.5,
+     "GB 1989Q3": -4.5,
+     "NZ 2021Q4": -11.3,
+     "NZ 2007Q4": -4.0,
+     "MY 1997Q2": -14.5
+    },
+    "soft_tops": {
+     "US 2006Q4": -24.7,
+     "GB 2023Q2": 2.3,
+     "NZ 2022Q3": -5.0,
+     "TW 2015Q4": 1.0
+    },
+    "note": "US 2006Q4 soft top is the same GFC event as the 2006Q1 hard top, dated later by the YoY rule"
+   },
+   "calibration_checks": {
+    "US_2006_top": "HIT - hard top dated 2006Q1",
+    "US_2012_bottom": "dated 2011Q1 by the rule on the BIS series - one year earlier than the expected 2012; reported as dated",
+    "TW_2014_soft_top": "dated 2015Q4 - four quarters later than expected (national YoY did not fall below 2% until then)",
+    "TW_2019_bottom": "NOT TRIGGERABLE - no >=8% decline ever existed on the index, so the bottom rule has nothing to fire on; the 2019 turn is visible only in volume and momentum",
+    "MY_2012_13_soft_top": "NOT TRIGGERED - the deceleration was too gradual for the written rule; recorded as an institutional-damping finding, not patched",
+    "NZ_2021_top": "HIT - hard top dated 2021Q4, price -11.3% eight quarters on"
+   }
   }
  },
  "test5_full_matrix": [
