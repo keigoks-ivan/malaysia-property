@@ -240,7 +240,7 @@ def main():
         if 'CLOCK_DATA_START' not in h:
             print('WARNING: markers not found in page; skipping injection'); return
         h = re.sub(r'/\*CLOCK_DATA_START\*/.*?/\*CLOCK_DATA_END\*/',
-                   '/*CLOCK_DATA_START*/var D = ' + compact + ';/*CLOCK_DATA_END*/', h, count=1, flags=re.S)
+                   '/*CLOCK_DATA_START*/var D_US = ' + compact + ';/*CLOCK_DATA_END*/', h, count=1, flags=re.S)
         open(PAGE, 'w', encoding='utf-8').write(h)
         print(f'injected into {PAGE}')
 
