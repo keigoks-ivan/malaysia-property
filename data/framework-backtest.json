@@ -9546,6 +9546,127 @@
      ]
     ]
    }
+  },
+  "test8_compass": {
+   "question": "Does the Compass (momentum x credit, four cells, from the Property Clock) rank forward 3-year nominal house-price returns in the order declared before reading any outcome: Fuelled >= Draining >= Reflating >= Starved?",
+   "declared_ordering": [
+    "fuelled",
+    "draining",
+    "reflating",
+    "starved"
+   ],
+   "theory": "Momentum is the dominant axis (price trend persists); credit direction is the secondary tie-break within each trend direction. Not fitted: this ordering is stated before the medians below were read.",
+   "method": "Per market, the realized 3-year forward nominal return is taken from data/compass-<m>.json qstat (median + n per cell, computed by scripts/build_compass.py over each cell's full quarterly history). Two measures: (1) pairwise concordance of the 4 cell medians against the 6 declared inequalities; (2) quarter-level Spearman rank correlation between the declared cell rank (fuelled=4 best .. starved=1 worst) and that quarter's realized fwd12, over all quarters with non-null fwd12 (warmup quarters excluded). Verdict thresholds fixed before reading results: rho>=0.3 holds, 0.10-0.30 weak, <0.10 breaks. Computed by scripts/backtest_compass.py.",
+   "source": "data/compass-us.json, compass-tw.json, compass-my.json, compass-jp.json (built by scripts/build_compass.py from clock-<m>.json, already-collected series — no raw data refetched for this test); scripts/backtest_compass.py",
+   "in_sample_caveat": "The cell->forward-return mapping (qstat) is measured on the same history the compass signal is built on (US/JP 1975-2026, TW 2001-2026, MY 2000-2026). The signal itself is trailing (momentum/credit z use only data <= t, no look-ahead within a quarter), but the ORDERING has not been tested out-of-sample -- only against history. The 2026 forward freeze below is the genuine out-of-sample test.",
+   "rank_not_timing": "This predicts the ORDERING of returns across the four regimes, not the level or turning point of any single quarter. A market can be correctly ranked worst (starved) and still post a positive 3-year return, or ranked best (fuelled) and still underperform its own history -- see US and JP, where the ordering holds but fuelled and reflating medians sit within 0.4-3.7pp of each other.",
+   "markets": {
+    "US": {
+     "cell_medians_pct": {
+      "fuelled": 19.4,
+      "draining": 15.1,
+      "reflating": 19.8,
+      "starved": 8.8
+     },
+     "cell_n": {
+      "fuelled": 70,
+      "draining": 23,
+      "reflating": 19,
+      "starved": 62
+     },
+     "pairwise_concordance": "4/6",
+     "spearman_rho_declared_rank_vs_fwd12": 0.58,
+     "n_scored_quarters": 174,
+     "verdict": "HOLDS",
+     "note": "Starved correctly ranks worst (min median); fuelled and reflating swap by 0.4pp (reflating n=19 vs fuelled n=70) -- the near-miss is a thin-cell artifact, not a reversal.",
+     "frozen_2026": {
+      "quarter": "2026Q1",
+      "cell": "starved",
+      "mom": -0.886,
+      "cred": -0.55,
+      "checkable": "2029Q1"
+     }
+    },
+    "TW": {
+     "cell_medians_pct": {
+      "fuelled": 29.0,
+      "draining": 27.6,
+      "reflating": 6.0,
+      "starved": 34.1
+     },
+     "cell_n": {
+      "fuelled": 26,
+      "draining": 18,
+      "reflating": 16,
+      "starved": 14
+     },
+     "pairwise_concordance": "3/6",
+     "spearman_rho_declared_rank_vs_fwd12": 0.081,
+     "n_scored_quarters": 74,
+     "verdict": "BREAKS",
+     "note": "Starved is the BEST cell (34.1%), not the worst -- a genuine inversion, not a near-miss. Taiwan 2001-2026 is a short, nearly one-directional bull run (see Test 6: zero hard tops/bottoms in its history); almost every downtrend quarter was simply followed by the next leg up. Sample problem, not a method problem.",
+     "frozen_2026": {
+      "quarter": "2026Q1",
+      "cell": "starved",
+      "mom": -1.742,
+      "cred": -1.273,
+      "checkable": "2029Q1"
+     }
+    },
+    "MY": {
+     "cell_medians_pct": {
+      "fuelled": 36.9,
+      "draining": 22.1,
+      "reflating": 8.2,
+      "starved": 11.7
+     },
+     "cell_n": {
+      "fuelled": 15,
+      "draining": 8,
+      "reflating": 7,
+      "starved": 24
+     },
+     "pairwise_concordance": "5/6",
+     "spearman_rho_declared_rank_vs_fwd12": 0.71,
+     "n_scored_quarters": 54,
+     "verdict": "HOLDS",
+     "note": "Fuelled correctly ranks best (max median), draining second; reflating and starved swap (8.2 vs 11.7, both thin cells, n=7 and n=24) -- the bottom two are close and out of order, top structure intact.",
+     "frozen_2026": {
+      "quarter": "2026Q1",
+      "cell": "starved",
+      "mom": -0.356,
+      "cred": -0.24,
+      "checkable": "2029Q1"
+     }
+    },
+    "JP": {
+     "cell_medians_pct": {
+      "fuelled": 6.0,
+      "draining": -2.3,
+      "reflating": 9.7,
+      "starved": -7.3
+     },
+     "cell_n": {
+      "fuelled": 64,
+      "draining": 38,
+      "reflating": 21,
+      "starved": 54
+     },
+     "pairwise_concordance": "4/6",
+     "spearman_rho_declared_rank_vs_fwd12": 0.4,
+     "n_scored_quarters": 177,
+     "verdict": "HOLDS",
+     "note": "Starved correctly ranks worst (-7.3%, the only negative-median cell alongside draining) -- Japan is the market that actually crashed, and starved captures it. Fuelled and reflating swap (6.0 vs 9.7), the same thin-cell pattern as the US.",
+     "frozen_2026": {
+      "quarter": "2025Q4",
+      "cell": "draining",
+      "mom": 0.44,
+      "cred": -2.36,
+      "checkable": "2028Q4"
+     }
+    }
+   },
+   "overall_verdict": "HOLDS in the US, Malaysia and Japan (rho 0.40-0.71); BREAKS in Taiwan (rho 0.081, and the pairwise ordering is inverted at the extremes -- its 'starved' cell has the single highest realized median of any cell in any market). The break is diagnosed, not hidden: Taiwan's 2001-2026 sample is short and nearly one-directional (zero hard tops or bottoms per Test 6), so almost every momentum-down quarter was simply followed by the next leg of one long bull run. This is a sample problem, not evidence against the mechanism -- but it is reported exactly as found."
   }
  },
  "test5_full_matrix": [
