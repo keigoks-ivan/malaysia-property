@@ -83,8 +83,8 @@ body.zh .judge .jlab{letter-spacing:.04em}
 .mkt-btn{font-size:12.5px;font-weight:700;color:var(--muted);background:transparent;border:none;border-radius:999px;padding:6px 18px;cursor:pointer;font-family:inherit}
 .mkt-btn.active{background:var(--navy);color:#fff}
 .mkt-tw{display:none}
-body.mkt-tw .mkt-us{display:none}
-body.mkt-tw .mkt-tw{display:revert}
+body.mk-tw .mkt-us{display:none}
+body.mk-tw .mkt-tw{display:revert}
 @media(max-width:760px){.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}.jphase{font-size:22px}.cells4{grid-template-columns:1fr}.axkey{grid-template-columns:1fr}}
 </style>
 </head>
@@ -529,7 +529,7 @@ function setLang(lang){
 }
 function setMarket(m){
   useMarket(m);
-  document.body.classList.toggle('mkt-tw', m==='tw');
+  document.body.classList.toggle('mk-tw', m==='tw');
   document.querySelectorAll('.mkt-btn').forEach(function(b){b.classList.toggle('active', b.dataset.mkt===m);});
   try{localStorage.setItem('mkt',m);}catch(e){}
   try{history.replaceState(null,'','#'+m);}catch(e){}
@@ -546,7 +546,7 @@ window.addEventListener('load',function(){
   var mkt='us';try{mkt=localStorage.getItem('mkt')||'us';}catch(e){}
   if(location.hash==='#tw')mkt='tw'; if(location.hash==='#us')mkt='us';
   useMarket(mkt);
-  document.body.classList.toggle('mkt-tw', mkt==='tw');
+  document.body.classList.toggle('mk-tw', mkt==='tw');
   document.querySelectorAll('.mkt-btn').forEach(function(b){b.classList.toggle('active', b.dataset.mkt===mkt);});
   setLang(lang);
 });
