@@ -55,11 +55,33 @@ function fillCard(isZh){
   gauge('g-sup',CARD.supply[CUR], isZh?'過剩':'glut', isZh?'緊':'tight');
 }
 
+/* rank bar: pin position = (n-rank)/(n-1) so rank 1 (best) sits at the right */
+function xcbar(barId,valId,v,unit,rank,n,isCarry){
+  var el=document.getElementById(barId), vel=document.getElementById(valId);
+  if(!el)return;
+  if(v==null||rank==null||n==null){el.innerHTML='<div class="xctrack"></div>';if(vel)vel.textContent='—';return;}
+  var pct=n>1?Math.max(4,Math.min(96,((n-rank)/(n-1))*100)):50;
+  var col=isCarry?C.gold:(pct>=50?C.green:C.red);
+  el.innerHTML='<div class="xctrack'+(isCarry?' xctrack-carry':'')+'"></div>'+
+    '<div class="xcpin'+(isCarry?' xcpin-carry':'')+'" style="left:'+pct+'%;background:'+col+'"></div>';
+  if(vel) vel.textContent=(v<0?'−':'')+Math.abs(v).toFixed(1)+unit+' · #'+rank+'/'+n;
+}
+function fillXC(isZh){
+  if(D.xc==null)return;
+  var X=D.xc;
+  gauge('g-xc-val', X.valcomp, isZh?'貴':'expensive', isZh?'便宜':'cheap');
+  xcbar('g-xc-pti','v-xc-pti', X.pti&&X.pti.v, 'x', X.pti&&X.pti.rank, X.n);
+  xcbar('g-xc-yield','v-xc-yield', X.yield&&X.yield.v, '%', X.yield&&X.yield.rank, X.n);
+  xcbar('g-xc-carry','v-xc-carry', X.carry&&X.carry.v, '%', X.carry&&X.carry.rank, X.n, true);
+  xcbar('g-xc-vac','v-xc-vac', X.vac&&X.vac.v, '%', X.vac&&X.vac.rank, X.n);
+  xcbar('g-xc-pop','v-xc-pop', X.pop&&X.pop.v, '%', X.pop&&X.pop.rank, X.n);
+}
+
 var allCharts=[];
 function initCharts(lang){
   allCharts.length=0; var isZh=lang==='zh';
   var cn={}; Object.keys(CELL).forEach(function(k){cn[k]=CELL[k][isZh?'zh':'en'];});
-  fillJudge(isZh); fillCard(isZh);
+  fillJudge(isZh); fillCard(isZh); fillXC(isZh);
 
   /* ===== compass scatter: momentum(X) × credit(Y) ===== */
   var cp=echarts.init(document.getElementById('chartCompass')); allCharts.push(cp);

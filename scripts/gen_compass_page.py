@@ -31,6 +31,23 @@ CSS_EXTRA="""
 .cnote b{color:var(--navy)}
 .methnote{font-size:13px;color:var(--text-soft);line-height:1.95;margin:0 0 14px}
 .methnote b{color:var(--navy);font-weight:600}
+/* versus-the-world panel */
+.xcdiv{display:flex;align-items:center;gap:10px;margin:26px 0 10px}
+.xcdiv-line{flex:1;height:1px;background:var(--gold-line)}
+.xcdiv-h{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:15px;margin:0;white-space:nowrap}
+.xcbars{display:grid;gap:9px;margin:6px 0 2px}
+.xcrow{display:grid;grid-template-columns:88px 1fr 108px;gap:12px;align-items:center}
+.xcrow .cl{font-size:11.5px;font-weight:700;color:var(--navy);text-align:right}
+.xcbar{position:relative;height:20px}
+.xctrack{position:absolute;top:7px;left:0;right:0;height:6px;border-radius:4px;background:linear-gradient(90deg,#e9c3c0,#f2ede2 50%,#c3e0cb)}
+.xctrack-carry{background:linear-gradient(90deg,#e9c3c0,#f6ecd8 50%,#e3cfa0);box-shadow:0 0 0 1px rgba(184,146,74,.35) inset}
+.xcpin{position:absolute;top:3px;width:3px;height:14px;border-radius:2px;transform:translateX(-50%);box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.xcpin-carry{width:5px;height:16px;top:2px;box-shadow:0 1px 5px rgba(184,146,74,.55)}
+.xcval{font-family:'IBM Plex Mono',Inter,sans-serif;font-size:10.5px;color:var(--text-soft);text-align:right;white-space:nowrap}
+.xcrow-carry{background:rgba(184,146,74,.10);border-radius:8px;padding:6px 8px;margin:2px -8px}
+.xcrow-carry .cl{color:var(--gold-deep)}
+.xcnote-carry{border-left:2px solid var(--gold);padding-left:10px;margin-top:8px}
+@media(max-width:520px){.xcrow{grid-template-columns:70px 1fr 92px;gap:8px}}
 """
 
 def badges():
@@ -136,6 +153,22 @@ HTML=f"""<!DOCTYPE html>
         <div class="crow"><div class="cl">{dual("Supply","供給")}</div><div class="gauge" id="g-sup"></div></div>
         <p class="cnote">{market_block('card_sup')}</p>
       </div>
+
+      <!-- versus the world -->
+      <div class="xcdiv"><span class="xcdiv-line"></span><h3 class="xcdiv-h">{dual("Versus the world · where it sits among 12 markets now","與世界比 · 現在在 12 個市場中的位置")}</h3><span class="xcdiv-line"></span></div>
+      <p class="sub" style="margin:0 0 14px">{dual(C['howto']['xc_howto_en'], C['howto']['xc_howto_zh'])}</p>
+      <div class="card">
+        <div class="crow"><div class="cl">{dual("Valuation","估值")}</div><div class="gauge" id="g-xc-val"></div></div>
+        <p class="cnote">{market_block('xc_val')}</p>
+      </div>
+      <div class="xcbars">
+        <div class="xcrow"><div class="cl">{dual("Price/income","房價/所得")}</div><div class="xcbar" id="g-xc-pti"></div><div class="xcval" id="v-xc-pti">—</div></div>
+        <div class="xcrow"><div class="cl">{dual("Rental yield","租金收益率")}</div><div class="xcbar" id="g-xc-yield"></div><div class="xcval" id="v-xc-yield">—</div></div>
+        <div class="xcrow xcrow-carry"><div class="cl">{dual("Carry spread","持有利差")}</div><div class="xcbar" id="g-xc-carry"></div><div class="xcval" id="v-xc-carry">—</div></div>
+        <div class="xcrow"><div class="cl">{dual("Vacancy","空置率")}</div><div class="xcbar" id="g-xc-vac"></div><div class="xcval" id="v-xc-vac">—</div></div>
+        <div class="xcrow"><div class="cl">{dual("Population","人口成長")}</div><div class="xcbar" id="g-xc-pop"></div><div class="xcval" id="v-xc-pop">—</div></div>
+      </div>
+      <p class="cnote xcnote-carry">{market_block('xc_carry')}</p>
     </div>
     <p class="narr-p" style="font-size:12.5px">{dual("Trajectory: ","軌跡：")}{market_block('traj')}</p>
   </div>
@@ -164,6 +197,7 @@ HTML=f"""<!DOCTYPE html>
   <!-- methodology -->
   <div class="sec-rule"><h2>{dual("Why We Rebuilt It","為什麼重建")}</h2></div>
   <p class="methnote">{dual(C['method']['why_en'], C['method']['why_zh'])}</p>
+  <p class="methnote">{dual(C['method']['frames_en'], C['method']['frames_zh'])}</p>
 
   <!-- honesty -->
   <div class="blk">

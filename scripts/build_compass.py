@@ -64,6 +64,42 @@ def ez(a, sign=1, minobs=12):
 def absz(a, scale=0.7, sign=1):
     return [None if v is None else sign*max(-3,min(3,v/scale)) for v in a]
 
+def build_xc():
+    """Cross-country (cross-sectional) report-card layer: where each market sits vs the WORLD now.
+    This is the THIRD reference frame — distinct from the compass (trailing, cyclical) and the
+    self-history gauges (expanding, vs own past). A market can be neutral vs its own history yet
+    expensive vs the world (Taiwan) or expensive vs its own past yet middling vs the world (US).
+    Vetted source: data/markets-summary.json (12-market universe). + = attractive / cheap."""
+    M = json.load(open(os.path.join(ROOT, 'data', 'markets-summary.json')))['markets']
+    ks = list(M.keys())
+    def col(f): return {k: M[k].get(f) for k in ks}
+    pti, yld, mort = col('priceIncomeRatio'), col('yield'), col('mortgageRate')
+    vac, pop = col('vacancy'), col('populationGrowth')
+    carry = {k: (round(yld[k]-mort[k], 1) if yld[k] is not None and mort[k] is not None else None) for k in ks}
+    def zc(d, higher_better):
+        vals = [v for v in d.values() if v is not None]
+        m = st.median(vals); mad = st.median([abs(x-m) for x in vals]) or 1e-9
+        out = {}
+        for k, v in d.items():
+            out[k] = None if v is None else round(max(-3, min(3, (v-m)/(1.4826*mad)))*(1 if higher_better else -1), 2)
+        return out
+    def rk(d, higher_better):
+        it = sorted([(k, v) for k, v in d.items() if v is not None], key=lambda x: x[1], reverse=higher_better)
+        return {k: i+1 for i, (k, v) in enumerate(it)}, len(it)
+    # + = attractive/cheap: low PTI good, high yield good, high carry good, low vacancy good, high pop good
+    Z = {'pti': zc(pti, False), 'yield': zc(yld, True), 'carry': zc(carry, True), 'vac': zc(vac, False), 'pop': zc(pop, True)}
+    R = {'pti': rk(pti, False), 'yield': rk(yld, True), 'carry': rk(carry, True), 'vac': rk(vac, False), 'pop': rk(pop, True)}
+    V = {'pti': pti, 'yield': yld, 'carry': carry, 'vac': vac, 'pop': pop}
+    xc = {}
+    for k in ks:
+        blk = {'n': R['pti'][1]}
+        for metric in ['pti', 'yield', 'carry', 'vac', 'pop']:
+            blk[metric] = {'v': V[metric][k], 'rank': R[metric][0].get(k), 'z': Z[metric][k]}
+        # objective valuation composite = mean cross-sectional z of the 3 valuation angles (+ = cheap/attractive)
+        blk['valcomp'] = round(st.mean([Z['pti'][k], Z['yield'][k], Z['carry'][k]]), 2)
+        xc[k] = blk
+    return xc
+
 # compass quadrant names: (momentum sign, credit sign)
 CELLS = {
     'fuelled':  {'en': 'Uptrend · Fuelled',    'zh': '上行·有燃料'},   # mom+ cred+  (strongest)
@@ -76,7 +112,7 @@ def cell(mx, cy):
     up, fu = mx >= 0, cy >= 0
     return 'fuelled' if (up and fu) else 'draining' if (up and not fu) else 'reflating' if (not up and fu) else 'starved'
 
-def compute(d, valsrc=None, supsrc=None, popyoy=None, win=24):
+def compute(d, valsrc=None, supsrc=None, popyoy=None, xc=None, win=24):
     q = d['q']; n = len(q)
     hpi = d['hpi_yoy']; fwd = d['fwd12']
     mom = smooth(tz(hpi, win))                       # X: price momentum
@@ -118,10 +154,12 @@ def compute(d, valsrc=None, supsrc=None, popyoy=None, win=24):
         'q': q, 'mom': r3(mom), 'cred': r3(cred), 'quad': QUAD, 'warn': warn,
         'ang': r1([ang(i) for i in range(n)]), 'rad': r3([rad(i) for i in range(n)]),
         'hpi_yoy': r1(hpi), 'fwd12': r1(fwd), 'qstat': QSTAT, 'card': card,
+        'xc': xc,   # cross-country report-card layer (vs the world now); None if unavailable
     }
 
 def main():
     RAWF = {'tw':'.twdata/tw_raw.json','my':'.mydata/my_raw.json','jp':'.jpdata/jp_raw.json'}
+    XC = build_xc()
     for m in MKTS:
         d = json.load(open(os.path.join(ROOT, 'data', f'clock-{m}.json')))
         # report-card source series (absolute levels), standardised over full history in compute()
@@ -136,7 +174,7 @@ def main():
                           for i in range(len(rw['price']))]
             supsrc = rw.get('vacancy')                             # TW low-electricity vacancy / MY overhang / JP 空き家率
             popyoy = yoy(rw['pop']) if rw.get('pop') else None
-        out = compute(d, valsrc, supsrc, popyoy)
+        out = compute(d, valsrc, supsrc, popyoy, xc=XC.get(m))
         json.dump(out, open(os.path.join(ROOT, 'data', f'compass-{m}.json'), 'w'), separators=(',', ':'))
         i = len(out['q'])-1
         lab = {'fuelled':'上行·有燃料','draining':'上行·資金退','reflating':'下行·資金回流','starved':'下行·斷炊','warmup':'暖機'}
