@@ -109,7 +109,7 @@ HTML=f"""<!DOCTYPE html>
   </div>
 
   <div class="lede">
-    <span class="lk">{dual("A clean-sheet redesign","推倒重來的設計")}</span>
+    <span class="lk">{dual("Two instruments, one page","兩套儀器，一頁讀")}</span>
     {dual(C['method']['lede_en'], C['method']['lede_zh'])}
   </div>
 
@@ -195,7 +195,7 @@ HTML=f"""<!DOCTYPE html>
   </div>
 
   <!-- methodology -->
-  <div class="sec-rule"><h2>{dual("Why We Rebuilt It","為什麼重建")}</h2></div>
+  <div class="sec-rule"><h2>{dual("Why It's Built This Way","為什麼這樣設計")}</h2></div>
   <p class="methnote">{dual(C['method']['why_en'], C['method']['why_zh'])}</p>
   <p class="methnote">{dual(C['method']['frames_en'], C['method']['frames_zh'])}</p>
 
