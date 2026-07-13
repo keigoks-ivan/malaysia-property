@@ -44,6 +44,26 @@ def smooth(a, w=3):
         if seg and a[i] is not None: out[i] = sum(seg)/len(seg)
     return out
 
+def yoy(a):
+    out=[None]*len(a)
+    for i in range(4,len(a)):
+        if a[i] is not None and a[i-4] not in (None,0): out[i]=(a[i]/a[i-4]-1)*100
+    return out
+
+def ez(a, sign=1, minobs=12):
+    """EXPANDING (whole-history) robust z — for report-card 'health' gauges: how the current
+    level compares to this market's ENTIRE history, not just the recent cycle."""
+    out=[None]*len(a); h=[]
+    for i,v in enumerate(a):
+        if v is not None: h.append(v)
+        if v is None or len(h)<minobs: continue
+        m=st.median(h); mad=st.median([abs(x-m) for x in h]) or 1e-9
+        out[i]=sign*max(-3,min(3,(v-m)/(1.4826*mad)))
+    return out
+
+def absz(a, scale=0.7, sign=1):
+    return [None if v is None else sign*max(-3,min(3,v/scale)) for v in a]
+
 # compass quadrant names: (momentum sign, credit sign)
 CELLS = {
     'fuelled':  {'en': 'Uptrend · Fuelled',    'zh': '上行·有燃料'},   # mom+ cred+  (strongest)
@@ -56,7 +76,7 @@ def cell(mx, cy):
     up, fu = mx >= 0, cy >= 0
     return 'fuelled' if (up and fu) else 'draining' if (up and not fu) else 'reflating' if (not up and fu) else 'starved'
 
-def compute(d, win=24):
+def compute(d, valsrc=None, supsrc=None, popyoy=None, win=24):
     q = d['q']; n = len(q)
     hpi = d['hpi_yoy']; fwd = d['fwd12']
     mom = smooth(tz(hpi, win))                       # X: price momentum
@@ -87,12 +107,12 @@ def compute(d, win=24):
     r2 = lambda a: [round(v, 2) if v is not None else None for v in a]
     r3 = lambda a: [round(v, 3) if v is not None else None for v in a]
 
-    # report-card factors (descriptive, NOT in the compass): keep the raw comp z's
+    # report-card factors (descriptive, NOT in the compass). Health = position vs the market's
+    # WHOLE history (expanding), not the recent cycle — a trailing window hides absolute extremes.
     card = {
-        'valuation': r2(cs.get('val', [None]*n)),     # + = cheap vs own history
-        'population': r2(cs.get('demo', [None]*n)),    # + = growing (absolute)
-        'supply':    r2(cs.get('months', [None]*n)),   # + = tight supply flow
-        'vacancy':   r2(cs.get('vac', [None]*n)),      # + = low vacancy
+        'valuation':  r2(ez(valsrc, -1)) if valsrc else r2(cs.get('val', [None]*n)),   # + = cheap vs full history
+        'population': r2(absz(popyoy, 0.7, +1)) if popyoy else r2(cs.get('demo', [None]*n)),  # + = growing (absolute)
+        'supply':     r2(ez(supsrc, -1)) if supsrc else r2(cs.get('months', [None]*n)),  # + = tight vs full history
     }
     return {
         'q': q, 'mom': r3(mom), 'cred': r3(cred), 'quad': QUAD, 'warn': warn,
@@ -101,9 +121,22 @@ def compute(d, win=24):
     }
 
 def main():
+    RAWF = {'tw':'.twdata/tw_raw.json','my':'.mydata/my_raw.json','jp':'.jpdata/jp_raw.json'}
     for m in MKTS:
         d = json.load(open(os.path.join(ROOT, 'data', f'clock-{m}.json')))
-        out = compute(d)
+        # report-card source series (absolute levels), standardised over full history in compute()
+        if m == 'us':
+            r = d['raw']; valsrc = r['val']; supsrc = r['months']; popyoy = r['pop_yoy']
+        else:
+            rw = json.load(open(os.path.join(ROOT, 'scripts', RAWF[m])))
+            if m == 'tw' and rw.get('pti') and any(x is not None for x in rw['pti']):
+                valsrc = rw['pti']                                  # real house-price-to-income ratio
+            else:
+                valsrc = [(rw['price'][i]/rw['income'][i]) if (rw.get('income') and rw['price'][i] and rw['income'][i]) else None
+                          for i in range(len(rw['price']))]
+            supsrc = rw.get('vacancy')                             # TW low-electricity vacancy / MY overhang / JP 空き家率
+            popyoy = yoy(rw['pop']) if rw.get('pop') else None
+        out = compute(d, valsrc, supsrc, popyoy)
         json.dump(out, open(os.path.join(ROOT, 'data', f'compass-{m}.json'), 'w'), separators=(',', ':'))
         i = len(out['q'])-1
         lab = {'fuelled':'上行·有燃料','draining':'上行·資金退','reflating':'下行·資金回流','starved':'下行·斷炊','warmup':'暖機'}
