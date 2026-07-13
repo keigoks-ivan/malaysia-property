@@ -65,6 +65,10 @@ def czlist(vals, sign=1, win=24, minobs=12):
         out[i] = sign*max(-3, min(3, (v-med)/(1.4826*mad)))
     return out
 
+def absz(vals, scale, sign=1):
+    # absolute-direction score (NOT de-meaned) — for monotonic structural trends like population
+    return [None if v is None else sign*max(-3, min(3, v/scale)) for v in vals]
+
 def smooth(a, w=3):
     out = [None]*len(a)
     for i in range(len(a)):
@@ -87,7 +91,7 @@ def compute(raw, win=24):
         'months': czlist(col('months'), -1, win),                    # supply: low = tight = +
         'vac':    czlist(col('vacancy'), -1, win),                   # supply: low vacancy = +
         'gap':    czlist(col('gap'),     +1, win),                   # demand: under-built = +
-        'demo':   czlist(yoy(col('pop')),+1, win),                   # population: growth = +
+        'demo':   absz(yoy(col('pop')), 0.7, +1),                   # population: growth = +
         'val':    czlist(val,            -1, win),                   # valuation: cheap = +
     }
     FLOW = {

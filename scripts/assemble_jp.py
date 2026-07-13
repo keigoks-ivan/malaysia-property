@@ -53,7 +53,7 @@ def main():
             aligned = interp(aligned)
         if sum(1 for x in aligned if x is not None) < 8:
             missing.append(wkey + '(sparse)'); continue
-        if field in ('vacancy', 'months', 'income', 'pop', 'credit'):  # lagged -> carry forward <=4q
+        if field in ('vacancy', 'months', 'income', 'pop', 'credit', 'cpi'):  # lagged -> carry forward <=4q
             lv = max((i for i, x in enumerate(aligned) if x is not None), default=-1)
             if lv >= 0:
                 for j in range(lv + 1, min(len(aligned), lv + 1 + 4)): aligned[j] = aligned[lv]

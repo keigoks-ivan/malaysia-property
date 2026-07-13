@@ -140,6 +140,9 @@ def main():
                 for i in range(len(QS))]
 
     # causal robust z over trailing window (win=40q, min 16 obs)
+    def absz(vals, scale, sign=1):
+        return [None if v is None else sign*max(-3, min(3, v/scale)) for v in vals]
+
     def czlist(vals, sign=1, win=40, minobs=16):
         out = [None]*len(vals); hist = []
         for i, v in enumerate(vals):
@@ -163,7 +166,7 @@ def main():
         ('months', czlist(S['months'], -1)),
         ('vac',    czlist(S['vac'],    -1)),
         ('gap',    czlist(S['gap'],    +1)),
-        ('demo',   czlist(S['pop_yoy'],+1)),
+        ('demo',   absz(S['pop_yoy'], 0.7, +1)),
         ('val',    czlist(S['val'],    -1)),
     ])
 
