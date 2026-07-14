@@ -4618,5 +4618,525 @@
       },
       "any_current_quarter_differs": true
     }
+  },
+  "au_holdout": {
+    "amendment": "Amendment 3 -- scripts/compass_v3_protocol.md",
+    "protocol_text_verbatim": "## Amendment 3 \u2014 2026-07-14, adding Australia as an out-of-sample market (rule frozen before any AU number computed)\nAustralia is added to the clock as a 5th market AFTER the v3 risk claim was frozen\nand published on {US, TW, MY, JP}. Frozen treatment (decided before any AU 2\u00d72\ntable exists), so AU cannot be cherry-picked into or out of the headline:\n- The PRIMARY validated claim stays EXACTLY as published: 4-market set, ABS on\n  US+JP, MH pooled 13.53 / 16.07. These numbers are NOT restated with AU folded in.\n- AU is evaluated with the identical v3 machinery (both targets, applicability\n  gate, per-market 2\u00d72/OR/precision/recall, episode analysis) and reported as a\n  HOLD-OUT: the first market the warning meets that it was never fit to.\n- A 5-market MH pooled OR is ALSO computed and shown, but LABELLED \"with AU\n  (out-of-sample)\" and never substituted for the frozen 4-market figure.\n- Applicability gate applies unchanged: AU is rated for ABS only if it has \u22658\n  matured 3y-loss quarters. Prior expectation (disclosed, not a threshold): AU\n  rarely posts multi-year nominal losses, so it will likely be NOT RATED for ABS\n  and evaluated on REL only \u2014 an informative outcome either way, reported as-is.\n- Whatever AU shows, the live clock's AU risk gauge uses the same per-market\n  state logic already in place (WARNING ON/OFF where rated; NOT RATED / NOT\n  VALIDATED shown honestly where not) \u2014 no new favourable framing invented for AU.\nAdding AU does not alter any existing market's warn/quad/W_PRIM series (verified\nby regression guard: the 4 markets' compass arrays must be byte-identical after\nAU is wired into build_compass.py).",
+    "gate": {
+      "n_bad_abs": 2,
+      "rated_abs": false,
+      "threshold": 8,
+      "status_note": "NOT RATED (2 loss quarters)"
+    },
+    "market_results": {
+      "market": "au",
+      "n_quarters": 205,
+      "afs_note": "AU: cpi inspected as an INDEX LEVEL (range 10.59-101.70, not a YoY% series) -> computed cpi_yoy=yoy(cpi) [build_compass.py yoy()], then r = rate - cpi_yoy, joined onto compass q axis by label (raw q axis identical to compass q axis: True).",
+      "demo_note": "demo file absent (/Users/ivanchang/malaysia-property/scripts/.audata/au_demo.json) -> W_DEMO NOT EVALUATED for AU",
+      "demo_available": false,
+      "n_bad_abs": 2,
+      "rated_abs": false,
+      "results": {
+        "T_ABS": {
+          "W_MOM": {
+            "OR": 0.663,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.0104,
+            "w_quarters": 44,
+            "cells": {
+              "a": 0,
+              "b": 44,
+              "c": 2,
+              "d": 147,
+              "n_used": 193,
+              "n_excluded": 12,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 3.0,
+                  "n_used": 17,
+                  "w_count": 4,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 2.778,
+                  "n_used": 16,
+                  "w_count": 4,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 3.857,
+                  "n_used": 16,
+                  "w_count": 3,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 3.0
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2017Q2",
+                  "end_q": "2017Q3",
+                  "length": 2,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_PRIM": {
+            "OR": 3.842,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.0104,
+            "w_quarters": 9,
+            "cells": {
+              "a": 0,
+              "b": 9,
+              "c": 2,
+              "d": 182,
+              "n_used": 193,
+              "n_excluded": 12,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 35.0,
+                  "n_used": 17,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 10.333,
+                  "n_used": 16,
+                  "w_count": 1,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 33.0,
+                  "n_used": 16,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 33.0
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2017Q2",
+                  "end_q": "2017Q3",
+                  "length": 2,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_AFS": {
+            "OR": 9.571,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.0116,
+            "w_quarters": 3,
+            "cells": {
+              "a": 0,
+              "b": 3,
+              "c": 2,
+              "d": 167,
+              "n_used": 172,
+              "n_excluded": 33,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 31.0,
+                  "n_used": 15,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 29.0,
+                  "n_used": 14,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 29.0,
+                  "n_used": 14,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 29.0
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2017Q2",
+                  "end_q": "2017Q3",
+                  "length": 2,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_DEMO": {
+            "status": "NOT EVALUATED (no demo data)"
+          }
+        },
+        "T_REL": {
+          "W_MOM": {
+            "OR": 0.337,
+            "haldane_applied": false,
+            "precision": 0.2273,
+            "recall": 0.1538,
+            "base_rate": 0.4012,
+            "w_quarters": 44,
+            "cells": {
+              "a": 10,
+              "b": 34,
+              "c": 55,
+              "d": 63,
+              "n_used": 162,
+              "n_excluded": 43,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.0,
+                  "n_used": 14,
+                  "w_count": 4,
+                  "bad_count": 7,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 0.417,
+                  "n_used": 13,
+                  "w_count": 4,
+                  "bad_count": 5,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 0.121,
+                  "n_used": 14,
+                  "w_count": 3,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 0.417
+            },
+            "episodes": {
+              "episodes_total": 6,
+              "caught": 3,
+              "missed": 3,
+              "details": [
+                {
+                  "start_q": "1983Q4",
+                  "end_q": "1985Q1",
+                  "length": 6,
+                  "caught": false
+                },
+                {
+                  "start_q": "1988Q4",
+                  "end_q": "1996Q1",
+                  "length": 30,
+                  "caught": true
+                },
+                {
+                  "start_q": "2003Q4",
+                  "end_q": "2003Q4",
+                  "length": 1,
+                  "caught": false
+                },
+                {
+                  "start_q": "2008Q1",
+                  "end_q": "2011Q2",
+                  "length": 14,
+                  "caught": true
+                },
+                {
+                  "start_q": "2015Q3",
+                  "end_q": "2018Q1",
+                  "length": 11,
+                  "caught": false
+                },
+                {
+                  "start_q": "2021Q4",
+                  "end_q": "2022Q2",
+                  "length": 3,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_PRIM": {
+            "OR": 1.938,
+            "haldane_applied": false,
+            "precision": 0.5556,
+            "recall": 0.0769,
+            "base_rate": 0.4012,
+            "w_quarters": 9,
+            "cells": {
+              "a": 5,
+              "b": 4,
+              "c": 60,
+              "d": 93,
+              "n_used": 162,
+              "n_excluded": 43,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.0,
+                  "n_used": 14,
+                  "w_count": 0,
+                  "bad_count": 7,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 5.667,
+                  "n_used": 13,
+                  "w_count": 1,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 1.308,
+                  "n_used": 14,
+                  "w_count": 0,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 1.308
+            },
+            "episodes": {
+              "episodes_total": 6,
+              "caught": 1,
+              "missed": 5,
+              "details": [
+                {
+                  "start_q": "1983Q4",
+                  "end_q": "1985Q1",
+                  "length": 6,
+                  "caught": false
+                },
+                {
+                  "start_q": "1988Q4",
+                  "end_q": "1996Q1",
+                  "length": 30,
+                  "caught": false
+                },
+                {
+                  "start_q": "2003Q4",
+                  "end_q": "2003Q4",
+                  "length": 1,
+                  "caught": false
+                },
+                {
+                  "start_q": "2008Q1",
+                  "end_q": "2011Q2",
+                  "length": 14,
+                  "caught": true
+                },
+                {
+                  "start_q": "2015Q3",
+                  "end_q": "2018Q1",
+                  "length": 11,
+                  "caught": false
+                },
+                {
+                  "start_q": "2021Q4",
+                  "end_q": "2022Q2",
+                  "length": 3,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_AFS": {
+            "OR": 0.206,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.4012,
+            "w_quarters": 3,
+            "cells": {
+              "a": 0,
+              "b": 3,
+              "c": 65,
+              "d": 94,
+              "n_used": 162,
+              "n_excluded": 43,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.0,
+                  "n_used": 14,
+                  "w_count": 0,
+                  "bad_count": 7,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 1.545,
+                  "n_used": 13,
+                  "w_count": 0,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 1.308,
+                  "n_used": 14,
+                  "w_count": 0,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 1.308
+            },
+            "episodes": {
+              "episodes_total": 6,
+              "caught": 0,
+              "missed": 6,
+              "details": [
+                {
+                  "start_q": "1983Q4",
+                  "end_q": "1985Q1",
+                  "length": 6,
+                  "caught": false
+                },
+                {
+                  "start_q": "1988Q4",
+                  "end_q": "1996Q1",
+                  "length": 30,
+                  "caught": false
+                },
+                {
+                  "start_q": "2003Q4",
+                  "end_q": "2003Q4",
+                  "length": 1,
+                  "caught": false
+                },
+                {
+                  "start_q": "2008Q1",
+                  "end_q": "2011Q2",
+                  "length": 14,
+                  "caught": false
+                },
+                {
+                  "start_q": "2015Q3",
+                  "end_q": "2018Q1",
+                  "length": 11,
+                  "caught": false
+                },
+                {
+                  "start_q": "2021Q4",
+                  "end_q": "2022Q2",
+                  "length": 3,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_DEMO": {
+            "status": "NOT EVALUATED (no demo data)"
+          }
+        }
+      }
+    },
+    "mh_5_market_with_au": {
+      "label": "with AU (out-of-sample) -- shown alongside, NOT a replacement for the frozen 4-market MH",
+      "T_ABS": {
+        "markets": [
+          "us",
+          "tw",
+          "jp"
+        ],
+        "OR_MH": 13.529,
+        "n_strata": 3,
+        "au_entered": false,
+        "frozen_4market_OR_MH": 13.529,
+        "delta_vs_frozen": 0.0
+      },
+      "T_REL": {
+        "markets": [
+          "us",
+          "tw",
+          "my",
+          "jp",
+          "au"
+        ],
+        "OR_MH": 10.959,
+        "n_strata": 5,
+        "frozen_4market_OR_MH": 16.07,
+        "delta_vs_frozen": -5.111
+      }
+    },
+    "current_quarter_state": {
+      "q": "2026Q1",
+      "quad": "fuelled",
+      "warn": false,
+      "W_PRIM": false
+    },
+    "self_checks": {
+      "truncation_lookahead_guard_au": {
+        "market": "au",
+        "k": 195,
+        "n_full": 205,
+        "checked": 195,
+        "pass": true,
+        "mismatches": []
+      }
+    },
+    "verdict": "AU is the gauge's first true out-of-sample market: it neither confirms nor breaks the frozen claim. It is NOT RATED on the absolute claim that was validated (only 2 matured 3y-loss quarters against an >=8 gate), and its Test-8 declared-ordering concordance BREAKS (fuelled median 16.1% < starved median 22.3%, rho=-0.156) -- the same no-crash signature seen in Taiwan, not a contradiction of the risk-gauge claim (which was never a return-ordering claim)."
   }
 }

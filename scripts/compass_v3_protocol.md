@@ -97,6 +97,28 @@ Frozen rules:
 Timing disclosure: this amendment was written after the audit revealed the
 fatigue cases but before any W_PRIM_EXP table was computed.
 
+## Amendment 3 — 2026-07-14, adding Australia as an out-of-sample market (rule frozen before any AU number computed)
+Australia is added to the clock as a 5th market AFTER the v3 risk claim was frozen
+and published on {US, TW, MY, JP}. Frozen treatment (decided before any AU 2×2
+table exists), so AU cannot be cherry-picked into or out of the headline:
+- The PRIMARY validated claim stays EXACTLY as published: 4-market set, ABS on
+  US+JP, MH pooled 13.53 / 16.07. These numbers are NOT restated with AU folded in.
+- AU is evaluated with the identical v3 machinery (both targets, applicability
+  gate, per-market 2×2/OR/precision/recall, episode analysis) and reported as a
+  HOLD-OUT: the first market the warning meets that it was never fit to.
+- A 5-market MH pooled OR is ALSO computed and shown, but LABELLED "with AU
+  (out-of-sample)" and never substituted for the frozen 4-market figure.
+- Applicability gate applies unchanged: AU is rated for ABS only if it has ≥8
+  matured 3y-loss quarters. Prior expectation (disclosed, not a threshold): AU
+  rarely posts multi-year nominal losses, so it will likely be NOT RATED for ABS
+  and evaluated on REL only — an informative outcome either way, reported as-is.
+- Whatever AU shows, the live clock's AU risk gauge uses the same per-market
+  state logic already in place (WARNING ON/OFF where rated; NOT RATED / NOT
+  VALIDATED shown honestly where not) — no new favourable framing invented for AU.
+Adding AU does not alter any existing market's warn/quad/W_PRIM series (verified
+by regression guard: the 4 markets' compass arrays must be byte-identical after
+AU is wired into build_compass.py).
+
 ## Data note
 - AFS inputs exist in-repo: scripts/.{tw,my,jp}data/*_raw.json (rate, cpi),
   US real_rate in data/clock-us.json raw.

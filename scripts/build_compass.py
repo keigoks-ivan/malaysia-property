@@ -24,7 +24,7 @@ import json, os, math
 import statistics as st
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MKTS = ['us', 'tw', 'my', 'jp']
+MKTS = ['us', 'tw', 'my', 'jp', 'au']
 
 def tz(series, win=24, minobs=12):
     out = [None]*len(series); h = []
@@ -182,7 +182,7 @@ def compute(d, valsrc=None, supsrc=None, popyoy=None, xc=None, win=24):
     }
 
 def main():
-    RAWF = {'tw':'.twdata/tw_raw.json','my':'.mydata/my_raw.json','jp':'.jpdata/jp_raw.json'}
+    RAWF = {'tw':'.twdata/tw_raw.json','my':'.mydata/my_raw.json','jp':'.jpdata/jp_raw.json','au':'.audata/au_raw.json'}
     XC = build_xc()
     for m in MKTS:
         d = json.load(open(os.path.join(ROOT, 'data', f'clock-{m}.json')))

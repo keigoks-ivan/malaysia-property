@@ -25,7 +25,7 @@ No external fetch. Standard library only (manual Spearman, no scipy dependency).
 import json, os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MKTS = ['us', 'tw', 'my', 'jp']
+MKTS = ['us', 'tw', 'my', 'jp', 'au']
 CELLS = ['fuelled', 'draining', 'reflating', 'starved']
 DECLARED_RANK = {'fuelled': 4, 'draining': 3, 'reflating': 2, 'starved': 1}
 PAIRS = [('fuelled', 'draining'), ('fuelled', 'reflating'), ('fuelled', 'starved'),

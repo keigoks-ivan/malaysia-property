@@ -4,7 +4,8 @@ import json, os
 ROOT='/Users/ivanchang/malaysia-property'
 SCR='/private/tmp/claude-501/-Users-ivanchang-malaysia-property/52542b53-2f2a-49e2-9a78-6dd7a75141c7/scratchpad'
 C=json.load(open(ROOT+'/scripts/compass_assets/content.json'))
-DATA={m:open(f'{ROOT}/data/compass-{m}.json').read().strip() for m in ['us','tw','my','jp']}
+MKTS=['us','tw','my','jp','au']
+DATA={m:open(f'{ROOT}/data/compass-{m}.json').read().strip() for m in MKTS}
 V3=json.load(open(ROOT+'/data/compass-backtest-v3.json'))
 def esc(s): return s  # copy is trusted (from our own agents); keep as-is
 def dual(en,zh): return f'<span class="lang-en">{en}</span><span class="lang-zh" style="display:none">{zh}</span>'
@@ -32,16 +33,20 @@ def fmt1(x): return f'{x:.1f}'
 def fmtpct1(x): return f'{x*100:.1f}'
 
 RISKVALS={}
-for m in ['us','tw','my','jp']:
+for m in MKTS:
     Dm=json.loads(DATA[m])
     cur_q=Dm['q'][-1]
     on=(Dm['quad'][-1]=='starved' and bool(Dm['warn'][-1]))
-    mres=V3['markets'][m]
+    # AU was added after the v3 claim was frozen (Amendment 3) and lives under
+    # au_holdout.market_results, not markets.au -- same shape, evaluated as an
+    # out-of-sample hold-out rather than folded into the frozen 4-market result.
+    mres=V3['au_holdout']['market_results'] if m=='au' else V3['markets'][m]
     rated_abs=mres['rated_abs']
     abs_r=mres['results']['T_ABS']['W_PRIM']
     rel_r=mres['results']['T_REL']['W_PRIM']
     v={'CUR_Q':cur_q,'ON':on,'STATE_EN':'ON' if on else 'OFF','STATE_ZH':'開啟' if on else '關閉'}
     v['OR_REL']=fmt1(rel_r['OR']); v['PREC_REL']=fmtpct1(rel_r['precision'])
+    v['RECALL_REL']=fmtpct1(rel_r['recall']); v['BASE_REL']=fmtpct1(rel_r['base_rate'])
     c2,d2=rel_r['cells']['c'],rel_r['cells']['d']; v['PREC_REL_OFF']=fmtpct1(c2/(c2+d2))
     if rated_abs:
         v['OR_ABS']=fmt1(abs_r['OR']); v['PREC_ABS']=fmtpct1(abs_r['precision'])
@@ -63,20 +68,27 @@ def risk_light(m):
             f'<span class="rgqtr">{dual("as of ","截至 ")}{v["CUR_Q"]}</span></div>')
 
 def risk_lights_html():
-    return ''.join(mktwrap(m, risk_light(m)) for m in ['us','tw','my','jp'])
+    return ''.join(mktwrap(m, risk_light(m)) for m in MKTS)
 
 def risk_text_block():
     return ''.join(mkt(m, C['markets'][m]['risk_en'].format(**RISKVALS[m]),
                         C['markets'][m]['risk_zh'].format(**RISKVALS[m]))
-                    for m in ['us','tw','my','jp'])
+                    for m in MKTS)
 
-MK={'us':('United States','美國'),'tw':('Taiwan','台灣'),'my':('Malaysia','馬來西亞'),'jp':('Japan','日本')}
+MK={'us':('United States','美國'),'tw':('Taiwan','台灣'),'my':('Malaysia','馬來西亞'),'jp':('Japan','日本'),'au':('Australia','澳洲')}
 SPAN={'us':('US · 1975–2026','美國 · 1975–2026'),'tw':('Taiwan · 2001–2026','台灣 · 2001–2026'),
-      'my':('Malaysia · 2000–2026','馬來西亞 · 2000–2026'),'jp':('Japan · 1975–2025','日本 · 1975–2025')}
+      'my':('Malaysia · 2000–2026','馬來西亞 · 2000–2026'),'jp':('Japan · 1975–2025','日本 · 1975–2025'),
+      'au':('Australia · 1994–2026','澳洲 · 1994–2026')}
 
 CSS=dedupe_css(open(ROOT+'/my/clock.html').read().split('<style>')[1].split('</style>')[0])
 # strip old-only rules we replace; keep base. Add compass/report-card styles.
 CSS_EXTRA="""
+/* market-switch visibility: au (5th market) -- mirrors the tw/my/jp pattern that
+   ships baked into the extracted CSS above (self-referential from prior output),
+   which only ever covers tw/my/jp, so au needs its own explicit rules here. */
+.mkt-au{display:none}
+body.mk-au .mkt-us,body.mk-au .mkt-tw,body.mk-au .mkt-my,body.mk-au .mkt-jp{display:none}
+body.mk-au .mkt-au{display:revert}
 /* compass + report card */
 .jwarn{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:#8a2b13;background:#fdf0e7;border:1px solid #f2c9b3;border-radius:999px;padding:5px 12px;margin:0 0 14px}
 .jwarn .dot{width:8px;height:8px;border-radius:50%;background:#dc2626;box-shadow:0 0 0 3px rgba(220,38,38,.18)}
@@ -128,20 +140,20 @@ def badges():
     b=[f'<span class="kpi-badge badge-blue">{dual("Momentum × Credit","動能 × 信貸")}</span>',
        f'<span class="kpi-badge badge-orange">{dual("+ supply-glut warning · report card","+ 供給警示 · 體檢表")}</span>',
        f'<span class="kpi-badge badge-orange">{dual("Risk gauge · validated on 2 busts","風險警報 · 驗證於兩次崩盤")}</span>']
-    for m in ['us','tw','my','jp']:
+    for m in MKTS:
         b.append(f'<span class="kpi-badge badge-green mkt-{m}">{dual(*SPAN[m])}</span>')
     b.append(f'<span class="kpi-badge badge-orange">{dual("Updated Jul 2026","更新至 2026年7月")}</span>')
     return ''.join(b)
 
 def mkt_buttons():
     r=[]
-    for m in ['us','tw','my','jp']:
+    for m in MKTS:
         a=' active' if m=='us' else ''
         r.append(f'<button class="mkt-btn{a}" data-mkt="{m}" type="button">{dual(*MK[m])}</button>')
     return '\n      '.join(r)
 
 def market_block(field):
-    return ''.join(mkt(m, C['markets'][m][field+'_en'], C['markets'][m][field+'_zh']) for m in ['us','tw','my','jp'])
+    return ''.join(mkt(m, C['markets'][m][field+'_en'], C['markets'][m][field+'_zh']) for m in MKTS)
 
 HTML=f"""<!DOCTYPE html>
 <html lang="en">
@@ -193,6 +205,7 @@ HTML=f"""<!DOCTYPE html>
     <p class="jlab">{dual('The reading right now · <span class="curQtr">—</span>','現在的判讀 · <span class="curQtr">—</span>')}</p>
     <p class="jphase curPhase">—</p>
     <p class="mkt-tw" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual("cell ordering not validated in Taiwan (ρ=0.08)","四格排序在台灣未通過驗證（ρ=0.08）")}</span></p>
+    <p class="mkt-au" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual("cell ordering not validated in Australia (ρ=−0.16 — fuelled trails starved, the same no-crash signature as Taiwan)","四格排序在澳洲未通過驗證（ρ=−0.16——有燃料格報酬低於斷炊格，與台灣同樣的『從未真正崩盤』訊號）")}</span></p>
     <p class="jread">{market_block('judge')}</p>
     <div class="jwarn"><span class="dot"></span><span>{market_block('warn')}</span></div>
     <div class="jrow">
@@ -312,6 +325,7 @@ var D_US={DATA['us']};
 var D_TW={DATA['tw']};
 var D_MY={DATA['my']};
 var D_JP={DATA['jp']};
+var D_AU={DATA['au']};
 </script>
 <script>
 {open(ROOT+'/scripts/compass_assets/compass.js').read()}

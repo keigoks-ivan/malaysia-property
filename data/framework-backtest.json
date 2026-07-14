@@ -10144,6 +10144,108 @@
    "monotone_finding": "The deeper finding, partly overturning the audit's own framing: JP 2023Q3 (vacancy 13.6% vs all-time high 13.8%) is missed by BOTH bases — the expanding z reads -0.71 (short of the -1 trigger) because Japan's vacancy has risen near-monotonically for ~50 years, so the whole-history median drifts up alongside the chronic glut. For a monotonically deteriorating series ANY relative basis fatigues; catching an 'absolute glut' would need an external cross-market level anchor that does not exist for series as different as a survey rate (JP) and an overhang count (MY). The trailing basis therefore stays not because it is conceptually right but because it empirically dominates — that tension is published, per the frozen decision rule.",
    "verdict": "~20 classified findings across the two audits: 5 BUGs fixed (footer basis claim, population whole-history overclaim, MY population false zero, MY span badge, MY stale mortgage input — none touching W_PRIM), 4 DESIGN-DEBTs disclosed on-page (nominal/real asymmetry, JP survey-step warn, MY interpolated income, TW short valuation history), 1 NEEDS-REVALIDATION resolved via Amendment 2 (KEEP TRAILING), remainder OK-AS-DESIGNED with reasons recorded.",
    "source": "scripts/compass_design_audit_charter.md (frozen charter; audits reproducible from it); data/compass-backtest-v3.json 'amendment2' (full trailing-vs-expanding tables, disagreement maps, fatigue exhibit checks, self-checks); scripts/compass_v3_protocol.md § Amendment 2 (frozen rules and decision rule)."
+  },
+  "au_holdout": {
+   "question": "Australia was added to the clock AFTER the v3 risk claim was frozen and published on {US, TW, MY, JP} -- does the frozen warning generalise to a market it was never fit to?",
+   "amendment": "Amendment 3 -- scripts/compass_v3_protocol.md, frozen 2026-07-14 before any AU number was computed. AU cannot be cherry-picked into or out of the headline: the primary 4-market claim (ABS MH 13.53, REL MH 16.07) stays exactly as published and is never restated with AU folded in; AU is run through the identical v3 machinery and reported as a hold-out.",
+   "test8_au": {
+    "question": "Same Test 8 as the core backtest (see test8_compass) -- does the compass's declared cell ordering (Fuelled>=Draining>=Reflating>=Starved) rank AU's forward 3-year returns, scored on rules frozen before any AU market existed on the clock?",
+    "cell_medians_pct": {
+     "fuelled": 16.1,
+     "draining": 24.1,
+     "reflating": 6.9,
+     "starved": 22.3
+    },
+    "cell_n": {
+     "fuelled": 34,
+     "draining": 31,
+     "reflating": 9,
+     "starved": 44
+    },
+    "pairwise_concordance": "3/6",
+    "spearman_rho_declared_rank_vs_fwd12": -0.156,
+    "n_scored_quarters": 118,
+    "verdict": "BREAKS",
+    "note": "Starved is the second-best cell (22.3%), well above fuelled (16.1%) -- the same no-crash signature as Taiwan (see test8_compass.TW): AU has never really fallen, so a momentum-down quarter is typically just a pause before the next leg up, not a regime with its own downside distribution.",
+    "source": "data/compass-au.json qstat (cell medians/n) and quad/fwd12 arrays (rho); scripts/backtest_compass.py method, identical to the 4-market test"
+   },
+   "applicability_gate": {
+    "rule": "unchanged from v3 protocol: a market is RATED for the absolute claim iff its matured history contains >=8 quarters with fwd12<0",
+    "n_bad_abs": 2,
+    "threshold": 8,
+    "rated_abs": false,
+    "loss_quarters": [
+     "2017Q2",
+     "2017Q3"
+    ],
+    "note": "AU is NOT RATED for the absolute-loss claim -- only 2 matured 3y-loss quarters in 50 years of history, below the >=8 gate. The absolute claim literally cannot be graded on AU; this is a data-availability statement, not a failed test. Same shape as MY's own ABS non-rating (0 loss quarters in 105)."
+   },
+   "t_rel_result": {
+    "classifier": "W_PRIM = quad==starved AND warn==true, identical definition to the 4-market test",
+    "cells_abcd": {
+     "a": 5,
+     "b": 4,
+     "c": 60,
+     "d": 93
+    },
+    "OR": 1.938,
+    "precision_on_pct": 55.6,
+    "precision_off_pct": 39.2,
+    "base_rate_pct": 40.1,
+    "recall_pct": 7.7,
+    "w_quarters": 9,
+    "episodes_caught": 1,
+    "episodes_total": 6,
+    "episodes_missed": 5,
+    "verdict": "weak -- OR clears 1 but sits far below the >=2 per-market bar used to grade the frozen 4-market REL claim; precision (55.6%) barely beats base rate (40.1%) and recall (7.7%) means the warning missed 5 of 6 episodes",
+    "source": "data/compass-backtest-v3.json au_holdout.market_results.results.T_REL.W_PRIM"
+   },
+   "pooled_mh": {
+    "abs": {
+     "frozen_4market_markets": [
+      "US",
+      "TW",
+      "JP"
+     ],
+     "frozen_4market_OR_MH": 13.529,
+     "with_au_5market_OR_MH": 13.529,
+     "delta": 0.0,
+     "note": "AU is not rated for ABS, so it never enters the ABS pool -- the 3-market-rated pool (US/TW/JP) is unchanged."
+    },
+    "rel": {
+     "frozen_4market_markets": [
+      "US",
+      "TW",
+      "MY",
+      "JP"
+     ],
+     "frozen_4market_OR_MH": 16.07,
+     "with_au_5market_OR_MH": 10.959,
+     "delta": -5.111,
+     "note": "All 5 markets are rated for REL, so AU enters this pool. Adding a no-crash market out-of-sample pulls the pooled relative signal down by 5.11 -- reported plainly, not smoothed over: this is the honest generalisation result, not a number to bury."
+    }
+   },
+   "current_state_2026Q1": {
+    "q": "2026Q1",
+    "quad": "fuelled",
+    "warn": false,
+    "W_PRIM": false
+   },
+   "cross_country_paradox": {
+    "valcomp": -0.84,
+    "carry_pct": -3.5,
+    "carry_rank": "11/12",
+    "yield_pct": 2.8,
+    "yield_rank": "11/12",
+    "vacancy_pct": 1.2,
+    "vacancy_rank": "1/12",
+    "population_growth_pct": 2.3,
+    "population_rank": "2/12",
+    "note": "Expensive on every valuation/carry cut (valcomp -0.84; carry -3.5%, rank 11/12; yield 2.8%, rank 11/12) yet structurally the tightest market in the panel on supply and demand (vacancy 1.2%, rank 1/12; population growth +2.3%, rank 2/12) -- a paradox the compass reads as fuelled, not as a warning.",
+    "source": "data/compass-au.json xc; data/markets-summary.json markets.au"
+   },
+   "meta_conclusion": "AU confirms the instrument's boundary rather than extending it. Momentum-x-credit ordering and the glut warning both read downside risk out of markets that HAVE downside history: on Test 8, AU joins Taiwan specifically (not Malaysia, which holds at rho=0.71) in a no-crash break. On the absolute-loss risk gate specifically, AU joins Taiwan and Malaysia in the cluster of markets with too little realized-loss history to validate a loss warning against (TW is rated but caught nothing; MY and AU are not rated at all) -- only US and JP carry real crash episodes. AU is the third market to show this no-crash pattern and the first one added as a pre-registered hold-out rather than discovered inside the original four.",
+   "source": "data/compass-backtest-v3.json au_holdout node (protocol_text_verbatim, gate, market_results, mh_5_market_with_au, current_quarter_state, verdict); data/compass-au.json (qstat, quad, fwd12, xc); scripts/compass_v3_protocol.md Amendment 3; data/markets-summary.json markets.au"
   }
  },
  "test5_full_matrix": [

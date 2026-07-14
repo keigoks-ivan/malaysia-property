@@ -11,7 +11,8 @@ var CELL = {
   warmup:   {col:'#9aa7bb',en:'Warm-up',              zh:'暖機'}
 };
 var MKT='us', D, Q, MOM, CRED, QUAD, WARN, CARD, CUR, LANG='en';
-function useMarket(m){MKT=(m==='tw'||m==='my'||m==='jp')?m:'us';D=(MKT==='tw'?D_TW:MKT==='my'?D_MY:MKT==='jp'?D_JP:D_US);
+function useMarket(m){MKT=(m==='tw'||m==='my'||m==='jp'||m==='au')?m:'us';
+  D=(MKT==='tw'?D_TW:MKT==='my'?D_MY:MKT==='jp'?D_JP:MKT==='au'?D_AU:D_US);
   Q=D.q;MOM=D.mom;CRED=D.cred;QUAD=D.quad;WARN=D.warn;CARD=D.card;CUR=Q.length-1;}
 useMarket('us');
 
@@ -191,7 +192,7 @@ function setLang(lang){LANG=lang;
   try{localStorage.setItem('lang',lang);}catch(e){}
   allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];initCharts(lang);}
 function setMarket(m){useMarket(m);
-  document.body.classList.toggle('mk-tw',m==='tw');document.body.classList.toggle('mk-my',m==='my');document.body.classList.toggle('mk-jp',m==='jp');
+  document.body.classList.toggle('mk-tw',m==='tw');document.body.classList.toggle('mk-my',m==='my');document.body.classList.toggle('mk-jp',m==='jp');document.body.classList.toggle('mk-au',m==='au');
   document.querySelectorAll('.mkt-btn').forEach(function(b){b.classList.toggle('active',b.dataset.mkt===m);});
   try{localStorage.setItem('mkt',m);}catch(e){}try{history.replaceState(null,'','#'+m);}catch(e){}
   allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];initCharts(LANG);}
@@ -201,8 +202,8 @@ window.addEventListener('load',function(){
   document.querySelectorAll('.mkt-btn').forEach(function(b){b.addEventListener('click',function(){setMarket(b.dataset.mkt);});});
   var lang='en';try{lang=localStorage.getItem('lang')||'en';}catch(e){}
   var mkt='us';try{mkt=localStorage.getItem('mkt')||'us';}catch(e){}
-  if(location.hash==='#tw')mkt='tw';if(location.hash==='#us')mkt='us';if(location.hash==='#my')mkt='my';if(location.hash==='#jp')mkt='jp';
-  useMarket(mkt);document.body.classList.toggle('mk-tw',mkt==='tw');document.body.classList.toggle('mk-my',mkt==='my');document.body.classList.toggle('mk-jp',mkt==='jp');
+  if(location.hash==='#tw')mkt='tw';if(location.hash==='#us')mkt='us';if(location.hash==='#my')mkt='my';if(location.hash==='#jp')mkt='jp';if(location.hash==='#au')mkt='au';
+  useMarket(mkt);document.body.classList.toggle('mk-tw',mkt==='tw');document.body.classList.toggle('mk-my',mkt==='my');document.body.classList.toggle('mk-jp',mkt==='jp');document.body.classList.toggle('mk-au',mkt==='au');
   document.querySelectorAll('.mkt-btn').forEach(function(b){b.classList.toggle('active',b.dataset.mkt===mkt);});
   setLang(lang);
 });

@@ -467,6 +467,54 @@ Timing disclosure: this amendment was written after the audit revealed the
 fatigue cases but before any W_PRIM_EXP table was computed."""
 
 
+# ---------------------------------------------------------------------------
+# Amendment 3 (2026-07-14): Australia as an out-of-sample hold-out
+# ---------------------------------------------------------------------------
+AMENDMENT3_TEXT = """## Amendment 3 — 2026-07-14, adding Australia as an out-of-sample market (rule frozen before any AU number computed)
+Australia is added to the clock as a 5th market AFTER the v3 risk claim was frozen
+and published on {US, TW, MY, JP}. Frozen treatment (decided before any AU 2×2
+table exists), so AU cannot be cherry-picked into or out of the headline:
+- The PRIMARY validated claim stays EXACTLY as published: 4-market set, ABS on
+  US+JP, MH pooled 13.53 / 16.07. These numbers are NOT restated with AU folded in.
+- AU is evaluated with the identical v3 machinery (both targets, applicability
+  gate, per-market 2×2/OR/precision/recall, episode analysis) and reported as a
+  HOLD-OUT: the first market the warning meets that it was never fit to.
+- A 5-market MH pooled OR is ALSO computed and shown, but LABELLED "with AU
+  (out-of-sample)" and never substituted for the frozen 4-market figure.
+- Applicability gate applies unchanged: AU is rated for ABS only if it has ≥8
+  matured 3y-loss quarters. Prior expectation (disclosed, not a threshold): AU
+  rarely posts multi-year nominal losses, so it will likely be NOT RATED for ABS
+  and evaluated on REL only — an informative outcome either way, reported as-is.
+- Whatever AU shows, the live clock's AU risk gauge uses the same per-market
+  state logic already in place (WARNING ON/OFF where rated; NOT RATED / NOT
+  VALIDATED shown honestly where not) — no new favourable framing invented for AU.
+Adding AU does not alter any existing market's warn/quad/W_PRIM series (verified
+by regression guard: the 4 markets' compass arrays must be byte-identical after
+AU is wired into build_compass.py)."""
+
+
+def truncation_selfcheck_au():
+    """T_REL truncation / look-ahead guard test, scoped to AU only (mirrors
+    truncation_selfcheck()'s logic exactly; kept as a separate function so the
+    existing self_checks.t_rel_truncation output for {us,tw,my,jp} is untouched)."""
+    mkt = 'au'
+    d = load_market(mkt)
+    n = d['n']
+    k = n - 10
+    fwd12_full = d['fwd12']
+    fwd12_trunc = fwd12_full[:k]
+
+    bad_full, q25_full, _ = compute_t_rel(fwd12_full)
+    bad_trunc, q25_trunc, _ = compute_t_rel(fwd12_trunc)
+
+    mismatches = []
+    for t in range(k):
+        if bad_full[t] != bad_trunc[t] or q25_full[t] != q25_trunc[t]:
+            mismatches.append((t, d['q'][t], bad_full[t], bad_trunc[t], q25_full[t], q25_trunc[t]))
+    ok = len(mismatches) == 0
+    return {'market': mkt, 'k': k, 'n_full': n, 'checked': k, 'pass': ok, 'mismatches': mismatches[:5]}
+
+
 def load_warn_exp_raw(mkt, compass_q):
     """RAW level series (vacancy, months) that feed the trailing warn, joined onto the
     compass q axis by quarter label (house convention; never positional). Returns
@@ -1296,6 +1344,126 @@ def main():
             'current_quarter_state_comparison': cur_state,
             'any_current_quarter_differs': any_current_differs,
         },
+    }
+
+    # =========================================================================
+    # AMENDMENT 3 -- Australia as an out-of-sample hold-out
+    # PRIMARY (MKTS = us/tw/my/jp) is untouched above this point. Everything
+    # below is additive: a separate pass over 'au' alone, reported as a
+    # hold-out, plus a 5-market MH shown ALONGSIDE (never replacing) the
+    # frozen 4-market MH computed above (a['MH_pooled_OR'] / r['MH_pooled_OR']).
+    # =========================================================================
+    print("\n\n" + "=" * 78)
+    print("AMENDMENT 3 -- AU out-of-sample hold-out")
+    print("=" * 78)
+    print(AMENDMENT3_TEXT)
+
+    au_res = analyze_market('au')
+    print("\n  >>> AU is an OUT-OF-SAMPLE HOLD-OUT: not part of the primary validated claim")
+    print("      ({us,tw,my,jp}); evaluated with the identical v3 machinery. <<<")
+    print_market_report(au_res)
+
+    print(f"\n  Applicability gate (AU): n_bad_abs={au_res['n_bad_abs']} -> "
+          f"{'RATED' if au_res['rated_abs'] else 'NOT RATED (' + str(au_res['n_bad_abs']) + ' loss quarters)'} "
+          f"(threshold >=8)")
+
+    print("\n  AU W_PRIM per-target summary (2x2 / OR / precision vs base_rate / recall / episodes):")
+    for tname in ('T_ABS', 'T_REL'):
+        s = au_res['results'][tname]['W_PRIM']
+        two_x_base = round(2 * s['base_rate'], 4) if s['base_rate'] is not None else None
+        prec_flag = (s['precision'] is not None and two_x_base is not None and s['precision'] >= two_x_base)
+        c = s['cells']
+        print(f"    {tname}: cells a={c['a']} b={c['b']} c={c['c']} d={c['d']}  OR={s['OR']}  "
+              f"precision={s['precision']} (vs 2x base_rate={two_x_base}: {prec_flag})  recall={s['recall']}  "
+              f"w_quarters={s['w_quarters']}  episodes: total={s['episodes']['episodes_total']} "
+              f"caught={s['episodes']['caught']} missed={s['episodes']['missed']}"
+              + ('  [target undefined at gate: NOT RATED, numbers shown for completeness]' if tname == 'T_ABS' and not au_res['rated_abs'] else ''))
+
+    # ---- 5-market MH pooled OR (4 frozen + AU), labelled, alongside frozen ----
+    all_res_5 = dict(all_res)
+    all_res_5['au'] = au_res
+    markets_5 = MKTS + ['au']
+    rated_markets_abs_5 = [m for m in markets_5 if all_res_5[m]['rated_abs']]
+    panel_abs_5 = build_panel(all_res_5, 'W_PRIM', 'T_ABS', rated_markets_abs_5)
+    panel_rel_5 = build_panel(all_res_5, 'W_PRIM', 'T_REL', markets_5)
+    mh_abs_frozen = a['MH_pooled_OR']
+    mh_rel_frozen = r['MH_pooled_OR']
+    mh_abs_5 = panel_abs_5['pooled']['OR_MH']
+    mh_rel_5 = panel_rel_5['pooled']['OR_MH']
+    mh_abs_delta = round(mh_abs_5 - mh_abs_frozen, 3) if (mh_abs_5 is not None and mh_abs_frozen is not None) else None
+    mh_rel_delta = round(mh_rel_5 - mh_rel_frozen, 3) if (mh_rel_5 is not None and mh_rel_frozen is not None) else None
+
+    print("\n  5-market MH pooled OR, LABELLED 'with AU (out-of-sample)' -- shown ALONGSIDE, never replacing, the frozen 4-market MH:")
+    print(f"    T_ABS: frozen 4-market MH={mh_abs_frozen}  |  with AU (rated markets: {rated_markets_abs_5}) MH={mh_abs_5}  "
+          f"AU entered={'au' in rated_markets_abs_5} (AU rated_abs={au_res['rated_abs']})  delta={mh_abs_delta}")
+    print(f"    T_REL: frozen 4-market MH={mh_rel_frozen}  |  with AU (markets: {markets_5}) MH={mh_rel_5}  delta={mh_rel_delta}")
+    if not au_res['rated_abs']:
+        print("    -> AU does NOT enter the T_ABS MH pool (not rated); T_ABS 5-market figure == frozen 4-market figure.")
+
+    # ---- current-quarter risk-gauge state ----
+    d_au_current = load_market('au')
+    i_last_au = d_au_current['n'] - 1
+    au_current_state = {
+        'q': d_au_current['q'][i_last_au],
+        'quad': d_au_current['quad'][i_last_au],
+        'warn': bool(d_au_current['warn'][i_last_au]) if d_au_current['warn'][i_last_au] is not None else False,
+        'W_PRIM': au_res['_classifiers']['W_PRIM'][i_last_au],
+    }
+    print(f"\n  AU current-quarter risk-gauge state: {au_current_state['q']}: quad={au_current_state['quad']}  "
+          f"warn={au_current_state['warn']}  -> W_PRIM={au_current_state['W_PRIM']}  -> gauge "
+          f"{'ON' if au_current_state['W_PRIM'] else 'OFF'}")
+    print(f"    Absolute rating regardless of gauge state: "
+          f"{'RATED' if au_res['rated_abs'] else 'NOT RATED'} -- live clock shows AU as 'not rated absolute', "
+          f"the same honest treatment as Malaysia.")
+
+    # ---- self-check: T_REL truncation extended to AU ----
+    print("\n  Self-check: T_REL truncation / look-ahead guard test, extended to AU:")
+    trunc_au = truncation_selfcheck_au()
+    print(f"    AU: truncated at k={trunc_au['k']} of n={trunc_au['n_full']}, checked {trunc_au['checked']} quarters -> "
+          f"{'PASS (no labels changed)' if trunc_au['pass'] else 'FAIL'}")
+    if not trunc_au['pass']:
+        print(f"      mismatches (first 5): {trunc_au['mismatches']}")
+
+    au_verdict = (
+        "AU is the gauge's first true out-of-sample market: it neither confirms nor breaks the frozen "
+        f"claim. It is NOT RATED on the absolute claim that was validated (only {au_res['n_bad_abs']} "
+        "matured 3y-loss quarters against an >=8 gate), and its Test-8 declared-ordering concordance "
+        "BREAKS (fuelled median 16.1% < starved median 22.3%, rho=-0.156) -- the same no-crash signature "
+        "seen in Taiwan, not a contradiction of the risk-gauge claim (which was never a return-ordering claim)."
+    )
+    print(f"\n  AU hold-out verdict: {au_verdict}")
+
+    out['au_holdout'] = {
+        'amendment': 'Amendment 3 -- scripts/compass_v3_protocol.md',
+        'protocol_text_verbatim': AMENDMENT3_TEXT,
+        'gate': {
+            'n_bad_abs': au_res['n_bad_abs'],
+            'rated_abs': au_res['rated_abs'],
+            'threshold': 8,
+            'status_note': ('NOT RATED (' + str(au_res['n_bad_abs']) + ' loss quarters)') if not au_res['rated_abs'] else 'RATED',
+        },
+        'market_results': clean_market(au_res),
+        'mh_5_market_with_au': {
+            'label': "with AU (out-of-sample) -- shown alongside, NOT a replacement for the frozen 4-market MH",
+            'T_ABS': {
+                'markets': rated_markets_abs_5, 'OR_MH': mh_abs_5,
+                'n_strata': panel_abs_5['pooled'].get('n_strata'),
+                'au_entered': 'au' in rated_markets_abs_5,
+                'frozen_4market_OR_MH': mh_abs_frozen,
+                'delta_vs_frozen': mh_abs_delta,
+            },
+            'T_REL': {
+                'markets': markets_5, 'OR_MH': mh_rel_5,
+                'n_strata': panel_rel_5['pooled'].get('n_strata'),
+                'frozen_4market_OR_MH': mh_rel_frozen,
+                'delta_vs_frozen': mh_rel_delta,
+            },
+        },
+        'current_quarter_state': au_current_state,
+        'self_checks': {
+            'truncation_lookahead_guard_au': trunc_au,
+        },
+        'verdict': au_verdict,
     }
 
     out_path = os.path.join(ROOT, 'data', 'compass-backtest-v3.json')
