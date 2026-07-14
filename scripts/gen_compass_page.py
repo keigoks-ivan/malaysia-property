@@ -5,15 +5,76 @@ ROOT='/Users/ivanchang/malaysia-property'
 SCR='/private/tmp/claude-501/-Users-ivanchang-malaysia-property/52542b53-2f2a-49e2-9a78-6dd7a75141c7/scratchpad'
 C=json.load(open(ROOT+'/scripts/compass_assets/content.json'))
 DATA={m:open(f'{ROOT}/data/compass-{m}.json').read().strip() for m in ['us','tw','my','jp']}
+V3=json.load(open(ROOT+'/data/compass-backtest-v3.json'))
 def esc(s): return s  # copy is trusted (from our own agents); keep as-is
 def dual(en,zh): return f'<span class="lang-en">{en}</span><span class="lang-zh" style="display:none">{zh}</span>'
 def mkt(m, en, zh): return f'<span class="mkt-{m}">{dual(en,zh)}</span>'
+def mktwrap(m, html): return f'<span class="mkt-{m}">{html}</span>'
+
+def dedupe_css(css):
+    """Drop exact-duplicate non-blank lines, keeping first occurrence and order.
+    Needed because CSS is re-extracted from this script's own previous output
+    (see below) -- without this, every regeneration re-appends the same
+    CSS_EXTRA block and the <style> tag grows without bound (found 7x-duplicated
+    rules already baked into the committed file before this fix)."""
+    seen=set(); out=[]
+    for line in css.split('\n'):
+        key=line.strip()
+        if key=='':
+            continue  # drop blank lines entirely so they can't accumulate across regenerations
+        if key in seen: continue
+        seen.add(key); out.append(line)
+    return '\n'.join(out)
+
+# ---- risk-gauge numbers: every stat below is pulled programmatically from
+# data/compass-backtest-v3.json (frozen protocol result), never hand-typed. ----
+def fmt1(x): return f'{x:.1f}'
+def fmtpct1(x): return f'{x*100:.1f}'
+
+RISKVALS={}
+for m in ['us','tw','my','jp']:
+    Dm=json.loads(DATA[m])
+    cur_q=Dm['q'][-1]
+    on=(Dm['quad'][-1]=='starved' and bool(Dm['warn'][-1]))
+    mres=V3['markets'][m]
+    rated_abs=mres['rated_abs']
+    abs_r=mres['results']['T_ABS']['W_PRIM']
+    rel_r=mres['results']['T_REL']['W_PRIM']
+    v={'CUR_Q':cur_q,'ON':on,'STATE_EN':'ON' if on else 'OFF','STATE_ZH':'開啟' if on else '關閉'}
+    v['OR_REL']=fmt1(rel_r['OR']); v['PREC_REL']=fmtpct1(rel_r['precision'])
+    c2,d2=rel_r['cells']['c'],rel_r['cells']['d']; v['PREC_REL_OFF']=fmtpct1(c2/(c2+d2))
+    if rated_abs:
+        v['OR_ABS']=fmt1(abs_r['OR']); v['PREC_ABS']=fmtpct1(abs_r['precision'])
+        c1,d1=abs_r['cells']['c'],abs_r['cells']['d']; v['PREC_ABS_OFF']=fmtpct1(c1/(c1+d1))
+    if m=='tw':
+        ep=mres['results']['T_ABS']['W_PRIM']['episodes']['details'][0]
+        v['EP_START']=ep['start_q']; v['EP_END']=ep['end_q']
+    RISKVALS[m]=v
+GV={'MH_ABS':fmt1(V3['threshold_evaluation']['ABS']['MH_pooled_OR']),
+    'MH_REL':fmt1(V3['threshold_evaluation']['REL']['MH_pooled_OR']),
+    'OR_US_ABS':RISKVALS['us']['OR_ABS'],'OR_JP_ABS':RISKVALS['jp']['OR_ABS']}
+
+def risk_light(m):
+    v=RISKVALS[m]
+    if m=='tw': st,lab='notval',dual('NOT VALIDATED','未通過驗證')
+    elif v['ON']: st,lab='on',dual('WARNING ON','警示開啟')
+    else: st,lab='off',dual('WARNING OFF','警示關閉')
+    return (f'<div class="rglight rg-{st}"><span class="dot"></span><span class="rglabel">{lab}</span>'
+            f'<span class="rgqtr">{dual("as of ","截至 ")}{v["CUR_Q"]}</span></div>')
+
+def risk_lights_html():
+    return ''.join(mktwrap(m, risk_light(m)) for m in ['us','tw','my','jp'])
+
+def risk_text_block():
+    return ''.join(mkt(m, C['markets'][m]['risk_en'].format(**RISKVALS[m]),
+                        C['markets'][m]['risk_zh'].format(**RISKVALS[m]))
+                    for m in ['us','tw','my','jp'])
 
 MK={'us':('United States','美國'),'tw':('Taiwan','台灣'),'my':('Malaysia','馬來西亞'),'jp':('Japan','日本')}
 SPAN={'us':('US · 1975–2026','美國 · 1975–2026'),'tw':('Taiwan · 2001–2026','台灣 · 2001–2026'),
       'my':('Malaysia · 1988–2026','馬來西亞 · 1988–2026'),'jp':('Japan · 1975–2025','日本 · 1975–2025')}
 
-CSS=open(ROOT+'/my/clock.html').read().split('<style>')[1].split('</style>')[0]
+CSS=dedupe_css(open(ROOT+'/my/clock.html').read().split('<style>')[1].split('</style>')[0])
 # strip old-only rules we replace; keep base. Add compass/report-card styles.
 CSS_EXTRA="""
 /* compass + report card */
@@ -48,11 +109,25 @@ CSS_EXTRA="""
 .xcrow-carry .cl{color:var(--gold-deep)}
 .xcnote-carry{border-left:2px solid var(--gold);padding-left:10px;margin-top:8px}
 @media(max-width:520px){.xcrow{grid-template-columns:70px 1fr 92px;gap:8px}}
+/* risk gauge */
+.rgbox{border:1px solid var(--gold-soft);border-radius:12px;padding:16px 18px 14px;margin:0 0 4px;background:var(--bg-section)}
+.rglight{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;border-radius:999px;padding:6px 14px;margin:0 0 10px}
+.rglight .dot{width:9px;height:9px;border-radius:50%;flex:none}
+.rglight .rgqtr{font-weight:600;opacity:.7;font-size:11px;margin-left:2px}
+.rg-on{color:var(--negative);background:var(--negative-bg);border:1px solid #f2c9b3}
+.rg-on .dot{background:var(--negative);box-shadow:0 0 0 3px rgba(185,28,28,.18)}
+.rg-off{color:var(--positive);background:var(--positive-bg);border:1px solid #bfe3cc}
+.rg-off .dot{background:var(--positive);box-shadow:0 0 0 3px rgba(21,128,61,.18)}
+.rg-notval{color:var(--gold-deep);background:var(--gold-bg);border:1px solid var(--gold-soft)}
+.rg-notval .dot{background:var(--gold-deep);box-shadow:0 0 0 3px rgba(143,109,44,.18)}
+.rgnote{font-size:12.5px;color:var(--text-soft);line-height:1.85;margin:0 0 10px}
+.rgcaveat{font-size:11.5px;color:var(--text-soft);line-height:1.75;border-left:2px solid var(--gold);background:rgba(184,146,74,.07);padding:8px 10px;border-radius:0 8px 8px 0;margin:6px 0 0}
 """
 
 def badges():
     b=[f'<span class="kpi-badge badge-blue">{dual("Momentum × Credit","動能 × 信貸")}</span>',
-       f'<span class="kpi-badge badge-orange">{dual("+ supply-glut warning · report card","+ 供給警示 · 體檢表")}</span>']
+       f'<span class="kpi-badge badge-orange">{dual("+ supply-glut warning · report card","+ 供給警示 · 體檢表")}</span>',
+       f'<span class="kpi-badge badge-orange">{dual("Risk gauge · validated on 2 busts","風險警報 · 驗證於兩次崩盤")}</span>']
     for m in ['us','tw','my','jp']:
         b.append(f'<span class="kpi-badge badge-green mkt-{m}">{dual(*SPAN[m])}</span>')
     b.append(f'<span class="kpi-badge badge-orange">{dual("Updated Jul 2026","更新至 2026年7月")}</span>')
@@ -81,7 +156,7 @@ HTML=f"""<!DOCTYPE html>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/kl-theme.css">
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-<style>{CSS}{CSS_EXTRA}</style>
+<style>{dedupe_css(CSS+CSS_EXTRA)}</style>
 </head>
 <body>
 
@@ -109,7 +184,7 @@ HTML=f"""<!DOCTYPE html>
   </div>
 
   <div class="lede">
-    <span class="lk">{dual("Two instruments, one page","兩套儀器，一頁讀")}</span>
+    <span class="lk">{dual("Three instruments, one page","三套儀器，一頁讀")}</span>
     {dual(C['method']['lede_en'], C['method']['lede_zh'])}
   </div>
 
@@ -130,6 +205,17 @@ HTML=f"""<!DOCTYPE html>
       <div class="cell4" data-ph="draining" style="border-color:#a16207"><p class="c4n" style="color:#a16207">{dual("Uptrend · Draining","上行·資金退")}<span class="nowtag now-draining"></span></p><p class="c4d">{dual("price rising × credit contracting — rally losing its fuel","房價漲 × 信貸收縮——漲勢在斷奶")}</p><p class="c4s">{dual("3y median ","其後3年中位 ")}<b class="med-draining">—</b> · n=<span class="n-draining">—</span></p></div>
       <div class="cell4" data-ph="reflating" style="border-color:#1d4ed8"><p class="c4n" style="color:#1d4ed8">{dual("Downtrend · Reflating","下行·資金回流")}<span class="nowtag now-reflating"></span></p><p class="c4d">{dual("price falling × credit expanding — money returning, possible bottom","房價跌 × 信貸擴張——資金回流、可能觸底")}</p><p class="c4s">{dual("3y median ","其後3年中位 ")}<b class="med-reflating">—</b> · n=<span class="n-reflating">—</span></p></div>
       <div class="cell4" data-ph="starved" style="border-color:#b91c1c"><p class="c4n" style="color:#b91c1c">{dual("Downtrend · Starved","下行·斷炊")}<span class="nowtag now-starved"></span></p><p class="c4d">{dual("price falling × credit contracting — no fuel, the weakest cell","房價跌 × 信貸收縮——無燃料，最弱的一格")}</p><p class="c4s">{dual("3y median ","其後3年中位 ")}<b class="med-starved">—</b> · n=<span class="n-starved">—</span></p></div>
+    </div>
+  </div>
+
+  <!-- risk gauge -->
+  <div class="blk">
+    <h2>{dual("The Risk Gauge — a Validated Downside Warning","風險警報 · 已驗證的下檔警示")}</h2>
+    <p class="sub">{dual(C['howto']['risk_howto_en'].format(**GV), C['howto']['risk_howto_zh'].format(**GV))}</p>
+    <div class="chartbox rgbox">
+      {risk_lights_html()}
+      <p class="rgnote">{risk_text_block()}</p>
+      <p class="rgcaveat">{dual(C['howto']['risk_caveat_en'], C['howto']['risk_caveat_zh'])}</p>
     </div>
   </div>
 
@@ -203,9 +289,13 @@ HTML=f"""<!DOCTYPE html>
   <div class="blk">
     <h2>{dual("What This Does and Does Not Claim","承諾什麼、不承諾什麼")}</h2>
     <ul class="pt">
-      <li class="warn">{dual("<b>In-sample, not a forward test.</b> The compass was built and shown on the same 1975–2026 history; forward-return numbers describe the past. The genuine out-of-sample test is the quarters still to come.","<b>樣本內，不是前向測試。</b>羅盤是在同一段 1975–2026 歷史上建立並展示的；前向報酬數字描述過去。真正的樣本外測試，是還沒到來的季度。")}</li>
-      <li>{dual("<b>The compass forecasts, the report card diagnoses.</b> Momentum × credit orders forward outcomes in the US, Malaysia and Japan (the market that actually crashed); Taiwan's short one-sided sample breaks it, disclosed. The report card never predicts — it describes valuation, population and supply health.","<b>羅盤預測、體檢表診斷。</b>動能×信貸在美國、馬來西亞、日本（真正崩過的市場）都能排序前向結果；台灣短且單邊的樣本會破壞它，已揭露。體檢表從不預測——它描述估值、人口、供給的體質。")}</li>
-      <li>{dual("<b>Supply is a warning, not an axis.</b> A supply glut (extreme vacancy or completions) flags downside risk beyond momentum, but does not change which compass cell you are in.","<b>供給是警示，不是軸。</b>供給過剩（空置或完工極端）標示動能之外的下檔風險，但不改變你在羅盤的哪一格。")}</li>
+      <li class="warn">{dual(
+        f"<b>The risk gauge is real, but thinly tested.</b> Starved-plus-supply-glut quarters carried elevated odds of a 3-year nominal loss (US OR {GV['OR_US_ABS']}×, Japan OR {GV['OR_JP_ABS']}×, pooled OR {GV['MH_ABS']}×) and of landing in a market's own worst quartile (US, Malaysia, Japan; pooled OR {GV['MH_REL']}×) — validated on frozen, pre-registered thresholds, not fit to the data afterward. But the absolute-loss claim rests on essentially two historical busts in this sample: the US 2006-08 crash and Japan's 1990s-2000s crash. A third crash, whenever it comes, is the real out-of-sample test this page hasn't faced yet.",
+        f"<b>風險警報是真實的，但驗證樣本很薄。</b>斷炊疊加供給過剩的季度，三年期名目虧損的勝算明顯偏高（美國勝算比{GV['OR_US_ABS']}倍、日本勝算比{GV['OR_JP_ABS']}倍、合併勝算比{GV['MH_ABS']}倍），落入市場自身最差四分之一表現的勝算也偏高（美國、馬來西亞、日本；合併勝算比{GV['MH_REL']}倍）——這是在凍結、預先設定門檻的條件下驗證出來的，不是事後套進資料調出來的。但絕對虧損這項宣稱，基本上只建立在樣本中僅有的兩次歷史崩盤上：美國2006年至2008年的崩盤，以及日本1990年代至2000年代的崩盤。下一次崩盤，不論何時到來，才是這頁尚未面對過的真正樣本外測試。")}</li>
+      <li>{dual('<b>The four-cell return ordering is still descriptive, not a forecast.</b> A separate attempt to validate Fuelled-beats-Starved as a forward-return ranking failed its own pre-registered gates (detail on <a href="/my/framework#v2compass">the framework backtest</a>); the compass panel and the forward-return table above describe the past, they are not a tested prediction of what comes next.',
+        '<b>四格報酬排序仍是描述性的，不是預測。</b>另一次想把「助燃格贏過斷炊格」驗證為前向報酬排序的嘗試，未能通過自己預先凍結的門檻（詳情見<a href="/my/framework#v2compass">框架回測</a>）；上方的羅盤面板與前向報酬表描述的是過去，不是經過測試、對未來的預測。')}</li>
+      <li>{dual("<b>Taiwan: neither claim validated — read its compass as descriptive only.</b> The risk gauge above never caught Taiwan's one recorded loss episode (2013-2015) and fell short of the pass bar on both the absolute-loss and relative-weakness tests; the return-ordering claim fails there too, for the same reason (a short, almost one-directional history). Treat every reading for Taiwan on this page as a record of the past, not a validated signal.",
+        "<b>台灣：兩項宣稱都未通過驗證——它的羅盤讀數請只當描述看待。</b>上方的風險警報從未抓到台灣紀錄中唯一一次虧損事件（2013年至2015年），在絕對虧損與相對弱勢兩項測試上都未達通過門檻；報酬排序的宣稱在台灣也因同樣原因（歷史短、且幾乎單向）而失敗。請把這一頁上所有台灣的讀數，都當作對過去的紀錄，而不是已驗證的訊號。")}</li>
     </ul>
   </div>
 

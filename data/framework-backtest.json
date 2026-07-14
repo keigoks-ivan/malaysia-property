@@ -9745,6 +9745,285 @@
    "decade_regime_caveat": "Baseline decade-by-decade rho, computed alongside the candidates: JP +0.727 (2000s, n=40) -> -0.399 (2010s, n=40) -> -0.627 (2020s, n=12); US +0.50 (2010s, n=40) -> -0.49 (2020s, n=13). Small late-decade samples, but a same-direction sign flip in both markets -- a regime caveat on the compass itself, independent of this upgrade attempt.",
    "outcome": "Thresholds not met -> the live clock (/my/clock) is unchanged. C4's full-period improvement is real (TW 0.081->0.335, JP 0.40->0.537, MY 0.71->0.821, US flat 0.58->0.563) but full-period fit was explicitly not the gate; the walk-forward process test is, and only MY clears it, against the required 2 of {US,JP,MY}. C4 enters the v2 2026 forward freeze as a declared challenger: S = mom + 0.5*cred - 0.5*glut, frozen 2026-07-14, scored against the baseline on quarters after 2026Q1, checkable 2029.",
    "source": "data/compass-backtest-v2.json (full candidate/market/selection-history detail); scripts/compass_v2_protocol.md (frozen protocol + Amendment 1); scripts/backtest_compass_v2.py (harness)."
+  },
+  "test_compass_v3": {
+   "question": "After v2's ordering upgrade failed its own gates, does changing the QUESTION (risk avoidance instead of return ranking) let the compass's worst cell (W_PRIM = starved AND supply-glut warning) pass as a validated downside warning?",
+   "protocol": "scripts/compass_v3_protocol.md, frozen 2026-07-14 before any evaluation run.",
+   "targets": {
+    "T_ABS": "bad_t = 1 iff fwd12_t < 0 (nominal 3y loss). No look-ahead: fwd12 is the outcome being predicted, evaluated after the fact.",
+    "T_REL": "bad_t = 1 iff fwd12_t < Q25 of matured own-history outcomes, Q25 at t computed from {fwd12_u : u<=t-12, non-null} only (expanding, matured, >=20 obs required else undefined). Look-ahead guard: u<=t-12 ensures the cutoff never includes an outcome window overlapping t."
+   },
+   "warning_states": {
+    "W_MOM": "quad_t == starved (momentum alone; isolates the glut term's contribution, not a rescue candidate)",
+    "W_PRIM": "quad_t == starved AND warn_t == true (no fuel + supply glut; the primary classifier the verdict rides on)"
+   },
+   "applicability_gate": {
+    "rule": "a market is RATED for the absolute claim iff its matured history contains >=8 quarters with fwd12<0; otherwise NOT RATED (absolute), published with the reason. All four markets are rated for the relative claim.",
+    "protocol_prior_expectation": "US, JP rated; TW, MY not rated (T6: zero hard turns / no 8% drawdown in 27y)",
+    "actual_result": "US and JP rated as expected; MY not rated as expected (0 loss quarters in 105). TW surprised the prior: RATED (9 matured loss quarters, single 2013Q3-2015Q3 episode -- the post-luxury-tax slowdown), contrary to the protocol's stated expectation. Disclosed, not smoothed over.",
+    "tw_n_bad_abs": 9,
+    "my_n_bad_abs": 0
+   },
+   "mantel_haenszel": "Pooled OR across market strata, rated markets only for T_ABS (US/TW/JP), all four for T_REL. No fitted model, stratified counts only.",
+   "success_thresholds": {
+    "ABS": "W_PRIM OR >= 3 with >= 8 W-quarters and precision >= 2x base rate, in BOTH US and JP; MH pooled OR >= 3",
+    "REL": "W_PRIM OR >= 2 in >= 3 of 4 markets; MH pooled OR >= 2.5",
+    "conditioners": "adopt only if OR rises >= +50% over W_PRIM without recall falling below 0.67x W_PRIM's recall, in both US and JP (T_ABS); otherwise discarded, result still published",
+    "clock_reframe": "live clock page re-framed as risk gauge ONLY if both ABS (US+JP) and REL claims pass; anything less = negative/partial result published here, clock unchanged"
+   },
+   "results": {
+    "T_ABS": {
+     "note": "cells = W_PRIM x T_ABS 2x2 (a=warn+loss, b=warn+no-loss, c=no-warn+loss, d=no-warn+no-loss); OR uses Haldane +0.5 correction when any cell is 0 (flagged, not evidentiary)",
+     "us": {
+      "a": 15,
+      "b": 23,
+      "c": 6,
+      "d": 149,
+      "precision_on_pct": 39.5,
+      "precision_off_pct": 3.9,
+      "OR": 16.196,
+      "haldane_applied": false,
+      "recall_pct": 71.4,
+      "w_quarters": 38,
+      "rated_abs": true,
+      "episodes": {
+       "total": 1,
+       "caught": 1,
+       "missed": 0,
+       "detail": [
+        {
+         "start": "2005Q3",
+         "end": "2010Q3",
+         "length": 21,
+         "caught": true,
+         "note": "the 2006-08 mortgage-credit bust"
+        }
+       ]
+      },
+      "nonoverlap_median_OR": 31.0
+     },
+     "jp": {
+      "a": 40,
+      "b": 9,
+      "c": 36,
+      "d": 107,
+      "precision_on_pct": 81.6,
+      "precision_off_pct": 25.2,
+      "OR": 13.21,
+      "haldane_applied": false,
+      "recall_pct": 52.6,
+      "w_quarters": 49,
+      "rated_abs": true,
+      "episodes": {
+       "total": 2,
+       "caught": 1,
+       "missed": 1,
+       "detail": [
+        {
+         "start": "1990Q2",
+         "end": "2008Q4",
+         "length": 75,
+         "caught": true,
+         "note": "the deflation-era mega-bust"
+        },
+        {
+         "start": "2010Q1",
+         "end": "2010Q1",
+         "length": 1,
+         "caught": false
+        }
+       ]
+      },
+      "nonoverlap_median_OR": 9.0
+     },
+     "tw": {
+      "a": 0,
+      "b": 1,
+      "c": 9,
+      "d": 79,
+      "precision_on_pct": 0.0,
+      "precision_off_pct": 10.2,
+      "OR": 2.789,
+      "haldane_applied": true,
+      "recall_pct": 0.0,
+      "w_quarters": 1,
+      "rated_abs": true,
+      "episodes": {
+       "total": 1,
+       "caught": 0,
+       "missed": 1,
+       "detail": [
+        {
+         "start": "2013Q3",
+         "end": "2015Q3",
+         "length": 9,
+         "caught": false,
+         "note": "post-luxury-tax slowdown; warning caught none of it"
+        }
+       ]
+      },
+      "warning": "OR is a Haldane +0.5 artifact from an empty a-cell (a=0) -- never present as evidence the warning works in TW; a policy-induced soft landing is a different animal from the credit busts the warning knows."
+     },
+     "my": {
+      "rated_abs": false,
+      "n_bad_abs": 0,
+      "note": "0 loss quarters in 105 -- below the applicability gate, not rated"
+     },
+     "MH_pooled_OR": 13.529,
+     "MH_markets": [
+      "us",
+      "tw",
+      "jp"
+     ],
+     "verdict": "PASS"
+    },
+    "T_REL": {
+     "note": "all four markets rated (no applicability gate on the relative claim); same cell/OR conventions as T_ABS",
+     "us": {
+      "a": 25,
+      "b": 2,
+      "c": 34,
+      "d": 101,
+      "precision_on_pct": 92.6,
+      "precision_off_pct": 25.2,
+      "OR": 37.132,
+      "haldane_applied": false,
+      "recall_pct": 42.4,
+      "w_quarters": 27,
+      "episodes": {
+       "total": 3,
+       "caught": 3,
+       "missed": 0
+      }
+     },
+     "tw": {
+      "a": 0,
+      "b": 1,
+      "c": 24,
+      "d": 33,
+      "precision_on_pct": 0.0,
+      "precision_off_pct": 42.1,
+      "OR": 0.456,
+      "haldane_applied": true,
+      "recall_pct": 0.0,
+      "w_quarters": 1,
+      "episodes": {
+       "total": 1,
+       "caught": 0,
+       "missed": 1
+      },
+      "verdict": "FAILS"
+     },
+     "my": {
+      "a": 8,
+      "b": 2,
+      "c": 9,
+      "d": 43,
+      "precision_on_pct": 80.0,
+      "precision_off_pct": 17.3,
+      "OR": 19.111,
+      "haldane_applied": false,
+      "recall_pct": 47.1,
+      "w_quarters": 10,
+      "episodes": {
+       "total": 2,
+       "caught": 2,
+       "missed": 0
+      }
+     },
+     "jp": {
+      "a": 41,
+      "b": 8,
+      "c": 30,
+      "d": 82,
+      "precision_on_pct": 83.7,
+      "precision_off_pct": 26.8,
+      "OR": 14.008,
+      "haldane_applied": false,
+      "recall_pct": 57.8,
+      "w_quarters": 49,
+      "episodes": {
+       "total": 2,
+       "caught": 2,
+       "missed": 0
+      }
+     },
+     "MH_pooled_OR": 16.07,
+     "MH_markets": [
+      "us",
+      "tw",
+      "my",
+      "jp"
+     ],
+     "n_markets_passing_ge_2": 3,
+     "verdict": "PASS (3 of 4 markets clear OR>=2, the literal 3-of-4 bar)"
+    }
+   },
+   "episode_domination_caveat": "The absolute-loss validation rests on the only two deep busts in the sample. US T_ABS is one episode -- 2005Q3-2010Q3, the mortgage-credit bust, caught. JP T_ABS is almost entirely one episode -- the 1990Q2-2008Q4 75-quarter deflation mega-bust, caught -- plus one stray quarter (2010Q1) missed. Two busts, not twenty: this is the difference between 'validated' and 'proven', stated plainly rather than smoothed over.",
+   "conditioners": {
+    "W_AFS": {
+     "definition": "W_PRIM AND (AFS_z_t > 0), AFS_t = r_t - r_(t-4), r = real financing rate; theory: affordability shock deepens downside on top of a starved+glut market",
+     "us": {
+      "W_PRIM_OR": 16.196,
+      "cond_OR": 6.422,
+      "required_OR_ge": 24.294,
+      "OR_pass": false,
+      "W_PRIM_recall_pct": 71.4,
+      "cond_recall_pct": 42.9,
+      "required_recall_ge_pct": 47.9,
+      "recall_pass": false
+     },
+     "jp": {
+      "W_PRIM_OR": 13.21,
+      "cond_OR": 7.216,
+      "required_OR_ge": 19.815,
+      "OR_pass": false,
+      "W_PRIM_recall_pct": 52.6,
+      "cond_recall_pct": 23.7,
+      "required_recall_ge_pct": 35.3,
+      "recall_pass": false
+     },
+     "status": "DISCARD -- adding an affordability shock on top of W_PRIM lowers the odds ratio in both markets rather than raising it"
+    },
+    "W_DEMO": {
+     "definition": "W_PRIM AND (25-39 cohort YoY < 0); theory: a shrinking first-buyer cohort deepens downside",
+     "us": {
+      "W_PRIM_OR": 16.196,
+      "cond_OR": 7.837,
+      "required_OR_ge": 24.294,
+      "OR_pass": false,
+      "W_PRIM_recall_pct": 71.4,
+      "cond_recall_pct": 0.0,
+      "required_recall_ge_pct": 47.9,
+      "recall_pass": false,
+      "note": "a=0, b=0 -- the US 25-39 cohort never shrank during a warning quarter in 50 years of data; the condition never fires, OR is a pure Haldane artifact"
+     },
+     "jp": {
+      "W_PRIM_OR": 13.21,
+      "cond_OR": 6.812,
+      "required_OR_ge": 19.815,
+      "OR_pass": false,
+      "W_PRIM_recall_pct": 52.6,
+      "cond_recall_pct": 15.79,
+      "required_recall_ge_pct": 35.3,
+      "recall_pass": false
+     },
+     "status": "DISCARD -- fires in JP but far too weakly (OR 6.8 vs required 19.8, recall 0.16); never fires in the US"
+    },
+    "both_published_as": "designed-and-rejected, per the protocol's multiple-comparison discipline (two conditioners, declared in advance, nothing else tried)"
+   },
+   "verdict": "PASS on both frozen gates (ABS: US+JP, MH pooled OR 13.5; REL: 3/4 markets, MH pooled OR 16.1). W_PRIM (starved AND supply-glut warning) is validated as a downside-risk warning, with the caveats above (TW rated-but-zero-caught; two-episode evidentiary base; both conditioners discarded).",
+   "clock_reframe": "Per protocol, both gates passing triggers re-framing the live clock (/my/clock) with a Risk Gauge block reading the same W_PRIM state, linking back to /my/framework#v3compass. Built in parallel with this test. The compass's return-ordering claim (Test 8 / #compass) is unchanged by this result -- the risk gauge is an additional, narrower claim, not a replacement.",
+   "new_data_assets": {
+    "demo_cohort_series": "scripts/.{us,tw,jp,my}data/*_demo.json -- official 25-39 population cohort series, annual-step, no interpolation. US: Census/FRED stitched vintages 1975-2024. TW: 內政部戶政司 five-age bands 1974-2025. JP: 総務省統計局人口推計 1947-2024. MY: OpenDOSM 1970-2025.",
+    "per_market_alignment": {
+     "us": "200/205 quarters aligned by label, demo_yoy = 4q %change",
+     "tw": "100/101 quarters aligned by label, demo_yoy = 4q %change",
+     "my": "104/105 quarters aligned by label, demo_yoy = 4q %change",
+     "jp": "200/204 quarters aligned by label, demo_yoy = 4q %change"
+    }
+   },
+   "source": "data/compass-backtest-v3.json (full per-market 2x2/OR/recall/episode/overlap detail, self-checks); scripts/compass_v3_protocol.md (frozen protocol); scripts/backtest_compass_v3.py (harness, implied)."
   }
  },
  "test5_full_matrix": [

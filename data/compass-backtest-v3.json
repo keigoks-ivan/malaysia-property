@@ -1,0 +1,2942 @@
+{
+  "protocol": "scripts/compass_v3_protocol.md frozen 2026-07-14",
+  "conventions": {
+    "q25": "Q25 convention: linear interpolation between order statistics (numpy 'linear' / Excel PERCENTILE.INC default) -- h=(n-1)*0.25 over the sorted matured pool, value = s[floor(h)] + frac*(s[ceil(h)]-s[floor(h)]).",
+    "episode": "Episode convention: a contiguous run of bad_t==True by adjacent quarter index (undefined/None quarters treated as not-bad for run-breaking purposes -- this only matters at series boundaries: T_REL's undefined stretch is the first ~20+12 quarters and fwd12's undefined stretch is the last 12, never a mid-series gap, so no episode is artificially split). An episode is 'caught' by a classifier if the classifier is True (defined-and-true) in any quarter from 4 quarters before the episode start through the episode's last quarter, inclusive."
+  },
+  "self_checks": {
+    "fwd12_alignment_vs_v2": {
+      "per_market": {
+        "us": {
+          "expected": {
+            "i": 20,
+            "q": "1980Q1",
+            "fwd12": 14.4,
+            "quad": "starved"
+          },
+          "got": {
+            "i": 20,
+            "q": "1980Q1",
+            "fwd12": 14.4,
+            "quad": "starved"
+          },
+          "pass": true
+        },
+        "tw": {
+          "expected": {
+            "i": 20,
+            "q": "2006Q1",
+            "fwd12": 15.2,
+            "quad": "fuelled"
+          },
+          "got": {
+            "i": 20,
+            "q": "2006Q1",
+            "fwd12": 15.2,
+            "quad": "fuelled"
+          },
+          "pass": true
+        },
+        "my": {
+          "expected": {
+            "i": 20,
+            "q": "2005Q1",
+            "fwd12": 11.9,
+            "quad": "warmup"
+          },
+          "got": {
+            "i": 20,
+            "q": "2005Q1",
+            "fwd12": 11.9,
+            "quad": "warmup"
+          },
+          "pass": true
+        },
+        "jp": {
+          "expected": {
+            "i": 20,
+            "q": "1980Q1",
+            "fwd12": 29.6,
+            "quad": "fuelled"
+          },
+          "got": {
+            "i": 20,
+            "q": "1980Q1",
+            "fwd12": 29.6,
+            "quad": "fuelled"
+          },
+          "pass": true
+        }
+      },
+      "pass": true
+    },
+    "t_rel_truncation": {
+      "per_market": {
+        "us": {
+          "k": 195,
+          "n_full": 205,
+          "checked": 195,
+          "pass": true,
+          "mismatches": []
+        },
+        "tw": {
+          "k": 91,
+          "n_full": 101,
+          "checked": 91,
+          "pass": true,
+          "mismatches": []
+        },
+        "my": {
+          "k": 95,
+          "n_full": 105,
+          "checked": 95,
+          "pass": true,
+          "mismatches": []
+        },
+        "jp": {
+          "k": 194,
+          "n_full": 204,
+          "checked": 194,
+          "pass": true,
+          "mismatches": []
+        }
+      },
+      "pass": true
+    },
+    "my_wprim_trel_bruteforce": {
+      "a": [
+        [
+          "2017Q2",
+          7.6
+        ],
+        [
+          "2017Q3",
+          5.2
+        ],
+        [
+          "2017Q4",
+          5.6
+        ],
+        [
+          "2018Q1",
+          5.2
+        ],
+        [
+          "2018Q2",
+          4.9
+        ],
+        [
+          "2018Q3",
+          3.4
+        ],
+        [
+          "2019Q3",
+          6.5
+        ],
+        [
+          "2019Q4",
+          7.1
+        ]
+      ],
+      "b": [
+        [
+          "2021Q4",
+          12.7
+        ],
+        [
+          "2022Q1",
+          12.3
+        ]
+      ],
+      "c": [
+        [
+          "2017Q1",
+          8.9
+        ],
+        [
+          "2018Q4",
+          5.0
+        ],
+        [
+          "2019Q1",
+          5.0
+        ],
+        [
+          "2019Q2",
+          5.2
+        ],
+        [
+          "2020Q1",
+          8.1
+        ],
+        [
+          "2020Q2",
+          8.2
+        ],
+        [
+          "2020Q3",
+          9.8
+        ],
+        [
+          "2020Q4",
+          9.9
+        ],
+        [
+          "2023Q1",
+          9.0
+        ]
+      ],
+      "d": [
+        [
+          "2007Q4",
+          16.1
+        ],
+        [
+          "2008Q1",
+          15.9
+        ],
+        [
+          "2008Q2",
+          18.7
+        ],
+        [
+          "2008Q3",
+          19.5
+        ],
+        [
+          "2008Q4",
+          26.0
+        ],
+        [
+          "2009Q1",
+          29.8
+        ],
+        [
+          "2009Q2",
+          31.4
+        ],
+        [
+          "2009Q3",
+          32.6
+        ],
+        [
+          "2009Q4",
+          37.1
+        ],
+        [
+          "2010Q1",
+          36.9
+        ],
+        [
+          "2010Q2",
+          37.6
+        ],
+        [
+          "2010Q3",
+          40.8
+        ],
+        [
+          "2010Q4",
+          39.0
+        ],
+        [
+          "2011Q1",
+          37.9
+        ],
+        [
+          "2011Q2",
+          39.2
+        ],
+        [
+          "2011Q3",
+          39.6
+        ],
+        [
+          "2011Q4",
+          35.9
+        ],
+        [
+          "2012Q1",
+          33.6
+        ],
+        [
+          "2012Q2",
+          31.4
+        ],
+        [
+          "2012Q3",
+          31.8
+        ],
+        [
+          "2012Q4",
+          26.5
+        ],
+        [
+          "2013Q1",
+          29.1
+        ],
+        [
+          "2013Q2",
+          26.3
+        ],
+        [
+          "2013Q3",
+          24.3
+        ],
+        [
+          "2013Q4",
+          23.8
+        ],
+        [
+          "2014Q1",
+          25.0
+        ],
+        [
+          "2014Q2",
+          22.6
+        ],
+        [
+          "2014Q3",
+          21.6
+        ],
+        [
+          "2014Q4",
+          20.9
+        ],
+        [
+          "2015Q1",
+          19.4
+        ],
+        [
+          "2015Q2",
+          18.6
+        ],
+        [
+          "2015Q3",
+          16.9
+        ],
+        [
+          "2015Q4",
+          16.4
+        ],
+        [
+          "2016Q1",
+          14.1
+        ],
+        [
+          "2016Q2",
+          13.3
+        ],
+        [
+          "2016Q3",
+          11.8
+        ],
+        [
+          "2016Q4",
+          10.7
+        ],
+        [
+          "2021Q1",
+          11.1
+        ],
+        [
+          "2021Q2",
+          11.5
+        ],
+        [
+          "2021Q3",
+          13.3
+        ],
+        [
+          "2022Q2",
+          11.9
+        ],
+        [
+          "2022Q3",
+          10.3
+        ],
+        [
+          "2022Q4",
+          11.1
+        ]
+      ],
+      "excluded": [
+        [
+          "2000Q1",
+          false,
+          null,
+          9.5
+        ],
+        [
+          "2000Q2",
+          false,
+          null,
+          6.4
+        ],
+        [
+          "2000Q3",
+          false,
+          null,
+          9.1
+        ],
+        [
+          "2000Q4",
+          false,
+          null,
+          9.4
+        ],
+        [
+          "2001Q1",
+          false,
+          null,
+          12.1
+        ],
+        [
+          "2001Q2",
+          false,
+          null,
+          11.5
+        ],
+        [
+          "2001Q3",
+          false,
+          null,
+          10.7
+        ],
+        [
+          "2001Q4",
+          false,
+          null,
+          11.3
+        ],
+        [
+          "2002Q1",
+          false,
+          null,
+          12.3
+        ],
+        [
+          "2002Q2",
+          false,
+          null,
+          12.3
+        ],
+        [
+          "2002Q3",
+          false,
+          null,
+          10.2
+        ],
+        [
+          "2002Q4",
+          false,
+          null,
+          8.9
+        ],
+        [
+          "2003Q1",
+          false,
+          null,
+          9.8
+        ],
+        [
+          "2003Q2",
+          false,
+          null,
+          10.6
+        ],
+        [
+          "2003Q3",
+          false,
+          null,
+          7.4
+        ],
+        [
+          "2003Q4",
+          false,
+          null,
+          10.1
+        ],
+        [
+          "2004Q1",
+          false,
+          null,
+          9.4
+        ],
+        [
+          "2004Q2",
+          false,
+          null,
+          9.4
+        ],
+        [
+          "2004Q3",
+          false,
+          null,
+          10.4
+        ],
+        [
+          "2004Q4",
+          false,
+          null,
+          10.4
+        ],
+        [
+          "2005Q1",
+          false,
+          null,
+          11.9
+        ],
+        [
+          "2005Q2",
+          false,
+          null,
+          10.3
+        ],
+        [
+          "2005Q3",
+          false,
+          null,
+          12.9
+        ],
+        [
+          "2005Q4",
+          false,
+          null,
+          10.4
+        ],
+        [
+          "2006Q1",
+          false,
+          null,
+          10.0
+        ],
+        [
+          "2006Q2",
+          false,
+          null,
+          11.5
+        ],
+        [
+          "2006Q3",
+          false,
+          null,
+          12.8
+        ],
+        [
+          "2006Q4",
+          false,
+          null,
+          10.7
+        ],
+        [
+          "2007Q1",
+          false,
+          null,
+          10.4
+        ],
+        [
+          "2007Q2",
+          false,
+          null,
+          13.8
+        ],
+        [
+          "2007Q3",
+          false,
+          null,
+          14.2
+        ],
+        [
+          "2023Q2",
+          false,
+          null,
+          null
+        ],
+        [
+          "2023Q3",
+          false,
+          null,
+          null
+        ],
+        [
+          "2023Q4",
+          false,
+          null,
+          null
+        ],
+        [
+          "2024Q1",
+          false,
+          null,
+          null
+        ],
+        [
+          "2024Q2",
+          false,
+          null,
+          null
+        ],
+        [
+          "2024Q3",
+          false,
+          null,
+          null
+        ],
+        [
+          "2024Q4",
+          false,
+          null,
+          null
+        ],
+        [
+          "2025Q1",
+          false,
+          null,
+          null
+        ],
+        [
+          "2025Q2",
+          false,
+          null,
+          null
+        ],
+        [
+          "2025Q3",
+          false,
+          null,
+          null
+        ],
+        [
+          "2025Q4",
+          false,
+          null,
+          null
+        ],
+        [
+          "2026Q1",
+          true,
+          null,
+          null
+        ]
+      ]
+    }
+  },
+  "markets": {
+    "us": {
+      "market": "us",
+      "n_quarters": 205,
+      "afs_note": "US: real rate read directly from data/clock-us.json raw.real_rate (already a real-rate series on the same axis as compass-us.json).",
+      "demo_note": "demo file found (/Users/ivanchang/malaysia-property/scripts/.usdata/us_demo.json), 200/205 quarters aligned by label, demo_yoy computed as 4q %change",
+      "demo_available": true,
+      "n_bad_abs": 21,
+      "rated_abs": true,
+      "results": {
+        "T_ABS": {
+          "W_MOM": {
+            "OR": 6.649,
+            "haldane_applied": false,
+            "precision": 0.2419,
+            "recall": 0.7143,
+            "base_rate": 0.1088,
+            "w_quarters": 62,
+            "cells": {
+              "a": 15,
+              "b": 47,
+              "c": 6,
+              "d": 125,
+              "n_used": 193,
+              "n_excluded": 12,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 8.333,
+                  "n_used": 17,
+                  "w_count": 5,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 2.5,
+                  "n_used": 16,
+                  "w_count": 5,
+                  "bad_count": 2,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 11.667,
+                  "n_used": 16,
+                  "w_count": 6,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 8.333
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 1,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2005Q3",
+                  "end_q": "2010Q3",
+                  "length": 21,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_PRIM": {
+            "OR": 16.196,
+            "haldane_applied": false,
+            "precision": 0.3947,
+            "recall": 0.7143,
+            "base_rate": 0.1088,
+            "w_quarters": 38,
+            "cells": {
+              "a": 15,
+              "b": 23,
+              "c": 6,
+              "d": 149,
+              "n_used": 193,
+              "n_excluded": 12,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 31.0,
+                  "n_used": 17,
+                  "w_count": 2,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 6.0,
+                  "n_used": 16,
+                  "w_count": 3,
+                  "bad_count": 2,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 45.0,
+                  "n_used": 16,
+                  "w_count": 3,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 31.0
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 1,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2005Q3",
+                  "end_q": "2010Q3",
+                  "length": 21,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_AFS": {
+            "OR": 6.422,
+            "haldane_applied": false,
+            "precision": 0.36,
+            "recall": 0.4286,
+            "base_rate": 0.1207,
+            "w_quarters": 25,
+            "cells": {
+              "a": 9,
+              "b": 16,
+              "c": 12,
+              "d": 137,
+              "n_used": 174,
+              "n_excluded": 31,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 3.0,
+                  "n_used": 15,
+                  "w_count": 1,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 11.0,
+                  "n_used": 14,
+                  "w_count": 2,
+                  "bad_count": 2,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 135.0,
+                  "n_used": 15,
+                  "w_count": 2,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 11.0
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 1,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2005Q3",
+                  "end_q": "2010Q3",
+                  "length": 21,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_DEMO": {
+            "OR": 7.837,
+            "haldane_applied": true,
+            "precision": null,
+            "recall": 0.0,
+            "base_rate": 0.1111,
+            "w_quarters": 0,
+            "cells": {
+              "a": 0,
+              "b": 0,
+              "c": 21,
+              "d": 168,
+              "n_used": 189,
+              "n_excluded": 16,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 10.333,
+                  "n_used": 16,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 5.8,
+                  "n_used": 16,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 5.8,
+                  "n_used": 16,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 5.8
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2005Q3",
+                  "end_q": "2010Q3",
+                  "length": 21,
+                  "caught": false
+                }
+              ]
+            }
+          }
+        },
+        "T_REL": {
+          "W_MOM": {
+            "OR": 40.229,
+            "haldane_applied": false,
+            "precision": 0.8627,
+            "recall": 0.7458,
+            "base_rate": 0.3642,
+            "w_quarters": 51,
+            "cells": {
+              "a": 44,
+              "b": 7,
+              "c": 15,
+              "d": 96,
+              "n_used": 162,
+              "n_excluded": 43,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 57.0,
+                  "n_used": 14,
+                  "w_count": 4,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 10.5,
+                  "n_used": 13,
+                  "w_count": 4,
+                  "bad_count": 5,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 32.0,
+                  "n_used": 14,
+                  "w_count": 5,
+                  "bad_count": 5,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 32.0
+            },
+            "episodes": {
+              "episodes_total": 3,
+              "caught": 3,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "1982Q4",
+                  "end_q": "1983Q2",
+                  "length": 3,
+                  "caught": true
+                },
+                {
+                  "start_q": "1987Q3",
+                  "end_q": "1994Q4",
+                  "length": 30,
+                  "caught": true
+                },
+                {
+                  "start_q": "2005Q1",
+                  "end_q": "2011Q2",
+                  "length": 26,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_PRIM": {
+            "OR": 37.132,
+            "haldane_applied": false,
+            "precision": 0.9259,
+            "recall": 0.4237,
+            "base_rate": 0.3642,
+            "w_quarters": 27,
+            "cells": {
+              "a": 25,
+              "b": 2,
+              "c": 34,
+              "d": 101,
+              "n_used": 162,
+              "n_excluded": 43,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 6.333,
+                  "n_used": 14,
+                  "w_count": 1,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 12.143,
+                  "n_used": 13,
+                  "w_count": 2,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 13.571,
+                  "n_used": 14,
+                  "w_count": 2,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 12.143
+            },
+            "episodes": {
+              "episodes_total": 3,
+              "caught": 3,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "1982Q4",
+                  "end_q": "1983Q2",
+                  "length": 3,
+                  "caught": true
+                },
+                {
+                  "start_q": "1987Q3",
+                  "end_q": "1994Q4",
+                  "length": 30,
+                  "caught": true
+                },
+                {
+                  "start_q": "2005Q1",
+                  "end_q": "2011Q2",
+                  "length": 26,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_AFS": {
+            "OR": 31.733,
+            "haldane_applied": false,
+            "precision": 0.9333,
+            "recall": 0.2373,
+            "base_rate": 0.3642,
+            "w_quarters": 15,
+            "cells": {
+              "a": 14,
+              "b": 1,
+              "c": 45,
+              "d": 102,
+              "n_used": 162,
+              "n_excluded": 43,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.727,
+                  "n_used": 14,
+                  "w_count": 0,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 5.667,
+                  "n_used": 13,
+                  "w_count": 1,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 13.571,
+                  "n_used": 14,
+                  "w_count": 2,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 5.667
+            },
+            "episodes": {
+              "episodes_total": 3,
+              "caught": 3,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "1982Q4",
+                  "end_q": "1983Q2",
+                  "length": 3,
+                  "caught": true
+                },
+                {
+                  "start_q": "1987Q3",
+                  "end_q": "1994Q4",
+                  "length": 30,
+                  "caught": true
+                },
+                {
+                  "start_q": "2005Q1",
+                  "end_q": "2011Q2",
+                  "length": 26,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_DEMO": {
+            "OR": 1.739,
+            "haldane_applied": true,
+            "precision": null,
+            "recall": 0.0,
+            "base_rate": 0.3642,
+            "w_quarters": 0,
+            "cells": {
+              "a": 0,
+              "b": 0,
+              "c": 59,
+              "d": 103,
+              "n_used": 162,
+              "n_excluded": 43,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.727,
+                  "n_used": 14,
+                  "w_count": 0,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 1.545,
+                  "n_used": 13,
+                  "w_count": 0,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 1.727,
+                  "n_used": 14,
+                  "w_count": 0,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 1.727
+            },
+            "episodes": {
+              "episodes_total": 3,
+              "caught": 0,
+              "missed": 3,
+              "details": [
+                {
+                  "start_q": "1982Q4",
+                  "end_q": "1983Q2",
+                  "length": 3,
+                  "caught": false
+                },
+                {
+                  "start_q": "1987Q3",
+                  "end_q": "1994Q4",
+                  "length": 30,
+                  "caught": false
+                },
+                {
+                  "start_q": "2005Q1",
+                  "end_q": "2011Q2",
+                  "length": 26,
+                  "caught": false
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tw": {
+      "market": "tw",
+      "n_quarters": 101,
+      "afs_note": "TW: cpi inspected as an INDEX LEVEL (range 81.22-110.50, not a YoY% series) -> computed cpi_yoy=yoy(cpi) [build_compass.py yoy()], then r = rate - cpi_yoy, joined onto compass q axis by label (raw q axis identical to compass q axis: True).",
+      "demo_note": "demo file found (/Users/ivanchang/malaysia-property/scripts/.twdata/tw_demo.json), 100/101 quarters aligned by label, demo_yoy computed as 4q %change",
+      "demo_available": true,
+      "n_bad_abs": 9,
+      "rated_abs": true,
+      "results": {
+        "T_ABS": {
+          "W_MOM": {
+            "OR": 0.241,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.1011,
+            "w_quarters": 14,
+            "cells": {
+              "a": 0,
+              "b": 14,
+              "c": 9,
+              "d": 66,
+              "n_used": 89,
+              "n_excluded": 12,
+              "n_total": 101
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 5.0,
+                  "n_used": 8,
+                  "w_count": 1,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 1.444,
+                  "n_used": 8,
+                  "w_count": 1,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 1.222,
+                  "n_used": 7,
+                  "w_count": 1,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.444
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 1,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2013Q3",
+                  "end_q": "2015Q3",
+                  "length": 9,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_PRIM": {
+            "OR": 2.789,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.1011,
+            "w_quarters": 1,
+            "cells": {
+              "a": 0,
+              "b": 1,
+              "c": 9,
+              "d": 79,
+              "n_used": 89,
+              "n_excluded": 12,
+              "n_total": 101
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 17.0,
+                  "n_used": 8,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 5.0,
+                  "n_used": 8,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 4.333,
+                  "n_used": 7,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 5.0
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2013Q3",
+                  "end_q": "2015Q3",
+                  "length": 9,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_AFS": {
+            "OR": 6.474,
+            "haldane_applied": true,
+            "precision": null,
+            "recall": 0.0,
+            "base_rate": 0.1286,
+            "w_quarters": 0,
+            "cells": {
+              "a": 0,
+              "b": 0,
+              "c": 9,
+              "d": 61,
+              "n_used": 70,
+              "n_excluded": 31,
+              "n_total": 101
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 13.0,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 3.667,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 3.667,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 3.667
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2013Q3",
+                  "end_q": "2015Q3",
+                  "length": 9,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_DEMO": {
+            "OR": 2.649,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.1059,
+            "w_quarters": 1,
+            "cells": {
+              "a": 0,
+              "b": 1,
+              "c": 9,
+              "d": 75,
+              "n_used": 85,
+              "n_excluded": 16,
+              "n_total": 101
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 15.0,
+                  "n_used": 7,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 5.0,
+                  "n_used": 8,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 4.333,
+                  "n_used": 7,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 5.0
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2013Q3",
+                  "end_q": "2015Q3",
+                  "length": 9,
+                  "caught": false
+                }
+              ]
+            }
+          }
+        },
+        "T_REL": {
+          "W_MOM": {
+            "OR": 1.228,
+            "haldane_applied": false,
+            "precision": 0.4545,
+            "recall": 0.2083,
+            "base_rate": 0.4138,
+            "w_quarters": 11,
+            "cells": {
+              "a": 5,
+              "b": 6,
+              "c": 19,
+              "d": 28,
+              "n_used": 58,
+              "n_excluded": 43,
+              "n_total": 101
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 7.0,
+                  "n_used": 5,
+                  "w_count": 1,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 0.333,
+                  "n_used": 5,
+                  "w_count": 1,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.4
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 1,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2012Q2",
+                  "end_q": "2018Q1",
+                  "length": 24,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_PRIM": {
+            "OR": 0.456,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.4138,
+            "w_quarters": 1,
+            "cells": {
+              "a": 0,
+              "b": 1,
+              "c": 24,
+              "d": 33,
+              "n_used": 58,
+              "n_excluded": 43,
+              "n_total": 101
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.4
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2012Q2",
+                  "end_q": "2018Q1",
+                  "length": 24,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_AFS": {
+            "OR": 1.408,
+            "haldane_applied": true,
+            "precision": null,
+            "recall": 0.0,
+            "base_rate": 0.4138,
+            "w_quarters": 0,
+            "cells": {
+              "a": 0,
+              "b": 0,
+              "c": 24,
+              "d": 34,
+              "n_used": 58,
+              "n_excluded": 43,
+              "n_total": 101
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.4
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2012Q2",
+                  "end_q": "2018Q1",
+                  "length": 24,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_DEMO": {
+            "OR": 0.456,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.4138,
+            "w_quarters": 1,
+            "cells": {
+              "a": 0,
+              "b": 1,
+              "c": 24,
+              "d": 33,
+              "n_used": 58,
+              "n_excluded": 43,
+              "n_total": 101
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.4
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2012Q2",
+                  "end_q": "2018Q1",
+                  "length": 24,
+                  "caught": false
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "my": {
+      "market": "my",
+      "n_quarters": 105,
+      "afs_note": "MY: cpi inspected as an INDEX LEVEL (range 80.23-136.03, not a YoY% series) -> computed cpi_yoy=yoy(cpi) [build_compass.py yoy()], then r = rate - cpi_yoy, joined onto compass q axis by label (raw q axis identical to compass q axis: True).",
+      "demo_note": "demo file found (/Users/ivanchang/malaysia-property/scripts/.mydata/my_demo.json), 104/105 quarters aligned by label, demo_yoy computed as 4q %change",
+      "demo_available": true,
+      "n_bad_abs": 0,
+      "rated_abs": false,
+      "results": {
+        "T_ABS": {
+          "W_MOM": {
+            "OR": 2.837,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": null,
+            "base_rate": 0.0,
+            "w_quarters": 24,
+            "cells": {
+              "a": 0,
+              "b": 24,
+              "c": 0,
+              "d": 69,
+              "n_used": 93,
+              "n_excluded": 12,
+              "n_total": 105
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 2.6,
+                  "n_used": 8,
+                  "w_count": 2,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 2.6,
+                  "n_used": 8,
+                  "w_count": 2,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 2.6,
+                  "n_used": 8,
+                  "w_count": 2,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 2.6
+            },
+            "episodes": {
+              "episodes_total": 0,
+              "caught": 0,
+              "missed": 0,
+              "details": []
+            }
+          },
+          "W_PRIM": {
+            "OR": 7.952,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": null,
+            "base_rate": 0.0,
+            "w_quarters": 10,
+            "cells": {
+              "a": 0,
+              "b": 10,
+              "c": 0,
+              "d": 83,
+              "n_used": 93,
+              "n_excluded": 12,
+              "n_total": 105
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 5.0,
+                  "n_used": 8,
+                  "w_count": 1,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 5.0,
+                  "n_used": 8,
+                  "w_count": 1,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 17.0,
+                  "n_used": 8,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 5.0
+            },
+            "episodes": {
+              "episodes_total": 0,
+              "caught": 0,
+              "missed": 0,
+              "details": []
+            }
+          },
+          "W_AFS": {
+            "OR": 19.286,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": null,
+            "base_rate": 0.0,
+            "w_quarters": 3,
+            "cells": {
+              "a": 0,
+              "b": 3,
+              "c": 0,
+              "d": 67,
+              "n_used": 70,
+              "n_excluded": 35,
+              "n_total": 105
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 13.0,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 13.0,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 13.0,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 13.0
+            },
+            "episodes": {
+              "episodes_total": 0,
+              "caught": 0,
+              "missed": 0,
+              "details": []
+            }
+          },
+          "W_DEMO": {
+            "OR": 35.0,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": null,
+            "base_rate": 0.0,
+            "w_quarters": 2,
+            "cells": {
+              "a": 0,
+              "b": 2,
+              "c": 0,
+              "d": 87,
+              "n_used": 89,
+              "n_excluded": 16,
+              "n_total": 105
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 15.0,
+                  "n_used": 7,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 5.0,
+                  "n_used": 8,
+                  "w_count": 1,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 17.0,
+                  "n_used": 8,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 15.0
+            },
+            "episodes": {
+              "episodes_total": 0,
+              "caught": 0,
+              "missed": 0,
+              "details": []
+            }
+          }
+        },
+        "T_REL": {
+          "W_MOM": {
+            "OR": 3.163,
+            "haldane_applied": false,
+            "precision": 0.4167,
+            "recall": 0.5882,
+            "base_rate": 0.2742,
+            "w_quarters": 24,
+            "cells": {
+              "a": 10,
+              "b": 14,
+              "c": 7,
+              "d": 31,
+              "n_used": 62,
+              "n_excluded": 43,
+              "n_total": 105
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 7.0,
+                  "n_used": 5,
+                  "w_count": 2,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 0.333,
+                  "n_used": 5,
+                  "w_count": 2,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 11.667,
+                  "n_used": 6,
+                  "w_count": 2,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 7.0
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 2,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2017Q1",
+                  "end_q": "2020Q4",
+                  "length": 16,
+                  "caught": true
+                },
+                {
+                  "start_q": "2023Q1",
+                  "end_q": "2023Q1",
+                  "length": 1,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_PRIM": {
+            "OR": 19.111,
+            "haldane_applied": false,
+            "precision": 0.8,
+            "recall": 0.4706,
+            "base_rate": 0.2742,
+            "w_quarters": 10,
+            "cells": {
+              "a": 8,
+              "b": 2,
+              "c": 9,
+              "d": 43,
+              "n_used": 62,
+              "n_excluded": 43,
+              "n_total": 105
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 27.0,
+                  "n_used": 5,
+                  "w_count": 1,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 0.778,
+                  "n_used": 5,
+                  "w_count": 1,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 1.0,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.0
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 2,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2017Q1",
+                  "end_q": "2020Q4",
+                  "length": 16,
+                  "caught": true
+                },
+                {
+                  "start_q": "2023Q1",
+                  "end_q": "2023Q1",
+                  "length": 1,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_AFS": {
+            "OR": 21.966,
+            "haldane_applied": true,
+            "precision": 1.0,
+            "recall": 0.1765,
+            "base_rate": 0.2742,
+            "w_quarters": 3,
+            "cells": {
+              "a": 3,
+              "b": 0,
+              "c": 14,
+              "d": 45,
+              "n_used": 62,
+              "n_excluded": 43,
+              "n_total": 105
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 3.0,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 3.0,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 1.0,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 3.0
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 1,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2017Q1",
+                  "end_q": "2020Q4",
+                  "length": 16,
+                  "caught": true
+                },
+                {
+                  "start_q": "2023Q1",
+                  "end_q": "2023Q1",
+                  "length": 1,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_DEMO": {
+            "OR": 0.497,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.2742,
+            "w_quarters": 2,
+            "cells": {
+              "a": 0,
+              "b": 2,
+              "c": 17,
+              "d": 43,
+              "n_used": 62,
+              "n_excluded": 43,
+              "n_total": 105
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 3.0,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 0.778,
+                  "n_used": 5,
+                  "w_count": 1,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 1.0,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.0
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 1,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2017Q1",
+                  "end_q": "2020Q4",
+                  "length": 16,
+                  "caught": false
+                },
+                {
+                  "start_q": "2023Q1",
+                  "end_q": "2023Q1",
+                  "length": 1,
+                  "caught": true
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "jp": {
+      "market": "jp",
+      "n_quarters": 204,
+      "afs_note": "JP: cpi inspected as an INDEX LEVEL (range 51.44-111.90, not a YoY% series) -> computed cpi_yoy=yoy(cpi) [build_compass.py yoy()], then r = rate - cpi_yoy, joined onto compass q axis by label (raw q axis identical to compass q axis: True).",
+      "demo_note": "demo file found (/Users/ivanchang/malaysia-property/scripts/.jpdata/jp_demo.json), 200/204 quarters aligned by label, demo_yoy computed as 4q %change",
+      "demo_available": true,
+      "n_bad_abs": 76,
+      "rated_abs": true,
+      "results": {
+        "T_ABS": {
+          "W_MOM": {
+            "OR": 10.706,
+            "haldane_applied": false,
+            "precision": 0.7778,
+            "recall": 0.5526,
+            "base_rate": 0.3958,
+            "w_quarters": 54,
+            "cells": {
+              "a": 42,
+              "b": 12,
+              "c": 34,
+              "d": 104,
+              "n_used": 192,
+              "n_excluded": 12,
+              "n_total": 204
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 37.8,
+                  "n_used": 16,
+                  "w_count": 4,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 9.0,
+                  "n_used": 16,
+                  "w_count": 4,
+                  "bad_count": 6,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 4.667,
+                  "n_used": 16,
+                  "w_count": 6,
+                  "bad_count": 7,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 9.0
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 1,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "1990Q2",
+                  "end_q": "2008Q4",
+                  "length": 75,
+                  "caught": true
+                },
+                {
+                  "start_q": "2010Q1",
+                  "end_q": "2010Q1",
+                  "length": 1,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_PRIM": {
+            "OR": 13.21,
+            "haldane_applied": false,
+            "precision": 0.8163,
+            "recall": 0.5263,
+            "base_rate": 0.3958,
+            "w_quarters": 49,
+            "cells": {
+              "a": 40,
+              "b": 9,
+              "c": 36,
+              "d": 107,
+              "n_used": 192,
+              "n_excluded": 12,
+              "n_total": 204
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 37.8,
+                  "n_used": 16,
+                  "w_count": 4,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 9.0,
+                  "n_used": 16,
+                  "w_count": 4,
+                  "bad_count": 6,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 10.667,
+                  "n_used": 16,
+                  "w_count": 5,
+                  "bad_count": 7,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 10.667
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 1,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "1990Q2",
+                  "end_q": "2008Q4",
+                  "length": 75,
+                  "caught": true
+                },
+                {
+                  "start_q": "2010Q1",
+                  "end_q": "2010Q1",
+                  "length": 1,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_AFS": {
+            "OR": 7.216,
+            "haldane_applied": false,
+            "precision": 0.8182,
+            "recall": 0.2368,
+            "base_rate": 0.4393,
+            "w_quarters": 22,
+            "cells": {
+              "a": 18,
+              "b": 4,
+              "c": 58,
+              "d": 93,
+              "n_used": 173,
+              "n_excluded": 31,
+              "n_total": 204
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 9.444,
+                  "n_used": 14,
+                  "w_count": 2,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 4.636,
+                  "n_used": 14,
+                  "w_count": 1,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 2.8,
+                  "n_used": 15,
+                  "w_count": 3,
+                  "bad_count": 7,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 4.636
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 1,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "1990Q2",
+                  "end_q": "2008Q4",
+                  "length": 75,
+                  "caught": true
+                },
+                {
+                  "start_q": "2010Q1",
+                  "end_q": "2010Q1",
+                  "length": 1,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_DEMO": {
+            "OR": 6.812,
+            "haldane_applied": false,
+            "precision": 0.8,
+            "recall": 0.1579,
+            "base_rate": 0.4043,
+            "w_quarters": 15,
+            "cells": {
+              "a": 12,
+              "b": 3,
+              "c": 64,
+              "d": 109,
+              "n_used": 188,
+              "n_excluded": 16,
+              "n_total": 204
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 5.182,
+                  "n_used": 15,
+                  "w_count": 1,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 1.615,
+                  "n_used": 16,
+                  "w_count": 0,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 8.636,
+                  "n_used": 16,
+                  "w_count": 2,
+                  "bad_count": 7,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 5.182
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 1,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "1990Q2",
+                  "end_q": "2008Q4",
+                  "length": 75,
+                  "caught": true
+                },
+                {
+                  "start_q": "2010Q1",
+                  "end_q": "2010Q1",
+                  "length": 1,
+                  "caught": false
+                }
+              ]
+            }
+          }
+        },
+        "T_REL": {
+          "W_MOM": {
+            "OR": 17.74,
+            "haldane_applied": false,
+            "precision": 0.8491,
+            "recall": 0.6338,
+            "base_rate": 0.441,
+            "w_quarters": 53,
+            "cells": {
+              "a": 45,
+              "b": 8,
+              "c": 26,
+              "d": 82,
+              "n_used": 161,
+              "n_excluded": 43,
+              "n_total": 204
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 6.0,
+                  "n_used": 13,
+                  "w_count": 4,
+                  "bad_count": 6,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 27.0,
+                  "n_used": 13,
+                  "w_count": 4,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 35.0,
+                  "n_used": 14,
+                  "w_count": 6,
+                  "bad_count": 6,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 27.0
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 2,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "1982Q4",
+                  "end_q": "1985Q1",
+                  "length": 10,
+                  "caught": true
+                },
+                {
+                  "start_q": "1989Q3",
+                  "end_q": "2004Q3",
+                  "length": 61,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_PRIM": {
+            "OR": 14.008,
+            "haldane_applied": false,
+            "precision": 0.8367,
+            "recall": 0.5775,
+            "base_rate": 0.441,
+            "w_quarters": 49,
+            "cells": {
+              "a": 41,
+              "b": 8,
+              "c": 30,
+              "d": 82,
+              "n_used": 161,
+              "n_excluded": 43,
+              "n_total": 204
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 6.0,
+                  "n_used": 13,
+                  "w_count": 4,
+                  "bad_count": 6,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 27.0,
+                  "n_used": 13,
+                  "w_count": 4,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 14.0,
+                  "n_used": 14,
+                  "w_count": 5,
+                  "bad_count": 6,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 14.0
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 2,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "1982Q4",
+                  "end_q": "1985Q1",
+                  "length": 10,
+                  "caught": true
+                },
+                {
+                  "start_q": "1989Q3",
+                  "end_q": "2004Q3",
+                  "length": 61,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_AFS": {
+            "OR": 7.302,
+            "haldane_applied": false,
+            "precision": 0.8182,
+            "recall": 0.2535,
+            "base_rate": 0.441,
+            "w_quarters": 22,
+            "cells": {
+              "a": 18,
+              "b": 4,
+              "c": 53,
+              "d": 86,
+              "n_used": 161,
+              "n_excluded": 43,
+              "n_total": 204
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 8.333,
+                  "n_used": 13,
+                  "w_count": 2,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 4.091,
+                  "n_used": 13,
+                  "w_count": 1,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 3.5,
+                  "n_used": 14,
+                  "w_count": 3,
+                  "bad_count": 6,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 4.091
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 1,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "1982Q4",
+                  "end_q": "1985Q1",
+                  "length": 10,
+                  "caught": false
+                },
+                {
+                  "start_q": "1989Q3",
+                  "end_q": "2004Q3",
+                  "length": 61,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_DEMO": {
+            "OR": 5.898,
+            "haldane_applied": false,
+            "precision": 0.8,
+            "recall": 0.169,
+            "base_rate": 0.441,
+            "w_quarters": 15,
+            "cells": {
+              "a": 12,
+              "b": 3,
+              "c": 59,
+              "d": 87,
+              "n_used": 161,
+              "n_excluded": 43,
+              "n_total": 204
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 0.333,
+                  "n_used": 13,
+                  "w_count": 1,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 1.154,
+                  "n_used": 13,
+                  "w_count": 0,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 9.444,
+                  "n_used": 14,
+                  "w_count": 2,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 1.154
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 2,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "1982Q4",
+                  "end_q": "1985Q1",
+                  "length": 10,
+                  "caught": true
+                },
+                {
+                  "start_q": "1989Q3",
+                  "end_q": "2004Q3",
+                  "length": 61,
+                  "caught": true
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "threshold_evaluation": {
+    "ABS": {
+      "per_market": {
+        "us": {
+          "OR": 16.196,
+          "OR_ge_3": true,
+          "w_quarters": 38,
+          "w_quarters_ge_8": true,
+          "precision": 0.3947,
+          "base_rate": 0.1088,
+          "2x_base_rate": 0.2176,
+          "precision_ge_2x_base_rate": true,
+          "rated_abs": true,
+          "pass": true
+        },
+        "jp": {
+          "OR": 13.21,
+          "OR_ge_3": true,
+          "w_quarters": 49,
+          "w_quarters_ge_8": true,
+          "precision": 0.8163,
+          "base_rate": 0.3958,
+          "2x_base_rate": 0.7916,
+          "precision_ge_2x_base_rate": true,
+          "rated_abs": true,
+          "pass": true
+        }
+      },
+      "us_and_jp_pass": true,
+      "rated_markets_used_for_MH": [
+        "us",
+        "tw",
+        "jp"
+      ],
+      "MH_pooled_OR": 13.529,
+      "MH_pooled_OR_ge_3": true,
+      "pass": true,
+      "status": "PASS"
+    },
+    "REL": {
+      "per_market": {
+        "us": {
+          "OR": 37.132,
+          "pass": true
+        },
+        "tw": {
+          "OR": 0.456,
+          "pass": false
+        },
+        "my": {
+          "OR": 19.111,
+          "pass": true
+        },
+        "jp": {
+          "OR": 14.008,
+          "pass": true
+        }
+      },
+      "n_markets_passing": 3,
+      "n_markets_passing_ge_3": true,
+      "MH_pooled_OR": 16.07,
+      "MH_pooled_OR_ge_2.5": true,
+      "pass": true,
+      "status": "PASS"
+    },
+    "conditioners": {
+      "W_AFS": {
+        "status": "DISCARD",
+        "per_market": {
+          "us": {
+            "W_PRIM_OR": 16.196,
+            "cond_OR": 6.422,
+            "OR_ge_1.5x": false,
+            "W_PRIM_recall": 0.7143,
+            "cond_recall": 0.4286,
+            "recall_ge_0.67x": false,
+            "pass": false
+          },
+          "jp": {
+            "W_PRIM_OR": 13.21,
+            "cond_OR": 7.216,
+            "OR_ge_1.5x": false,
+            "W_PRIM_recall": 0.5263,
+            "cond_recall": 0.2368,
+            "recall_ge_0.67x": false,
+            "pass": false
+          }
+        }
+      },
+      "W_DEMO": {
+        "status": "DISCARD",
+        "per_market": {
+          "us": {
+            "W_PRIM_OR": 16.196,
+            "cond_OR": 7.837,
+            "OR_ge_1.5x": false,
+            "W_PRIM_recall": 0.7143,
+            "cond_recall": 0.0,
+            "recall_ge_0.67x": false,
+            "pass": false
+          },
+          "jp": {
+            "W_PRIM_OR": 13.21,
+            "cond_OR": 6.812,
+            "OR_ge_1.5x": false,
+            "W_PRIM_recall": 0.5263,
+            "cond_recall": 0.1579,
+            "recall_ge_0.67x": false,
+            "pass": false
+          }
+        }
+      }
+    },
+    "risk_gauge_verdict": {
+      "abs_pass": true,
+      "rel_pass": true,
+      "reframe_as_risk_gauge": true
+    },
+    "panels": {
+      "abs_wprim": {
+        "classifier": "W_PRIM",
+        "target": "T_ABS",
+        "markets": [
+          "us",
+          "tw",
+          "jp"
+        ],
+        "per_market_cells": {
+          "us": {
+            "a": 15,
+            "b": 23,
+            "c": 6,
+            "d": 149,
+            "n_used": 193,
+            "n_excluded": 12,
+            "n_total": 205
+          },
+          "tw": {
+            "a": 0,
+            "b": 1,
+            "c": 9,
+            "d": 79,
+            "n_used": 89,
+            "n_excluded": 12,
+            "n_total": 101
+          },
+          "jp": {
+            "a": 40,
+            "b": 9,
+            "c": 36,
+            "d": 107,
+            "n_used": 192,
+            "n_excluded": 12,
+            "n_total": 204
+          }
+        },
+        "pooled": {
+          "OR_MH": 13.529,
+          "n_strata": 3
+        }
+      },
+      "rel_wprim": {
+        "classifier": "W_PRIM",
+        "target": "T_REL",
+        "markets": [
+          "us",
+          "tw",
+          "my",
+          "jp"
+        ],
+        "per_market_cells": {
+          "us": {
+            "a": 25,
+            "b": 2,
+            "c": 34,
+            "d": 101,
+            "n_used": 162,
+            "n_excluded": 43,
+            "n_total": 205
+          },
+          "tw": {
+            "a": 0,
+            "b": 1,
+            "c": 24,
+            "d": 33,
+            "n_used": 58,
+            "n_excluded": 43,
+            "n_total": 101
+          },
+          "my": {
+            "a": 8,
+            "b": 2,
+            "c": 9,
+            "d": 43,
+            "n_used": 62,
+            "n_excluded": 43,
+            "n_total": 105
+          },
+          "jp": {
+            "a": 41,
+            "b": 8,
+            "c": 30,
+            "d": 82,
+            "n_used": 161,
+            "n_excluded": 43,
+            "n_total": 204
+          }
+        },
+        "pooled": {
+          "OR_MH": 16.07,
+          "n_strata": 4
+        }
+      }
+    }
+  },
+  "honesty": {
+    "contamination_note": "v2's published results (cell medians, decade decay, C3 refutation) inform this design; the gate/targets/cuts are frozen before computing any 2x2 table. The known clustering of loss events (2006-08 US, 1990s JP) means OR estimates are dominated by few episodes; episode counts (distinct contiguous bad-spells caught vs missed) are reported alongside quarter counts for exactly this reason.",
+    "overlap_caveat": "Overlap robustness: forward windows overlap (serial correlation inflates n). Report metrics on non-overlapping subsamples: every 12th quarter at offsets {0,4,8}, median OR of the offsets, with per-offset event counts. Small-n caveat flagged when a subsample has <10 usable quarters.",
+    "episode_domination": {
+      "us": {
+        "T_ABS": {
+          "episodes_total": 1,
+          "caught": 1,
+          "missed": 0
+        },
+        "T_REL": {
+          "episodes_total": 3,
+          "caught": 3,
+          "missed": 0
+        }
+      },
+      "tw": {
+        "T_ABS": {
+          "episodes_total": 1,
+          "caught": 0,
+          "missed": 1
+        },
+        "T_REL": {
+          "episodes_total": 1,
+          "caught": 0,
+          "missed": 1
+        }
+      },
+      "my": {
+        "T_ABS": {
+          "episodes_total": 0,
+          "caught": 0,
+          "missed": 0
+        },
+        "T_REL": {
+          "episodes_total": 2,
+          "caught": 2,
+          "missed": 0
+        }
+      },
+      "jp": {
+        "T_ABS": {
+          "episodes_total": 2,
+          "caught": 1,
+          "missed": 1
+        },
+        "T_REL": {
+          "episodes_total": 2,
+          "caught": 2,
+          "missed": 0
+        }
+      }
+    },
+    "applicability_gate_divergence_from_protocol_expectation": {
+      "tw_rated_abs": true,
+      "my_rated_abs": false,
+      "tw_n_bad_abs": 9,
+      "my_n_bad_abs": 0
+    }
+  }
+}
