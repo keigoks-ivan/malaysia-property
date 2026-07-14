@@ -29,6 +29,22 @@ function fillJudge(isZh){
   setAll('jSince',sinceQ());
   var s=D.qstat[QUAD[CUR]];
   if(s&&s.n){setAll('jpMed',fmtPc(s.med));setAll('jpN',s.n);}
+  // era-split honesty note: full-history medians can hide a post-2010 shift — see if this
+  // market's scored history is effectively all-modern, or split the current cell pre/post-2010.
+  var era=D.qstat_era?D.qstat_era[QUAD[CUR]]:null, post=era?era.post:null;
+  var eraTxt;
+  if(D.all_modern){
+    eraTxt=isZh?'這個市場可評分的歷史幾乎全在 2010 年後——上面的數字本身就是現代時代。':
+      "This market's scored history is effectively all post-2010 — the number above is already the modern era.";
+  } else if(post&&post.n>=8){
+    eraTxt=isZh?('僅看 2010 年後：中位 '+fmtPc(post.med)+'（n='+post.n+'）。'):
+      ('Post-2010 era alone: median '+fmtPc(post.med)+' (n='+post.n+').');
+  } else {
+    var pn=post?post.n:0;
+    eraTxt=isZh?('2010 年後落在此格的樣本太少，不足以評分（n='+pn+'）。'):
+      ('Post-2010 sample in this cell is too thin to score (n='+pn+').');
+  }
+  setAll('jhistEra',eraTxt);
   ['fuelled','draining','reflating','starved'].forEach(function(p){var f=D.qstat[p]||{n:0};
     setAll('med-'+p,f.n?fmtPc(f.med):'—');setAll('n-'+p,f.n||0);
     setAll('rng-'+p,f.n?(fmtPc(f.mn)+' → '+fmtPc(f.mx)):'—');});

@@ -192,6 +192,7 @@ HTML=f"""<!DOCTYPE html>
   <div class="judge">
     <p class="jlab">{dual('The reading right now · <span class="curQtr">—</span>','現在的判讀 · <span class="curQtr">—</span>')}</p>
     <p class="jphase curPhase">—</p>
+    <p class="mkt-tw" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual("cell ordering not validated in Taiwan (ρ=0.08)","四格排序在台灣未通過驗證（ρ=0.08）")}</span></p>
     <p class="jread">{market_block('judge')}</p>
     <div class="jwarn"><span class="dot"></span><span>{market_block('warn')}</span></div>
     <div class="jrow">
@@ -200,6 +201,7 @@ HTML=f"""<!DOCTYPE html>
       <span class="jchip">{dual("In this cell since ","停留於此自 ")}<b class="jSince">—</b></span>
     </div>
     <p class="jhist">{dual("Historical echo: quarters in this cell saw a <b>3-year forward nominal house-price return with a median of <span class='jpMed'>—</span></b> (n=<span class='jpN'>—</span>).","歷史對照：落在此格的季度，其後 <b>3 年名目房價報酬中位 <span class='jpMed'>—</span></b>（n=<span class='jpN'>—</span>）。")} <span class="apx">{market_block('fwdnote') if False else dual("Descriptive of the past, not a forward promise.","描述過去，非對未來的承諾。")}</span></p>
+    <p class="jhist jhistEra">—</p>
     <div class="cells4">
       <div class="cell4" data-ph="fuelled" style="border-color:#15803d"><p class="c4n" style="color:#15803d">{dual("Uptrend · Fuelled","上行·有燃料")}<span class="nowtag now-fuelled"></span></p><p class="c4d">{dual("price rising × credit expanding — trend with fuel","房價漲 × 信貸擴張——有燃料的趨勢")}</p><p class="c4s">{dual("3y median ","其後3年中位 ")}<b class="med-fuelled">—</b> · n=<span class="n-fuelled">—</span></p></div>
       <div class="cell4" data-ph="draining" style="border-color:#a16207"><p class="c4n" style="color:#a16207">{dual("Uptrend · Draining","上行·資金退")}<span class="nowtag now-draining"></span></p><p class="c4d">{dual("price rising × credit contracting — rally losing its fuel","房價漲 × 信貸收縮——漲勢在斷奶")}</p><p class="c4s">{dual("3y median ","其後3年中位 ")}<b class="med-draining">—</b> · n=<span class="n-draining">—</span></p></div>

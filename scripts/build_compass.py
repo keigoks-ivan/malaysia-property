@@ -149,6 +149,17 @@ def compute(d, valsrc=None, supsrc=None, popyoy=None, xc=None, win=24):
                 'mx': round(max(v), 1), 'q1': round(sv[len(sv)//4], 1)}
     QSTAT = {k: stats(k) for k in CELLS}
 
+    # era split (frozen design: boundary 2010Q1, pre = q < '2010Q1', post = q >= '2010Q1').
+    # Used only for the honesty-upgrade echo line in the Compass UI; does not touch QSTAT itself.
+    def era_med_n(name, era):
+        idx = [i for i in range(n) if QUAD[i] == name and fwd[i] is not None
+               and ((q[i] < '2010Q1') if era == 'pre' else (q[i] >= '2010Q1'))]
+        v = [fwd[i] for i in idx]
+        return {'med': round(st.median(v), 1) if v else None, 'n': len(v)}
+    QSTAT_ERA = {k: {'pre': era_med_n(k, 'pre'), 'post': era_med_n(k, 'post')} for k in CELLS}
+    total_pre_scored = sum(QSTAT_ERA[k]['pre']['n'] for k in CELLS)
+    ALL_MODERN = total_pre_scored < 8
+
     def ang(i): return None if (mom[i] is None or cred[i] is None) else math.degrees(math.atan2(cred[i], mom[i]))
     def rad(i): return None if (mom[i] is None or cred[i] is None) else math.hypot(mom[i], cred[i])
     r1 = lambda a: [round(v, 1) if v is not None else None for v in a]
@@ -167,6 +178,7 @@ def compute(d, valsrc=None, supsrc=None, popyoy=None, xc=None, win=24):
         'ang': r1([ang(i) for i in range(n)]), 'rad': r3([rad(i) for i in range(n)]),
         'hpi_yoy': r1(hpi), 'fwd12': r1(fwd), 'qstat': QSTAT, 'card': card,
         'xc': xc,   # cross-country report-card layer (vs the world now); None if unavailable
+        'qstat_era': QSTAT_ERA, 'all_modern': ALL_MODERN,
     }
 
 def main():
