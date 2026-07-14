@@ -10024,6 +10024,126 @@
     }
    },
    "source": "data/compass-backtest-v3.json (full per-market 2x2/OR/recall/episode/overlap detail, self-checks); scripts/compass_v3_protocol.md (frozen protocol); scripts/backtest_compass_v3.py (harness, implied)."
+  },
+  "design_audit": {
+   "question": "After v3 validated W_PRIM, is the DESIGN LOGIC of both instruments (Compass incl. supply-glut warning; Report Card incl. cross-country layer) actually correct — right standardisation basis, claims matching code, data integrity, and no silent change to any validated-claim input?",
+   "charter": "scripts/compass_design_audit_charter.md, frozen 2026-07-14 before either audit ran. Four standards: (1) basis principle — cyclical/predictive quantities use trailing windows, health/absolute quantities use expanding whole-history, monotone trends use absolute direction; (2) claims = code; (3) data integrity (deflator, frequency incl. step/interpolated segments, freshness, quarter-label alignment); (4) validated-claim protection — any change to a W_PRIM input requires a disclosed protocol amendment + v3 harness re-run, never a silent fix.",
+   "method": "Two independent audits against the frozen charter — one on design logic / standardisation bases, one on data integrity / claims-vs-code — covering the full pipeline build_clock_{us,tw,my,jp}.py -> clock-*.json -> build_compass.py -> compass-*.json -> gen_compass_page.py/compass.js -> my/clock.html. Every finding classified exactly one of: BUG / NEEDS-REVALIDATION / DESIGN-DEBT / OK-AS-DESIGNED. Reproducible from the charter (it names the pipeline, standards and classification).",
+   "findings": [
+    {
+     "id": "footer_basis_claim",
+     "class": "BUG",
+     "finding": "Page footer said report-card gauges are 'trailing-z' and everything is 'standardised on trailing windows' — engine has been expanding (valuation, supply) / absolute (population) since the earlier basis fix; the footer contradicted the page's own methodology copy.",
+     "action": "Fixed — footer rewritten to state each basis: compass trailing-z; valuation and supply expanding-z; population absolute direction on a fixed scale. Documentation only, no W_PRIM contact."
+    },
+    {
+     "id": "whole_history_overclaim_population",
+     "class": "BUG",
+     "finding": "Generic how-to claimed every report-card gauge is standardised over the market's whole history; population is an absolute-direction fixed-scale reading, not history-relative.",
+     "action": "Fixed — population carve-out added to the blanket sentence. Documentation only."
+    },
+    {
+     "id": "my_population_false_zero",
+     "class": "BUG",
+     "finding": "MY population gauge displayed 0.0: annual data forward-filled onto the quarterly axis made YoY read a false zero at the series boundary, while true cohort growth is ~+1.4%.",
+     "action": "Fixed — engine yoy() now guards flat-fill windows (carries the last genuine YoY across a degenerate hold segment instead of emitting 0). Descriptive gauge, no W_PRIM contact."
+    },
+    {
+     "id": "my_span_badge",
+     "class": "BUG",
+     "finding": "MY history badge claimed 1988-2026; actual data axis starts 2000Q1 — a 12-year overstatement (the 1988-1999 BIS price history exists on disk but is never used).",
+     "action": "Fixed — badge now reads 2000-2026."
+    },
+    {
+     "id": "my_mortgage_stale",
+     "class": "BUG",
+     "finding": "MY mortgageRate input was 4.30% from the OPR 3.00% era; at OPR 2.75% the typical lending rate is 4.05%. Published carry spread moves +0.9% -> +1.2% (rank 3/12 unchanged); valuation composites nudge (US +0.21->+0.23, MY +0.57->+0.59, JP +0.24->+0.20), no rank changes.",
+     "action": "Fixed — markets-summary.json refreshed, page numbers regenerated. Cross-country layer only, no W_PRIM contact."
+    },
+    {
+     "id": "nominal_momentum_real_credit",
+     "class": "DESIGN-DEBT",
+     "finding": "Compass X is nominal house-price YoY while Y is CPI-deflated credit — an internal asymmetry. Defensible: the validated downside target (fwd 3y return) is itself nominal, and the trailing z de-trends steady inflation; the flaw only bites on inflation regime changes.",
+     "action": "Disclosed in the page footer; behavior unchanged. A switch to real momentum would touch W_PRIM (via starved) and would itself require re-validation."
+    },
+    {
+     "id": "jp_warn_step_series",
+     "class": "DESIGN-DEBT",
+     "finding": "JP vacancy is a quinquennial survey held flat between releases (exact 20-quarter steps), and JP's warn flag is ~98% vacancy-driven — one of the two validated busts rides on a step series.",
+     "action": "Disclosed on the JP card; OR logic unchanged (W_PRIM input)."
+    },
+    {
+     "id": "my_income_interpolated",
+     "class": "DESIGN-DEBT",
+     "finding": "MY income is piecewise-linear interpolated between sparse DOSM survey years and flat at RM7,017 since 2024Q1 — it is the valuation gauge's denominator, so recent gauge movement is mostly the price numerator.",
+     "action": "Disclosed on the MY card; behavior unchanged pending a better source."
+    },
+    {
+     "id": "tw_valuation_short_history",
+     "class": "DESIGN-DEBT",
+     "finding": "TW valuation's 'whole-history' expanding z is in practice built on 2016Q3-2026Q1 (pti series start), not the 2001-2026 span the page otherwise covers.",
+     "action": "Disclosed on the TW card; behavior unchanged."
+    },
+    {
+     "id": "warn_basis_trailing_vs_absolute",
+     "class": "NEEDS-REVALIDATION",
+     "finding": "Supply-glut warn uses trailing-z while a glut is conceptually absolute; demonstrated warning fatigue: MY 2022Q2 overhang 34,092 (series record 36,863) read trailing z -0.99 -> warn OFF, expanding z -1.11 -> would be ON. Same vacancy series is already expanding in the report card. warn is a W_PRIM input.",
+     "action": "Re-validated via protocol Amendment 2 (see amendment2 block below) — no silent fix, per charter standard 4."
+    },
+    {
+     "id": "verified_clean",
+     "class": "OK-AS-DESIGNED",
+     "finding": "Cell-boundary flutter rare (2-4 one-quarter runs per market; 3q smoothing suffices, hysteresis unwarranted); fwd12 = exactly 12 quarters cumulative, matching every '3-year' page string; quarter axes align exactly raw->clock->compass in all four markets; CPI deflator applied consistently everywhere; all ~20 risk-gauge numbers on /my/clock match data/compass-backtest-v3.json digit for digit.",
+     "action": "Recorded with reasons; no change."
+    }
+   ],
+   "amendment2": {
+    "what": "Warn-basis re-validation. Challenger warn_exp = expanding whole-history robust z on the identical series, identical <=-1 threshold and OR-combination — basis is the only difference, no threshold/window search. W_PRIM_EXP = starved AND warn_exp, evaluated with the identical v3 machinery (both targets, applicability gate, MH pooling).",
+    "frozen": "Amendment written 2026-07-14 after the audit surfaced the fatigue cases but before any W_PRIM_EXP table was computed (timing disclosed in the protocol).",
+    "decision_rule_frozen": "The live gauge switches to the expanding basis ONLY if W_PRIM_EXP passes the same ABS+REL gates AND its ABS MH-pooled OR >= the trailing version's. Otherwise trailing stays (status quo unless dominated), and the conceptual tension is published as a finding.",
+    "side_by_side_OR": {
+     "note": "T_ABS/T_REL odds ratios, trailing (validated v3) vs expanding (challenger). Haldane +0.5 applied where a cell is empty (TW both targets both bases; MY T_ABS both bases) — null readings, not evidence. MY remains NOT RATED for the absolute claim on both bases (0 realized-loss quarters in 105); ABS MH pooling uses rated markets US/TW/JP.",
+     "us": {
+      "T_ABS_trailing": 16.196,
+      "T_ABS_expanding": 12.328,
+      "T_REL_trailing": 37.132,
+      "T_REL_expanding": 23.925
+     },
+     "tw": {
+      "T_ABS_trailing": 2.789,
+      "T_ABS_expanding": 8.474,
+      "T_REL_trailing": 0.456,
+      "T_REL_expanding": 1.408
+     },
+     "my": {
+      "T_ABS_trailing": 7.952,
+      "T_ABS_expanding": 10.059,
+      "T_REL_trailing": 19.111,
+      "T_REL_expanding": 5.833
+     },
+     "jp": {
+      "T_ABS_trailing": 13.21,
+      "T_ABS_expanding": 9.124,
+      "T_REL_trailing": 14.008,
+      "T_REL_expanding": 9.419
+     },
+     "MH_pooled": {
+      "T_ABS_trailing": 13.529,
+      "T_ABS_expanding": 10.114,
+      "T_REL_trailing": 16.07,
+      "T_REL_expanding": 12.161
+     }
+    },
+    "gate_results_expanding": {
+     "ABS": "FAIL — JP precision 0.7857 vs required 2x base rate 0.7916 (miss of 0.006); US passes; MH pooled 10.114 (>=3 but the US+JP joint condition fails).",
+     "REL": "PASS — 3 of 4 markets (US 23.925, MY 5.833, JP 9.419; TW 1.408 fails), MH pooled 12.161 >= 2.5 — but weaker than trailing's 16.07 everywhere except TW (Haldane on both bases).",
+     "abs_mh_or_expanding_ge_trailing": false
+    },
+    "verdict": "KEEP TRAILING — the challenger neither passes both gates nor matches the trailing ABS MH-pooled OR (10.114 < 13.529). Both full tables published in data/compass-backtest-v3.json 'amendment2'. The fatigue exhibit stands: expanding catches MY 2022Q2 (ez -1.112 ON vs trailing -0.99 OFF), but loses ground on both validated busts."
+   },
+   "monotone_finding": "The deeper finding, partly overturning the audit's own framing: JP 2023Q3 (vacancy 13.6% vs all-time high 13.8%) is missed by BOTH bases — the expanding z reads -0.71 (short of the -1 trigger) because Japan's vacancy has risen near-monotonically for ~50 years, so the whole-history median drifts up alongside the chronic glut. For a monotonically deteriorating series ANY relative basis fatigues; catching an 'absolute glut' would need an external cross-market level anchor that does not exist for series as different as a survey rate (JP) and an overhang count (MY). The trailing basis therefore stays not because it is conceptually right but because it empirically dominates — that tension is published, per the frozen decision rule.",
+   "verdict": "~20 classified findings across the two audits: 5 BUGs fixed (footer basis claim, population whole-history overclaim, MY population false zero, MY span badge, MY stale mortgage input — none touching W_PRIM), 4 DESIGN-DEBTs disclosed on-page (nominal/real asymmetry, JP survey-step warn, MY interpolated income, TW short valuation history), 1 NEEDS-REVALIDATION resolved via Amendment 2 (KEEP TRAILING), remainder OK-AS-DESIGNED with reasons recorded.",
+   "source": "scripts/compass_design_audit_charter.md (frozen charter; audits reproducible from it); data/compass-backtest-v3.json 'amendment2' (full trailing-vs-expanding tables, disagreement maps, fatigue exhibit checks, self-checks); scripts/compass_v3_protocol.md § Amendment 2 (frozen rules and decision rule)."
   }
  },
  "test5_full_matrix": [

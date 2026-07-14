@@ -2938,5 +2938,1685 @@
       "tw_n_bad_abs": 9,
       "my_n_bad_abs": 0
     }
+  },
+  "amendment2": {
+    "protocol_text_verbatim": "## Amendment 2 \u2014 2026-07-14, warn-basis re-validation (from the design audit)\nThe design audit (scripts/compass_design_audit_charter.md; findings F1/C4) found\nthe supply-glut warn flag uses a TRAILING 24q z while a glut is arguably an\nABSOLUTE concept \u2014 with demonstrated warning fatigue (JP 2023Q3: vacancy 13.6%,\nnear the all-time high, reads trailing z \u22120.67 \u2192 warn OFF; MY 2022Q2 similar) \u2014\nand an internal inconsistency (the same series is EXPANDING in the report card).\nwarn is an input of the validated W_PRIM, so per audit charter \u00a74 this cannot be\nsilently fixed; it is re-validated here.\n\nFrozen rules:\n- warn_exp: expanding robust z (ez(), same MAD/clamp/minobs=12 conventions as\n  build_compass.py) on the SAME raw level series (vacancy, months-supply per\n  market; US raw.months/raw.vac from clock-us.json), sign such that loose =\n  negative, threshold \u2264 \u22121, OR-combination \u2014 identical to trailing warn except\n  the basis. No threshold or window search.\n- W_PRIM_EXP = starved \u2227 warn_exp. Evaluated with the IDENTICAL v3 machinery\n  (both targets, gate, MH pooling, episode counts, overlap robustness).\n- Decision rule (frozen): the live gauge switches to the expanding basis ONLY if\n  W_PRIM_EXP passes the same ABS+REL gates AND its ABS MH-pooled OR \u2265 the\n  trailing version's. Otherwise trailing stays (status quo unless dominated),\n  and the conceptual tension is published as a finding: the trailing warning\n  works empirically even though a glut is conceptually absolute.\n- Both versions' full tables are published regardless of outcome.\nTiming disclosure: this amendment was written after the audit revealed the\nfatigue cases but before any W_PRIM_EXP table was computed.",
+    "markets": {
+      "us": {
+        "market": "us",
+        "n_quarters": 205,
+        "level_check": {
+          "vacancy": {
+            "field": "vacancy",
+            "n_total": 205,
+            "n_nonnull": 205,
+            "min": 0.7,
+            "max": 2.9,
+            "sample_first5": [
+              1.2,
+              1.2,
+              1.4,
+              1.2,
+              1.2
+            ]
+          },
+          "months": {
+            "field": "months",
+            "n_total": 205,
+            "n_nonnull": 205,
+            "min": 3.47,
+            "max": 11.4,
+            "sample_first5": [
+              9.73,
+              7.07,
+              7.03,
+              6.07,
+              6.37
+            ]
+          },
+          "axis_identical_to_compass_q": true,
+          "align_note": "US: source=data/clock-us.json raw.vac / raw.months; raw q axis identical to compass q axis: True (joined by label regardless)."
+        },
+        "n_bad_abs": 21,
+        "rated_abs": true,
+        "results": {
+          "T_ABS": {
+            "OR": 12.328,
+            "haldane_applied": false,
+            "precision": 0.3409,
+            "recall": 0.7143,
+            "base_rate": 0.1088,
+            "w_quarters": 44,
+            "cells": {
+              "a": 15,
+              "b": 29,
+              "c": 6,
+              "d": 143,
+              "n_used": 193,
+              "n_excluded": 12,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 11.571,
+                  "n_used": 17,
+                  "w_count": 4,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 6.0,
+                  "n_used": 16,
+                  "w_count": 3,
+                  "bad_count": 2,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 45.0,
+                  "n_used": 16,
+                  "w_count": 3,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 11.571
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 1,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2005Q3",
+                  "end_q": "2010Q3",
+                  "length": 21,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "T_REL": {
+            "OR": 23.925,
+            "haldane_applied": false,
+            "precision": 0.8788,
+            "recall": 0.4915,
+            "base_rate": 0.3642,
+            "w_quarters": 33,
+            "cells": {
+              "a": 29,
+              "b": 4,
+              "c": 30,
+              "d": 99,
+              "n_used": 162,
+              "n_excluded": 43,
+              "n_total": 205
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 26.6,
+                  "n_used": 14,
+                  "w_count": 3,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 12.143,
+                  "n_used": 13,
+                  "w_count": 2,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 13.571,
+                  "n_used": 14,
+                  "w_count": 2,
+                  "bad_count": 5,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 13.571
+            },
+            "episodes": {
+              "episodes_total": 3,
+              "caught": 3,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "1982Q4",
+                  "end_q": "1983Q2",
+                  "length": 3,
+                  "caught": true
+                },
+                {
+                  "start_q": "1987Q3",
+                  "end_q": "1994Q4",
+                  "length": 30,
+                  "caught": true
+                },
+                {
+                  "start_q": "2005Q1",
+                  "end_q": "2011Q2",
+                  "length": 26,
+                  "caught": true
+                }
+              ]
+            }
+          }
+        },
+        "disagreements_count": 24,
+        "disagreements_2020plus": [
+          {
+            "q": "2021Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 0.9,
+            "months_level": 6.17,
+            "vac_ez": 2.698,
+            "months_ez": -0.182
+          },
+          {
+            "q": "2021Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 0.9,
+            "months_level": 6.13,
+            "vac_ez": 3,
+            "months_ez": -0.155
+          },
+          {
+            "q": "2022Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 0.8,
+            "months_level": 6.27,
+            "vac_ez": 2.698,
+            "months_ez": -0.25
+          },
+          {
+            "q": "2023Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 0.7,
+            "months_level": 7.4,
+            "vac_ez": 3,
+            "months_ez": -0.993
+          }
+        ]
+      },
+      "tw": {
+        "market": "tw",
+        "n_quarters": 101,
+        "level_check": {
+          "vacancy": {
+            "field": "vacancy",
+            "n_total": 101,
+            "n_nonnull": 69,
+            "min": 8.66,
+            "max": 10.68,
+            "sample_first5": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          "months": {
+            "field": "months",
+            "n_total": 101,
+            "n_nonnull": 73,
+            "min": 71565,
+            "max": 142616,
+            "sample_first5": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          "axis_identical_to_compass_q": true,
+          "align_note": "TW: source=scripts/.twdata/tw_raw.json vacancy / months; raw q axis identical to compass q axis: True (joined by label regardless)."
+        },
+        "n_bad_abs": 9,
+        "rated_abs": true,
+        "results": {
+          "T_ABS": {
+            "OR": 8.474,
+            "haldane_applied": true,
+            "precision": null,
+            "recall": 0.0,
+            "base_rate": 0.1011,
+            "w_quarters": 0,
+            "cells": {
+              "a": 0,
+              "b": 0,
+              "c": 9,
+              "d": 80,
+              "n_used": 89,
+              "n_excluded": 12,
+              "n_total": 101
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 17.0,
+                  "n_used": 8,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 5.0,
+                  "n_used": 8,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 4.333,
+                  "n_used": 7,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 5.0
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2013Q3",
+                  "end_q": "2015Q3",
+                  "length": 9,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "T_REL": {
+            "OR": 1.408,
+            "haldane_applied": true,
+            "precision": null,
+            "recall": 0.0,
+            "base_rate": 0.4138,
+            "w_quarters": 0,
+            "cells": {
+              "a": 0,
+              "b": 0,
+              "c": 24,
+              "d": 34,
+              "n_used": 58,
+              "n_excluded": 43,
+              "n_total": 101
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 1.4,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 2,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.4
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2012Q2",
+                  "end_q": "2018Q1",
+                  "length": 24,
+                  "caught": false
+                }
+              ]
+            }
+          }
+        },
+        "disagreements_count": 8,
+        "disagreements_2020plus": []
+      },
+      "my": {
+        "market": "my",
+        "n_quarters": 105,
+        "level_check": {
+          "vacancy": {
+            "field": "vacancy",
+            "n_total": 105,
+            "n_nonnull": 85,
+            "min": 8804,
+            "max": 36863,
+            "sample_first5": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          "months": {
+            "field": "months",
+            "n_total": 105,
+            "n_nonnull": 57,
+            "min": 65866,
+            "max": 181123,
+            "sample_first5": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          "axis_identical_to_compass_q": true,
+          "align_note": "MY: source=scripts/.mydata/my_raw.json vacancy / months; raw q axis identical to compass q axis: True (joined by label regardless)."
+        },
+        "n_bad_abs": 0,
+        "rated_abs": false,
+        "results": {
+          "T_ABS": {
+            "OR": 10.059,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": null,
+            "base_rate": 0.0,
+            "w_quarters": 8,
+            "cells": {
+              "a": 0,
+              "b": 8,
+              "c": 0,
+              "d": 85,
+              "n_used": 93,
+              "n_excluded": 12,
+              "n_total": 105
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 17.0,
+                  "n_used": 8,
+                  "w_count": 0,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 5.0,
+                  "n_used": 8,
+                  "w_count": 1,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 5.0,
+                  "n_used": 8,
+                  "w_count": 1,
+                  "bad_count": 0,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 5.0
+            },
+            "episodes": {
+              "episodes_total": 0,
+              "caught": 0,
+              "missed": 0,
+              "details": []
+            }
+          },
+          "T_REL": {
+            "OR": 5.833,
+            "haldane_applied": false,
+            "precision": 0.625,
+            "recall": 0.2941,
+            "base_rate": 0.2742,
+            "w_quarters": 8,
+            "cells": {
+              "a": 5,
+              "b": 3,
+              "c": 12,
+              "d": 42,
+              "n_used": 62,
+              "n_excluded": 43,
+              "n_total": 105
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 3.0,
+                  "n_used": 5,
+                  "w_count": 0,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 0.778,
+                  "n_used": 5,
+                  "w_count": 1,
+                  "bad_count": 1,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 4.2,
+                  "n_used": 6,
+                  "w_count": 1,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 3.0
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 2,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2017Q1",
+                  "end_q": "2020Q4",
+                  "length": 16,
+                  "caught": true
+                },
+                {
+                  "start_q": "2023Q1",
+                  "end_q": "2023Q1",
+                  "length": 1,
+                  "caught": true
+                }
+              ]
+            }
+          }
+        },
+        "disagreements_count": 16,
+        "disagreements_2020plus": [
+          {
+            "q": "2020Q1",
+            "warn_trailing": false,
+            "warn_exp": true,
+            "vac_level": 29698,
+            "months_level": 77009,
+            "vac_ez": -1.071,
+            "months_ez": 0.501
+          },
+          {
+            "q": "2020Q2",
+            "warn_trailing": false,
+            "warn_exp": true,
+            "vac_level": 31661,
+            "months_level": 77009,
+            "vac_ez": -1.217,
+            "months_ez": 0.501
+          },
+          {
+            "q": "2020Q3",
+            "warn_trailing": false,
+            "warn_exp": true,
+            "vac_level": 30926,
+            "months_level": 77009,
+            "vac_ez": -1.012,
+            "months_ez": 0.501
+          },
+          {
+            "q": "2022Q2",
+            "warn_trailing": false,
+            "warn_exp": true,
+            "vac_level": 34092,
+            "months_level": 71981,
+            "vac_ez": -1.112,
+            "months_ez": 0.674
+          },
+          {
+            "q": "2024Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 24208,
+            "months_level": 82135,
+            "vac_ez": -0.164,
+            "months_ez": -0.0
+          },
+          {
+            "q": "2024Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 22642,
+            "months_level": 82135,
+            "vac_ez": -0.003,
+            "months_ez": -0.0
+          },
+          {
+            "q": "2024Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 21968,
+            "months_level": 82135,
+            "vac_ez": 0.068,
+            "months_ez": -0.0
+          },
+          {
+            "q": "2024Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 23149,
+            "months_level": 82135,
+            "vac_ez": -0.062,
+            "months_ez": -0.0
+          },
+          {
+            "q": "2025Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 23515,
+            "months_level": 99877,
+            "vac_ez": -0.108,
+            "months_ez": -0.92
+          },
+          {
+            "q": "2025Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 26911,
+            "months_level": 99877,
+            "vac_ez": -0.536,
+            "months_ez": -0.92
+          },
+          {
+            "q": "2025Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 28672,
+            "months_level": 99877,
+            "vac_ez": -0.709,
+            "months_ez": -0.92
+          },
+          {
+            "q": "2025Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 30471,
+            "months_level": 99877,
+            "vac_ez": -0.881,
+            "months_ez": -0.675
+          }
+        ]
+      },
+      "jp": {
+        "market": "jp",
+        "n_quarters": 204,
+        "level_check": {
+          "vacancy": {
+            "field": "vacancy",
+            "n_total": 204,
+            "n_nonnull": 189,
+            "min": 7.6,
+            "max": 13.8,
+            "sample_first5": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          "months": {
+            "field": "months",
+            "n_total": 204,
+            "n_nonnull": 204,
+            "min": 154980.0,
+            "max": 448043.0,
+            "sample_first5": [
+              297338.0,
+              333950.0,
+              345544.0,
+              372698.0,
+              380219.0
+            ]
+          },
+          "axis_identical_to_compass_q": true,
+          "align_note": "JP: source=scripts/.jpdata/jp_raw.json vacancy / months; raw q axis identical to compass q axis: True (joined by label regardless)."
+        },
+        "n_bad_abs": 76,
+        "rated_abs": true,
+        "results": {
+          "T_ABS": {
+            "OR": 9.124,
+            "haldane_applied": false,
+            "precision": 0.7857,
+            "recall": 0.4342,
+            "base_rate": 0.3958,
+            "w_quarters": 42,
+            "cells": {
+              "a": 33,
+              "b": 9,
+              "c": 43,
+              "d": 107,
+              "n_used": 192,
+              "n_excluded": 12,
+              "n_total": 204
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 21.0,
+                  "n_used": 16,
+                  "w_count": 3,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 9.0,
+                  "n_used": 16,
+                  "w_count": 4,
+                  "bad_count": 6,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 6.0,
+                  "n_used": 16,
+                  "w_count": 4,
+                  "bad_count": 7,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 9.0
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 1,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "1990Q2",
+                  "end_q": "2008Q4",
+                  "length": 75,
+                  "caught": true
+                },
+                {
+                  "start_q": "2010Q1",
+                  "end_q": "2010Q1",
+                  "length": 1,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "T_REL": {
+            "OR": 9.419,
+            "haldane_applied": false,
+            "precision": 0.8095,
+            "recall": 0.4789,
+            "base_rate": 0.441,
+            "w_quarters": 42,
+            "cells": {
+              "a": 34,
+              "b": 8,
+              "c": 37,
+              "d": 82,
+              "n_used": 161,
+              "n_excluded": 43,
+              "n_total": 204
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 3.0,
+                  "n_used": 13,
+                  "w_count": 3,
+                  "bad_count": 6,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                },
+                "4": {
+                  "OR": 27.0,
+                  "n_used": 13,
+                  "w_count": 4,
+                  "bad_count": 6,
+                  "haldane_applied": true,
+                  "small_n_caveat": false
+                },
+                "8": {
+                  "OR": 7.0,
+                  "n_used": 14,
+                  "w_count": 4,
+                  "bad_count": 6,
+                  "haldane_applied": false,
+                  "small_n_caveat": false
+                }
+              },
+              "median_OR": 7.0
+            },
+            "episodes": {
+              "episodes_total": 2,
+              "caught": 2,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "1982Q4",
+                  "end_q": "1985Q1",
+                  "length": 10,
+                  "caught": true
+                },
+                {
+                  "start_q": "1989Q3",
+                  "end_q": "2004Q3",
+                  "length": 61,
+                  "caught": true
+                }
+              ]
+            }
+          }
+        },
+        "disagreements_count": 47,
+        "disagreements_2020plus": [
+          {
+            "q": "2020Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 212619.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.045
+          },
+          {
+            "q": "2020Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 199897.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.187
+          },
+          {
+            "q": "2020Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 202361.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.152
+          },
+          {
+            "q": "2020Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 202295.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.152
+          },
+          {
+            "q": "2021Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 206250.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.105
+          },
+          {
+            "q": "2021Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 216668.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.975
+          },
+          {
+            "q": "2021Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 217800.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.951
+          },
+          {
+            "q": "2021Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 215361.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.971
+          },
+          {
+            "q": "2022Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 214364.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.974
+          },
+          {
+            "q": "2022Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 214435.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.965
+          },
+          {
+            "q": "2022Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 217771.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.922
+          },
+          {
+            "q": "2022Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 212850.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.963
+          },
+          {
+            "q": "2023Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 213991.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.941
+          },
+          {
+            "q": "2023Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 206713.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.024
+          },
+          {
+            "q": "2023Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 199084.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.103
+          },
+          {
+            "q": "2024Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 194300.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.152
+          },
+          {
+            "q": "2024Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 207199.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.006
+          },
+          {
+            "q": "2024Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 197555.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.111
+          },
+          {
+            "q": "2024Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 192858.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.16
+          },
+          {
+            "q": "2025Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 216797.0,
+            "vac_ez": -0.776,
+            "months_ez": 0.891
+          },
+          {
+            "q": "2025Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 154980.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.576
+          },
+          {
+            "q": "2025Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 179812.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.278
+          },
+          {
+            "q": "2025Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 188893.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.172
+          }
+        ]
+      }
+    },
+    "threshold_evaluation_wprim_exp": {
+      "ABS": {
+        "per_market": {
+          "us": {
+            "OR": 12.328,
+            "OR_ge_3": true,
+            "w_quarters": 44,
+            "w_quarters_ge_8": true,
+            "precision": 0.3409,
+            "base_rate": 0.1088,
+            "2x_base_rate": 0.2176,
+            "precision_ge_2x_base_rate": true,
+            "rated_abs": true,
+            "pass": true
+          },
+          "jp": {
+            "OR": 9.124,
+            "OR_ge_3": true,
+            "w_quarters": 42,
+            "w_quarters_ge_8": true,
+            "precision": 0.7857,
+            "base_rate": 0.3958,
+            "2x_base_rate": 0.7916,
+            "precision_ge_2x_base_rate": false,
+            "rated_abs": true,
+            "pass": false
+          }
+        },
+        "us_and_jp_pass": false,
+        "rated_markets_used_for_MH": [
+          "us",
+          "tw",
+          "jp"
+        ],
+        "MH_pooled_OR": 10.114,
+        "MH_pooled_OR_ge_3": true,
+        "pass": false,
+        "status": "FAIL"
+      },
+      "REL": {
+        "per_market": {
+          "us": {
+            "OR": 23.925,
+            "pass": true
+          },
+          "tw": {
+            "OR": 1.408,
+            "pass": false
+          },
+          "my": {
+            "OR": 5.833,
+            "pass": true
+          },
+          "jp": {
+            "OR": 9.419,
+            "pass": true
+          }
+        },
+        "n_markets_passing": 3,
+        "n_markets_passing_ge_3": true,
+        "MH_pooled_OR": 12.161,
+        "MH_pooled_OR_ge_2.5": true,
+        "pass": true,
+        "status": "PASS"
+      },
+      "panels": {
+        "abs_wprim_exp": {
+          "classifier": "W_PRIM_EXP",
+          "target": "T_ABS",
+          "markets": [
+            "us",
+            "tw",
+            "jp"
+          ],
+          "per_market_cells": {
+            "us": {
+              "a": 15,
+              "b": 29,
+              "c": 6,
+              "d": 143,
+              "n_used": 193,
+              "n_excluded": 12,
+              "n_total": 205
+            },
+            "tw": {
+              "a": 0,
+              "b": 0,
+              "c": 9,
+              "d": 80,
+              "n_used": 89,
+              "n_excluded": 12,
+              "n_total": 101
+            },
+            "jp": {
+              "a": 33,
+              "b": 9,
+              "c": 43,
+              "d": 107,
+              "n_used": 192,
+              "n_excluded": 12,
+              "n_total": 204
+            }
+          },
+          "pooled": {
+            "OR_MH": 10.114,
+            "n_strata": 3
+          }
+        },
+        "rel_wprim_exp": {
+          "classifier": "W_PRIM_EXP",
+          "target": "T_REL",
+          "markets": [
+            "us",
+            "tw",
+            "my",
+            "jp"
+          ],
+          "per_market_cells": {
+            "us": {
+              "a": 29,
+              "b": 4,
+              "c": 30,
+              "d": 99,
+              "n_used": 162,
+              "n_excluded": 43,
+              "n_total": 205
+            },
+            "tw": {
+              "a": 0,
+              "b": 0,
+              "c": 24,
+              "d": 34,
+              "n_used": 58,
+              "n_excluded": 43,
+              "n_total": 101
+            },
+            "my": {
+              "a": 5,
+              "b": 3,
+              "c": 12,
+              "d": 42,
+              "n_used": 62,
+              "n_excluded": 43,
+              "n_total": 105
+            },
+            "jp": {
+              "a": 34,
+              "b": 8,
+              "c": 37,
+              "d": 82,
+              "n_used": 161,
+              "n_excluded": 43,
+              "n_total": 204
+            }
+          },
+          "pooled": {
+            "OR_MH": 12.161,
+            "n_strata": 4
+          }
+        }
+      }
+    },
+    "side_by_side_vs_trailing": {
+      "us": {
+        "T_ABS_OR_trailing": 16.196,
+        "T_ABS_OR_expanding": 12.328,
+        "T_REL_OR_trailing": 37.132,
+        "T_REL_OR_expanding": 23.925
+      },
+      "tw": {
+        "T_ABS_OR_trailing": 2.789,
+        "T_ABS_OR_expanding": 8.474,
+        "T_REL_OR_trailing": 0.456,
+        "T_REL_OR_expanding": 1.408
+      },
+      "my": {
+        "T_ABS_OR_trailing": 7.952,
+        "T_ABS_OR_expanding": 10.059,
+        "T_REL_OR_trailing": 19.111,
+        "T_REL_OR_expanding": 5.833
+      },
+      "jp": {
+        "T_ABS_OR_trailing": 13.21,
+        "T_ABS_OR_expanding": 9.124,
+        "T_REL_OR_trailing": 14.008,
+        "T_REL_OR_expanding": 9.419
+      }
+    },
+    "mh_side_by_side": {
+      "T_ABS": {
+        "trailing": 13.529,
+        "expanding": 10.114
+      },
+      "T_REL": {
+        "trailing": 16.07,
+        "expanding": 12.161
+      }
+    },
+    "disagreement_map": {
+      "us": {
+        "disagreements_count": 24,
+        "disagreements_2020plus": [
+          {
+            "q": "2021Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 0.9,
+            "months_level": 6.17,
+            "vac_ez": 2.698,
+            "months_ez": -0.182
+          },
+          {
+            "q": "2021Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 0.9,
+            "months_level": 6.13,
+            "vac_ez": 3,
+            "months_ez": -0.155
+          },
+          {
+            "q": "2022Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 0.8,
+            "months_level": 6.27,
+            "vac_ez": 2.698,
+            "months_ez": -0.25
+          },
+          {
+            "q": "2023Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 0.7,
+            "months_level": 7.4,
+            "vac_ez": 3,
+            "months_ez": -0.993
+          }
+        ]
+      },
+      "tw": {
+        "disagreements_count": 8,
+        "disagreements_2020plus": []
+      },
+      "my": {
+        "disagreements_count": 16,
+        "disagreements_2020plus": [
+          {
+            "q": "2020Q1",
+            "warn_trailing": false,
+            "warn_exp": true,
+            "vac_level": 29698,
+            "months_level": 77009,
+            "vac_ez": -1.071,
+            "months_ez": 0.501
+          },
+          {
+            "q": "2020Q2",
+            "warn_trailing": false,
+            "warn_exp": true,
+            "vac_level": 31661,
+            "months_level": 77009,
+            "vac_ez": -1.217,
+            "months_ez": 0.501
+          },
+          {
+            "q": "2020Q3",
+            "warn_trailing": false,
+            "warn_exp": true,
+            "vac_level": 30926,
+            "months_level": 77009,
+            "vac_ez": -1.012,
+            "months_ez": 0.501
+          },
+          {
+            "q": "2022Q2",
+            "warn_trailing": false,
+            "warn_exp": true,
+            "vac_level": 34092,
+            "months_level": 71981,
+            "vac_ez": -1.112,
+            "months_ez": 0.674
+          },
+          {
+            "q": "2024Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 24208,
+            "months_level": 82135,
+            "vac_ez": -0.164,
+            "months_ez": -0.0
+          },
+          {
+            "q": "2024Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 22642,
+            "months_level": 82135,
+            "vac_ez": -0.003,
+            "months_ez": -0.0
+          },
+          {
+            "q": "2024Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 21968,
+            "months_level": 82135,
+            "vac_ez": 0.068,
+            "months_ez": -0.0
+          },
+          {
+            "q": "2024Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 23149,
+            "months_level": 82135,
+            "vac_ez": -0.062,
+            "months_ez": -0.0
+          },
+          {
+            "q": "2025Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 23515,
+            "months_level": 99877,
+            "vac_ez": -0.108,
+            "months_ez": -0.92
+          },
+          {
+            "q": "2025Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 26911,
+            "months_level": 99877,
+            "vac_ez": -0.536,
+            "months_ez": -0.92
+          },
+          {
+            "q": "2025Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 28672,
+            "months_level": 99877,
+            "vac_ez": -0.709,
+            "months_ez": -0.92
+          },
+          {
+            "q": "2025Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 30471,
+            "months_level": 99877,
+            "vac_ez": -0.881,
+            "months_ez": -0.675
+          }
+        ]
+      },
+      "jp": {
+        "disagreements_count": 47,
+        "disagreements_2020plus": [
+          {
+            "q": "2020Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 212619.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.045
+          },
+          {
+            "q": "2020Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 199897.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.187
+          },
+          {
+            "q": "2020Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 202361.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.152
+          },
+          {
+            "q": "2020Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 202295.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.152
+          },
+          {
+            "q": "2021Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 206250.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.105
+          },
+          {
+            "q": "2021Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 216668.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.975
+          },
+          {
+            "q": "2021Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 217800.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.951
+          },
+          {
+            "q": "2021Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 215361.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.971
+          },
+          {
+            "q": "2022Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 214364.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.974
+          },
+          {
+            "q": "2022Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 214435.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.965
+          },
+          {
+            "q": "2022Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 217771.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.922
+          },
+          {
+            "q": "2022Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 212850.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.963
+          },
+          {
+            "q": "2023Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 213991.0,
+            "vac_ez": -0.708,
+            "months_ez": 0.941
+          },
+          {
+            "q": "2023Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.6,
+            "months_level": 206713.0,
+            "vac_ez": -0.708,
+            "months_ez": 1.024
+          },
+          {
+            "q": "2023Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 199084.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.103
+          },
+          {
+            "q": "2024Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 194300.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.152
+          },
+          {
+            "q": "2024Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 207199.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.006
+          },
+          {
+            "q": "2024Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 197555.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.111
+          },
+          {
+            "q": "2024Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 192858.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.16
+          },
+          {
+            "q": "2025Q1",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 216797.0,
+            "vac_ez": -0.776,
+            "months_ez": 0.891
+          },
+          {
+            "q": "2025Q2",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 154980.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.576
+          },
+          {
+            "q": "2025Q3",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 179812.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.278
+          },
+          {
+            "q": "2025Q4",
+            "warn_trailing": true,
+            "warn_exp": false,
+            "vac_level": 13.8,
+            "months_level": 188893.0,
+            "vac_ez": -0.776,
+            "months_ez": 1.172
+          }
+        ]
+      }
+    },
+    "fatigue_exhibit_check": {
+      "jp_2023Q3": {
+        "market": "jp",
+        "q": "2023Q3",
+        "found": true,
+        "vac_level": 13.6,
+        "months_level": 201631.0,
+        "vac_ez_expanding": -0.708,
+        "months_ez_expanding": 1.079,
+        "warn_trailing": false,
+        "warn_exp": false,
+        "expected_flip": "trailing OFF -> expanding ON",
+        "flip_confirmed": false
+      },
+      "my_2022Q2": {
+        "market": "my",
+        "q": "2022Q2",
+        "found": true,
+        "vac_level": 34092,
+        "months_level": 71981,
+        "vac_ez_expanding": -1.112,
+        "months_ez_expanding": 0.674,
+        "warn_trailing": false,
+        "warn_exp": true,
+        "expected_flip": "trailing OFF -> expanding ON",
+        "flip_confirmed": true
+      }
+    },
+    "decision_rule": {
+      "text_verbatim": "the live gauge switches to the expanding basis ONLY if W_PRIM_EXP passes the same ABS+REL gates AND its ABS MH-pooled OR >= the trailing version's. Otherwise trailing stays (status quo unless dominated), and the conceptual tension is published as a finding: the trailing warning works empirically even though a glut is conceptually absolute.",
+      "component_1_wprim_exp_abs_pass": false,
+      "component_2_wprim_exp_rel_pass": true,
+      "component_3_abs_mh_or_expanding_ge_trailing": {
+        "mh_or_expanding": 10.114,
+        "mh_or_trailing": 13.529,
+        "pass": false
+      },
+      "verdict": "KEEP-TRAILING"
+    },
+    "self_checks": {
+      "warn_exp_truncation_lookahead_guard": {
+        "market": "jp",
+        "k": 194,
+        "n_full": 204,
+        "checked": 194,
+        "pass": true,
+        "mismatches": []
+      },
+      "current_quarter_state_comparison": {
+        "us": {
+          "q": "2026Q1",
+          "quad": "starved",
+          "warn_trailing": true,
+          "warn_exp": true,
+          "differs": false,
+          "W_PRIM_now": true,
+          "W_PRIM_EXP_now": true
+        },
+        "tw": {
+          "q": "2026Q1",
+          "quad": "starved",
+          "warn_trailing": true,
+          "warn_exp": true,
+          "differs": false,
+          "W_PRIM_now": true,
+          "W_PRIM_EXP_now": true
+        },
+        "my": {
+          "q": "2026Q1",
+          "quad": "starved",
+          "warn_trailing": true,
+          "warn_exp": true,
+          "differs": false,
+          "W_PRIM_now": true,
+          "W_PRIM_EXP_now": true
+        },
+        "jp": {
+          "q": "2025Q4",
+          "quad": "draining",
+          "warn_trailing": true,
+          "warn_exp": false,
+          "differs": true,
+          "W_PRIM_now": false,
+          "W_PRIM_EXP_now": false
+        }
+      },
+      "any_current_quarter_differs": true
+    }
   }
 }

@@ -45,9 +45,21 @@ def smooth(a, w=3):
     return out
 
 def yoy(a):
+    """YoY growth (%). Guards against annual data forward-filled onto a quarterly axis:
+    when the trailing 4-quarter window straddles a hold segment on BOTH ends (a[i]==a[i-4]
+    and every point in between is that same flat value), a plain YoY reads a false 0 even
+    though the underlying annual series is still growing — this hits the most recent
+    quarter(s) right after the last real update. In that case carry forward the last
+    genuine (non-degenerate) YoY reading instead of emitting 0."""
     out=[None]*len(a)
+    last_good=None
     for i in range(4,len(a)):
-        if a[i] is not None and a[i-4] not in (None,0): out[i]=(a[i]/a[i-4]-1)*100
+        if a[i] is not None and a[i-4] not in (None,0):
+            if a[i]==a[i-4] and all(a[j]==a[i] for j in range(i-4,i+1)) and last_good is not None:
+                out[i]=last_good
+            else:
+                out[i]=(a[i]/a[i-4]-1)*100
+                last_good=out[i]
     return out
 
 def ez(a, sign=1, minobs=12):

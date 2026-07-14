@@ -6,31 +6,32 @@ the inputs differ, so the compute half is identical to build_clock_us.py.
 
 INPUT: a JSON file of raw quarterly series (scripts/.jpdata/jp_raw.json), shape:
 {
-  "q":      ["1991Q1", ...],        # quarter labels, contiguous
-  "price":  [ ... ],                # 信義房價指數 (level)     -> judged + valuation numerator
-  "pti":    [ ... ],                # 房價所得比 (level)       -> valuation (low = cheap)   [optional]
-  "months": [ ... ],                # 待售/餘屋月數 or proxy   -> supply (low = tight)      [optional]
-  "vacancy":[ ... ],                # 低度用電宅比率           -> supply (low = tight)      [optional]
-  "gap":    [ ... ],                # 家庭形成 - 完工 (annualised) -> demand (+ = under-built)[optional]
-  "pop":    [ ... ],                # 25-54 人口 (level)       -> population (growth = +)   [optional]
-  "credit": [ ... ],                # 購置住宅貸款餘額 (level) -> money (real growth = +)   [optional]
-  "rate":   [ ... ],                # 房貸利率 % (nominal)     -> money (real, easing = +)  [optional]
-  "cpi":    [ ... ],                # CPI 指數 (level)         -> deflator for credit & rate[optional]
-  "gdp":    [ ... ],                # 實質GDP (level)          -> economy (YoY = +)         [optional]
-  "unemp":  [ ... ],                # 失業率 % (level)         -> economy (falling = +)     [optional]
-  "income": [ ... ]                 # 實質可支配所得 (level)   -> economy (YoY = +); also valuation denom if no pti
+  "q":      ["1975Q1", ...],        # quarter labels, contiguous
+  "price":  [ ... ],                # BIS Japan house-price index (level) -> judged + valuation numerator
+  "pti":    [ ... ],                # not fetched for JP (no pti field; valuation falls back to price/income) [optional]
+  "months": [ ... ],                # e-Stat/FRED housing starts (units, raw count) -> supply (low = tight)  [optional]
+  "vacancy":[ ... ],                # 空き家率 (空屋率) — quinquennial Housing & Land Survey, held flat between releases -> supply (low = tight) [optional]
+  "gap":    [ ... ],                # not fetched for JP (household formation - completions) [optional]
+  "pop":    [ ... ],                # e-Stat/World Bank population (level) -> population (growth = +)   [optional]
+  "credit": [ ... ],                # BOJ household housing-loan balance (level) -> money (real growth = +) [optional]
+  "rate":   [ ... ],                # BOJ policy / mortgage rate % (nominal) -> money (real, easing = +)  [optional]
+  "cpi":    [ ... ],                # e-Stat CPI index (level) -> deflator for credit & rate[optional]
+  "gdp":    [ ... ],                # FRED/e-Stat real GDP (level) -> economy (YoY = +)         [optional]
+  "unemp":  [ ... ],                # e-Stat unemployment rate % (level) -> economy (falling = +) [optional]
+  "income": [ ... ]                 # e-Stat/FRED household income proxy (level, annual-held) -> economy (YoY = +); valuation denominator (no pti for JP)
 }
 Any series may be absent or contain nulls; a quarter needs >=3 of the components on each
 axis to get a reading. Valuation uses `pti` if present, else price/income.
 
-Because TW price history is shorter than the US, the trailing standardisation window
-defaults to 6y (24q) instead of 10y; override with --win N.
+This market shares MY/TW's 6y (24q) trailing standardisation window (not the US's 10y
+default), even though JP's own price history is long enough to support a wider one;
+override with --win N.
 
 Usage:
-    python3 scripts/build_clock_tw.py                 # read .jpdata/jp_raw.json, write + inject
-    python3 scripts/build_clock_tw.py --no-inject     # write data/clock-jp.json only
-    python3 scripts/build_clock_tw.py --selftest      # run on synthetic data, no files needed
-    python3 scripts/build_clock_tw.py --win 40        # use a 10y window (if history allows)
+    python3 scripts/build_clock_jp.py                 # read .jpdata/jp_raw.json, write + inject
+    python3 scripts/build_clock_jp.py --no-inject     # write data/clock-jp.json only
+    python3 scripts/build_clock_jp.py --selftest      # run on synthetic data, no files needed
+    python3 scripts/build_clock_jp.py --win 40        # use a 10y window (if history allows)
 """
 import json, math, os, sys
 import statistics as st

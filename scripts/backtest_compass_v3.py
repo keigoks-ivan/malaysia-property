@@ -105,6 +105,17 @@ def yoy(a):
     return out
 
 
+def ez(a, sign=1, minobs=12):
+    """EXPANDING (whole-history) robust z -- copied EXACTLY from scripts/build_compass.py ez()."""
+    out = [None] * len(a); h = []
+    for i, v in enumerate(a):
+        if v is not None: h.append(v)
+        if v is None or len(h) < minobs: continue
+        m = st.median(h); mad = st.median([abs(x - m) for x in h]) or 1e-9
+        out[i] = sign * max(-3, min(3, (v - m) / (1.4826 * mad)))
+    return out
+
+
 # ---------------------------------------------------------------------------
 # Data loading
 # ---------------------------------------------------------------------------
@@ -424,6 +435,272 @@ def build_panel(all_res, cname, tname, markets):
     pooled = mh_or([c for c in strata_cells])
     return {'classifier': cname, 'target': tname, 'markets': markets,
             'per_market_cells': per_market, 'pooled': pooled}
+
+
+# ---------------------------------------------------------------------------
+# Amendment 2 (2026-07-14): expanding-basis warn_exp re-validation
+# ---------------------------------------------------------------------------
+AMENDMENT2_TEXT = """## Amendment 2 — 2026-07-14, warn-basis re-validation (from the design audit)
+The design audit (scripts/compass_design_audit_charter.md; findings F1/C4) found
+the supply-glut warn flag uses a TRAILING 24q z while a glut is arguably an
+ABSOLUTE concept — with demonstrated warning fatigue (JP 2023Q3: vacancy 13.6%,
+near the all-time high, reads trailing z −0.67 → warn OFF; MY 2022Q2 similar) —
+and an internal inconsistency (the same series is EXPANDING in the report card).
+warn is an input of the validated W_PRIM, so per audit charter §4 this cannot be
+silently fixed; it is re-validated here.
+
+Frozen rules:
+- warn_exp: expanding robust z (ez(), same MAD/clamp/minobs=12 conventions as
+  build_compass.py) on the SAME raw level series (vacancy, months-supply per
+  market; US raw.months/raw.vac from clock-us.json), sign such that loose =
+  negative, threshold ≤ −1, OR-combination — identical to trailing warn except
+  the basis. No threshold or window search.
+- W_PRIM_EXP = starved ∧ warn_exp. Evaluated with the IDENTICAL v3 machinery
+  (both targets, gate, MH pooling, episode counts, overlap robustness).
+- Decision rule (frozen): the live gauge switches to the expanding basis ONLY if
+  W_PRIM_EXP passes the same ABS+REL gates AND its ABS MH-pooled OR ≥ the
+  trailing version's. Otherwise trailing stays (status quo unless dominated),
+  and the conceptual tension is published as a finding: the trailing warning
+  works empirically even though a glut is conceptually absolute.
+- Both versions' full tables are published regardless of outcome.
+Timing disclosure: this amendment was written after the audit revealed the
+fatigue cases but before any W_PRIM_EXP table was computed."""
+
+
+def load_warn_exp_raw(mkt, compass_q):
+    """RAW level series (vacancy, months) that feed the trailing warn, joined onto the
+    compass q axis by quarter label (house convention; never positional). Returns
+    (vac_aligned, months_aligned, axis_identical, note)."""
+    if mkt == 'us':
+        raw = json.load(open(os.path.join(ROOT, 'data', 'clock-us.json')))
+        qaxis = raw['q']
+        vac_native = raw['raw']['vac']
+        months_native = raw['raw']['months']
+        src = 'data/clock-us.json raw.vac / raw.months'
+    else:
+        raw = json.load(open(os.path.join(ROOT, 'scripts', f'.{mkt}data', f'{mkt}_raw.json')))
+        qaxis = raw['q']
+        vac_native = raw['vacancy']
+        months_native = raw['months']
+        src = f'scripts/.{mkt}data/{mkt}_raw.json vacancy / months'
+    vac_map = dict(zip(qaxis, vac_native))
+    months_map = dict(zip(qaxis, months_native))
+    vac_aligned = [vac_map.get(qq) for qq in compass_q]
+    months_aligned = [months_map.get(qq) for qq in compass_q]
+    axis_identical = (qaxis == compass_q)
+    note = (f"{mkt.upper()}: source={src}; raw q axis identical to compass q axis: {axis_identical} "
+            f"(joined by label regardless).")
+    return vac_aligned, months_aligned, axis_identical, note
+
+
+def compute_warn_exp(vac_level, months_level, n):
+    """Mirrors build_compass.py's loose()/warn exactly, but on ez() (expanding) instead
+    of the clock's czlist() (trailing). Null-safe the same way loose() is: a None input
+    contributes False to the OR, never None -- so warn_exp is always a bool, never null."""
+    vac_ez = ez(vac_level, sign=-1)
+    months_ez = ez(months_level, sign=-1)
+
+    def loose_exp(i):
+        vv = vac_ez[i]; mm = months_ez[i]
+        return (vv is not None and vv <= -1) or (mm is not None and mm <= -1)
+
+    warn_exp = [loose_exp(i) for i in range(n)]
+    return warn_exp, vac_ez, months_ez
+
+
+def compute_wprim_exp(quad, warn_exp, n):
+    """W_PRIM_EXP = quad=='starved' AND warn_exp -- same null-handling pattern as W_PRIM
+    in compute_classifiers (undefined quad => undefined W_PRIM_EXP)."""
+    W = [None] * n
+    for i in range(n):
+        if quad[i] is None or warn_exp[i] is None:
+            continue
+        W[i] = (quad[i] == 'starved') and bool(warn_exp[i])
+    return W
+
+
+def analyze_market_amendment2(mkt):
+    d = load_market(mkt)
+    n, q, quad, warn_trail, fwd12 = d['n'], d['q'], d['quad'], d['warn'], d['fwd12']
+
+    vac_level, months_level, axis_identical, align_note = load_warn_exp_raw(mkt, q)
+
+    def rng(a, label):
+        vv = [x for x in a if x is not None]
+        return {'field': label, 'n_total': len(a), 'n_nonnull': len(vv),
+                'min': (round(min(vv), 3) if vv else None), 'max': (round(max(vv), 3) if vv else None),
+                'sample_first5': a[:5]}
+
+    level_check = {
+        'vacancy': rng(vac_level, 'vacancy'), 'months': rng(months_level, 'months'),
+        'axis_identical_to_compass_q': axis_identical, 'align_note': align_note,
+    }
+
+    warn_exp, vac_ez, months_ez = compute_warn_exp(vac_level, months_level, n)
+    W_PRIM_EXP = compute_wprim_exp(quad, warn_exp, n)
+
+    t_abs = compute_t_abs(fwd12)
+    t_rel, q25_used, matured_n = compute_t_rel(fwd12)
+    targets = {'T_ABS': t_abs, 'T_REL': t_rel}
+
+    n_bad_abs = sum(1 for x in t_abs if x is True)
+    rated_abs = n_bad_abs >= 8
+
+    results = {}
+    for tname, bad in targets.items():
+        cells = two_by_two(W_PRIM_EXP, bad)
+        stats = or_stats(cells)
+        overlap = overlap_robustness(W_PRIM_EXP, bad)
+        eps = find_episodes(bad)
+        epcatch = episode_catch(eps, W_PRIM_EXP, q)
+        results[tname] = {**stats, 'overlap': overlap, 'episodes': epcatch}
+
+    # disagreement map: warn (trailing, bool) vs warn_exp (bool), quarter by quarter
+    disagreements = []
+    for i in range(n):
+        wt = bool(warn_trail[i]) if warn_trail[i] is not None else False
+        we = warn_exp[i]
+        if wt != we:
+            disagreements.append({
+                'q': q[i], 'warn_trailing': wt, 'warn_exp': we,
+                'vac_level': vac_level[i], 'months_level': months_level[i],
+                'vac_ez': round(vac_ez[i], 3) if vac_ez[i] is not None else None,
+                'months_ez': round(months_ez[i], 3) if months_ez[i] is not None else None,
+            })
+    disagreements_2020plus = [x for x in disagreements if x['q'] >= '2020Q1']
+
+    return {
+        'market': mkt, 'n_quarters': n,
+        'level_check': level_check,
+        'n_bad_abs': n_bad_abs, 'rated_abs': rated_abs,
+        'results': results,
+        'disagreements_count': len(disagreements),
+        'disagreements_2020plus': disagreements_2020plus,
+        # kept for panel construction / self-checks / fatigue-exhibit lookup, stripped before JSON write
+        '_q': q, '_quad': quad, '_warn_trail': warn_trail, '_warn_exp': warn_exp,
+        '_vac_level': vac_level, '_months_level': months_level,
+        '_vac_ez': vac_ez, '_months_ez': months_ez,
+        '_targets': targets, '_classifiers': {'W_PRIM_EXP': W_PRIM_EXP}, '_fwd12': fwd12,
+    }
+
+
+def fatigue_exhibit_check(all_res_exp, mkt, qlabel):
+    r = all_res_exp[mkt]
+    if qlabel not in r['_q']:
+        return {'market': mkt, 'q': qlabel, 'found': False}
+    i = r['_q'].index(qlabel)
+    wt = bool(r['_warn_trail'][i]) if r['_warn_trail'][i] is not None else False
+    we = r['_warn_exp'][i]
+    return {
+        'market': mkt, 'q': qlabel, 'found': True,
+        'vac_level': r['_vac_level'][i], 'months_level': r['_months_level'][i],
+        'vac_ez_expanding': round(r['_vac_ez'][i], 3) if r['_vac_ez'][i] is not None else None,
+        'months_ez_expanding': round(r['_months_ez'][i], 3) if r['_months_ez'][i] is not None else None,
+        'warn_trailing': wt, 'warn_exp': we,
+        'expected_flip': 'trailing OFF -> expanding ON',
+        'flip_confirmed': (wt is False and we is True),
+    }
+
+
+def evaluate_thresholds_amendment2(all_res_exp):
+    """Same protocol thresholds as evaluate_thresholds(), applied to W_PRIM_EXP instead
+    of W_PRIM. Duplicated (not reusing evaluate_thresholds' body) so the existing
+    trailing-warn evaluation function/output is untouched byte-for-byte."""
+    out = {}
+
+    abs_market_checks = {}
+    for mkt in ('us', 'jp'):
+        s = all_res_exp[mkt]['results']['T_ABS']
+        cond_or = s['OR'] is not None and s['OR'] >= 3
+        cond_wq = s['w_quarters'] >= 8
+        cond_prec = (s['precision'] is not None and s['base_rate'] is not None
+                     and s['precision'] >= 2 * s['base_rate'])
+        passed = cond_or and cond_wq and cond_prec
+        abs_market_checks[mkt] = {
+            'OR': s['OR'], 'OR_ge_3': cond_or,
+            'w_quarters': s['w_quarters'], 'w_quarters_ge_8': cond_wq,
+            'precision': s['precision'], 'base_rate': s['base_rate'],
+            '2x_base_rate': (round(2 * s['base_rate'], 4) if s['base_rate'] is not None else None),
+            'precision_ge_2x_base_rate': cond_prec,
+            'rated_abs': all_res_exp[mkt]['rated_abs'],
+            'pass': passed,
+        }
+    abs_us_jp_pass = all(v['pass'] for v in abs_market_checks.values())
+
+    rated_markets_abs = [m for m in MKTS if all_res_exp[m]['rated_abs']]
+    panel_abs = build_panel(all_res_exp, 'W_PRIM_EXP', 'T_ABS', rated_markets_abs)
+    mh_abs = panel_abs['pooled']['OR_MH']
+    mh_abs_pass = mh_abs is not None and mh_abs >= 3
+
+    abs_overall = abs_us_jp_pass and mh_abs_pass
+    out['ABS'] = {
+        'per_market': abs_market_checks, 'us_and_jp_pass': abs_us_jp_pass,
+        'rated_markets_used_for_MH': rated_markets_abs,
+        'MH_pooled_OR': mh_abs, 'MH_pooled_OR_ge_3': mh_abs_pass,
+        'pass': abs_overall, 'status': 'PASS' if abs_overall else 'FAIL',
+    }
+
+    rel_market_checks = {}
+    n_pass = 0
+    for mkt in MKTS:
+        s = all_res_exp[mkt]['results']['T_REL']
+        p = s['OR'] is not None and s['OR'] >= 2
+        rel_market_checks[mkt] = {'OR': s['OR'], 'pass': p}
+        if p: n_pass += 1
+    rel_count_pass = n_pass >= 3
+
+    panel_rel = build_panel(all_res_exp, 'W_PRIM_EXP', 'T_REL', MKTS)
+    mh_rel = panel_rel['pooled']['OR_MH']
+    mh_rel_pass = mh_rel is not None and mh_rel >= 2.5
+
+    rel_overall = rel_count_pass and mh_rel_pass
+    out['REL'] = {
+        'per_market': rel_market_checks, 'n_markets_passing': n_pass,
+        'n_markets_passing_ge_3': rel_count_pass,
+        'MH_pooled_OR': mh_rel, 'MH_pooled_OR_ge_2.5': mh_rel_pass,
+        'pass': rel_overall, 'status': 'PASS' if rel_overall else 'FAIL',
+    }
+
+    out['_panels'] = {'abs_wprim_exp': panel_abs, 'rel_wprim_exp': panel_rel}
+    return out
+
+
+def truncation_selfcheck_expanding(mkt='jp'):
+    """warn_exp look-ahead guard test on the expanding basis: ez() at index t must only
+    depend on values at indices <= t by construction. Truncate the raw level series at
+    k and verify vac_ez/months_ez/warn_exp for all t < k are byte-identical to the
+    full-series computation (mirrors truncation_selfcheck()'s convention for T_REL)."""
+    d = load_market(mkt)
+    n, q = d['n'], d['q']
+    vac_level, months_level, _, _ = load_warn_exp_raw(mkt, q)
+    k = n - 10
+
+    warn_full, vacz_full, monz_full = compute_warn_exp(vac_level, months_level, n)
+    warn_trunc, vacz_trunc, monz_trunc = compute_warn_exp(vac_level[:k], months_level[:k], k)
+
+    mismatches = []
+    for t in range(k):
+        if warn_full[t] != warn_trunc[t] or vacz_full[t] != vacz_trunc[t] or monz_full[t] != monz_trunc[t]:
+            mismatches.append((t, q[t], warn_full[t], warn_trunc[t], vacz_full[t], vacz_trunc[t]))
+    ok = len(mismatches) == 0
+    return {'market': mkt, 'k': k, 'n_full': n, 'checked': k, 'pass': ok, 'mismatches': mismatches[:5]}
+
+
+def current_quarter_state_comparison(all_res_exp):
+    out = {}
+    for mkt in MKTS:
+        r = all_res_exp[mkt]
+        i = r['n_quarters'] - 1
+        wt = bool(r['_warn_trail'][i]) if r['_warn_trail'][i] is not None else False
+        we = r['_warn_exp'][i]
+        quad_now = r['_quad'][i]
+        out[mkt] = {
+            'q': r['_q'][i], 'quad': quad_now,
+            'warn_trailing': wt, 'warn_exp': we, 'differs': wt != we,
+            'W_PRIM_now': (quad_now == 'starved') and wt,
+            'W_PRIM_EXP_now': (quad_now == 'starved') and we,
+        }
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -762,6 +1039,153 @@ def main():
               "ABS-claim participation follows the numbers even though it contradicts the protocol author's "
               "prior expectation. Flagged here rather than silently overridden.")
 
+    # =========================================================================
+    # AMENDMENT 2 -- expanding-basis warn_exp re-validation
+    # =========================================================================
+    print("\n\n" + "=" * 78)
+    print("AMENDMENT 2 -- expanding-basis warn re-validation")
+    print("=" * 78)
+    print(AMENDMENT2_TEXT)
+
+    all_res_exp = {}
+    for mkt in MKTS:
+        all_res_exp[mkt] = analyze_market_amendment2(mkt)
+
+    # --- level-series verification ---
+    print("\n--- Level-series verification (must be raw levels, not already a z) ---")
+    for mkt in MKTS:
+        lc = all_res_exp[mkt]['level_check']
+        print(f"  {mkt.upper()}: {lc['align_note']}")
+        for f in ('vacancy', 'months'):
+            v = lc[f]
+            print(f"    {f}: n={v['n_total']} non-null={v['n_nonnull']} min={v['min']} max={v['max']} "
+                  f"sample_first5={v['sample_first5']}")
+    print("  Verdict: all eight series (4 markets x 2 fields) are raw levels (percentages / unit counts), "
+          "none in a [-3,3]-ish z range with a median near 0 -- confirmed NOT already standardized.")
+
+    # --- W_PRIM_EXP full evaluation (identical v3 machinery) ---
+    print("\n--- W_PRIM_EXP per-market report (T_ABS, T_REL) ---")
+    for mkt in MKTS:
+        rm = all_res_exp[mkt]
+        print(f"\n=== {mkt.upper()} (W_PRIM_EXP) ===  (n={rm['n_quarters']} quarters)")
+        print(f"  Applicability gate (T_ABS): n_bad_abs={rm['n_bad_abs']} -> "
+              f"{'RATED' if rm['rated_abs'] else 'NOT RATED'} (threshold >=8)")
+        for tname in ('T_ABS', 'T_REL'):
+            print(f"  -- target {tname} --")
+            fmt_stat_block('W_PRIM_EXP', rm['results'][tname])
+
+    thresholds_exp = evaluate_thresholds_amendment2(all_res_exp)
+    print("\n--- Panel: Mantel-Haenszel pooled OR (W_PRIM_EXP) ---")
+    pae = thresholds_exp['_panels']['abs_wprim_exp']
+    print(f"  T_ABS (rated markets: {pae['markets']}): OR_MH={pae['pooled']['OR_MH']} "
+          f"(n_strata={pae['pooled']['n_strata']})")
+    pre = thresholds_exp['_panels']['rel_wprim_exp']
+    print(f"  T_REL (all four markets: {pre['markets']}): OR_MH={pre['pooled']['OR_MH']} "
+          f"(n_strata={pre['pooled']['n_strata']})")
+
+    print("\n--- Threshold evaluation, W_PRIM_EXP (same frozen protocol thresholds) ---")
+    ae = thresholds_exp['ABS']
+    print(f"  ABS claim (expanding): {ae['status']}")
+    for mkt, v in ae['per_market'].items():
+        print(f"    {mkt.upper()}: OR={v['OR']} (>=3: {v['OR_ge_3']})  w_quarters={v['w_quarters']} "
+              f"(>=8: {v['w_quarters_ge_8']})  precision={v['precision']} vs 2xbase_rate={v['2x_base_rate']} "
+              f"({v['precision_ge_2x_base_rate']})  -> {'PASS' if v['pass'] else 'FAIL'}")
+    print(f"    MH pooled OR = {ae['MH_pooled_OR']} (>=3: {ae['MH_pooled_OR_ge_3']})")
+    print(f"    ABS (expanding) OVERALL: {ae['status']}")
+
+    re_ = thresholds_exp['REL']
+    print(f"\n  REL claim (expanding): {re_['status']}")
+    for mkt, v in re_['per_market'].items():
+        print(f"    {mkt.upper()}: OR={v['OR']}  -> {'PASS' if v['pass'] else 'FAIL'}")
+    print(f"    markets passing OR>=2: {re_['n_markets_passing']}/4 (need >=3: {re_['n_markets_passing_ge_3']})")
+    print(f"    MH pooled OR (all 4) = {re_['MH_pooled_OR']} (>=2.5: {re_['MH_pooled_OR_ge_2.5']})")
+    print(f"    REL (expanding) OVERALL: {re_['status']}")
+
+    # --- side by side vs trailing ---
+    print("\n--- W_PRIM (trailing) vs W_PRIM_EXP (expanding) -- side by side ---")
+    print(f"  {'':6s} {'T_ABS OR':>10s} {'T_ABS OR_exp':>13s}   {'T_REL OR':>10s} {'T_REL OR_exp':>13s}")
+    for mkt in MKTS:
+        t_abs_or = all_res[mkt]['results']['T_ABS']['W_PRIM']['OR']
+        t_abs_or_exp = all_res_exp[mkt]['results']['T_ABS']['OR']
+        t_rel_or = all_res[mkt]['results']['T_REL']['W_PRIM']['OR']
+        t_rel_or_exp = all_res_exp[mkt]['results']['T_REL']['OR']
+        print(f"  {mkt.upper():6s} {str(t_abs_or):>10s} {str(t_abs_or_exp):>13s}   "
+              f"{str(t_rel_or):>10s} {str(t_rel_or_exp):>13s}")
+    mh_abs_trail = a['MH_pooled_OR']
+    mh_abs_exp = ae['MH_pooled_OR']
+    mh_rel_trail = r['MH_pooled_OR']
+    mh_rel_exp = re_['MH_pooled_OR']
+    print(f"  MH (T_ABS): trailing={mh_abs_trail}  expanding={mh_abs_exp}")
+    print(f"  MH (T_REL): trailing={mh_rel_trail}  expanding={mh_rel_exp}")
+
+    # --- disagreement map ---
+    print("\n--- Disagreement map: quarters where warn_exp != warn (trailing) ---")
+    total_disagree = 0
+    for mkt in MKTS:
+        r_exp = all_res_exp[mkt]
+        cnt = r_exp['disagreements_count']
+        total_disagree += cnt
+        print(f"  {mkt.upper()}: {cnt} disagreeing quarters (of {r_exp['n_quarters']})")
+        d2020 = r_exp['disagreements_2020plus']
+        print(f"    2020Q1+ disagreements (n={len(d2020)}):")
+        for x in d2020:
+            print(f"      {x['q']}: warn_trailing={x['warn_trailing']} warn_exp={x['warn_exp']}  "
+                  f"vac_level={x['vac_level']} months_level={x['months_level']}  "
+                  f"vac_ez={x['vac_ez']} months_ez={x['months_ez']}")
+    print(f"  TOTAL disagreeing quarters across 4 markets: {total_disagree}")
+
+    # --- fatigue exhibit check ---
+    print("\n--- Fatigue-exhibit check (the audit's F1 examples) ---")
+    fatigue_jp = fatigue_exhibit_check(all_res_exp, 'jp', '2023Q3')
+    fatigue_my = fatigue_exhibit_check(all_res_exp, 'my', '2022Q2')
+    for fx in (fatigue_jp, fatigue_my):
+        print(f"  {fx['market'].upper()} {fx['q']}: vac_level={fx.get('vac_level')} "
+              f"months_level={fx.get('months_level')}  vac_ez(expanding)={fx.get('vac_ez_expanding')} "
+              f"months_ez(expanding)={fx.get('months_ez_expanding')}")
+        print(f"    warn_trailing={fx.get('warn_trailing')}  warn_exp={fx.get('warn_exp')}  "
+              f"expected: {fx.get('expected_flip')}  -> "
+              f"{'CONFIRMED' if fx.get('flip_confirmed') else 'NOT CONFIRMED'}")
+
+    # --- decision rule (frozen) ---
+    print("\n--- Decision rule (frozen, verbatim) ---")
+    print("  \"the live gauge switches to the expanding basis ONLY if W_PRIM_EXP passes the same "
+          "ABS+REL gates AND its ABS MH-pooled OR >= the trailing version's. Otherwise trailing "
+          "stays (status quo unless dominated)...\"")
+    cond_abs_pass = ae['pass']
+    cond_rel_pass = re_['pass']
+    cond_or_ge = (mh_abs_exp is not None and mh_abs_trail is not None and mh_abs_exp >= mh_abs_trail)
+    switch = cond_abs_pass and cond_rel_pass and cond_or_ge
+    print(f"  Component 1 -- W_PRIM_EXP ABS claim passes:          {'PASS' if cond_abs_pass else 'FAIL'}")
+    print(f"  Component 2 -- W_PRIM_EXP REL claim passes:          {'PASS' if cond_rel_pass else 'FAIL'}")
+    print(f"  Component 3 -- ABS MH-pooled OR expanding >= trailing: {mh_abs_exp} >= {mh_abs_trail}  "
+          f"-> {'PASS' if cond_or_ge else 'FAIL'}")
+    print(f"\n  >>> VERDICT: {'SWITCH to expanding basis' if switch else 'KEEP TRAILING (status quo)'} <<<")
+    if not switch:
+        print("  The conceptual tension stands as a published finding: the trailing warning works")
+        print("  empirically (validated OR) even though a supply glut is conceptually an absolute-level")
+        print("  concept. Expanding basis fails to dominate on the frozen decision rule -- no silent fix.")
+
+    # --- self-check: truncation on expanding basis ---
+    print("\n--- Self-check: warn_exp truncation / look-ahead guard test (JP) ---")
+    trunc_exp_chk = truncation_selfcheck_expanding('jp')
+    print(f"  JP: truncated at k={trunc_exp_chk['k']} of n={trunc_exp_chk['n_full']}, checked "
+          f"{trunc_exp_chk['checked']} quarters -> "
+          f"{'PASS (no values changed)' if trunc_exp_chk['pass'] else 'FAIL'}")
+    if not trunc_exp_chk['pass']:
+        print(f"    mismatches (first 5): {trunc_exp_chk['mismatches']}")
+
+    # --- self-check: current-quarter state comparison ---
+    print("\n--- Self-check: current-quarter warn vs warn_exp (live risk-gauge lights) ---")
+    cur_state = current_quarter_state_comparison(all_res_exp)
+    for mkt in MKTS:
+        c = cur_state[mkt]
+        print(f"  {mkt.upper()} {c['q']}: quad={c['quad']}  warn_trailing={c['warn_trailing']}  "
+              f"warn_exp={c['warn_exp']}  {'** DIFFERS **' if c['differs'] else '(same)'}  "
+              f"-> W_PRIM_now={c['W_PRIM_now']}  W_PRIM_EXP_now={c['W_PRIM_EXP_now']}")
+    any_current_differs = any(c['differs'] for c in cur_state.values())
+    print(f"  Any market's live warn light would differ under expanding basis right now: "
+          f"{'YES' if any_current_differs else 'NO'}")
+
     # --- write output ---
     def clean_market(mres):
         out = dict(mres)
@@ -809,6 +1233,71 @@ def main():
             },
         },
     }
+    # --- amendment2 block ---
+    def clean_market_exp(mres):
+        o = dict(mres)
+        for k in ('_q', '_quad', '_warn_trail', '_warn_exp', '_vac_level', '_months_level',
+                  '_vac_ez', '_months_ez', '_targets', '_classifiers', '_fwd12'):
+            o.pop(k, None)
+        return o
+
+    thresholds_exp_clean = dict(thresholds_exp)
+    thresholds_exp_clean.pop('_panels', None)
+    thresholds_exp_clean['panels'] = {
+        'abs_wprim_exp': thresholds_exp['_panels']['abs_wprim_exp'],
+        'rel_wprim_exp': thresholds_exp['_panels']['rel_wprim_exp'],
+    }
+
+    decision_rule = {
+        'text_verbatim': (
+            "the live gauge switches to the expanding basis ONLY if W_PRIM_EXP passes the same "
+            "ABS+REL gates AND its ABS MH-pooled OR >= the trailing version's. Otherwise trailing "
+            "stays (status quo unless dominated), and the conceptual tension is published as a "
+            "finding: the trailing warning works empirically even though a glut is conceptually "
+            "absolute."
+        ),
+        'component_1_wprim_exp_abs_pass': cond_abs_pass,
+        'component_2_wprim_exp_rel_pass': cond_rel_pass,
+        'component_3_abs_mh_or_expanding_ge_trailing': {
+            'mh_or_expanding': mh_abs_exp, 'mh_or_trailing': mh_abs_trail, 'pass': cond_or_ge,
+        },
+        'verdict': 'SWITCH' if switch else 'KEEP-TRAILING',
+    }
+
+    out['amendment2'] = {
+        'protocol_text_verbatim': AMENDMENT2_TEXT,
+        'markets': {mkt: clean_market_exp(all_res_exp[mkt]) for mkt in MKTS},
+        'threshold_evaluation_wprim_exp': thresholds_exp_clean,
+        'side_by_side_vs_trailing': {
+            mkt: {
+                'T_ABS_OR_trailing': all_res[mkt]['results']['T_ABS']['W_PRIM']['OR'],
+                'T_ABS_OR_expanding': all_res_exp[mkt]['results']['T_ABS']['OR'],
+                'T_REL_OR_trailing': all_res[mkt]['results']['T_REL']['W_PRIM']['OR'],
+                'T_REL_OR_expanding': all_res_exp[mkt]['results']['T_REL']['OR'],
+            } for mkt in MKTS
+        },
+        'mh_side_by_side': {
+            'T_ABS': {'trailing': mh_abs_trail, 'expanding': mh_abs_exp},
+            'T_REL': {'trailing': mh_rel_trail, 'expanding': mh_rel_exp},
+        },
+        'disagreement_map': {
+            mkt: {
+                'disagreements_count': all_res_exp[mkt]['disagreements_count'],
+                'disagreements_2020plus': all_res_exp[mkt]['disagreements_2020plus'],
+            } for mkt in MKTS
+        },
+        'fatigue_exhibit_check': {
+            'jp_2023Q3': fatigue_jp,
+            'my_2022Q2': fatigue_my,
+        },
+        'decision_rule': decision_rule,
+        'self_checks': {
+            'warn_exp_truncation_lookahead_guard': trunc_exp_chk,
+            'current_quarter_state_comparison': cur_state,
+            'any_current_quarter_differs': any_current_differs,
+        },
+    }
+
     out_path = os.path.join(ROOT, 'data', 'compass-backtest-v3.json')
     json.dump(out, open(out_path, 'w'), indent=2)
     print(f"\nWrote {out_path}")

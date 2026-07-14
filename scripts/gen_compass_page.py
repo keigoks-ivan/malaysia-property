@@ -72,7 +72,7 @@ def risk_text_block():
 
 MK={'us':('United States','美國'),'tw':('Taiwan','台灣'),'my':('Malaysia','馬來西亞'),'jp':('Japan','日本')}
 SPAN={'us':('US · 1975–2026','美國 · 1975–2026'),'tw':('Taiwan · 2001–2026','台灣 · 2001–2026'),
-      'my':('Malaysia · 1988–2026','馬來西亞 · 1988–2026'),'jp':('Japan · 1975–2025','日本 · 1975–2025')}
+      'my':('Malaysia · 2000–2026','馬來西亞 · 2000–2026'),'jp':('Japan · 1975–2025','日本 · 1975–2025')}
 
 CSS=dedupe_css(open(ROOT+'/my/clock.html').read().split('<style>')[1].split('</style>')[0])
 # strip old-only rules we replace; keep base. Add compass/report-card styles.
@@ -299,7 +299,7 @@ HTML=f"""<!DOCTYPE html>
     </ul>
   </div>
 
-  <p class="src">{dual("Inputs per market via FRED, BIS, DOSM/OpenDOSM, DGBAS, BNM, BOJ, e-Stat, NAPIC, World Bank and the Sinyi index; assembled and standardised on trailing windows. Momentum = trailing-z of house-price YoY; credit = real credit impulse. Report-card gauges are trailing-z of valuation (price/income), population (absolute growth), and supply (completions/vacancy). Independent analysis, not investment advice.","各市場輸入經 FRED、BIS、DOSM／OpenDOSM、主計總處、央行、日本央行、e-Stat、NAPIC、世界銀行與信義指數；以滾動窗組裝標準化。動能＝房價年增的滾動 z；信貸＝實質信貸脈衝。體檢表為估值（房價／所得）、人口（絕對成長）、供給（完工／空置）的滾動 z。獨立分析，不構成投資建議。")}</p>
+  <p class="src">{dual("Inputs per market via FRED, BIS, DOSM/OpenDOSM, DGBAS, BNM, BOJ, e-Stat, NAPIC, World Bank and the Sinyi index. The compass axes are trailing-z: momentum = trailing-z of nominal house-price YoY (rolling window); credit = real (CPI-deflated) credit impulse, also trailing-z. The report card uses a different basis per gauge: valuation and supply are expanding-z against a market's entire history, while population is an absolute growth-direction reading on a fixed scale, not standardised against history. Momentum is nominal while credit is deflated — the trailing window de-trends steady inflation, and the validated downside target (the 3-year forward return) is itself a nominal figure, so the mismatch is by design, not an oversight. Independent analysis, not investment advice.","各市場輸入經 FRED、BIS、DOSM／OpenDOSM、主計總處、央行、日本央行、e-Stat、NAPIC、世界銀行與信義指數。羅盤軸為滾動 z：動能＝名目房價年增的滾動 z（滾動窗）；信貸＝經 CPI 平減的實質信貸脈衝，同樣是滾動 z。體檢表各量表基準不同：估值與供給是相對該市場整段歷史的擴張型 z，人口則是固定尺度的絕對成長方向讀數，不是相對歷史的標準化值。動能採名目、信貸採實質——滾動窗會抵銷穩定的通膨基期，而驗證用的下檔目標（3年前向報酬）本身也是名目數字，因此這個不對稱是刻意設計，不是疏漏。獨立分析，不構成投資建議。")}</p>
 </main>
 
 <footer class="footer"><div class="footer-ornament" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>

@@ -71,6 +71,32 @@ known clustering of loss events (2006–08 US, 1990s JP) means OR estimates are
 dominated by few episodes; episode counts (distinct contiguous bad-spells
 caught vs missed) are reported alongside quarter counts for exactly this reason.
 
+## Amendment 2 — 2026-07-14, warn-basis re-validation (from the design audit)
+The design audit (scripts/compass_design_audit_charter.md; findings F1/C4) found
+the supply-glut warn flag uses a TRAILING 24q z while a glut is arguably an
+ABSOLUTE concept — with demonstrated warning fatigue (JP 2023Q3: vacancy 13.6%,
+near the all-time high, reads trailing z −0.67 → warn OFF; MY 2022Q2 similar) —
+and an internal inconsistency (the same series is EXPANDING in the report card).
+warn is an input of the validated W_PRIM, so per audit charter §4 this cannot be
+silently fixed; it is re-validated here.
+
+Frozen rules:
+- warn_exp: expanding robust z (ez(), same MAD/clamp/minobs=12 conventions as
+  build_compass.py) on the SAME raw level series (vacancy, months-supply per
+  market; US raw.months/raw.vac from clock-us.json), sign such that loose = 
+  negative, threshold ≤ −1, OR-combination — identical to trailing warn except
+  the basis. No threshold or window search.
+- W_PRIM_EXP = starved ∧ warn_exp. Evaluated with the IDENTICAL v3 machinery
+  (both targets, gate, MH pooling, episode counts, overlap robustness).
+- Decision rule (frozen): the live gauge switches to the expanding basis ONLY if
+  W_PRIM_EXP passes the same ABS+REL gates AND its ABS MH-pooled OR ≥ the
+  trailing version's. Otherwise trailing stays (status quo unless dominated),
+  and the conceptual tension is published as a finding: the trailing warning
+  works empirically even though a glut is conceptually absolute.
+- Both versions' full tables are published regardless of outcome.
+Timing disclosure: this amendment was written after the audit revealed the
+fatigue cases but before any W_PRIM_EXP table was computed.
+
 ## Data note
 - AFS inputs exist in-repo: scripts/.{tw,my,jp}data/*_raw.json (rate, cpi),
   US real_rate in data/clock-us.json raw.

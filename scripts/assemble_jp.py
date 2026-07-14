@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Assemble jp_raw.json from the BIS price seed + the workflow's fetched JP series.
-Axis 1975Q1–2025Q4. Low-frequency structural inputs (5-yearly vacancy, annual income)
-are linearly interpolated across internal gaps, then tail forward-filled."""
+Axis 1975Q1-2025Q4. `interp()` linearly interpolates internal None gaps for the
+low-frequency fields (vacancy, income) IF the fetched series has any such gaps.
+In practice, on the data this pipeline actually receives, the fetch workflow already
+returns every quarter pre-filled (e.g. vacancy arrives as a step, holding each
+5-yearly survey reading flat across the quarters until the next release), so
+interp() is a no-op here — it does not turn the step into a ramp. Separately, several
+lagged fields (vacancy/months/income/pop/credit/cpi) get a <=4-quarter carry-forward
+at the tail, past their last real observation."""
 import json, os
 
 SCRATCH = '/private/tmp/claude-501/-Users-ivanchang-malaysia-property/52542b53-2f2a-49e2-9a78-6dd7a75141c7/scratchpad'

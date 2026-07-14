@@ -6,31 +6,31 @@ the inputs differ, so the compute half is identical to build_clock_us.py.
 
 INPUT: a JSON file of raw quarterly series (scripts/.mydata/my_raw.json), shape:
 {
-  "q":      ["1991Q1", ...],        # quarter labels, contiguous
-  "price":  [ ... ],                # 信義房價指數 (level)     -> judged + valuation numerator
-  "pti":    [ ... ],                # 房價所得比 (level)       -> valuation (low = cheap)   [optional]
-  "months": [ ... ],                # 待售/餘屋月數 or proxy   -> supply (low = tight)      [optional]
-  "vacancy":[ ... ],                # 低度用電宅比率           -> supply (low = tight)      [optional]
-  "gap":    [ ... ],                # 家庭形成 - 完工 (annualised) -> demand (+ = under-built)[optional]
-  "pop":    [ ... ],                # 25-54 人口 (level)       -> population (growth = +)   [optional]
-  "credit": [ ... ],                # 購置住宅貸款餘額 (level) -> money (real growth = +)   [optional]
-  "rate":   [ ... ],                # 房貸利率 % (nominal)     -> money (real, easing = +)  [optional]
-  "cpi":    [ ... ],                # CPI 指數 (level)         -> deflator for credit & rate[optional]
-  "gdp":    [ ... ],                # 實質GDP (level)          -> economy (YoY = +)         [optional]
-  "unemp":  [ ... ],                # 失業率 % (level)         -> economy (falling = +)     [optional]
-  "income": [ ... ]                 # 實質可支配所得 (level)   -> economy (YoY = +); also valuation denom if no pti
+  "q":      ["2000Q1", ...],        # quarter labels, contiguous
+  "price":  [ ... ],                # BIS Malaysia house-price index (level) -> judged + valuation numerator
+  "pti":    [ ... ],                # not fetched for MY (no pti field; valuation falls back to price/income) [optional]
+  "months": [ ... ],                # NAPIC completions (units, raw count)       -> supply (low = tight)      [optional]
+  "vacancy":[ ... ],                # NAPIC overhang (unsold completed units, raw count) -> supply (low = tight) [optional]
+  "gap":    [ ... ],                # not fetched for MY (household formation - completions) [optional]
+  "pop":    [ ... ],                # DOSM/OpenDOSM population (level) -> population (growth = +)   [optional]
+  "credit": [ ... ],                # BNM/BIS household housing-loan balance (level) -> money (real growth = +) [optional]
+  "rate":   [ ... ],                # BNM OPR / lending rate % (nominal) -> money (real, easing = +)  [optional]
+  "cpi":    [ ... ],                # DOSM CPI index (level)   -> deflator for credit & rate[optional]
+  "gdp":    [ ... ],                # DOSM real GDP (level)    -> economy (YoY = +)         [optional]
+  "unemp":  [ ... ],                # DOSM unemployment rate % (level) -> economy (falling = +) [optional]
+  "income": [ ... ]                 # DOSM median household income (level, interpolated between sparse survey years) -> economy (YoY = +); valuation denominator (no pti for MY)
 }
 Any series may be absent or contain nulls; a quarter needs >=3 of the components on each
 axis to get a reading. Valuation uses `pti` if present, else price/income.
 
-Because TW price history is shorter than the US, the trailing standardisation window
+MY price history is shorter than the US's, so the trailing standardisation window
 defaults to 6y (24q) instead of 10y; override with --win N.
 
 Usage:
-    python3 scripts/build_clock_tw.py                 # read .mydata/my_raw.json, write + inject
-    python3 scripts/build_clock_tw.py --no-inject     # write data/clock-my.json only
-    python3 scripts/build_clock_tw.py --selftest      # run on synthetic data, no files needed
-    python3 scripts/build_clock_tw.py --win 40        # use a 10y window (if history allows)
+    python3 scripts/build_clock_my.py                 # read .mydata/my_raw.json, write + inject
+    python3 scripts/build_clock_my.py --no-inject     # write data/clock-my.json only
+    python3 scripts/build_clock_my.py --selftest      # run on synthetic data, no files needed
+    python3 scripts/build_clock_my.py --win 40        # use a 10y window (if history allows)
 """
 import json, math, os, sys
 import statistics as st
