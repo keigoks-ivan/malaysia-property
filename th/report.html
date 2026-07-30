@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bangkok — Property Market Report | Thailand Property Monitor</title>
+<meta name="description" content="Bangkok residential market report: inventory, absorption, mortgage rejection, foreign demand, sub-markets and a ten-year ledger. Updated July 2026.">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/kl-theme.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+/* ── report (chart-led) — macro-style chrome ── */
+.wrap{max-width:900px;margin:0 auto;padding:30px 20px 10px}
+body.zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
+.wrap, .wrap p, .wrap li, .lede, .pt li, .col li, .src, .cat li, .narr-p, .concept p, .prop-take p{line-height:2.0}
+
+.pg-head{margin-bottom:22px}
+.pg-title{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:26px;letter-spacing:-.01em;margin:0 0 10px;line-height:1.3}
+.pg-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+.snap{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:22px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 12px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:4px;min-width:0}
+.stat-lbl{font-size:10.5px;font-weight:600;letter-spacing:.04em;color:var(--gold-deep);text-transform:uppercase;line-height:1.45}
+body.zh .stat-lbl{text-transform:none;letter-spacing:0}
+.stat-num{font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--navy);line-height:1.2}
+.stat-tag{font-size:10.5px;font-weight:600;line-height:1.5}
+.t-green{color:#15803d}.t-orange{color:#a16207}.t-red{color:#b91c1c}.t-blue{color:#1d4ed8}
+
+.lede{background:linear-gradient(135deg,#0d2244 0%,#173564 100%);color:#fff;border-radius:14px;padding:20px 24px;margin-bottom:32px;font-size:14px;box-shadow:var(--shadow-md)}
+.lede b{color:var(--gold-light);font-weight:600}
+.lede .lk{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+.lede a{color:var(--gold-light);font-weight:600}
+
+.blk{margin-bottom:34px}
+.blk h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:600;color:var(--navy);font-size:18px;margin:0 0 4px;line-height:1.35}
+.blk .sub{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:1.6}
+.chartbox{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 12px 8px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.chartbox .kick{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin:2px 4px 8px}
+.pt{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.pt li{position:relative;padding-left:18px;font-size:13px;color:var(--text-soft)}
+.pt li::before{content:'';position:absolute;left:0;top:13px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.pt li b{color:var(--navy);font-weight:600}
+.pt li.warn::before{background:#b91c1c}.pt li.good::before{background:#15803d}
+
+.sec-rule{display:flex;align-items:center;gap:12px;margin:40px 0 18px}
+.sec-rule h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:21px;margin:0;white-space:nowrap;line-height:1.3}
+.sec-rule::after{content:'';flex:1;height:1px;background:var(--gold-line)}
+
+.pull{font-family:'Playfair Display','Noto Serif TC',serif;font-size:17px;line-height:1.7;color:var(--navy);border-left:3px solid var(--gold);padding:3px 0 3px 16px;margin:0 0 18px;font-weight:600}
+.narr-p{font-size:13.5px;color:var(--text-soft);margin:0 0 16px}
+.narr-p b{color:var(--navy);font-weight:600}
+.narr-p a{color:var(--gold-deep);font-weight:600}
+.mrow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:2px 0 24px}
+.m{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;min-width:0}
+.m .mn{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:700;color:var(--navy);line-height:1.2}
+.m .ml{font-size:10px;color:var(--muted);line-height:1.55;margin-top:4px}
+.m .mn.neg{color:#b91c1c}.m .mn.pos{color:#15803d}.m .mn.gold{color:var(--gold-deep)}
+
+.concept{background:var(--bg-section);border:1px solid var(--gold-soft);border-radius:12px;padding:16px 20px;margin:2px 0 24px}
+.concept h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 8px}
+.concept p{font-size:12.5px;color:var(--text-soft);margin:0 0 8px}
+.concept p:last-child{margin-bottom:0}
+.concept p b{color:var(--navy);font-weight:600}
+.concept p.g b{color:#15803d}.concept p.r b{color:#b91c1c}
+
+.prop-take{background:linear-gradient(135deg,#0d2244,#173564);color:#fff;border-radius:14px;padding:18px 22px;margin:6px 0 30px;box-shadow:var(--shadow-md)}
+.prop-take .pk{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;display:block}
+.prop-take p{margin:0 0 10px;font-size:13.5px;color:rgba(255,255,255,.9)}
+.prop-take p:last-child{margin-bottom:0}
+.prop-take b{color:var(--gold-light)}
+.prop-take a{color:var(--gold-light);font-weight:600}
+
+.play{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0 24px}
+.play .p{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 15px;box-shadow:var(--shadow-sm)}
+.play .p.buy{border-top:3px solid #15803d}
+.play .p.wait{border-top:3px solid var(--gold)}
+.play .p.avoid{border-top:3px solid #b91c1c}
+.play .p h5{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:0 0 6px}
+.play .p.buy h5{color:#15803d}.play .p.wait h5{color:var(--gold-deep)}.play .p.avoid h5{color:#b91c1c}
+.play .p p{font-size:12px;line-height:1.7;color:var(--text-soft);margin:0}
+.play .p p b{color:var(--navy);font-weight:600}
+
+.scen{display:grid;gap:10px;margin:6px 0 24px}
+.scen .s{border:1px solid var(--border);border-left:3px solid var(--navy);border-radius:12px;padding:13px 16px;background:var(--card);box-shadow:var(--shadow-sm)}
+.scen .s.c{border-left-color:#b91c1c}.scen .s.d{border-left-color:var(--gold-deep)}
+.scen .sh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px}
+.scen .st{font-family:'Playfair Display','Noto Serif TC',serif;font-size:14.5px;font-weight:600;color:var(--navy)}
+.scen .sp{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:700;color:var(--navy);white-space:nowrap}
+.scen .s.c .sp{color:#b91c1c}.scen .s.d .sp{color:var(--gold-deep)}
+.scen .s p{font-size:12.5px;line-height:1.7;color:var(--text-soft);margin:0}
+.scen .s p b{color:var(--navy);font-weight:600}
+
+.splitbar{display:flex;height:30px;border-radius:7px;overflow:hidden;border:1px solid var(--gold-soft);font-family:'IBM Plex Mono',monospace;margin:6px 0 4px}
+.splitbar div{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;text-align:center;line-height:1.15;padding:0 6px}
+.splitbar .cyc{flex:0 0 28%;background:#d9a441;color:#3a2a06}
+.splitbar .str{flex:1;background:var(--navy);color:#f3ebd6}
+
+.cat{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:6px 0 22px}
+.cat .c{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-sm)}
+.cat .c h4{font-size:12px;font-weight:700;color:var(--navy);margin:0 0 6px;line-height:1.4}
+.cat .c p{font-size:12px;color:var(--muted);margin:0;line-height:1.85}
+.cat .c p b{color:var(--navy);font-weight:600}
+
+.watch{background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:14px;padding:18px 22px;margin:6px 0 26px}
+.watch h3{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 10px}
+.watch ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.watch li{font-size:12.5px;color:var(--text-soft);padding-left:16px;position:relative;line-height:1.9}
+.watch li::before{content:'▸';position:absolute;left:0;top:0;color:var(--gold-deep);font-size:11px;line-height:1.9}
+.watch li b{color:var(--navy);font-weight:600}
+
+.src{font-size:11px;color:var(--muted);background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:12px 16px;margin-bottom:8px}
+.src a{color:var(--gold-deep)}
+
+.nav-sep{width:1px;height:16px;background:var(--border);margin:0 4px;display:inline-block}
+
+@media(max-width:760px){.snap,.mrow{grid-template-columns:repeat(3,1fr)}.play,.cat{grid-template-columns:1fr}.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}}
+@media(max-width:440px){.snap,.mrow{grid-template-columns:repeat(2,1fr)}}
+
+.matrix-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:6px 0 8px}
+.matrix{min-width:820px;width:100%;border-collapse:separate;border-spacing:5px}
+.matrix th{font-weight:700;color:var(--gold-deep);text-align:center;padding:2px 4px;line-height:1.25}
+.matrix th.grp{font-size:11px;letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid var(--gold-soft);padding-bottom:5px}
+.matrix th.zone{font-size:9.5px;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0}
+.matrix td.rowh{font-size:11px;font-weight:600;color:var(--navy);text-align:left;padding-right:8px;line-height:1.25}
+.matrix td.cell{border-radius:8px;padding:8px 5px;text-align:center;font-size:10.5px;font-weight:700;line-height:1.25;color:#fff}
+.matrix .buy{background:#15803d}.matrix .hold{background:#a16207}.matrix .avoid{background:#b91c1c}.matrix .na{background:#c2cad6;color:#5a6b82}
+.matrix td.cell small{display:block;font-weight:500;font-size:8.5px;opacity:.95;margin-top:2px;letter-spacing:0;line-height:1.2}
+.fnote{font-size:10px;color:var(--muted);margin:-8px 4px 14px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/kl-check">
+      <span class="brand-mark">K</span>
+      <span class="brand-text">
+        <span class="brand-name">KL Property Check</span>
+        <span class="brand-by">by InvestMQuest</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="/kl-check"><span class="lang-en">Scorecards</span><span class="lang-zh">評分卡</span></a>
+      <a class="nav-link" href="/my/report">🇲🇾 <span class="lang-en">Malaysia</span><span class="lang-zh">馬來西亞</span></a>
+      <a class="nav-link" href="/my/macro">🇲🇾 <span class="lang-en">Macro</span><span class="lang-zh">總經</span></a>
+      <span class="nav-sep"></span>
+      <a class="nav-link active" href="/th/report">🇹🇭 <span class="lang-en">Bangkok</span><span class="lang-zh">曼谷</span></a>
+      <a class="nav-link" href="/th/macro">🇹🇭 <span class="lang-en">Thailand Macro</span><span class="lang-zh">泰國總經</span></a>
+      <div class="lang-btns">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ── Header ── -->
+  <div class="pg-head">
+    <h1 class="pg-title">
+      <span class="lang-en">Bangkok — Property Market Report</span>
+      <span class="lang-zh" style="display:none">曼谷 · 住宅市場報告</span>
+    </h1>
+    <div class="pg-badges">
+      <span class="kpi-badge badge-red"><span class="lang-en">4 years of stock on market</span><span class="lang-zh" style="display:none">在售存量約四年</span></span>
+      <span class="kpi-badge badge-green"><span class="lang-en">Policy rate 1.00%</span><span class="lang-zh" style="display:none">政策利率 1.00%</span></span>
+      <span class="kpi-badge badge-orange"><span class="lang-en">Updated Jul 2026</span><span class="lang-zh" style="display:none">更新至 2026年7月</span></span>
+    </div>
+  </div>
+
+  <!-- ── Snapshot ── -->
+  <div class="snap">
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Bangkok unsold</span><span class="lang-zh" style="display:none">曼谷在售未售</span></div><div class="stat-num">210,112</div><div class="stat-tag t-red"><span class="lang-en">49.5 months to clear</span><span class="lang-zh" style="display:none">去化 49.5 個月</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Condo stock, Gtr BKK</span><span class="lang-zh" style="display:none">大曼谷公寓存量</span></div><div class="stat-num">~350k</div><div class="stat-tag t-red"><span class="lang-en">5–6 yrs · wide basis</span><span class="lang-zh" style="display:none">5–6 年 · 廣義口徑</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Gross yield</span><span class="lang-zh" style="display:none">毛收益率</span></div><div class="stat-num">~5.0%</div><div class="stat-tag t-green"><span class="lang-en">+4.0pp over policy</span><span class="lang-zh" style="display:none">高於政策利率 4.0%</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Mortgage rejection</span><span class="lang-zh" style="display:none">房貸退件率</span></div><div class="stat-num">40–50%</div><div class="stat-tag t-red"><span class="lang-en">≤3m฿ band ~70%</span><span class="lang-zh" style="display:none">300 萬泰銖以下約 70%</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Household debt</span><span class="lang-zh" style="display:none">家庭債務</span></div><div class="stat-num">86.7%</div><div class="stat-tag t-orange"><span class="lang-en">of GDP · 4Q25</span><span class="lang-zh" style="display:none">佔 GDP · 2025Q4</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Nat'l price index</span><span class="lang-zh" style="display:none">全國房價指數</span></div><div class="stat-num">+1.26%</div><div class="stat-tag t-orange"><span class="lang-en">1Q26 yoy · BKK −0.18%</span><span class="lang-zh" style="display:none">2026Q1 年增 · 曼谷 −0.18%</span></div></div>
+  </div>
+
+  <!-- ── Bottom line ── -->
+  <div class="lede">
+    <span class="lk"><span class="lang-en">Bottom line</span><span class="lang-zh" style="display:none">總結</span></span>
+    <span class="lang-en">Bangkok is not short of buyers who want a home. It is short of buyers a bank will lend to. Between 40% and 50% of mortgage applications were declined in the first half of 2026, and in the sub-3-million-baht band — the price point at which most Thai households actually shop — rejection has run near 70%. That single filter explains more about this market than any supply statistic.<br><br>The result is a market that has quietly rebuilt itself around cash. At the top, foreign buyers took only 13.6% of transferred units in the first quarter of 2026 but 23.9% of the value. In the middle, second-hand homes now account for two-thirds of all ownership transfers, with 240,000 resale units listed nationwide, up 34.2% in a year as owners, banks and asset managers all try to exit at once. At the bottom, almost nothing clears. Developers have responded by abandoning the mass market — no new project launched in the central business district in the first quarter, 68% of new launches priced below 80,000 baht per square metre, and a booking rate of 24.3% on those launches against 43.8% a quarter earlier.<br><br>What makes this market interesting rather than merely weak is the carry. A gross yield near 5% against a 1.00% policy rate is roughly four points of positive carry, the widest in Asia. But the carry is wide because the policy rate is at a two-decade low, and it is at a two-decade low because the economy has been in deflation for most of a year. You are being paid to wait in a currency whose central bank has already spent its ammunition. And since October 2025 there is a second reason to look: a purchase of 3 million baht now carries a renewable long-stay visa for the buyer and their family, the single biggest change to foreign access in years — though one full quarter of data has yet to show it moving demand. The structural reasons behind all of this are set out in the companion <a href="/th/macro">Thailand Macro × Property</a> analysis.</span>
+    <span class="lang-zh" style="display:none">曼谷缺的不是想買房的人，而是銀行願意放款的人。2026 年上半年，房貸申請的退件率落在四成到五成之間；在 300 萬泰銖以下這個泰國家庭真正在買的價位帶，退件率一度接近七成。這一道篩子，比任何一項供給統計都更能解釋這個市場。<br><br>結果是市場悄悄地繞著現金重建了自己。頂端，外國買方在 2026 年第一季只佔過戶戶數的 13.6%，卻佔了金額的 23.9%。中段，二手屋已佔全部過戶的三分之二，全國二手掛牌量達 24 萬戶、年增 34.2%——屋主、銀行、資產管理公司同時在找出口。底端幾乎不動：第一季中央商業區沒有任何新案推出，新推案中 68% 定價低於每平方公尺 8 萬泰銖，而這些案子的訂購率只有 24.3%，前一季還有 43.8%。<br><br>讓這個市場「有意思」而不只是「疲弱」的，是它的持有收益。近 5% 的毛收益率對上 1.00% 的政策利率，正利差約四個百分點，是亞洲最寬的一個。但利差之所以寬，是因為政策利率處在二十年低點；而它之所以在二十年低點，是因為這個經濟體已經通縮了大半年。你是在一個央行子彈已經打完的貨幣裡被付錢等待。而自 2025 年 10 月起還有第二個值得看的理由：購置 300 萬泰銖的物件，即可為買方與家屬換得一張可續期的長期居留簽證，這是多年來外資准入最大的一次改變——儘管已有一整季的數據，還看不到它推動需求。這一切的結構成因，見另文<a href="/th/macro">《泰國總經 × 房產》</a>。</span>
+  </div>
+
+  <!-- ════════ PART I ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">I · Where the Market Stands</span><span class="lang-zh" style="display:none">第一部 · 市場現況</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The stock on the shelf, by product</span><span class="lang-zh" style="display:none">貨架上的存量，按產品別</span></h2>
+    <p class="sub"><span class="lang-en">Bangkok metropolitan area · unsold units in projects actively marketed · mid-2026 · Agency for Real Estate Affairs</span><span class="lang-zh" style="display:none">曼谷都會區 · 在售案場未售戶數 · 2026 年中 · AREA</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Unsold inventory by type</span><span class="lang-zh" style="display:none">未售存量分產品</span></div><div id="cInv" style="height:250px"></div></div>
+    <ul class="pt">
+      <li><b><span class="lang-en">210,112 units are sitting on the market</span><span class="lang-zh" style="display:none">21 萬 112 戶正在市場上</span></b><span class="lang-en">, and at the pace units are currently being absorbed that is 49.5 months of stock — a shade over four years. A healthy market carries 12 to 18 months.</span><span class="lang-zh" style="display:none">，以目前的吸納速度計，相當於 49.5 個月、略多於四年的存量。健康市場通常只背 12 到 18 個月。</span></li>
+      <li><span class="lang-en">The overhang is <b>not a condo story alone</b>. Townhouses are the single largest block at 68,831 units (32.8%), ahead of condominiums at 61,543 (29.3%) and single-detached houses at 51,739 (24.6%). Bangkok's problem spans the whole product ladder.</span><span class="lang-zh" style="display:none">餘屋<b>不只是公寓的事</b>。連棟屋以 68,831 戶（32.8%）居首，高於公寓的 61,543 戶（29.3%）與獨棟屋的 51,739 戶（24.6%）。曼谷的問題貫穿整個產品階梯。</span></li>
+      <li class="warn"><span class="lang-en">That breadth matters for diagnosis. If only high-rises were stuck, you would blame supply. When townhouses and landed homes are stuck too, the binding constraint is on the demand side — specifically on <b>who can obtain credit</b>.</span><span class="lang-zh" style="display:none">這個「橫向蔓延」對診斷很重要。若只有高層卡住，可以歸咎供給；當連棟與有地住宅同樣卡住，真正的約束就在需求端——精確地說，在<b>誰拿得到貸款</b>。</span></li>
+    </ul>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Three inventory numbers, three definitions</span><span class="lang-zh" style="display:none">三個存量數字，三種口徑</span></h2>
+    <p class="sub"><span class="lang-en">Why published figures for the same market differ by 140,000 units · 2026</span><span class="lang-zh" style="display:none">為何同一個市場的公開數字相差 14 萬戶 · 2026</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Same market, different counting rules</span><span class="lang-zh" style="display:none">同一市場，不同計算規則</span></div><div id="cDef" style="height:230px"></div></div>
+    <p class="narr-p"><span class="lang-en">Every serious discussion of Bangkok oversupply eventually collides with the fact that the headline number depends entirely on where the counter draws the boundary. AREA counts <b>210,112</b> unsold units in projects actively being marketed inside the Bangkok metropolitan area. SCB EIC projects roughly <b>213,000</b> unsold units across Greater Bangkok by the end of 2026. Knight Frank puts the Greater Bangkok condominium overhang alone at around <b>350,000</b> units, five to six years of absorption at the recent run-rate of about 60,000 transfers a year, because it counts stock still under construction and stock in completed projects that have quietly stopped being marketed.</span><span class="lang-zh" style="display:none">任何認真討論曼谷過剩的人，最後都會撞上同一件事：標題數字完全取決於計數者把界線畫在哪裡。AREA 統計曼谷都會區內「仍在銷售中的案場」未售 <b>210,112</b> 戶；SCB EIC 推估大曼谷到 2026 年底未售約 <b>213,000</b> 戶；Knight Frank 則把大曼谷「公寓一項」的存量估在 <b>35 萬</b>戶左右，以近年約每年 6 萬戶過戶的速度計，需要五到六年——因為它把在建中、以及完工後已悄悄停止行銷的存量也算了進去。</span></p>
+    <div class="concept">
+      <h4><span class="lang-en">The Malaysian mirror</span><span class="lang-zh" style="display:none">馬來西亞的鏡像</span></h4>
+      <p><span class="lang-en">In Malaysia the statistical blind spot runs one way: serviced apartments were reclassified as commercial in 2016 and dropped out of the residential overhang series, so the official number <b>understates</b> by roughly 19,000 units. In Thailand the distortion runs the other way and is larger. There is no single official unsold register at all; what exists is a set of private surveys with incompatible boundaries. The honest reading is that Bangkok carries <b>four-plus years of visible stock and an unmeasured tail behind it</b>.</span><span class="lang-zh" style="display:none">在馬來西亞，統計盲點只往一個方向偏：服務式公寓 2016 年被改列商業，退出住宅餘屋序列，官方數字因此<b>低估</b>約 1.9 萬戶。在泰國，偏誤方向相反、幅度更大——泰國根本沒有單一的官方未售登記，有的只是幾份邊界互不相容的民間調查。誠實的讀法是：曼谷背著<b>四年以上的可見存量，後面還拖著一條無法量測的尾巴</b>。</span></p>
+      <p class="r"><span class="lang-en">Practical rule: <b>never compare an inventory number across two sources.</b> Compare each source against its own history, and treat the level as a range, not a point.</span><span class="lang-zh" style="display:none">實務規則：<b>不要跨來源比較存量數字。</b>每個來源只跟自己的歷史比；把水準視為區間，不是一個點。</span></p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The widest carry in Asia lasts exactly three years</span><span class="lang-zh" style="display:none">亞洲最寬的利差，剛好只有三年</span></h2>
+    <p class="sub"><span class="lang-en">Bangkok gross yield against the rate ladder · 2026 · BOT / bank rate cards</span><span class="lang-zh" style="display:none">曼谷毛收益率對上利率階梯 · 2026 · 泰國央行／各行牌告</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Yield vs the rate you actually pay</span><span class="lang-zh" style="display:none">收益率 vs 你實際付的利率</span></div><div id="cCarry" style="height:250px"></div></div>
+    <ul class="pt">
+      <li class="good"><span class="lang-en">Against the <b>1.00% policy rate</b>, a 5% gross yield is four points of carry — wider than Malaysia's 2.44 points and the widest in the region. For an unlevered cash buyer, that is the whole investment case.</span><span class="lang-zh" style="display:none">對上 <b>1.00% 的政策利率</b>，5% 的毛收益率有四個百分點的利差——比馬來西亞的 2.44 個百分點更寬，是區域最寬。對不用槓桿的現金買方，這就是全部的投資論述。</span></li>
+      <li><span class="lang-en">Against the <b>promotional mortgage rate</b> of roughly 2.65% to 3.85% for the first three years, the carry narrows to around 1.7 points. Thin, but still positive.</span><span class="lang-zh" style="display:none">對上前三年約 2.65% 到 3.85% 的<b>優惠房貸利率</b>，利差收斂到約 1.7 個百分點。很薄，但仍為正。</span></li>
+      <li class="warn"><span class="lang-en">Against the <b>MRR the loan reverts to in year four</b> — averaging 7.38% across domestic commercial banks in June 2026 — the carry is minus 2.4 points. The Thai teaser structure means every levered buyer is underwriting a negative-carry position that begins on a known date.</span><span class="lang-zh" style="display:none">對上<b>第四年跳回的 MRR</b>——2026 年 6 月本地商銀平均 7.38%——利差變成負 2.4 個百分點。泰式前低後高的房貸結構，等於每個用槓桿的買方都在承作一個「已知日期開始的負持有」部位。</span></li>
+    </ul>
+    <p class="narr-p"><span class="lang-en">This is the single most under-discussed number in the Thai market. Malaysia's borrower pays a floating rate from day one and knows what they signed. Thailand's borrower pays a subsidised rate for 36 months and then faces a step-up of three to four points. A buyer whose debt-service ratio only cleared at the teaser rate is a default waiting for a calendar. It is one reason special-mention loans — the 30-to-90-day bucket that leads non-performing loans — had built to about <b>1.28 trillion baht</b> by the end of 2025.</span><span class="lang-zh" style="display:none">這是泰國市場最被低估的一個數字。馬來西亞的借款人從第一天就付浮動利率，簽的是什麼很清楚；泰國的借款人先付 36 個月補貼利率，然後面對三到四個百分點的跳升。一個只有在優惠利率下才勉強過關的償債比，本質上是一個「等日曆的違約」。這也是為什麼「特別關注類」貸款——逾期 30 至 90 天、領先於不良債權的那一桶——到 2025 年底已累積到約 <b>1.28 兆泰銖</b>。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Prices are not falling — but Bangkok's are</span><span class="lang-zh" style="display:none">全國房價沒跌，但曼谷在跌</span></h2>
+    <p class="sub"><span class="lang-en">Residential property price index, year-on-year · 1Q2026 · Bank of Thailand / REIC</span><span class="lang-zh" style="display:none">住宅價格指數年增率 · 2026Q1 · 泰國央行／REIC</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">RPPI by product and region</span><span class="lang-zh" style="display:none">價格指數分產品與區域</span></div><div id="cRppi" style="height:240px"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">The national index rose <b>1.26%</b> year-on-year in the first quarter of 2026, up from 0.63% a quarter earlier. In nominal terms nothing is breaking.</span><span class="lang-zh" style="display:none">全國指數 2026 年第一季<b>年增 1.26%</b>，前一季為 0.63%。以名目計，什麼都沒有崩。</span></li>
+      <li class="warn"><span class="lang-en">Bangkok and its vicinity is <b>the only region in the country with a falling index</b>, at −0.18%. The South, carried by tourism and foreign demand in Phuket, ran +5.59%. The capital is the weak market, not the strong one.</span><span class="lang-zh" style="display:none">曼谷及周邊是<b>全國唯一指數下跌的區域</b>，−0.18%。南部靠普吉的觀光與外資需求，年增 5.59%。首都是弱市，不是強市。</span></li>
+      <li><span class="lang-en">Within Greater Bangkok, condominiums were the <b>only</b> segment to record growth, at +1.95%. Landed prices, where the townhouse and detached overhang sits, are flat to negative. The index composition hides this: land is a rising cost input everywhere, which props up the asking price of new supply even where nothing sells.</span><span class="lang-zh" style="display:none">在大曼谷內部，公寓是<b>唯一</b>錄得成長的類別，+1.95%。連棟與獨棟這些餘屋所在的有地產品，價格持平至下跌。指數的組成把這件事藏了起來：土地在各處都是上漲的成本項，即使賣不動，也把新供給的開價撐住。</span></li>
+    </ul>
+    <div class="concept">
+      <h4><span class="lang-en">Nominal flat is real decline</span><span class="lang-zh" style="display:none">名目持平＝實質下跌</span></h4>
+      <p><span class="lang-en">Thai consumer prices fell year-on-year for twelve consecutive months through March 2026, so a +1.26% nominal index reading was briefly a genuine real gain. That window has closed. The Bank of Thailand's June 2026 forecast puts headline inflation at <b>2.8% for 2026</b> as imported energy costs pass through. Hold the price index at its current growth rate and Bangkok housing loses roughly <b>1.5% to 3% of real value per year</b> — before transaction costs, before vacancy, before the mortgage step-up.</span><span class="lang-zh" style="display:none">泰國消費者物價至 2026 年 3 月已連續 12 個月年減，所以 +1.26% 的名目讀數一度是真實的實質增值。那扇窗已經關上。泰國央行 2026 年 6 月預測，隨進口能源成本傳導，<b>2026 全年通膨 2.8%</b>。若價格指數維持現行增速，曼谷住宅每年約損失 <b>1.5% 到 3% 的實質價值</b>——這還沒算交易成本、空置、以及房貸的利率跳升。</span></p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Globally, this is a carry market</span><span class="lang-zh" style="display:none">放到全球看，這是收租市場</span></h2>
+    <p class="sub"><span class="lang-en">Gross residential yield, headline city · vetted cross-market dataset · 2026</span><span class="lang-zh" style="display:none">主要城市住宅毛收益率 · 跨市場已核數據 · 2026</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Where Bangkok sits</span><span class="lang-zh" style="display:none">曼谷的位置</span></div><div id="cCross" style="height:230px"></div></div>
+    <p class="narr-p"><span class="lang-en">Bangkok sits in the same cluster as Kuala Lumpur, New York and London on yield, and in a different universe on capital growth. Taipei and Sydney are the mirror image: sub-3% yields carried by two decades of price appreciation. Which of those two engines you are buying determines everything downstream — holding period, product choice, leverage, and how much a stalled price index should worry you. <b>In Bangkok you are buying the rent line. If the rent line breaks, there is no second engine underneath it.</b></span><span class="lang-zh" style="display:none">在收益率上，曼谷與吉隆坡、紐約、倫敦同群；在資本利得上，則在另一個宇宙。台北與雪梨是鏡像：不到 3% 的收益率，靠二十年的價格上漲撐著。你買的是哪一具引擎，決定了後面所有事——持有期、產品選擇、槓桿，以及一個停滯的價格指數該讓你多擔心。<b>在曼谷，你買的是租金那條線。租金線一斷，底下沒有第二具引擎。</b></span></p>
+  </div>
+
+  <!-- ════════ PART II ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">II · The Supply Engine</span><span class="lang-zh" style="display:none">第二部 · 供給端的形成機制</span></h2></div>
+
+  <p class="pull"><span class="lang-en">Eight years of building 100,000 homes a year into 92,000 of demand does not produce a shortfall of 8,000. It compounds.</span><span class="lang-zh" style="display:none">連續八年，用每年 10 萬戶的興建對上 9.2 萬戶的需求，不會只留下 8,000 戶的缺口——它會複利。</span></p>
+
+  <div class="blk">
+    <h2><span class="lang-en">The arithmetic that built the overhang</span><span class="lang-zh" style="display:none">堆出餘屋的那道算術</span></h2>
+    <p class="sub"><span class="lang-en">Annual launches vs annual absorption, two eras · Greater Bangkok · SCB EIC / REIC</span><span class="lang-zh" style="display:none">年推案量 vs 年吸納量，兩個時代 · 大曼谷 · SCB EIC／REIC</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Launches vs absorption</span><span class="lang-zh" style="display:none">推案 vs 吸納</span></div><div id="cEra" style="height:250px"></div></div>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">Through <b>2016 to 2023</b>, developers launched an average of about 100,000 units a year into demand of roughly 92,000. The annual gap looks modest. Run it for eight years and it is the overhang.</span><span class="lang-zh" style="display:none">從 <b>2016 到 2023</b>，發展商年均推出約 10 萬戶，對上約 9.2 萬戶的需求。單年缺口看起來不大；跑八年，就是今天的餘屋。</span></li>
+      <li class="good"><span class="lang-en">Since 2023 launches have halved to roughly <b>51,000 a year</b>. This is the single most important positive in the Thai market and it is genuinely voluntary — no regulator forced it. Developers cut because presales stopped funding construction.</span><span class="lang-zh" style="display:none">2023 年後推案腰斬到約<b>每年 5.1 萬戶</b>。這是泰國市場最重要的一個正面因素，而且是自願的——沒有監管機關逼他們。發展商減量，是因為預售已經無法為工程提供資金。</span></li>
+      <li><span class="lang-en">Bangkok condominium launches specifically fell to about <b>16,400 units in 2025</b>, the lowest in over a decade against a pre-pandemic norm above 50,000. The discipline is real, but it arrives after the stock is already built.</span><span class="lang-zh" style="display:none">單看曼谷公寓，2025 年推案僅約 <b>1.64 萬戶</b>，為十餘年最低，疫前常態在 5 萬戶以上。紀律是真的，但它在存量已經蓋完之後才到。</span></li>
+    </ul>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Completions are finally rolling over</span><span class="lang-zh" style="display:none">完工量終於翻落</span></h2>
+    <p class="sub"><span class="lang-en">Newly completed residential registrations, Bangkok Metropolitan Region · 2024–2025 · REIC</span><span class="lang-zh" style="display:none">新完工住宅登記，曼谷都會區 · 2024–2025 · REIC</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Completions and completed condo value</span><span class="lang-zh" style="display:none">完工戶數與完工公寓貨值</span></div><div id="cComp" style="height:235px"></div></div>
+    <p class="narr-p"><span class="lang-en">Registered completions in the Bangkok Metropolitan Region fell to <b>72,584 units in 2025</b> from 97,284 a year earlier, a drop of 25.4%, with condominium completions down 22.7%. The value of newly completed condominium supply fell from <b>178.4 billion baht in 2024 to about 140.6 billion in 2025</b>. This is the 2023 launch cut arriving on site, and it is the mechanical reason the overhang should stop growing from new supply after 2027. It is not a reason the existing stock clears faster.</span><span class="lang-zh" style="display:none">曼谷都會區的新完工住宅登記，從 2024 年的 97,284 戶降到 <b>2025 年的 72,584 戶</b>，減少 25.4%，其中公寓完工量減 22.7%。新完工公寓的貨值從 <b>2024 年的 1,784 億泰銖降到 2025 年約 1,406 億</b>。這是 2023 年的推案收縮傳導到工地，也是為什麼 2027 年之後餘屋不應再因新供給而增加的機械性原因。但它不是既有存量會去化得更快的理由。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The Q1 2026 rebound, read twice</span><span class="lang-zh" style="display:none">2026 第一季的回彈，讀兩遍</span></h2>
+    <p class="sub"><span class="lang-en">The same quarter as counted by two consultancies · Bangkok condominiums · Colliers / Knight Frank</span><span class="lang-zh" style="display:none">同一季，兩家顧問的兩種算法 · 曼谷公寓 · Colliers／Knight Frank</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Launches and sell-rate, two definitions</span><span class="lang-zh" style="display:none">推案量與去化率，兩種定義</span></div><div id="cQ1" style="height:250px"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">Colliers counted <b>9,480 new condominium units</b> launched in Bangkok in the first quarter, up 42.6% year-on-year, with a take-up rate of 67.8% — a figure computed across all units on the market, not just the quarter's launches.</span><span class="lang-zh" style="display:none">Colliers 統計曼谷第一季推出 <b>9,480 戶</b>新公寓，年增 42.6%，去化率 67.8%——這個數字是就市場上全部在售戶數計算的，不只是當季推案。</span></li>
+      <li class="warn"><span class="lang-en">Knight Frank counted <b>6,174 units</b> across the same quarter and reported a booking rate of just <b>24.3%</b> on those launches, down from 43.8% in the fourth quarter of 2025. Same market, same quarter, opposite headline.</span><span class="lang-zh" style="display:none">Knight Frank 就同一季統計 <b>6,174 戶</b>，並回報這批推案的訂購率僅 <b>24.3%</b>，前一季為 43.8%。同一個市場、同一季，標題完全相反。</span></li>
+      <li><span class="lang-en">Both are correct. The reconciling fact is that first-week booking rates on newly launched projects have <b>halved in six months</b>, while cumulative absorption across older, repriced stock has held up. Developers are clearing yesterday's inventory at a discount and failing to sell today's launches at list.</span><span class="lang-zh" style="display:none">兩者都對。調和兩者的事實是：新推案的首期訂購率<b>半年內腰斬</b>，而已降價的舊存量累積去化仍撐得住。發展商正在打折清昨天的庫存，同時賣不掉今天的開價新案。</span></li>
+    </ul>
+    <p class="narr-p"><span class="lang-en">The launch geography confirms it. In that quarter <b>no new project launched in the central business district at all</b>. Fifty-eight per cent of units came out on the city fringe and 42% in the suburbs, and 68% were priced below 80,000 baht per square metre. Developers are building where land is cheap, which is precisely where the mortgage rejection rate is highest. That is a supply decision driven by cost, not by demand.</span><span class="lang-zh" style="display:none">推案的地理分布佐證了這一點。該季<b>中央商業區沒有任何新案推出</b>；58% 的戶數落在市郊、42% 在外圍，68% 定價低於每平方公尺 8 萬泰銖。發展商在地價便宜的地方蓋，而那正是房貸退件率最高的地方。這是一個由成本而非需求驅動的供給決策。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The blind spot: the second-hand tide</span><span class="lang-zh" style="display:none">統計盲點：二手屋的潮水</span></h2>
+    <p class="sub"><span class="lang-en">Residential units listed for sale nationwide · 1Q2026 · REIC</span><span class="lang-zh" style="display:none">全國住宅在售掛牌量 · 2026Q1 · REIC</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">New vs second-hand listings</span><span class="lang-zh" style="display:none">新案 vs 二手掛牌</span></div><div id="cResale" style="height:240px"></div></div>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">National residential inventory on the market reached <b>590,000 units</b> in the first quarter of 2026, up 7.2% year-on-year. The growth came almost entirely from resale: second-hand listings jumped <b>34.2% to 240,000 units</b>.</span><span class="lang-zh" style="display:none">2026 年第一季，全國在售住宅存量達 <b>59 萬戶</b>，年增 7.2%。增量幾乎全部來自二手：二手掛牌<b>年增 34.2% 至 24 萬戶</b>。</span></li>
+      <li><span class="lang-en">In Bangkok alone, <b>70,495 second-hand homes</b> were listed, and their combined asking value rose 234% year-on-year to 701.25 billion baht. A 234% jump in listed value is not households upgrading. It is higher-value assets being pushed onto the market.</span><span class="lang-zh" style="display:none">單是曼谷就有 <b>70,495 戶</b>二手屋掛牌，掛牌總值年增 234% 至 7,012.5 億泰銖。掛牌總值年增 234%，不是家庭在換屋，而是高價資產被推上市場。</span></li>
+      <li class="warn"><span class="lang-en">Behind that is a <b>210% surge in foreclosed properties</b> as households default. Banks and asset-management companies are now competitors to developers, and they are price-takers with a mandate to clear.</span><span class="lang-zh" style="display:none">背後是家庭違約推動的<b>法拍物件年增 210%</b>。銀行與資產管理公司如今是發展商的競爭者，而且是帶著「必須出清」授權的價格接受者。</span></li>
+    </ul>
+    <div class="concept">
+      <h4><span class="lang-en">Why this breaks the standard overhang model</span><span class="lang-zh" style="display:none">為何這打破了標準的餘屋模型</span></h4>
+      <p><span class="lang-en">Every developer-overhang analysis assumes the seller has a balance sheet and can wait. Malaysia's Housing Development Act reinforces that: developers carry rather than cut, so the surplus shows up in time-to-clear rather than in price. <b>A foreclosed unit has no such patience.</b> Once distressed resale becomes the marginal seller, the price-discovery mechanism inverts — the lowest-conviction holder sets the comparable, and the developer's list price becomes fiction.</span><span class="lang-zh" style="display:none">所有「發展商餘屋」的分析，都假設賣方有資產負債表、可以等。馬來西亞的《房屋發展法》強化了這一點：發展商寧可持有也不降價，過剩因此表現在去化時間而非價格上。<b>法拍屋沒有這種耐性。</b>一旦不良二手成為邊際賣方，價格發現機制就會反轉——持有意願最低的人決定了實價，發展商的開價變成虛構。</span></p>
+      <p class="r"><span class="lang-en">Second-hand homes already account for <b>about two-thirds of all ownership transfers</b> in Thailand. That threshold has been crossed. The developer market is no longer where the price is set.</span><span class="lang-zh" style="display:none">在泰國，二手屋已佔<b>全部過戶的約三分之二</b>。這個門檻已經跨過了。價格不再由新案市場決定。</span></p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Launched versus sold, first half 2026</span><span class="lang-zh" style="display:none">2026 上半年：推了多少，賣了多少</span></h2>
+    <p class="sub"><span class="lang-en">Bangkok metropolitan area · units · Agency for Real Estate Affairs</span><span class="lang-zh" style="display:none">曼谷都會區 · 戶數 · AREA</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">H1 2026 launches vs sales by type</span><span class="lang-zh" style="display:none">2026 上半年推案 vs 銷售分產品</span></div><div id="cH1" style="height:250px"></div></div>
+    <p class="narr-p"><span class="lang-en">In the first half of 2026, Bangkok saw <b>97 new residential projects totalling 17,045 units</b> launched with a combined value of 152.7 billion baht, against <b>26,780 units sold</b>. For the first time in this cycle the market sold more than it launched — the stock declined. Condominiums accounted for 14,439 of those sales, or 53.9%, so the clearing is happening in the segment with the largest visible overhang. Full-year projections put launches at about 35,795 units and sales near 57,000. If those hold, Bangkok removes roughly <b>21,000 units of net inventory in 2026</b> — around 10% of the standing stock, which on a straight line implies the better part of a decade to normalise.</span><span class="lang-zh" style="display:none">2026 上半年，曼谷推出 <b>97 個新住宅案、共 17,045 戶</b>，總貨值 1,527 億泰銖，同期<b>售出 26,780 戶</b>。這個循環裡第一次「賣得比推得多」，存量開始下降。其中公寓成交 14,439 戶、佔 53.9%，也就是說去化正發生在可見餘屋最大的那個類別。全年預估推案約 35,795 戶、銷售約 5.7 萬戶。若成立，曼谷 <b>2026 年淨減約 2.1 萬戶存量</b>——約當前存量的一成；直線外推，正常化要接近十年。</span></p>
+  </div>
+
+  <!-- ════════ PART III ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">III · Demand &amp; Access</span><span class="lang-zh" style="display:none">第三部 · 需求與可負擔性</span></h2></div>
+
+  <p class="pull"><span class="lang-en">Thailand does not have a housing demand problem. It has a housing credit problem that looks like one.</span><span class="lang-zh" style="display:none">泰國沒有住宅需求問題。它有一個長得很像需求問題的住宅信用問題。</span></p>
+
+  <div class="blk">
+    <h2><span class="lang-en">Four straight years of shrinking transfers</span><span class="lang-zh" style="display:none">連續四年萎縮的過戶量</span></h2>
+    <p class="sub"><span class="lang-en">Nationwide residential ownership transfers, units and value · REIC forecast base</span><span class="lang-zh" style="display:none">全國住宅過戶戶數與金額 · REIC 預測基礎</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Transfers: volume and value</span><span class="lang-zh" style="display:none">過戶：量與值</span></div><div id="cTrans" style="height:250px"></div></div>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">Nationwide transfers fell <b>7.3% to 322,500 units in 2025</b>, and transfer value fell harder, down <b>10.9% to 873.4 billion baht</b>. REIC's 2026 base case is broadly flat at 320,200 units and 866.2 billion baht.</span><span class="lang-zh" style="display:none">2025 年全國過戶量<b>年減 7.3% 至 322,500 戶</b>，金額跌得更多，<b>年減 10.9% 至 8,734 億泰銖</b>。REIC 的 2026 基準情境大致持平，320,200 戶、8,662 億泰銖。</span></li>
+      <li><span class="lang-en">Value falling faster than volume for two consecutive years is the signature of a <b>downward mix shift</b>: the same number of transactions, at lower price points. That is what a fee incentive capped at 7 million baht produces.</span><span class="lang-zh" style="display:none">金額連兩年跌得比戶數快，是<b>成交結構向下位移</b>的特徵：同樣的筆數，落在更低的價位。這正是一個以 700 萬泰銖為上限的費用優惠會產生的效果。</span></li>
+    </ul>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The Q1 rebound is a resale rebound</span><span class="lang-zh" style="display:none">第一季的回彈，是二手的回彈</span></h2>
+    <p class="sub"><span class="lang-en">1Q2026 transfers, year-on-year change by segment · REIC</span><span class="lang-zh" style="display:none">2026Q1 過戶年增率分類別 · REIC</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Volume vs value growth</span><span class="lang-zh" style="display:none">量增 vs 值增</span></div><div id="cQmix" style="height:235px"></div></div>
+    <p class="narr-p"><span class="lang-en">First-quarter transfers totalled <b>72,583 units worth 187 billion baht</b>, up 11.2% in volume but only 3.1% in value. Second-hand homes drove it, at 48,446 units — two-thirds of all transfers — up 13.8% in volume and 7.7% in value. New-build transfers rose 6.2% in volume while <b>falling 1.1% in value</b>. Read together: the recovery is real, it is happening in the resale market, and developers are participating in it only by cutting price. For a buyer, that combination is the most favourable set of terms in a decade. For a developer holding land at 2022 cost, it is a margin problem with no obvious exit.</span><span class="lang-zh" style="display:none">第一季過戶共 <b>72,583 戶、1,870 億泰銖</b>，量增 11.2%，值僅增 3.1%。推動的是二手屋：48,446 戶、佔全部三分之二，量增 13.8%、值增 7.7%。新建案過戶量增 6.2%，金額卻<b>年減 1.1%</b>。合起來讀：復甦是真的，發生在二手市場，而發展商只能靠降價參與。對買方，這是十年來最有利的一組條件；對一個手上還握著 2022 年成本土地的發展商，這是一個沒有明顯出口的毛利問題。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The financing filter: where the market actually stops</span><span class="lang-zh" style="display:none">融資篩子：市場實際卡住的地方</span></h2>
+    <p class="sub"><span class="lang-en">Mortgage rejection rate, developer surveys · 2024–1H2026 · Thai Condominium Association / REIC</span><span class="lang-zh" style="display:none">房貸退件率，發展商調查 · 2024–2026H1 · 泰國公寓公會／REIC</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Rejection rate</span><span class="lang-zh" style="display:none">退件率</span></div><div id="cRej" style="height:250px"></div></div>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">Rejection ran at an average of <b>45% across 272 surveyed projects</b> in the first quarter of 2025 and has held in a <b>40–50% band through the first half of 2026</b>. In the sub-3-million-baht segment it reached roughly <b>70%</b>.</span><span class="lang-zh" style="display:none">2025 年第一季，<b>272 個受調案場</b>的平均退件率為 <b>45%</b>；2026 上半年維持在 <b>40% 至 50% 的區間</b>。在 300 萬泰銖以下的價位帶，退件率一度達 <b>70%</b> 左右。</span></li>
+      <li><span class="lang-en">The stated reasons are the same three every quarter: adverse credit-bureau history, existing debt burden, and undocumented or unstable income. None of those are fixed by a lower policy rate. <b>A central bank can change the price of credit; it cannot change the eligibility of a borrower.</b></span><span class="lang-zh" style="display:none">被列出的原因每一季都是同三項：聯徵不良紀錄、既有債務負擔、收入不穩或無法舉證。這三項都不會因政策利率下降而改變。<b>央行能改變信用的價格，改變不了借款人的資格。</b></span></li>
+      <li><span class="lang-en">This is why the Thai and Malaysian markets fail differently. Malaysia's loan approval rate has hovered near half for a decade and the binding constraint is <b>income level</b> versus a RM500k price wall. Thailand's binding constraint is <b>balance-sheet history</b>: a decade of auto and consumer lending left the household sector with the credit records, not just the incomes, to be declined.</span><span class="lang-zh" style="display:none">這也是泰國與馬來西亞失敗方式不同的原因。馬來西亞的貸款核准率十年來徘徊在五成上下，約束是<b>收入水準</b>對上 RM50 萬那道價格牆；泰國的約束是<b>資產負債表的歷史</b>：十年的車貸與消費金融，留給家庭部門的不只是收入不足，而是足以被退件的信用紀錄。</span></li>
+    </ul>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Deleveraging by denial</span><span class="lang-zh" style="display:none">用「不放款」完成的去槓桿</span></h2>
+    <p class="sub"><span class="lang-en">Household debt as a share of GDP · 2008–4Q2025 · Bank of Thailand</span><span class="lang-zh" style="display:none">家庭債務佔 GDP · 2008–2025Q4 · 泰國央行</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Household debt / GDP</span><span class="lang-zh" style="display:none">家庭債務／GDP</span></div><div id="cHhd" style="height:250px"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">The ratio climbed from <b>66% in 2008 to a peak of 95.5% in the first quarter of 2021</b>, and has since eased to <b>86.7% at the end of 2025</b> — 16.44 trillion baht in absolute terms.</span><span class="lang-zh" style="display:none">這個比率從 <b>2008 年的 66% 一路升到 2021 年第一季的 95.5% 峰值</b>，之後回落到 <b>2025 年底的 86.7%</b>——絕對金額 16.44 兆泰銖。</span></li>
+      <li class="warn"><span class="lang-en">A nine-point fall reads like healing. It is not repayment. Loan growth was <b>+0.2% year-on-year in the first quarter of 2026</b> with SME and consumer lending still contracting. The ratio is falling because the numerator has stopped growing, not because households paid down debt.</span><span class="lang-zh" style="display:none">下降九個百分點看起來像在痊癒。但它不是還款來的。2026 年第一季貸款年增僅 <b>+0.2%</b>，中小企業與消費貸款仍在收縮。比率下降，是因為分子不再成長，不是因為家庭把債還掉了。</span></li>
+      <li><span class="lang-en">Malaysia sits at 84.8% on the same measure and is generally treated as ASEAN's leverage outlier. Thailand is <b>two points higher with half the growth rate and a shrinking population</b>. The debt-service capacity behind the two numbers is not comparable.</span><span class="lang-zh" style="display:none">馬來西亞在同一口徑下是 84.8%，通常被視為東協的槓桿異數。泰國<b>比它高兩個百分點，成長率只有一半，而且人口在萎縮</b>。這兩個數字背後的償債能力不能相提並論。</span></li>
+    </ul>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Asset quality: the pipeline behind the NPL ratio</span><span class="lang-zh" style="display:none">資產品質：不良率背後的待爆管線</span></div><div id="cCredit" style="height:230px"></div></div>
+    <p class="narr-p"><span class="lang-en">The reported non-performing loan ratio held steady at <b>2.85% in the first quarter of 2026</b>, or 535.8 billion baht. Behind it sits roughly <b>1.28 trillion baht of special-mention loans</b> — the 30-to-90-day bucket — which is more than twice the NPL stock. Special-mention loans do not all migrate, but the ratio between the two is the cleanest available forward indicator, and it is unusually high. That is what a mortgage book written at teaser rates into a deflationary economy looks like on the way to year four.</span><span class="lang-zh" style="display:none">2026 年第一季公布的不良貸款率持平於 <b>2.85%</b>、金額 5,358 億泰銖。它背後坐著約 <b>1.28 兆泰銖的「特別關注類」貸款</b>——逾期 30 至 90 天那一桶——是不良債權存量的兩倍以上。關注類不會全部劣化，但兩者的比值是現成最乾淨的前瞻指標，而它異常地高。一本以優惠利率承作、投放進通縮經濟的房貸簿，走向第四年時，看起來就是這樣。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The affordability ladder — and where it snaps</span><span class="lang-zh" style="display:none">可負擔階梯 —— 以及它斷在哪裡</span></h2>
+    <p class="sub"><span class="lang-en">Price-to-annual-income multiples, Bangkok · 2026 · author's calculation on REIC / AREA / labour statistics</span><span class="lang-zh" style="display:none">房價所得比，曼谷 · 2026 · 依 REIC／AREA／勞動統計計算</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Years of income per unit</span><span class="lang-zh" style="display:none">每戶需要幾年所得</span></div><div id="cAfford" style="height:250px"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">Average Bangkok household income is about <b>39,100 baht a month</b>, or 469,000 baht a year. The average newly launched residential unit priced at <b>8.9 million baht in 2026</b> — up from 7.17 million in 2025 — is therefore a <b>19-year</b> multiple.</span><span class="lang-zh" style="display:none">曼谷家庭平均月所得約 <b>39,100 泰銖</b>、年約 46.9 萬。<b>2026 年新推案平均單價 890 萬泰銖</b>（2025 年為 717 萬），房價所得比因此為 <b>19 倍</b>。</span></li>
+      <li><span class="lang-en">A 30-square-metre unit at the average new-launch price of 120,364 baht per square metre costs about 3.6 million baht — a <b>7.7-year</b> multiple for that same Bangkok household, and about <b>25 years</b> for a household on the national median income of roughly 12,000 baht a month.</span><span class="lang-zh" style="display:none">一戶 30 平方公尺、以新推案均價每平方公尺 120,364 泰銖計，約 360 萬泰銖——對同一個曼谷家庭是 <b>7.7 倍</b>，對月所得約 12,000 泰銖的全國中位家庭則約 <b>25 倍</b>。</span></li>
+      <li class="warn"><span class="lang-en">The gap between those two multiples is the whole market. Bangkok's formal-sector households can just about buy a small condominium; the rest of the country cannot buy anything in Bangkok. Since <b>53% to 55% of Thai workers are informal</b> and therefore cannot document income to a bank's satisfaction, the addressable buyer pool is a fraction of the population — which is exactly what a 70% rejection rate in the cheap band is measuring.</span><span class="lang-zh" style="display:none">這兩個倍數之間的落差，就是整個市場。曼谷的正式部門家庭勉強買得起一戶小公寓；全國其餘人口在曼谷什麼都買不起。由於<b>泰國有 53% 到 55% 的勞動人口在非正式部門</b>、無法向銀行舉證收入，可及買方池只是人口的一小部分——而低價帶 70% 的退件率，量的正是這件事。</span></li>
+    </ul>
+  </div>
+
+  <!-- ════════ PART IV ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">IV · The Sub-Markets</span><span class="lang-zh" style="display:none">第四部 · 分層市場</span></h2></div>
+
+  <p class="pull"><span class="lang-en">In Bangkok, geography tells you the yield. The mortgage tells you whether the sale happens at all.</span><span class="lang-zh" style="display:none">在曼谷，地理決定你的收益率；房貸決定這筆交易到底成不成立。</span></p>
+
+  <div class="blk">
+    <h2><span class="lang-en">The price-per-square-metre ladder</span><span class="lang-zh" style="display:none">每平方公尺的價格階梯</span></h2>
+    <p class="sub"><span class="lang-en">Bangkok condominium pricing benchmarks · baht per sq m · 2026</span><span class="lang-zh" style="display:none">曼谷公寓價格基準 · 泰銖／平方公尺 · 2026</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Where each buyer actually transacts</span><span class="lang-zh" style="display:none">各類買方實際成交的位置</span></div><div id="cPsm" style="height:255px"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">Prime new-build Sukhumvit clears around <b>220,000 baht per square metre</b>; the Bangkok-wide average is near 150,000 and the median near 125,000.</span><span class="lang-zh" style="display:none">素坤逸精華地段的新案約在<b>每平方公尺 22 萬泰銖</b>；曼谷全市均價接近 15 萬，中位數約 12.5 萬。</span></li>
+      <li class="warn"><span class="lang-en">Secondary stock on the BTS Silom line, which peaked near 220,000 in 2021, now negotiates at <b>108,000 to 130,000</b>. That is a 40%-plus discount to peak on prime-line resale, and it sits underneath every new launch in the same corridor.</span><span class="lang-zh" style="display:none">BTS 席隆線的二手存量，2021 年高點接近 22 萬，如今議價落在 <b>10.8 萬到 13 萬</b>。這是精華軌道線二手相對高點四成以上的折價，而它就墊在同一條走廊上每一個新案的下面。</span></li>
+      <li><span class="lang-en">The average newly launched unit came out at <b>120,364 baht per square metre in the first half of 2026</b>, up 9.4% from 110,000 at end-2025 — a rise driven by mix, since 68% of launch volume was priced under 80,000. The headline price rose because the cheap projects sold out and the expensive ones did not.</span><span class="lang-zh" style="display:none">2026 上半年新推案均價為<b>每平方公尺 120,364 泰銖</b>，較 2025 年底的 11 萬上升 9.4%——但這是結構造成的，因為推案量的 68% 定價低於 8 萬。標題價格上升，是因為便宜的案子賣掉了、貴的沒賣掉。</span></li>
+    </ul>
+    <div class="concept">
+      <h4><span class="lang-en">The barbell that inverts the usual instinct</span><span class="lang-zh" style="display:none">一個顛覆直覺的槓鈴</span></h4>
+      <p class="g"><span class="lang-en"><b>Luxury and super-luxury clear at about 93%</b> of existing supply, because that buyer does not use a Thai mortgage. Cash, foreign currency, or an offshore facility bypasses the entire rejection problem.</span><span class="lang-zh" style="display:none"><b>豪宅與超豪宅的既有供給去化率約 93%</b>，因為那個買方不用泰國房貸。現金、外幣、或境外融資，直接繞過整個退件問題。</span></p>
+      <p class="r"><span class="lang-en"><b>The sub-3-million-baht band is where 70% of applications fail.</b> The conventional wisdom that cheap stock is defensive is exactly backwards in this market: the cheaper the unit, the more dependent the sale is on the one mechanism that is broken.</span><span class="lang-zh" style="display:none"><b>300 萬泰銖以下的價位帶，七成申請被退。</b>「便宜的比較保險」這個常識在這個市場恰好是反的：單價越低，成交越依賴那個已經壞掉的機制。</span></p>
+      <p><span class="lang-en">The resilient middle is the <b>3 to 5 million baht</b> band, where absorption has improved since 2021: expensive enough that the buyer has documented income, cheap enough to stay inside the 7-million-baht fee incentive.</span><span class="lang-zh" style="display:none">真正有韌性的中段是 <b>300 萬到 500 萬泰銖</b>，其吸納自 2021 年以來持續改善：貴到買方有可舉證的收入，又便宜到還在 700 萬泰銖的費用優惠範圍內。</span></p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Land prices follow the trains, not the buyers</span><span class="lang-zh" style="display:none">地價跟著鐵路走，不跟著買方走</span></h2>
+    <p class="sub"><span class="lang-en">Greater Bangkok vacant land price index, year-on-year · 2Q2026 · REIC</span><span class="lang-zh" style="display:none">大曼谷空地價格指數年增率 · 2026Q2 · REIC</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Land price growth by corridor</span><span class="lang-zh" style="display:none">分走廊的地價增速</span></div><div id="cLand" style="height:260px"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">The Greater Bangkok index reached <b>441 points in the second quarter of 2026</b>, up 6.2% year-on-year but down 1.8% on the quarter — the first quarterly fall after years of steady appreciation.</span><span class="lang-zh" style="display:none">大曼谷指數在 <b>2026 年第二季達 441 點</b>，年增 6.2%，但季減 1.8%——多年穩定上漲後的首次季度下跌。</span></li>
+      <li><span class="lang-en">The dispersion beneath the average is enormous. <b>Phra Khanong–Bang Na–Suan Luang–Prawet rose 36.3%</b>; the Bang Khen–Sai Mai–Don Mueang cluster 21.1%; Mueang Nonthaburi–Pak Kret 17.2%. Land along the Green Line extension to Khu Khot–Lam Luk Ka gained 17.6%.</span><span class="lang-zh" style="display:none">平均值底下的離散度極大。<b>帕卡儂—邦那—萱鑾—巴威區年增 36.3%</b>；邦肯—賽邁—廊曼群 21.1%；暖武里—巴革 17.2%。綠線延伸至庫科—林魯卡沿線地價上漲 17.6%。</span></li>
+      <li class="warn"><span class="lang-en">Land is the one input still inflating while output prices stall. That compresses developer margins from both ends, and it explains the launch map: builders chase land they can still underwrite, which pushes them outward, which pushes them into the price band where mortgages fail. <b>Rising land prices in a stalled housing market are not a bullish signal. They are a margin squeeze.</b></span><span class="lang-zh" style="display:none">土地是產出價格停滯之際唯一仍在通膨的投入項。這從兩端壓縮發展商毛利，也解釋了推案地圖：建商追還算得過來的地，於是往外推，於是推進了房貸失敗的那個價位帶。<b>停滯房市裡的地價上漲不是多頭訊號，是毛利擠壓。</b></span></li>
+    </ul>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The stimulus has a nationality clause</span><span class="lang-zh" style="display:none">刺激措施裡的國籍條款</span></h2>
+    <p class="sub"><span class="lang-en">Statutory rates, Thai national vs foreign buyer · 2026 · Revenue Department / Land Department</span><span class="lang-zh" style="display:none">法定稅費率，泰國國民 vs 外國買方 · 2026 · 稅務廳／土地廳</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Who pays what</span><span class="lang-zh" style="display:none">誰付什麼</span></div><div id="cCost" style="height:250px"></div></div>
+    <p class="fnote"><span class="lang-en">The first three bands are one-off percentages of transaction or appraised value; the rental-withholding band is an <b>annual</b> rate on gross rent and is stacked here only to show the full statutory burden facing each buyer type. Mortgage registration applies only where a Thai bank loan is taken — most foreign purchases are cash-remitted from abroad.</span><span class="lang-zh" style="display:none">前三段是按交易價或評定價值計算的一次性費率；租金扣繳那一段是對租金總額課徵的<b>年度</b>稅率，此處併入堆疊僅為呈現兩類買方面對的完整法定負擔。抵押登記費僅在使用泰國銀行貸款時發生——多數外國買方是自境外匯入現金。</span></p>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">The headline demand measure — transfer and mortgage registration fees cut from 2% and 1% to <b>0.01%</b>, now extended to 30 June 2027 for homes at or below 7 million baht — is available <b>to individual Thai nationals only</b>. A foreign buyer pays the full 2%.</span><span class="lang-zh" style="display:none">最主要的需求措施——過戶費與抵押登記費由 2% 與 1% 降至 <b>0.01%</b>，並已延長至 2027 年 6 月 30 日、適用 700 萬泰銖以下住宅——<b>僅限泰國籍個人</b>。外國買方付足額 2%。</span></li>
+      <li><span class="lang-en">On exit, specific business tax of <b>3.3%</b> applies if the property is sold within five years; otherwise stamp duty of 0.5%. Rental income for a non-resident foreigner is subject to a flat <b>15% withholding on gross rent</b> — which converts a 5% gross yield into roughly 4.25% before any operating cost.</span><span class="lang-zh" style="display:none">出場端，五年內出售課 <b>3.3%</b> 特種商業稅，否則課 0.5% 印花稅。非居民外國人的租金收入按<b>租金總額 15% 就源扣繳</b>——這把 5% 的毛收益率在任何營運成本之前先變成約 4.25%。</span></li>
+      <li><span class="lang-en">2026 is also the <b>first full-rate year for the Land and Building Tax</b>: pandemic-era discounts have lapsed and vacant land now faces a step-up penalty. Residential property below 50 million baht in appraised value remains largely exempt, so the burden falls on land banks and on the luxury tier.</span><span class="lang-zh" style="display:none">2026 年同時是<b>土地與建物稅的第一個全額年度</b>：疫情期的折扣已到期，空置土地另有遞增罰則。評定價值 5,000 萬泰銖以下的住宅大致仍免稅，因此負擔落在土地銀行與豪宅層。</span></li>
+    </ul>
+    <p class="narr-p"><span class="lang-en">Put the pieces together and the policy design is self-defeating. The state is subsidising the buyer the banks reject and taxing the buyer who arrives with cash. Malaysia does something structurally similar with its RM1 million foreign-purchase floor and 8% flat stamp duty, but at least the Malaysian rule <b>directs</b> foreign money to a price tier rather than penalising it everywhere. Thailand's 49% foreign quota already caps how much of a building can be sold freehold to non-Thais; adding a fee differential on top means the marginal cash buyer faces a worse round-trip in the one market segment that still clears.</span><span class="lang-zh" style="display:none">把這幾塊拼起來，政策設計是自我拆台的。國家在補貼銀行會退件的買方，同時對帶著現金來的買方課稅。馬來西亞用 RM100 萬的外國人購屋門檻與 8% 統一印花稅做了結構上類似的事，但馬國的規則至少是把外資<b>導向</b>某個價格層，而不是全面懲罰它。泰國的 49% 外資配額本來就已經限制了一棟樓能以永久產權賣給非泰籍的比例；再疊一層費用差別，等於讓邊際現金買方在唯一還去化得動的那一段裡，承擔更差的來回成本。</span></p>
+    <p class="narr-p"><span class="lang-en">The offset arrived through a different door. Fiscal policy still excludes the foreign buyer, but <b>immigration policy now pays them</b>: since October 2025 a purchase of 3 million baht or more carries a renewable long-stay visa for the buyer and their family. That measure is examined in full below, and it is the reason the foreign-access picture in 2026 is genuinely more open than the tax schedule alone suggests.</span><span class="lang-zh" style="display:none">補償是從另一道門進來的。財政政策仍然把外國買方排除在外，但<b>移民政策現在開始付錢給他們</b>：自 2025 年 10 月起，300 萬泰銖以上的購置可換得買方與家屬的可續期長期居留簽證。該措施於下方完整檢視——這也是為什麼 2026 年的外資准入圖像，實際上比單看稅費表更為開放。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">What foreigners can and cannot buy — the 2026 status</span><span class="lang-zh" style="display:none">外國人能買什麼、不能買什麼 —— 2026 現狀</span></h2>
+    <div class="cat">
+      <div class="c"><h4><span class="lang-en">Freehold condominium, 49% quota</span><span class="lang-zh" style="display:none">永久產權公寓，49% 配額</span></h4><p><span class="lang-en">Foreigners may own condominium units in freehold up to <b>49% of a building's saleable area</b>. Funds must be remitted from abroad in foreign currency with a bank certificate. The quota is per building, so in prime projects it is the binding constraint on foreign demand, and quota units routinely trade at a premium to the Thai-quota equivalent.</span><span class="lang-zh" style="display:none">外國人可持有公寓永久產權，上限為<b>該棟可售面積的 49%</b>。資金須自境外以外幣匯入並取得銀行證明。配額以「棟」為單位，因此在精華案場，這是外資需求的實質約束；外配戶通常較泰配戶溢價成交。</span></p></div>
+      <div class="c"><h4><span class="lang-en">Land: no; lease: 30 years</span><span class="lang-zh" style="display:none">土地：不行；租賃：30 年</span></h4><p><span class="lang-en">Foreigners cannot own land. Registered leases are enforceable for an <b>initial 30-year term</b>; renewal clauses are contractual, not statutory, and courts have not reliably enforced them. Villas marketed as "30+30+30" carry legal risk that is routinely understated at the point of sale.</span><span class="lang-zh" style="display:none">外國人不得持有土地。登記租賃的可執行期為<b>首期 30 年</b>；續約條款屬合約性質而非法定，法院並未穩定支持。以「30＋30＋30」行銷的別墅，其法律風險在銷售端經常被低估。</span></p></div>
+      <div class="c"><h4><span class="lang-en">The 99-year lease and 75% quota: not law</span><span class="lang-zh" style="display:none">99 年租賃與 75% 配額：未立法</span></h4><p><span class="lang-en">Both reforms have been floated repeatedly and neither has been enacted. The 99-year leasehold bill was debated in 2024 and shelved under domestic political pressure; <b>no draft to raise the condominium quota to 75% had been submitted to parliament as of mid-2026</b>. Underwrite the current law, not the proposal.</span><span class="lang-zh" style="display:none">兩項改革反覆被提出，皆未立法。99 年租賃法案 2024 年曾進入討論，因國內政治壓力擱置；<b>至 2026 年中，未有將公寓配額提高至 75% 的草案送進國會</b>。請以現行法律定價，不要以提案定價。</span></p></div>
+      <div class="c"><h4><span class="lang-en">Residency, though, did open</span><span class="lang-zh" style="display:none">但居留權確實開了</span></h4><p><span class="lang-en">Since <b>1 October 2025</b> a freehold condominium of 3 million baht or more carries a renewable long-stay visa for the buyer and dependants, under Immigration Orders 237/2568 and 238/2568. It changes <b>who may live here, not who may own</b> — the 49% quota is untouched. Detailed below.</span><span class="lang-zh" style="display:none">自 <b>2025 年 10 月 1 日</b>起，依移民局第 237/2568 與 238/2568 號命令，300 萬泰銖以上的永久產權公寓可為買方與眷屬換得可續期的長期居留簽證。它改變的是<b>誰可以住在這裡，不是誰可以持有</b>——49% 配額並未變動。詳見下文。</span></p></div>
+      <div class="c"><h4><span class="lang-en">Nominee structures: actively policed</span><span class="lang-zh" style="display:none">人頭公司：正在被查</span></h4><p><span class="lang-en">From January and April 2026, Department of Business Development orders require proof of genuine source of funds and signed investment confirmation letters at company incorporation and amendment. The Thai-majority company route to holding land is <b>under enforcement pressure, not merely legally grey</b>.</span><span class="lang-zh" style="display:none">自 2026 年 1 月與 4 月起，商業發展廳的命令要求公司設立與變更時提出真實資金來源證明與簽署投資確認書。以「泰籍過半公司」持有土地的路徑，如今是<b>正在被執法追查，而不只是法律灰色</b>。</span></p></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The 3-million-baht visa — the demand policy that actually moved</span><span class="lang-zh" style="display:none">300 萬泰銖簽證 —— 真正動起來的那項需求政策</span></h2>
+    <p class="sub"><span class="lang-en">Immigration Bureau Orders No. 237/2568 and 238/2568, effective 1 October 2025 · qualifying thresholds</span><span class="lang-zh" style="display:none">移民局第 237/2568 與 238/2568 號命令，2025 年 10 月 1 日生效 · 各項門檻</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Where the new threshold sits</span><span class="lang-zh" style="display:none">新門檻落在哪裡</span></div><div id="cVisa" style="height:250px"></div></div>
+    <p class="narr-p"><span class="lang-en">On 1 October 2025 Thailand did the one thing on foreign demand that no bill in parliament has managed: it cut the property-linked investment-visa threshold from <b>10 million baht to 3 million</b>. Two Immigration Bureau orders — 237/2568 covering the initial 90-day alignment and change of category, 238/2568 covering the renewable twelve-month extension — created a long-stay route under the Non-Immigrant "B" (Investment) class. There are three qualifying paths: a <b>freehold condominium of at least 3 million baht</b>, a registered long-term lease with total contract value above <b>3.06 million</b>, or a high-value rental at <b>85,000 baht a month</b> with three months prepaid at application and twelve at renewal. Sap-Ing-Sith, the registered right-over-property instrument, is accepted as a standalone route. A leasehold suspension reported in June 2026 has since been lifted.</span><span class="lang-zh" style="display:none">2025 年 10 月 1 日，泰國在外資需求這件事上做成了國會任何法案都沒做成的事：把與房產連動的投資簽證門檻，從 <b>1,000 萬泰銖降到 300 萬</b>。移民局兩道命令——237/2568 處理最初 90 天的簽證對接與類別變更，238/2568 處理可續期的十二個月延長——在非移民「B」（投資）類別下開出一條長期居留路徑。合格路徑有三條：<b>不低於 300 萬泰銖的永久產權公寓</b>、合約總值超過 <b>306 萬</b>的登記長期租賃，或<b>每月 85,000 泰銖</b>的高額租賃（申請時預付三個月、續期時預付十二個月）。已登記的「地上權益」（Sap-Ing-Sith）亦被接受為獨立路徑。2026 年 6 月一度傳出的租賃路徑暫停，其後已解除。</span></p>
+    <div class="cat">
+      <div class="c"><h4><span class="lang-en">How it works in practice</span><span class="lang-zh" style="display:none">實務上怎麼運作</span></h4><p><span class="lang-en">Ninety days on entry, then a <b>12-month extension renewable annually</b> for as long as the asset is held, with no border runs. Dependants — spouse, unmarried children under 20, parents aged 50 or over — may be added <b>with no further investment</b>, but only after the principal has the full twelve-month extension. Fees run about <b>27,000 baht a year</b> plus a one-off membership of 4,000 to 6,000 baht.</span><span class="lang-zh" style="display:none">入境 90 天，之後取得<b>可逐年續期的 12 個月延長</b>，只要資產持有中即可續，不需出境。眷屬——配偶、20 歲以下未婚子女、50 歲以上父母——可<b>不需額外投資</b>納入，但須待主申請人取得完整 12 個月延長之後。費用約<b>每年 27,000 泰銖</b>，另加一次性會籍費 4,000 至 6,000 泰銖。</span></p></div>
+      <div class="c"><h4><span class="lang-en">The conditions that actually bind</span><span class="lang-zh" style="display:none">真正會卡住人的條件</span></h4><p><span class="lang-en">The unit must be <b>completed and registered at the Department of Lands — off-plan does not qualify</b>. The counterparty must be a Thai individual or a Thai-majority company. Funds must be remitted from abroad in foreign currency, evidenced by a Foreign Exchange Transaction form. And the reduced 3-million threshold is only available with a <b>Certification Letter from the Ministry of Tourism and Sports</b>, issued through a designated long-stay operator; without it the applicant falls back to the old 10-million rule.</span><span class="lang-zh" style="display:none">標的必須是<b>已完工並在土地廳完成登記的物件——預售不符資格</b>。交易對手須為泰國籍個人或泰資過半的公司。資金必須自境外以外幣匯入，並取得外匯交易表（FET）為憑。而 300 萬的降低門檻，只有在取得<b>觀光與體育部核發的認證函</b>（透過指定的長期居留營運商辦理）時才適用；沒有它，申請人就退回原本的 1,000 萬規則。</span></p></div>
+      <div class="c"><h4><span class="lang-en">What it is not</span><span class="lang-zh" style="display:none">它不是什麼</span></h4><p><span class="lang-en">It carries <b>no work rights</b>, still requires 90-day reporting and a TM.30 residence notification, and is <b>not a path to permanent residence or citizenship</b>. It is tied to the asset: sell the unit and the basis for the extension goes with it. It also does <b>not</b> change ownership law — the 49% freehold quota per building is untouched.</span><span class="lang-zh" style="display:none">它<b>不附工作權</b>，仍須 90 天報到與 TM.30 住所通報，且<b>不是通往永久居留或公民身分的路徑</b>。它綁在資產上：賣掉物件，延長的依據就一併消失。它也<b>不</b>改變產權法律——每棟 49% 的永久產權外資配額原封不動。</span></p></div>
+      <div class="c"><h4><span class="lang-en">Already under political pressure</span><span class="lang-zh" style="display:none">已經在承受政治壓力</span></h4><p><span class="lang-en">The Phuket Tourism Association has publicly opposed the scheme, arguing the threshold is <b>too low for the residency granted</b>, that it invites undocumented work and unlicensed business, and that it inflates housing costs for residents. Industry submissions ask for a higher minimum or additional deposits per dependant. <b>The direction of any revision is up, not down</b> — which makes the current window the cheap one.</span><span class="lang-zh" style="display:none">普吉觀光協會已公開反對，主張門檻<b>相對於所給予的居留權過低</b>，將引來無證工作與無照經營，並推高當地居民的住房成本。業界的建議是提高最低金額，或對每位眷屬另設存款要求。<b>任何修訂的方向都是往上、不是往下</b>——這使得現在這個窗口是便宜的那一個。</span></p></div>
+    </div>
+    <div class="concept">
+      <h4><span class="lang-en">Why the threshold was set where it was — and why it has not worked yet</span><span class="lang-zh" style="display:none">門檻為何訂在這裡 —— 以及它為何還沒發揮作用</span></h4>
+      <p><span class="lang-en">Three million baht is roughly <b>US$89,000</b> at 33.65 to the dollar. The <b>average foreign condominium purchase in 2025 was 4.1 million baht</b>. The threshold was therefore set <i>below</i> the price the average foreign buyer was already paying — so for most of the existing foreign cohort the visa is a free upgrade on a purchase they were making anyway, not an inducement to buy something new.</span><span class="lang-zh" style="display:none">以 33.65 的匯率計，300 萬泰銖約 <b>8.9 萬美元</b>。而 <b>2025 年外國人購買公寓的平均金額是 410 萬泰銖</b>。也就是說，門檻被訂在<i>低於</i>一般外國買方本來就在支付的價格——對既有的外資族群而言，這張簽證是他們原本就要做的那筆交易上的免費加值，不是去買新東西的誘因。</span></p>
+      <p class="r"><span class="lang-en">The evidence backs that reading. The scheme has been live since October 2025, and in the first quarter of 2026 foreign condominium transfers still <b>fell 17.3% in units and 17.9% in value</b>, with Bangkok down 35%. <b>A visa did not offset a Chinese balance-sheet recession.</b> Anyone underwriting the 3-million rule as a demand catalyst should note that one full quarter of live data has already failed to show it.</span><span class="lang-zh" style="display:none">數據支持這個讀法。制度自 2025 年 10 月上路，2026 年第一季外國人公寓過戶仍<b>戶數年減 17.3%、金額年減 17.9%</b>，曼谷更減 35%。<b>一張簽證抵不過中國的資產負債表衰退。</b>任何把 300 萬新規當成需求催化劑來承作的人，都該注意：已經有一整季的實際數據沒有支持它。</span></p>
+      <p class="g"><span class="lang-en">Where it does bite is <b>product selection</b>. Because off-plan is excluded and the unit must already be registered, the rule channels foreign money into <b>completed standing inventory</b> — precisely the 210,112 units the market needs to clear — and away from developer presales. And the 3-million floor sits at the bottom of the 3-to-5-million band, the one segment where absorption has improved since 2021. Whether by design or accident, it is the best-targeted piece of housing policy Thailand currently has.</span><span class="lang-zh" style="display:none">它真正發揮作用的地方在<b>產品選擇</b>。由於排除預售、且標的必須已完成登記，這條規則把外資導向<b>已完工的在售存量</b>——正是市場需要去化的那 210,112 戶——而非發展商的預售。而 300 萬的下限恰好落在 300 萬至 500 萬這個區間的底部，也就是 2021 年以來吸納唯一改善的那一段。無論是設計還是巧合，這是泰國目前最精準對準目標的一項住宅政策。</span></p>
+    </div>
+    <p class="narr-p"><span class="lang-en">Set against Malaysia the comparison is stark. A foreigner buying in Kuala Lumpur faces a <b>RM1 million purchase floor and 8% flat stamp duty</b>, with MM2H Silver requiring RM600,000. A foreigner buying in Bangkok needs <b>3 million baht, about US$89,000</b>, pays 2% transfer duty, and gets a renewable family visa attached. On entry cost and residency, Thailand is now materially the cheaper door. What Malaysia offers in exchange is a growing population, a functioning mortgage market, and a currency with a central bank that still has room to cut. <b>That is the actual trade.</b></span><span class="lang-zh" style="display:none">與馬來西亞對照，落差非常明顯。外國人在吉隆坡購屋，面對的是 <b>RM100 萬的購買門檻與 8% 統一印花稅</b>，MM2H 銀級則需 RM60 萬。外國人在曼谷購屋，需要 <b>300 萬泰銖、約 8.9 萬美元</b>，付 2% 過戶稅，並附帶一張可續期的全家簽證。就進場成本與居留權而言，泰國現在明顯是比較便宜的那道門。馬來西亞拿來交換的，是仍在成長的人口、一個運作中的房貸市場，以及一個央行還有降息空間的貨幣。<b>這才是真正的取捨。</b></span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Bangkok is not the whole of Thailand</span><span class="lang-zh" style="display:none">曼谷不等於泰國</span></h2>
+    <p class="sub"><span class="lang-en">Regional divergence · 2026 · REIC / consultancy estimates</span><span class="lang-zh" style="display:none">區域分化 · 2026 · REIC／顧問估計</span></p>
+    <div class="cat">
+      <div class="c"><h4><span class="lang-en">Phuket — the market Bangkok is not</span><span class="lang-zh" style="display:none">普吉 —— 曼谷做不到的那種市場</span></h4><p><span class="lang-en">The South posted the country's strongest price index growth at <b>+5.59%</b>. Foreign buyers are projected to represent around 65% of Phuket transactions, with Russian and CIS buyers the largest cohort, joined by Indian and Gulf money. Prime west-coast zones have risen roughly 23% to 29% since 2023. <b>It is barely a Thai housing market at all</b> — it is a dollar-denominated lifestyle market that happens to sit in Thailand, and it carries the risks of one: illiquidity, single-source demand, and a villa-lease legal structure.</span><span class="lang-zh" style="display:none">南部錄得全國最強的價格指數增速 <b>+5.59%</b>。普吉的成交中，外國買方預估約佔 65%，以俄羅斯與獨立國協買方為最大群體，印度與波灣資金加入。西岸精華區自 2023 年以來約上漲 23% 至 29%。<b>它幾乎不算泰國住宅市場</b>——它是一個剛好坐落在泰國的美元計價生活方式市場，並帶著這類市場的風險：流動性差、需求來源單一、以及別墅租賃的法律結構問題。</span></p></div>
+      <div class="c"><h4><span class="lang-en">Chiang Mai — cheap, thin, and slow</span><span class="lang-zh" style="display:none">清邁 —— 便宜、量小、慢</span></h4><p><span class="lang-en">Digital nomads and retirees underpin a small, low-priced market with genuine rental demand but very limited depth. Yields can look attractive on paper; exit liquidity is the constraint, and the seasonal air-quality problem is a recurring demand shock that rarely appears in yield tables.</span><span class="lang-zh" style="display:none">數位游牧與退休族支撐一個規模小、單價低的市場，租賃需求真實但深度非常有限。紙面上收益率可能好看，約束在出場流動性；季節性空污是一個反覆出現、卻很少出現在收益率表格裡的需求衝擊。</span></p></div>
+      <div class="c"><h4><span class="lang-en">Pattaya / EEC — an industrial thesis wearing a resort costume</span><span class="lang-zh" style="display:none">芭達雅／東部經濟走廊 —— 穿著度假外衣的工業論述</span></h4><p><span class="lang-en">The Eastern Economic Corridor gives Pattaya something the other resort markets lack: an employment base. Industrial estates, EV and electronics investment, and infrastructure spending create genuine tenant demand. It is also the market most exposed to the auto sector's transition, which is <b>the single weakest part of the Thai industrial story</b>.</span><span class="lang-zh" style="display:none">東部經濟走廊給了芭達雅其他度假市場沒有的東西：就業基礎。工業區、電動車與電子業投資、基礎建設支出，創造了真實的租客需求。它同時也是最直接暴露於汽車業轉型的市場，而汽車業是<b>泰國工業敘事裡最弱的一環</b>。</span></p></div>
+      <div class="c"><h4><span class="lang-en">The rule that carries across all four</span><span class="lang-zh" style="display:none">四個市場共通的規則</span></h4><p><span class="lang-en">Every Thai regional market that is working is working on <b>foreign or non-local money</b>. Every market that depends on the domestic Thai mortgage is stuck. That is one variable, not four markets, and it means diversifying across Thai cities does not diversify the risk.</span><span class="lang-zh" style="display:none">泰國每一個「還在運作」的區域市場，靠的都是<b>外資或非本地資金</b>；每一個仰賴本國房貸的市場都卡住了。這是一個變數，不是四個市場——也就是說，在泰國跨城市分散並不會分散風險。</span></p></div>
+    </div>
+  </div>
+
+  <!-- ════════ PART V ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">V · Foreign Demand &amp; Catalysts</span><span class="lang-zh" style="display:none">第五部 · 外資需求與催化因素</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The cash layer is shrinking too</span><span class="lang-zh" style="display:none">現金層也在縮</span></h2>
+    <p class="sub"><span class="lang-en">Condominium transfers to foreigners, nationwide · 2024–2026F · REIC</span><span class="lang-zh" style="display:none">全國外國人公寓過戶 · 2024–2026F · REIC</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Foreign transfers: units and value</span><span class="lang-zh" style="display:none">外國人過戶：戶數與金額</span></div><div id="cForeign" style="height:250px"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">In 2025 foreigners took <b>14,899 units</b>, up 2.2%, but paid <b>60.9 billion baht</b>, down 10.7%. Average price per unit was 4.1 million baht at 99,043 baht per square metre, on an average unit size of 41.3 square metres. More buyers, smaller cheques.</span><span class="lang-zh" style="display:none">2025 年外國人購入 <b>14,899 戶</b>，年增 2.2%，但支付 <b>609 億泰銖</b>，年減 10.7%。單戶均價 410 萬泰銖、每平方公尺 99,043 泰銖，平均坪效面積 41.3 平方公尺。人變多，支票變小。</span></li>
+      <li class="warn"><span class="lang-en">The first quarter of 2026 broke the streak: units down <b>17.3%</b> and value down <b>17.9%</b> year-on-year, driven by a <b>38.8% collapse in Chinese purchases</b>. REIC's full-year projection is a 20% decline, the first annual fall in five years.</span><span class="lang-zh" style="display:none">2026 年第一季打斷了連續成長：戶數年減 <b>17.3%</b>、金額年減 <b>17.9%</b>，主因中國買方<b>崩跌 38.8%</b>。REIC 全年預估下滑 20%，為五年來首次年度下跌。</span></li>
+      <li><span class="lang-en">Bangkok and its vicinity took the sharpest hit, with foreign condominium transfers down <b>35% to 1,239 units</b>. The capital still holds 45.63% of national foreign transfer value at 6.14 billion baht, but it is losing share to the resort markets.</span><span class="lang-zh" style="display:none">曼谷及周邊受創最深，外國人公寓過戶<b>年減 35% 至 1,239 戶</b>。首都仍佔全國外資過戶金額的 45.63%、61.4 億泰銖，但正在把份額讓給度假市場。</span></li>
+    </ul>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Who is left, and what they spend</span><span class="lang-zh" style="display:none">還剩下誰，以及他們花多少</span></div><div id="cNation" style="height:235px"></div></div>
+    <p class="narr-p"><span class="lang-en">Chinese buyers remain the largest single group by volume but spend the least per unit, at an average of 3.8 million baht. Indian buyers spend the most, averaging 6.9 million baht on units of 75.7 square metres — family-sized, not investment studios. Russian buyers became the second-largest cohort in the first quarter with 383 units, up 33%. The composition matters more than the total: <b>Chinese demand was a leveraged, investment-driven flow tied to a domestic property market that is no longer generating surplus capital</b>, and capital controls have tightened on top. Russian and Indian demand is smaller, slower and more end-use, which is more durable but cannot replace the volume.</span><span class="lang-zh" style="display:none">中國買方在戶數上仍是最大單一群體，但每戶花費最少，平均 380 萬泰銖。印度買方花最多，平均 690 萬泰銖、面積 75.7 平方公尺——是家庭房，不是投資型套房。俄羅斯買方在第一季成為第二大群體，383 戶、年增 33%。組成比總量更重要：<b>中國需求是一股帶槓桿、以投資為目的的資金流，繫在一個已不再產生剩餘資本的本國房市上</b>，加上資本管制收緊。俄印需求較小、較慢、較偏自用，比較耐久，但補不上量。</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Units vs value share</span><span class="lang-zh" style="display:none">戶數佔比 vs 金額佔比</span></div><div id="cShare" style="height:220px"></div></div>
+    <p class="narr-p"><span class="lang-en">Foreigners were <b>13.6% of transferred units but 23.9% of value</b> in the first quarter of 2026. Every foreign buyer is worth roughly two domestic buyers by revenue, and the segment they occupy — freehold condominiums in transit-served central locations — is the only segment where price discovery is still functioning normally. If foreign transfers fall 20% this year as forecast, the loss is not 20% of a small number. It is a fifth of the market's cash-settled, price-setting layer.</span><span class="lang-zh" style="display:none">2026 年第一季，外國人佔<b>過戶戶數 13.6%、金額 23.9%</b>。以貢獻金額計，一個外國買方約當兩個本地買方；而他們所在的區段——軌道沿線中心區的永久產權公寓——是價格發現仍正常運作的唯一區段。若外資過戶如預測般全年下滑 20%，失去的不是「一個小數字的兩成」，而是這個市場現金結算、決定價格的那一層的五分之一。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The catalyst calendar</span><span class="lang-zh" style="display:none">催化因素的時間表</span></h2>
+    <div class="watch">
+      <h3><span class="lang-en">Dated, checkable events</span><span class="lang-zh" style="display:none">有日期、可查核的事件</span></h3>
+      <ul>
+        <li><b><span class="lang-en">30 June 2026 — LTV relaxation lapsed.</span><span class="lang-zh" style="display:none">2026 年 6 月 30 日 —— LTV 鬆綁到期。</span></b><span class="lang-en"> The measure allowing 100% loan-to-value on first homes above 10 million baht and on second homes below 10 million ran from 1 May 2025 to 30 June 2026. Whether it is renewed is the single most checkable near-term signal, and its lapse tightens exactly the buyer segment that was already marginal.</span><span class="lang-zh" style="display:none"> 允許 1,000 萬泰銖以上首購與 1,000 萬泰銖以下第二戶做到 100% 成數的措施，自 2025 年 5 月 1 日實施至 2026 年 6 月 30 日。是否續行，是近期最容易查核的單一訊號；到期會直接收緊本已邊際的那一群買方。</span></li>
+        <li><b><span class="lang-en">30 June 2027 — the 0.01% fee window closes.</span><span class="lang-zh" style="display:none">2027 年 6 月 30 日 —— 0.01% 費率窗口關閉。</span></b><span class="lang-en"> Cabinet extended the transfer and mortgage registration fee cut for a further year, for Thai individuals buying homes at or below 7 million baht. Expect a pull-forward of transfers into the first half of 2027 and an air pocket after.</span><span class="lang-zh" style="display:none"> 內閣已把過戶與抵押登記費優惠再延一年，適用泰籍個人購買 700 萬泰銖以下住宅。可預期 2027 上半年過戶被拉前，之後出現真空。</span></li>
+        <li><b><span class="lang-en">Late 2026 — Brown Line bidding.</span><span class="lang-zh" style="display:none">2026 年底 —— 棕線招標。</span></b><span class="lang-en"> The 22.1-km, 20-station monorail from Nonthaburi Civic Centre to Lam Sali, budgeted near 48 billion baht, was restudied for the 20-baht flat-fare policy and is due to reach bidding late in 2026. Grey and Silver line studies conclude 2027; the new Blue Line alignment not before 2028.</span><span class="lang-zh" style="display:none"> 由暖武里市民中心至南沙里、全長 22.1 公里、20 站、預算近 480 億泰銖的單軌，因應 20 泰銖統一票價政策重新研究，預計 2026 年底進入招標。灰線與銀線研究 2027 年完成；新藍線路廊不早於 2028 年。</span></li>
+        <li><b><span class="lang-en">2026 — first full-rate Land and Building Tax year.</span><span class="lang-zh" style="display:none">2026 年 —— 土地與建物稅第一個全額年度。</span></b><span class="lang-en"> Pandemic discounts have lapsed and vacant land faces a step-up. Watch for land-bank disposals by listed developers in the second half.</span><span class="lang-zh" style="display:none"> 疫情折扣到期，空置土地面臨遞增稅率。留意下半年上市發展商的土地處分。</span></li>
+        <li><b><span class="lang-en">Ongoing — the 20-baht flat fare.</span><span class="lang-zh" style="display:none">持續中 —— 20 泰銖統一票價。</span></b><span class="lang-en"> Capping rail fares raises the effective catchment of outer stations and is the closest thing Bangkok has to a supply-side fix for suburban absorption. It also forces a renegotiation of concession economics with BTS and BEM, which is the risk sitting under every new line's timetable.</span><span class="lang-zh" style="display:none"> 票價上限提高外圍車站的有效腹地，是曼谷目前最接近「外圍去化的供給面解方」的政策。它同時迫使與 BTS、BEM 重談特許經濟條件——這是每一條新線時程底下的風險。</span></li>
+        <li><b><span class="lang-en">Live since 1 October 2025 — the 3-million-baht long-stay visa.</span><span class="lang-zh" style="display:none">2025 年 10 月 1 日起實施 —— 300 萬泰銖長期居留簽證。</span></b><span class="lang-en"> Immigration Orders 237/2568 and 238/2568 cut the property-linked investment-visa threshold from 10 million baht to 3 million. Already opposed by the Phuket Tourism Association on the grounds that it is set too low. <b>Any revision will raise the threshold, not lower it</b> — this is a closing window, not an opening one.</span><span class="lang-zh" style="display:none"> 移民局第 237/2568 與 238/2568 號命令，將與房產連動的投資簽證門檻自 1,000 萬泰銖降至 300 萬。普吉觀光協會已以「訂得太低」為由表達反對。<b>任何修訂都會調高門檻、不會調低</b>——這是一個正在關上的窗口，不是正在打開的。</span></li>
+        <li><b><span class="lang-en">Not scheduled — the 99-year lease and 75% quota.</span><span class="lang-zh" style="display:none">無時程 —— 99 年租賃與 75% 配額。</span></b><span class="lang-en"> Treat as optionality with no delivery date. Both are politically expensive and neither has a bill before parliament. Note the contrast: the visa change needed only two administrative orders, while the ownership change needs legislation — which is why one happened and the other has not.</span><span class="lang-zh" style="display:none"> 視為沒有交付日期的選擇權。兩者政治成本高，且皆無草案在國會。請注意對比：簽證的改變只需要兩道行政命令，產權的改變需要立法——這正是前者發生、後者沒有發生的原因。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ════════ PART VI ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">VI · Scenarios &amp; Outlook</span><span class="lang-zh" style="display:none">第六部 · 情境與展望</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">How much of this is cyclical?</span><span class="lang-zh" style="display:none">這裡面有多少是循環性的？</span></h2>
+    <div class="splitbar">
+      <div class="cyc"><span class="lang-en">Cyclical ~28%<br>rates · tourism · China</span><span class="lang-zh" style="display:none">循環性 約28%<br>利率 · 觀光 · 中國</span></div>
+      <div class="str"><span class="lang-en">Structural ~72% — household leverage · credit eligibility · demographics · income ceiling · legal access</span><span class="lang-zh" style="display:none">結構性 約72% —— 家庭槓桿 · 信用資格 · 人口 · 所得天花板 · 法律准入</span></div>
+    </div>
+    <p class="fnote"><span class="lang-en">Author's decomposition. The test: a variable is cyclical only if a two-year change in rates, tourism or Chinese capital flows would plausibly reverse it. Rejection rates, informality, and the fertility rate fail that test.</span><span class="lang-zh" style="display:none">作者拆解。判準：只有當利率、觀光或中國資金流在兩年內的變化「有可能」使其反轉，該變數才算循環性。退件率、非正式就業比重、生育率都不通過這個測試。</span></p>
+    <div class="scen">
+      <div class="s"><div class="sh"><span class="st"><span class="lang-en">Base — grinding absorption</span><span class="lang-zh" style="display:none">基準 —— 磨底去化</span></span><span class="sp">50%</span></div><p><span class="lang-en">Launches stay near 35,000 units a year in Bangkok, sales near 57,000, and net inventory falls about 20,000 a year. Prices flat in nominal terms, down 1.5% to 3% in real terms. Foreign transfers stabilise after the 2026 fall. <b>Standing stock returns to a 24-month norm around 2033.</b></span><span class="lang-zh" style="display:none">曼谷年推案維持在約 3.5 萬戶、銷售約 5.7 萬戶，淨存量每年減少約 2 萬戶。名目價格持平，實質年減 1.5% 至 3%。外資過戶在 2026 年下滑後穩定。<b>在售存量約在 2033 年回到 24 個月的常態。</b></span></p></div>
+      <div class="s d"><div class="sh"><span class="st"><span class="lang-en">Upside — credit reopens</span><span class="lang-zh" style="display:none">上檔 —— 信用重開</span></span><span class="sp">20%</span></div><p><span class="lang-en">LTV relief is renewed, banks reopen the sub-5-million band as special-mention loans roll off, and rejection falls back toward 30%. Absorption jumps and the mass-market segment restarts. This is the only path in which <b>Bangkok prices rise in real terms before 2030</b>, and it requires a bank-credit decision, not a rate cut.</span><span class="lang-zh" style="display:none">LTV 鬆綁續行，關注類貸款消化後銀行重開 500 萬泰銖以下市場，退件率回落至 30% 附近。吸納跳升，大眾市場重啟。這是<b>曼谷房價在 2030 年前實質上漲的唯一路徑</b>，而它取決於銀行的信用決策，不是降息。</span></p></div>
+      <div class="s c"><div class="sh"><span class="st"><span class="lang-en">Downside — the resale cascade</span><span class="lang-zh" style="display:none">下檔 —— 二手瀑布</span></span><span class="sp">25%</span></div><p><span class="lang-en">Special-mention loans migrate to non-performing, foreclosure supply accelerates from an already 210%-higher base, and asset managers become the price-setter across the 2-to-5-million-baht band. Developer list prices break. <b>Nominal declines of 10% to 20% on secondary stock outside the CBD</b>, with prime and foreign-quota units holding better because they never depended on the mortgage.</span><span class="lang-zh" style="display:none">關注類貸款劣化為不良，法拍供給在已高出 210% 的基礎上再加速，資產管理公司成為 200 萬至 500 萬泰銖區間的定價者。發展商開價崩解。<b>中央商業區以外的二手存量名目下跌 10% 至 20%</b>；精華與外配戶跌幅較小，因為它們從來就不靠房貸。</span></p></div>
+      <div class="s c"><div class="sh"><span class="st"><span class="lang-en">Tail — external shock</span><span class="lang-zh" style="display:none">尾部 —— 外部衝擊</span></span><span class="sp">5%</span></div><p><span class="lang-en">A renewed Thai–Cambodian escalation, a further tourism collapse, or a second seismic event of the March 2025 kind. The 2025 earthquake alone was enough for Kasikorn Securities to model a 50% fall in high-rise transfer value; a repeat with a residential collapse would <b>close the high-rise market to end-users for years</b>.</span><span class="lang-zh" style="display:none">泰柬衝突再升溫、觀光再度崩跌，或再發生一次 2025 年 3 月那種地震。單是 2025 年那次，就足以讓 Kasikorn 證券模擬高層過戶金額下滑 50%；若重演且發生住宅倒塌，會<b>讓高層市場對自住客關閉數年</b>。</span></p></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Three paths for the standing stock</span><span class="lang-zh" style="display:none">在售存量的三條路徑</span></h2>
+    <p class="sub"><span class="lang-en">Bangkok unsold units on market · scenario projection to 2032 · author's model on AREA base</span><span class="lang-zh" style="display:none">曼谷在售未售戶數 · 至 2032 情境推估 · 以 AREA 基期建模</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Inventory projection</span><span class="lang-zh" style="display:none">存量推估</span></div><div id="cPath" style="height:260px"></div></div>
+    <p class="narr-p"><span class="lang-en">The model has one locked input and two moving ones. Locked: the 210,112 units already standing, which no policy can unbuild. Moving: annual launches, which developers control and have already halved, and annual absorption, which the banks control and have not. <b>Nothing on the supply side can shorten the queue by more than a year or two.</b> The variable with real leverage is the rejection rate, and it sits with a credit committee, not with a central bank or a cabinet.</span><span class="lang-zh" style="display:none">模型有一個鎖死的輸入與兩個變動的。鎖死的是已經蓋好的 210,112 戶，任何政策都拆不掉。變動的是年推案量——由發展商控制，且已經腰斬——與年吸納量，由銀行控制，而它們沒有動。<b>供給端做什麼，都不可能把隊伍縮短超過一兩年。</b>真正有槓桿的變數是退件率，而它握在授信委員會手上，不在央行、也不在內閣。</span></p>
+  </div>
+
+  <!-- ════════ PART VII ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">VII · The Ten-Year Ledger</span><span class="lang-zh" style="display:none">第七部 · 放長：2026–2035 的十年帳</span></h2></div>
+
+  <p class="pull"><span class="lang-en">Malaysia's demographic engine cools last in Asia. Thailand's already stopped, and it stopped at seven thousand dollars a head.</span><span class="lang-zh" style="display:none">馬來西亞的人口引擎是亞洲最晚降溫的。泰國的已經停了，而且停在人均七千美元。</span></p>
+
+  <div class="blk">
+    <h2><span class="lang-en">Demand — the engine that already reversed</span><span class="lang-zh" style="display:none">需求 —— 已經反轉的引擎</span></h2>
+    <p class="sub"><span class="lang-en">Registered births and deaths · 2024–2025 · Department of Provincial Administration</span><span class="lang-zh" style="display:none">登記出生與死亡 · 2024–2025 · 內政部地方行政廳</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Births vs deaths</span><span class="lang-zh" style="display:none">出生 vs 死亡</span></div><div id="cDemo" style="height:245px"></div></div>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">Thailand recorded <b>462,240 births against 571,646 deaths in 2024</b> — the first time births fell below 500,000 since 1949 — and <b>416,574 births against 559,684 deaths in 2025</b>. Deaths have exceeded births every year since 2021.</span><span class="lang-zh" style="display:none">泰國 <b>2024 年出生 462,240 人、死亡 571,646 人</b>——是 1949 年以來出生首度跌破 50 萬——<b>2025 年出生 416,574 人、死亡 559,684 人</b>。自 2021 年起，死亡數每年都超過出生數。</span></li>
+      <li><span class="lang-en">The population fell to <b>65.8 million at the end of 2025</b>, down 142,199 in a year and declining for a sixth consecutive year. The total fertility rate is around <b>1.1</b>, among the lowest in the world and far below the 2.1 replacement level.</span><span class="lang-zh" style="display:none">人口在 <b>2025 年底降至 6,580 萬</b>，一年減少 142,199 人，為連續第六年下降。總生育率約 <b>1.1</b>，屬全球最低之列，遠低於 2.1 的替代水準。</span></li>
+      <li><span class="lang-en">Household formation is the only true source of net housing demand. Every other source — investment, upgrading, foreign purchase — is a reallocation of existing stock. <b>Thailand's household formation engine went into reverse five years ago and the country is still building.</b></span><span class="lang-zh" style="display:none">家戶形成是淨住宅需求唯一真正的來源；其他來源——投資、換屋、外資購置——都只是既有存量的再配置。<b>泰國的家戶形成引擎五年前就開始倒退，而這個國家還在蓋房子。</b></span></li>
+    </ul>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Age structure, 2015 → now → 2040</span><span class="lang-zh" style="display:none">年齡結構：2015 → 現在 → 2040</span></div><div id="cAge" style="height:245px"></div></div>
+    <p class="narr-p"><span class="lang-en">The under-15 population fell from <b>11.7 million in 2015 to 9.6 million</b>, while the 60-plus population rose from <b>8.4 million to 12.6 million</b>. The working-age share went from 68% to 64% and is projected at <b>58% by 2040</b>. Thailand crosses the 28% elderly threshold — the formal super-aged definition — around 2033, with some projections putting it at 2036. That is the first-time-buyer cohort of 2040 already born, already counted, and already too small. No mortgage policy reaches it.</span><span class="lang-zh" style="display:none">15 歲以下人口從 <b>2015 年的 1,170 萬降到 960 萬</b>，60 歲以上則從 <b>840 萬升到 1,260 萬</b>。工作年齡人口佔比從 68% 降到 64%，並預估在 <b>2040 年降至 58%</b>。泰國約在 2033 年跨過 28% 的高齡門檻——正式的「超高齡」定義——部分推估指向 2036 年。2040 年的首購族群已經出生、已經被算過，而且已經太少。任何房貸政策都碰不到他們。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Income — the hinge, and the arithmetic of the wall</span><span class="lang-zh" style="display:none">收入 —— 樞紐變數，與那道牆的算術</span></h2>
+    <p class="sub"><span class="lang-en">Gross national income per capita against the high-income threshold · 2026 · World Bank</span><span class="lang-zh" style="display:none">人均國民所得對上高收入門檻 · 2026 · 世界銀行</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Distance to high income</span><span class="lang-zh" style="display:none">距離高收入還有多遠</span></div><div id="cGni" style="height:240px"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">Thai GNI per capita is <b>US$7,690</b> against a high-income threshold of <b>US$14,375</b>. Real GDP per capita grew 2.2% in 2025. At that rate the gap takes roughly <b>29 years</b> to close, and 2026 growth is forecast lower.</span><span class="lang-zh" style="display:none">泰國人均國民所得 <b>7,690 美元</b>，高收入門檻為 <b>14,375 美元</b>。2025 年實質人均 GDP 成長 2.2%。以此速度，缺口需約 <b>29 年</b>才能補上，而 2026 年的成長預估更低。</span></li>
+      <li class="warn"><span class="lang-en">On 1 July 2026 the World Bank moved <b>Vietnam and the Philippines into the upper-middle-income tier</b> Thailand has occupied for years. Being caught from below is not a statistical curiosity; it is the labour-cost arbitrage that drew Thailand's factories in the 1990s now running against it.</span><span class="lang-zh" style="display:none">2026 年 7 月 1 日，世界銀行把<b>越南與菲律賓升入泰國已停留多年的中高收入層級</b>。從下方被追上不是統計趣聞，而是 1990 年代把工廠吸引到泰國的那個勞動成本套利，如今反過來對它不利。</span></li>
+      <li><span class="lang-en">For housing, the number that matters is not GNI but <b>documented, bankable income</b>. With 53% to 55% of the workforce informal, roughly half the country is structurally outside the mortgage system regardless of what it earns. Raising GNI without formalising employment does not create a single new mortgage-eligible buyer.</span><span class="lang-zh" style="display:none">對住宅而言，重要的不是 GNI，而是<b>可舉證、銀行認得的收入</b>。當 53% 至 55% 的勞動力在非正式部門，無論賺多少，全國約一半的人在結構上就在房貸體系之外。GNI 上升而就業未正式化，不會多出任何一個合格的房貸買方。</span></li>
+    </ul>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The ledger — the conclusion in three numbers</span><span class="lang-zh" style="display:none">十年帳 —— 把結論收斂成三個數</span></h2>
+    <div class="mrow">
+      <div class="m"><div class="mn neg">49.5</div><div class="ml"><span class="lang-en">months of standing Bangkok stock at current absorption</span><span class="lang-zh" style="display:none">曼谷在售存量以現行吸納速度計的月數</span></div></div>
+      <div class="m"><div class="mn neg">−0.2%</div><div class="ml"><span class="lang-en">annual population change; sixth straight year of decline</span><span class="lang-zh" style="display:none">人口年變動率；連續第六年下降</span></div></div>
+      <div class="m"><div class="mn gold">+4.0pp</div><div class="ml"><span class="lang-en">gross yield over policy rate — the widest carry in Asia</span><span class="lang-zh" style="display:none">毛收益率高於政策利率——亞洲最寬利差</span></div></div>
+      <div class="m"><div class="mn neg">−2.4pp</div><div class="ml"><span class="lang-en">the same carry once the mortgage reverts to MRR in year four</span><span class="lang-zh" style="display:none">同一利差在第四年跳回 MRR 之後</span></div></div>
+      <div class="m"><div class="mn neg">19x</div><div class="ml"><span class="lang-en">average new unit to average Bangkok household income</span><span class="lang-zh" style="display:none">新推案均價／曼谷平均家庭年所得</span></div></div>
+      <div class="m"><div class="mn">~29y</div><div class="ml"><span class="lang-en">to reach the high-income threshold at 2.2% per-capita growth</span><span class="lang-zh" style="display:none">以 2.2% 人均成長計，達到高收入門檻的年數</span></div></div>
+    </div>
+    <div class="prop-take">
+      <span class="pk"><span class="lang-en">What this adds up to</span><span class="lang-zh" style="display:none">加總起來是什麼</span></span>
+      <p><span class="lang-en">Bangkok over the next decade is a <b>carry-and-currency market with a flat real capital line</b>. The rent is real, the yield is genuinely the widest in Asia against the local policy rate, and the stock is cheap in dollar terms after a decade of baht weakness punctuated by sharp rallies. What is not there is an appreciation engine: no population growth, no income breakout, no supply shortage, and a four-year queue of unsold homes ahead of you.</span><span class="lang-zh" style="display:none">未來十年的曼谷，是一個<b>資本線實質持平的持有收益＋匯率市場</b>。租金是真的，收益率相對本國政策利率確實是亞洲最寬，經歷十年泰銖走弱（其間夾雜數次急升）之後，以美元計的存量也不貴。缺的是增值引擎：沒有人口成長、沒有所得突破、沒有供給短缺，而你前面還排著四年的未售屋。</span></p>
+      <p><span class="lang-en">That is not a reason to avoid the market. It is a reason to <b>underwrite it as an income asset with a 15% non-resident withholding, a legally capped ownership share, and a hard four-year clock on the mortgage rate</b> — and to require the entry price to compensate for all three. The buyer who does that in the 3-to-5-million-baht band on a completed, transit-adjacent, foreign-quota unit is being paid well to wait. The buyer who underwrites capital growth is buying the one thing this market has not produced in a decade.</span><span class="lang-zh" style="display:none">這不是避開這個市場的理由，而是<b>把它當成一個「有 15% 非居民扣繳、有法定持有比例上限、房貸利率有四年硬時鐘」的收益型資產來承作</b>的理由——並要求進場價格把這三件事都補償進去。在 300 萬至 500 萬泰銖區間、買一戶已完工、鄰近軌道、外配名額的物件，這樣的買方是被付了不錯的價錢在等待。把資本利得寫進承作假設的買方，買的則是這個市場十年來唯一沒有生產過的東西。</span></p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Where to act</span><span class="lang-zh" style="display:none">該在哪裡出手</span></h2>
+    <div class="play">
+      <div class="p buy"><h5><span class="lang-en">Act</span><span class="lang-zh" style="display:none">可做</span></h5><p><span class="lang-en"><b>Completed foreign-quota units, 3–5m baht, within 400 m of an operating BTS/MRT station.</b> Completed removes construction risk in a market where developer balance sheets are stretched, and is also the <b>only form that qualifies for the 3-million-baht long-stay visa</b> — off-plan is excluded. Foreign quota removes the ownership question. The 3–5m band is where absorption has improved since 2021. Buy from a bank or asset-management disposal if you can, but check the counterparty: the visa requires a Thai individual or Thai-majority company as seller.</span><span class="lang-zh" style="display:none"><b>已完工的外配名額物件、300 萬至 500 萬泰銖、距營運中的 BTS／MRT 車站 400 公尺內。</b>已完工可移除在發展商資產負債表吃緊時的工程風險，同時也是<b>唯一符合 300 萬泰銖長期居留簽證的形態</b>——預售被排除。外配名額移除產權問題；300 萬至 500 萬是 2021 年以來吸納改善的區間。能向銀行或資產管理公司的處分案購買更好，但要查交易對手：該簽證要求賣方為泰國籍個人或泰資過半的公司。</span></p></div>
+      <div class="p wait"><h5><span class="lang-en">Wait</span><span class="lang-zh" style="display:none">等待</span></h5><p><span class="lang-en"><b>Prime CBD new launches and anything on the outer fringe.</b> Prime new-build is priced off a 93% luxury sell-rate that reflects a cash cohort now shrinking 20% a year. Outer fringe is where 68% of launches went and where mortgage rejection is worst. In both cases the better entry is 12 to 24 months out, after the LTV decision and after the 2027 fee cliff is visible.</span><span class="lang-zh" style="display:none"><b>核心商業區新推案，以及任何外圍案。</b>核心新案的定價建立在 93% 的豪宅去化率上，而那個現金族群正以每年 20% 的速度縮小；外圍是 68% 推案量的去處，也是退件率最糟的地方。兩者較好的進場點都在 12 至 24 個月後——等 LTV 決定出來、2027 年費用懸崖看得見之後。</span></p></div>
+      <div class="p avoid"><h5><span class="lang-en">Avoid</span><span class="lang-zh" style="display:none">避開</span></h5><p><span class="lang-en"><b>Off-plan in the sub-3m band; land-holding structures; "30+30+30" villa leases.</b> Off-plan below 3 million baht is underwriting a 70% rejection rate at handover. Nominee company structures are now under active DBD enforcement. Villa leases past the first 30 years rest on contract terms Thai courts have not reliably enforced, and that risk is not priced into the yield being quoted.</span><span class="lang-zh" style="display:none"><b>300 萬泰銖以下的預售；持地公司架構；「30＋30＋30」別墅租賃。</b>300 萬以下的預售，等於在交屋時承作 70% 的退件率；人頭公司架構如今正被商業發展廳實質執法；別墅租賃第一個 30 年之後的部分，建立在泰國法院並未穩定執行的合約條款上，而這個風險並未反映在報給你的收益率裡。</span></p></div>
+    </div>
+  </div>
+
+  <div class="watch">
+    <h3><span class="lang-en">What to watch — in order of lead time</span><span class="lang-zh" style="display:none">觀察重點 —— 依領先程度排序</span></h3>
+    <ul>
+      <li><b><span class="lang-en">Mortgage rejection rate (monthly, developer surveys).</span><span class="lang-zh" style="display:none">房貸退件率（月頻，發展商調查）。</span></b><span class="lang-en"> The single highest-information series in this market. A sustained move below 35% would change the entire thesis; a move above 55% brings the resale-cascade scenario forward.</span><span class="lang-zh" style="display:none"> 這個市場資訊量最高的單一序列。持續降到 35% 以下會改寫整個論述；升破 55% 會把二手瀑布情境提前。</span></li>
+      <li><b><span class="lang-en">Special-mention loans as a multiple of NPLs (quarterly, BOT).</span><span class="lang-zh" style="display:none">關注類貸款對不良貸款的倍數（季頻，泰國央行）。</span></b><span class="lang-en"> Currently above 2x. Migration of even a quarter of that stock would double the NPL ratio and force disposals.</span><span class="lang-zh" style="display:none"> 目前在 2 倍以上。即使只有四分之一劣化，也會讓不良率翻倍並迫使處分。</span></li>
+      <li><b><span class="lang-en">Second-hand listing count and listed value (quarterly, REIC).</span><span class="lang-zh" style="display:none">二手掛牌量與掛牌總值（季頻，REIC）。</span></b><span class="lang-en"> Listings up 34.2% and Bangkok listed value up 234% are the distress signal. Watch whether listed value keeps outrunning listing count — that is forced sale of larger assets.</span><span class="lang-zh" style="display:none"> 掛牌量年增 34.2%、曼谷掛牌總值年增 234%，是壓力訊號。留意掛牌總值是否持續跑贏掛牌量——那代表較大型資產被迫出售。</span></li>
+      <li><b><span class="lang-en">Foreign transfer value, quarterly, split China vs rest.</span><span class="lang-zh" style="display:none">外國人過戶金額，按季，中國 vs 其他分列。</span></b><span class="lang-en"> Chinese purchases fell 38.8% in the first quarter. If the non-China cohort stops growing, the cash-settled layer is gone and price discovery in the prime segment stops with it.</span><span class="lang-zh" style="display:none"> 中國買方第一季下滑 38.8%。若非中國群體停止成長，現金結算層就消失了，精華段的價格發現也隨之停止。</span></li>
+      <li><b><span class="lang-en">Whether the LTV relaxation is renewed after 30 June 2026.</span><span class="lang-zh" style="display:none">2026 年 6 月 30 日之後 LTV 鬆綁是否續行。</span></b><span class="lang-en"> A binary, dated, checkable policy decision that directly moves the eligible-buyer pool.</span><span class="lang-zh" style="display:none"> 一個二元、有日期、可查核的政策決定，直接改變合格買方池。</span></li>
+      <li><b><span class="lang-en">Any revision to the 3-million-baht visa threshold.</span><span class="lang-zh" style="display:none">300 萬泰銖簽證門檻的任何修訂。</span></b><span class="lang-en"> The Phuket lobby is pushing for a higher minimum and per-dependant deposits. Because the rule sits in immigration orders rather than statute, it can be changed by administrative act at short notice — in either direction.</span><span class="lang-zh" style="display:none"> 普吉的業界正推動調高最低金額並對每位眷屬加設存款要求。由於這條規則落在移民命令而非法律裡，它可以在短時間內由行政行為改變——而且兩個方向都可能。</span></li>
+      <li><b><span class="lang-en">Registered births (annual, DOPA).</span><span class="lang-zh" style="display:none">登記出生數（年頻，內政部地方行政廳）。</span></b><span class="lang-en"> The slowest-moving and most decisive series on this page. Below 400,000 confirms the 2040 demand base is smaller than any current supply plan assumes.</span><span class="lang-zh" style="display:none"> 本頁移動最慢、也最具決定性的序列。跌破 40 萬，等於確認 2040 年的需求基數小於目前任何供給計畫的假設。</span></li>
+    </ul>
+  </div>
+
+  <div class="src">
+    <span class="lang-en"><b>Sources.</b> Bank of Thailand (MPC statements, RPPI, household debt, banking-sector quarterly brief); Real Estate Information Center (REIC) transfer, inventory, land-price and foreign-transfer series; Agency for Real Estate Affairs (AREA) Bangkok inventory and launch survey; Immigration Bureau Orders No. 237/2568 and 238/2568 (long-stay visa, effective 1 October 2025) and Ministry of Tourism and Sports certification guidance; Knight Frank Thailand, Colliers Thailand, CBRE, Savills, JLL condominium market reports; SCB EIC; Thai Condominium Association; Department of Provincial Administration (population registration); World Bank country classifications; OECD Economic Survey of Thailand; Ministry of Finance and NESDC forecasts; Bangkok Post and Nation Thailand property desks. Figures marked as derived are computed from published year-on-year changes and are labelled in the charts. Scenario projections are the author's and are not forecasts by any of the above.</span>
+    <span class="lang-zh" style="display:none"><b>資料來源。</b>泰國央行（MPC 決議、住宅價格指數、家庭債務、銀行業季報）；泰國房地產資訊中心 REIC（過戶、存量、地價、外資過戶序列）；AREA（曼谷存量與推案調查）；移民局第 237/2568 與 238/2568 號命令（長期居留簽證，2025 年 10 月 1 日生效）與觀光體育部認證作業說明；Knight Frank Thailand、Colliers Thailand、CBRE、Savills、JLL 公寓市場報告；SCB EIC；泰國公寓公會；內政部地方行政廳（人口登記）；世界銀行國家分類；OECD 泰國經濟調查；財政部與 NESDC 預測；《曼谷郵報》與《國家報》房產版。標示為推導的數字係依公開年增率計算，並於圖表中註明。情境推估為作者所作，非上述任一機構之預測。</span>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-ornament" aria-hidden="true">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+  <p class="footer-disclaimer">
+    <span class="lang-en"><strong>Independent analysis for reference only</strong> — not investment advice. Sources: BOT · REIC · AREA · Knight Frank · Colliers · CBRE · SCB EIC · World Bank · OECD. A project by InvestMQuest.</span>
+    <span class="lang-zh"><strong>獨立分析參考</strong>，不構成投資建議。資料來源：泰國央行 · REIC · AREA · Knight Frank · Colliers · CBRE · SCB EIC · 世界銀行 · OECD。InvestMQuest 製作。</span>
+  </p>
+</footer>
+
+<script>
+/* ───────── chart engine (shared with /my/report) ───────── */
+var C = {navy:'#0d2244',navyMid:'#234a86',gold:'#b8924a',goldHi:'#cda85f',goldLight:'#d4b576',
+         green:'#15803d',amber:'#a16207',red:'#b91c1c',blue:'#1d4ed8',muted:'#6b7a92',
+         grid:'#ece5d4',track:'#e5dfd0',text:'#0c1521'};
+var FONT = "Inter, 'Noto Sans TC', sans-serif";
+function ax(o){return Object.assign({color:C.muted,fontFamily:FONT,fontSize:11},o||{});}
+function lg(a,b){return new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:a},{offset:1,color:b}]);}
+function lgh(a,b){return new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:a},{offset:1,color:b}]);}
+var goldBar = {color:lg(C.goldHi,C.gold),borderRadius:[5,5,0,0]};
+var navyBar = {color:lg(C.navyMid,C.navy),borderRadius:[5,5,0,0]};
+var goldBarH = {color:lgh(C.gold,C.goldHi),borderRadius:[0,5,5,0]};
+var navyBarH = {color:lgh(C.navy,C.navyMid),borderRadius:[0,5,5,0]};
+var baseTip = {trigger:'axis',backgroundColor:'#fff',borderColor:C.track,borderWidth:1,padding:[8,11],
+               textStyle:{color:C.navy,fontSize:11,fontFamily:FONT},
+               extraCssText:'box-shadow:0 8px 24px rgba(13,34,68,.10);border-radius:8px'};
+var baseLegend = {top:0,right:4,itemWidth:9,itemHeight:9,itemGap:14,icon:'roundRect',textStyle:ax({fontSize:10.5})};
+function catAxis(d,o){return Object.assign({type:'category',data:d,boundaryGap:true,axisLine:{lineStyle:{color:C.track}},axisTick:{show:false},axisLabel:ax({fontSize:10})},o||{});}
+function valAxis(o){return Object.assign({type:'value',axisLine:{show:false},axisTick:{show:false},splitLine:{lineStyle:{color:C.grid,type:'dashed'}},axisLabel:ax()},o||{});}
+function lbl(o){return Object.assign({show:true,color:C.navy,fontFamily:FONT,fontSize:10,fontWeight:600},o||{});}
+
+var allCharts = [];
+function mk(id){var el=document.getElementById(id); if(!el) return null; var c=echarts.init(el); allCharts.push(c); return c;}
+
+function initAllCharts(lang){
+  allCharts.forEach(function(c){ if(c) c.dispose(); });
+  allCharts = [];
+  var zh = lang === 'zh';
+  var L = function(en,cn){ return zh ? cn : en; };
+
+  /* 1 · Bangkok unsold by product type */
+  (function(){ var c=mk('cInv'); if(!c) return;
+    var cats=[L('Other','其他'),L('Single-detached','獨棟'),L('Condominium','公寓'),L('Townhouse','連棟屋')];
+    var vals=[27999,51739,61543,68831];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){return p.name+'<br/><b>'+p.value.toLocaleString()+'</b> '+L('units','戶');}}),
+      grid:{left:8,right:60,top:14,bottom:6,containLabel:true},
+      xAxis:valAxis({axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),
+      yAxis:catAxis(cats,{axisLabel:ax({fontSize:11})}),
+      series:[{type:'bar',data:vals.map(function(v,i){return {value:v,itemStyle:i===1||i===3?navyBarH:goldBarH};}),barMaxWidth:26,
+        label:lbl({position:'right',formatter:function(p){return p.value.toLocaleString()+'  ('+(p.value/210112*100).toFixed(1)+'%)';},fontSize:10})}]
+    });
+  })();
+
+  /* 2 · Three definitions */
+  (function(){ var c=mk('cDef'); if(!c) return;
+    var cats=[L('AREA · BKK metro\non-market, all types','AREA · 曼谷都會\n在售、全產品'),L('SCB EIC · Greater BKK\nprojected end-2026','SCB EIC · 大曼谷\n2026 年底推估'),L('Knight Frank · Greater BKK\ncondo incl. pipeline','Knight Frank · 大曼谷\n公寓含在建')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){return '<b>'+p.value.toLocaleString()+'</b> '+L('units','戶');}}),
+      grid:{left:8,right:12,top:22,bottom:6,containLabel:true},
+      xAxis:catAxis(cats,{axisLabel:ax({fontSize:9.5,lineHeight:13,interval:0})}),
+      yAxis:valAxis({axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),
+      series:[{type:'bar',data:[{value:210112,itemStyle:navyBar},{value:213000,itemStyle:goldBar},{value:350000,itemStyle:{color:C.red,borderRadius:[5,5,0,0]}}],barMaxWidth:70,
+        label:lbl({position:'top',formatter:function(p){return (p.value/1000).toFixed(0)+'k';}})}]
+    });
+  })();
+
+  /* 3 · Carry ladder */
+  (function(){ var c=mk('cCarry'); if(!c) return;
+    var cats=[L('Policy rate','政策利率'),L('Promo mortgage\nyr 1–3','優惠房貸\n第 1–3 年'),L('Gross yield','毛收益率'),L('MRR · yr 4+','MRR · 第 4 年起')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',valueFormatter:function(v){return v+'%';}}),
+      grid:{left:8,right:12,top:24,bottom:6,containLabel:true},
+      xAxis:catAxis(cats,{axisLabel:ax({fontSize:10,lineHeight:13,interval:0})}),
+      yAxis:valAxis({axisLabel:ax({formatter:'{value}%'}),max:8}),
+      series:[{type:'bar',data:[
+          {value:1.00,itemStyle:{color:C.navyMid,borderRadius:[5,5,0,0]}},
+          {value:3.25,itemStyle:{color:'#7d9bc4',borderRadius:[5,5,0,0]}},
+          {value:5.00,itemStyle:{color:C.green,borderRadius:[5,5,0,0]}},
+          {value:7.38,itemStyle:{color:C.red,borderRadius:[5,5,0,0]}}],barMaxWidth:52,
+        label:lbl({position:'top',formatter:'{c}%'}),
+        markLine:{silent:true,symbol:'none',data:[{yAxis:5.00,lineStyle:{color:C.green,type:'dashed',width:1.5},label:{formatter:L('yield line','收益率線'),color:C.green,fontFamily:FONT,fontSize:9,position:'insideEndTop'}}]}}]
+    });
+  })();
+
+  /* 4 · RPPI by segment */
+  (function(){ var c=mk('cRppi'); if(!c) return;
+    var cats=[L('BKK & vicinity','曼谷及周邊'),L('Townhouse (nat\'l)','連棟屋（全國）'),L('Nationwide','全國'),L('SDH (nat\'l)','獨棟（全國）'),L('BMR condo','大曼谷公寓'),L('South','南部')];
+    var vals=[-0.18,1.06,1.26,1.57,1.95,5.59];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',valueFormatter:function(v){return v+'%';}}),
+      grid:{left:8,right:44,top:14,bottom:6,containLabel:true},
+      xAxis:valAxis({axisLabel:ax({formatter:'{value}%'})}),
+      yAxis:catAxis(cats,{axisLabel:ax({fontSize:10.5})}),
+      series:[{type:'bar',data:vals.map(function(v){return {value:v,itemStyle:v<0?{color:C.red,borderRadius:[5,0,0,5]}:goldBarH};}),barMaxWidth:20,
+        label:lbl({position:'right',formatter:'{c}%',fontSize:10})}]
+    });
+  })();
+
+  /* 5 · Cross-market yield */
+  (function(){ var c=mk('cCross'); if(!c) return;
+    var cats=['Taipei','Sydney','Tokyo','Seoul','London','Bangkok','Kuala Lumpur','New York'];
+    var catsZh=['台北','雪梨','東京','首爾','倫敦','曼谷','吉隆坡','紐約'];
+    var vals=[1.8,2.8,4.3,4.3,4.5,5.0,5.2,5.5];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',valueFormatter:function(v){return v+'%';}}),
+      grid:{left:8,right:40,top:14,bottom:6,containLabel:true},
+      xAxis:valAxis({axisLabel:ax({formatter:'{value}%'})}),
+      yAxis:catAxis(zh?catsZh:cats,{axisLabel:ax({fontSize:10.5})}),
+      series:[{type:'bar',data:vals.map(function(v,i){return {value:v,itemStyle:i===5?{color:C.red,borderRadius:[0,5,5,0]}:navyBarH};}),barMaxWidth:18,
+        label:lbl({position:'right',formatter:'{c}%',fontSize:10})}]
+    });
+  })();
+
+  /* 6 · Launch era */
+  (function(){ var c=mk('cEra'); if(!c) return;
+    var cats=[L('2016–2023 avg','2016–2023 年均'),L('2024–2025 avg','2024–2025 年均')];
+    c.setOption({
+      tooltip:baseTip, legend:Object.assign({},baseLegend,{data:[L('Launches','推案量'),L('Absorption','吸納量')]}),
+      grid:{left:8,right:12,top:26,bottom:6,containLabel:true},
+      xAxis:catAxis(cats,{axisLabel:ax({fontSize:11})}),
+      yAxis:valAxis({axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),
+      series:[
+        {name:L('Launches','推案量'),type:'bar',data:[100000,51000],itemStyle:goldBar,barMaxWidth:56,label:lbl({position:'top',formatter:function(p){return (p.value/1000).toFixed(0)+'k';}})},
+        {name:L('Absorption','吸納量'),type:'bar',data:[92000,null],itemStyle:navyBar,barMaxWidth:56,label:lbl({position:'top',formatter:function(p){return p.value?(p.value/1000).toFixed(0)+'k':'';}})}
+      ]
+    });
+  })();
+
+  /* 7 · Completions */
+  (function(){ var c=mk('cComp'); if(!c) return;
+    c.setOption({
+      tooltip:baseTip, legend:Object.assign({},baseLegend,{data:[L('BMR completions (units)','大曼谷完工（戶）'),L('Completed condo value (฿bn)','完工公寓貨值（十億泰銖）')]}),
+      grid:{left:8,right:16,top:26,bottom:6,containLabel:true},
+      xAxis:catAxis(['2024','2025']),
+      yAxis:[valAxis({axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),valAxis({position:'right',splitLine:{show:false},axisLabel:ax({formatter:'{value}'})})],
+      series:[
+        {name:L('BMR completions (units)','大曼谷完工（戶）'),type:'bar',data:[97284,72584],itemStyle:navyBar,barMaxWidth:58,label:lbl({position:'top',formatter:function(p){return p.value.toLocaleString();},fontSize:10})},
+        {name:L('Completed condo value (฿bn)','完工公寓貨值（十億泰銖）'),type:'line',yAxisIndex:1,data:[178.4,140.6],smooth:true,symbol:'circle',symbolSize:7,lineStyle:{color:C.gold,width:3},itemStyle:{color:C.gold},label:lbl({position:'bottom',color:C.gold,formatter:'{c}'})}
+      ]
+    });
+  })();
+
+  /* 8 · Q1 two definitions */
+  (function(){ var c=mk('cQ1'); if(!c) return;
+    c.setOption({
+      tooltip:baseTip, legend:Object.assign({},baseLegend,{data:[L('Units launched','推案戶數'),L('Sell / booking rate %','去化／訂購率%')]}),
+      grid:{left:8,right:16,top:26,bottom:6,containLabel:true},
+      xAxis:catAxis([L('Colliers 1Q26\n(all stock take-up)','Colliers 2026Q1\n（全存量去化）'),L('Knight Frank 1Q26\n(launch booking)','Knight Frank 2026Q1\n（新案訂購）'),L('Knight Frank 4Q25\n(launch booking)','Knight Frank 2025Q4\n（新案訂購）')],{axisLabel:ax({fontSize:9.5,lineHeight:13,interval:0})}),
+      yAxis:[valAxis({axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),valAxis({max:80,position:'right',splitLine:{show:false},axisLabel:ax({formatter:'{value}%'})})],
+      series:[
+        {name:L('Units launched','推案戶數'),type:'bar',data:[9480,6174,null],itemStyle:navyBar,barMaxWidth:44,label:lbl({position:'top',formatter:function(p){return p.value?p.value.toLocaleString():'';},fontSize:10})},
+        {name:L('Sell / booking rate %','去化／訂購率%'),type:'line',yAxisIndex:1,data:[67.8,24.3,43.8],symbol:'circle',symbolSize:8,lineStyle:{color:C.red,width:2.5},itemStyle:{color:C.red},label:lbl({position:'top',color:C.red,formatter:'{c}%'})}
+      ]
+    });
+  })();
+
+  /* 9 · Resale tide */
+  (function(){ var c=mk('cResale'); if(!c) return;
+    c.setOption({
+      tooltip:baseTip, legend:Object.assign({},baseLegend,{data:[L('New-build listings','新案掛牌'),L('Second-hand listings','二手掛牌')]}),
+      grid:{left:8,right:12,top:26,bottom:6,containLabel:true},
+      xAxis:catAxis([L('1Q2025 (derived)','2025Q1（推導）'),L('1Q2026','2026Q1')],{axisLabel:ax({fontSize:10.5})}),
+      yAxis:valAxis({axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),
+      series:[
+        {name:L('New-build listings','新案掛牌'),type:'bar',stack:'a',data:[371500,350000],itemStyle:{color:lg(C.navyMid,C.navy)},barMaxWidth:78},
+        {name:L('Second-hand listings','二手掛牌'),type:'bar',stack:'a',data:[178800,240000],itemStyle:{color:lg(C.goldHi,C.gold),borderRadius:[5,5,0,0]},barMaxWidth:78,
+          label:lbl({position:'top',formatter:function(p){var t=p.dataIndex===0?550300:590000;return (t/1000).toFixed(0)+'k '+L('total','合計');},fontSize:10})}
+      ]
+    });
+  })();
+
+  /* 10 · H1 2026 launches vs sales */
+  (function(){ var c=mk('cH1'); if(!c) return;
+    c.setOption({
+      tooltip:baseTip, legend:Object.assign({},baseLegend,{top:0,left:'center',right:'auto',itemGap:10,textStyle:ax({fontSize:9.5}),data:[L('Total launched (mix n/a)','推案合計（未分產品）'),L('Condominium','公寓'),L('Townhouse','連棟屋'),L('Single-detached','獨棟'),L('Other','其他')]}),
+      grid:{left:8,right:12,top:32,bottom:6,containLabel:true},
+      xAxis:catAxis([L('H1 2026 launched','2026 上半年推案'),L('H1 2026 sold','2026 上半年銷售')],{axisLabel:ax({fontSize:11})}),
+      yAxis:valAxis({axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),
+      series:[
+        {name:L('Total launched (mix n/a)','推案合計（未分產品）'),type:'bar',stack:'a',data:[17045,null],itemStyle:{color:'#c2cad6',borderRadius:[5,5,0,0]},barMaxWidth:74,
+          label:lbl({position:'top',formatter:function(p){return p.value?'17,045':'';},fontSize:10.5})},
+        {name:L('Condominium','公寓'),type:'bar',stack:'a',data:[null,14439],itemStyle:{color:lg(C.navyMid,C.navy)},barMaxWidth:74},
+        {name:L('Townhouse','連棟屋'),type:'bar',stack:'a',data:[null,6820],itemStyle:{color:'#7d9bc4'},barMaxWidth:74},
+        {name:L('Single-detached','獨棟'),type:'bar',stack:'a',data:[null,3393],itemStyle:{color:C.goldHi},barMaxWidth:74},
+        {name:L('Other','其他'),type:'bar',stack:'a',data:[null,2128],itemStyle:{color:C.gold,borderRadius:[5,5,0,0]},barMaxWidth:74,
+          label:lbl({position:'top',formatter:function(p){return p.value?'26,780':'';},fontSize:10.5})}
+      ]
+    });
+  })();
+
+  /* 11 · Transfers */
+  (function(){ var c=mk('cTrans'); if(!c) return;
+    c.setOption({
+      tooltip:baseTip, legend:Object.assign({},baseLegend,{data:[L('Units','戶數'),L('Value ฿bn','金額 十億泰銖')]}),
+      grid:{left:8,right:18,top:26,bottom:6,containLabel:true},
+      xAxis:catAxis([L('2024 (derived)','2024（推導）'),'2025',L('2026F','2026 預估')],{axisLabel:ax({fontSize:10.5})}),
+      yAxis:[valAxis({min:280000,axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),valAxis({min:800,position:'right',splitLine:{show:false},axisLabel:ax({formatter:'{value}'})})],
+      series:[
+        {name:L('Units','戶數'),type:'bar',data:[347900,322500,320200],itemStyle:navyBar,barMaxWidth:48,label:lbl({position:'top',formatter:function(p){return p.value.toLocaleString();},fontSize:10})},
+        {name:L('Value ฿bn','金額 十億泰銖'),type:'line',yAxisIndex:1,data:[980.3,873.4,866.2],smooth:true,symbol:'circle',symbolSize:7,lineStyle:{color:C.red,width:2.5},itemStyle:{color:C.red},label:lbl({position:'bottom',color:C.red,formatter:'{c}'})}
+      ]
+    });
+  })();
+
+  /* 12 · Q1 mix */
+  (function(){ var c=mk('cQmix'); if(!c) return;
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v+'%';}}),
+      legend:Object.assign({},baseLegend,{data:[L('Volume growth','量增'),L('Value growth','值增')]}),
+      grid:{left:8,right:12,top:26,bottom:6,containLabel:true},
+      xAxis:catAxis([L('All transfers','全部過戶'),L('Second-hand','二手'),L('New build','新建案')],{axisLabel:ax({fontSize:10.5})}),
+      yAxis:valAxis({axisLabel:ax({formatter:'{value}%'})}),
+      series:[
+        {name:L('Volume growth','量增'),type:'bar',data:[11.2,13.8,6.2],itemStyle:navyBar,barMaxWidth:34,label:lbl({position:'top',formatter:'{c}%',fontSize:10})},
+        {name:L('Value growth','值增'),type:'bar',data:[3.1,7.7,-1.1],itemStyle:goldBar,barMaxWidth:34,label:lbl({position:'top',formatter:'{c}%',fontSize:10})}
+      ]
+    });
+  })();
+
+  /* 13 · Rejection */
+  (function(){ var c=mk('cRej'); if(!c) return;
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'n/a':v+'%';}}),
+      legend:Object.assign({},baseLegend,{data:[L('Overall rejection','整體退件率'),L('Sub-฿3m band','300 萬泰銖以下')]}),
+      grid:{left:8,right:14,top:26,bottom:6,containLabel:true},
+      xAxis:catAxis(['2024','1Q2025',L('1H2026 low','2026H1 下緣'),L('1H2026 high','2026H1 上緣')],{boundaryGap:false,axisLabel:ax({fontSize:10})}),
+      yAxis:valAxis({max:80,axisLabel:ax({formatter:'{value}%'})}),
+      series:[
+        {name:L('Overall rejection','整體退件率'),type:'line',data:[null,45,40,50],smooth:false,symbol:'circle',symbolSize:7,lineStyle:{color:C.navy,width:2.5},itemStyle:{color:C.navy},connectNulls:true,label:lbl({position:'top',formatter:function(p){return p.value?p.value+'%':'';}})},
+        {name:L('Sub-฿3m band','300 萬泰銖以下'),type:'line',data:[70,null,null,null],symbol:'circle',symbolSize:9,itemStyle:{color:C.red},label:lbl({position:'top',color:C.red,formatter:function(p){return p.value?p.value+'%':'';}}),
+          markLine:{silent:true,symbol:'none',data:[{yAxis:70,lineStyle:{color:C.red,type:'dashed',width:1.5},label:{formatter:L('sub-฿3m ≈70%','300 萬以下 ≈70%'),color:C.red,fontFamily:FONT,fontSize:9,position:'insideEndTop'}}]}}
+      ]
+    });
+  })();
+
+  /* 14 · Household debt */
+  (function(){ var c=mk('cHhd'); if(!c) return;
+    var yr=['2008','2015','2019','1Q2021','2023','2024','4Q2025'];
+    var v=[66.0,85.9,82.0,95.5,90.0,88.4,86.7];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v+'%';}}),
+      grid:{left:8,right:14,top:20,bottom:6,containLabel:true},
+      xAxis:catAxis(yr,{boundaryGap:false,axisLabel:ax({fontSize:10})}),
+      yAxis:valAxis({min:60,max:100,axisLabel:ax({formatter:'{value}%'})}),
+      series:[{type:'line',data:v,smooth:true,symbol:'circle',symbolSize:6,lineStyle:{color:C.navy,width:3},itemStyle:{color:C.navy},
+        areaStyle:{color:lg('rgba(35,74,134,.18)','rgba(35,74,134,0)')},
+        label:lbl({position:'top',formatter:'{c}',fontSize:9.5}),
+        markLine:{silent:true,symbol:'none',data:[{yAxis:84.8,lineStyle:{color:C.gold,type:'dashed',width:1.5},label:{formatter:L('Malaysia 84.8%','馬來西亞 84.8%'),color:C.gold,fontFamily:FONT,fontSize:9,position:'insideStartBottom'}}]}}]
+    });
+  })();
+
+  /* 15 · Credit quality */
+  (function(){ var c=mk('cCredit'); if(!c) return;
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',valueFormatter:function(v){return v+'฿bn';}}),
+      grid:{left:8,right:44,top:14,bottom:6,containLabel:true},
+      xAxis:valAxis({axisLabel:ax({formatter:function(v){return (v/1000).toFixed(1)+'tn';}})}),
+      yAxis:catAxis([L('NPL (2.85%)','不良貸款（2.85%）'),L('Special-mention','特別關注類')],{axisLabel:ax({fontSize:10.5})}),
+      series:[{type:'bar',data:[{value:535.8,itemStyle:{color:lgh(C.red,'#d97a6c'),borderRadius:[0,5,5,0]}},{value:1280,itemStyle:{color:lgh(C.amber,'#d9a441'),borderRadius:[0,5,5,0]}}],barMaxWidth:36,
+        label:lbl({position:'right',formatter:function(p){return '฿'+(p.value/1000).toFixed(2)+'tn';},fontSize:10.5})}]
+    });
+  })();
+
+  /* 16 · Affordability */
+  (function(){ var c=mk('cAfford'); if(!c) return;
+    var cats=[L('30 sqm condo /\nBKK avg household','30 m² 公寓／\n曼谷平均家庭'),L('Avg new unit /\nBKK avg household','新推案均價／\n曼谷平均家庭'),L('30 sqm condo /\nnat\'l median income','30 m² 公寓／\n全國中位所得')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',valueFormatter:function(v){return v+'x';}}),
+      grid:{left:8,right:12,top:22,bottom:6,containLabel:true},
+      xAxis:catAxis(cats,{axisLabel:ax({fontSize:9.5,lineHeight:13,interval:0})}),
+      yAxis:valAxis({axisLabel:ax({formatter:'{value}x'}),max:30}),
+      series:[{type:'bar',data:[{value:7.7,itemStyle:{color:C.green,borderRadius:[5,5,0,0]}},{value:19.0,itemStyle:{color:C.amber,borderRadius:[5,5,0,0]}},{value:25.1,itemStyle:{color:C.red,borderRadius:[5,5,0,0]}}],barMaxWidth:62,
+        label:lbl({position:'top',formatter:'{c}x'}),
+        markLine:{silent:true,symbol:'none',data:[{yAxis:10,lineStyle:{color:C.muted,type:'dashed',width:1.5},label:{formatter:L('10x — global stretch line','10 倍 —— 全球緊繃線'),color:C.muted,fontFamily:FONT,fontSize:9,position:'insideStartTop'}}]}}]
+    });
+  })();
+
+  /* 17 · Price per sqm ladder */
+  (function(){ var c=mk('cPsm'); if(!c) return;
+    var cats=[L('68% of new launches','68% 的新推案'),L('Silom secondary (low)','席隆二手（低）'),L('New-launch avg 1H26','2026H1 新案均價'),L('BKK median','曼谷中位'),L('Silom 2021 peak','席隆 2021 高點'),L('Prime Sukhumvit new','素坤逸精華新案')];
+    var vals=[80000,108000,120364,125000,220000,220000];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){return p.name+'<br/><b>฿'+p.value.toLocaleString()+'</b>/m²';}}),
+      grid:{left:8,right:66,top:14,bottom:6,containLabel:true},
+      xAxis:valAxis({axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),
+      yAxis:catAxis(cats,{axisLabel:ax({fontSize:10})}),
+      series:[{type:'bar',data:vals.map(function(v,i){return {value:v,itemStyle:(i===4)?{color:'#c2cad6',borderRadius:[0,5,5,0]}:(i>=5?navyBarH:goldBarH)};}),barMaxWidth:18,
+        label:lbl({position:'right',formatter:function(p){return '฿'+(p.value/1000).toFixed(0)+'k';},fontSize:10})}]
+    });
+  })();
+
+  /* 18 · Land price by corridor */
+  (function(){ var c=mk('cLand'); if(!c) return;
+    var cats=[L('Greater BKK overall','大曼谷整體'),L('Pathum Thani cluster','巴吞他尼群'),L('Samut Sakhon','龍仔厝'),L('Nonthaburi–Pak Kret','暖武里—巴革'),L('Green Line ext. corridor','綠線延伸走廊'),L('Bang Khen–Sai Mai cluster','邦肯—賽邁群'),L('Phra Khanong–Bang Na','帕卡儂—邦那')];
+    var vals=[6.2,11.8,16.0,17.2,17.6,21.1,36.3];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',valueFormatter:function(v){return '+'+v+'%';}}),
+      grid:{left:8,right:44,top:14,bottom:6,containLabel:true},
+      xAxis:valAxis({axisLabel:ax({formatter:'{value}%'})}),
+      yAxis:catAxis(cats,{axisLabel:ax({fontSize:10})}),
+      series:[{type:'bar',data:vals.map(function(v,i){return {value:v,itemStyle:i===0?{color:'#c2cad6',borderRadius:[0,5,5,0]}:goldBarH};}),barMaxWidth:18,
+        label:lbl({position:'right',formatter:'+{c}%',fontSize:10})}]
+    });
+  })();
+
+  /* 19 · Cost stack */
+  (function(){ var c=mk('cCost'); if(!c) return;
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v+'%';}}),
+      legend:Object.assign({},baseLegend,{data:[L('Transfer fee','過戶費'),L('Mortgage registration','抵押登記費'),L('SBT if sold <5 yrs','五年內售出特種商業稅'),L('Rental withholding','租金就源扣繳')]}),
+      grid:{left:8,right:12,top:26,bottom:6,containLabel:true},
+      xAxis:catAxis([L('Thai national ≤฿7m','泰籍 ≤700 萬泰銖'),L('Foreign buyer','外國買方')],{axisLabel:ax({fontSize:11})}),
+      yAxis:valAxis({axisLabel:ax({formatter:'{value}%'}),max:22}),
+      series:[
+        {name:L('Transfer fee','過戶費'),type:'bar',stack:'a',data:[0.01,2.0],itemStyle:{color:lg(C.navyMid,C.navy)},barMaxWidth:72},
+        {name:L('Mortgage registration','抵押登記費'),type:'bar',stack:'a',data:[0.01,1.0],itemStyle:{color:'#7d9bc4'},barMaxWidth:72},
+        {name:L('SBT if sold <5 yrs','五年內售出特種商業稅'),type:'bar',stack:'a',data:[3.3,3.3],itemStyle:{color:C.goldHi},barMaxWidth:72},
+        {name:L('Rental withholding','租金就源扣繳'),type:'bar',stack:'a',data:[0,15],itemStyle:{color:C.red,borderRadius:[5,5,0,0]},barMaxWidth:72,
+          label:lbl({position:'top',formatter:function(p){return p.dataIndex===0?'3.32%':'21.3%';},fontSize:10.5})}
+      ]
+    });
+  })();
+
+  /* 19b · Visa thresholds */
+  (function(){ var c=mk('cVisa'); if(!c) return;
+    var cats=[L('Rental route\n฿85k/mo × 12','租賃路徑\n每月 8.5 萬 × 12'),L('Freehold condo\nnew threshold','永久產權公寓\n新門檻'),L('Registered lease\ncontract value','登記租賃\n合約總值'),L('Avg foreign purchase\n2025 actual','外資實際均價\n2025'),L('Old investment visa\nthreshold','舊投資簽證\n門檻')];
+    var vals=[1.02,3.00,3.06,4.10,10.00];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){return p.name.replace(/\n/g,' — ')+'<br/><b>฿'+p.value.toFixed(2)+'m</b>';}}),
+      grid:{left:8,right:14,top:22,bottom:6,containLabel:true},
+      xAxis:catAxis(cats,{axisLabel:ax({fontSize:9,lineHeight:12,interval:0})}),
+      yAxis:valAxis({max:11,axisLabel:ax({formatter:function(v){return '฿'+v+'m';}})}),
+      series:[{type:'bar',data:[
+          {value:1.02,itemStyle:{color:'#c2cad6',borderRadius:[5,5,0,0]}},
+          {value:3.00,itemStyle:{color:lg(C.green,'#0f5f2d'),borderRadius:[5,5,0,0]}},
+          {value:3.06,itemStyle:{color:'#7d9bc4',borderRadius:[5,5,0,0]}},
+          {value:4.10,itemStyle:goldBar},
+          {value:10.00,itemStyle:{color:lg('#d97a6c',C.red),borderRadius:[5,5,0,0]}}],barMaxWidth:48,
+        label:lbl({position:'top',formatter:function(p){return '฿'+p.value.toFixed(2)+'m';},fontSize:10}),
+        markLine:{silent:true,symbol:'none',data:[{yAxis:4.10,lineStyle:{color:C.gold,type:'dashed',width:1.5},label:{formatter:L('avg foreign ticket 2025','2025 外資平均票面'),color:C.gold,fontFamily:FONT,fontSize:9,position:'insideStartTop'}}]}}]
+    });
+  })();
+
+  /* 20 · Foreign transfers */
+  (function(){ var c=mk('cForeign'); if(!c) return;
+    c.setOption({
+      tooltip:baseTip, legend:Object.assign({},baseLegend,{data:[L('Units','戶數'),L('Value ฿bn','金額 十億泰銖')]}),
+      grid:{left:8,right:18,top:26,bottom:6,containLabel:true},
+      xAxis:catAxis([L('2024 (derived)','2024（推導）'),'2025',L('2026F','2026 預估')],{axisLabel:ax({fontSize:10.5})}),
+      yAxis:[valAxis({min:10000,axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),valAxis({min:40,position:'right',splitLine:{show:false},axisLabel:ax({formatter:'{value}'})})],
+      series:[
+        {name:L('Units','戶數'),type:'bar',data:[14578,14899,11919],itemStyle:navyBar,barMaxWidth:48,label:lbl({position:'top',formatter:function(p){return p.value.toLocaleString();},fontSize:10})},
+        {name:L('Value ฿bn','金額 十億泰銖'),type:'line',yAxisIndex:1,data:[68.2,60.9,48.7],smooth:true,symbol:'circle',symbolSize:7,lineStyle:{color:C.red,width:2.5},itemStyle:{color:C.red},label:lbl({position:'bottom',color:C.red,formatter:'{c}'})}
+      ]
+    });
+  })();
+
+  /* 21 · Nationality spend */
+  (function(){ var c=mk('cNation'); if(!c) return;
+    var cats=[L('China','中國'),L('All foreign avg','外資平均'),L('India','印度')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',valueFormatter:function(v){return '฿'+v+'m';}}),
+      grid:{left:8,right:44,top:14,bottom:6,containLabel:true},
+      xAxis:valAxis({axisLabel:ax({formatter:function(v){return '฿'+v+'m';}})}),
+      yAxis:catAxis(cats,{axisLabel:ax({fontSize:11})}),
+      series:[{type:'bar',data:[{value:3.8,itemStyle:{color:lgh(C.red,'#d97a6c'),borderRadius:[0,5,5,0]}},{value:4.1,itemStyle:navyBarH},{value:6.9,itemStyle:goldBarH}],barMaxWidth:26,
+        label:lbl({position:'right',formatter:function(p){return '฿'+p.value+'m';},fontSize:10.5})}]
+    });
+  })();
+
+  /* 22 · Units vs value share */
+  (function(){ var c=mk('cShare'); if(!c) return;
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v+'%';}}),
+      legend:Object.assign({},baseLegend,{data:[L('Foreign','外國人'),L('Domestic','本地')]}),
+      grid:{left:8,right:12,top:26,bottom:6,containLabel:true},
+      xAxis:valAxis({max:100,axisLabel:ax({formatter:'{value}%'})}),
+      yAxis:catAxis([L('Share of value','金額佔比'),L('Share of units','戶數佔比')],{axisLabel:ax({fontSize:11})}),
+      series:[
+        {name:L('Foreign','外國人'),type:'bar',stack:'a',data:[23.9,13.6],itemStyle:{color:lgh(C.gold,C.goldHi)},barMaxWidth:34,label:lbl({position:'inside',color:'#fff',formatter:'{c}%',fontSize:10.5})},
+        {name:L('Domestic','本地'),type:'bar',stack:'a',data:[76.1,86.4],itemStyle:{color:'#c2cad6',borderRadius:[0,5,5,0]},barMaxWidth:34}
+      ]
+    });
+  })();
+
+  /* 23 · Inventory paths */
+  (function(){ var c=mk('cPath'); if(!c) return;
+    var yr=['2026','2027','2028','2029','2030','2031','2032'];
+    var base=[210,190,171,153,136,120,105];
+    var up  =[210,180,152,126,103,84,68];
+    var dn  =[210,204,201,200,202,206,212];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v+'k';}}),
+      legend:Object.assign({},baseLegend,{data:[L('Upside · credit reopens','上檔 · 信用重開'),L('Base · grinding absorption','基準 · 磨底去化'),L('Downside · resale cascade','下檔 · 二手瀑布')]}),
+      grid:{left:8,right:14,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(yr,{boundaryGap:false}),
+      yAxis:valAxis({min:50,max:230,axisLabel:ax({formatter:'{value}k'})}),
+      series:[
+        {name:L('Upside · credit reopens','上檔 · 信用重開'),type:'line',data:up,smooth:true,symbol:'circle',symbolSize:4,lineStyle:{color:C.green,width:2.5},itemStyle:{color:C.green}},
+        {name:L('Base · grinding absorption','基準 · 磨底去化'),type:'line',data:base,smooth:true,symbol:'circle',symbolSize:4,lineStyle:{color:C.gold,width:3},itemStyle:{color:C.gold}},
+        {name:L('Downside · resale cascade','下檔 · 二手瀑布'),type:'line',data:dn,smooth:true,symbol:'circle',symbolSize:4,lineStyle:{color:C.red,width:2.5,type:'dashed'},itemStyle:{color:C.red},
+          markLine:{silent:true,symbol:'none',data:[{yAxis:105,lineStyle:{color:C.muted,type:'dashed',width:1},label:{formatter:L('≈24-month norm','≈24 個月常態'),color:C.muted,fontFamily:FONT,fontSize:9,position:'insideStartTop'}}]}}
+      ]
+    });
+  })();
+
+  /* 24 · Births vs deaths */
+  (function(){ var c=mk('cDemo'); if(!c) return;
+    c.setOption({
+      tooltip:baseTip, legend:Object.assign({},baseLegend,{data:[L('Births','出生'),L('Deaths','死亡')]}),
+      grid:{left:8,right:12,top:26,bottom:6,containLabel:true},
+      xAxis:catAxis(['2024','2025'],{axisLabel:ax({fontSize:11})}),
+      yAxis:valAxis({min:300000,axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),
+      series:[
+        {name:L('Births','出生'),type:'bar',data:[462240,416574],itemStyle:navyBar,barMaxWidth:56,label:lbl({position:'top',formatter:function(p){return p.value.toLocaleString();},fontSize:10})},
+        {name:L('Deaths','死亡'),type:'bar',data:[571646,559684],itemStyle:{color:lg('#d97a6c',C.red),borderRadius:[5,5,0,0]},barMaxWidth:56,label:lbl({position:'top',color:C.red,formatter:function(p){return p.value.toLocaleString();},fontSize:10})}
+      ]
+    });
+  })();
+
+  /* 25 · Age structure */
+  (function(){ var c=mk('cAge'); if(!c) return;
+    c.setOption({
+      tooltip:baseTip, legend:Object.assign({},baseLegend,{data:[L('Under 15 (m)','15 歲以下（百萬）'),L('Aged 60+ (m)','60 歲以上（百萬）'),L('Working-age share %','工作年齡佔比%')]}),
+      grid:{left:8,right:16,top:26,bottom:6,containLabel:true},
+      xAxis:catAxis(['2015',L('now','現在'),L('2040F','2040 預估')],{axisLabel:ax({fontSize:11})}),
+      yAxis:[valAxis({axisLabel:ax({formatter:'{value}m'}),max:16}),valAxis({min:50,max:75,position:'right',splitLine:{show:false},axisLabel:ax({formatter:'{value}%'})})],
+      series:[
+        {name:L('Under 15 (m)','15 歲以下（百萬）'),type:'bar',data:[11.7,9.6,null],itemStyle:navyBar,barMaxWidth:34,label:lbl({position:'top',formatter:function(p){return p.value?p.value:'';},fontSize:10})},
+        {name:L('Aged 60+ (m)','60 歲以上（百萬）'),type:'bar',data:[8.4,12.6,null],itemStyle:goldBar,barMaxWidth:34,label:lbl({position:'top',formatter:function(p){return p.value?p.value:'';},fontSize:10})},
+        {name:L('Working-age share %','工作年齡佔比%'),type:'line',yAxisIndex:1,data:[68,64,58],smooth:true,symbol:'circle',symbolSize:7,lineStyle:{color:C.red,width:2.5},itemStyle:{color:C.red},label:lbl({position:'top',color:C.red,formatter:'{c}%'})}
+      ]
+    });
+  })();
+
+  /* 26 · GNI gap */
+  (function(){ var c=mk('cGni'); if(!c) return;
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){return p.name+'<br/><b>US$'+p.value.toLocaleString()+'</b>';}}),
+      grid:{left:8,right:56,top:14,bottom:6,containLabel:true},
+      xAxis:valAxis({max:16000,axisLabel:ax({formatter:function(v){return '$'+(v/1000)+'k';}})}),
+      yAxis:catAxis([L('Thailand GNI/capita','泰國人均 GNI'),L('High-income threshold','高收入門檻')],{axisLabel:ax({fontSize:11})}),
+      series:[{type:'bar',data:[{value:7690,itemStyle:navyBarH},{value:14375,itemStyle:{color:'#c2cad6',borderRadius:[0,5,5,0]}}],barMaxWidth:34,
+        label:lbl({position:'right',formatter:function(p){return '$'+p.value.toLocaleString();},fontSize:10.5})}]
+    });
+  })();
+}
+
+/* ───────── language + UI ───────── */
+function setLang(lang){
+  document.body.classList.toggle('zh', lang==='zh');
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  try{localStorage.setItem('lang',lang);}catch(e){}
+  initAllCharts(lang);
+}
+
+window.addEventListener('load', function(){
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.addEventListener('click', function(){ setLang(b.dataset.lang); });
+  });
+  var lang='en';
+  try{ lang = localStorage.getItem('lang') || 'en'; }catch(e){}
+  setLang(lang);
+});
+window.addEventListener('resize', function(){ allCharts.forEach(function(c){ if(c) c.resize(); }); });
+</script>
+</body>
+</html>
