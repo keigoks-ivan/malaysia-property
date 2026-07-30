@@ -1,13 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>KL Property Check</title>
-  <meta http-equiv="refresh" content="0; url=/kl-check">
-  <link rel="canonical" href="/kl-check">
-  <script>location.replace('/kl-check');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Property Check — Independent Property Analysis by InvestMQuest</title>
+<meta name="description" content="Independent, data-led property analysis across Asian markets: Malaysia development scorecards and market research, Thailand and Bangkok reports. A ten-year-hold investor lens.">
+<meta name="color-scheme" content="light">
+<link rel="canonical" href="https://myproperty.investmquest.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/kl-theme.css">
+<style>
+.lang-zh{display:none}
+body.zh .lang-en{display:none}
+body.zh .lang-zh{display:inline}
+body.zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
+body.zh h1,body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+
+/* hero */
+.hero{padding:58px 0 34px;text-align:center}
+.ornament{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px}
+.ornament-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,#c9a96b)}
+.ornament-line.right{background:linear-gradient(90deg,#c9a96b,transparent)}
+.ornament-mark{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);border-radius:1px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:14px}
+body.zh .eyebrow{letter-spacing:.08em;text-transform:none}
+.hero h1{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:40px;line-height:1.22;letter-spacing:-.02em;margin:0 0 16px}
+.hero h1 .accent{color:var(--gold-deep)}
+.hero-sub{font-size:15px;line-height:1.9;color:var(--text-soft);max-width:640px;margin:0 auto 20px}
+.hero-sub strong{color:var(--navy);font-weight:600}
+.trust{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);font-weight:600}
+.trust .ti{display:inline-flex;align-items:center;gap:6px}
+.trust .ti::before{content:'◆';color:var(--gold);font-size:8px}
+
+/* market cards */
+.markets{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:14px 0 10px;align-items:start}
+.mk{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-md);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s}
+.mk:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.mk-head{padding:20px 22px 16px;background:linear-gradient(135deg,#0d2244 0%,#173564 100%);color:#fff}
+.mk-flagrow{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.mk-flag{font-size:26px;line-height:1}
+.mk-name{font-family:'Playfair Display','Noto Serif TC',serif;font-size:21px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.mk-city{font-size:10.5px;color:rgba(255,255,255,.6);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+body.zh .mk-city{letter-spacing:.04em;text-transform:none}
+.mk-read{font-size:13px;line-height:1.8;color:rgba(255,255,255,.9);margin:0}
+.mk-read b{color:var(--gold-light);font-weight:600}
+
+.mk-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border-soft)}
+.mk-stat{padding:13px 8px;text-align:center;border-right:1px solid var(--border-soft);min-width:0}
+.mk-stat:last-child{border-right:none}
+.mk-sn{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;color:var(--navy);line-height:1.2}
+.mk-sl{font-size:9.5px;color:var(--muted);line-height:1.5;margin-top:4px;font-weight:600}
+
+.mk-links{padding:12px 14px 16px;display:grid;gap:2px;flex:1}
+.mk-link{display:flex;align-items:baseline;gap:9px;padding:9px 11px;border-radius:9px;text-decoration:none!important;transition:background .15s}
+.mk-link:hover{background:var(--gold-bg)}
+.mk-link .ml-t{font-size:13px;font-weight:600;color:var(--navy);white-space:nowrap}
+.mk-link .ml-d{font-size:11px;color:var(--muted);line-height:1.5}
+.mk-link .ml-ar{margin-left:auto;color:var(--gold-deep);font-size:12px;opacity:0;transition:opacity .15s}
+.mk-link:hover .ml-ar{opacity:1}
+.mk-link.lead{background:var(--navy-soft)}
+.mk-link.lead:hover{background:#dde7f2}
+
+/* latest */
+.latest{background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:14px;padding:16px 20px;margin:22px 0 10px;display:flex;align-items:flex-start;gap:14px}
+.latest .lk{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);white-space:nowrap;padding-top:3px}
+body.zh .latest .lk{letter-spacing:.04em;text-transform:none}
+.latest p{margin:0;font-size:12.5px;line-height:1.9;color:var(--text-soft)}
+.latest a{color:var(--gold-deep);font-weight:600}
+.latest b{color:var(--navy);font-weight:600}
+
+/* method */
+.how{margin:34px 0 8px}
+.how-head{text-align:center;margin-bottom:18px}
+.how-head .section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep)}
+body.zh .how-head .section-eyebrow{letter-spacing:.05em;text-transform:none}
+.how-head h2{font-family:'Playfair Display','Noto Serif TC',serif;font-size:22px;font-weight:700;color:var(--navy);margin:8px 0 0}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.how-c{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:12px;padding:15px 17px;box-shadow:var(--shadow-sm)}
+.how-c h4{font-size:12.5px;font-weight:700;color:var(--navy);margin:0 0 6px;line-height:1.5}
+.how-c p{font-size:12px;color:var(--muted);line-height:1.9;margin:0}
+
+@media(max-width:820px){
+  .markets{grid-template-columns:1fr}
+  .how-grid{grid-template-columns:1fr}
+  .hero{padding:36px 0 26px}
+  .hero h1{font-size:29px}
+  .latest{flex-direction:column;gap:6px}
+}
+</style>
 </head>
 <body>
-  <p>Redirecting to <a href="/kl-check">KL Property Check</a>…</p>
+
+<div id="nav-root"></div>
+<script src="/js/nav.js"></script>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="ornament" aria-hidden="true">
+      <span class="ornament-line"></span><span class="ornament-mark"></span><span class="ornament-line right"></span>
+    </div>
+    <div class="eyebrow"><span class="lang-en">Independent property analysis</span><span class="lang-zh">獨立房地產分析</span></div>
+    <h1>
+      <span class="lang-en">Property <span class="accent">Check</span></span>
+      <span class="lang-zh">房地產 <span class="accent">體檢</span></span>
+    </h1>
+    <p class="hero-sub">
+      <span class="lang-en">Market research and development scorecards written from a <strong>ten-year-hold investor</strong> perspective. Every number is sourced, every framework states how it could be proven wrong, and nothing here is for sale.</span>
+      <span class="lang-zh">以<strong>十年持有的投資人</strong>視角寫的市場研究與建案評分卡。每個數字都標來源，每套框架都寫得出被推翻的條件，站上沒有任何東西在賣。</span>
+    </p>
+    <div class="trust">
+      <span class="ti"><span class="lang-en">Independent analysis</span><span class="lang-zh">獨立分析</span></span>
+      <span class="ti"><span class="lang-en">Sourced data only</span><span class="lang-zh">數字全部標來源</span></span>
+      <span class="ti"><span class="lang-en">Bilingual EN / 中文</span><span class="lang-zh">中英雙語</span></span>
+    </div>
+  </section>
+
+  <section class="markets">
+
+    <!-- ── Malaysia ── -->
+    <div class="mk">
+      <div class="mk-head">
+        <div class="mk-flagrow">
+          <span class="mk-flag">🇲🇾</span>
+          <div>
+            <div class="mk-name"><span class="lang-en">Malaysia</span><span class="lang-zh">馬來西亞</span></div>
+            <div class="mk-city"><span class="lang-en">Kuala Lumpur · Penang · Johor</span><span class="lang-zh">吉隆坡 · 檳城 · 新山</span></div>
+          </div>
+        </div>
+        <p class="mk-read">
+          <span class="lang-en">Oversupply coexists with <b>positive carry</b>. Developers would rather hold than cut, so the surplus shows up in time-to-clear rather than in price — which makes product type, not location, the decision that matters.</span>
+          <span class="lang-zh">過剩與<b>正持有收益</b>並存。發展商寧可持有也不降價，供過於求因此落在去化時間而非價格上——真正要決定的是產品類別，不是地段。</span>
+        </p>
+      </div>
+      <div class="mk-stats">
+        <div class="mk-stat"><div class="mk-sn">2.75%</div><div class="mk-sl"><span class="lang-en">Policy rate</span><span class="lang-zh">政策利率 OPR</span></div></div>
+        <div class="mk-stat"><div class="mk-sn">32,801</div><div class="mk-sl"><span class="lang-en">Resi overhang</span><span class="lang-zh">住宅餘屋</span></div></div>
+        <div class="mk-stat"><div class="mk-sn">5.19%</div><div class="mk-sl"><span class="lang-en">Gross yield</span><span class="lang-zh">毛收益率</span></div></div>
+      </div>
+      <div class="mk-links">
+        <a class="mk-link lead" href="/kl-check">
+          <span class="ml-t"><span class="lang-en">KL Scorecards</span><span class="lang-zh">吉隆坡建案評分卡</span></span>
+          <span class="ml-d"><span class="lang-en">23 developments, 7 dimensions</span><span class="lang-zh">23 個建案 · 7 維度</span></span>
+          <span class="ml-ar">→</span>
+        </a>
+        <a class="mk-link" href="/my/report">
+          <span class="ml-t"><span class="lang-en">Market Report</span><span class="lang-zh">市場報告</span></span>
+          <span class="ml-d"><span class="lang-en">Supply, demand, the ten-year ledger</span><span class="lang-zh">供給、需求、十年帳</span></span>
+          <span class="ml-ar">→</span>
+        </a>
+        <a class="mk-link" href="/my/macro">
+          <span class="ml-t"><span class="lang-en">Macro × Property</span><span class="lang-zh">總經 × 房產</span></span>
+          <span class="ml-d"><span class="lang-en">Why the income ceiling binds</span><span class="lang-zh">所得天花板為何是約束</span></span>
+          <span class="ml-ar">→</span>
+        </a>
+        <a class="mk-link" href="/my/airbnb">
+          <span class="ml-t"><span class="lang-en">Airbnb / STRA</span><span class="lang-zh">短租 STRA</span></span>
+          <span class="ml-d"><span class="lang-en">Short-stay rules and real yields</span><span class="lang-zh">短租法規與實際收益</span></span>
+          <span class="ml-ar">→</span>
+        </a>
+        <a class="mk-link" href="/my/reit-vs-direct">
+          <span class="ml-t"><span class="lang-en">REITs vs Property</span><span class="lang-zh">REIT vs 實體房產</span></span>
+          <span class="ml-d"><span class="lang-en">Calculator on the YA2026 tax rules</span><span class="lang-zh">互動計算器 · YA2026 新稅制</span></span>
+          <span class="ml-ar">→</span>
+        </a>
+        <a class="mk-link" href="/my/framework">
+          <span class="ml-t"><span class="lang-en">Framework, Backtested</span><span class="lang-zh">框架回測</span></span>
+          <span class="ml-d"><span class="lang-en">Which signals actually held up</span><span class="lang-zh">哪些訊號真的站得住</span></span>
+          <span class="ml-ar">→</span>
+        </a>
+        <a class="mk-link" href="/my/clock">
+          <span class="ml-t"><span class="lang-en">Property Compass</span><span class="lang-zh">房產羅盤</span></span>
+          <span class="ml-d"><span class="lang-en">Where the cycle stands, five markets</span><span class="lang-zh">五個市場的週期位置</span></span>
+          <span class="ml-ar">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── Thailand ── -->
+    <div class="mk">
+      <div class="mk-head">
+        <div class="mk-flagrow">
+          <span class="mk-flag">🇹🇭</span>
+          <div>
+            <div class="mk-name"><span class="lang-en">Thailand</span><span class="lang-zh">泰國</span></div>
+            <div class="mk-city"><span class="lang-en">Bangkok · Phuket · EEC</span><span class="lang-zh">曼谷 · 普吉 · 東部經濟走廊</span></div>
+          </div>
+        </div>
+        <p class="mk-read">
+          <span class="lang-en">Not short of buyers who want a home — short of buyers <b>a bank will lend to</b>. Between 40% and 50% of mortgage applications are declined, and the market has quietly rebuilt itself around cash.</span>
+          <span class="lang-zh">缺的不是想買房的人，是<b>銀行願意放款的人</b>。房貸退件率在四成到五成之間，市場已經悄悄繞著現金重建了自己。</span>
+        </p>
+      </div>
+      <div class="mk-stats">
+        <div class="mk-stat"><div class="mk-sn">1.00%</div><div class="mk-sl"><span class="lang-en">Policy rate</span><span class="lang-zh">政策利率</span></div></div>
+        <div class="mk-stat"><div class="mk-sn">210,112</div><div class="mk-sl"><span class="lang-en">BKK unsold</span><span class="lang-zh">曼谷未售</span></div></div>
+        <div class="mk-stat"><div class="mk-sn">~5.0%</div><div class="mk-sl"><span class="lang-en">Gross yield</span><span class="lang-zh">毛收益率</span></div></div>
+      </div>
+      <div class="mk-links">
+        <a class="mk-link lead" href="/th/report">
+          <span class="ml-t"><span class="lang-en">Bangkok Report</span><span class="lang-zh">曼谷市場報告</span></span>
+          <span class="ml-d"><span class="lang-en">Seven parts, 27 charts</span><span class="lang-zh">七部 · 27 張圖</span></span>
+          <span class="ml-ar">→</span>
+        </a>
+        <a class="mk-link" href="/th/macro">
+          <span class="ml-t"><span class="lang-en">Macro × Property</span><span class="lang-zh">總經 × 房產</span></span>
+          <span class="ml-d"><span class="lang-en">Aged before it got rich</span><span class="lang-zh">先老後富的結構</span></span>
+          <span class="ml-ar">→</span>
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="latest">
+    <span class="lk"><span class="lang-en">Latest</span><span class="lang-zh">最新</span></span>
+    <p>
+      <span class="lang-en"><b>July 2026 — Thailand added.</b> The <a href="/th/report">Bangkok Property Market Report</a> and <a href="/th/macro">Thailand Macro × Property</a> are live, including a full section on the <b>3-million-baht long-stay visa</b> introduced by Immigration Orders 237/2568 and 238/2568 on 1 October 2025 — and why a full quarter of live data has not yet shown it moving demand.</span>
+      <span class="lang-zh"><b>2026 年 7 月 —— 新增泰國。</b><a href="/th/report">曼谷住宅市場報告</a>與<a href="/th/macro">泰國總經 × 房產</a>已上線，含<b>300 萬泰銖長期居留簽證</b>專節（移民局第 237/2568、238/2568 號命令，2025 年 10 月 1 日生效），以及為何已有一整季實際數據，仍看不到它推動需求。</span>
+    </p>
+  </div>
+
+  <section class="how">
+    <div class="how-head">
+      <span class="section-eyebrow"><span class="lang-en">How this is written</span><span class="lang-zh">這些內容怎麼寫的</span></span>
+      <h2><span class="lang-en">Three rules, applied to every page</span><span class="lang-zh">三條規則，套用在每一頁</span></h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-c">
+        <h4><span class="lang-en">Numbers need a reference frame</span><span class="lang-zh">數字要有參照系</span></h4>
+        <p><span class="lang-en">A figure on its own says nothing. Every important number is shown against its own history and against comparable markets on the same definition — and where two sources disagree, both are shown rather than one being quietly picked.</span><span class="lang-zh">單一數字說明不了任何事。重要的數字一律同時給出它自己的歷史序列，以及同口徑的跨市場對照；兩個來源打架時，兩個都列出來，而不是悄悄挑一個。</span></p>
+      </div>
+      <div class="how-c">
+        <h4><span class="lang-en">Frameworks must be falsifiable</span><span class="lang-zh">框架必須可被證偽</span></h4>
+        <p><span class="lang-en">Every model on this site states the conditions under which it would be wrong, before you reach the conclusion. Signals that failed a forward-frozen test are listed as failures instead of being deleted.</span><span class="lang-zh">站上每一個模型，都在結論之前先寫出「什麼情況代表它錯了」。前瞻凍結檢定沒通過的訊號，會被列為失敗，而不是被刪掉。</span></p>
+      </div>
+      <div class="how-c">
+        <h4><span class="lang-en">Nothing here is for sale</span><span class="lang-zh">站上沒有東西在賣</span></h4>
+        <p><span class="lang-en">No listings, no referrals, no developer relationships, no lead capture. The scorecards rate projects the author holds no position in, which is the only reason a rating is worth reading.</span><span class="lang-zh">沒有物件、沒有轉介、沒有與發展商的合作、不收名單。評分卡評的是作者沒有部位的案子——這也是一份評分唯一值得看的理由。</span></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-ornament" aria-hidden="true">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+  <p class="footer-disclaimer">
+    <span class="lang-en"><strong>Independent analysis for reference only</strong> — not investment advice. A project by InvestMQuest.</span>
+    <span class="lang-zh"><strong>獨立分析參考</strong>，不構成投資建議。InvestMQuest 製作。</span>
+  </p>
+</footer>
+
 </body>
 </html>

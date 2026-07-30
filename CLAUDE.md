@@ -1,37 +1,55 @@
-# CLAUDE.md — KL Property Check 開發規範
+# CLAUDE.md — Property Check 開發規範
 # 讀這個檔案後不需要再問結構問題，直接執行任務
 
 ## ⚠️ 關鍵禁止事項
 - **絕對不能執行 build.py** — 那是舊多市場站的產生器，會覆蓋所有手工 HTML
 - **不能直接編輯 templates/ 或 market_data/** — 舊站遺留，僅供參考
 - **不能編輯 archive/** — 舊多市場站（tw/au/jp/nz/uk/us/ca/kr/th/vn…）已凍結封存，不更新、不修復
-- **_redirects 千萬不能加 `/*` catch-all** — Cloudflare Pages 先評估 _redirects 再供靜態檔，會整站迴圈；舊網址一律由 404.html 客戶端導回 /kl-check
+- **_redirects 千萬不能加 `/*` catch-all** — Cloudflare Pages 先評估 _redirects 再供靜態檔，會整站迴圈；舊網址一律由 404.html 客戶端導回 `/`
+- **不要在頁面裡硬寫 navbar** — 一律用 `/js/nav.js`（見下方）
 - 所有修改直接編輯 HTML 檔案
 
 ## 部署
 - Repo: github.com/keigoks-ivan/malaysia-property
 - 網站：myproperty.investmquest.com（Cloudflare Pages 自動 deploy）
 - Push 到 main 後約 1-2 分鐘生效
+- robots.txt 全站 Disallow，站點刻意不被搜尋引擎收錄 → 改標題／改品牌沒有 SEO 風險
 
-## 現行站點結構（2026-07，站已收斂為 KL/MY 專站）
+## 現行站點結構（2026-07 改版：市場優先，品牌＝Property Check）
 ```
-/kl-check            ← 首頁 hub（KL 建案評分卡總表；index.html redirect 到此）
-/my/report.html      ← 市場報告（餘屋/供需，七部）
-/my/macro.html       ← 總經 × 房產（週期/結構/政治篇/總合模型）
-/my/airbnb.html      ← 短租 / STRA 分析
-/my/reit-vs-direct.html ← REITs vs 實體房產互動計算器（本國人/稅務居民/外國人）
+/                    ← 首頁：市場入口 hub（🇲🇾 馬來西亞 / 🇹🇭 泰國 卡片＋最新）
+/kl-check            ← 馬來西亞：KL 建案評分卡總表
+/my/report.html      ← 馬來西亞：市場報告（餘屋/供需，七部）
+/my/macro.html       ← 馬來西亞：總經 × 房產（週期/結構/政治/總合模型）
+/my/airbnb.html      ← 馬來西亞：短租 / STRA
+/my/reit-vs-direct.html ← 馬來西亞：REITs vs 實體房產互動計算器
+/my/framework.html   ← 馬來西亞：框架回測
+/my/clock.html       ← 馬來西亞：房產羅盤 Compass
+/th/report.html      ← 泰國：曼谷住宅市場報告（七部）
+/th/macro.html       ← 泰國：總經 × 房產（四部＋答案篇）
 /kl/SC_*.html        ← 建案評分卡（en/zh 成對；用 kl-property-scorecard skill 產生）
 /kl/viewing.html     ← 看房檢核工具
-/css/style.css       ← 基底樣式；/css/kl-theme.css ← KL 站主題（navy-gold）
-/js/navbar.js        ← 導覽列
+/css/style.css       ← 基底樣式；/css/kl-theme.css ← 主題（navy-gold cream）
+/js/nav.js           ← 全站共用導覽列（唯一來源）
 /data/*.json         ← vetted 數據（markets-summary、prices、demand、macro、supply）
 /_redirects          ← 只放「目標仍存在」的舊網址 301；見上方禁止事項
-/404.html            ← 未匹配網址 → 客戶端導回 /kl-check
+/404.html            ← 未匹配網址 → 客戶端導回 /
 /archive/            ← 舊多市場站凍結封存（勿動）
 ```
 
-## Navbar（kl-theme 頁面共用）
-評分卡（/kl-check）· 市場報告（/my/report）· 總經（/my/macro）· 短租（/my/airbnb）· REIT vs 房產（/my/reit-vs-direct）· EN/中文切換
+## Navbar — 共用 `/js/nav.js`
+兩層結構：第一列＝品牌＋市場切換（🇲🇾 馬來西亞 / 🇹🇭 泰國）＋EN/中文；第二列＝當前市場的子頁。
+
+頁面只需要這兩行，放在 `<body>` 最上方、且在該頁自己的 `<script>` 之前：
+```html
+<div id="nav-root"></div>
+<script src="/js/nav.js"></script>
+```
+
+- **新增市場／新增子頁＝只改 `nav.js` 裡的 `MARKETS` 陣列**，不要動任何 HTML。
+- 語言：nav 用全站的 `.lang-en` / `.lang-zh` class，所以 kl-check 的 `body.zh` CSS 機制與其他頁的 `setLang()` inline 切換都能相容。
+- nav 的語言鈕會呼叫該頁的 `window.setLang()`（沒有的話用內建 fallback），並以 `stopImmediatePropagation()` 擋掉頁面自己綁的 `.lang-btn` handler，避免 setLang 跑兩次把圖表重建兩遍。
+- 評分卡 `/kl/SC_*.html` 與 `viewing.html` **刻意不掛共用 navbar**：它們是單篇文件，保留原本精簡的動作列（品牌 → `/`、← All Scores、Viewing、中文對照頁）。
 
 ## 現行利率
 - Malaysia OPR: **2.75%**（BNM 2026 年 7 月會議維持；全站徽章一律用此值）
