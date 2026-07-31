@@ -34,15 +34,15 @@ PAGES = [
      'desc': 'The property compass for the United States, Taiwan, Japan and Australia: momentum × credit, a supply-glut risk gauge and a report card per market.',
      'h1_en': 'The Property Compass — Other Markets',
      'h1_zh': '房產羅盤 — 其他市場'},
-    # Thailand slots in here once data/compass-th.json exists:
-    # {'out': 'th/clock.html', 'markets': ['th'], 'default': 'th',
-    #  'title': 'Property Compass | Thailand · Property Check', 'desc': '...'},
+    {'out': 'th/clock.html', 'markets': ['th'], 'default': 'th',
+     'title': 'Property Compass | Thailand · Property Check',
+     'desc': 'Thailand property compass: Bangkok momentum × credit, a report card on valuation and population, and a supply gauge that reads not measurable because no Thai supply series exists.'},
 ]
 
 # Markets whose data/copy must always be loaded, regardless of which page is
 # being built: the honesty section and the pooled risk-gauge numbers quote the
 # US and Japan odds ratios on every page.
-ALL_MKTS = ['us', 'tw', 'my', 'jp', 'au']
+ALL_MKTS = ['us', 'tw', 'my', 'jp', 'au', 'th']
 
 C = json.load(open(ASSETS + '/content.json'))
 DATA = {m: open(f'{ROOT}/data/compass-{m}.json').read().strip() for m in ALL_MKTS}
@@ -76,11 +76,35 @@ def dedupe_css(css):
 def fmt1(x): return f'{x:.1f}'
 def fmtpct1(x): return f'{x*100:.1f}'
 
+def last_complete(Dm):
+    """Index of the newest quarter that has a fully formed compass cell.
+
+    Everything a page presents as "now" reads off this index, never off the last
+    row of the arrays. Thailand's price series runs one quarter ahead of its
+    credit series, so its final row (2026Q1) is a warm-up cell with a null credit
+    axis; the live reading is the last complete quarter behind it. For the five
+    markets whose last row is already complete this returns len-1, unchanged."""
+    for i in range(len(Dm['q']) - 1, -1, -1):
+        if Dm['quad'][i] != 'warmup' and Dm['mom'][i] is not None and Dm['cred'][i] is not None:
+            return i
+    return len(Dm['q']) - 1
+
+
 RISKVALS = {}
 for m in ALL_MKTS:
     Dm = json.loads(DATA[m])
-    cur_q = Dm['q'][-1]
-    on = (Dm['quad'][-1] == 'starved' and bool(Dm['warn'][-1]))
+    i_cur = last_complete(Dm)
+    cur_q = Dm['q'][i_cur]
+    # Supply is three-state, never two. A market that emits supply_available:false
+    # has no supply series at all, so the primary classifier (starved AND
+    # supply-glut) cannot be formed: there is no ON/OFF to compute and no v3
+    # result to quote. bool(None) would silently render that market as "warning
+    # off", i.e. a false negative, so the null is caught here explicitly.
+    if Dm.get('supply_available', True) is False:
+        RISKVALS[m] = {'CUR_Q': cur_q, 'ON': None, 'SUPPLY_OK': False,
+                       'STATE_EN': 'NOT EVALUABLE', 'STATE_ZH': '無法評估'}
+        continue
+    on = (Dm['quad'][i_cur] == 'starved' and bool(Dm['warn'][i_cur]))
     # AU was added after the v3 claim was frozen (Amendment 3) and lives under
     # au_holdout.market_results, not markets.au -- same shape, evaluated as an
     # out-of-sample hold-out rather than folded into the frozen 4-market result.
@@ -88,7 +112,8 @@ for m in ALL_MKTS:
     rated_abs = mres['rated_abs']
     abs_r = mres['results']['T_ABS']['W_PRIM']
     rel_r = mres['results']['T_REL']['W_PRIM']
-    v = {'CUR_Q': cur_q, 'ON': on, 'STATE_EN': 'ON' if on else 'OFF', 'STATE_ZH': '開啟' if on else '關閉'}
+    v = {'CUR_Q': cur_q, 'ON': on, 'SUPPLY_OK': True,
+         'STATE_EN': 'ON' if on else 'OFF', 'STATE_ZH': '開啟' if on else '關閉'}
     v['OR_REL'] = fmt1(rel_r['OR']); v['PREC_REL'] = fmtpct1(rel_r['precision'])
     v['RECALL_REL'] = fmtpct1(rel_r['recall']); v['BASE_REL'] = fmtpct1(rel_r['base_rate'])
     c2, d2 = rel_r['cells']['c'], rel_r['cells']['d']; v['PREC_REL_OFF'] = fmtpct1(c2 / (c2 + d2))
@@ -105,20 +130,31 @@ GV = {'MH_ABS': fmt1(V3['threshold_evaluation']['ABS']['MH_pooled_OR']),
       'OR_US_ABS': RISKVALS['us']['OR_ABS'], 'OR_JP_ABS': RISKVALS['jp']['OR_ABS']}
 
 MK = {'us': ('United States', '美國'), 'tw': ('Taiwan', '台灣'), 'my': ('Malaysia', '馬來西亞'),
-      'jp': ('Japan', '日本'), 'au': ('Australia', '澳洲')}
+      'jp': ('Japan', '日本'), 'au': ('Australia', '澳洲'), 'th': ('Thailand', '泰國')}
 SPAN = {'us': ('US · 1975–2026', '美國 · 1975–2026'), 'tw': ('Taiwan · 2001–2026', '台灣 · 2001–2026'),
         'my': ('Malaysia · 2000–2026', '馬來西亞 · 2000–2026'), 'jp': ('Japan · 1975–2025', '日本 · 1975–2025'),
-        'au': ('Australia · 1994–2026', '澳洲 · 1994–2026')}
+        'au': ('Australia · 1994–2026', '澳洲 · 1994–2026'),
+        # Thailand's price leg is the BIS Bangkok city index, so the badge names
+        # the city rather than the country.
+        'th': ('Bangkok · 1991–2026', '曼谷 · 1991–2026')}
 
 BASE_CSS = open(ASSETS + '/compass.css', encoding='utf-8').read()
 
 
 def risk_light(m):
     v = RISKVALS[m]
-    if m == 'tw': st, lab = 'notval', dual('NOT VALIDATED', '未通過驗證')
+    dot, lstyle = '<span class="dot"></span>', ''
+    if not v['SUPPLY_OK']:
+        # Slate + dashed, deliberately unlike rg-off (green) and rg-notval (gold):
+        # the gauge is not computable here, which is not the same as "no warning"
+        # and not the same as "computable but unvalidated".
+        st, lab = 'noteval', dual('NOT EVALUABLE', '無法評估')
+        lstyle = ' style="color:#475569;background:#eef1f5;border:1px dashed #9aa7bb"'
+        dot = '<span class="dot" style="background:#9aa7bb;box-shadow:0 0 0 3px rgba(154,167,187,.20)"></span>'
+    elif m == 'tw': st, lab = 'notval', dual('NOT VALIDATED', '未通過驗證')
     elif v['ON']: st, lab = 'on', dual('WARNING ON', '警示開啟')
     else: st, lab = 'off', dual('WARNING OFF', '警示關閉')
-    return (f'<div class="rglight rg-{st}"><span class="dot"></span><span class="rglabel">{lab}</span>'
+    return (f'<div class="rglight rg-{st}"{lstyle}>{dot}<span class="rglabel">{lab}</span>'
             f'<span class="rgqtr">{dual("as of ","截至 ")}{v["CUR_Q"]}</span></div>')
 
 
@@ -148,10 +184,18 @@ def build(page):
     def has(m): return m in MKTS
     def only(m, html): return html if has(m) else ''
 
+    # A page carries the supply-glut/risk-gauge badges only if at least one of its
+    # markets actually has a supply series to form them from.
+    page_supply = any(RISKVALS[m]['SUPPLY_OK'] for m in MKTS)
+
     def badges():
-        b = [f'<span class="kpi-badge badge-blue">{dual("Momentum × Credit","動能 × 信貸")}</span>',
-             f'<span class="kpi-badge badge-orange">{dual("+ supply-glut warning · report card","+ 供給警示 · 體檢表")}</span>',
-             f'<span class="kpi-badge badge-orange">{dual("Risk gauge · validated on 2 busts","風險警報 · 驗證於兩次崩盤")}</span>']
+        b = [f'<span class="kpi-badge badge-blue">{dual("Momentum × Credit","動能 × 信貸")}</span>']
+        if page_supply:
+            b.append(f'<span class="kpi-badge badge-orange">{dual("+ supply-glut warning · report card","+ 供給警示 · 體檢表")}</span>')
+            b.append(f'<span class="kpi-badge badge-orange">{dual("Risk gauge · validated on 2 busts","風險警報 · 驗證於兩次崩盤")}</span>')
+        else:
+            b.append(f'<span class="kpi-badge badge-orange">{dual("+ report card · no supply series","+ 體檢表 · 無供給數列")}</span>')
+            b.append(f'<span class="kpi-badge badge-orange">{dual("Risk gauge · not evaluable here","風險警報 · 此市場無法評估")}</span>')
         for m in MKTS:
             b.append(f'<span class="kpi-badge badge-green mkt-{m}">{dual(*SPAN[m])}</span>')
         b.append(f'<span class="kpi-badge badge-orange">{dual("Updated Jul 2026","更新至 2026年7月")}</span>')
@@ -186,6 +230,11 @@ def build(page):
     tw_note = only('tw', f'''<p class="mkt-tw" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual("cell ordering not validated in Taiwan (ρ=0.08)","四格排序在台灣未通過驗證（ρ=0.08）")}</span></p>
     ''')
     au_note = only('au', f'''<p class="mkt-au" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual("cell ordering not validated in Australia (ρ=−0.16 — fuelled trails starved, the same no-crash signature as Taiwan)","四格排序在澳洲未通過驗證（ρ=−0.16——有燃料格報酬低於斷炊格，與台灣同樣的『從未真正崩盤』訊號）")}</span></p>
+    ''')
+    # Thailand's credit leg ends one quarter before its price leg, so the newest
+    # row is a warm-up cell. The panel reads the last complete quarter and says so.
+    th_q = RISKVALS['th']['CUR_Q']
+    th_note = only('th', f'''<p class="mkt-th" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual(f"reading as of {th_q}: BIS household credit ends one quarter behind the price index, so 2026Q1 has no complete cell and nothing is carried forward", f"讀數截至 {th_q}：BIS 家庭信貸數列較房價指數早一季結束，2026Q1 因此無完整格位，缺值未以前期數值填補")}</span></p>
     ''')
 
     return f"""<!DOCTYPE html>
@@ -225,7 +274,7 @@ def build(page):
   <div class="judge">
     <p class="jlab">{dual('The reading right now · <span class="curQtr">—</span>','現在的判讀 · <span class="curQtr">—</span>')}</p>
     <p class="jphase curPhase">—</p>
-    {tw_note}{au_note}<p class="jread">{market_block('judge')}</p>
+    {tw_note}{au_note}{th_note}<p class="jread">{market_block('judge')}</p>
     <div class="jwarn"><span class="dot"></span><span>{market_block('warn')}</span></div>
     <div class="jrow">
       <span class="jchip">{dual("Momentum: ","動能：")}<b class="jMom">—</b></span>
@@ -333,7 +382,7 @@ def build(page):
     </ul>
   </div>
 
-  <p class="src">{dual("Inputs per market via FRED, BIS, DOSM/OpenDOSM, DGBAS, BNM, BOJ, e-Stat, NAPIC, World Bank and the Sinyi index. The compass axes are trailing-z: momentum = trailing-z of nominal house-price YoY (rolling window); credit = real (CPI-deflated) credit impulse, also trailing-z. The report card uses a different basis per gauge: valuation and supply are expanding-z against a market's entire history, while population is an absolute growth-direction reading on a fixed scale, not standardised against history. Momentum is nominal while credit is deflated — the trailing window de-trends steady inflation, and the validated downside target (the 3-year forward return) is itself a nominal figure, so the mismatch is by design, not an oversight. Independent analysis, not investment advice.","各市場輸入經 FRED、BIS、DOSM／OpenDOSM、主計總處、央行、日本央行、e-Stat、NAPIC、世界銀行與信義指數。羅盤軸為滾動 z：動能＝名目房價年增的滾動 z（滾動窗）；信貸＝經 CPI 平減的實質信貸脈衝，同樣是滾動 z。體檢表各量表基準不同：估值與供給是相對該市場整段歷史的擴張型 z，人口則是固定尺度的絕對成長方向讀數，不是相對歷史的標準化值。動能採名目、信貸採實質——滾動窗會抵銷穩定的通膨基期，而驗證用的下檔目標（3年前向報酬）本身也是名目數字，因此這個不對稱是刻意設計，不是疏漏。獨立分析，不構成投資建議。")}</p>
+  <p class="src">{dual("Inputs per market via FRED, BIS, DOSM/OpenDOSM, DGBAS, BNM, BOJ, e-Stat, NAPIC, World Bank and the Sinyi index. The compass axes are trailing-z: momentum = trailing-z of nominal house-price YoY (rolling window); credit = real (CPI-deflated) credit impulse, also trailing-z. The report card uses a different basis per gauge: valuation and supply are expanding-z against a market's entire history, while population is an absolute growth-direction reading on a fixed scale, not standardised against history. Momentum is nominal while credit is deflated — the trailing window de-trends steady inflation, and the validated downside target (the 3-year forward return) is itself a nominal figure, so the mismatch is by design, not an oversight. Independent analysis, not investment advice.{only('th', ' Thailand adds ILOSTAT average monthly earnings per employee as the valuation denominator, and its price leg is the BIS Bangkok city index rather than a nationwide one.')}","各市場輸入經 FRED、BIS、DOSM／OpenDOSM、主計總處、央行、日本央行、e-Stat、NAPIC、世界銀行與信義指數。羅盤軸為滾動 z：動能＝名目房價年增的滾動 z（滾動窗）；信貸＝經 CPI 平減的實質信貸脈衝，同樣是滾動 z。體檢表各量表基準不同：估值與供給是相對該市場整段歷史的擴張型 z，人口則是固定尺度的絕對成長方向讀數，不是相對歷史的標準化值。動能採名目、信貸採實質——滾動窗會抵銷穩定的通膨基期，而驗證用的下檔目標（3年前向報酬）本身也是名目數字，因此這個不對稱是刻意設計，不是疏漏。獨立分析，不構成投資建議。{only('th', '泰國的估值分母採 ILOSTAT 平均每受僱者月收入，房價腿則為 BIS 曼谷市指數，非全國指數。')}")}</p>
 </main>
 
 <footer class="footer"><div class="footer-ornament" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>

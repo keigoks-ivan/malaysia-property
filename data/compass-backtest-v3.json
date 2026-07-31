@@ -5138,5 +5138,188 @@
       }
     },
     "verdict": "AU is the gauge's first true out-of-sample market: it neither confirms nor breaks the frozen claim. It is NOT RATED on the absolute claim that was validated (only 2 matured 3y-loss quarters against an >=8 gate), and its Test-8 declared-ordering concordance BREAKS (fuelled median 16.1% < starved median 22.3%, rho=-0.156) -- the same no-crash signature seen in Taiwan, not a contradiction of the risk-gauge claim (which was never a return-ordering claim)."
+  },
+  "th_holdout": {
+    "amendment": "Amendment 4 -- Thailand added to the data layer; ordering check only, risk gauge structurally NOT EVALUABLE",
+    "amendment_text_verbatim": "## Amendment 4 — 2026-07-31, adding Thailand (Bangkok) to the data layer (rule frozen before any Thai statistic in this block was computed)\nThailand is added as a 6th market AFTER the v3 risk claim was frozen and published on\n{US, TW, MY, JP}, and after Australia was added as the first hold-out (Amendment 3).\nFrozen treatment:\n- The PRIMARY validated claim is unchanged: 4-market set, ABS on US+JP, MH pooled 13.53 / 16.07.\n  Thailand does not enter it and no pooled figure is restated with Thailand folded in.\n- The v3 RISK GAUGE IS NOT EVALUABLE for Thailand and is therefore NOT EVALUATED. The primary\n  classifier W_PRIM = (quad == starved) AND (warn == true) requires the supply-glut term, and\n  Thailand has no supply series at all: months and vacancy are 141/141 null because no official\n  Thai quarterly inventory / absorption / vacancy series exists (REIC is an unextractable SPA;\n  the private surveys are annual, begin ~2021 and disagree by more than 60% on the same\n  \"Greater Bangkok unsold units\" concept). The glut term is UNDEFINED, not false, so W_PRIM\n  cannot be formed. No proxy is substituted, no 2x2 table is computed, and the applicability\n  gate is not applied. Thailand is NOT RATED for a stronger reason than Australia: Australia's\n  gauge could be computed and merely lacked loss events to be rated on; Thailand's cannot be\n  computed at all. build_compass.py encodes this as warn = null (never false) plus a market-level\n  \"supply_available\": false, so that no renderer can show Thailand as \"no supply-glut warning\" —\n  which would be a false negative, and would contradict this site's own /th/report (210,112\n  unsold units, 49.5 months of stock).\n- What IS evaluated is the Test-8 four-cell forward-return ordering (declared\n  Fuelled >= Draining >= Reflating >= Starved), because it needs only momentum, credit and\n  forward returns, all of which Thailand has across 1991-2026. Method, declared ordering and\n  verdict thresholds are exactly those already applied to TW and AU in\n  scripts/backtest_compass.py (rho >= 0.3 HOLDS, 0.1-0.3 WEAK, < 0.1 BREAKS); they were fixed\n  before any Thai number was read and the result is published whichever way it falls, as\n  Australia's rho = -0.156 BREAKS was.\n- Adding Thailand does not alter any existing market's arrays (regression guard: the five\n  existing markets' clock-*.json and compass-*.json are byte-identical after Thailand is wired\n  into build_compass.py).",
+    "protocol_file_status": "This amendment text is recorded in this JSON only. scripts/compass_v3_protocol.md was NOT edited in this pass (that file is outside the Thailand data-layer workstream's ownership); append this text verbatim as Amendment 4 when the protocol file is next touched.",
+    "risk_gauge": {
+      "status": "NOT EVALUABLE",
+      "evaluated": false,
+      "reason": "W_PRIM = starved AND supply-glut; Thailand has zero supply data (months and vacancy 141/141 null), so the glut term is undefined and the classifier cannot be formed. This is structural, not a coverage gap that a retry fixes.",
+      "distinct_from_au": "AU is NOT RATED because its computable gauge had only 2 matured 3y-loss quarters against the >=8 gate. TH is NOT RATED because the gauge cannot be computed at all.",
+      "gate_applied": false,
+      "descriptive_only": {
+        "note": "Descriptive counts, NOT a gate evaluation (the gate is not applied because the classifier is undefined).",
+        "matured_fwd12_obs": 129,
+        "n_fwd12_negative": 13
+      },
+      "encoding": {
+        "warn": "null for every quarter",
+        "supply_available": false,
+        "card_supply": "all-null array"
+      }
+    },
+    "ordering_check": {
+      "test": "Test 8 -- declared four-cell ordering Fuelled >= Draining >= Reflating >= Starved",
+      "method": "scripts/backtest_compass.py analyze() run unmodified on data/compass-th.json (the script's own MKTS list was not edited); quarter-level Spearman rho of declared cell rank (fuelled=4 .. starved=1) against realised fwd12 (3-year forward nominal price return), over every quarter with a non-null fwd12 and a non-warmup cell.",
+      "target": "fwd12 = 3-year forward nominal Bangkok house-price return (BIS QTHN628BIS)",
+      "scored_span": {
+        "first_q": "1995Q3",
+        "last_q": "2023Q1",
+        "n_scored": 111
+      },
+      "medians_pct": {
+        "fuelled": 18.8,
+        "draining": 7.3,
+        "reflating": 11.0,
+        "starved": 7.1
+      },
+      "n_per_cell": {
+        "fuelled": 29,
+        "draining": 24,
+        "reflating": 9,
+        "starved": 49
+      },
+      "pairwise": {
+        "fuelled>draining": {
+          "holds": true,
+          "med_a": 18.8,
+          "med_b": 7.3
+        },
+        "fuelled>reflating": {
+          "holds": true,
+          "med_a": 18.8,
+          "med_b": 11.0
+        },
+        "fuelled>starved": {
+          "holds": true,
+          "med_a": 18.8,
+          "med_b": 7.1
+        },
+        "draining>reflating": {
+          "holds": false,
+          "med_a": 7.3,
+          "med_b": 11.0
+        },
+        "draining>starved": {
+          "holds": true,
+          "med_a": 7.3,
+          "med_b": 7.1
+        },
+        "reflating>starved": {
+          "holds": true,
+          "med_a": 11.0,
+          "med_b": 7.1
+        }
+      },
+      "concordant_pairs": "5/6",
+      "starved_is_min": true,
+      "fuelled_is_max": true,
+      "rho": 0.527,
+      "verdict": "HOLDS",
+      "thresholds": "rho >= 0.3 HOLDS; 0.1-0.3 WEAK; < 0.1 BREAKS (unchanged from the TW/AU runs)",
+      "supplementary_non_overlapping": {
+        "note": "SUPPLEMENTARY, not the headline: 3-year forward windows overlap, so the 111 scored quarters are far from independent. Every 12th quarter, offsets {0,4,8}, same rho convention. n is 9-10 per offset, so each is noisy.",
+        "per_offset": {
+          "0": {
+            "rho": 0.858,
+            "n": 9,
+            "small_n_caveat": true,
+            "first_q": "1997Q1",
+            "last_q": "2021Q1"
+          },
+          "4": {
+            "rho": 0.483,
+            "n": 9,
+            "small_n_caveat": true,
+            "first_q": "1998Q1",
+            "last_q": "2022Q1"
+          },
+          "8": {
+            "rho": 0.202,
+            "n": 10,
+            "small_n_caveat": false,
+            "first_q": "1996Q1",
+            "last_q": "2023Q1"
+          }
+        },
+        "median_rho": 0.483
+      },
+      "supplementary_era_split": {
+        "note": "SUPPLEMENTARY: same 2010Q1 boundary as qstat_era.",
+        "pre_2010": {
+          "rho": 0.424,
+          "n": 58
+        },
+        "post_2010": {
+          "rho": 0.697,
+          "n": 53
+        }
+      },
+      "cross_market_context": {
+        "us": 0.58,
+        "tw": 0.081,
+        "my": 0.71,
+        "jp": 0.4,
+        "au": -0.156,
+        "th": 0.527
+      }
+    },
+    "current_quarter_state": {
+      "q": "2026Q1",
+      "quad": "warmup",
+      "mom": -1.002,
+      "cred": null,
+      "warn": null,
+      "supply_available": false,
+      "W_PRIM": null,
+      "note": "2026Q1 is warmup because BIS household credit ends 2025Q4 while BIS prices run to 2026Q1; the last credit value is deliberately NOT carried forward. The last COMPLETE compass reading is 2025Q4.",
+      "last_complete": {
+        "q": "2025Q4",
+        "quad": "starved",
+        "mom": -0.778,
+        "cred": -0.497,
+        "warn": null
+      },
+      "forward_check_freeze": {
+        "quarter": "2025Q4",
+        "cell": "starved",
+        "checkable": "2028Q4"
+      }
+    },
+    "data_limitations": [
+      "No supply data of any kind: months and vacancy are 141/141 null. warn is null, never false; the supply gauge has no value. Bangkok is in fact heavily oversupplied (site's own /th/report: 210,112 unsold units, 49.5 months), so a rendering that reads 'no glut' would be a false negative.",
+      "Credit ends 2025Q4 while prices end 2026Q1, so the compass credit axis and the current cell are null at 2026Q1; not imputed, not carried forward.",
+      "Valuation = price / income with income = ILOSTAT average monthly earnings PER EMPLOYEE (baht/worker/month), not household disposable income as for AU -- NOT unit-comparable across markets. Income starts 2014Q1 (2015Q1 dropped as an evident source unit error), so the first valuation z is 2017Q1 and the standardisation base is not full (24 obs) until ~2020Q1.",
+      "No pti: Thailand publishes no official price-to-income ratio.",
+      "price is the BIS BANGKOK city index, not a nationwide Thai index.",
+      "pop is the World Bank annual value stepped onto the quarterly axis (YoY at lag 4 is well defined; QoQ within a year is zero by construction); 2026Q1 null. Population peaked in 2022 and has declined since -- the negative population gauge is real.",
+      "unemp has seven missing COVID-era quarters (2020Q2, 2021Q1-2022Q3) and sits structurally near 1%, so small absolute moves dominate its z.",
+      "rate is spliced at 2000Q2/2000Q3 (money-market rate before, BOT policy rate after) with a ~0.48pp level step, so YoY across 2000Q3-2001Q2 is not clean.",
+      "The Structure x Flow clock's X axis is not computable for Thailand at all (only 2 of 5 structure components can ever exist against a >=3 requirement): data/clock-th.json has x = null and quad = 'warmup' for all 141 quarters by design. Thailand's usable instrument is the Compass, not that clock.",
+      "The cross-sectional xc block for Thailand carries vacancy = 18 from data/markets-summary.json. That is a 2026 snapshot derived from AREA's unsold-stock figure in a different reference frame -- it is NOT a quarterly series and must never be used to fill the missing supply gauge or to switch the glut warning on."
+    ],
+    "self_checks": {
+      "regression_guard_five_markets": {
+        "method": "byte comparison (cmp) of data/{clock,compass}-{us,tw,my,jp,au}.json against a copy taken before any change",
+        "all_identical": true,
+        "md5_after": {
+          "data/clock-us.json": "18fa16b0f492a99acbaa20fc94ea6262",
+          "data/compass-us.json": "a8d7cad3e53c6477257aca22fff3a41f",
+          "data/clock-tw.json": "10a30c3127336e680daacbd2ca1c77a9",
+          "data/compass-tw.json": "892a357c5d2177318ad467defa325c20",
+          "data/clock-my.json": "c724235c6c82d64528283105cfbeb840",
+          "data/compass-my.json": "37a04b13074d691cd9ada6dfec4bc927",
+          "data/clock-jp.json": "1daee431cc4c5b7366e0de256cd14759",
+          "data/compass-jp.json": "3aee27e8343ea661e1c78f402c9dd1d3",
+          "data/clock-au.json": "acb88c87e78d191d2fd39ecb3184689b",
+          "data/compass-au.json": "2b911dc113fc41be7e973a746a131d68"
+        }
+      },
+      "au_th_engine_equivalence": "The unmodified HEAD version of build_compass.py and the Thailand-enabled version produce byte-identical output for all five existing markets, confirming the MKTS/RAWF/warn changes are inert for them.",
+      "pre_existing_xc_drift_found": "Rebuilding all markets today would change every market's xc block, because data/markets-summary.json was updated in commit 03a7a79 (Thailand's yield 6.5->5.0, mortgageRate 7.00->7.38, populationGrowth 0.5->-0.2, priceIncomeRatio 21->19) after the compass files were last generated, which moves the 12-market cross-sectional medians. This drift is PRE-EXISTING and independent of adding Thailand to MKTS (verified with the HEAD script). It was NOT accepted here: the five existing markets' files were restored byte-identical and only data/compass-th.json was written (build_compass.py now takes an optional market-name argv filter for exactly this)."
+    },
+    "verdict": "Thailand's four-cell ordering HOLDS, and more strongly than any market except Malaysia: rho = 0.527 over 111 scored quarters (1995Q3-2023Q1), 5/6 declared pairs concordant, with fuelled the best cell (median 18.8% 3y forward, n=29) and starved the worst (median 7.1%, n=49). The single inversion is draining (7.3%, n=24) below reflating (11.0%, n=9) -- reflating is the thinnest cell in the sample. The result survives the overlap correction directionally (non-overlapping median rho 0.483, all three offsets positive, n=9-10 each) and both era halves (pre-2010 0.424, post-2010 0.697). Unlike Australia's hold-out, this is a positive out-of-sample result for the ORDERING claim only. It says nothing about the risk gauge, which is NOT EVALUABLE for Thailand because the supply-glut term does not exist -- and it must not be read as evidence that Thailand carries no supply risk: the supply state is UNKNOWN TO THIS ENGINE, while the site's own market report documents a severe Bangkok glut."
   }
 }

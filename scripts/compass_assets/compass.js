@@ -25,10 +25,27 @@ function hasMkt(m){return !!(m && CDATA[m]);}
 function domMkts(){var r=[];document.querySelectorAll('.mkt-btn').forEach(function(b){if(hasMkt(b.dataset.mkt))r.push(b.dataset.mkt);});return r.length?r:MKTS;}
 
 var MKT=DEF, D, Q, MOM, CRED, QUAD, WARN, CARD, CUR, LANG='en';
+/* CUR is the newest quarter with a COMPLETE cell, not simply the last row.
+   Thailand's price series runs one quarter ahead of its credit series, so its
+   final row is a warm-up cell with a null credit axis: reading it as "now" would
+   print a NaN credit chip and plot the current dot off a null coordinate. For
+   the five markets whose last row is already complete this is Q.length-1. */
+function lastComplete(q,quad,mom,cred){
+  for(var i=q.length-1;i>=0;i--){if(quad[i]!=='warmup'&&mom[i]!=null&&cred[i]!=null)return i;}
+  return q.length-1;}
 function useMarket(m){MKT=hasMkt(m)?m:DEF;
   D=CDATA[MKT];
-  Q=D.q;MOM=D.mom;CRED=D.cred;QUAD=D.quad;WARN=D.warn;CARD=D.card;CUR=Q.length-1;}
+  Q=D.q;MOM=D.mom;CRED=D.cred;QUAD=D.quad;WARN=D.warn;CARD=D.card;CUR=lastComplete(Q,QUAD,MOM,CRED);}
 useMarket(DEF);
+/* Supply is THREE-state, never two. A market with no supply series at all
+   (supply_available:false, or a null warn on the current quarter) must never
+   render as "no glut": null is falsy, and a falsy read here would print a false
+   negative. 'na' = not measurable, 'glut' = measured and loose, 'ok' = measured
+   and not loose. */
+function supplyState(){
+  if(D.supply_available===false||WARN[CUR]==null)return 'na';
+  return WARN[CUR]?'glut':'ok';}
+var NA_INK='#475569', NA_LINE='#9aa7bb', NA_BG='#eef1f5';
 
 function fmtPc(x){return (x>=0?'+':'−')+Math.abs(x).toFixed(1)+'%';}
 function hexA(hex,a){var n=parseInt(hex.slice(1),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
@@ -68,13 +85,32 @@ function fillJudge(isZh){
   document.querySelectorAll('.now-'+QUAD[CUR]).forEach(function(e){e.textContent=isZh?' （現在）':' (now)';});
   document.querySelectorAll('.mtbl tr').forEach(function(t){t.classList.remove('hl');});
   document.querySelectorAll('.mtbl tr[data-ph="'+QUAD[CUR]+'"]').forEach(function(t){t.classList.add('hl');});
-  // supply-glut warning bar
-  var w=document.querySelector('.jwarn'); if(w) w.style.display=WARN[CUR]?'inline-flex':'none';
+  // supply bar: shown for a live glut (red, as before) AND for a market whose
+  // supply cannot be measured at all (slate/dashed) -- hidden only when supply
+  // was actually measured and is not loose.
+  var w=document.querySelector('.jwarn');
+  if(w){var ws=supplyState(), wd=w.querySelector('.dot');
+    w.style.display=ws==='ok'?'none':'inline-flex';
+    w.style.color = ws==='na'?NA_INK:'';
+    w.style.background = ws==='na'?NA_BG:'';
+    w.style.borderColor = ws==='na'?NA_LINE:'';
+    w.style.borderStyle = ws==='na'?'dashed':'';
+    if(wd){wd.style.background = ws==='na'?NA_LINE:'';
+      wd.style.boxShadow = ws==='na'?'0 0 0 3px rgba(154,167,187,.20)':'';}}
 }
 
-function gauge(id,z,leftLab,rightLab){
+/* naTxt (optional): what to print when there is no value AND the absence is
+   structural rather than a pending release. Without it a null renders as an
+   empty track (used for a publication lag, e.g. AU population), which must not
+   be reused for a series that will never exist. */
+function gauge(id,z,leftLab,rightLab,naTxt){
   var el=document.getElementById(id); if(!el)return;
-  if(z==null){el.innerHTML='<div class="gtrack"></div><div class="gmid"></div>';return;}
+  if(z==null){
+    if(!naTxt){el.innerHTML='<div class="gtrack"></div><div class="gmid"></div>';return;}
+    el.innerHTML='<div class="gtrack" style="background:'+NA_BG+';box-shadow:0 0 0 1px '+NA_LINE+' inset;top:12px;height:10px"></div>'+
+      '<div style="position:absolute;top:8px;left:0;right:0;height:18px;display:flex;align-items:center;justify-content:center;'+
+      'font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:'+NA_INK+'">'+naTxt+'</div>';
+    return;}
   var pct=Math.max(4,Math.min(96,50+(z/3)*45)), col=z>=0?C.green:C.red;
   el.innerHTML='<div class="gtrack"></div><div class="gmid"></div>'+
     '<div class="gends"><span>'+leftLab+'</span><span>'+rightLab+'</span></div>'+
@@ -83,7 +119,8 @@ function gauge(id,z,leftLab,rightLab){
 function fillCard(isZh){
   gauge('g-val',CARD.valuation[CUR], isZh?'貴':'expensive', isZh?'便宜':'cheap');
   gauge('g-pop',CARD.population[CUR], isZh?'萎縮':'shrinking', isZh?'成長':'growing');
-  gauge('g-sup',CARD.supply[CUR], isZh?'過剩':'glut', isZh?'緊':'tight');
+  gauge('g-sup',CARD.supply[CUR], isZh?'過剩':'glut', isZh?'緊':'tight',
+    supplyState()==='na'?(isZh?'無供給數列 · 無法衡量':'no supply series · not measurable'):null);
 }
 
 /* rank bar: pin position = (n-rank)/(n-1) so rank 1 (best) sits at the right */
@@ -140,10 +177,14 @@ function initCharts(lang){
     {type:'scatter',data:medPts,z:6,symbolSize:1,itemStyle:{color:'transparent'},silent:true},
     {type:'scatter',data:cornLbl,z:6,symbolSize:1,itemStyle:{color:'transparent'},silent:true}
   ];
-  // supply-glut warning ring on the current point
-  if(WARN[CUR]) series.push({type:'scatter',data:[{value:[MOM[CUR],CRED[CUR]]}],z:6,symbolSize:34,
-    itemStyle:{color:'transparent',borderColor:C.red,borderWidth:1.6,borderType:'dashed'},silent:true,
-    label:{show:true,position:'bottom',formatter:(isZh?'⚠ 供給過剩':'⚠ supply glut'),color:C.red,fontSize:10,fontWeight:700,fontFamily:FF}});
+  // supply ring on the current point: red for a measured glut, slate for a
+  // market whose supply cannot be measured, nothing when supply was measured and
+  // is not loose. An absent ring must only ever mean the third case.
+  var sst=supplyState();
+  if(sst!=='ok') series.push({type:'scatter',data:[{value:[MOM[CUR],CRED[CUR]]}],z:6,symbolSize:34,
+    itemStyle:{color:'transparent',borderColor:sst==='na'?NA_LINE:C.red,borderWidth:1.6,borderType:'dashed'},silent:true,
+    label:{show:true,position:'bottom',color:sst==='na'?NA_INK:C.red,fontSize:10,fontWeight:700,fontFamily:FF,
+      formatter:sst==='na'?(isZh?'供給：無數列，無法衡量':'supply: no series, not measurable'):(isZh?'⚠ 供給過剩':'⚠ supply glut')}});
   cp.setOption({grid:{left:52,right:20,top:40,bottom:52},
     tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(o){
       if(o.data&&o.data.q){var i=Q.indexOf(o.data.q);
@@ -177,7 +218,7 @@ function initCharts(lang){
     sub+='\n'+(isZh?'房價年增 ':'HPI YoY ')+(D.hpi_yoy[fi]==null?'–':D.hpi_yoy[fi]+'%');
     frames.push({title:{text:Q[fi],subtext:sub},series:[{},{},{data:hand},{data:tl},{data:td},{data:isN?[]:[{value:[R,A],itemStyle:{color:C.gold}}]}]});}
   dl.setOption({baseOption:{
-    timeline:{axisType:'category',data:Q,autoPlay:false,playInterval:200,loop:false,currentIndex:Q.length-1,left:34,right:34,bottom:4,height:34,symbol:'circle',symbolSize:4,
+    timeline:{axisType:'category',data:Q,autoPlay:false,playInterval:200,loop:false,currentIndex:CUR,left:34,right:34,bottom:4,height:34,symbol:'circle',symbolSize:4,
       lineStyle:{color:'#e5dcc8'},itemStyle:{color:'#cdbf9f'},checkpointStyle:{color:C.gold,borderColor:'#fff',borderWidth:2},
       controlStyle:{showPlayBtn:true,showPrevBtn:true,showNextBtn:true,itemSize:15,itemGap:8,color:C.navy,borderColor:C.navy},
       progress:{lineStyle:{color:C.gold},itemStyle:{color:C.gold},label:{show:false}},

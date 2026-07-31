@@ -19,12 +19,41 @@ So v2 splits into two instruments:
 
 Reads the existing clock-<mkt>.json (which already carries hpi_yoy, comps_flow,
 comps_struct, fwd12) so nothing needs re-fetching. Writes compass-<mkt>.json.
+
+SUPPLY HAS THREE STATES, NOT TWO (added 2026-07-31 with Thailand)
+-----------------------------------------------------------------
+The supply-glut overlay used to be binary: warn[i] True = glut, False = no glut.
+That is wrong for a market with NO supply series at all — loose() would be False
+in every quarter and the market would silently publish "no supply-glut warning",
+a false negative. Thailand is exactly that case (months and vacancy are 141/141
+null; no official Thai inventory/absorption/vacancy series exists) and it is also
+the most oversupplied market on this site, so the silent-false rendering would
+directly contradict our own /th/report. The contract is now:
+
+    warn[i] == true   -> supply glut flagged in that quarter
+    warn[i] == false  -> supply measured, no glut in that quarter
+    warn[i] == null   -> SUPPLY NOT MEASURABLE for this market (no data at all)
+
+and, only for markets in the null case, the output carries a market-level flag:
+
+    "supply_available": false
+
+The flag is emitted ONLY when it is false. Its ABSENCE means supply data exists
+(us/tw/my/jp/au), which keeps those five files byte-identical to before this
+change. Renderers must therefore read it as: `d.supply_available === false` =>
+show "no data" for the supply gauge and for the glut overlay; key missing =>
+behave exactly as before. Note bool(null) is false in both Python and JS, so any
+renderer that does `if (warn[i])` will silently get the WRONG state — the null
+must be tested explicitly.
+Consequences for the report card: card.supply is an all-null array for such a
+market (no value to show), and the risk gauge (starved AND glut) is structurally
+NOT EVALUABLE there, because the glut term is undefined — not "off".
 """
-import json, os, math
+import json, os, math, sys
 import statistics as st
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MKTS = ['us', 'tw', 'my', 'jp', 'au']
+MKTS = ['us', 'tw', 'my', 'jp', 'au', 'th']
 
 def tz(series, win=24, minobs=12):
     out = [None]*len(series); h = []
@@ -136,7 +165,11 @@ def compute(d, valsrc=None, supsrc=None, popyoy=None, xc=None, win=24):
     def loose(i):
         vv = cs.get('vac', [None]*n)[i]; mm = cs.get('months', [None]*n)[i]
         return (vv is not None and vv <= -1) or (mm is not None and mm <= -1)
-    warn = [loose(i) for i in range(n)]
+    # THIRD STATE (see module docstring): a market with no supply series at all would
+    # score loose()=False everywhere and read as "no glut". Emit null instead of false.
+    sup_avail = any(cs.get('vac', [None]*n)[i] is not None or cs.get('months', [None]*n)[i] is not None
+                    for i in range(n))
+    warn = [loose(i) for i in range(n)] if sup_avail else [None]*n
 
     def med(a):
         a = [x for x in a if x is not None]; return round(st.median(a), 1) if a else None
@@ -173,18 +206,26 @@ def compute(d, valsrc=None, supsrc=None, popyoy=None, xc=None, win=24):
         'population': r2(absz(popyoy, 0.7, +1)) if popyoy else r2(cs.get('demo', [None]*n)),  # + = growing (absolute)
         'supply':     r2(ez(supsrc, -1)) if supsrc else r2(cs.get('months', [None]*n)),  # + = tight vs full history
     }
-    return {
+    out = {
         'q': q, 'mom': r3(mom), 'cred': r3(cred), 'quad': QUAD, 'warn': warn,
         'ang': r1([ang(i) for i in range(n)]), 'rad': r3([rad(i) for i in range(n)]),
         'hpi_yoy': r1(hpi), 'fwd12': r1(fwd), 'qstat': QSTAT, 'card': card,
         'xc': xc,   # cross-country report-card layer (vs the world now); None if unavailable
         'qstat_era': QSTAT_ERA, 'all_modern': ALL_MODERN,
     }
+    # emitted only when false, so markets with supply data keep their exact previous bytes
+    if not sup_avail: out['supply_available'] = False
+    return out
 
 def main():
-    RAWF = {'tw':'.twdata/tw_raw.json','my':'.mydata/my_raw.json','jp':'.jpdata/jp_raw.json','au':'.audata/au_raw.json'}
+    RAWF = {'tw':'.twdata/tw_raw.json','my':'.mydata/my_raw.json','jp':'.jpdata/jp_raw.json','au':'.audata/au_raw.json',
+            'th':'.thdata/th_raw.json'}
     XC = build_xc()
-    for m in MKTS:
+    # optional argv filter: `python3 scripts/build_compass.py th` rebuilds only the named
+    # market(s). Needed because data/markets-summary.json (the xc source) drifts between
+    # runs, so a blanket rebuild silently rewrites every market's cross-sectional block.
+    only = [a for a in sys.argv[1:] if a in MKTS]
+    for m in (only or MKTS):
         d = json.load(open(os.path.join(ROOT, 'data', f'clock-{m}.json')))
         # report-card source series (absolute levels), standardised over full history in compute()
         if m == 'us':
@@ -202,7 +243,9 @@ def main():
         json.dump(out, open(os.path.join(ROOT, 'data', f'compass-{m}.json'), 'w'), separators=(',', ':'))
         i = len(out['q'])-1
         lab = {'fuelled':'上行·有燃料','draining':'上行·資金退','reflating':'下行·資金回流','starved':'下行·斷炊','warmup':'暖機'}
-        print(f"{m.upper()}: {out['q'][i]} → {lab[out['quad'][i]]}  mom={out['mom'][i]} cred={out['cred'][i]} warn={out['warn'][i]}")
+        w = out['warn'][i]
+        ws = 'n/a (no supply data)' if w is None else w
+        print(f"{m.upper()}: {out['q'][i]} → {lab[out['quad'][i]]}  mom={out['mom'][i]} cred={out['cred'][i]} warn={ws}")
 
 if __name__ == '__main__':
     main()
