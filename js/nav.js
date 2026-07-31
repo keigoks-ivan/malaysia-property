@@ -34,6 +34,12 @@ var MARKETS = [
     links: [
       { href: '/th/report', en: 'Bangkok Report', zh: '曼谷報告' },
       { href: '/th/macro',  en: 'Macro',          zh: '總經' }
+    ] },
+  { k: 'ae', flag: '🇦🇪', en: 'UAE', zh: '阿聯', home: '/ae/report',
+    prefixes: ['/ae/'],
+    links: [
+      { href: '/ae/report', en: 'Dubai Report', zh: '杜拜報告' },
+      { href: '/ae/macro',  en: 'Macro',        zh: '總經' }
     ] }
 ];
 
