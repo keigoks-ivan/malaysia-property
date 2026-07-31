@@ -1,166 +1,200 @@
 #!/usr/bin/env python3
-"""Generate my/clock.html (Compass + Report Card redesign) from content.json + compass-*.json."""
+"""Generate the Property Compass pages from content.json + compass-*.json.
+
+One generator, several output pages, each carrying a different market subset.
+Add a page = add one entry to PAGES below (and make sure data/compass-<m>.json
+exists for every market it lists).
+
+Page config keys
+  out       output path relative to repo root
+  markets   ordered market subset this page carries (data, buttons, badges, copy)
+  default   market shown before any hash / localStorage choice; must be in markets
+  title     <title> text
+  desc      <meta name="description"> text
+  h1_en/zh  page headline (optional; falls back to H1_DEFAULT)
+
+The market switcher, the #hash deep-links and the .mkt-XX visibility CSS are all
+derived from len(markets): a one-market page renders no switcher at all.
+"""
 import json, os
-ROOT='/Users/ivanchang/malaysia-property'
-SCR='/private/tmp/claude-501/-Users-ivanchang-malaysia-property/52542b53-2f2a-49e2-9a78-6dd7a75141c7/scratchpad'
-C=json.load(open(ROOT+'/scripts/compass_assets/content.json'))
-MKTS=['us','tw','my','jp','au']
-DATA={m:open(f'{ROOT}/data/compass-{m}.json').read().strip() for m in MKTS}
-V3=json.load(open(ROOT+'/data/compass-backtest-v3.json'))
-def esc(s): return s  # copy is trusted (from our own agents); keep as-is
-def dual(en,zh): return f'<span class="lang-en">{en}</span><span class="lang-zh" style="display:none">{zh}</span>'
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ASSETS = ROOT + '/scripts/compass_assets'
+
+# ---------------------------------------------------------------- page config
+H1_EN = 'The Property Compass — Trend, Credit &amp; a Report Card'
+H1_ZH = '房產羅盤 — 趨勢、信貸與體檢表'
+
+PAGES = [
+    {'out': 'my/clock.html', 'markets': ['my'], 'default': 'my',
+     'title': 'Property Compass | Malaysia · Property Check',
+     'desc': 'Malaysia property compass: momentum × credit, a supply-glut risk gauge and a valuation / population / supply report card.'},
+    {'out': 'global/compass.html', 'markets': ['us', 'tw', 'jp', 'au'], 'default': 'us',
+     'title': 'Other Markets — Property Compass | Cross-market · Property Check',
+     'desc': 'The property compass for the United States, Taiwan, Japan and Australia: momentum × credit, a supply-glut risk gauge and a report card per market.',
+     'h1_en': 'The Property Compass — Other Markets',
+     'h1_zh': '房產羅盤 — 其他市場'},
+    # Thailand slots in here once data/compass-th.json exists:
+    # {'out': 'th/clock.html', 'markets': ['th'], 'default': 'th',
+    #  'title': 'Property Compass | Thailand · Property Check', 'desc': '...'},
+]
+
+# Markets whose data/copy must always be loaded, regardless of which page is
+# being built: the honesty section and the pooled risk-gauge numbers quote the
+# US and Japan odds ratios on every page.
+ALL_MKTS = ['us', 'tw', 'my', 'jp', 'au']
+
+C = json.load(open(ASSETS + '/content.json'))
+DATA = {m: open(f'{ROOT}/data/compass-{m}.json').read().strip() for m in ALL_MKTS}
+V3 = json.load(open(ROOT + '/data/compass-backtest-v3.json'))
+
+
+def dual(en, zh): return f'<span class="lang-en">{en}</span><span class="lang-zh" style="display:none">{zh}</span>'
 def mkt(m, en, zh): return f'<span class="mkt-{m}">{dual(en,zh)}</span>'
 def mktwrap(m, html): return f'<span class="mkt-{m}">{html}</span>'
 
+
 def dedupe_css(css):
     """Drop exact-duplicate non-blank lines, keeping first occurrence and order.
-    Needed because CSS is re-extracted from this script's own previous output
-    (see below) -- without this, every regeneration re-appends the same
-    CSS_EXTRA block and the <style> tag grows without bound (found 7x-duplicated
-    rules already baked into the committed file before this fix)."""
-    seen=set(); out=[]
+
+    The CSS now comes from a real asset file (compass_assets/compass.css) rather
+    than from this script's own previous output, so it can no longer grow by
+    re-appending -- but the per-page market rules are concatenated onto it and
+    the guard is cheap, so it stays."""
+    seen = set(); out = []
     for line in css.split('\n'):
-        key=line.strip()
-        if key=='':
-            continue  # drop blank lines entirely so they can't accumulate across regenerations
+        key = line.strip()
+        if key == '':
+            continue
         if key in seen: continue
         seen.add(key); out.append(line)
     return '\n'.join(out)
+
 
 # ---- risk-gauge numbers: every stat below is pulled programmatically from
 # data/compass-backtest-v3.json (frozen protocol result), never hand-typed. ----
 def fmt1(x): return f'{x:.1f}'
 def fmtpct1(x): return f'{x*100:.1f}'
 
-RISKVALS={}
-for m in MKTS:
-    Dm=json.loads(DATA[m])
-    cur_q=Dm['q'][-1]
-    on=(Dm['quad'][-1]=='starved' and bool(Dm['warn'][-1]))
+RISKVALS = {}
+for m in ALL_MKTS:
+    Dm = json.loads(DATA[m])
+    cur_q = Dm['q'][-1]
+    on = (Dm['quad'][-1] == 'starved' and bool(Dm['warn'][-1]))
     # AU was added after the v3 claim was frozen (Amendment 3) and lives under
     # au_holdout.market_results, not markets.au -- same shape, evaluated as an
     # out-of-sample hold-out rather than folded into the frozen 4-market result.
-    mres=V3['au_holdout']['market_results'] if m=='au' else V3['markets'][m]
-    rated_abs=mres['rated_abs']
-    abs_r=mres['results']['T_ABS']['W_PRIM']
-    rel_r=mres['results']['T_REL']['W_PRIM']
-    v={'CUR_Q':cur_q,'ON':on,'STATE_EN':'ON' if on else 'OFF','STATE_ZH':'開啟' if on else '關閉'}
-    v['OR_REL']=fmt1(rel_r['OR']); v['PREC_REL']=fmtpct1(rel_r['precision'])
-    v['RECALL_REL']=fmtpct1(rel_r['recall']); v['BASE_REL']=fmtpct1(rel_r['base_rate'])
-    c2,d2=rel_r['cells']['c'],rel_r['cells']['d']; v['PREC_REL_OFF']=fmtpct1(c2/(c2+d2))
+    mres = V3['au_holdout']['market_results'] if m == 'au' else V3['markets'][m]
+    rated_abs = mres['rated_abs']
+    abs_r = mres['results']['T_ABS']['W_PRIM']
+    rel_r = mres['results']['T_REL']['W_PRIM']
+    v = {'CUR_Q': cur_q, 'ON': on, 'STATE_EN': 'ON' if on else 'OFF', 'STATE_ZH': '開啟' if on else '關閉'}
+    v['OR_REL'] = fmt1(rel_r['OR']); v['PREC_REL'] = fmtpct1(rel_r['precision'])
+    v['RECALL_REL'] = fmtpct1(rel_r['recall']); v['BASE_REL'] = fmtpct1(rel_r['base_rate'])
+    c2, d2 = rel_r['cells']['c'], rel_r['cells']['d']; v['PREC_REL_OFF'] = fmtpct1(c2 / (c2 + d2))
     if rated_abs:
-        v['OR_ABS']=fmt1(abs_r['OR']); v['PREC_ABS']=fmtpct1(abs_r['precision'])
-        c1,d1=abs_r['cells']['c'],abs_r['cells']['d']; v['PREC_ABS_OFF']=fmtpct1(c1/(c1+d1))
-    if m=='tw':
-        ep=mres['results']['T_ABS']['W_PRIM']['episodes']['details'][0]
-        v['EP_START']=ep['start_q']; v['EP_END']=ep['end_q']
-    RISKVALS[m]=v
-GV={'MH_ABS':fmt1(V3['threshold_evaluation']['ABS']['MH_pooled_OR']),
-    'MH_REL':fmt1(V3['threshold_evaluation']['REL']['MH_pooled_OR']),
-    'OR_US_ABS':RISKVALS['us']['OR_ABS'],'OR_JP_ABS':RISKVALS['jp']['OR_ABS']}
+        v['OR_ABS'] = fmt1(abs_r['OR']); v['PREC_ABS'] = fmtpct1(abs_r['precision'])
+        c1, d1 = abs_r['cells']['c'], abs_r['cells']['d']; v['PREC_ABS_OFF'] = fmtpct1(c1 / (c1 + d1))
+    if m == 'tw':
+        ep = mres['results']['T_ABS']['W_PRIM']['episodes']['details'][0]
+        v['EP_START'] = ep['start_q']; v['EP_END'] = ep['end_q']
+    RISKVALS[m] = v
+
+GV = {'MH_ABS': fmt1(V3['threshold_evaluation']['ABS']['MH_pooled_OR']),
+      'MH_REL': fmt1(V3['threshold_evaluation']['REL']['MH_pooled_OR']),
+      'OR_US_ABS': RISKVALS['us']['OR_ABS'], 'OR_JP_ABS': RISKVALS['jp']['OR_ABS']}
+
+MK = {'us': ('United States', '美國'), 'tw': ('Taiwan', '台灣'), 'my': ('Malaysia', '馬來西亞'),
+      'jp': ('Japan', '日本'), 'au': ('Australia', '澳洲')}
+SPAN = {'us': ('US · 1975–2026', '美國 · 1975–2026'), 'tw': ('Taiwan · 2001–2026', '台灣 · 2001–2026'),
+        'my': ('Malaysia · 2000–2026', '馬來西亞 · 2000–2026'), 'jp': ('Japan · 1975–2025', '日本 · 1975–2025'),
+        'au': ('Australia · 1994–2026', '澳洲 · 1994–2026')}
+
+BASE_CSS = open(ASSETS + '/compass.css', encoding='utf-8').read()
+
 
 def risk_light(m):
-    v=RISKVALS[m]
-    if m=='tw': st,lab='notval',dual('NOT VALIDATED','未通過驗證')
-    elif v['ON']: st,lab='on',dual('WARNING ON','警示開啟')
-    else: st,lab='off',dual('WARNING OFF','警示關閉')
+    v = RISKVALS[m]
+    if m == 'tw': st, lab = 'notval', dual('NOT VALIDATED', '未通過驗證')
+    elif v['ON']: st, lab = 'on', dual('WARNING ON', '警示開啟')
+    else: st, lab = 'off', dual('WARNING OFF', '警示關閉')
     return (f'<div class="rglight rg-{st}"><span class="dot"></span><span class="rglabel">{lab}</span>'
             f'<span class="rgqtr">{dual("as of ","截至 ")}{v["CUR_Q"]}</span></div>')
 
-def risk_lights_html():
-    return ''.join(mktwrap(m, risk_light(m)) for m in MKTS)
 
-def risk_text_block():
-    return ''.join(mkt(m, C['markets'][m]['risk_en'].format(**RISKVALS[m]),
-                        C['markets'][m]['risk_zh'].format(**RISKVALS[m]))
-                    for m in MKTS)
+def market_css(markets, default):
+    """Per-page .mkt-XX / body.mk-XX visibility rules.
 
-MK={'us':('United States','美國'),'tw':('Taiwan','台灣'),'my':('Malaysia','馬來西亞'),'jp':('Japan','日本'),'au':('Australia','澳洲')}
-SPAN={'us':('US · 1975–2026','美國 · 1975–2026'),'tw':('Taiwan · 2001–2026','台灣 · 2001–2026'),
-      'my':('Malaysia · 2000–2026','馬來西亞 · 2000–2026'),'jp':('Japan · 1975–2025','日本 · 1975–2025'),
-      'au':('Australia · 1994–2026','澳洲 · 1994–2026')}
+    A single-market page needs none: its only .mkt-XX spans are always visible.
+    Multi-market pages hide every non-default subset up front (so the page shows
+    the default market before JS runs) and swap on body.mk-XX."""
+    if len(markets) < 2:
+        return ''
+    others = [m for m in markets if m != default]
+    rules = [','.join('.mkt-' + m for m in others) + '{display:none}']
+    for m in markets:
+        rest = [o for o in markets if o != m]
+        rules.append(','.join(f'body.mk-{m} .mkt-{o}' for o in rest) + '{display:none}')
+        rules.append(f'body.mk-{m} .mkt-{m}{{display:revert}}')
+    return '\n'.join(rules)
 
-CSS=dedupe_css(open(ROOT+'/my/clock.html').read().split('<style>')[1].split('</style>')[0])
-# strip old-only rules we replace; keep base. Add compass/report-card styles.
-CSS_EXTRA="""
-/* market-switch visibility: au (5th market) -- mirrors the tw/my/jp pattern that
-   ships baked into the extracted CSS above (self-referential from prior output),
-   which only ever covers tw/my/jp, so au needs its own explicit rules here. */
-.mkt-au{display:none}
-body.mk-au .mkt-us,body.mk-au .mkt-tw,body.mk-au .mkt-my,body.mk-au .mkt-jp{display:none}
-body.mk-au .mkt-au{display:revert}
-/* compass + report card */
-.jwarn{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:#8a2b13;background:#fdf0e7;border:1px solid #f2c9b3;border-radius:999px;padding:5px 12px;margin:0 0 14px}
-.jwarn .dot{width:8px;height:8px;border-radius:50%;background:#dc2626;box-shadow:0 0 0 3px rgba(220,38,38,.18)}
-.card{display:grid;gap:12px;margin:6px 0 4px}
-.crow{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center}
-.crow .cl{font-size:12px;font-weight:700;color:var(--navy);text-align:right}
-.gauge{position:relative;height:34px}
-.gtrack{position:absolute;top:13px;left:0;right:0;height:8px;border-radius:6px;background:linear-gradient(90deg,#e9c3c0,#f2ede2 50%,#c3e0cb)}
-.gmid{position:absolute;top:8px;bottom:8px;left:50%;width:1px;background:#c9bfa8}
-.gpin{position:absolute;top:8px;width:4px;height:18px;border-radius:3px;transform:translateX(-50%);box-shadow:0 1px 3px rgba(0,0,0,.25)}
-.gends{position:absolute;top:-2px;left:0;right:0;display:flex;justify-content:space-between;font-size:9.5px;color:var(--muted)}
-.cnote{font-size:11.5px;color:var(--text-soft);line-height:1.6;margin:3px 0 0}
-.cnote b{color:var(--navy)}
-.methnote{font-size:13px;color:var(--text-soft);line-height:1.95;margin:0 0 14px}
-.methnote b{color:var(--navy);font-weight:600}
-/* versus-the-world panel */
-.xcdiv{display:flex;align-items:center;gap:10px;margin:26px 0 10px}
-.xcdiv-line{flex:1;height:1px;background:var(--gold-line)}
-.xcdiv-h{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:15px;margin:0;white-space:nowrap}
-.xcbars{display:grid;gap:9px;margin:6px 0 2px}
-.xcrow{display:grid;grid-template-columns:88px 1fr 108px;gap:12px;align-items:center}
-.xcrow .cl{font-size:11.5px;font-weight:700;color:var(--navy);text-align:right}
-.xcbar{position:relative;height:20px}
-.xctrack{position:absolute;top:7px;left:0;right:0;height:6px;border-radius:4px;background:linear-gradient(90deg,#e9c3c0,#f2ede2 50%,#c3e0cb)}
-.xctrack-carry{background:linear-gradient(90deg,#e9c3c0,#f6ecd8 50%,#e3cfa0);box-shadow:0 0 0 1px rgba(184,146,74,.35) inset}
-.xcpin{position:absolute;top:3px;width:3px;height:14px;border-radius:2px;transform:translateX(-50%);box-shadow:0 1px 3px rgba(0,0,0,.25)}
-.xcpin-carry{width:5px;height:16px;top:2px;box-shadow:0 1px 5px rgba(184,146,74,.55)}
-.xcval{font-family:'IBM Plex Mono',Inter,sans-serif;font-size:10.5px;color:var(--text-soft);text-align:right;white-space:nowrap}
-.xcrow-carry{background:rgba(184,146,74,.10);border-radius:8px;padding:6px 8px;margin:2px -8px}
-.xcrow-carry .cl{color:var(--gold-deep)}
-.xcnote-carry{border-left:2px solid var(--gold);padding-left:10px;margin-top:8px}
-@media(max-width:520px){.xcrow{grid-template-columns:70px 1fr 92px;gap:8px}}
-/* risk gauge */
-.rgbox{border:1px solid var(--gold-soft);border-radius:12px;padding:16px 18px 14px;margin:0 0 4px;background:var(--bg-section)}
-.rglight{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;border-radius:999px;padding:6px 14px;margin:0 0 10px}
-.rglight .dot{width:9px;height:9px;border-radius:50%;flex:none}
-.rglight .rgqtr{font-weight:600;opacity:.7;font-size:11px;margin-left:2px}
-.rg-on{color:var(--negative);background:var(--negative-bg);border:1px solid #f2c9b3}
-.rg-on .dot{background:var(--negative);box-shadow:0 0 0 3px rgba(185,28,28,.18)}
-.rg-off{color:var(--positive);background:var(--positive-bg);border:1px solid #bfe3cc}
-.rg-off .dot{background:var(--positive);box-shadow:0 0 0 3px rgba(21,128,61,.18)}
-.rg-notval{color:var(--gold-deep);background:var(--gold-bg);border:1px solid var(--gold-soft)}
-.rg-notval .dot{background:var(--gold-deep);box-shadow:0 0 0 3px rgba(143,109,44,.18)}
-.rgnote{font-size:12.5px;color:var(--text-soft);line-height:1.85;margin:0 0 10px}
-.rgcaveat{font-size:11.5px;color:var(--text-soft);line-height:1.75;border-left:2px solid var(--gold);background:rgba(184,146,74,.07);padding:8px 10px;border-radius:0 8px 8px 0;margin:6px 0 0}
-"""
 
-def badges():
-    b=[f'<span class="kpi-badge badge-blue">{dual("Momentum × Credit","動能 × 信貸")}</span>',
-       f'<span class="kpi-badge badge-orange">{dual("+ supply-glut warning · report card","+ 供給警示 · 體檢表")}</span>',
-       f'<span class="kpi-badge badge-orange">{dual("Risk gauge · validated on 2 busts","風險警報 · 驗證於兩次崩盤")}</span>']
-    for m in MKTS:
-        b.append(f'<span class="kpi-badge badge-green mkt-{m}">{dual(*SPAN[m])}</span>')
-    b.append(f'<span class="kpi-badge badge-orange">{dual("Updated Jul 2026","更新至 2026年7月")}</span>')
-    return ''.join(b)
+def build(page):
+    MKTS = page['markets']
+    DEFAULT = page['default']
+    assert DEFAULT in MKTS, f"default {DEFAULT} not in {MKTS}"
+    multi = len(MKTS) > 1
 
-def mkt_buttons():
-    r=[]
-    for m in MKTS:
-        a=' active' if m=='us' else ''
-        r.append(f'<button class="mkt-btn{a}" data-mkt="{m}" type="button">{dual(*MK[m])}</button>')
-    return '\n      '.join(r)
+    def has(m): return m in MKTS
+    def only(m, html): return html if has(m) else ''
 
-def market_block(field):
-    return ''.join(mkt(m, C['markets'][m][field+'_en'], C['markets'][m][field+'_zh']) for m in MKTS)
+    def badges():
+        b = [f'<span class="kpi-badge badge-blue">{dual("Momentum × Credit","動能 × 信貸")}</span>',
+             f'<span class="kpi-badge badge-orange">{dual("+ supply-glut warning · report card","+ 供給警示 · 體檢表")}</span>',
+             f'<span class="kpi-badge badge-orange">{dual("Risk gauge · validated on 2 busts","風險警報 · 驗證於兩次崩盤")}</span>']
+        for m in MKTS:
+            b.append(f'<span class="kpi-badge badge-green mkt-{m}">{dual(*SPAN[m])}</span>')
+        b.append(f'<span class="kpi-badge badge-orange">{dual("Updated Jul 2026","更新至 2026年7月")}</span>')
+        return ''.join(b)
 
-HTML=f"""<!DOCTYPE html>
+    def switcher():
+        if not multi:
+            return ''
+        r = []
+        for m in MKTS:
+            a = ' active' if m == DEFAULT else ''
+            r.append(f'<button class="mkt-btn{a}" data-mkt="{m}" type="button">{dual(*MK[m])}</button>')
+        btns = '\n      '.join(r)
+        return ('<div class="mkt-switch" role="tablist" aria-label="market">\n      '
+                + btns + '\n    </div>')
+
+    def market_block(field):
+        return ''.join(mkt(m, C['markets'][m][field + '_en'], C['markets'][m][field + '_zh']) for m in MKTS)
+
+    def risk_lights_html():
+        return ''.join(mktwrap(m, risk_light(m)) for m in MKTS)
+
+    def risk_text_block():
+        return ''.join(mkt(m, C['markets'][m]['risk_en'].format(**RISKVALS[m]),
+                           C['markets'][m]['risk_zh'].format(**RISKVALS[m])) for m in MKTS)
+
+    h1 = dual(page.get('h1_en', H1_EN), page.get('h1_zh', H1_ZH))
+    CSS = dedupe_css(BASE_CSS + '\n' + market_css(MKTS, DEFAULT))
+    data_js = 'window.COMPASS_DATA={' + ','.join(f'"{m}":{DATA[m]}' for m in MKTS) + '};'
+    cfg_js = 'window.COMPASS_CFG=' + json.dumps({'def': DEFAULT, 'markets': MKTS}, separators=(',', ':')) + ';'
+
+    tw_note = only('tw', f'''<p class="mkt-tw" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual("cell ordering not validated in Taiwan (ρ=0.08)","四格排序在台灣未通過驗證（ρ=0.08）")}</span></p>
+    ''')
+    au_note = only('au', f'''<p class="mkt-au" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual("cell ordering not validated in Australia (ρ=−0.16 — fuelled trails starved, the same no-crash signature as Taiwan)","四格排序在澳洲未通過驗證（ρ=−0.16——有燃料格報酬低於斷炊格，與台灣同樣的『從未真正崩盤』訊號）")}</span></p>
+    ''')
+
+    return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Property Compass | Malaysia Property Monitor</title>
+<title>{page['title']}</title>
+<meta name="description" content="{page['desc']}">
 <meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -168,30 +202,17 @@ HTML=f"""<!DOCTYPE html>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/kl-theme.css">
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-<style>{dedupe_css(CSS+CSS_EXTRA)}</style>
+<style>{CSS}</style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a class="brand" href="/kl-check"><span class="brand-mark">K</span><span class="brand-text"><span class="brand-name">KL Property Check</span><span class="brand-by">by InvestMQuest</span></span></a>
-    <div class="nav-links">
-      <a class="nav-link" href="/kl-check">{dual("Scorecards","評分卡")}</a>
-      <a class="nav-link" href="/my/report">{dual("Market Report","市場報告")}</a>
-      <a class="nav-link" href="/my/macro">{dual("Macro","總經")}</a>
-      <a class="nav-link" href="/my/framework">{dual("Framework","框架回測")}</a>
-      <a class="nav-link active" href="/my/clock">{dual("Compass","羅盤")}</a>
-      <div class="lang-btns"><button class="lang-btn active" data-lang="en">EN</button><button class="lang-btn" data-lang="zh">中文</button></div>
-    </div>
-  </div>
-</nav>
+<div id="nav-root"></div>
+<script src="/js/nav.js"></script>
 
 <main class="wrap">
   <div class="pg-head">
-    <h1 class="pg-title">{dual("The Property Compass — Trend, Credit &amp; a Report Card","房產羅盤 — 趨勢、信貸與體檢表")}</h1>
-    <div class="mkt-switch" role="tablist" aria-label="market">
-      {mkt_buttons()}
-    </div>
+    <h1 class="pg-title">{h1}</h1>
+    {switcher()}
     <div class="pg-badges">{badges()}</div>
   </div>
 
@@ -204,16 +225,14 @@ HTML=f"""<!DOCTYPE html>
   <div class="judge">
     <p class="jlab">{dual('The reading right now · <span class="curQtr">—</span>','現在的判讀 · <span class="curQtr">—</span>')}</p>
     <p class="jphase curPhase">—</p>
-    <p class="mkt-tw" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual("cell ordering not validated in Taiwan (ρ=0.08)","四格排序在台灣未通過驗證（ρ=0.08）")}</span></p>
-    <p class="mkt-au" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual("cell ordering not validated in Australia (ρ=−0.16 — fuelled trails starved, the same no-crash signature as Taiwan)","四格排序在澳洲未通過驗證（ρ=−0.16——有燃料格報酬低於斷炊格，與台灣同樣的『從未真正崩盤』訊號）")}</span></p>
-    <p class="jread">{market_block('judge')}</p>
+    {tw_note}{au_note}<p class="jread">{market_block('judge')}</p>
     <div class="jwarn"><span class="dot"></span><span>{market_block('warn')}</span></div>
     <div class="jrow">
       <span class="jchip">{dual("Momentum: ","動能：")}<b class="jMom">—</b></span>
       <span class="jchip">{dual("Credit: ","信貸：")}<b class="jCred">—</b></span>
       <span class="jchip">{dual("In this cell since ","停留於此自 ")}<b class="jSince">—</b></span>
     </div>
-    <p class="jhist">{dual("Historical echo: quarters in this cell saw a <b>3-year forward nominal house-price return with a median of <span class='jpMed'>—</span></b> (n=<span class='jpN'>—</span>).","歷史對照：落在此格的季度，其後 <b>3 年名目房價報酬中位 <span class='jpMed'>—</span></b>（n=<span class='jpN'>—</span>）。")} <span class="apx">{market_block('fwdnote') if False else dual("Descriptive of the past, not a forward promise.","描述過去，非對未來的承諾。")}</span></p>
+    <p class="jhist">{dual("Historical echo: quarters in this cell saw a <b>3-year forward nominal house-price return with a median of <span class='jpMed'>—</span></b> (n=<span class='jpN'>—</span>).","歷史對照：落在此格的季度，其後 <b>3 年名目房價報酬中位 <span class='jpMed'>—</span></b>（n=<span class='jpN'>—</span>）。")} <span class="apx">{dual("Descriptive of the past, not a forward promise.","描述過去，非對未來的承諾。")}</span></p>
     <p class="jhist jhistEra">—</p>
     <div class="cells4">
       <div class="cell4" data-ph="fuelled" style="border-color:#15803d"><p class="c4n" style="color:#15803d">{dual("Uptrend · Fuelled","上行·有燃料")}<span class="nowtag now-fuelled"></span></p><p class="c4d">{dual("price rising × credit expanding — trend with fuel","房價漲 × 信貸擴張——有燃料的趨勢")}</p><p class="c4s">{dual("3y median ","其後3年中位 ")}<b class="med-fuelled">—</b> · n=<span class="n-fuelled">—</span></p></div>
@@ -307,10 +326,10 @@ HTML=f"""<!DOCTYPE html>
       <li class="warn">{dual(
         f"<b>The risk gauge is real, but thinly tested.</b> Starved-plus-supply-glut quarters carried elevated odds of a 3-year nominal loss (US OR {GV['OR_US_ABS']}×, Japan OR {GV['OR_JP_ABS']}×, pooled OR {GV['MH_ABS']}×) and of landing in a market's own worst quartile (US, Malaysia, Japan; pooled OR {GV['MH_REL']}×) — validated on frozen, pre-registered thresholds, not fit to the data afterward. But the absolute-loss claim rests on essentially two historical busts in this sample: the US 2006-08 crash and Japan's 1990s-2000s crash. A third crash, whenever it comes, is the real out-of-sample test this page hasn't faced yet.",
         f"<b>風險警報是真實的，但驗證樣本很薄。</b>斷炊疊加供給過剩的季度，三年期名目虧損的勝算明顯偏高（美國勝算比{GV['OR_US_ABS']}倍、日本勝算比{GV['OR_JP_ABS']}倍、合併勝算比{GV['MH_ABS']}倍），落入市場自身最差四分之一表現的勝算也偏高（美國、馬來西亞、日本；合併勝算比{GV['MH_REL']}倍）——這是在凍結、預先設定門檻的條件下驗證出來的，不是事後套進資料調出來的。但絕對虧損這項宣稱，基本上只建立在樣本中僅有的兩次歷史崩盤上：美國2006年至2008年的崩盤，以及日本1990年代至2000年代的崩盤。下一次崩盤，不論何時到來，才是這頁尚未面對過的真正樣本外測試。")}</li>
-      <li>{dual('<b>The four-cell return ordering is still descriptive, not a forecast.</b> A separate attempt to validate Fuelled-beats-Starved as a forward-return ranking failed its own pre-registered gates (detail on <a href="/my/framework#v2compass">the framework backtest</a>); the compass panel and the forward-return table above describe the past, they are not a tested prediction of what comes next.',
-        '<b>四格報酬排序仍是描述性的，不是預測。</b>另一次想把「助燃格贏過斷炊格」驗證為前向報酬排序的嘗試，未能通過自己預先凍結的門檻（詳情見<a href="/my/framework#v2compass">框架回測</a>）；上方的羅盤面板與前向報酬表描述的是過去，不是經過測試、對未來的預測。')}</li>
-      <li>{dual("<b>Taiwan: neither claim validated — read its compass as descriptive only.</b> The risk gauge above never caught Taiwan's one recorded loss episode (2013-2015) and fell short of the pass bar on both the absolute-loss and relative-weakness tests; the return-ordering claim fails there too, for the same reason (a short, almost one-directional history). Treat every reading for Taiwan on this page as a record of the past, not a validated signal.",
-        "<b>台灣：兩項宣稱都未通過驗證——它的羅盤讀數請只當描述看待。</b>上方的風險警報從未抓到台灣紀錄中唯一一次虧損事件（2013年至2015年），在絕對虧損與相對弱勢兩項測試上都未達通過門檻；報酬排序的宣稱在台灣也因同樣原因（歷史短、且幾乎單向）而失敗。請把這一頁上所有台灣的讀數，都當作對過去的紀錄，而不是已驗證的訊號。")}</li>
+      <li>{dual('<b>The four-cell return ordering is still descriptive, not a forecast.</b> A separate attempt to validate Fuelled-beats-Starved as a forward-return ranking failed its own pre-registered gates (detail on <a href="/global/framework#v2compass">the framework backtest</a>); the compass panel and the forward-return table above describe the past, they are not a tested prediction of what comes next.',
+        '<b>四格報酬排序仍是描述性的，不是預測。</b>另一次想把「助燃格贏過斷炊格」驗證為前向報酬排序的嘗試，未能通過自己預先凍結的門檻（詳情見<a href="/global/framework#v2compass">框架回測</a>）；上方的羅盤面板與前向報酬表描述的是過去，不是經過測試、對未來的預測。')}</li>
+      {(f'''<li>{dual("<b>Taiwan: neither claim validated — read its compass as descriptive only.</b> The risk gauge above never caught Taiwan's one recorded loss episode (2013-2015) and fell short of the pass bar on both the absolute-loss and relative-weakness tests; the return-ordering claim fails there too, for the same reason (a short, almost one-directional history). Treat every reading for Taiwan on this page as a record of the past, not a validated signal.",
+        "<b>台灣：兩項宣稱都未通過驗證——它的羅盤讀數請只當描述看待。</b>上方的風險警報從未抓到台灣紀錄中唯一一次虧損事件（2013年至2015年），在絕對虧損與相對弱勢兩項測試上都未達通過門檻；報酬排序的宣稱在台灣也因同樣原因（歷史短、且幾乎單向）而失敗。請把這一頁上所有台灣的讀數，都當作對過去的紀錄，而不是已驗證的訊號。")}</li>''') if 'tw' in page['markets'] else ''}
     </ul>
   </div>
 
@@ -321,17 +340,21 @@ HTML=f"""<!DOCTYPE html>
 <p class="footer-disclaimer">{dual("<strong>Independent analysis for reference only</strong> — not investment advice. A project by InvestMQuest.","<strong>獨立分析參考</strong>，不構成投資建議。InvestMQuest 製作。")}</p></footer>
 
 <script>
-var D_US={DATA['us']};
-var D_TW={DATA['tw']};
-var D_MY={DATA['my']};
-var D_JP={DATA['jp']};
-var D_AU={DATA['au']};
+{cfg_js}
+{data_js}
 </script>
 <script>
-{open(ROOT+'/scripts/compass_assets/compass.js').read()}
+{open(ASSETS + '/compass.js', encoding='utf-8').read()}
 </script>
 </body>
 </html>
 """
-open(ROOT+'/my/clock.html','w',encoding='utf-8').write(HTML)
-print('wrote my/clock.html', len(HTML),'bytes')
+
+
+if __name__ == '__main__':
+    for page in PAGES:
+        html = build(page)
+        path = os.path.join(ROOT, page['out'])
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        open(path, 'w', encoding='utf-8').write(html)
+        print(f"wrote {page['out']}  markets={','.join(page['markets'])}  default={page['default']}  {len(html)} chars")

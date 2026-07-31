@@ -26,20 +26,26 @@ var MARKETS = [
       { href: '/my/macro',          en: 'Macro',             zh: '總經' },
       { href: '/my/airbnb',         en: 'Airbnb / STRA',     zh: '短租' },
       { href: '/my/reit-vs-direct', en: 'REITs vs Property', zh: 'REIT vs 房產' },
-      { href: '/my/framework',      en: 'Framework',         zh: '框架回測' },
       { href: '/my/clock',          en: 'Compass',           zh: '羅盤' }
     ] },
   { k: 'th', flag: '🇹🇭', en: 'Thailand', zh: '泰國', home: '/th/report',
     prefixes: ['/th/'],
     links: [
       { href: '/th/report', en: 'Bangkok Report', zh: '曼谷報告' },
-      { href: '/th/macro',  en: 'Macro',          zh: '總經' }
+      { href: '/th/macro',  en: 'Macro',          zh: '總經' },
+      { href: '/th/clock',  en: 'Compass',        zh: '羅盤' }
     ] },
   { k: 'ae', flag: '🇦🇪', en: 'UAE', zh: '阿聯', home: '/ae/report',
     prefixes: ['/ae/'],
     links: [
       { href: '/ae/report', en: 'Dubai Report', zh: '杜拜報告' },
       { href: '/ae/macro',  en: 'Macro',        zh: '總經' }
+    ] },
+  { k: 'global', flag: '🌐', en: 'Cross-market', zh: '跨市場', home: '/global/compass',
+    prefixes: ['/global/'],
+    links: [
+      { href: '/global/compass',   en: 'Other Markets',  zh: '其他市場羅盤' },
+      { href: '/global/framework', en: 'Framework',      zh: '框架回測' }
     ] }
 ];
 
@@ -125,7 +131,7 @@ var css = [
 '.pc-brand-name{font-size:15px;font-weight:700;letter-spacing:-.01em;color:#0d2244}',
 '.pc-brand-by{font-size:10px;color:#6b7a92;font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}',
 '.pc-right{display:flex;align-items:center;gap:14px;min-width:0}',
-'.pc-markets{display:flex;gap:4px;align-items:center}',
+'.pc-markets{display:flex;gap:4px;align-items:center;min-width:0}',
 '.pc-mk{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;font-size:13.5px;font-weight:600;color:#41506b!important;text-decoration:none!important;border-radius:999px;border:1px solid transparent;transition:all .15s;white-space:nowrap}',
 '.pc-mk:hover{color:#8f6d2c!important;background:#fbf3df;text-decoration:none!important}',
 '.pc-mk.on{color:#0d2244!important;background:#e8eef5;border-color:#ccd9e8}',
@@ -148,7 +154,11 @@ var css = [
   '.pc-mark{width:26px;height:26px;font-size:14px}',
   '.pc-brand-name{font-size:14px}',
   '.pc-right{gap:8px;width:100%;justify-content:space-between}',
-  '.pc-mk{padding:5px 10px;font-size:12.5px}',
+  /* four market tabs no longer fit on one narrow row — scroll them like .pc-sub */
+  '.pc-markets{flex:1 1 auto;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}',
+  '.pc-markets::-webkit-scrollbar{display:none}',
+  '.pc-mk{padding:5px 10px;font-size:12.5px;flex-shrink:0}',
+  '.pc-lang{flex-shrink:0}',
   '.pc-lbtn{padding:4px 10px}',
   '.pc-row2{padding:0 14px 7px}',
   '.pc-sub{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}',

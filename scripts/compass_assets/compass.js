@@ -10,11 +10,25 @@ var CELL = {
   starved:  {col:C.red,    en:'Downtrend · Starved',  zh:'下行·斷炊'},
   warmup:   {col:'#9aa7bb',en:'Warm-up',              zh:'暖機'}
 };
-var MKT='us', D, Q, MOM, CRED, QUAD, WARN, CARD, CUR, LANG='en';
-function useMarket(m){MKT=(m==='tw'||m==='my'||m==='jp'||m==='au')?m:'us';
-  D=(MKT==='tw'?D_TW:MKT==='my'?D_MY:MKT==='jp'?D_JP:MKT==='au'?D_AU:D_US);
+/* ---- market wiring -------------------------------------------------
+   The market list is NEVER hardcoded here: the generator injects
+   window.COMPASS_DATA (a {code: blob} map of only the markets this page
+   carries) and window.COMPASS_CFG ({def: default code}). Everything below
+   derives from those, so a one-market page and a four-market page run the
+   same script. As a belt-and-braces fallback the list is also readable off
+   the .mkt-btn buttons present in the DOM.                            */
+var CFG = window.COMPASS_CFG || {};
+var CDATA = window.COMPASS_DATA || {};
+var MKTS = Object.keys(CDATA);
+var DEF = (CFG.def && CDATA[CFG.def]) ? CFG.def : MKTS[0];
+function hasMkt(m){return !!(m && CDATA[m]);}
+function domMkts(){var r=[];document.querySelectorAll('.mkt-btn').forEach(function(b){if(hasMkt(b.dataset.mkt))r.push(b.dataset.mkt);});return r.length?r:MKTS;}
+
+var MKT=DEF, D, Q, MOM, CRED, QUAD, WARN, CARD, CUR, LANG='en';
+function useMarket(m){MKT=hasMkt(m)?m:DEF;
+  D=CDATA[MKT];
   Q=D.q;MOM=D.mom;CRED=D.cred;QUAD=D.quad;WARN=D.warn;CARD=D.card;CUR=Q.length-1;}
-useMarket('us');
+useMarket(DEF);
 
 function fmtPc(x){return (x>=0?'+':'−')+Math.abs(x).toFixed(1)+'%';}
 function hexA(hex,a){var n=parseInt(hex.slice(1),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
@@ -191,19 +205,30 @@ function setLang(lang){LANG=lang;
   document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
   try{localStorage.setItem('lang',lang);}catch(e){}
   allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];initCharts(lang);}
-function setMarket(m){useMarket(m);
-  document.body.classList.toggle('mk-tw',m==='tw');document.body.classList.toggle('mk-my',m==='my');document.body.classList.toggle('mk-jp',m==='jp');document.body.classList.toggle('mk-au',m==='au');
-  document.querySelectorAll('.mkt-btn').forEach(function(b){b.classList.toggle('active',b.dataset.mkt===m);});
-  try{localStorage.setItem('mkt',m);}catch(e){}try{history.replaceState(null,'','#'+m);}catch(e){}
+function applyMarketClasses(m){var list=domMkts();
+  list.forEach(function(x){document.body.classList.toggle('mk-'+x,x===m);});
+  document.querySelectorAll('.mkt-btn').forEach(function(b){b.classList.toggle('active',b.dataset.mkt===m);});}
+function setMarket(m){if(!hasMkt(m))return;useMarket(m);
+  applyMarketClasses(MKT);
+  /* the 'mkt' key is shared by every compass page, so only pages that actually
+     offer a choice write to it -- a single-market page must not stamp its own
+     market over the reader's cross-market selection. */
+  if(domMkts().length>1){try{localStorage.setItem('mkt',MKT);}catch(e){}try{history.replaceState(null,'','#'+MKT);}catch(e){}}
   allCharts.forEach(function(c){if(c)c.dispose();});allCharts=[];initCharts(LANG);}
 window.addEventListener('resize',function(){allCharts.forEach(function(c){if(c)c.resize();});});
 window.addEventListener('load',function(){
   document.querySelectorAll('.lang-btn').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.lang);});});
   document.querySelectorAll('.mkt-btn').forEach(function(b){b.addEventListener('click',function(){setMarket(b.dataset.mkt);});});
   var lang='en';try{lang=localStorage.getItem('lang')||'en';}catch(e){}
-  var mkt='us';try{mkt=localStorage.getItem('mkt')||'us';}catch(e){}
-  if(location.hash==='#tw')mkt='tw';if(location.hash==='#us')mkt='us';if(location.hash==='#my')mkt='my';if(location.hash==='#jp')mkt='jp';if(location.hash==='#au')mkt='au';
-  useMarket(mkt);document.body.classList.toggle('mk-tw',mkt==='tw');document.body.classList.toggle('mk-my',mkt==='my');document.body.classList.toggle('mk-jp',mkt==='jp');document.body.classList.toggle('mk-au',mkt==='au');
-  document.querySelectorAll('.mkt-btn').forEach(function(b){b.classList.toggle('active',b.dataset.mkt===mkt);});
+  /* stored market may come from a page with a different subset (e.g. 'us' saved
+     on the cross-market page, then the Malaysia-only page loads) -- fall back to
+     this page's own default whenever the stored value isn't on this page. */
+  var mkt=DEF;try{var st=localStorage.getItem('mkt');if(hasMkt(st))mkt=st;}catch(e){}
+  if(domMkts().length>1){var h=location.hash.replace('#','');if(hasMkt(h))mkt=h;}
+  useMarket(mkt);applyMarketClasses(MKT);
   setLang(lang);
+  /* same-document #hash navigation (in-page links, back/forward) must switch too;
+     setMarket uses replaceState, which does not fire hashchange, so no loop. */
+  if(domMkts().length>1)window.addEventListener('hashchange',function(){
+    var h=location.hash.replace('#','');if(hasMkt(h)&&h!==MKT)setMarket(h);});
 });

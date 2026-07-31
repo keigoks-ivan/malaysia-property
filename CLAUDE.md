@@ -23,10 +23,11 @@
 /my/macro.html       ← 馬來西亞：總經 × 房產（週期/結構/政治/總合模型）
 /my/airbnb.html      ← 馬來西亞：短租 / STRA
 /my/reit-vs-direct.html ← 馬來西亞：REITs vs 實體房產互動計算器
-/my/framework.html   ← 馬來西亞：框架回測
 /my/clock.html       ← 馬來西亞：房產羅盤 Compass
 /th/report.html      ← 泰國：曼谷住宅市場報告（七部）
 /th/macro.html       ← 泰國：總經 × 房產（四部＋答案篇）
+/global/framework.html ← 跨市場：框架回測（原 /my/framework，2026-07 搬遷）
+/global/compass.html ← 跨市場：其他市場羅盤（由另一條工作線建置中）
 /kl/SC_*.html        ← 建案評分卡（en/zh 成對；用 kl-property-scorecard skill 產生）
 /kl/viewing.html     ← 看房檢核工具
 /css/style.css       ← 基底樣式；/css/kl-theme.css ← 主題（navy-gold cream）
