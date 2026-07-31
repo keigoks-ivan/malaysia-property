@@ -311,12 +311,12 @@ body.zh .cmp th.dim{letter-spacing:.02em;text-transform:none}
   <p class="pull"><span class="lang-en">Thailand does not have a housing demand problem. It has a housing credit problem that looks like one.</span><span class="lang-zh" style="display:none">泰國面對的並非住宅需求問題，而是表現形式近似需求問題的住宅信用問題。</span></p>
 
   <div class="blk">
-    <h2><span class="lang-en">Four straight years of shrinking transfers</span><span class="lang-zh" style="display:none">連續四年萎縮的過戶量</span></h2>
-    <p class="sub"><span class="lang-en">Nationwide residential ownership transfers, units and value · REIC forecast base</span><span class="lang-zh" style="display:none">全國住宅過戶戶數與金額 · REIC 預測基礎</span></p>
+    <h2><span class="lang-en">Four straight years of shrinking transfers, from a 2022 peak</span><span class="lang-zh" style="display:none">過戶量自 2022 年高點連續四年萎縮</span></h2>
+    <p class="sub"><span class="lang-en">Nationwide residential ownership transfers, units and value · 2021–2026F · REIC; years marked * are chained from published year-on-year changes</span><span class="lang-zh" style="display:none">全國住宅過戶戶數與金額 · 2021–2026F · REIC；標 * 之年度係依公布年增率回推</span></p>
     <div class="chartbox"><div class="kick"><span class="lang-en">Transfers: volume and value</span><span class="lang-zh" style="display:none">過戶：量與值</span></div><div id="cTrans" style="height:250px"></div></div>
     <ul class="pt">
-      <li class="warn"><span class="lang-en">Nationwide transfers fell <b>7.3% to 322,500 units in 2025</b>, and transfer value fell harder, down <b>10.9% to 873.4 billion baht</b>. REIC's 2026 base case is broadly flat at 320,200 units and 866.2 billion baht.</span><span class="lang-zh" style="display:none">2025 年全國過戶 <b>322,500 戶，年減 7.3%</b>；過戶金額 <b>8,734 億泰銖，年減 10.9%</b>，減幅大於件數。REIC 對 2026 年的基準預估為大致持平：320,200 戶、8,662 億泰銖。</span></li>
-      <li><span class="lang-en">Value falling faster than volume for two consecutive years is the signature of a <b>downward mix shift</b>: the same number of transactions, at lower price points. That is what a fee incentive capped at 7 million baht produces.</span><span class="lang-zh" style="display:none">金額減幅連續兩年大於件數減幅，反映<b>成交結構向下位移</b>：件數變動有限，單價下降。以 700 萬泰銖為上限的費用優惠，其設計本身即會導向此一結果。</span></li>
+      <li class="warn"><span class="lang-en">Transfers peaked at <b>392,802 units in 2022</b> and have fallen every year since: down 6.6% in 2023, 5.2% in 2024 and 9.1% in 2025 to <b>316,000 units</b>. Value followed, from 1.06 trillion baht in 2022 to <b>864 billion in 2025</b>. REIC's 2026 base case is 314,000 units and 858 billion baht — roughly <b>a fifth below the 2022 peak</b>.</span><span class="lang-zh" style="display:none">過戶量於 <b>2022 年見頂 392,802 戶</b>，此後連續四年下滑：2023 年減 6.6%、2024 年減 5.2%、2025 年減 9.1% 至 <b>316,000 戶</b>。過戶金額同步自 2022 年的 1.06 兆泰銖降至 <b>2025 年的 8,640 億泰銖</b>。REIC 對 2026 年的基準預估為 314,000 戶、8,580 億泰銖，較 2022 年高點<b>減少約兩成</b>。</span></li>
+      <li><span class="lang-en">Average value per transfer was 2.71 million baht in 2022 and 2.73 million in 2025 — flat across four years, so the contraction in volume has not been offset by any move up the price ladder. In the years where value fell faster than volume, the signature is a <b>downward mix shift</b>. That is what a fee incentive capped at 7 million baht produces.</span><span class="lang-zh" style="display:none">以每戶均價衡量，2022 年為 271 萬泰銖，2025 年降至 273 萬泰銖，四年間大致持平；亦即量能收縮並非由結構升級所抵銷。金額減幅於部分年度大於件數減幅，反映<b>成交結構向下位移</b>。以 700 萬泰銖為上限的費用優惠，其設計本身即導向此一結果。</span></li>
     </ul>
   </div>
 
@@ -904,16 +904,26 @@ function initAllCharts(lang){
     });
   })();
 
-  /* 11 · Transfers */
+  /* 11 · Transfers, 2021–2026F */
   (function(){ var c=mk('cTrans'); if(!c) return;
+    var yr=[L('2021*','2021*'),L('2022*','2022*'),L('2023*','2023*'),'2024','2025',L('2026F','2026F')];
+    var units=[343657,392802,366878,347799,316000,314000];
+    var value=[null,1064.7,1046.6,980.6,864.0,858.0];
     c.setOption({
       tooltip:baseTip, legend:Object.assign({},baseLegend,{data:[L('Units','戶數'),L('Value ฿bn','金額 十億泰銖')]}),
       grid:{left:8,right:18,top:26,bottom:6,containLabel:true},
-      xAxis:catAxis([L('2024 (derived)','2024（推導）'),'2025',L('2026F','2026 預估')],{axisLabel:ax({fontSize:10.5})}),
-      yAxis:[valAxis({min:280000,axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),valAxis({min:800,position:'right',splitLine:{show:false},axisLabel:ax({formatter:'{value}'})})],
+      xAxis:catAxis(yr,{axisLabel:ax({fontSize:10})}),
+      yAxis:[valAxis({min:280000,max:410000,axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),
+             valAxis({min:800,max:1120,position:'right',splitLine:{show:false},axisLabel:ax({formatter:'{value}'})})],
       series:[
-        {name:L('Units','戶數'),type:'bar',data:[347900,322500,320200],itemStyle:navyBar,barMaxWidth:48,label:lbl({position:'top',formatter:function(p){return p.value.toLocaleString();},fontSize:10})},
-        {name:L('Value ฿bn','金額 十億泰銖'),type:'line',yAxisIndex:1,data:[980.3,873.4,866.2],smooth:true,symbol:'circle',symbolSize:7,lineStyle:{color:C.red,width:2.5},itemStyle:{color:C.red},label:lbl({position:'bottom',color:C.red,formatter:'{c}'})}
+        {name:L('Units','戶數'),type:'bar',
+         data:units.map(function(v,i){return {value:v,itemStyle:i>=5?{color:'#c8b78f',borderRadius:[5,5,0,0]}:navyBar};}),
+         barMaxWidth:40,label:lbl({position:'insideTop',color:'#fff',formatter:function(p){return (p.value/1000).toFixed(0)+'k';},fontSize:10,distance:6}),
+         markLine:{silent:true,symbol:'none',data:[{yAxis:392802,lineStyle:{color:C.muted,type:'dashed',width:1.2},
+           label:{formatter:L('2022 peak 393k','2022 高點 39.3 萬'),color:C.muted,fontFamily:FONT,fontSize:9,position:'insideStartTop'}}]}},
+        {name:L('Value ฿bn','金額 十億泰銖'),type:'line',yAxisIndex:1,data:value,connectNulls:true,smooth:true,symbol:'circle',symbolSize:6,
+         lineStyle:{color:C.red,width:2.5},itemStyle:{color:C.red},
+         label:lbl({position:'top',color:C.red,formatter:function(p){return p.value?Math.round(p.value):'';},fontSize:9.5,distance:7})}
       ]
     });
   })();
