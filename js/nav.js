@@ -44,8 +44,7 @@ var MARKETS = [
   { k: 'global', flag: '🌐', en: 'Cross-market', zh: '跨市場', home: '/global/compass',
     prefixes: ['/global/'],
     links: [
-      { href: '/global/compass',   en: 'Other Markets',  zh: '其他市場羅盤' },
-      { href: '/global/framework', en: 'Framework',      zh: '框架回測' }
+      { href: '/global/compass',   en: 'Other Markets',  zh: '其他市場羅盤' }
     ] }
 ];
 

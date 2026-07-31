@@ -26,8 +26,10 @@
 /my/clock.html       ← 馬來西亞：房產羅盤 Compass
 /th/report.html      ← 泰國：曼谷住宅市場報告（七部）
 /th/macro.html       ← 泰國：總經 × 房產（四部＋答案篇）
-/global/framework.html ← 跨市場：框架回測（原 /my/framework，2026-07 搬遷）
-/global/compass.html ← 跨市場：其他市場羅盤（由另一條工作線建置中）
+/th/clock.html       ← 泰國：房產羅盤 Compass
+/ae/report.html      ← 阿聯：杜拜住宅市場報告（七部）
+/ae/macro.html       ← 阿聯：總經 × 房產（四部＋結論篇）
+/global/compass.html ← 跨市場：其他市場羅盤（美／台／日／澳，含市場切換）
 /kl/SC_*.html        ← 建案評分卡（en/zh 成對；用 kl-property-scorecard skill 產生）
 /kl/viewing.html     ← 看房檢核工具
 /css/style.css       ← 基底樣式；/css/kl-theme.css ← 主題（navy-gold cream）
