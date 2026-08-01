@@ -1,0 +1,187 @@
+{
+  "schema": "my-shadow-proxy/v1",
+  "lastUpdated": "2026-08-02",
+  "purpose": "四象限方法論 four-quadrant-v1.md §3 S_shadow 層的唯一可得觀察。本檔只收 2020 人口普查的空置住所觀察值。",
+  "verdict": "S_shadow 在 MY 無法量測成序列。本檔提供的是單一年度（2020）的水準錨點，非時間序列，非 S_shadow 的估計值。",
+  "feasibility_report": "docs/methodology/my-shadow-stock-feasibility.md",
+
+  "discipline": {
+    "not_a_series": "本檔只有 2020 一個期別。下一次人口普查為 2030。禁止內插、禁止外推。",
+    "not_for_test3": "禁止用於 §4 檢定 3 當硬數字。檢定 3 的分母應退回 S_total − S_overhang，並註明因此漏掉 shadow 層、分母偏大、隱含需求成長被系統性低估（結果偏樂觀）。",
+    "denominator_mismatch": "普查『住所 living quarters』與 NAPIC『住宅存量』是兩個不同母體。2020 全國 9,614,139（普查）vs 5,845,580（NAPIC 2020Q4 existing_stock）；KL 634,639 vs 495,996。禁止把本檔的空置戶數除以 NAPIC 存量，禁止把本檔的空置率乘上 NAPIC 存量。",
+    "shadow_is_lower_bound_only": "唯一可對應 S_shadow 的欄位是 holiday_resort_or_transit，且僅在都會區有效。它是下界不是估計值——未分類殘差與『新完工／待租售』欄裡的已售未租單位都可能屬 shadow 但無法拆分。",
+    "metro_only": "holiday_resort_or_transit 欄位在鄉區指的是長屋／原鄉住屋（屋主在城市工作、老家空著），不是投資持有。禁止在全國層或東馬用此欄當 S_shadow。",
+    "covid_caveat": "2020 普查日落在 COVID 行動管制期附近，人口流動異常（外勞返鄉、學生離校），空置判定可能系統性偏高。全國空置率相對 2010 跳升 4.4pp，DOSM 未分解其中多少屬普查日效應。",
+    "method_caveat": "空置原因係普查員實地觀察判定（DOSM 原註：Sebab TK Kosong: Data adalah berdasarkan pemerhatian di lapangan），非行政紀錄。度假屋與純投資空置在門外幾乎無法區分，分類誤差方向未知。"
+  },
+
+  "sourceTiers": {
+    "primary": "逐字出自 DOSM 官方出版品／新聞稿",
+    "derived": "由 primary 的數字算出（本檔內註明算式）",
+    "secondary": "他方（KRI）依普查資料呈現，未在 DOSM 正文出現原文；僅供參照，不得當觀察值引用"
+  },
+
+  "sources": {
+    "dosm_state_kl": {
+      "title": "Penemuan Utama Banci Penduduk dan Perumahan Malaysia 2020 — NEGERI（W.P. Kuala Lumpur 卷）",
+      "publisher": "Department of Statistics Malaysia (DOSM)",
+      "url": "https://www.dosm.gov.my/uploads/publications/20221018092119.pdf",
+      "fetched": "2026-08-02",
+      "fetch_status": "HTTP 200, 3,638,675 bytes",
+      "tables_used": ["Jadual 1（Malaysia 主要統計，1970–2020）", "Jadual 2（W.P. Kuala Lumpur 主要統計）", "Jadual 10（空置住所按主要空置原因，KL，2020）"],
+      "note": "WebFetch 對 dosm.gov.my 回憑證錯誤（unable to verify the first certificate）。須用 curl -sSL 下載後以 pdftotext -layout 解析。"
+    },
+    "dosm_district_release": {
+      "title": "Penemuan Utama Banci Penduduk dan Perumahan Malaysia 2020 — Daerah Pentadbiran（新聞稿，禁載至 2022-05-29 11:00）",
+      "publisher": "Department of Statistics Malaysia (DOSM)",
+      "url": "https://www.dosm.gov.my/uploads/content-downloads/file_20221105172037.pdf",
+      "fetched": "2026-08-02",
+      "fetch_status": "HTTP 200, 935,575 bytes",
+      "provides": "全國層空置原因百分比、縣層極值"
+    },
+    "kri_views_2023": {
+      "title": "KRI Views — Curbing Overhang and Vacancy: The Case for a Vacancy Tax in Malaysia",
+      "author": "Theebalakshmi Kunasekaran",
+      "publisher": "Khazanah Research Institute",
+      "date": "2023-09-11",
+      "url": "https://cdn.prod.website-files.com/684b55df28cddcbe52b406f2/68b7ee897c4a12ee1e797fc5_68a678f1f965e9ba4cce738e_KRI-20Views_Curbing-20Overhang-20and-20Vacancy_The-20Case-20for-20a-20Vacancy-20Tax-20in-20Malaysia.pdf",
+      "fetched": "2026-08-02",
+      "fetch_status": "HTTP 200, 492,938 bytes",
+      "tier": "secondary",
+      "why_recorded": "馬來西亞空屋稅的代表性政策文件，衡量 vacancy 只用 2020 普查、未用任何行政代理，且明講資料無法分辨投機持有——是『MY 無更好代理』的最強旁證。"
+    }
+  },
+
+  "definitions": {
+    "living_quarters": "DOSM 口徑：結構上獨立、可由公用樓梯／通道／樓面平台直接進出的居住單元。涵蓋非正規住居、店屋樓上住居、宿舍。不等同 NAPIC 的『已發 CCC 住宅單位』。",
+    "vacant": "DOSM 口徑：普查日當天通常未被占用、且未作為慣常居所使用的住所。"
+  },
+
+  "data": {
+    "vacancy_totals": {
+      "unit": "living quarters (units)",
+      "tier": "primary",
+      "source": "dosm_state_kl",
+      "MALAYSIA": {
+        "1970": { "total": 1671108, "occupied": 1488227, "vacant": 156411, "vacancy_rate_pct": 9.5 },
+        "1980": { "total": 2632561, "occupied": 2332563, "vacant": 227072, "vacancy_rate_pct": 8.9 },
+        "1991": { "total": 4092769, "occupied": 3422189, "vacant": 638753, "vacancy_rate_pct": 15.7 },
+        "2000": { "total": 5569261, "occupied": 4679757, "vacant": 867311, "vacancy_rate_pct": 15.6 },
+        "2010": { "total": 7346910, "occupied": 6232613, "vacant": 1102558, "vacancy_rate_pct": 15.0 },
+        "2020": { "total": 9614139, "occupied": 7751312, "vacant": 1862827, "vacancy_rate_pct": 19.4 }
+      },
+      "W.P. Kuala Lumpur": {
+        "1980": { "total": 169776, "occupied": 154467, "vacant": 11533, "vacancy_rate_pct": 6.9 },
+        "1991": { "total": 264585, "occupied": 229353, "vacant": 33351, "vacancy_rate_pct": 12.7 },
+        "2000": { "total": 354731, "occupied": 297889, "vacant": 56191, "vacancy_rate_pct": 15.9 },
+        "2010": { "total": 468325, "occupied": 408047, "vacant": 59967, "vacancy_rate_pct": 12.8 },
+        "2020": { "total": 634639, "occupied": 542210, "vacant": 92429, "vacancy_rate_pct": 14.6 }
+      },
+      "series_note": "1970–2010 的已居住／空置戶數只涵蓋私人住宅單位（DOSM 原註：Bilangan tempat kediaman didiami dan kosong merujuk kepada unit perumahan persendirian sahaja (1970-2010)）。2020 口徑不同，跨期比較須留意此斷點。1970 年 KL 資料 DOSM 標為不可得（..）。"
+    },
+
+    "vacancy_by_reason_2020": {
+      "period": "2020",
+      "frequency": "decennial (next: 2030)",
+      "geography_available": "Malaysia / state / administrative district（每個分冊各一張 Jadual 10）",
+      "method": "普查員實地觀察判定",
+
+      "W.P. Kuala Lumpur": {
+        "tier": "primary",
+        "source": "dosm_state_kl",
+        "table": "Jadual 10 / Table 10",
+        "vacant_total": 92429,
+        "reasons": {
+          "newly_completed_for_rent_or_sale": { "ms": "Baru siap/ untuk disewa atau dijual", "units": 43204, "pct_as_published": 46.8, "shadow_mapping": "mixed — 待售部分屬 S_overhang，已售待租部分屬摩擦性空置（業主有意進入使用市場），皆非 S_shadow。無法拆分。" },
+          "holiday_resort_or_transit": { "ms": "Rumah peranginan/ persinggahan", "units": 18036, "pct_as_published": 19.6, "shadow_mapping": "S_SHADOW_LOWER_BOUND — 都會區脈絡下＝已售、有主、不作常住、不放租。這是本檔唯一可對應 S_shadow 的欄位。" },
+          "for_repair_or_renovation": { "ms": "Untuk dibaiki/ ubahsuai", "units": 5174, "pct_as_published": 5.6, "shadow_mapping": "屬 δ（汰換）維度，非 shadow" },
+          "homestay": { "ms": "Homestay", "units": 1571, "pct_as_published": 1.7, "shadow_mapping": "已進入使用市場（短租），依 §3 定義應算在 S_effective 內或另立第三態，非 shadow" },
+          "seasonal_workers_quarters": { "ms": "Rumah pekerja bermusim", "units": 842, "pct_as_published": 0.9, "shadow_mapping": "非 shadow" },
+          "dilapidated": { "ms": "Hampir roboh", "units": 199, "pct_as_published": 0.2, "shadow_mapping": "屬 δ（汰換）維度，非 shadow" }
+        },
+        "classified_subtotal": { "units": 69026, "pct_of_vacant": 74.7, "tier": "derived", "formula": "六欄相加" },
+        "unclassified_residual": { "units": 23403, "pct_of_vacant": 25.3, "tier": "derived", "formula": "92,429 − 69,026", "note": "DOSM 未公佈這 23,403 戶的分類。其中可能有相當比例是投資持有空置，但無資料支持任何拆分——這是 S_shadow 無法定值的直接原因。" },
+        "shadow_lower_bound": {
+          "units": 18036,
+          "pct_of_census_lq_stock": 2.84,
+          "tier": "derived",
+          "formula": "18,036 / 634,639",
+          "warning": "分母是普查住所存量，不是 NAPIC 住宅存量。禁止把 2.84% 套到 NAPIC 存量上。"
+        },
+        "published_pct_rounding_note": "DOSM 印出的百分比與由戶數重算的值在 holiday_resort_or_transit 一欄差 0.1pp（18,036/92,429 ＝ 19.5%，表上印 19.6%）。其餘五欄一致。屬來源端四捨五入雜訊，戶數為準。"
+      },
+
+      "MALAYSIA": {
+        "tier": "primary",
+        "source": "dosm_district_release",
+        "vacant_total": 1862827,
+        "note": "DOSM 新聞稿正文只給百分比，未給絕對戶數。",
+        "reasons_pct_as_published": {
+          "newly_completed_for_rent_or_sale": 37.8,
+          "holiday_resort_or_transit": 23.3,
+          "for_repair_or_renovation": 5.4,
+          "homestay": 2.3,
+          "seasonal_workers_quarters": 2.2,
+          "dilapidated": 2.0
+        },
+        "national_shadow_mapping": "全國層的 holiday_resort_or_transit 不可當 S_shadow。DOSM 同一份新聞稿顯示該欄占比最高的縣全在 Sarawak（Kanowit 87.0%、Pakan 76.4%、Tatau 69.3%），指的是長屋／原鄉住屋而非都會投資持有。同一欄位在 KL 與在 Kanowit 是兩件不同的事。",
+        "district_extremes_as_published": {
+          "highest_vacancy_rate": [
+            { "district": "Telang Usan, Sarawak", "pct": 41.2 },
+            { "district": "Tanjung Manis, Sarawak", "pct": 40.7 },
+            { "district": "Cameron Highlands, Pahang", "pct": 40.2 }
+          ],
+          "lowest_vacancy_rate": [
+            { "district": "Lahad Datu, Sabah", "pct": 3.1 },
+            { "district": "Kinabatangan, Sabah", "pct": 3.5 },
+            { "district": "Tambunan, Sabah", "pct": 4.0 }
+          ],
+          "highest_newly_completed_share": [
+            { "district": "Sepang, Selangor", "pct": 71.3 },
+            { "district": "Gombak, Selangor", "pct": 62.9 },
+            { "district": "Petaling, Selangor", "pct": 62.9 }
+          ],
+          "highest_holiday_transit_share": [
+            { "district": "Kanowit, Sarawak", "pct": 87.0 },
+            { "district": "Pakan, Sarawak", "pct": 76.4 },
+            { "district": "Tatau, Sarawak", "pct": 69.3 }
+          ]
+        }
+      },
+
+      "MALAYSIA_absolute_units_secondary": {
+        "tier": "secondary",
+        "source": "kri_views_2023",
+        "do_not_use_as_observation": true,
+        "why_recorded": "KRI 呈現的全國絕對戶數與 DOSM 原始百分比相容（704,935/1,862,827 ＝ 37.84% 對 37.8%；433,953/1,862,827 ＝ 23.30% 對 23.3%），但這些絕對數未在 DOSM 新聞稿正文出現。記錄於此供追溯，不得當觀察值引用。",
+        "values": {
+          "newly_completed_for_rent_or_sale": 704935,
+          "holiday_resort_or_transit": 433953,
+          "for_repair_or_renovation": 100978,
+          "homestay": 42767,
+          "seasonal_workers_quarters": 40594,
+          "dilapidated": 37729
+        },
+        "kri_self_note": "KRI 自註：the given data breakdown for vacancy reasons only totals to 1.3 million（1,360,956 戶；相對 1,862,827 的未分類殘差 501,871 戶＝26.9%）。",
+        "kri_stated_limitation": "the data lacks a detailed breakdown between newly completed units and those intended for rental, making it difficult to ascertain whether the units are primarily for long term rental or purchased for speculative purposes."
+      }
+    }
+  },
+
+  "rejected_proxies": {
+    "note": "以下代理經 2026-08-02 偵察判定不可用，記錄於此以免重複偵察。詳見 feasibility_report。",
+    "utility_zero_consumption": "ST《Performance and Statistical Information 2014》與 TNB IAR 2024 皆只公佈帳戶數，無用量分布、無零用量戶數。衍生的『存量 − 帳戶數』缺口法已證偽：2014 半島 TNB 住宅帳戶 6,710,032 vs NAPIC 半島住宅存量 4,441,210，帳戶多出 51%，母體不同。",
+    "ccc_vs_assessment_tax": "評估稅按估值課徵、與占用無關（DBKL FAQ 明載空置不得豁免）。《Akta Kerajaan Tempatan 1976》第 162 條的 elaun kekosongan 需證明已作合理努力出租，選擇方向與 S_shadow 相反。DBKL Data Terbuka 12 筆資料集無任何房產稅籍或空置項目。",
+    "rental_registration_lhdn": "MY 無強制住宅租賃登記制度。LHDN 年報與統計頁只發布徵管績效，無按所得來源（B2 法定租金所得）分解的申報戶數。即使有，漏報會系統性高估空置。",
+    "opendosm_hh_lq_annual_series": "資料集 hh_lq_state（https://storage.dosm.gov.my/demography/hh_lq_state.csv，年頻 1970–2024 州別，含 households 與 living_quarters）已實測證偽：非普查年為人口推計外推值，KL 2017–2019 算出負空置率（−0.2%／−1.0%／−1.7%），2019→2020 有 11.3pp 水準斷點，2020 後為機械單調延伸。不含新增資訊。",
+    "teduh_unit_level": "KRI 從 KPKT TEDUH 爬取的單位層資料庫有銷售狀態（sold/unsold）但無占用狀態。可升級 S_overhang 至週頻單位層，對 S_shadow 零資訊。",
+    "span_water": "未結項——span.gov.my 在偵察期間連續連線逾時（兩次共 135 秒），取數失敗屬連線層而非內容層。不得寫成『已確認無資料』，重試成本低。"
+  },
+
+  "reopen_triggers": [
+    "ST／TNB 公佈住宅帳戶用量分布（半島 910 萬具智慧電表 2029 年前裝設完成，資料屆時必然存在）",
+    "2030 普查把『新完工／待租售』拆成『未售』與『已售待租』，並降低未分類殘差",
+    "MY 立法課空屋稅——課稅會創造行政空置登記，那將是第一個真正的 S_shadow 觀察值",
+    "SPAN 網站恢復可達後，確認 Water Services Industry Performance Report 是否含住宅用量分布"
+  ]
+}
