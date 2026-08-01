@@ -92,6 +92,38 @@ const t = await r.text();   // CSV：observation_date,VALUE
 **BIS 房價的實質序列是全頁最有力的一張圖**：名目看起來漂亮，實質往往顯示
 長期橫盤。泰國：實質指數 1993 年見頂，2015 年才收復，來回 22 年。
 
+### 各國央行／統計局：先試「SPA 的資料端點」再放棄
+
+FRED 只是起點。多數國家的長序列與城市級資料只在本國央行手上，而那些站
+通常是 SPA。**SPA 的畫面抓不到，不代表它的資料端點抓不到**——前端要
+拿資料一定得打某個 API，而那個 API 往往比搜尋／瀏覽端點寬鬆。
+
+作法：瀏覽器開到該網域任一頁 → DevTools 或攔截 `fetch`／`XHR` 看前端
+自己打哪個端點、送什麼 body → 用同源 fetch 重放，改參數即可批次取數。
+
+**已驗證可用的例子——土耳其央行 EVDS3**（2026-08 取得，無需 API key；
+只有搜尋／瀏覽端點要 `key` header，資料端點不要）：
+
+```js
+// 在 evds3.tcmb.gov.tr 任一頁執行
+await fetch('/igmevdsms-dis/fe', {method:'POST', credentials:'same-origin',
+  headers:{'Content-Type':'application/json'},
+  body: JSON.stringify({type:'json', series:'TP.KFE.TR-TP.KFE.TR10',
+    aggregationTypes:'avg-avg', formulas:'0-0',
+    startDate:'01-01-2010', endDate:'01-08-2026',
+    frequency:'5',            // 4=季 5=月
+    decimalSeperator:'.', decimal:'2', dateFormat:'0',
+    lang:'tr', yon:'0', sira:'0', ozelFormuller:[],
+    groupSeperator:false, isRaporSayfasi:false})
+}).then(r=>r.json());
+```
+序列以 `-` 串接，回傳的鍵改用 `_`。這一招解鎖了 TCMB 房價指數（含
+**伊斯坦堡等 NUTS-2 分項**，2010-01 起月頻）、新租租金指數、單位價格與
+單位租金（可直接算實質毛收益率）、政策與房貸利率、CPI／PPI。
+
+**反例（已知打不開）**：杜拜土地局 `gateway.dubailand.gov.ae/open-data/*`
+回 `INVALID_REQUEST_PARAMETERS`，三次後放棄，成交量序列因此留白。
+
 ### 重前端 SPA 抓不到就停手
 REIC 官網（`reic.or.th`）是 SPA，統計頁內容擷取不出來。試兩三次就放棄，
 在頁上標明資料區間，不要硬湊。**不要在這種站上耗超過幾輪。**

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Türkiye Macro × Property | Türkiye · Property Check</title>
+<meta name="description" content="Why a policy rate run backwards for two years, an inflation-voided credit system and a deteriorating external account drive Turkish property more than any local variable. Four parts, 15 charts. Updated August 2026.">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=IBM+Plex+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/kl-theme.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+.wrap{max-width:900px;margin:0 auto;padding:30px 20px 10px}
+body.zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif}
+.wrap, .wrap p, .wrap li, .lede, .pt li, .col li, .src, .cat li, .narr-p, .concept p, .prop-take p, .tl li{line-height:2.0}
+
+.pg-head{margin-bottom:22px}
+.pg-title{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:26px;letter-spacing:-.01em;margin:0 0 10px;line-height:1.3}
+.pg-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+.snap{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:22px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 12px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:4px;min-width:0}
+.stat-lbl{font-size:10.5px;font-weight:600;letter-spacing:.04em;color:var(--gold-deep);text-transform:uppercase;line-height:1.45}
+body.zh .stat-lbl{text-transform:none;letter-spacing:0}
+.stat-num{font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:19px;font-weight:700;color:var(--navy);line-height:1.2}
+.stat-tag{font-size:10.5px;font-weight:600;line-height:1.5}
+.t-green{color:#15803d}.t-orange{color:#a16207}.t-red{color:#b91c1c}.t-blue{color:#1d4ed8}
+
+.lede{background:linear-gradient(135deg,#0d2244 0%,#173564 100%);color:#fff;border-radius:14px;padding:20px 24px;margin-bottom:32px;font-size:14px;box-shadow:var(--shadow-md)}
+.lede b{color:var(--gold-light);font-weight:600}
+.lede .lk{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+.lede a{color:var(--gold-light);font-weight:600}
+
+.blk{margin-bottom:34px}
+.blk h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:600;color:var(--navy);font-size:18px;margin:0 0 4px;line-height:1.35}
+.blk .sub{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:1.6}
+.chartbox{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 12px 8px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.chartbox .kick{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin:2px 4px 8px}
+body.zh .chartbox .kick{letter-spacing:.03em;text-transform:none}
+.ch{height:250px}
+.pt{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.pt li{position:relative;padding-left:18px;font-size:13px;color:var(--text-soft)}
+.pt li::before{content:'';position:absolute;left:0;top:13px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.pt li b{color:var(--navy);font-weight:600}
+.pt li.warn::before{background:#b91c1c}.pt li.good::before{background:#15803d}
+
+.sec-rule{display:flex;align-items:center;gap:12px;margin:40px 0 18px}
+.sec-rule h2{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:21px;margin:0;white-space:nowrap;line-height:1.3}
+.sec-rule::after{content:'';flex:1;height:1px;background:var(--gold-line)}
+
+.pull{font-family:'Playfair Display','Noto Serif TC',serif;font-size:17px;line-height:1.7;color:var(--navy);border-left:3px solid var(--gold);padding:3px 0 3px 16px;margin:0 0 18px;font-weight:600}
+.narr-p{font-size:13.5px;color:var(--text-soft);margin:0 0 16px}
+.narr-p b{color:var(--navy);font-weight:600}
+.narr-p a{color:var(--gold-deep);font-weight:600}
+.mrow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:2px 0 24px}
+.m{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;min-width:0}
+.m .mn{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;color:var(--navy);line-height:1.2}
+.m .ml{font-size:10px;color:var(--muted);line-height:1.55;margin-top:4px}
+.m .mn.neg{color:#b91c1c}.m .mn.pos{color:#15803d}.m .mn.gold{color:var(--gold-deep)}
+
+.concept{background:var(--bg-section);border:1px solid var(--gold-soft);border-radius:12px;padding:16px 20px;margin:2px 0 24px}
+.concept h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 8px}
+body.zh .concept h4{letter-spacing:.02em;text-transform:none}
+.concept p{font-size:12.5px;color:var(--text-soft);margin:0 0 8px}
+.concept p:last-child{margin-bottom:0}
+.concept p b{color:var(--navy);font-weight:600}
+.concept p.g b{color:#15803d}.concept p.r b{color:#b91c1c}
+
+.prop-take{background:linear-gradient(135deg,#0d2244,#173564);color:#fff;border-radius:14px;padding:18px 22px;margin:6px 0 30px;box-shadow:var(--shadow-md)}
+.prop-take .pk{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;display:block}
+body.zh .prop-take .pk{letter-spacing:.03em;text-transform:none}
+.prop-take p{margin:0 0 10px;font-size:13.5px;color:rgba(255,255,255,.9)}
+.prop-take p:last-child{margin-bottom:0}
+.prop-take b{color:var(--gold-light)}
+.prop-take a{color:var(--gold-light);font-weight:600}
+
+.cat{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:6px 0 22px}
+.cat .c{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-sm)}
+.cat .c h4{font-size:12px;font-weight:700;color:var(--navy);margin:0 0 6px;line-height:1.4}
+.cat .c p{font-size:12px;color:var(--muted);margin:0;line-height:1.85}
+.cat .c p b{color:var(--navy);font-weight:600}
+
+.tl{list-style:none;margin:6px 0 22px;padding:0 0 0 4px;display:grid;gap:0}
+.tl li{position:relative;padding:0 0 16px 26px;border-left:2px solid var(--gold-soft);font-size:12.5px;color:var(--text-soft)}
+.tl li:last-child{border-left-color:transparent;padding-bottom:0}
+.tl li::before{content:'';position:absolute;left:-6px;top:9px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--bg-primary)}
+.tl li.hard::before{background:#b91c1c}
+.tl li .yr{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--navy);margin-right:8px;font-size:12px}
+.tl li b{color:var(--navy);font-weight:600}
+
+.eq{background:linear-gradient(135deg,#0d2244,#173564);color:#fff;border-radius:14px;padding:22px 24px;margin:6px 0 20px;box-shadow:var(--shadow-md);text-align:center}
+.eq .ef{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;line-height:2.1;color:var(--gold-light);letter-spacing:.01em}
+.eq .en{font-size:11.5px;color:rgba(255,255,255,.72);margin-top:10px;line-height:1.8}
+.eqv{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:2px 0 24px}
+.eqv .v{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:13px 15px;box-shadow:var(--shadow-sm)}
+.eqv .v h5{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--gold-deep);margin:0 0 5px}
+.eqv .v p{font-size:11.5px;color:var(--text-soft);margin:0;line-height:1.85}
+.eqv .v p b{color:var(--navy);font-weight:600}
+.eqv .v.neg{border-left:3px solid #b91c1c}
+.eqv .v.pos{border-left:3px solid #15803d}
+.eqv .v.mid{border-left:3px solid var(--gold)}
+
+.mtbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:2px 0 10px}
+.mtbl{min-width:680px;width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.mtbl th{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--gold-deep);text-align:left;padding:10px 14px;border-bottom:2px solid var(--gold-soft);background:var(--bg-section)}
+body.zh .mtbl th{text-transform:none;letter-spacing:0}
+.mtbl td{font-size:12px;color:var(--text-soft);padding:11px 14px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.85}
+.mtbl tr:last-child td{border-bottom:none}
+.mtbl td.who{font-weight:700;color:var(--navy);white-space:nowrap}
+.mtbl td b{color:var(--navy);font-weight:600}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:32px}
+.col{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow-sm)}
+.col.up{border-top:3px solid #15803d}.col.dn{border-top:3px solid #b91c1c}
+.col h3{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px}
+body.zh .col h3{text-transform:none;letter-spacing:.02em}
+.col.up h3{color:#15803d}.col.dn h3{color:#b91c1c}
+.col ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.col li{font-size:12.5px;color:var(--text-soft);padding-left:15px;position:relative}
+.col li::before{content:'';position:absolute;left:0;top:12px;width:5px;height:5px;border-radius:50%}
+.col.up li::before{background:#15803d}.col.dn li::before{background:#b91c1c}
+
+.watch{background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:14px;padding:18px 22px;margin-bottom:26px}
+.watch h3{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 10px}
+body.zh .watch h3{text-transform:none;letter-spacing:.02em}
+.watch ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.watch li{font-size:12.5px;color:var(--text-soft);padding-left:16px;position:relative;line-height:1.95}
+.watch li::before{content:'▸';position:absolute;left:0;top:0;color:var(--gold-deep);font-size:11px;line-height:1.95}
+.watch li b{color:var(--navy);font-weight:600}
+
+.src{font-size:11px;color:var(--muted);background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:12px 16px;margin-bottom:8px}
+.src a{color:var(--gold-deep)}
+.fnote{font-size:10px;color:var(--muted);margin:-8px 4px 14px;line-height:1.6}
+
+.tier{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0 14px}
+.tier .t{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 15px;box-shadow:var(--shadow-sm)}
+.tier .t.a{border-top:3px solid #15803d}
+.tier .t.b{border-top:3px solid var(--gold)}
+.tier .t.c{border-top:3px solid #b91c1c}
+.tier .t h5{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin:0 0 6px}
+body.zh .tier .t h5{text-transform:none;letter-spacing:.02em}
+.tier .t.a h5{color:#15803d}.tier .t.b h5{color:var(--gold-deep)}.tier .t.c h5{color:#b91c1c}
+.tier .t p{font-size:11.5px;line-height:1.85;color:var(--text-soft);margin:0}
+.tier .t p b{color:var(--navy);font-weight:600}
+@media(max-width:760px){.tier{grid-template-columns:1fr}}
+
+.thesis{background:var(--card);border:1px solid var(--gold-soft);border-radius:14px;padding:20px 22px;margin:0 0 32px;box-shadow:var(--shadow-sm)}
+.thesis > .tk{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:14px}
+body.zh .thesis > .tk{letter-spacing:.03em;text-transform:none}
+.thesis ol{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:th}
+.thesis li{counter-increment:th;position:relative;padding-left:34px;border-left:2px solid var(--gold-soft);padding-bottom:2px}
+.thesis li::before{content:counter(th);position:absolute;left:-13px;top:0;width:24px;height:24px;border-radius:50%;background:var(--navy);color:var(--gold-light);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.thesis .cl{display:block;font-size:14px;font-weight:700;color:var(--navy);line-height:1.6;margin-bottom:6px}
+.thesis .ev{display:block;font-size:12.5px;color:var(--text-soft);line-height:1.85;margin-bottom:5px}
+.thesis .ev b{color:var(--navy);font-weight:600}
+.thesis .fa{display:block;font-size:11.5px;color:#b91c1c;line-height:1.75}
+.thesis .fa b{color:#b91c1c;font-weight:700}
+.thesis .go{font-size:11px;color:var(--gold-deep);font-weight:600}
+
+@media(max-width:760px){.snap,.mrow{grid-template-columns:repeat(3,1fr)}.cols,.cat,.eqv{grid-template-columns:1fr}.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}.eq .ef{font-size:11.5px}}
+@media(max-width:440px){.snap,.mrow{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div id="nav-root"></div>
+<script src="/js/nav.js"></script>
+
+<main class="wrap">
+
+  <div class="pg-head">
+    <h1 class="pg-title">
+      <span class="lang-en">Türkiye — Macro × Property</span>
+      <span class="lang-zh" style="display:none">土耳其 · 總經 × 房產</span>
+    </h1>
+    <div class="pg-badges">
+      <span class="kpi-badge badge-blue"><span class="lang-en">Policy rate 37.00% since 23 Jan 2026</span><span class="lang-zh" style="display:none">政策利率 37.00%，2026 年 1 月 23 日起</span></span>
+      <span class="kpi-badge badge-red"><span class="lang-en">CPI 32.1%, disinflation stalled</span><span class="lang-zh" style="display:none">CPI 32.1%，反通膨停滯</span></span>
+      <span class="kpi-badge badge-red"><span class="lang-en">Reserves ex-gold −US$21.9bn in five months</span><span class="lang-zh" style="display:none">外匯存底（不含黃金）五個月減少 219 億美元</span></span>
+      <span class="kpi-badge badge-orange"><span class="lang-en">Updated Aug 2026</span><span class="lang-zh" style="display:none">更新至 2026年8月</span></span>
+    </div>
+  </div>
+
+  <div class="snap">
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">One-week repo</span><span class="lang-zh" style="display:none">一週期附買回利率</span></div><div class="stat-num">37.00%</div><div class="stat-tag t-blue"><span class="lang-en">official rate · from 23 Jan 2026</span><span class="lang-zh" style="display:none">官方政策利率 · 2026年1月23日起</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Effective funding cost</span><span class="lang-zh" style="display:none">有效資金成本</span></div><div class="stat-num">40.00%</div><div class="stat-tag t-orange"><span class="lang-en">Apr–Jul 2026 · 300bp above policy</span><span class="lang-zh" style="display:none">2026年4至7月 · 高於政策利率 300 個基點</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">CPI, year on year</span><span class="lang-zh" style="display:none">CPI 年增率</span></div><div class="stat-num">32.1%</div><div class="stat-tag t-red"><span class="lang-en">Jun 2026 · up from 30.7% in Jan</span><span class="lang-zh" style="display:none">2026年6月 · 1月為 30.7%</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Household credit / GDP</span><span class="lang-zh" style="display:none">家庭信用／GDP</span></div><div class="stat-num">10.1%</div><div class="stat-tag t-red"><span class="lang-en">2025Q4 · peak 19.4% in 2013Q3</span><span class="lang-zh" style="display:none">2025Q4 · 2013Q3 高點 19.4%</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Real effective exch. rate</span><span class="lang-zh" style="display:none">實質有效匯率</span></div><div class="stat-num">108.7</div><div class="stat-tag t-orange"><span class="lang-en">Jun 2026 · Jan 2022 low was 78.3</span><span class="lang-zh" style="display:none">2026年6月 · 2022年1月低點 78.3</span></div></div>
+    <div class="stat"><div class="stat-lbl"><span class="lang-en">Reserves excl. gold</span><span class="lang-zh" style="display:none">外匯存底（不含黃金）</span></div><div class="stat-num">$39.2bn</div><div class="stat-tag t-red"><span class="lang-en">Jun 2026 · lowest since Jan 2021</span><span class="lang-zh" style="display:none">2026年6月 · 2021年1月以來最低</span></div></div>
+  </div>
+
+  <div class="lede">
+    <span class="lk"><span class="lang-en">Bottom line</span><span class="lang-zh" style="display:none">總結</span></span>
+    <span class="lang-en">Turkish property has been priced by one variable for five years, and that variable is the real policy rate. Between November 2021 and June 2023 the central bank cut into accelerating inflation; the effective funding cost less consumer price inflation reached <b>−74 percentage points in November 2022</b>. Real house prices rose 168% in the four years to the second quarter of 2023. The stance then reversed to a peak policy rate of 50.00% in March 2024, the real rate crossed into positive territory in September 2024, and real prices have fallen in every quarter since the 2023 peak. The correction has run entirely through inflation: nominal prices have not declined in a single quarter over the whole sixteen-year series.<br><br>The second consequence of that inflation is structural rather than cyclical. <b>Household credit fell from 19.4% of GDP in the third quarter of 2013 to 9.4% in 2024</b>, and not by repayment — the nominal stock rose 5.7 times between the first quarter of 2022 and the fourth quarter of 2025. Price levels destroyed the real value of the debt faster than new lending replaced it. Mortgaged sales were 10.8% of Turkish house transactions in 2024 against 40.0% in 2013. The credit channel through which rate policy reaches house prices in most markets does not operate here at any material scale, which is set out transaction by transaction in the companion <a href="/tr/report">Istanbul Property Market Report</a>.<br><br>The binding constraint is external, and it is deteriorating now. Reserves excluding gold fell from <b>US$61.1bn in January 2026 to US$39.2bn in June 2026</b>, a fall of US$21.9bn in five months to the lowest reading since the January 2021 trough, while the real effective exchange rate rose from 104.9 to 108.7 over the same months. Defending an appreciating real lira on a falling reserve stock is the configuration that broke in 2018 and again in 2021. We regard this as the single most important observable risk on this page, and it is not yet reflected in the general commentary on the market.</span>
+    <span class="lang-zh" style="display:none">土耳其房產於近五年由單一變數定價，該變數為實質政策利率。2021 年 11 月至 2023 年 6 月間，央行於通膨加速期間持續降息；有效資金成本扣除消費者物價年增率後，於 <b>2022 年 11 月達 −74 個百分點</b>。至 2023 年第二季止的四年間，實質房價上漲 168%。政策立場其後反轉，政策利率於 2024 年 3 月升至 50.00% 的高點，實質利率於 2024 年 9 月轉正，實質房價自 2023 年高點起逐季下跌。該次修正完全經由通膨完成：於全部十六年的序列中，名目房價未曾出現單季下跌。<br><br>通膨的第二項後果屬結構性而非循環性。<b>家庭信用佔 GDP 比重自 2013 年第三季的 19.4% 降至 2024 年的 9.4%</b>，其成因並非償還：名目餘額於 2022 年第一季至 2025 年第四季間增為 5.7 倍。物價水準摧毀債務實質價值的速度，快於新增貸放的補充速度。2024 年土耳其房屋成交中使用房貸者佔 10.8%，2013 年為 40.0%。於多數市場中將利率政策傳導至房價的信用管道，於此地並不以具規模的方式運作，其逐筆成交的證據見對照的<a href="/tr/report">《伊斯坦堡住宅市場報告》</a>。<br><br>真正的約束條件在對外帳，且正在劣化。外匯存底（不含黃金）自 <b>2026 年 1 月的 611 億美元降至 2026 年 6 月的 392 億美元</b>，五個月減少 219 億美元，為 2021 年 1 月谷底以來最低；同期實質有效匯率自 104.9 升至 108.7。以下降中的存底支撐升值中的實質里拉，即為 2018 年與 2021 年兩度失守的組合。我們認為此為本頁最重要的可觀察風險，且尚未反映於市場的一般評論。</span>
+  </div>
+
+  <div class="thesis">
+    <span class="tk"><span class="lang-en">The three arguments on this page</span><span class="lang-zh" style="display:none">本頁的三個核心論點</span></span>
+    <ol>
+      <li>
+        <span class="cl"><span class="lang-en">Monetary policy has been the dominant asset-price variable in Türkiye, and for two years it was run backwards.</span><span class="lang-zh" style="display:none">貨幣政策是土耳其資產價格的主導變數，且其中兩年是倒著執行的。</span></span>
+        <span class="ev"><span class="lang-en"><b>Evidence:</b> the one-week repo rate was cut from 19.00% in September 2021 to 8.50% in February 2023 while consumer price inflation rose from 19.6% to 55.2%. The derived real funding rate reached <b>−74 percentage points in November 2022</b>. It was then raised to 50.00% by March 2024 and stands at 37.00%, with the effective funding cost at 40.00%. Real house prices peaked in the second quarter of 2023, two quarters after the real rate turned.</span><span class="lang-zh" style="display:none"><b>證據：</b>一週期附買回利率自 2021 年 9 月的 19.00% 降至 2023 年 2 月的 8.50%，同期消費者物價年增率自 19.6% 升至 55.2%。推導所得的實質資金利率於 <b>2022 年 11 月達 −74 個百分點</b>。其後於 2024 年 3 月升至 50.00%，現為 37.00%，有效資金成本為 40.00%。實質房價於 2023 年第二季見頂，時點在實質利率轉折後兩季。</span></span>
+        <span class="fa"><span class="lang-en"><b>Wrong if:</b> the real policy rate stays positive for four consecutive quarters while real house prices rise over the same span. That would show the rate is no longer the dominant term.</span><span class="lang-zh" style="display:none"><b>此論點錯誤的條件：</b>實質政策利率連續四季為正，而同期實質房價上升。該情形代表利率已非主導變數。</span></span>
+        <span class="go"><span class="lang-en">→ Part 1</span><span class="lang-zh" style="display:none">→ 見週期篇</span></span>
+      </li>
+      <li>
+        <span class="cl"><span class="lang-en">Inflation restructured the household balance sheet without anyone deleveraging, and that is why the credit channel no longer transmits.</span><span class="lang-zh" style="display:none">通膨在無人去槓桿的情況下重組了家庭資產負債表，信用管道因此不再傳導。</span></span>
+        <span class="ev"><span class="lang-en"><b>Evidence:</b> household credit fell from <b>19.4% of GDP in 2013Q3 to 9.4% in 2024</b>, while the nominal stock rose from TRY 1,102bn in 2022Q1 to TRY 6,310bn in 2025Q4. Credit to the private non-financial sector fell 39 percentage points of GDP in four years. Mortgaged transactions were 10.8% of Turkish house sales in 2024 against 40.0% in 2013.</span><span class="lang-zh" style="display:none"><b>證據：</b>家庭信用佔 GDP 比重自 <b>2013Q3 的 19.4% 降至 2024 年的 9.4%</b>，同期名目餘額自 2022Q1 的 11,020 億里拉增至 2025Q4 的 63,100 億里拉。民間非金融部門信用佔 GDP 比重於四年間下降 39 個百分點。2024 年房貸成交佔土耳其房屋成交的 10.8%，2013 年為 40.0%。</span></span>
+        <span class="fa"><span class="lang-en"><b>Wrong if:</b> household credit returns above 15% of GDP, or the mortgaged share of transactions holds above 20% for four consecutive quarters, while the real policy rate stays positive.</span><span class="lang-zh" style="display:none"><b>此論點錯誤的條件：</b>家庭信用佔 GDP 比重回升逾 15%，或房貸成交佔比於實質政策利率為正的期間連續四季維持於 20% 以上。</span></span>
+        <span class="go"><span class="lang-en">→ Part 2</span><span class="lang-zh" style="display:none">→ 見經濟結構篇</span></span>
+      </li>
+      <li>
+        <span class="cl"><span class="lang-en">The external account is the binding constraint on this whole configuration, and it is deteriorating now.</span><span class="lang-zh" style="display:none">對外帳是整套配置的約束條件，且正在劣化。</span></span>
+        <span class="ev"><span class="lang-en"><b>Evidence:</b> reserves excluding gold fell from <b>US$61.1bn in January 2026 to US$39.2bn in June 2026</b>, the lowest since the January 2021 trough of US$37.1bn, while the BIS real effective exchange rate rose from 104.9 to 108.7. Nominal depreciation has been held near 1.1% a month against 32% inflation, which is a deliberate real appreciation financed out of the reserve stock.</span><span class="lang-zh" style="display:none"><b>證據：</b>外匯存底（不含黃金）自 <b>2026 年 1 月的 611 億美元降至 2026 年 6 月的 392 億美元</b>，為 2021 年 1 月谷底 371 億美元以來最低；同期 BIS 實質有效匯率自 104.9 升至 108.7。名目貶值幅度被維持於每月約 1.1%，對照 32% 的通膨，此為以存底支應的刻意實質升值。</span></span>
+        <span class="fa"><span class="lang-en"><b>Wrong if:</b> reserves excluding gold rebuild above US$60bn while the real effective exchange rate holds above 105 for two consecutive quarters. That would show the real appreciation is being financed by inflows rather than by the reserve stock.</span><span class="lang-zh" style="display:none"><b>此論點錯誤的條件：</b>外匯存底（不含黃金）回升至 600 億美元以上，且實質有效匯率連續兩季維持於 105 以上。該情形代表實質升值係由資金流入而非存底支應。</span></span>
+        <span class="go"><span class="lang-en">→ Part 3</span><span class="lang-zh" style="display:none">→ 見政治與對外約束篇</span></span>
+      </li>
+    </ol>
+  </div>
+
+  <!-- ════════ PART 1 ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Part 1 · The Cycle</span><span class="lang-zh" style="display:none">週期篇 · 政策利率決定了一切</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Real house prices rose 168% in four years and have fallen for eleven quarters, and the nominal index never once declined</span><span class="lang-zh" style="display:none">實質房價四年上漲 168%，其後連跌十一季，名目指數未曾下跌</span></h2>
+    <p class="sub"><span class="lang-en">Three measures of real Turkish house prices, indexed to January 2010 = 100 · TCMB house price index deflated by the consumer price index (author's calculation) and the BIS real index for cross-validation · January observations, plus June 2026</span><span class="lang-zh" style="display:none">三種土耳其實質房價量測，以 2010 年 1 月＝100 設定基期 · TCMB 房價指數經消費者物價指數平減（作者計算），並以 BIS 實質指數交叉驗證 · 各年 1 月觀測值，另加 2026 年 6 月</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Real house prices, sixteen years, two independent computations</span><span class="lang-zh" style="display:none">實質房價十六年，兩套獨立計算</span></div><div id="mHpi" class="ch"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">The Turkish national house price index begins in <b>January 2010</b>. This is not a truncation of a longer series: TCMB's own hedonic index starts there and the BIS series starts at the same point. No longer official Turkish national house price series exists, and any claim about Turkish house prices before 2010 rests on something other than a national index.</span><span class="lang-zh" style="display:none">土耳其全國房價指數始於 <b>2010 年 1 月</b>。此非長序列的截斷：TCMB 自身的特徵價格指數即由該點起算，BIS 序列的起點相同。土耳其並不存在更長的官方全國房價序列，任何關於 2010 年以前土耳其房價的陳述，其依據並非全國指數。</span></li>
+      <li><span class="lang-en">Deflating the TCMB index by the consumer price index gives a real national series that rose from 107.0 in January 2019 to a peak in the third quarter of 2023 and stood at <b>212.9 in June 2026</b>. The BIS real index, computed independently by a different institution from the same underlying data, gives 107.8 and 219.5 at the corresponding points. <b>The two agree within about two per cent across sixteen years</b>, which is the strongest available check on the deflation method used throughout this page.</span><span class="lang-zh" style="display:none">以消費者物價指數平減 TCMB 指數，所得全國實質序列自 2019 年 1 月的 107.0 升至 2023 年第三季的高點，<b>2026 年 6 月為 212.9</b>。由另一機構就相同底層資料獨立計算的 BIS 實質指數，於對應時點分別為 107.8 與 219.5。<b>兩者於十六年間的差距約在 2% 以內</b>，此為本頁所採平減方法可得的最強檢核。</span></li>
+      <li class="warn"><span class="lang-en">İstanbul is the weaker of the two lines after 2023. Its real index reached 269.8 in January 2023 and <b>219.7 in June 2026</b>, a fall of 18.6%, against a national fall of 11.7% over the same span. The city led the country in real terms from 2014 to 2018 and has lagged it since 2023.</span><span class="lang-zh" style="display:none">2023 年之後，伊斯坦堡為兩條線中較弱者。其實質指數於 2023 年 1 月為 269.8，<b>2026 年 6 月為 219.7</b>，跌幅 18.6%，同期全國跌幅為 11.7%。該市於 2014 至 2018 年間以實質計領先全國，2023 年以後則落後。</span></li>
+    </ul>
+    <p class="fnote"><span class="lang-en">Derived. The consumer price deflator is chained from published January year-on-year rates 2010 to 2026 and extended to June 2026 with the published monthly rates for 2026. The chained January index reproduces the source dossier's independently computed values at every checkpoint. The BIS line ends at the first quarter of 2026.</span><span class="lang-zh" style="display:none">推導值。物價平減因子係依 2010 至 2026 年各年 1 月公布之年增率連鎖計算，並以 2026 年公布之各月月增率延伸至 2026 年 6 月。該連鎖後之 1 月指數於每一檢核點均重現原始資料的獨立計算值。BIS 線止於 2026 年第一季。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Three different numbers are all called the policy rate, and they differ by four and a half points today</span><span class="lang-zh" style="display:none">三個不同的數字都被稱為政策利率，今日彼此相差四個半百分點</span></h2>
+    <p class="sub"><span class="lang-en">TCMB one-week repo rate from the official decision table, TCMB average cost of funding, and the OECD immediate interest rate · monthly, January 2021 to July 2026</span><span class="lang-zh" style="display:none">TCMB 一週期附買回利率（取自官方決議表）、TCMB 平均資金成本，以及 OECD 即期利率 · 月頻，2021 年 1 月至 2026 年 7 月</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Which rate is the policy rate</span><span class="lang-zh" style="display:none">哪一個才是政策利率</span></div><div id="mPolicy" class="ch"></div></div>
+    <div class="concept">
+      <h4><span class="lang-en">The distinction, stated so it can be checked</span><span class="lang-zh" style="display:none">此一區別的可查核陳述</span></h4>
+      <p><span class="lang-en">The <b>one-week repo rate</b> is the announced policy rate and is what the central bank's own decision table records: 37.00% since 23 January 2026. The <b>average cost of funding</b> is what the central bank actually charged the banking system: it equals the announced rate exactly in calm periods, and sits above it when the bank funds off the upper band. It has been <b>40.00% from April to July 2026</b>, three points above the announced rate. The <b>OECD immediate rate</b> is the overnight borrowing rate, not the policy rate, and reads 35.50%. The three coincide at 50.00, 50.00 and 47.00 in mid-2024, which is what identifies them.</span><span class="lang-zh" style="display:none"><b>一週期附買回利率</b>為公告政策利率，即央行決議表所載者：2026 年 1 月 23 日起為 37.00%。<b>平均資金成本</b>為央行實際向銀行體系收取的利率：於平穩期間與公告利率完全相等，於央行以利率走廊上緣供給資金時則高於公告利率。該項於 <b>2026 年 4 至 7 月為 40.00%</b>，高於公告利率 3 個百分點。<b>OECD 即期利率</b>為隔夜借款利率而非政策利率，讀數為 35.50%。三者於 2024 年年中分別為 50.00、50.00 與 47.00，該一致性即為辨識三者的依據。</span></p>
+      <p class="r"><span class="lang-en">The distinction is not academic. <b>A real-rate calculation using the OECD series understates the current stance by 450 basis points against the average cost of funding</b>, which is the difference between a modestly restrictive policy and a firmly restrictive one. This page uses the average cost of funding for the stance and the decision table for the narrative, and shows the OECD readings only as marked points.</span><span class="lang-zh" style="display:none">此一區別具實務意義。<b>以 OECD 序列計算實質利率，相對於平均資金成本將低估當前政策緊縮程度達 450 個基點</b>，該差距即為溫和緊縮與明確緊縮之別。本頁以平均資金成本衡量政策立場、以決議表敘述政策歷程，OECD 讀數僅以標記點呈現。</span></p>
+    </div>
+    <p class="fnote"><span class="lang-en">A further caveat on the announced rate: between 2017 and May 2018 the one-week repo was effectively suspended and the central bank funded through the late liquidity window instead, so the announced policy rate understated the effective rate for over a year. Any chart pairing the announced rate with house prices across that span is measuring the wrong variable.</span><span class="lang-zh" style="display:none">關於公告利率的另一項注意事項：2017 年至 2018 年 5 月間，一週期附買回實質上暫停使用，央行改以後期流動性窗口供給資金，公告政策利率因此於一年以上的期間低估實際利率。任何跨越該期間、將公告利率與房價並列的圖表，量測的是錯誤的變數。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The real funding rate went from −74 points to +8 points in two years, and the price peak arrived two quarters after the turn</span><span class="lang-zh" style="display:none">實質資金利率兩年內自 −74 個百分點升至 +8 個百分點，房價高點落在轉折後兩季</span></h2>
+    <p class="sub"><span class="lang-en">TCMB average cost of funding less consumer price inflation, monthly, January 2021 to June 2026 (author's calculation), against the real national house price index at its January observations</span><span class="lang-zh" style="display:none">TCMB 平均資金成本減消費者物價年增率，月頻，2021 年 1 月至 2026 年 6 月（作者計算），對照全國實質房價指數之各年 1 月觀測值</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Real funding rate against real house prices</span><span class="lang-zh" style="display:none">實質資金利率對照實質房價</span></div><div id="mRealRate" class="ch"></div></div>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">The real funding rate was <b>−74.0 percentage points in November 2022</b>, the deepest reading in the series. A borrower with a fixed-rate loan at 10% against inflation of 84% was being paid to hold debt, and a holder of lira cash was losing roughly seven per cent of purchasing power a month. Both facts point at the same asset.</span><span class="lang-zh" style="display:none">實質資金利率於 <b>2022 年 11 月為 −74.0 個百分點</b>，為序列中最深的讀數。以 10% 固定利率借款、對照 84% 的通膨者，實質上因持有債務而獲付；持有里拉現金者則每月損失約 7% 的購買力。兩項事實指向同一類資產。</span></li>
+      <li><span class="lang-en">The rate turned in December 2022, crossed into positive territory in <b>September 2024</b>, and has held between +4.4 and +13.0 points since. The real house price index peaked in the second quarter of 2023, roughly two quarters after the real rate began to improve, and has fallen in every quarter since.</span><span class="lang-zh" style="display:none">該利率於 2022 年 12 月轉折，<b>2024 年 9 月</b>轉為正值，其後維持於 +4.4 至 +13.0 個百分點之間。實質房價指數於 2023 年第二季見頂，約在實質利率開始改善後兩季，其後逐季下跌。</span></li>
+      <li><span class="lang-en">The current reading is <b>+7.9 points on the average cost of funding and +4.9 points on the announced rate</b>, for June 2026. We regard the first as the operative number, because it is what the banking system pays.</span><span class="lang-zh" style="display:none">2026 年 6 月的讀數為<b>以平均資金成本計 +7.9 個百分點、以公告利率計 +4.9 個百分點</b>。我們認為前者為有效數字，因其為銀行體系實際支付的水準。</span></li>
+    </ul>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Double-digit inflation is the Turkish norm, and the 2003 to 2017 disinflation is the exception</span><span class="lang-zh" style="display:none">兩位數通膨是土耳其的常態，2003 至 2017 年的反通膨才是例外</span></h2>
+    <p class="sub"><span class="lang-en">Consumer price inflation, year on year, January observations, 1956 to 2026 · OECD via FRED to 2025, TÜİK bulletin for 2026</span><span class="lang-zh" style="display:none">消費者物價年增率，各年 1 月觀測值，1956 至 2026 年 · 2025 年以前為 OECD 經 FRED，2026 年為 TÜİK 公報</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Seventy years of Turkish inflation</span><span class="lang-zh" style="display:none">七十年的土耳其通膨</span></div><div id="mCpiLong" class="ch"></div></div>
+    <p class="narr-p"><span class="lang-en">Türkiye has recorded double-digit January inflation in the large majority of the years for which the series exists, including a reading of <b>125.9% in January 1995</b> and 101.6% in January 1998. The fifteen years from 2003 to 2017, in which inflation ran between 4.9% and 10.6%, are the anomaly in this record rather than the baseline from which the current episode departed. The practical consequence for a property investor is that the inflation-hedging motive behind Turkish housing demand is not a response to a recent shock; it is a learned behaviour with a seventy-year sample behind it, and it does not disappear when a single disinflation succeeds.</span><span class="lang-zh" style="display:none">於序列存在的年份中，土耳其於絕大多數年度的 1 月錄得兩位數通膨，其中包括 <b>1995 年 1 月的 125.9%</b> 與 1998 年 1 月的 101.6%。2003 至 2017 年這十五年通膨介於 4.9% 至 10.6% 之間，於此紀錄中屬異常值，而非本輪通膨所偏離的基準。對房產投資人的實務意涵為：土耳其住宅需求背後的通膨避險動機，並非對近期衝擊的反應，而是具七十年樣本的習得行為，不會因單一次反通膨成功而消失。</span></p>
+    <p class="fnote"><span class="lang-en">Observations are marked with points. Years between marked points were not retrieved and the connecting line is interpolation, not data. Disinflation stalled in 2026: the January reading was 30.65% and the June reading 32.11%.</span><span class="lang-zh" style="display:none">觀測值以點標示。標示點之間的年度未取得資料，連線為內插而非資料。反通膨於 2026 年停滯：1 月讀數為 30.65%，6 月為 32.11%。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The official price statistics contradict each other by sixty-eight points, and that contradiction is the honest way to state the credibility problem</span><span class="lang-zh" style="display:none">官方物價統計彼此相差六十八個百分點，此一矛盾是陳述可信度問題的誠實方式</span></h2>
+    <p class="sub"><span class="lang-en">TÜİK domestic producer price index and consumer price index, year on year, quarterly, 2021Q2 to 2026Q2 · producer price growth derived from the published index</span><span class="lang-zh" style="display:none">TÜİK 國內生產者物價指數與消費者物價指數年增率，季頻，2021Q2 至 2026Q2 · 生產者物價年增率係由公布指數推導</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Producer prices against consumer prices</span><span class="lang-zh" style="display:none">生產者物價對照消費者物價</span></div><div id="mPpiCpi" class="ch"></div></div>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">In the third quarter of 2022 the domestic producer price index ran at <b>151.5% against a consumer print of 83.5%</b>, a gap of 68 percentage points. Both numbers are produced by the same statistical authority from the same collection apparatus. A gap of that size across a quarter is difficult to reconcile with a consumer index that fully captured the price level at the peak.</span><span class="lang-zh" style="display:none">2022 年第三季，國內生產者物價指數年增 <b>151.5%，同期消費者物價公布值為 83.5%</b>，差距 68 個百分點。兩項數字由同一統計機關以同一套採集機制產生。單季出現此一規模的差距，與一個充分捕捉高峰期物價水準的消費者指數並不相容。</span></li>
+      <li class="good"><span class="lang-en">The same evidence cuts the other way after 2023. Producer prices have run <b>below</b> consumer prices since the third quarter of 2023, and in the second quarter of 2026 read 28.1% against 32.1%. On the same reasoning that made the 2022 gap suspicious, the current consumer index is not obviously understated.</span><span class="lang-zh" style="display:none">2023 年以後，同一證據的方向相反。生產者物價自 2023 年第三季起<b>低於</b>消費者物價，2026 年第二季為 28.1%，對照消費者物價 32.1%。依使 2022 年差距可疑的同一推理，當前消費者指數並無明顯低估。</span></li>
+      <li><span class="lang-en">An independent academic group publishes a competing Turkish inflation index. <b>Its site did not respond during data collection and no figure from it is quoted anywhere on this page</b>, because a number recalled rather than retrieved is not evidence. The producer-consumer wedge above requires no third-party index to make the argument.</span><span class="lang-zh" style="display:none">另有獨立學術團體發布競爭性的土耳其通膨指數。<b>該站於資料採集期間未回應，本頁任何處均未引用其數字</b>，因憑記憶陳述而非實際取得的數字不構成證據。上述生產者與消費者物價的落差，無需第三方指數即可支持此一論述。</span></li>
+    </ul>
+    <div class="concept">
+      <h4><span class="lang-en">Why this matters to every real number on both pages</span><span class="lang-zh" style="display:none">此點對兩頁所有實質數字的意義</span></h4>
+      <p><span class="lang-en">Every real house price, real rent and real interest rate on this site's Turkish pages is a nominal series divided by the consumer price index. <b>If that index understated inflation in 2022 and 2023, the real house price peak shown in Part 1 is too high and the subsequent fall is understated.</b> The direction of the error is therefore known even though its size is not: our real price decline is a conservative reading, not an aggressive one. Since 2025 the producer and consumer series have converged, so the same reasoning does not apply to the recent end of the record.</span><span class="lang-zh" style="display:none">本站土耳其頁面上的每一項實質房價、實質租金與實質利率，均為名目序列除以消費者物價指數所得。<b>若該指數於 2022 與 2023 年低估通膨，則週期篇所示之實質房價高點過高，其後的跌幅被低估。</b>誤差的方向因此為已知，僅其幅度未知：本頁的實質跌幅屬保守讀數而非激進讀數。2025 年以後兩項序列已收斂，故同一推理不適用於紀錄的近期段落。</span></p>
+    </div>
+  </div>
+
+  <!-- ════════ PART 2 ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Part 2 · The Structural Economy</span><span class="lang-zh" style="display:none">經濟結構篇 · 通膨重組了資產負債表</span></h2></div>
+
+  <p class="pull"><span class="lang-en">Household debt halved as a share of the economy while the nominal stock rose fivefold. Nobody repaid anything.</span><span class="lang-zh" style="display:none">家庭債務佔經濟的比重減半，名目餘額卻增為五倍。無人償還任何款項。</span></p>
+
+  <div class="blk">
+    <h2><span class="lang-en">Household credit fell from 19.4% of GDP to 9.4%, and the mechanism was inflation rather than repayment</span><span class="lang-zh" style="display:none">家庭信用佔 GDP 自 19.4% 降至 9.4%，機制是通膨而非償還</span></h2>
+    <p class="sub"><span class="lang-en">Credit to households as a percentage of GDP, annual, 2008 to 2025 · BIS via FRED (QTRHAM770A)</span><span class="lang-zh" style="display:none">家庭信用佔 GDP 比重，年頻，2008 至 2025 年 · BIS，經 FRED（QTRHAM770A）</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">The transmission channel, disappearing</span><span class="lang-zh" style="display:none">正在消失的傳導管道</span></div><div id="mCredit" class="ch"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">The series peaks at <b>19.4% in the third quarter of 2013</b> and reads 9.4% in 2024, with a partial recovery to 10.1% by the fourth quarter of 2025. Turkish households are half as leveraged relative to the economy as they were thirteen years ago.</span><span class="lang-zh" style="display:none">該序列於 <b>2013 年第三季見頂於 19.4%</b>，2024 年為 9.4%，至 2025 年第四季部分回升至 10.1%。土耳其家庭相對於經濟的槓桿程度，為十三年前的一半。</span></li>
+      <li class="warn"><span class="lang-en">This is not deleveraging. The nominal household credit stock rose from <b>TRY 550bn in 2019 to TRY 6,310bn in the fourth quarter of 2025</b>, a factor of 11.5. Nominal GDP rose faster. The ratio fell because the denominator inflated, not because the numerator was paid down.</span><span class="lang-zh" style="display:none">此非去槓桿。名目家庭信用餘額自 <b>2019 年的 5,500 億里拉增至 2025 年第四季的 63,100 億里拉</b>，倍數為 11.5。名目 GDP 的成長更快。該比率下降的成因為分母膨脹，而非分子被償還。</span></li>
+      <li><span class="lang-en">The same mechanism operated on the corporate side. Credit to the private non-financial sector fell from a peak of <b>88.1% of GDP in the first quarter of 2021 to 46.8% in the fourth quarter of 2024</b>, a drop of 41 points in fifteen quarters, before recovering to 49.0%. No comparable market on this site has moved this measure that far that fast.</span><span class="lang-zh" style="display:none">同一機制亦作用於企業部門。民間非金融部門信用佔 GDP 比重自 <b>2021 年第一季高點 88.1% 降至 2024 年第四季的 46.8%</b>，十五季內下降 41 個百分點，其後回升至 49.0%。本站涵蓋的市場中，無一於同等時間內使該指標移動至此幅度。</span></li>
+    </ul>
+    <p class="fnote"><span class="lang-en">Annual observations. 2013 is the third-quarter all-time peak; 2020 to 2023 are third-quarter readings; 2024 and 2025 are fourth quarter. The 2009 observation was not retrieved and the line is interpolated across it.</span><span class="lang-zh" style="display:none">年度觀測值。2013 年為第三季的歷史高點；2020 至 2023 年為第三季讀數；2024 與 2025 年為第四季。2009 年觀測值未取得，該處為內插。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The nominal debt stock rose 11.5 times over the same period the ratio was halved</span><span class="lang-zh" style="display:none">比率減半的同一期間，名目債務餘額增為 11.5 倍</span></h2>
+    <p class="sub"><span class="lang-en">Household credit, level in TRY billions, against the same credit as a share of GDP · annual, 2019 to 2025 · BIS via FRED (CRDQTRAHABIS, QTRHAM770A)</span><span class="lang-zh" style="display:none">家庭信用餘額（十億里拉）對照同一信用佔 GDP 比重 · 年頻，2019 至 2025 年 · BIS，經 FRED（CRDQTRAHABIS、QTRHAM770A）</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Level against ratio</span><span class="lang-zh" style="display:none">餘額對照比率</span></div><div id="mCreditLevel" class="ch"></div></div>
+    <p class="narr-p"><span class="lang-en">The two lines move in opposite directions for six consecutive years, which is the whole of the argument in one picture. For a property analyst the operative consequence is that <b>the standard credit-cycle framework does not apply to Türkiye at present</b>. A rate cut in Malaysia or Thailand widens the pool of qualified borrowers and lifts transactions; a rate cut in Türkiye reaches a mortgage market that clears roughly one transaction in seven. The transmission runs instead through the real return on holding lira, which is why the real funding rate in Part 1 explains more of the price series than any credit variable does.</span><span class="lang-zh" style="display:none">兩條線於連續六年間方向相反，此即整套論述的圖示。對房產分析而言，其有效後果為<b>標準的信用循環架構於現階段不適用於土耳其</b>。馬來西亞或泰國的降息可擴大合格借款人的規模並帶動成交；土耳其的降息所面對的房貸市場，約每七筆成交中僅一筆經此完成。傳導改由持有里拉的實質報酬進行，此即週期篇之實質資金利率對房價序列的解釋力高於任何信用變數的原因。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The mortgage rate has been above 33% for thirty months, and the real mortgage rate turned positive in 2025</span><span class="lang-zh" style="display:none">房貸利率已連續三十個月高於 33%，實質房貸利率於 2025 年轉正</span></h2>
+    <p class="sub"><span class="lang-en">TCMB weighted-average housing loan rate, the announced one-week repo rate and consumer price inflation · January observations, 2010 to 2026</span><span class="lang-zh" style="display:none">TCMB 加權平均住宅貸款利率、公告一週期附買回利率與消費者物價年增率 · 各年 1 月觀測值，2010 至 2026 年</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Mortgage rate, policy rate and inflation</span><span class="lang-zh" style="display:none">房貸利率、政策利率與通膨</span></div><div id="mMortgage" class="ch"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">The all-time low is <b>10.10% in July 2013</b>. The peak is 54.39% in July 2024. The January 2026 reading is 37.36%, and weekly readings in late July 2026 run between 41% and 47% depending on which loan-category series is used.</span><span class="lang-zh" style="display:none">歷史低點為 <b>2013 年 7 月的 10.10%</b>，高點為 2024 年 7 月的 54.39%。2026 年 1 月讀數為 37.36%，2026 年 7 月下旬的週頻讀數依所採貸款類別序列不同，介於 41% 至 47% 之間。</span></li>
+      <li class="warn"><span class="lang-en">The real mortgage rate was <b>−32.3 points in January 2023</b> and <b>+6.7 points in January 2026</b>. Between 2022 and 2024 a Turkish mortgage was an instrument that transferred wealth to the borrower; since late 2024 it has been an ordinary and expensive loan. The mortgaged share of transactions fell to its series low of 10.8% in the year that transition completed.</span><span class="lang-zh" style="display:none">實質房貸利率於 <b>2023 年 1 月為 −32.3 個百分點</b>，<b>2026 年 1 月為 +6.7 個百分點</b>。2022 至 2024 年間，土耳其房貸為一項將財富移轉予借款人的工具；2024 年底以後，其為一般且昂貴的貸款。房貸成交佔比於該轉換完成的年度降至序列低點 10.8%。</span></li>
+      <li><span class="lang-en">The state-bank campaign of mid-2020, visible as the 11.61% July 2020 reading, produced the single largest monthly transaction counts in Turkish history. <b>That episode is the only clean evidence in the record of what Turkish housing demand looks like when credit is genuinely available</b>, and it is examined in Part 3 of the report.</span><span class="lang-zh" style="display:none">2020 年年中的公股銀行專案（對應 2020 年 7 月的 11.61% 讀數）創造了土耳其史上單月成交量的最大值。<b>該事件為紀錄中唯一一次清楚呈現「信用真正可得時土耳其住宅需求樣貌」的證據</b>，其分析見報告第三部。</span></li>
+    </ul>
+    <p class="fnote"><span class="lang-en">The January 2013 observation was not retrieved and the line is interpolated across it. The EVDS code-to-name mapping for the loan-category series is conventional but was not confirmed against a labelled source in this collection, so the headline mortgage rate is treated as second tier throughout. The alternative code reads 41.4% in late July 2026 against 43.7% for the one used here; both support the same conclusion. A sharp jump in this series between May and July 2026, from 36.28% to 49.07%, could not be corroborated and may be a composition effect rather than a repricing; no argument on either page rests on it.</span><span class="lang-zh" style="display:none">2013 年 1 月觀測值未取得，該處為內插。貸款類別序列的 EVDS 代碼與名稱對應屬慣例作法，本次採集未對照具標示的來源確認，故本頁一律將房貸利率列為第二層。另一代碼於 2026 年 7 月下旬讀數為 41.4%，本頁所採者為 43.7%，兩者支持同一結論。該序列於 2026 年 5 月至 7 月間自 36.28% 跳升至 49.07%，未能取得佐證，可能為組成效果而非重新定價；兩頁的任何論述均不以此為依據。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Real income per head stalled for five years and then rose 29%, which is the fact the bearish case has to answer</span><span class="lang-zh" style="display:none">實質人均所得停滯五年後上升 29%，這是看空論述必須回應的事實</span></h2>
+    <p class="sub"><span class="lang-en">Türkiye GDP per capita, constant 2015 US dollars, 1960 to 2025 · World Bank via FRED (NYGDPPCAPKDTUR)</span><span class="lang-zh" style="display:none">土耳其人均 GDP，2015 年不變價美元，1960 至 2025 年 · 世界銀行，經 FRED（NYGDPPCAPKDTUR）</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Output per person, sixty-five years</span><span class="lang-zh" style="display:none">人均產出，六十五年</span></div><div id="mGdpPc" class="ch"></div></div>
+    <p class="narr-p"><span class="lang-en">Real output per head rose from US$2,449 in 1960 to <b>US$15,883 in 2025</b>. The informative section is recent: the series stalled between 2015 and 2020, adding 11% across five years, then rose 29% between 2020 and 2025 in spite of the inflation. This distinguishes Türkiye sharply from the Gulf, where real income per head has fallen for four decades, and it means the domestic income base under Turkish housing is genuinely expanding. <b>We regard this as the strongest single argument against extrapolating the current real price decline indefinitely.</b> The measured dollar value of total output tells a different and less reliable story: it fell 24% between 2013 and 2020 and has since nearly doubled to US$1,597bn, almost entirely through the exchange rate rather than through volume.</span><span class="lang-zh" style="display:none">實質人均產出自 1960 年的 2,449 美元升至 <b>2025 年的 15,883 美元</b>。具資訊價值的區段為近期：該序列於 2015 至 2020 年停滯，五年累計增加 11%，其後於 2020 至 2025 年間於通膨環境下上升 29%。此使土耳其與波灣地區明顯區隔，後者的實質人均所得已下降四十年，並代表土耳其住宅底下的本地所得基礎確實在擴張。<b>我們認為此為反對將當前實質房價跌勢無限外推的最有力單一論據。</b>以美元計的總產出所呈現者為另一個較不可靠的故事：其於 2013 至 2020 年間下降 24%，其後幾乎倍增至 15,970 億美元，成因幾乎全部為匯率而非數量。</span></p>
+    <p class="fnote"><span class="lang-en">Observations are marked with points; the line between marked points before 2019 is interpolation, not data.</span><span class="lang-zh" style="display:none">觀測值以點標示；2019 年以前標示點之間的連線為內插而非資料。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Disinflation has cost growth without producing a recession, which is what makes the current policy path politically survivable</span><span class="lang-zh" style="display:none">反通膨壓低了成長但未造成衰退，這使當前政策路徑在政治上得以存續</span></h2>
+    <p class="sub"><span class="lang-en">Real GDP growth year on year, quarterly, against consumer price inflation · 2018Q1 to 2026Q1 · OECD and TÜİK via FRED and EVDS</span><span class="lang-zh" style="display:none">實質 GDP 年增率（季頻）對照消費者物價年增率 · 2018Q1 至 2026Q1 · OECD 與 TÜİK，經 FRED 與 EVDS</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Growth against inflation</span><span class="lang-zh" style="display:none">成長對照通膨</span></div><div id="mGrowth" class="ch"></div></div>
+    <p class="narr-p"><span class="lang-en">Real growth has run between <b>2.0% and 4.4% through the entire tightening cycle</b>, with the first quarter of 2026 at 2.8%. Unemployment is 8.2% as of May 2026, a twenty-year low, against 13.9% in July 2019. A tightening of this size delivered without a contraction is unusual, and it removes the most common political trigger for an early reversal. The consequence for a property position is that the restrictive stance in Part 1 is more durable than the 2018 and 2021 episodes were, both of which ended in a reversal within months. The offsetting observation is that inflation stopped falling in 2026 and turned back up, from 30.65% in January to 32.11% in June, which is the condition under which a further tightening rather than an easing becomes the risk.</span><span class="lang-zh" style="display:none">實質成長於整個緊縮週期間介於 <b>2.0% 至 4.4%</b>，2026 年第一季為 2.8%。失業率於 2026 年 5 月為 8.2%，為二十年低點，2019 年 7 月則為 13.9%。此等幅度的緊縮於未造成收縮的情況下完成，屬罕見情形，並移除了提前反轉最常見的政治觸發條件。對房產部位的意涵為，週期篇所述之緊縮立場較 2018 與 2021 兩次事件更具持續性，該兩次均於數月內反轉。相抵的觀察為，通膨於 2026 年停止下降並回升，自 1 月的 30.65% 升至 6 月的 32.11%，於此條件下，風險轉為進一步緊縮而非寬鬆。</span></p>
+    <p class="fnote"><span class="lang-en">Growth observations are marked with points; quarters between marked points before 2024 were not retrieved. The inflation series is complete across the whole span.</span><span class="lang-zh" style="display:none">成長率觀測值以點標示；2024 年以前標示點之間的季度未取得資料。通膨序列於全區間完整。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Population growth fell from 1.43% to 0.23% in five years, which removes the demand floor under any long-horizon housing case</span><span class="lang-zh" style="display:none">人口成長率五年內自 1.43% 降至 0.23%，長期住宅需求的底部因此消失</span></h2>
+    <p class="sub"><span class="lang-en">Türkiye population growth rate, per cent a year, 1961 to 2025 · World Bank via FRED (SPPOPGROWTUR)</span><span class="lang-zh" style="display:none">土耳其人口成長率，年增百分比，1961 至 2025 年 · 世界銀行，經 FRED（SPPOPGROWTUR）</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Population growth, sixty-five years</span><span class="lang-zh" style="display:none">人口成長，六十五年</span></div><div id="mPop" class="ch"></div></div>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">Growth fell from <b>1.43% in 2019 to 0.23% in 2024</b>, the lowest reading in the series, before recovering to 0.42% in 2025. In level terms Türkiye added 4.2 million people between 2015 and 2020 and 2.5 million between 2020 and 2025. The population stood at 85.9 million in 2025.</span><span class="lang-zh" style="display:none">成長率自 <b>2019 年的 1.43% 降至 2024 年的 0.23%</b>，為序列中最低讀數，其後於 2025 年回升至 0.42%。以人數計，土耳其於 2015 至 2020 年間增加 420 萬人，2020 至 2025 年間增加 250 萬人。2025 年人口為 8,590 萬人。</span></li>
+      <li><span class="lang-en">Household formation is the demand floor under any housing market, and it is decelerating at exactly the moment real prices are correcting. The two are not causally linked in the short run, but they set the terms of the ten-year case: <b>a market whose real prices are falling and whose household formation is halving cannot be underwritten on volume growth</b>.</span><span class="lang-zh" style="display:none">家戶形成為任何住宅市場的需求底部，而該項正於實質房價修正的同一時點減速。兩者於短期內並無因果關聯，惟其共同設定了十年期論述的條件：<b>實質房價下跌且家戶形成減半的市場，不得以數量成長為承作基礎。</b></span></li>
+      <li class="good"><span class="lang-en">The offsetting fact is that the age structure remains favourable. The population aged 65 and over was <b>10.6% of the total in 2025</b> and the old-age dependency ratio 15.5, both far below Japan, Taiwan or Thailand. The demographic dividend has not ended; the inflow into it has slowed.</span><span class="lang-zh" style="display:none">相抵的事實為年齡結構仍屬有利。65 歲以上人口於 <b>2025 年佔總人口 10.6%</b>，老年扶養比為 15.5，兩者均遠低於日本、台灣或泰國。人口紅利尚未結束，惟其流入已放緩。</span></li>
+    </ul>
+    <p class="fnote"><span class="lang-en">Observations are marked with points; years between marked points before 2019 were not retrieved.</span><span class="lang-zh" style="display:none">觀測值以點標示；2019 年以前標示點之間的年度未取得資料。</span></p>
+  </div>
+
+  <!-- ════════ PART 3 ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Part 3 · Politics and the External Constraint</span><span class="lang-zh" style="display:none">政治與對外約束篇 · 誰決定利率與匯率</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The interest rate has been a political variable in Türkiye, and the record of interventions is dated</span><span class="lang-zh" style="display:none">利率在土耳其是政治變數，歷次干預均有明確日期</span></h2>
+    <ul class="tl">
+      <li><span class="yr">2010–13</span><span class="lang-en">The one-week repo rate falls from 7.00% to <b>4.50%</b> by May 2013, the lowest in the modern record. Household credit reaches its all-time peak of 19.4% of GDP in the third quarter of 2013. Both series turn in the same year.</span><span class="lang-zh" style="display:none">一週期附買回利率自 7.00% 降至 2013 年 5 月的 <b>4.50%</b>，為現代紀錄中最低。家庭信用於 2013 年第三季達歷史高點 19.4% 的 GDP 佔比。兩項序列於同年反轉。</span></li>
+      <li class="hard"><span class="yr">2014</span><span class="lang-en">An emergency overnight hike on 29 January takes the rate from 4.50% to <b>10.00%</b> during a currency crisis, then unwinds to 7.50% within thirteen months.</span><span class="lang-zh" style="display:none">1 月 29 日的緊急夜間升息，於貨幣危機期間將利率自 4.50% 提高至 <b>10.00%</b>，其後於十三個月內回落至 7.50%。</span></li>
+      <li><span class="yr">2017–18</span><span class="lang-en">The one-week repo is effectively suspended and the central bank funds through the late liquidity window instead. <b>The announced policy rate understates the effective rate for over a year</b>, which is why any chart pairing the two across this window is misleading.</span><span class="lang-zh" style="display:none">一週期附買回實質上暫停使用，央行改以後期流動性窗口供給資金。<b>公告政策利率於一年以上期間低估實際利率</b>，此即任何跨越該區間並列兩者之圖表具誤導性的原因。</span></li>
+      <li class="hard"><span class="yr">2018</span><span class="lang-en">Currency crisis. The rate is raised to <b>24.00% on 14 September</b>. Real house prices fall from 122.6 in the first quarter to 107.9 in the fourth, the sharpest single-year real decline before the current one.</span><span class="lang-zh" style="display:none">貨幣危機。利率於 <b>9 月 14 日升至 24.00%</b>。實質房價自第一季的 122.6 降至第四季的 107.9，為本輪之前最陡的單年實質跌幅。</span></li>
+      <li class="hard"><span class="yr">2021</span><span class="lang-en">The rate reaches 19.00% on 19 March. <b>The governor is removed three days later.</b> The rate is then cut to 14.00% by December while inflation runs from 16% to 36%. The lira falls from 7.40 to 13.54 to the dollar over the following twelve months.</span><span class="lang-zh" style="display:none">利率於 3 月 19 日升至 19.00%。<b>央行總裁於三日後遭撤換。</b>其後利率於 12 月前降至 14.00%，同期通膨自 16% 升至 36%。里拉於其後十二個月自 7.40 貶至 13.54 兌 1 美元。</span></li>
+      <li class="hard"><span class="yr">2022–23</span><span class="lang-en">The rate reaches its trough of <b>8.50% on 24 February 2023</b> with inflation near 55%. This is the deepest deliberate negative real rate in the record and the direct cause of the 168% real price rise documented in Part 1.</span><span class="lang-zh" style="display:none">利率於 <b>2023 年 2 月 24 日降至谷底 8.50%</b>，同期通膨接近 55%。此為紀錄中最深的刻意負實質利率，亦為週期篇所載 168% 實質房價漲幅的直接成因。</span></li>
+      <li><span class="yr">2023–24</span><span class="lang-en">After the May 2023 election the stance reverses. The rate rises from 8.50% to <b>50.00% by 22 March 2024</b> and is held there for nine months. Real house prices peak in the second quarter of 2023 and begin falling.</span><span class="lang-zh" style="display:none">2023 年 5 月大選後政策立場反轉。利率自 8.50% 升至 <b>2024 年 3 月 22 日的 50.00%</b>，並維持九個月。實質房價於 2023 年第二季見頂並開始下跌。</span></li>
+      <li class="hard"><span class="yr">2025</span><span class="lang-en">A political shock in March interrupts the easing cycle. The rate is cut to 42.50% on 7 March and raised back to <b>46.00% on 18 April</b>. Reserves excluding gold fall US$32.8bn in the same quarter, from US$74.6bn to US$41.8bn.</span><span class="lang-zh" style="display:none">3 月的政治衝擊中斷降息循環。利率於 3 月 7 日降至 42.50%，並於 <b>4 月 18 日回升至 46.00%</b>。外匯存底（不含黃金）於同季自 746 億美元降至 418 億美元，減少 328 億美元。</span></li>
+      <li class="hard"><span class="yr">2026</span><span class="lang-en">The rate reaches <b>37.00% on 23 January</b> and has not moved since; the effective funding cost has been 40.00% since April. Inflation stops falling and turns back up. Reserves excluding gold fall a further US$21.9bn between January and June while the real exchange rate appreciates.</span><span class="lang-zh" style="display:none">利率於 <b>1 月 23 日降至 37.00%</b>，其後未再變動；有效資金成本自 4 月起為 40.00%。通膨停止下降並回升。外匯存底（不含黃金）於 1 月至 6 月間再減少 219 億美元，同期實質匯率升值。</span></li>
+    </ul>
+    <div class="concept">
+      <h4><span class="lang-en">What the record establishes and what it does not</span><span class="lang-zh" style="display:none">此一紀錄確立了什麼，未確立什麼</span></h4>
+      <p><span class="lang-en">The record establishes that <b>the direction of Turkish monetary policy has been reversed by executive decision at least twice, in March 2021 and in the 2021 to 2023 easing cycle</b>, and that both reversals were followed by a currency event within twelve months. It does not establish that the current stance will be reversed. The 2024 to 2026 tightening has been sustained for thirty months across an election and a political shock, and it has been delivered without a recession, which is the condition under which previous reversals occurred. <b>The falsification test is therefore not a statement about intentions but about a series: a cut in the announced rate below the prevailing inflation rate would restore the 2021 configuration and should be treated as such.</b></span><span class="lang-zh" style="display:none">該紀錄確立：<b>土耳其貨幣政策的方向至少兩度由行政決定反轉，即 2021 年 3 月與 2021 至 2023 年的降息循環</b>，且兩次反轉均於十二個月內伴隨貨幣事件。該紀錄並未確立當前立場將被反轉。2024 至 2026 年的緊縮已跨越一次大選與一次政治衝擊、持續三十個月，且於未造成衰退的情況下達成，而衰退正是歷次反轉發生的前提條件。<b>可證偽的檢定因此不是關於意圖的陳述，而是關於一條序列的陳述：公告利率降至當期通膨率以下，即恢復 2021 年的配置，應以此視之。</b></span></p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The nominal exchange rate has fallen without interruption and the real one has round-tripped, which is why the foreign-buyer discount has closed</span><span class="lang-zh" style="display:none">名目匯率持續下跌，實質匯率已完成往返，外資的價格折讓因此消失</span></h2>
+    <p class="sub"><span class="lang-en">BIS real effective exchange rate for Türkiye (2020 = 100) against the lira per US dollar, January observations, 2000 to 2026, plus June 2026 · FRED (RBTRBIS, CCUSMA02TRM618N)</span><span class="lang-zh" style="display:none">BIS 土耳其實質有效匯率（2020＝100）對照美元兌里拉，各年 1 月觀測值，2000 至 2026 年，另加 2026 年 6 月 · FRED（RBTRBIS、CCUSMA02TRM618N）</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Real against nominal, twenty-six years</span><span class="lang-zh" style="display:none">實質對照名目，二十六年</span></div><div id="mReerFx" class="ch"></div></div>
+    <ul class="pt">
+      <li><span class="lang-en">The lira went from <b>0.545 to the dollar in January 2000 to 46.22 in June 2026</b>, a fall of 98.8%. The real effective exchange rate over the same span went from 159.6 to 108.7 with a low of <b>78.3 in January 2022</b> and a peak of 185.3 in January 2008. The nominal line carries almost no information about the cost of Turkish property to a foreign buyer; the real line carries all of it.</span><span class="lang-zh" style="display:none">里拉自 <b>2000 年 1 月的 0.545 兌 1 美元貶至 2026 年 6 月的 46.22</b>，跌幅 98.8%。同期實質有效匯率自 159.6 降至 108.7，低點為 <b>2022 年 1 月的 78.3</b>，高點為 2008 年 1 月的 185.3。名目線幾乎不含關於土耳其房產對外國買方成本的資訊，實質線則承載其全部。</span></li>
+      <li class="warn"><span class="lang-en">The real rate is now <b>39% above the January 2022 low and back above its 2020 level</b>. January 2022 was a once-in-a-generation real discount for a foreign buyer, and it has closed. Istanbul unit prices measured in dollars make the same point directly and are charted in Part 1 of the report.</span><span class="lang-zh" style="display:none">實質匯率現<b>高於 2022 年 1 月低點 39%，並回到 2020 年水準之上</b>。2022 年 1 月對外國買方而言為一代人一次的實質折讓，該折讓已消失。以美元計價的伊斯坦堡單位房價直接呈現同一結論，其圖表見報告第一部。</span></li>
+      <li class="warn"><span class="lang-en">Nominal depreciation has been held near <b>1.1% a month, roughly 14% a year, against 32% inflation</b>. That is a deliberate real appreciation, and Part 3 below identifies what is financing it.</span><span class="lang-zh" style="display:none">名目貶值幅度被維持於<b>每月約 1.1%、年約 14%，對照 32% 的通膨</b>。此為刻意的實質升值，其資金來源見下一節。</span></li>
+    </ul>
+    <p class="fnote"><span class="lang-en">Observations are marked with points; years between marked points were not retrieved. The exchange-rate axis is logarithmic. Pre-2005 lira values are expressed in the redenominated unit.</span><span class="lang-zh" style="display:none">觀測值以點標示；標示點之間的年度未取得資料。匯率軸為對數刻度。2005 年以前的里拉數值以改制後單位表示。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Reserves excluding gold fell US$21.9bn in five months while the real exchange rate rose, which is the 2018 and 2021 configuration</span><span class="lang-zh" style="display:none">外匯存底五個月減少 219 億美元，同期實質匯率上升，此為 2018 與 2021 年的配置</span></h2>
+    <p class="sub"><span class="lang-en">Türkiye total reserves excluding gold, US$ millions, quarterly observations, January 2024 to June 2026 · IMF via FRED (TRESEGTRM194N)</span><span class="lang-zh" style="display:none">土耳其外匯存底（不含黃金），百萬美元，季度觀測值，2024 年 1 月至 2026 年 6 月 · IMF，經 FRED（TRESEGTRM194N）</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Two drawdowns in eighteen months</span><span class="lang-zh" style="display:none">十八個月內兩次抽離</span></div><div id="mReserves" class="ch"></div></div>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">Reserves excluding gold reached <b>US$74.6bn in January 2025</b>, the highest since 2015, then fell to US$41.8bn by April 2025 in the quarter of the political shock. They rebuilt to US$61.1bn by January 2026 and have fallen again to <b>US$39.2bn in June 2026</b>, the lowest reading since the January 2021 trough of US$37.1bn.</span><span class="lang-zh" style="display:none">外匯存底（不含黃金）於 <b>2025 年 1 月達 746 億美元</b>，為 2015 年以來最高，其後於政治衝擊發生的該季降至 2025 年 4 月的 418 億美元。至 2026 年 1 月回補至 611 億美元，並再度降至 <b>2026 年 6 月的 392 億美元</b>，為 2021 年 1 月谷底 371 億美元以來最低讀數。</span></li>
+      <li class="warn"><span class="lang-en">The second drawdown is the more important one, because <b>it happened while the real effective exchange rate was rising, from 104.9 in January to 108.7 in June</b>. A falling reserve stock and an appreciating real currency are the same transaction seen from two sides: the reserve is what is paying for the appreciation.</span><span class="lang-zh" style="display:none">第二次抽離較為重要，因其<b>發生於實質有效匯率上升的期間，自 1 月的 104.9 升至 6 月的 108.7</b>。存底下降與實質幣值升值為同一筆交易的兩面：升值的支付來源即為存底。</span></li>
+      <li><span class="lang-en">The sovereign balance sheet is not the vulnerability. General government gross debt was <b>29.3% of GDP in 2023</b>, down from 75.5% in 2001, and the deficit 5.3% in the earthquake reconstruction year. The same inflation that destroyed household credit destroyed the public debt stock. <b>The exposure is external and private, not sovereign, and the reserve series is where it is measured.</b></span><span class="lang-zh" style="display:none">主權資產負債表並非弱點所在。一般政府債務總額於 <b>2023 年為 GDP 的 29.3%</b>，2001 年為 75.5%；該年為震災重建年度，赤字為 5.3%。摧毀家庭信用的同一通膨亦摧毀了公共債務餘額。<b>曝險在對外與民間部門，不在主權部門，而存底序列即為其量測所在。</b></span></li>
+    </ul>
+    <p class="fnote"><span class="lang-en">Quarterly observations at January, April, July and October, plus June 2026 as the last actual. The July 2024 observation was not retrieved. The current account series on FRED ends at the third quarter of 2024 at +0.07% of GDP and could not be extended within this collection, so no current-account chart appears on this page; the reserve series is used as the observable proxy for the external position and its limits should be read accordingly.</span><span class="lang-zh" style="display:none">季度觀測值取各年 1、4、7、10 月，另加最後實際值 2026 年 6 月。2024 年 7 月觀測值未取得。FRED 之經常帳序列止於 2024 年第三季（+0.07% 的 GDP 佔比），本次採集未能延伸，故本頁未設經常帳圖表；存底序列作為對外部位的可觀察替代指標，其侷限應據此判讀。</span></p>
+  </div>
+
+  <!-- ════════ PART 4 ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">Part 4 · The Model</span><span class="lang-zh" style="display:none">總合模型 · 單一方程式架構</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">One equation</span><span class="lang-zh" style="display:none">方程式</span></h2>
+    <div class="eq">
+      <div class="ef">Δ Real price ≈ − ƒ( <span style="color:#fff">Real funding rate</span> ) + <span style="color:#fff">Inflation-hedge demand</span> − <span style="color:#fff">Permitted supply</span> ± <span style="color:#fff">Real exchange rate</span></div>
+      <div class="en"><span class="lang-en">The coefficient on credit is close to zero. Mortgaged transactions are 10.8% to 14.1% of the market and the mortgage rate is above 37%, so the channel that carries policy into price in most markets carries almost nothing here. That is the single largest structural difference between Türkiye and every other market on this site.</span><span class="lang-zh" style="display:none">信用項的係數趨近於零。房貸成交佔市場的 10.8% 至 14.1%，房貸利率高於 37%，故於多數市場中將政策傳導至價格的管道，於此地幾乎不承載任何量。此為土耳其與本站其他所有市場之間最大的結構差異。</span></div>
+    </div>
+    <div class="eqv">
+      <div class="v neg"><h5>Real funding rate</h5><p><span class="lang-en"><b>+7.9 points in June 2026</b>, against −74.0 in November 2022. Positive since September 2024 and held there across an election and a political shock. <b>The dominant term, and currently restrictive.</b></span><span class="lang-zh" style="display:none"><b>2026 年 6 月為 +7.9 個百分點</b>，2022 年 11 月為 −74.0。自 2024 年 9 月起為正，並跨越一次大選與一次政治衝擊維持至今。<b>為主導變數，現處緊縮。</b></span></p></div>
+      <div class="v pos"><h5>Inflation-hedge demand</h5><p><span class="lang-en">Double-digit inflation in the large majority of the past seventy years. Housing is the default store of value for a household that cannot hold lira and will not hold credit. <b>Positive, structural, and weakening as the real rate stays positive.</b></span><span class="lang-zh" style="display:none">過去七十年的絕大多數年度為兩位數通膨。對無法持有里拉、亦不使用信用的家戶而言，住宅為預設的價值儲存工具。<b>正向、結構性，並隨實質利率維持為正而減弱。</b></span></p></div>
+      <div class="v neg"><h5>Permitted supply</h5><p><span class="lang-en"><b>1,187,924 dwellings permitted in 2025</b>, up 39.1%, against 692,708 completions. Permits ran 1.72 times completions. A pipeline is being loaded that has not yet arrived. <b>The binding term over a three-year horizon.</b></span><span class="lang-zh" style="display:none"><b>2025 年核發 1,187,924 戶建照</b>，年增 39.1%，同期完工 692,708 戶。建照為完工的 1.72 倍。一批尚未到達的供給正在累積。<b>為三年期間的約束項。</b></span></p></div>
+      <div class="v neg"><h5>Real exchange rate</h5><p><span class="lang-en"><b>108.7 in June 2026</b> against 78.3 in January 2022, a real appreciation of 39%. Financed out of a reserve stock that fell US$21.9bn in five months. <b>Negative for foreign demand and the least sustainable term in the equation.</b></span><span class="lang-zh" style="display:none"><b>2026 年 6 月為 108.7</b>，2022 年 1 月為 78.3，實質升值 39%。其資金來源為五個月內減少 219 億美元的存底。<b>對外資需求為負，且為式中最不可持續的一項。</b></span></p></div>
+    </div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">The four terms, and which way each points now</span><span class="lang-zh" style="display:none">四項變數，及其當前方向</span></div><div id="mDrivers" class="ch"></div></div>
+    <p class="fnote"><span class="lang-en">The scoring is the author's, on a scale of −3 to +3, and is a summary of the argument above rather than an estimate of any coefficient. Do not quote it as a measurement.</span><span class="lang-zh" style="display:none">評分為作者所作，尺度為 −3 至 +3，係上述論述的摘要，非任何係數的估計值。不應作為量測值引用。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The conclusions live in the interactions</span><span class="lang-zh" style="display:none">關鍵結論位於交互作用</span></h2>
+    <ul class="pt">
+      <li><span class="lang-en"><b>Real funding rate × inflation-hedge demand.</b> These are the two largest terms and they work against each other. A positive real rate gives a household a lira-denominated alternative to housing for the first time since 2019, so the hedging motive weakens exactly when the discount rate rises. That double effect is why the real price decline has been continuous rather than cyclical, and why it has run through eleven quarters without a single nominal fall.</span><span class="lang-zh" style="display:none"><b>實質資金利率 × 通膨避險需求。</b>兩者為式中最大的兩項，且方向相反。正實質利率使家戶自 2019 年以來首次擁有以里拉計價的住宅替代選項，避險動機因此於折現率上升的同一時點減弱。此一雙重效果即為實質房價跌勢呈連續而非循環形態的原因，亦為其歷經十一季而未出現任何一次名目下跌的原因。</span></li>
+      <li class="warn"><span class="lang-en"><b>Real exchange rate × external reserves.</b> The real appreciation that removed the foreign-buyer discount is being financed from the reserve stock. If the reserve constraint binds, the adjustment is a step depreciation, which restores the foreign discount and raises inflation at the same time. <b>The two paths out of the current configuration are therefore not symmetric: one restores foreign demand and destroys the real rate, the other holds the real rate and continues to drain the reserve.</b></span><span class="lang-zh" style="display:none"><b>實質匯率 × 外匯存底。</b>移除外資折讓的實質升值，其資金來源為存底。若存底約束成立，調整方式為階梯式貶值，該情形同時恢復外資折讓並推高通膨。<b>當前配置的兩條出路因此並不對稱：一條恢復外資需求並摧毀實質利率，另一條維持實質利率並持續消耗存底。</b></span></li>
+      <li><span class="lang-en"><b>Permitted supply × population growth.</b> Permits rose 39.1% in 2025 to 1.19 million dwellings while population growth fell to 0.23% in 2024. The supply pipeline is being loaded against a household-formation base that is decelerating. The lag between a permit and a completion is two to four years, which places the arrival of that supply in 2027 to 2029.</span><span class="lang-zh" style="display:none"><b>核准供給 × 人口成長。</b>2025 年建照核發量年增 39.1% 至 119 萬戶，而人口成長率於 2024 年降至 0.23%。供給正對著一個減速中的家戶形成基礎累積。建照至完工的時間差為二至四年，該批供給的到達時點因此落於 2027 至 2029 年。</span></li>
+      <li class="good"><span class="lang-en"><b>Positive real rate × no recession.</b> The one benign asymmetry. A thirty-month tightening delivered with growth between 2.0% and 4.4% and unemployment at a twenty-year low removes the political trigger that ended the 2018 and 2021 tightenings within months. <b>Restrictive policy that does not cause a recession is restrictive policy that can be sustained</b>, and the durability of the stance is what separates the base case from the reversal case in the scenarios below.</span><span class="lang-zh" style="display:none"><b>正實質利率 × 無衰退。</b>唯一具正面效果的不對稱。歷時三十個月的緊縮於成長率介於 2.0% 至 4.4%、失業率處二十年低點的情況下完成，移除了使 2018 與 2021 兩次緊縮於數月內終止的政治觸發條件。<b>不造成衰退的緊縮政策，即為可持續的緊縮政策</b>，而政策立場的持續性正是下列情境中基準情境與反轉情境的分野。</span></li>
+    </ul>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The model's output — who, what, when</span><span class="lang-zh" style="display:none">模型輸出 —— 客群、標的、時窗</span></h2>
+    <div class="mtbl-wrap">
+      <table class="mtbl">
+        <thead><tr>
+          <th><span class="lang-en">Who</span><span class="lang-zh" style="display:none">誰</span></th>
+          <th><span class="lang-en">What the model says</span><span class="lang-zh" style="display:none">模型怎麼說</span></th>
+          <th><span class="lang-en">Window</span><span class="lang-zh" style="display:none">時窗</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="who"><span class="lang-en">Foreign income buyer</span><span class="lang-zh" style="display:none">外幣收益型買方</span></td><td><span class="lang-en">The profile the equation supports, and only on the rent line. Istanbul gross yield is <b>6.09% and rising</b>, against 4.28% at the 2022 price peak. Underwrite the rent, treat real capital growth as zero, and accept that the entry price in dollars is at an all-time high because the real exchange rate is.</span><span class="lang-zh" style="display:none">為本方程式支持之型態，且僅就租金線而言。伊斯坦堡毛收益率為 <b>6.09% 且持續上升</b>，2022 年房價高點時為 4.28%。承作基礎為租金，實質資本利得假設為零，並接受以美元計的進場價格處於歷史高點，因實質匯率正處歷史高位。</span></td><td><span class="lang-en">Selectively, on yield only</span><span class="lang-zh" style="display:none">選擇性地，僅以收益為據</span></td></tr>
+          <tr><td class="who"><span class="lang-en">Local levered buyer</span><span class="lang-zh" style="display:none">本地槓桿買方</span></td><td><span class="lang-en">The instrument is unavailable in practice. A mortgage at <b>37% to 47% nominal against 32% inflation</b> is a positive real rate on a twenty-year liability. This is the reverse of 2021 to 2023, when the same instrument transferred wealth to the borrower, and it is why the mortgaged share fell to 10.8%.</span><span class="lang-zh" style="display:none">該工具於實務上不可得。名目 <b>37% 至 47% 的房貸利率對照 32% 的通膨</b>，代表一項二十年期負債的實質利率為正。此與 2021 至 2023 年相反，當時同一工具將財富移轉予借款人，亦為房貸成交佔比降至 10.8% 的原因。</span></td><td><span class="lang-en">Not until the real rate turns</span><span class="lang-zh" style="display:none">實質利率轉向前不適用</span></td></tr>
+          <tr><td class="who"><span class="lang-en">Lira cash holder</span><span class="lang-zh" style="display:none">持有里拉現金者</span></td><td><span class="lang-en">For the first time since 2019 there is a lira alternative to property. A deposit at the prevailing rate delivers a positive real return, and it did not between 2020 and 2024. <b>This is the demand that the 2021 to 2023 price rise consisted of, and it is now being met elsewhere.</b></span><span class="lang-zh" style="display:none">自 2019 年以來首次出現以里拉計價的房產替代選項。以現行利率計之存款可取得正實質報酬，2020 至 2024 年間則否。<b>2021 至 2023 年的房價漲幅即由此類需求構成，該需求現已於他處獲得滿足。</b></span></td><td><span class="lang-en">The marginal seller, not buyer</span><span class="lang-zh" style="display:none">為邊際賣方而非買方</span></td></tr>
+          <tr><td class="who"><span class="lang-en">Citizenship-motivated buyer</span><span class="lang-zh" style="display:none">以取得公民身分為目的之買方</span></td><td><span class="lang-en">The threshold has moved twice by regulation, to US$250,000 in September 2018 and to <b>US$400,000 on 13 June 2022</b>, and both moves produced an immediate break in the monthly foreign-sales series. Underwrite the asset alone. The access rule is an administrative instrument and can move again on one month's notice.</span><span class="lang-zh" style="display:none">門檻已兩度以規則變更：2018 年 9 月調至 25 萬美元，<b>2022 年 6 月 13 日調至 40 萬美元</b>，兩次變動均於月頻外資成交序列中造成即時斷點。應僅就資產本身評價。准入規則為行政工具，可再度以一個月的預告期變動。</span></td><td><span class="lang-en">Price the asset, not the passport</span><span class="lang-zh" style="display:none">為資產定價，不為護照定價</span></td></tr>
+          <tr><td class="who"><span class="lang-en">Developer and off-plan buyer</span><span class="lang-zh" style="display:none">建商與預售買方</span></td><td><span class="lang-en">Permits ran <b>1.72 times completions in 2025</b> and the permit count rose 39.1%. That pipeline arrives between 2027 and 2029 into a market whose household formation growth has fallen to 0.23%. Instalment plans denominated in lira also carry the inflation risk the buyer thinks the property is hedging.</span><span class="lang-zh" style="display:none">2025 年建照為完工的 <b>1.72 倍</b>，建照件數年增 39.1%。該批供給於 2027 至 2029 年間到達，屆時市場的家戶形成成長率已降至 0.23%。以里拉計價的分期付款方案，亦承擔買方認為該房產正在對沖的同一項通膨風險。</span></td><td><span class="lang-en">Avoid 2027–29 completion</span><span class="lang-zh" style="display:none">避開 2027 至 2029 年完工</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">How this model dies</span><span class="lang-zh" style="display:none">模型的可證偽條件</span></h2>
+    <p class="sub"><span class="lang-en">Stated before the conclusion. Each condition is observable in a published series.</span><span class="lang-zh" style="display:none">於結論之前列出。各項條件均可於公開序列中觀察。</span></p>
+    <div class="cols">
+      <div class="col up">
+        <h3><span class="lang-en">Falsified to the upside if</span><span class="lang-zh" style="display:none">若出現以下，向上證偽</span></h3>
+        <ul>
+          <li><span class="lang-en"><b>The real policy rate stays positive for four consecutive quarters while the real house price index rises over the same span.</b> This breaks argument one directly: the rate would no longer be the dominant term and something the model does not contain would be setting the price.</span><span class="lang-zh" style="display:none"><b>實質政策利率連續四季為正，而實質房價指數於同期上升。</b>此直接推翻論點一：利率已非主導變數，設定價格者為模型未涵蓋的因素。</span></li>
+          <li><span class="lang-en"><b>Household credit returns above 15% of GDP, or the mortgaged share of transactions holds above 20% for four consecutive quarters.</b> This breaks argument two: the credit channel would be operating again and the standard rate-to-price framework would apply.</span><span class="lang-zh" style="display:none"><b>家庭信用佔 GDP 比重回升逾 15%，或房貸成交佔比連續四季維持於 20% 以上。</b>此推翻論點二：信用管道恢復運作，標準的利率至價格架構重新適用。</span></li>
+          <li><span class="lang-en"><b>Reserves excluding gold rebuild above US$60bn while the real effective exchange rate holds above 105 for two consecutive quarters.</b> This breaks argument three: the real appreciation would be financed by inflows rather than by the reserve stock, and the external constraint would not be binding.</span><span class="lang-zh" style="display:none"><b>外匯存底（不含黃金）回升至 600 億美元以上，且實質有效匯率連續兩季維持於 105 以上。</b>此推翻論點三：實質升值由資金流入而非存底支應，對外約束不成立。</span></li>
+        </ul>
+      </div>
+      <div class="col dn">
+        <h3><span class="lang-en">Falsified to the downside if</span><span class="lang-zh" style="display:none">若出現以下，向下證偽</span></h3>
+        <ul>
+          <li><span class="lang-en"><b>The announced policy rate is cut below the prevailing inflation rate.</b> This restores the 2021 configuration, and both previous instances were followed by a currency event within twelve months. It is the single highest-information observation on this page.</span><span class="lang-zh" style="display:none"><b>公告政策利率降至當期通膨率以下。</b>此恢復 2021 年的配置，前兩次發生後均於十二個月內出現貨幣事件。此為本頁資訊含量最高的單一觀測值。</span></li>
+          <li><span class="lang-en"><b>Reserves excluding gold fall below US$35bn, or the lira depreciates more than 10% in a month.</b> The external constraint would have bound. The adjustment is a step depreciation, which raises inflation, forces the real rate negative again and repeats the 2021 sequence from a weaker starting point.</span><span class="lang-zh" style="display:none"><b>外匯存底（不含黃金）低於 350 億美元，或里拉單月貶值逾 10%。</b>對外約束已成立。調整方式為階梯式貶值，該情形推高通膨、使實質利率再度轉負，並自更弱的起點重演 2021 年的序列。</span></li>
+          <li><span class="lang-en"><b>Consumer price inflation rises above 40% year on year for two consecutive quarters.</b> Disinflation has already stalled, from 30.65% in January 2026 to 32.11% in June. A resumption on this scale would require a further tightening into a supply pipeline that is already arriving.</span><span class="lang-zh" style="display:none"><b>消費者物價年增率連續兩季高於 40%。</b>反通膨已停滯，自 2026 年 1 月的 30.65% 回升至 6 月的 32.11%。此等規模的再起將迫使政策於供給已開始到達的環境中進一步緊縮。</span></li>
+          <li><span class="lang-en"><b>Real GDP growth turns negative for two consecutive quarters.</b> The absence of a recession is what makes the current stance sustainable. A contraction restores the political trigger that ended the 2018 and 2021 tightenings, and the model's dominant term would reverse on a timetable set by politics rather than by inflation.</span><span class="lang-zh" style="display:none"><b>實質 GDP 連續兩季負成長。</b>未出現衰退為當前政策立場得以持續的原因。收縮將恢復終結 2018 與 2021 兩次緊縮的政治觸發條件，模型的主導變數將依政治而非通膨所設定的時程反轉。</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ THE ANSWER ════════ -->
+  <div class="sec-rule"><h2><span class="lang-en">The Answer — Where, What, When</span><span class="lang-zh" style="display:none">結論篇 · 區位、產品、時點</span></h2></div>
+
+  <div class="blk">
+    <div class="cat">
+      <div class="c"><h4><span class="lang-en">Where</span><span class="lang-zh" style="display:none">區位</span></h4><p><span class="lang-en">Not İstanbul on price momentum. The city's nominal index has risen <b>206% since December 2022 against Ankara's 301%</b>, a gap of 95 percentage points in three and a half years, and its real index has fallen 18.6% from the January 2023 reading against a national 11.7%. İstanbul is the right market for rent, tenant depth and liquidity; it has been the wrong one for capital growth for three years running.</span><span class="lang-zh" style="display:none">不以價格動能為由選擇伊斯坦堡。該市名目指數自 2022 年 12 月起上漲 <b>206%，安卡拉為 301%</b>，三年半內差距 95 個百分點；其實質指數自 2023 年 1 月讀數下跌 18.6%，全國為 11.7%。伊斯坦堡為租金、租客深度與流動性的正確市場，惟已連續三年不是資本利得的正確市場。</span></p></div>
+      <div class="c"><h4><span class="lang-en">What</span><span class="lang-zh" style="display:none">產品</span></h4><p><span class="lang-en">Completed stock with a verifiable letting record, bought on the rent line. The gross yield has expanded from <b>4.28% at the 2022 price peak to 6.09% in the second quarter of 2026</b>, and that expansion is the entire investment case. Off-plan and instalment structures carry the lira inflation risk the buyer believes the property is hedging, and they deliver into the 2027 to 2029 permit pipeline.</span><span class="lang-zh" style="display:none">具可查證出租紀錄的已完工物件，並以租金線為承作基礎。毛收益率自 <b>2022 年房價高點的 4.28% 擴張至 2026 年第二季的 6.09%</b>，該擴張即為投資論述的全部。預售與分期結構承擔買方認為該房產正在對沖的里拉通膨風險，且其交屋時點落於 2027 至 2029 年的建照供給區間。</span></p></div>
+      <div class="c"><h4><span class="lang-en">When</span><span class="lang-zh" style="display:none">時點</span></h4><p><span class="lang-en">The decision does not turn on the price index. It turns on <b>the reserve series and the announced policy rate</b>, both published and both moving before price does. A foreign buyer is additionally buying at a real exchange rate 39% above its January 2022 low, so the currency entry point is the worst in five years even where the property entry point is not.</span><span class="lang-zh" style="display:none">此一判斷不取決於房價指數，而取決於<b>存底序列與公告政策利率</b>，兩者均為公開資料，且均先於價格變動。外國買方另須考量進場時的實質匯率高於 2022 年 1 月低點 39%，故縱使房產的進場時點尚可，貨幣的進場時點為五年來最差。</span></p></div>
+      <div class="c"><h4><span class="lang-en">What would change the answer</span><span class="lang-zh" style="display:none">什麼會改變這個答案</span></h4><p><span class="lang-en">A step depreciation of the lira. It would restore the foreign-buyer discount that closed between January 2022 and June 2026, and it would do so at the same moment it forced the real rate negative and restarted the inflation-hedge bid. <b>That single event flips three of the four terms in the equation at once</b>, and the reserve series is where it becomes visible first.</span><span class="lang-zh" style="display:none">里拉的階梯式貶值。該事件將恢復 2022 年 1 月至 2026 年 6 月間消失的外資折讓，並於同一時點迫使實質利率轉負、重啟通膨避險買盤。<b>單一事件即同時翻轉方程式四項中的三項</b>，而存底序列為其最先顯現之處。</span></p></div>
+    </div>
+  </div>
+
+  <div class="chartbox"><div class="kick"><span class="lang-en">Scenario paths for real house prices to end-2029</span><span class="lang-zh" style="display:none">至 2029 年底的實質房價情境路徑</span></div><div id="mScen" class="ch"></div></div>
+  <p class="fnote"><span class="lang-en">Scenario paths and probabilities are the author's, indexed to the first quarter of 2026 = 100 on the real national index, and match those in the companion report. They are not forecasts by any institution cited on this page.</span><span class="lang-zh" style="display:none">情境路徑與機率為作者所作，以全國實質指數 2026 年第一季＝100 設定基期，與對照報告一致。該等路徑非本頁引用之任何機構的預測。</span></p>
+
+  <div class="prop-take">
+    <span class="pk"><span class="lang-en">What this page concludes</span><span class="lang-zh" style="display:none">本頁的結論</span></span>
+    <p><span class="lang-en">Türkiye is the only market on this site where monetary policy alone explains most of the property price series, and it is the only one where the credit channel has been removed by inflation rather than by regulation or by preference. <b>The real funding rate moved 82 percentage points in two years, and the real house price index moved with it in both directions.</b> An investor who tracks one series here should track that one.</span><span class="lang-zh" style="display:none">土耳其為本站唯一一個貨幣政策單獨即可解釋房價序列多數變動的市場，亦為唯一一個信用管道係由通膨而非由法規或偏好所移除的市場。<b>實質資金利率於兩年內移動 82 個百分點，實質房價指數於兩個方向上均隨之移動。</b>於此市場僅追蹤單一序列者，應追蹤該序列。</span></p>
+    <p><span class="lang-en">The record does not support underwriting real capital growth from here. Real prices are 18.6% below their January 2023 reading in İstanbul and have fallen in every quarter for eleven quarters, entirely through inflation rather than through a nominal fall. Against that, real output per head rose 29% between 2020 and 2025, which is a genuine domestic income base and the strongest argument against extrapolating the decline. <b>The return available now is the rent, at a gross yield that has expanded 181 basis points from the 2022 trough, and the mechanism behind that expansion is a lapsed statute rather than a market judgement.</b></span><span class="lang-zh" style="display:none">歷史紀錄不支持自此處起將實質資本利得納入承作假設。伊斯坦堡的實質房價低於 2023 年 1 月讀數 18.6%，並已連續十一季下跌，其全部成因為通膨而非名目下跌。相對地，實質人均產出於 2020 至 2025 年間上升 29%，此為真實存在的本地所得基礎，亦為反對將跌勢外推的最有力論據。<b>現階段可取得的報酬為租金，其毛收益率自 2022 年谷底擴張 181 個基點，而該擴張背後的機制是一項已失效的法律規定，不是市場判斷。</b></span></p>
+    <p><span class="lang-en">The question that decides the next three years is not the price index. It is whether the reserve stock can continue to finance a real appreciation of the size seen since January 2022. That question is answered month by month in a published series, and the transaction-level consequences of each answer are set out in the companion <a href="/tr/report">Istanbul Property Market Report</a>.</span><span class="lang-zh" style="display:none">決定未來三年的問題不是房價指數，而是存底能否持續支應自 2022 年 1 月以來規模的實質升值。該問題逐月由一項公開序列給出答案，各種答案於成交層面的後果詳見對照的<a href="/tr/report">《伊斯坦堡住宅市場報告》</a>。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Which numbers on this page carry weight</span><span class="lang-zh" style="display:none">本頁哪些數字撐得住</span></h2>
+    <p class="sub"><span class="lang-en">Not every figure here is equally reliable. Three tiers, so a reader can tell which numbers to act on.</span><span class="lang-zh" style="display:none">本頁數字的可信度並不一致。分為三層，供判斷哪些可據以決策。</span></p>
+    <div class="tier">
+      <div class="t a">
+        <h5><span class="lang-en">Tier 1 · Primary statistics</span><span class="lang-zh" style="display:none">第一層 · 原始統計</span></h5>
+        <p><span class="lang-en">Published by a statistical authority and retrieved from source. <b>TCMB house price index and its city variants 2010–2026; TCMB unit price and unit rent series; the TCMB one-week repo decision table; the average cost of funding series; TÜİK consumer and producer price indices; BIS nominal and real house price indices, real and nominal effective exchange rates and credit-to-GDP series; IMF reserve series; World Bank population and constant-price GDP per capita.</b> Retrieved through the TCMB EVDS data endpoint, TÜİK bulletins or FRED. Use these for decisions.</span><span class="lang-zh" style="display:none">由統計機關發布並自原始來源取得。<b>TCMB 房價指數及其分市序列 2010–2026；TCMB 單位價格與單位租金序列；TCMB 一週期附買回決議表；平均資金成本序列；TÜİK 消費者與生產者物價指數；BIS 名目與實質房價指數、實質與名目有效匯率及信用佔 GDP 序列；IMF 存底序列；世界銀行人口與不變價人均 GDP。</b>均經 TCMB EVDS 資料端點、TÜİK 公報或 FRED 取得。可據以決策。</span></p>
+      </div>
+      <div class="t b">
+        <h5><span class="lang-en">Tier 2 · Official figures with a stated caveat</span><span class="lang-zh" style="display:none">第二層 · 官方數字，附註記事項</span></h5>
+        <p><span class="lang-en">Produced by an official body but carrying a limitation that must be stated. <b>The OECD immediate interest rate, which many users label a policy rate and which has gaps in 2023; IMF fiscal projections from 2025 onward, which are not observations; the consumer price index splice across the January 2026 rebase to 2025 = 100; the housing loan rate, whose EVDS code-to-name mapping was not confirmed and whose May-to-July 2026 jump is uncorroborated; the announced policy rate across 2017 to May 2018, when the central bank funded through the late liquidity window instead.</b> Directionally reliable; treat precise values as approximate.</span><span class="lang-zh" style="display:none">由官方機構產生，惟帶有必須註明的限制。<b>OECD 即期利率，多數使用者將其標示為政策利率，且於 2023 年有缺漏；IMF 自 2025 年起之財政預測，非觀測值；消費者物價指數跨越 2026 年 1 月改基期為 2025＝100 的接續；住宅貸款利率，其 EVDS 代碼與名稱對應未經確認，且 2026 年 5 至 7 月的跳升未取得佐證；2017 年至 2018 年 5 月間的公告政策利率，該期間央行改以後期流動性窗口供給資金。</b>方向可信，精確值視為近似。</span></p>
+      </div>
+      <div class="t c">
+        <h5><span class="lang-en">Tier 3 · Derived, marked on the charts</span><span class="lang-zh" style="display:none">第三層 · 推導值，已於圖上標示</span></h5>
+        <p><span class="lang-en">Computed by the author from published series. <b>The consumer-price-deflated house price index for Türkiye and İstanbul; the real funding rate and the real mortgage rate; producer price growth computed from the published index; consumer price growth for May to December 2025 computed from the index rather than from a published rate; the four-term driver scoring; all scenario paths.</b> Each is marked in the chart caption. Do not quote these as outturns. An independent competing inflation index exists and is <b>not cited anywhere on this page</b>, because its publisher's site did not respond during collection and a figure recalled rather than retrieved is not evidence.</span><span class="lang-zh" style="display:none">由作者依公開序列計算。<b>經消費者物價平減之土耳其與伊斯坦堡房價指數；實質資金利率與實質房貸利率；依公布指數計算之生產者物價年增率；2025 年 5 至 12 月依指數而非依公布數字計算之消費者物價年增率；四項變數的評分；所有情境路徑。</b>各項均已於圖說標示。不應作為實績引用。另有獨立的競爭性通膨指數存在，本頁<b>任何處均未引用</b>，因其發布方網站於採集期間未回應，而憑記憶陳述而非實際取得的數字不構成證據。</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="watch">
+    <h3><span class="lang-en">What to watch — in order of lead time</span><span class="lang-zh" style="display:none">追蹤指標 —— 依領先程度排序</span></h3>
+    <ul>
+      <li><b><span class="lang-en">Reserves excluding gold, monthly, IMF series.</span><span class="lang-zh" style="display:none">外匯存底（不含黃金），月頻，IMF 序列。</span></b><span class="lang-en"> The highest-information series on this page. US$39.2bn in June 2026 after a fall of US$21.9bn in five months. Below US$35bn the external constraint has bound and the adjustment is a step depreciation.</span><span class="lang-zh" style="display:none"> 本頁資訊含量最高的序列。2026 年 6 月為 392 億美元，五個月減少 219 億美元。低於 350 億美元即代表對外約束成立，調整方式為階梯式貶值。</span></li>
+      <li><b><span class="lang-en">The TCMB one-week repo decision table.</span><span class="lang-zh" style="display:none">TCMB 一週期附買回決議表。</span></b><span class="lang-en"> 37.00% since 23 January 2026. The single condition that falsifies the whole page is a cut below the prevailing inflation rate, which has happened twice and produced a currency event within twelve months on both occasions.</span><span class="lang-zh" style="display:none"> 2026 年 1 月 23 日起為 37.00%。推翻本頁全部論述的單一條件為降息至當期通膨率以下，該情形已發生兩次，兩次均於十二個月內出現貨幣事件。</span></li>
+      <li><b><span class="lang-en">The average cost of funding, monthly.</span><span class="lang-zh" style="display:none">平均資金成本，月頻。</span></b><span class="lang-en"> 40.00% since April 2026 against an announced 37.00%. The gap between the two is the clearest single indicator of whether the central bank is tightening without announcing it, and it moves before the decision table does.</span><span class="lang-zh" style="display:none"> 自 2026 年 4 月起為 40.00%，公告利率為 37.00%。兩者的差距為判斷央行是否在未公告的情況下緊縮的最明確單一指標，且其變動先於決議表。</span></li>
+      <li><b><span class="lang-en">Consumer price inflation, monthly.</span><span class="lang-zh" style="display:none">消費者物價年增率，月頻。</span></b><span class="lang-en"> Disinflation stalled in 2026: 30.65% in January, 32.11% in June. Above 40% for two consecutive quarters and the model's dominant term has to be reset upward against a supply pipeline that is already arriving.</span><span class="lang-zh" style="display:none"> 反通膨於 2026 年停滯：1 月 30.65%，6 月 32.11%。若連續兩季高於 40%，模型的主導變數須向上重設，且屆時供給已開始到達。</span></li>
+      <li><b><span class="lang-en">BIS real effective exchange rate, monthly.</span><span class="lang-zh" style="display:none">BIS 實質有效匯率，月頻。</span></b><span class="lang-en"> 108.7 in June 2026 against 78.3 in January 2022. This is the term that decides whether Turkish property is cheap to a foreign buyer, and it is currently at its least favourable level in five years.</span><span class="lang-zh" style="display:none"> 2026 年 6 月為 108.7，2022 年 1 月為 78.3。此為決定土耳其房產對外國買方是否便宜的變數，現處五年來最不利的水準。</span></li>
+      <li><b><span class="lang-en">Mortgaged share of house transactions, monthly, TÜİK.</span><span class="lang-zh" style="display:none">房貸成交佔比，月頻，TÜİK。</span></b><span class="lang-en"> 10.8% in 2024 and 14.1% in 2025 against 40.0% in 2013. Above 20% for four consecutive quarters and the credit channel is operating again, which falsifies argument two and restores the standard framework.</span><span class="lang-zh" style="display:none"> 2024 年為 10.8%，2025 年為 14.1%，2013 年為 40.0%。若連續四季高於 20%，代表信用管道恢復運作，此推翻論點二並使標準架構重新適用。</span></li>
+      <li><b><span class="lang-en">Construction permits, quarterly, TÜİK.</span><span class="lang-zh" style="display:none">建照核發，季頻，TÜİK。</span></b><span class="lang-en"> 1,187,924 dwellings in 2025, up 39.1%, at 1.72 times completions. This is the only term in the model with a published lead of two to four years, and it is the one that decides 2027 to 2029.</span><span class="lang-zh" style="display:none"> 2025 年核發 1,187,924 戶，年增 39.1%，為完工量的 1.72 倍。此為模型中唯一具備二至四年公開領先期的變數，亦為決定 2027 至 2029 年的變數。</span></li>
+    </ul>
+  </div>
+
+  <div class="src">
+    <span class="lang-en"><b>Sources.</b> Central Bank of the Republic of Türkiye through the EVDS data service: house price index for Türkiye and the NUTS-2 regions (TP.KFE.TR, TP.KFE.TR10, TP.KFE.TR51, TP.KFE.TR31), unit price and unit rent series, the new-tenant rent index, the average cost of funding (TP.APIFON4), housing loan rates (TP.KTF series) and the consumer and domestic producer price indices (TP.FG.J0, TP.TUFE1YI.T1); the TCMB published one-week repo decision table for policy rates from 2010 to 2026; Turkish Statistical Institute press bulletins for consumer prices in 2026 and for construction and occupancy permits (release no. 58303, first quarter 2026); Bank for International Settlements nominal and real residential property price indices (QTRN628BIS, QTRR628BIS), real and nominal effective exchange rates (RBTRBIS, NBTRBIS) and credit-to-GDP series (QTRHAM770A, QTRPAM770A, CRDQTRAHABIS), retrieved through FRED; International Monetary Fund reserve series (TRESEGTRM194N, TRESEGTRM052N) and World Economic Outlook fiscal series; OECD consumer price and immediate interest rate series (CPALTT01TRM659N, IRSTCI01TRM156N) and real GDP growth (TURGDPRQPSMEI) and unemployment (LRHUTTTTTRM156S), retrieved through FRED; World Bank population, population growth and constant-price GDP per capita (POPTOTTRA647NWDB, SPPOPGROWTUR, NYGDPPCAPKDTUR). The consumer-price-deflated house price series, the real funding rate, the real mortgage rate, producer price growth and the driver scoring are the author's calculations and are marked as such in the charts. Scenario paths are the author's and are not forecasts by any of the above.</span>
+    <span class="lang-zh" style="display:none"><b>資料來源。</b>土耳其共和國中央銀行 EVDS 資料服務：土耳其及 NUTS-2 各區房價指數（TP.KFE.TR、TP.KFE.TR10、TP.KFE.TR51、TP.KFE.TR31）、單位價格與單位租金序列、新租租金指數、平均資金成本（TP.APIFON4）、住宅貸款利率（TP.KTF 系列），以及消費者與國內生產者物價指數（TP.FG.J0、TP.TUFE1YI.T1）；TCMB 公布之一週期附買回決議表，涵蓋 2010 至 2026 年政策利率；土耳其統計局公報，2026 年消費者物價與建照及使用執照統計（第 58303 號發布，2026 年第一季）；國際清算銀行名目與實質住宅價格指數（QTRN628BIS、QTRR628BIS）、實質與名目有效匯率（RBTRBIS、NBTRBIS）及信用佔 GDP 序列（QTRHAM770A、QTRPAM770A、CRDQTRAHABIS），經 FRED 取得；國際貨幣基金存底序列（TRESEGTRM194N、TRESEGTRM052N）與《世界經濟展望》財政序列；OECD 消費者物價與即期利率序列（CPALTT01TRM659N、IRSTCI01TRM156N）、實質 GDP 成長（TURGDPRQPSMEI）與失業率（LRHUTTTTTRM156S），經 FRED 取得；世界銀行人口、人口成長率與不變價人均 GDP（POPTOTTRA647NWDB、SPPOPGROWTUR、NYGDPPCAPKDTUR）。經消費者物價平減之房價序列、實質資金利率、實質房貸利率、生產者物價年增率與變數評分，均為作者計算，並於圖表中標示。情境路徑為作者所作，非上述任一機構之預測。</span>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-ornament" aria-hidden="true">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+  <p class="footer-disclaimer">
+    <span class="lang-en"><strong>Independent analysis for reference only</strong> — not investment advice. Sources: TCMB · TÜİK · BIS · IMF · OECD · World Bank. A project by InvestMQuest.</span>
+    <span class="lang-zh"><strong>獨立分析參考</strong>，不構成投資建議。資料來源：TCMB · TÜİK · BIS · IMF · OECD · 世界銀行。InvestMQuest 製作。</span>
+  </p>
+</footer>
+
+<script>
+/* ───────── chart engine (shared with /tr/report) ───────── */
+var C = {navy:'#0d2244',navyMid:'#234a86',gold:'#b8924a',goldHi:'#cda85f',goldLight:'#d4b576',
+         green:'#15803d',amber:'#a16207',red:'#b91c1c',blue:'#1d4ed8',muted:'#6b7a92',
+         grid:'#ece5d4',track:'#e5dfd0',text:'#0c1521'};
+var FONT = "Inter, 'Noto Sans TC', sans-serif";
+function ax(o){return Object.assign({color:C.muted,fontFamily:FONT,fontSize:11},o||{});}
+function lg(a,b){return new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:a},{offset:1,color:b}]);}
+function lgh(a,b){return new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:a},{offset:1,color:b}]);}
+var baseTip = {trigger:'axis',backgroundColor:'#fff',borderColor:C.track,borderWidth:1,padding:[8,11],
+               textStyle:{color:C.navy,fontSize:11,fontFamily:FONT},
+               extraCssText:'box-shadow:0 8px 24px rgba(13,34,68,.10);border-radius:8px'};
+var baseLegend = {top:0,right:4,itemWidth:9,itemHeight:9,itemGap:12,icon:'roundRect',textStyle:ax({fontSize:10.5})};
+function catAxis(d,o){return Object.assign({type:'category',data:d,boundaryGap:true,axisLine:{lineStyle:{color:C.track}},axisTick:{show:false},axisLabel:ax({fontSize:10})},o||{});}
+function valAxis(o){return Object.assign({type:'value',axisLine:{show:false},axisTick:{show:false},splitLine:{lineStyle:{color:C.grid,type:'dashed'}},axisLabel:ax()},o||{});}
+function lbl(o){return Object.assign({show:true,color:C.navy,fontFamily:FONT,fontSize:10,fontWeight:600},o||{});}
+function yrs(a,b){var r=[];for(var y=a;y<=b;y++)r.push(String(y));return r;}
+function mons(y0,y1){var r=[];for(var y=y0;y<=y1;y++){for(var m=1;m<=12;m++){r.push(y+'-'+(m<10?'0'+m:''+m));}}return r;}
+function qtrs(y0,y1){var r=[];for(var y=y0;y<=y1;y++){for(var q=1;q<=4;q++){r.push(y+'Q'+q);}}return r;}
+
+/* ───────── source data ───────── */
+/* TCMB house price index deflated by CPI, Jan 2010 = 100. Author's calculation. */
+var HPI_LAB = yrs(2010,2026).concat(['2026-06']);
+var REAL_TR  = [100.0,102.2,101.8,104.8,108.8,116.4,122.4,124.9,123.1,107.0,107.6,122.3,149.4,233.7,241.1,223.9,218.7,212.9];
+var REAL_IST = [100.0,103.6,104.1,108.4,119.0,137.9,155.1,158.0,149.0,124.2,119.2,131.9,169.4,269.8,249.4,227.4,223.8,219.7];
+/* BIS real residential property price index, Q1 of each year, rebased 2010Q1 = 100 */
+var REAL_BIS = [100.0,103.6,103.2,106.7,110.4,118.5,124.7,126.8,124.2,107.8,110.5,125.7,156.1,245.6,240.4,226.8,219.5,null];
+
+/* Policy rates, monthly Jan 2021 – Jul 2026 */
+var POL_LAB = mons(2021,2026).slice(0,67);
+var APIFON = [17.00,null,17.63,19.00,19.00,19.00,19.00,19.00,18.86,17.68,15.71,14.60,
+              14.00,14.00,14.00,14.00,14.00,14.00,14.00,13.71,12.81,11.65,10.37,9.00,
+              9.01,null,8.51,null,8.90,9.32,15.31,18.09,26.17,30.27,35.77,40.51,
+              42.70,45.24,47.29,51.36,50.54,50.11,50.00,50.00,50.00,50.00,50.00,49.83,
+              46.91,45.00,43.69,46.96,48.39,46.87,45.32,43.00,41.55,40.27,39.50,38.59,
+              37.73,37.00,39.82,40.00,40.00,40.00,40.00];
+var REPO = [17,17,19,19,19,19,19,19,18,16,15,14,
+            14,14,14,14,14,14,14,13,12,10.5,9,9,
+            9,8.5,8.5,8.5,8.5,15,17.5,25,30,35,40,42.5,
+            45,45,50,50,50,50,50,50,50,50,50,47.5,
+            45,45,42.5,46,46,46,43,43,40.5,39.5,39.5,38,
+            37,37,37,37,37,37,37];
+var OECDR = (function(){var a=[];for(var i=0;i<67;i++)a.push(null);a[42]=47.00;a[60]=35.50;a[64]=35.50;return a;})();
+
+/* Real funding rate, monthly Jan 2021 – Jun 2026. Author's calculation. */
+var RR_LAB = mons(2021,2026).slice(0,66);
+var REALRATE = [2.00,null,1.43,1.90,2.40,1.50,0.00,-0.30,-0.74,-2.22,-5.59,-21.50,
+                -34.70,-40.40,-47.10,-56.00,-59.50,-64.60,-65.60,-66.49,-70.69,-73.85,-74.03,-55.30,
+                -48.69,null,-41.99,null,-30.70,-28.88,-32.49,-40.81,-35.33,-31.13,-26.23,-24.29,
+                -22.20,-21.86,-21.21,-18.44,-24.86,-21.49,-11.80,-2.00,0.60,1.40,2.90,5.43,
+                4.81,5.90,5.59,9.06,12.99,11.87,11.82,10.00,8.25,7.37,8.40,7.69,
+                7.08,5.47,8.95,7.63,7.39,7.89];
+var RR_HPI = (function(){var a=[];for(var i=0;i<66;i++)a.push(null);
+  a[0]=122.3;a[12]=149.4;a[24]=233.7;a[36]=241.1;a[48]=223.9;a[60]=218.7;a[65]=212.9;return a;})();
+
+/* CPI year on year, January observations 1956–2026 */
+var CPI_LAB_L = yrs(1956,2026);
+var CPI_LONG = (function(){
+  var m = {1956:17.7,1960:16.6,1965:1.1,1970:6.5,1975:24.5,1978:51.6,1979:51.5,1980:96.2,1981:64.2,
+    1982:30.2,1985:52.8,1988:59.6,1990:60.0,1992:78.5,1994:69.6,1995:125.9,1996:78.1,1997:75.7,
+    1998:101.6,1999:65.9,2000:68.9,2001:35.9,2002:73.2,2003:26.4,2004:10.6,2005:9.2,2006:7.9,
+    2007:9.9,2008:8.2,2009:9.5,2010:8.2,2011:4.9,2012:10.6,2013:7.3,2014:7.8,2015:7.2,2016:9.6,
+    2017:9.2,2018:10.3,2019:20.4,2020:12.2,2021:15.0,2022:48.7,2023:57.7,2024:64.9,2025:42.1,2026:30.65};
+  var a=[];for(var y=1956;y<=2026;y++)a.push(m[y]===undefined?null:m[y]);return a;})();
+
+/* PPI and CPI year on year, quarterly 2021Q2 – 2026Q2 */
+var PQ_LAB = qtrs(2021,2026).slice(1,22);
+var PPI_Q = [42.9,44.0,79.9,115.0,138.3,151.5,97.7,62.5,40.4,47.4,44.2,51.5,50.1,33.1,28.5,23.5,24.5,26.6,27.7,28.1,28.1];
+var CPI_Q = [17.5,19.6,36.1,61.1,78.6,83.5,64.3,50.5,38.2,61.5,64.8,68.5,71.6,49.4,44.4,38.1,35.0,33.3,30.9,30.87,32.11];
+
+/* Household credit as a share of GDP, annual 2008–2025 */
+var CRED_LAB = yrs(2008,2025);
+var CRED = [11.5,null,14.3,16.3,17.1,19.4,18.7,18.6,17.4,17.4,16.5,14.1,18.1,15.4,11.1,11.1,9.4,10.1];
+var CL_LAB = yrs(2019,2025);
+var CL_LEVEL = [550,672,911,1102,1950,3228,6310];
+var CL_RATIO = [14.1,18.1,15.4,11.1,11.1,9.4,10.1];
+
+/* Mortgage rate, policy rate and CPI, January observations 2010–2026 */
+var MR_LAB = yrs(2010,2026);
+var MORT     = [13.18,10.28,15.04,null,12.84,12.91,15.82,15.21,17.48,29.52,14.06,19.04,28.25,25.38,44.39,46.17,37.36];
+var REPO_JAN = [null,6.25,5.75,5.50,10.00,7.75,7.50,8.00,8.00,24.00,11.25,17.00,14.00,9.00,45.00,45.00,37.00];
+var CPI_JAN  = [8.2,4.9,10.6,7.3,7.8,7.2,9.6,9.2,10.3,20.4,12.2,15.0,48.7,57.7,64.9,42.1,30.65];
+
+/* GDP per capita, constant 2015 US dollars, 1960–2025 */
+var GDPPC_LAB = yrs(1960,2025);
+var GDPPC = (function(){
+  var m={1960:2449,1980:3842,1990:5188,2000:6326,2010:8473,2015:11065,2019:12238,2020:12339,
+         2021:13671,2022:14274,2023:14933,2024:15395,2025:15883};
+  var a=[];for(var y=1960;y<=2025;y++)a.push(m[y]===undefined?null:m[y]);return a;})();
+
+/* Real GDP growth and CPI, quarterly 2018Q1 – 2026Q1 */
+var GR_LAB = qtrs(2018,2026).slice(0,33);
+var GDPG = [8.3,null,null,-2.1, -1.6,null,null,5.9, null,-8.6,null,5.4, null,22.2,null,10.0,
+            6.8,null,null,3.3, 2.8,null,null,5.4, 7.2,2.2,2.0,2.7, 2.6,4.0,4.4,3.5, 2.8];
+var CPI_GR = [10.2,15.4,24.5,20.3, 19.7,15.7,9.3,11.8, 11.9,12.6,11.7,14.6, 16.2,17.5,19.6,36.1,
+              61.1,78.6,83.5,64.3, 50.5,38.2,61.5,64.8, 68.5,71.6,49.4,44.4, 38.1,35.0,33.3,30.9, 30.87];
+
+/* Population growth, per cent a year, 1961–2025 */
+var POP_LAB = yrs(1961,2025);
+var POPG = (function(){
+  var m={1961:2.75,1971:2.37,1981:1.99,1991:1.76,2001:1.24,2011:1.47,2015:1.33,2019:1.43,
+         2020:0.97,2021:0.91,2022:0.98,2023:0.41,2024:0.23,2025:0.42};
+  var a=[];for(var y=1961;y<=2025;y++)a.push(m[y]===undefined?null:m[y]);return a;})();
+
+/* Real effective exchange rate and USD/TRY, January observations 2000–2026 plus Jun 2026 */
+var FX_LAB = yrs(2000,2026).concat(['2026-06']);
+var REER = [null,159.6,null,126.6,null,null,170.5,null,185.3,null,174.6,null,null,170.3,null,164.7,
+            null,129.2,null,111.5,111.9,97.2,78.3,87.0,88.8,108.7,104.9,108.7];
+var USDTRY = [0.545,0.671,1.375,1.663,null,null,null,null,1.170,1.595,1.467,null,1.833,null,2.221,null,
+              3.007,3.750,3.775,5.367,5.926,7.397,13.535,18.779,30.040,35.501,43.162,46.220];
+
+/* Reserves excluding gold, US$ millions */
+var RES_LAB = ['2024-01','2024-04','2024-07','2024-10','2025-01','2025-04','2025-07','2025-10','2026-01','2026-04','2026-06'];
+var RES = [64276,50152,null,69424,74618,41776,62619,59159,61071,41257,39206];
+
+var allCharts = [];
+function mk(id){var el=document.getElementById(id); if(!el) return null; var c=echarts.init(el); allCharts.push(c); return c;}
+
+function initAllCharts(lang){
+  allCharts.forEach(function(c){ if(c) c.dispose(); });
+  allCharts = [];
+  var zh = lang === 'zh';
+  var L = function(en,cn){ return zh ? cn : en; };
+
+  /* 1 · real house prices, three measures */
+  (function(){ var c=mk('mHpi'); if(!c) return;
+    var n=[L('Türkiye, real*','土耳其，實質*'),L('İstanbul, real*','伊斯坦堡，實質*'),L('BIS real index (rebased)','BIS 實質指數（換基）')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':v.toFixed(1);}}),
+      legend:Object.assign({},baseLegend,{data:n}),
+      grid:{left:8,right:14,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(HPI_LAB,{boundaryGap:false,axisLabel:ax({fontSize:9,interval:2})}),
+      yAxis:valAxis({min:80,max:290}),
+      series:[
+        {name:n[0],type:'line',data:REAL_TR,smooth:true,symbol:'circle',symbolSize:4,
+         lineStyle:{color:C.navy,width:2.8},itemStyle:{color:C.navy},
+         areaStyle:{color:lg('rgba(13,34,68,.10)','rgba(13,34,68,0)')},
+         markArea:{silent:true,itemStyle:{color:'rgba(185,28,28,.07)'},
+           data:[[{xAxis:'2023',label:{show:true,position:'insideTop',color:C.red,fontFamily:FONT,fontSize:9.5,fontWeight:700,formatter:L('eleven quarters of real decline','實質連跌十一季')}},{xAxis:'2026-06'}]]},
+         markLine:{silent:true,symbol:'none',data:[{yAxis:100,lineStyle:{color:C.muted,type:'dashed',width:1.1},label:{formatter:L('Jan 2010 = 100','2010年1月＝100'),color:C.muted,fontFamily:FONT,fontSize:9,position:'insideStartTop'}}]}},
+        {name:n[1],type:'line',data:REAL_IST,smooth:true,symbol:'circle',symbolSize:4,
+         lineStyle:{color:C.gold,width:2.8},itemStyle:{color:C.gold}},
+        {name:n[2],type:'line',data:REAL_BIS,smooth:true,symbol:'none',connectNulls:true,
+         lineStyle:{color:C.muted,width:1.6,type:'dashed'},itemStyle:{color:C.muted}}
+      ]
+    });
+  })();
+
+  /* 2 · three policy rates */
+  (function(){ var c=mk('mPolicy'); if(!c) return;
+    var n=[L('Average cost of funding','平均資金成本'),L('Announced one-week repo','公告一週期附買回'),L('OECD immediate rate','OECD 即期利率')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':v.toFixed(2)+'%';}}),
+      legend:Object.assign({},baseLegend,{data:n}),
+      grid:{left:8,right:14,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(POL_LAB,{boundaryGap:false,axisLabel:ax({fontSize:9,interval:11})}),
+      yAxis:valAxis({max:55,axisLabel:ax({formatter:'{value}%'})}),
+      series:[
+        {name:n[0],type:'line',data:APIFON,smooth:false,symbol:'none',connectNulls:true,
+         lineStyle:{color:C.navy,width:2.8},itemStyle:{color:C.navy},
+         areaStyle:{color:lg('rgba(13,34,68,.10)','rgba(13,34,68,0)')}},
+        {name:n[1],type:'line',data:REPO,step:'end',symbol:'none',
+         lineStyle:{color:C.gold,width:2},itemStyle:{color:C.gold}},
+        {name:n[2],type:'line',data:OECDR,symbol:'diamond',symbolSize:9,connectNulls:false,
+         lineStyle:{width:0},itemStyle:{color:C.red},
+         label:lbl({position:'bottom',color:C.red,fontSize:9,formatter:function(p){return p.value===null?'':p.value.toFixed(1);}})}
+      ]
+    });
+  })();
+
+  /* 3 · real funding rate against real house prices */
+  (function(){ var c=mk('mRealRate'); if(!c) return;
+    var n=[L('Real funding rate*','實質資金利率*'),L('Real house price index*','實質房價指數*')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':v.toFixed(1);}}),
+      legend:Object.assign({},baseLegend,{data:n}),
+      grid:{left:8,right:14,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(RR_LAB,{boundaryGap:false,axisLabel:ax({fontSize:9,interval:11})}),
+      yAxis:[valAxis({min:-80,max:20,axisLabel:ax({formatter:'{value}pp'})}),
+             valAxis({min:80,max:280,position:'right',splitLine:{show:false}})],
+      series:[
+        {name:n[0],type:'bar',data:REALRATE,barMaxWidth:8,
+         itemStyle:{color:function(p){return p.value>=0?C.green:C.red;}},
+         markLine:{silent:true,symbol:'none',data:[{yAxis:0,lineStyle:{color:C.muted,width:1.2}}]},
+         markPoint:{symbol:'circle',symbolSize:8,itemStyle:{color:C.red},
+           label:{show:true,position:'bottom',color:C.red,fontFamily:FONT,fontSize:9,fontWeight:700,formatter:function(p){return p.data.txt;}},
+           data:[{coord:['2022-11',-74.03],txt:L('Nov 2022  −74.0pp','2022年11月  −74.0pp')}]}},
+        {name:n[1],type:'line',yAxisIndex:1,data:RR_HPI,connectNulls:true,symbol:'circle',symbolSize:6,
+         lineStyle:{color:C.navy,width:2.4},itemStyle:{color:C.navy}}
+      ]
+    });
+  })();
+
+  /* 4 · seventy years of inflation */
+  (function(){ var c=mk('mCpiLong'); if(!c) return;
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':v.toFixed(1)+'%';}}),
+      grid:{left:8,right:14,top:22,bottom:6,containLabel:true},
+      xAxis:catAxis(CPI_LAB_L,{boundaryGap:false,axisLabel:ax({fontSize:9,interval:9})}),
+      yAxis:valAxis({max:140,axisLabel:ax({formatter:'{value}%'})}),
+      series:[{type:'line',data:CPI_LONG,connectNulls:true,symbol:'circle',symbolSize:3.5,showSymbol:true,
+        lineStyle:{color:C.navy,width:2},itemStyle:{color:C.gold},
+        areaStyle:{color:lg('rgba(13,34,68,.10)','rgba(13,34,68,0)')},
+        markLine:{silent:true,symbol:'none',data:[{yAxis:10,lineStyle:{color:C.red,type:'dashed',width:1.2},
+          label:{formatter:L('10% line','10% 線'),color:C.red,fontFamily:FONT,fontSize:9,position:'insideStartTop'}}]},
+        markArea:{silent:true,itemStyle:{color:'rgba(21,128,61,.09)'},
+          data:[[{xAxis:'2003',label:{show:true,position:'insideTop',color:C.green,fontFamily:FONT,fontSize:9.5,fontWeight:700,formatter:L('2003–17: the anomaly','2003–17：異常段')}},{xAxis:'2017'}]]}}]
+    });
+  })();
+
+  /* 5 · producer prices against consumer prices */
+  (function(){ var c=mk('mPpiCpi'); if(!c) return;
+    var n=[L('Producer prices, y/y*','生產者物價年增*'),L('Consumer prices, y/y','消費者物價年增'),L('Gap, pp*','差距，百分點*')];
+    var gap = PPI_Q.map(function(v,i){return +(v-CPI_Q[i]).toFixed(1);});
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':v.toFixed(1);}}),
+      legend:Object.assign({},baseLegend,{data:n}),
+      grid:{left:8,right:14,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(PQ_LAB,{boundaryGap:true,axisLabel:ax({fontSize:9,interval:2})}),
+      yAxis:valAxis({min:-30,max:160,axisLabel:ax({formatter:'{value}%'})}),
+      series:[
+        {name:n[2],type:'bar',data:gap,barMaxWidth:16,
+         itemStyle:{color:function(p){return p.value>=0?'rgba(185,28,28,.30)':'rgba(21,128,61,.28)';}},
+         markLine:{silent:true,symbol:'none',data:[{yAxis:0,lineStyle:{color:C.muted,width:1.1}}]}},
+        {name:n[0],type:'line',data:PPI_Q,smooth:true,symbol:'none',lineStyle:{color:C.red,width:2.8},itemStyle:{color:C.red},
+         markPoint:{symbol:'circle',symbolSize:8,itemStyle:{color:C.red},
+           label:{show:true,position:'top',color:C.red,fontFamily:FONT,fontSize:9,fontWeight:700,formatter:function(p){return p.data.txt;}},
+           data:[{coord:['2022Q3',151.5],txt:L('151.5% vs 83.5% — a 68pp gap','151.5% 對 83.5%，差距 68pp')}]}},
+        {name:n[1],type:'line',data:CPI_Q,smooth:true,symbol:'none',lineStyle:{color:C.navy,width:2.8},itemStyle:{color:C.navy}}
+      ]
+    });
+  })();
+
+  /* 6 · household credit to GDP */
+  (function(){ var c=mk('mCredit'); if(!c) return;
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':v.toFixed(1)+'%';}}),
+      grid:{left:8,right:14,top:22,bottom:6,containLabel:true},
+      xAxis:catAxis(CRED_LAB,{boundaryGap:false,axisLabel:ax({fontSize:9,interval:1})}),
+      yAxis:valAxis({min:6,max:22,axisLabel:ax({formatter:'{value}%'})}),
+      series:[{type:'line',data:CRED,connectNulls:true,smooth:true,symbol:'circle',symbolSize:5,
+        lineStyle:{color:C.navy,width:3},itemStyle:{color:C.navy},
+        areaStyle:{color:lg('rgba(13,34,68,.13)','rgba(13,34,68,0)')},
+        markPoint:{symbol:'circle',symbolSize:9,
+          label:{show:true,position:'top',fontFamily:FONT,fontSize:9,fontWeight:700,formatter:function(p){return p.data.txt;}},
+          data:[{coord:['2013',19.4],txt:L('2013Q3  19.4%','2013Q3  19.4%'),itemStyle:{color:C.gold},label:{color:C.amber}},
+                {coord:['2024',9.4],txt:L('2024  9.4%','2024  9.4%'),itemStyle:{color:C.red},label:{color:C.red,position:'bottom'}}]}}]
+    });
+  })();
+
+  /* 7 · credit level against ratio */
+  (function(){ var c=mk('mCreditLevel'); if(!c) return;
+    var n=[L('Household credit, TRY bn','家庭信用，十億里拉'),L('Same credit, % of GDP','同一信用，佔 GDP %')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{}),
+      legend:Object.assign({},baseLegend,{data:n}),
+      grid:{left:8,right:14,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(CL_LAB,{axisLabel:ax({fontSize:10})}),
+      yAxis:[valAxis({axisLabel:ax({formatter:function(v){return (v/1000).toFixed(1)+'k';}})}),
+             valAxis({min:6,max:22,position:'right',splitLine:{show:false},axisLabel:ax({formatter:'{value}%'})})],
+      series:[
+        {name:n[0],type:'bar',data:CL_LEVEL,barMaxWidth:30,itemStyle:{color:lg(C.navyMid,C.navy),borderRadius:[5,5,0,0]},
+         label:lbl({position:'top',fontSize:9,formatter:function(p){return p.value.toLocaleString();}})},
+        {name:n[1],type:'line',yAxisIndex:1,data:CL_RATIO,smooth:true,symbol:'circle',symbolSize:6,
+         lineStyle:{color:C.red,width:2.8},itemStyle:{color:C.red}}
+      ]
+    });
+  })();
+
+  /* 8 · mortgage rate, policy rate and inflation */
+  (function(){ var c=mk('mMortgage'); if(!c) return;
+    var n=[L('Housing loan rate','住宅貸款利率'),L('One-week repo','一週期附買回'),L('Consumer prices, y/y','消費者物價年增'),L('Real mortgage rate*','實質房貸利率*')];
+    var real = MORT.map(function(v,i){return v===null?null:+(v-CPI_JAN[i]).toFixed(1);});
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':v.toFixed(1)+'%';}}),
+      legend:Object.assign({},baseLegend,{data:n}),
+      grid:{left:8,right:14,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(MR_LAB,{boundaryGap:true,axisLabel:ax({fontSize:9,interval:1})}),
+      yAxis:valAxis({min:-40,max:70,axisLabel:ax({formatter:'{value}%'})}),
+      series:[
+        {name:n[3],type:'bar',data:real,barMaxWidth:16,
+         itemStyle:{color:function(p){return p.value>=0?'rgba(21,128,61,.30)':'rgba(185,28,28,.28)';}},
+         markLine:{silent:true,symbol:'none',data:[{yAxis:0,lineStyle:{color:C.muted,width:1.1}}]}},
+        {name:n[0],type:'line',data:MORT,connectNulls:true,smooth:true,symbol:'circle',symbolSize:4,
+         lineStyle:{color:C.navy,width:2.8},itemStyle:{color:C.navy}},
+        {name:n[1],type:'line',data:REPO_JAN,connectNulls:true,smooth:false,symbol:'none',
+         lineStyle:{color:C.gold,width:2,type:'dashed'},itemStyle:{color:C.gold}},
+        {name:n[2],type:'line',data:CPI_JAN,smooth:true,symbol:'none',
+         lineStyle:{color:C.red,width:2},itemStyle:{color:C.red}}
+      ]
+    });
+  })();
+
+  /* 9 · GDP per capita */
+  (function(){ var c=mk('mGdpPc'); if(!c) return;
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':'US$'+v.toLocaleString();}}),
+      grid:{left:8,right:14,top:22,bottom:6,containLabel:true},
+      xAxis:catAxis(GDPPC_LAB,{boundaryGap:false,axisLabel:ax({fontSize:9,interval:9})}),
+      yAxis:valAxis({axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),
+      series:[{type:'line',data:GDPPC,connectNulls:true,smooth:true,symbol:'circle',symbolSize:4,showSymbol:true,
+        lineStyle:{color:C.navy,width:2.8},itemStyle:{color:C.gold},
+        areaStyle:{color:lg('rgba(13,34,68,.12)','rgba(13,34,68,0)')},
+        markArea:{silent:true,itemStyle:{color:'rgba(161,98,7,.10)'},
+          data:[[{xAxis:'2015',label:{show:true,position:'insideTop',color:C.amber,fontFamily:FONT,fontSize:9.5,fontWeight:700,formatter:L('2015–20 stall: +11% in five years','2015–20 停滯：五年 +11%')}},{xAxis:'2020'}]]}}]
+    });
+  })();
+
+  /* 10 · growth against inflation */
+  (function(){ var c=mk('mGrowth'); if(!c) return;
+    var n=[L('Real GDP growth, y/y','實質 GDP 年增率'),L('Consumer prices, y/y','消費者物價年增')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':v.toFixed(1)+'%';}}),
+      legend:Object.assign({},baseLegend,{data:n}),
+      grid:{left:8,right:14,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(GR_LAB,{boundaryGap:false,axisLabel:ax({fontSize:9,interval:3})}),
+      yAxis:[valAxis({min:-12,max:26,axisLabel:ax({formatter:'{value}%'})}),
+             valAxis({min:0,max:90,position:'right',splitLine:{show:false},axisLabel:ax({formatter:'{value}%'})})],
+      series:[
+        {name:n[0],type:'line',data:GDPG,connectNulls:true,symbol:'circle',symbolSize:5,showSymbol:true,
+         lineStyle:{color:C.navy,width:2.8},itemStyle:{color:C.navy},
+         markLine:{silent:true,symbol:'none',data:[{yAxis:0,lineStyle:{color:C.muted,width:1.1}}]}},
+        {name:n[1],type:'line',yAxisIndex:1,data:CPI_GR,smooth:true,symbol:'none',
+         lineStyle:{color:C.red,width:2,type:'dashed'},itemStyle:{color:C.red}}
+      ]
+    });
+  })();
+
+  /* 11 · population growth */
+  (function(){ var c=mk('mPop'); if(!c) return;
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':v.toFixed(2)+'%';}}),
+      grid:{left:8,right:14,top:22,bottom:6,containLabel:true},
+      xAxis:catAxis(POP_LAB,{boundaryGap:false,axisLabel:ax({fontSize:9,interval:9})}),
+      yAxis:valAxis({min:0,max:3,axisLabel:ax({formatter:'{value}%'})}),
+      series:[{type:'line',data:POPG,connectNulls:true,smooth:true,symbol:'circle',symbolSize:4,showSymbol:true,
+        lineStyle:{color:C.navy,width:2.8},itemStyle:{color:C.gold},
+        areaStyle:{color:lg('rgba(13,34,68,.12)','rgba(13,34,68,0)')},
+        markPoint:{symbol:'circle',symbolSize:9,itemStyle:{color:C.red},
+          label:{show:true,position:'bottom',color:C.red,fontFamily:FONT,fontSize:9,fontWeight:700,formatter:function(p){return p.data.txt;}},
+          data:[{coord:['2024',0.23],txt:L('2024: 0.23%, lowest on record','2024：0.23%，紀錄最低')}]}}]
+    });
+  })();
+
+  /* 12 · real effective exchange rate against USD/TRY */
+  (function(){ var c=mk('mReerFx'); if(!c) return;
+    var n=[L('Real effective exchange rate (2020 = 100)','實質有效匯率（2020＝100）'),L('Lira per US dollar (log)','美元兌里拉（對數）')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{}),
+      legend:Object.assign({},baseLegend,{data:n}),
+      grid:{left:8,right:14,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(FX_LAB,{boundaryGap:false,axisLabel:ax({fontSize:9,interval:2})}),
+      yAxis:[valAxis({min:60,max:200}),
+             Object.assign(valAxis({position:'right',splitLine:{show:false},axisLabel:ax({formatter:function(v){return v>=1?v:v.toFixed(1);}})}),{type:'log',min:0.4,max:60})],
+      series:[
+        {name:n[0],type:'line',data:REER,connectNulls:true,smooth:true,symbol:'circle',symbolSize:4,
+         lineStyle:{color:C.navy,width:3},itemStyle:{color:C.navy},
+         areaStyle:{color:lg('rgba(13,34,68,.11)','rgba(13,34,68,0)')},
+         markPoint:{symbol:'circle',symbolSize:9,itemStyle:{color:C.green},
+           label:{show:true,position:'bottom',color:C.green,fontFamily:FONT,fontSize:9,fontWeight:700,formatter:function(p){return p.data.txt;}},
+           data:[{coord:['2022',78.3],txt:L('Jan 2022: 78.3, the real discount','2022年1月：78.3，實質折讓')}]}},
+        {name:n[1],type:'line',yAxisIndex:1,data:USDTRY,connectNulls:true,smooth:true,symbol:'none',
+         lineStyle:{color:C.gold,width:2.2,type:'dashed'},itemStyle:{color:C.gold}}
+      ]
+    });
+  })();
+
+  /* 13 · reserves excluding gold */
+  (function(){ var c=mk('mReserves'); if(!c) return;
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':'US$'+(v/1000).toFixed(1)+'bn';}}),
+      grid:{left:8,right:14,top:22,bottom:6,containLabel:true},
+      xAxis:catAxis(RES_LAB,{axisLabel:ax({fontSize:9,rotate:30})}),
+      yAxis:valAxis({min:30000,max:80000,axisLabel:ax({formatter:function(v){return (v/1000)+'bn';}})}),
+      series:[{type:'bar',data:RES,barMaxWidth:34,
+        itemStyle:{color:function(p){return p.value!==null&&p.value<45000?lg('#d05a5a',C.red):lg(C.navyMid,C.navy);},borderRadius:[5,5,0,0]},
+        label:lbl({position:'top',fontSize:9,formatter:function(p){return p.value===null?'':(p.value/1000).toFixed(1);}}),
+        markLine:{silent:true,symbol:'none',data:[{yAxis:37138,lineStyle:{color:C.red,type:'dashed',width:1.4},
+          label:{formatter:L('Jan 2021 trough  US$37.1bn','2021年1月谷底  371 億美元'),color:C.red,fontFamily:FONT,fontSize:9,position:'insideStartTop'}}]}}]
+    });
+  })();
+
+  /* 14 · the four model terms */
+  (function(){ var c=mk('mDrivers'); if(!c) return;
+    var cats=[L('Real exchange rate','實質匯率'),L('Permitted supply','核准供給'),L('Real funding rate','實質資金利率'),L('Inflation-hedge demand','通膨避險需求')];
+    var vals=[-2,-2,-2,1];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(p){return p.name+'<br/><b>'+(p.value>0?'+':'')+p.value+'</b> '+L('(author’s scoring, −3 to +3)','（作者評分，−3 至 +3）');}}),
+      grid:{left:8,right:34,top:14,bottom:6,containLabel:true},
+      xAxis:valAxis({min:-4,max:4,axisLabel:ax({formatter:function(v){return v>0?'+'+v:v;}})}),
+      yAxis:catAxis(cats,{axisLabel:ax({fontSize:10.5})}),
+      series:[{type:'bar',data:vals.map(function(v){return {value:v,itemStyle:{color:v<0?C.red:(v>=2?C.green:C.gold),borderRadius:v<0?[4,0,0,4]:[0,4,4,0]}};}),barMaxWidth:26,
+        label:lbl({position:function(p){return p.value<0?'left':'right';},formatter:function(p){return (p.value>0?'+':'')+p.value;},fontSize:11}),
+        markLine:{silent:true,symbol:'none',data:[{xAxis:0,lineStyle:{color:C.muted,width:1.3}}]}}]
+    });
+  })();
+
+  /* 15 · scenarios */
+  (function(){ var c=mk('mScen'); if(!c) return;
+    var cats=[L('2026Q1','2026Q1'),L('2026Q4','2026Q4'),L('2027Q4','2027Q4'),L('2028Q4','2028Q4'),L('2029Q4','2029Q4')];
+    var names=[L('Stance held · 50%','政策立場維持 · 50%'),L('External break · 30%','對外帳失守 · 30%'),L('Disinflation completes · 20%','反通膨完成 · 20%')];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v===null?'—':v.toFixed(0);}}),
+      legend:Object.assign({},baseLegend,{data:names}),
+      grid:{left:8,right:14,top:32,bottom:6,containLabel:true},
+      xAxis:catAxis(cats,{boundaryGap:false,axisLabel:ax({fontSize:9.5})}),
+      yAxis:valAxis({min:65,max:120}),
+      series:[
+        {name:names[0],type:'line',data:[100,96,93,92,93],smooth:true,symbol:'circle',symbolSize:6,lineStyle:{color:C.navy,width:2.6},itemStyle:{color:C.navy}},
+        {name:names[1],type:'line',data:[100,94,84,76,74],smooth:true,symbol:'circle',symbolSize:6,lineStyle:{color:C.red,width:2.6},itemStyle:{color:C.red}},
+        {name:names[2],type:'line',data:[100,98,100,105,111],smooth:true,symbol:'circle',symbolSize:6,lineStyle:{color:C.green,width:2.6},itemStyle:{color:C.green},
+         markLine:{silent:true,symbol:'none',data:[{yAxis:100,lineStyle:{color:C.muted,type:'dashed',width:1.2},
+           label:{formatter:L('2026Q1 real index = 100','2026Q1 實質指數＝100'),color:C.muted,fontFamily:FONT,fontSize:9,position:'insideStartBottom'}}]}}
+      ]
+    });
+  })();
+}
+
+/* ───────── language + UI ───────── */
+function setLang(lang){
+  document.body.classList.toggle('zh', lang==='zh');
+  document.querySelectorAll('.lang-en').forEach(function(e){e.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-zh').forEach(function(e){e.style.display=lang==='zh'?'':'none';});
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.lang===lang);});
+  try{localStorage.setItem('lang',lang);}catch(e){}
+  initAllCharts(lang);
+}
+
+window.addEventListener('load', function(){
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.addEventListener('click', function(){ setLang(b.dataset.lang); });
+  });
+  var lang='en';
+  try{ lang = localStorage.getItem('lang') || 'en'; }catch(e){}
+  setLang(lang);
+});
+window.addEventListener('resize', function(){ allCharts.forEach(function(c){ if(c) c.resize(); }); });
+</script>
+
+</body>
+</html>

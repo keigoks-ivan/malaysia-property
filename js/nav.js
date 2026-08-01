@@ -41,6 +41,12 @@ var MARKETS = [
       { href: '/ae/report', en: 'Dubai Report', zh: '杜拜報告' },
       { href: '/ae/macro',  en: 'Macro',        zh: '總經' }
     ] },
+  { k: 'tr', flag: '🇹🇷', en: 'Türkiye', zh: '土耳其', home: '/tr/report',
+    prefixes: ['/tr/'],
+    links: [
+      { href: '/tr/report', en: 'Istanbul Report', zh: '伊斯坦堡報告' },
+      { href: '/tr/macro',  en: 'Macro',           zh: '總經' }
+    ] },
   { k: 'global', flag: '🌐', en: 'Cross-market', zh: '跨市場', home: '/global/compass',
     prefixes: ['/global/'],
     links: [
