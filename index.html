@@ -66,6 +66,51 @@ body.zh .sec-head .section-eyebrow{letter-spacing:.05em;text-transform:none}
 .vcard:hover .vc-cta{text-decoration:underline}
 .vfoot{font-size:11px;line-height:1.9;color:var(--muted);max-width:760px;margin:18px auto 0;text-align:center}
 
+/* ── interactive filter ── */
+.vfilter{margin:22px 0 0;display:flex;flex-direction:column;gap:11px}
+.vq{border:1px solid var(--border);border-radius:14px;padding:13px 16px 12px;margin:0;background:var(--card);box-shadow:var(--shadow-sm)}
+.vq legend{padding:0 3px;font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;font-size:14.5px;color:var(--navy)}
+.vopts{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+.vopt{display:inline-flex;align-items:center;gap:7px;padding:7px 12px 7px 9px;border-radius:999px;border:1px solid var(--border);background:var(--bg-soft);cursor:pointer;font-size:12.5px;color:var(--text-soft);transition:border-color .15s,background .15s}
+.vopt input{width:14px;height:14px;accent-color:var(--gold-deep);cursor:pointer;flex-shrink:0}
+.vopt:hover{border-color:var(--gold)}
+.vopt:focus-within{outline:2px solid var(--gold-deep);outline-offset:2px}
+.vopt.checked{background:var(--gold-bg);border-color:var(--gold-deep);color:var(--navy);font-weight:600}
+.vopt .ocnt{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--gold-deep);font-size:11px}
+.vopt.checked .ocnt{color:var(--navy)}
+
+.vres{margin-top:24px}
+.vres-sum{display:flex;gap:20px;flex-wrap:wrap;align-items:baseline;padding:14px 18px;border-radius:12px;background:var(--bg-soft);border:1px solid var(--border)}
+.vres-sum .vsn{display:flex;align-items:baseline;gap:6px;font-size:12.5px;color:var(--text-soft)}
+.vres-sum .vsn b{font-family:'IBM Plex Mono',monospace;font-size:19px;color:#15803d}
+.vres-sum .vsn.unk b{color:#a16207}
+.vres-note{font-size:11.5px;line-height:1.8;color:var(--muted);margin:9px 2px 0}
+.vres-hint{font-size:12px;line-height:1.9;color:var(--text-soft);background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:10px;padding:11px 14px;margin-top:12px}
+.vres-hint b{color:var(--navy)}
+.vgroup-h{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 2px 8px}
+body.zh .vgroup-h{letter-spacing:.02em;text-transform:none}
+.vres-list{display:grid;gap:7px;max-height:460px;overflow-y:auto;padding-right:3px}
+.vitem{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--card);text-decoration:none!important;transition:border-color .15s,transform .15s;min-width:0}
+.vitem:hover{border-color:var(--gold);transform:translateX(2px)}
+.vitem .vfl{font-size:17px;flex-shrink:0}
+.vitem .vinfo{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;overflow:hidden}
+.vitem .vjur{font-weight:700;color:var(--navy);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vitem .vprog{font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vitem .vamt{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--gold-deep);font-weight:700;white-space:nowrap;flex-shrink:0}
+.vitem .voc{font-size:10px;padding:3px 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;font-weight:600;color:var(--navy)}
+.voc.citizenship{background:#dde7f2}
+.voc.permanent{background:#dcefe1}
+.voc.renewable{background:#fbe6d2}
+.vitem.vunk{flex-wrap:wrap;background:var(--bg)}
+.vitem.vunk .vreason{width:100%;font-size:10.5px;color:var(--muted);margin-top:2px}
+.vitem.vpartial{flex-wrap:wrap}
+.vitem .vcaveat{width:100%;font-size:10.5px;line-height:1.6;color:#a16207;margin-top:2px}
+.vempty{font-size:12.5px;color:var(--muted);padding:14px 4px;text-align:center}
+@media(max-width:520px){
+  .vitem{flex-wrap:wrap}
+  .vitem .vinfo{min-width:120px}
+}
+
 /* ── market strip: dependent-market layer, compact ── */
 .mkt{margin:40px 0 6px}
 .cov{background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:12px;padding:12px 18px;margin:0 0 18px;font-size:12px;line-height:1.85;color:var(--text-soft);text-align:center}
@@ -146,75 +191,65 @@ body.zh .how-head .section-eyebrow{letter-spacing:.05em;text-transform:none}
   <!-- ══════════ VISA HUB — primary entry ══════════ -->
   <section class="vhub">
     <div class="sec-head">
-      <span class="section-eyebrow"><span class="lang-en">Forty-nine programmes, five honest cuts</span><span class="lang-zh">四十九套制度，五種切法</span></span>
-      <h2><span class="lang-en">Start from the condition you can't compromise on</span><span class="lang-zh">從不能妥協的那個條件開始</span></h2>
-      <p><span class="lang-en">Each cut below comes straight from a field every programme in the dataset carries: minimum threshold, stay requirement, what the route confers, whether property is the route at all. Where a field could not be verified, it is counted on its own rather than folded into a yes or a no.</span><span class="lang-zh">以下每種切法，都直接取自資料集裡每套制度皆有的欄位：最低門檻、停留要求、途徑最終賦予的身分、買房本身是不是途徑。任何欄位查無可靠依據時，都獨立計算一類，不歸進「有」或「沒有」。</span></p>
+      <span class="section-eyebrow"><span class="lang-en">Forty-nine programmes, five honest questions</span><span class="lang-zh">四十九套制度，五個白話問題</span></span>
+      <h2><span class="lang-en">Answer what you actually care about</span><span class="lang-zh">回答你真正在意的事</span></h2>
+      <p><span class="lang-en">Pick as many answers as apply to each question below — the results update as you go. Where a programme's data could not settle a question, it is shown on its own rather than guessed into a yes or a no.</span><span class="lang-zh">以下每題可複選，選好之後結果會即時更新。任何制度的資料無法回答某一題時，會獨立列出，不會被猜測歸進「符合」或「不符合」。</span></p>
     </div>
 
-    <div class="vgrid">
+    <form class="vfilter" id="vfilter">
 
-      <a class="vcard" href="/global/visa">
-        <h3><span class="lang-en">Minimum threshold</span><span class="lang-zh">最低門檻金額</span></h3>
-        <p class="vdesc"><span class="lang-en">Published capital requirement, sorted into bands. From <code>min_value</code> and <code>established.threshold</code>.</span><span class="lang-zh">已公布之最低資金要求，依級距分組。取自 <code>min_value</code> 與 <code>established.threshold</code>。</span></p>
-        <div class="vbkts">
-          <div class="vbkt"><span class="vdot"></span><span class="vl"><span class="lang-en">No minimum published</span><span class="lang-zh">未設金額下限</span></span><span class="vn">8</span></div>
-          <div class="vbkt"><span class="vdot"></span><span class="vl"><span class="lang-en">Under US$100k</span><span class="lang-zh">10 萬美元以下</span></span><span class="vn">7</span></div>
-          <div class="vbkt"><span class="vdot"></span><span class="vl"><span class="lang-en">US$100k – 300k</span><span class="lang-zh">10 萬至 30 萬美元</span></span><span class="vn">12</span></div>
-          <div class="vbkt"><span class="vdot"></span><span class="vl"><span class="lang-en">US$300k – 600k</span><span class="lang-zh">30 萬至 60 萬美元</span></span><span class="vn">14</span></div>
-          <div class="vbkt"><span class="vdot"></span><span class="vl"><span class="lang-en">US$600k and above</span><span class="lang-zh">60 萬美元以上</span></span><span class="vn">7</span></div>
-          <div class="vbkt unver"><span class="vdot"></span><span class="vl"><span class="lang-en">Threshold itself unverified</span><span class="lang-zh">門檻本身未查證</span></span><span class="vn">1</span></div>
+      <fieldset class="vq" data-q="q1">
+        <legend><span class="lang-en">How much are you looking to spend?</span><span class="lang-zh">你打算花多少錢？</span></legend>
+        <div class="vopts">
+          <label class="vopt"><input type="checkbox" data-q="q1" data-v="no_min"><span class="ot"><span class="lang-en">No minimum published</span><span class="lang-zh">未設金額下限</span></span><span class="ocnt">8</span></label>
+          <label class="vopt"><input type="checkbox" data-q="q1" data-v="u100"><span class="ot"><span class="lang-en">Under US$100k</span><span class="lang-zh">10 萬美元以下</span></span><span class="ocnt">7</span></label>
+          <label class="vopt"><input type="checkbox" data-q="q1" data-v="b100_300"><span class="ot"><span class="lang-en">US$100k – 300k</span><span class="lang-zh">10 萬至 30 萬美元</span></span><span class="ocnt">12</span></label>
+          <label class="vopt"><input type="checkbox" data-q="q1" data-v="b300_600"><span class="ot"><span class="lang-en">US$300k – 600k</span><span class="lang-zh">30 萬至 60 萬美元</span></span><span class="ocnt">14</span></label>
+          <label class="vopt"><input type="checkbox" data-q="q1" data-v="o600"><span class="ot"><span class="lang-en">US$600k and above</span><span class="lang-zh">60 萬美元以上</span></span><span class="ocnt">7</span></label>
         </div>
-        <span class="vc-cta"><span class="lang-en">Open the full table →</span><span class="lang-zh">開啟完整對照表 →</span></span>
-      </a>
+      </fieldset>
 
-      <a class="vcard" href="/global/visa">
-        <h3><span class="lang-en">Do you actually have to live there</span><span class="lang-zh">需不需要真的搬過去</span></h3>
-        <p class="vdesc"><span class="lang-en">The single field with the most decision weight. From <code>stay</code> and <code>established.stay</code>.</span><span class="lang-zh">決策份量最重的一欄。取自 <code>stay</code> 與 <code>established.stay</code>。</span></p>
-        <div class="vbkts">
-          <div class="vbkt"><span class="vdot"></span><span class="vl"><span class="lang-en">No minimum presence required</span><span class="lang-zh">無最低居住天數要求</span></span><span class="vn">19</span></div>
-          <div class="vbkt"><span class="vdot"></span><span class="vl"><span class="lang-en">Requires actual residence or occupation</span><span class="lang-zh">需要真實居住或占用</span></span><span class="vn">8</span></div>
-          <div class="vbkt unver"><span class="vdot"></span><span class="vl"><span class="lang-en">Not established</span><span class="lang-zh">未能查證</span></span><span class="vn">22</span></div>
+      <fieldset class="vq" data-q="q2">
+        <legend><span class="lang-en">Are you willing to actually move there and live?</span><span class="lang-zh">你願意真的搬過去住嗎？</span></legend>
+        <div class="vopts">
+          <label class="vopt"><input type="checkbox" data-q="q2" data-v="requires"><span class="ot"><span class="lang-en">Yes, I'll actually live there</span><span class="lang-zh">願意實際居住</span></span><span class="ocnt">8</span></label>
+          <label class="vopt"><input type="checkbox" data-q="q2" data-v="no_min"><span class="ot"><span class="lang-en">No, I just want the status</span><span class="lang-zh">不想搬，只要身分就好</span></span><span class="ocnt">19</span></label>
+          <label class="vopt"><input type="checkbox" data-q="q2" data-v="__any" data-noop="1"><span class="ot"><span class="lang-en">Either is fine</span><span class="lang-zh">都可以</span></span><span class="ocnt">49</span></label>
         </div>
-        <span class="vc-cta"><span class="lang-en">Open the full table →</span><span class="lang-zh">開啟完整對照表 →</span></span>
-      </a>
+      </fieldset>
 
-      <a class="vcard" href="/global/visa">
-        <h3><span class="lang-en">What the route confers</span><span class="lang-zh">拿到的是什麼身分</span></h3>
-        <p class="vdesc"><span class="lang-en">Classified from each programme's published onward-status text. From <code>outcome_class</code>.</span><span class="lang-zh">依各制度已刊登之後續身分文字分類。取自 <code>outcome_class</code>。</span></p>
-        <div class="vbkts">
-          <div class="vbkt oc-citizenship"><span class="vdot"></span><span class="vl"><span class="lang-en">Citizenship</span><span class="lang-zh">公民身分</span></span><span class="vn">6</span></div>
-          <div class="vbkt oc-permanent"><span class="vdot"></span><span class="vl"><span class="lang-en">Permanent status</span><span class="lang-zh">永久身分</span></span><span class="vn">18</span></div>
-          <div class="vbkt oc-renewable"><span class="vdot"></span><span class="vl"><span class="lang-en">Renewable permit only</span><span class="lang-zh">僅可續期許可</span></span><span class="vn">12</span></div>
-          <div class="vbkt unver"><span class="vdot"></span><span class="vl"><span class="lang-en">Not established</span><span class="lang-zh">未能查證</span></span><span class="vn">13</span></div>
+      <fieldset class="vq" data-q="q3">
+        <legend><span class="lang-en">What do you want to end up with?</span><span class="lang-zh">你要拿到什麼？</span></legend>
+        <div class="vopts">
+          <label class="vopt"><input type="checkbox" data-q="q3" data-v="citizenship"><span class="ot"><span class="lang-en">Citizenship</span><span class="lang-zh">公民身分</span></span><span class="ocnt">6</span></label>
+          <label class="vopt"><input type="checkbox" data-q="q3" data-v="permanent"><span class="ot"><span class="lang-en">Permanent status</span><span class="lang-zh">永久身分</span></span><span class="ocnt">18</span></label>
+          <label class="vopt"><input type="checkbox" data-q="q3" data-v="renewable"><span class="ot"><span class="lang-en">A renewable permit is enough</span><span class="lang-zh">可續期的許可就好</span></span><span class="ocnt">12</span></label>
         </div>
-        <span class="vc-cta"><span class="lang-en">Open the full table →</span><span class="lang-zh">開啟完整對照表 →</span></span>
-      </a>
+      </fieldset>
 
-      <a class="vcard" href="/global/visa">
-        <h3><span class="lang-en">Is property the route, or one of several</span><span class="lang-zh">買房是不是唯一途徑</span></h3>
-        <p class="vdesc"><span class="lang-en">Whether the rules require property specifically, or accept it alongside other qualifying investments. From <code>route_type</code>.</span><span class="lang-zh">規則是否指定必須是房地產，或允許以其他合格投資並列選擇。取自 <code>route_type</code>。</span></p>
-        <div class="vbkts">
-          <div class="vbkt"><span class="vdot"></span><span class="vl"><span class="lang-en">Property is the route</span><span class="lang-zh">買房本身即是途徑</span></span><span class="vn">19</span></div>
-          <div class="vbkt"><span class="vdot"></span><span class="vl"><span class="lang-en">Property is one of several routes</span><span class="lang-zh">買房是可選途徑之一</span></span><span class="vn">30</span></div>
+      <fieldset class="vq" data-q="q4">
+        <legend><span class="lang-en">Does buying the property have to be what gets you status?</span><span class="lang-zh">買房本身就要能換到身分嗎？</span></legend>
+        <div class="vopts">
+          <label class="vopt"><input type="checkbox" data-q="q4" data-v="property_is_route"><span class="ot"><span class="lang-en">Yes, buying property is the route</span><span class="lang-zh">是，買房就是途徑</span></span><span class="ocnt">19</span></label>
+          <label class="vopt"><input type="checkbox" data-q="q4" data-v="property_one_of_several"><span class="ot"><span class="lang-en">It can be one part of a wider portfolio</span><span class="lang-zh">可以是投資組合的一部分</span></span><span class="ocnt">30</span></label>
         </div>
-        <span class="vc-cta"><span class="lang-en">Open the full table →</span><span class="lang-zh">開啟完整對照表 →</span></span>
-      </a>
+      </fieldset>
 
-      <a class="vcard" href="/global/visa">
-        <h3><span class="lang-en">Can you bring family</span><span class="lang-zh">能不能帶家屬</span></h3>
-        <p class="vdesc"><span class="lang-en">Whether the source publishes any detail on dependants, checked against the same bar as every other field. From <code>dependants</code>.</span><span class="lang-zh">來源是否刊登眷屬相關細節，查證標準與其餘欄位相同。取自 <code>dependants</code>。</span></p>
-        <div class="vbkts">
-          <div class="vbkt"><span class="vdot"></span><span class="vl"><span class="lang-en">Detail published</span><span class="lang-zh">已刊登細節</span></span><span class="vn">34</span></div>
-          <div class="vbkt unver"><span class="vdot"></span><span class="vl"><span class="lang-en">Not established</span><span class="lang-zh">未能查證</span></span><span class="vn">15</span></div>
+      <fieldset class="vq" data-q="q5">
+        <legend><span class="lang-en">Do you need to bring family?</span><span class="lang-zh">要帶家人嗎？</span></legend>
+        <div class="vopts">
+          <label class="vopt"><input type="checkbox" data-q="q5" data-v="yes"><span class="ot"><span class="lang-en">Yes</span><span class="lang-zh">要</span></span><span class="ocnt">33</span></label>
+          <label class="vopt"><input type="checkbox" data-q="q5" data-v="__any" data-noop="1"><span class="ot"><span class="lang-en">No</span><span class="lang-zh">不用</span></span><span class="ocnt">49</span></label>
         </div>
-        <span class="vc-cta"><span class="lang-en">Open the full table →</span><span class="lang-zh">開啟完整對照表 →</span></span>
-      </a>
+      </fieldset>
 
-    </div>
+    </form>
+
+    <div class="vres" id="vres" aria-live="polite"></div>
 
     <p class="vfoot">
-      <span class="lang-en">Counts computed directly from the 49-programme dataset compiled 2026-08-02. A field that could not clear the sourcing bar (one tier-1 source, or two agreeing tier-2 sources) is marked not established and counted there, never guessed into a yes or a no. Full method and every source: <a href="/global/visa">the residency-by-property page</a>.</span>
-      <span class="lang-zh">以上統計直接算自 2026 年 8 月 2 日彙編之四十九套制度資料集。任何欄位未能通過查證標準（一筆第一級來源，或兩筆一致之第二級來源）即標示為未能查證，並獨立計入該類，不猜測歸入是或否。完整方法與逐筆來源見<a href="/global/visa">買房換居留頁</a>。</span>
+      <span class="lang-en">Results are computed directly from the 49-programme dataset compiled 2026-08-02, using the same field-by-field rule as the underlying table: a field that could not clear the sourcing bar (one tier-1 source, or two agreeing tier-2 sources) is marked not established and shown on its own, never guessed into a yes or a no. Full method and every source, jurisdiction by jurisdiction: <a href="/global/visa">the residency-by-property page</a>.</span>
+      <span class="lang-zh">以上結果直接算自 2026 年 8 月 2 日彙編之四十九套制度資料集，分類規則與下方完整對照表相同：任何欄位未能通過查證標準（一筆第一級來源，或兩筆一致之第二級來源）即標示為未能查證並獨立列出，不猜測歸入是或否。完整方法與逐筆來源見<a href="/global/visa">買房換居留頁</a>。</span>
     </p>
   </section>
 
@@ -303,6 +338,232 @@ body.zh .how-head .section-eyebrow{letter-spacing:.05em;text-transform:none}
       </div>
     </div>
   </div>
+
+<script>
+/* Interactive residency-by-property filter.
+   VFD (visa filter data) is a minimal per-programme extract from
+   data/visa-property.json, built 2026-08-02 with the exact bucketing
+   rules used by /global/visa (see docs/verification/CHANGELOG-2026-08-02.md):
+     i  = id, matches the row's data-id on /global/visa for deep-linking
+     f  = flag emoji (blank where no ISO flag exists, e.g. Northern Cyprus)
+     je/jz = jurisdiction, English / Chinese
+     le/lz = programme label, English / Chinese
+     ae/az = display string for min_value (amount+currency, or a no-minimum /
+             not-established label), English / Chinese
+     oc = outcome_class, used only for the result badge colour and label
+     q1 = threshold bucket: no_min|u100|b100_300|b300_600|o600, or null when
+          established.threshold is not_established (bucketed on sort_usd,
+          which equals min_value.usd except Cape Verde's EUR conversion)
+     q2 = stay bucket: no_min|requires, or null when the stay field's own
+          text could not establish either way. established.stay is NOT used
+          here — that flag has confirmed mismatches against the field text
+          (e.g. several "published" flags whose text is actually silent).
+          Read from the full stay.text_en for every programme.
+     q3 = outcome_class itself, or null when it is not_established
+     q4 = route_type, always established for all 49
+     q5 = three-state, read from the full dependants.text_en for every
+          programme (not from any keyword or flag, which have confirmed
+          mismatches elsewhere on this dataset — see q2's note above):
+            'yes'  = the text confirms a spouse/child/etc can be brought in
+                     under this specific route (partial coverage still
+                     counts as 'yes' — see ce/cz below)
+            'no'   = the text establishes, as a checked finding, that this
+                     specific route does NOT extend to family (e.g. Serbia
+                     art. 54: family must apply separately under a wholly
+                     different article) — this is a verified negative, not
+                     a gap, so it must fail the filter outright rather than
+                     landing in "can't tell"
+            null   = no source settles it either way for this route
+     ce/cz = present only where q5='yes' but coverage is partial in a way
+          that matters (e.g. Turkey's citizenship-by-investment: minor
+          children are naturalised automatically, the spouse is not, and
+          must apply separately). Rendered as a visible caveat line under
+          the result card so a plain green "yes" never hides a real limit.
+   Every bucket total below reproduces the counts on the underlying table at
+   /global/visa exactly; see docs/verification/CHANGELOG-2026-08-02.md for
+   the sourcing rule itself. */
+var VFD = [{"i":"greece","f":"🇬🇷","je":"Greece","jz":"希臘","le":"Golden Visa","lz":"黃金簽證","ae":"EUR 400,000","az":"EUR 400,000","oc":"renewable","q1":"b300_600","q2":"no_min","q3":"renewable","q4":"property_is_route","q5":"yes"},{"i":"cyprus","f":"🇨🇾","je":"Cyprus","jz":"賽普勒斯","le":"Immigration Permit, Reg. 6(2)","lz":"移民許可（第 6(2) 條）","ae":"EUR 300,000","az":"EUR 300,000","oc":"permanent","q1":"b300_600","q2":"no_min","q3":"permanent","q4":"property_is_route","q5":"yes"},{"i":"malta","f":"🇲🇹","je":"Malta","jz":"馬爾他","le":"MPRP","lz":"永久居留計畫 MPRP","ae":"EUR 375,000","az":"EUR 375,000","oc":"permanent","q1":"b300_600","q2":"no_min","q3":"permanent","q4":"property_is_route","q5":"yes"},{"i":"latvia","f":"🇱🇻","je":"Latvia","jz":"拉脫維亞","le":"TRP for real-estate investment","lz":"不動產投資暫時居留許可","ae":"EUR 250,000","az":"EUR 250,000","oc":"permanent","q1":"b100_300","q2":"no_min","q3":"permanent","q4":"property_one_of_several","q5":"yes"},{"i":"montenegro","f":"🇲🇪","je":"Montenegro","jz":"蒙特內哥羅","le":"Temporary residence, art. 56","lz":"暫時居留（第 56 條）","ae":"EUR 150,000","az":"EUR 150,000","oc":"not_established","q1":"b100_300","q2":null,"q3":null,"q4":"property_is_route","q5":null},{"i":"georgia","f":"🇬🇪","je":"Georgia","jz":"喬治亞","le":"Short-term permit for owners, art. 15(j)","lz":"業主短期居留許可（第 15(j) 條）","ae":"US$150,000","az":"US$150,000","oc":"permanent","q1":"b100_300","q2":null,"q3":"permanent","q4":"property_one_of_several","q5":null},{"i":"turkey","f":"🇹🇷","je":"Turkey","jz":"土耳其","le":"Short-term permit, art. 31(1)(b)","lz":"短期居留許可（第 31(1)(b) 條）","ae":"No minimum","az":"未設下限","oc":"permanent","q1":"no_min","q2":null,"q3":"permanent","q4":"property_is_route","q5":"yes"},{"i":"turkey-2","f":"🇹🇷","je":"Turkey","jz":"土耳其","le":"Citizenship by real estate","lz":"不動產投資入籍","ae":"US$400,000","az":"US$400,000","oc":"citizenship","q1":"b300_600","q2":"no_min","q3":"citizenship","q4":"property_one_of_several","q5":"yes","ce":"Partial: only minor children are naturalised with the applicant. The spouse does not automatically acquire citizenship and must pursue it separately.","cz":"部分：僅未成年子女隨同申請人入籍。配偶不會自動取得公民身分，須另循他途申請。"},{"i":"serbia","f":"🇷🇸","je":"Serbia","jz":"塞爾維亞","le":"Temporary residence, art. 54","lz":"暫時居留（第 54 條）","ae":"No minimum","az":"未設下限","oc":"permanent","q1":"no_min","q2":"requires","q3":"permanent","q4":"property_is_route","q5":"no"},{"i":"northern-cyprus-trnc","f":"","je":"Northern Cyprus (TRNC)","jz":"北賽普勒斯（北賽土耳其共和國）","le":"Permit for property owners","lz":"業主居留許可","ae":"No minimum","az":"未設下限","oc":"not_established","q1":"no_min","q2":"no_min","q3":null,"q4":"property_one_of_several","q5":null},{"i":"azerbaijan","f":"🇦🇿","je":"Azerbaijan","jz":"亞塞拜然","le":"Migration Code art. 45","lz":"《移民法典》第 45 條","ae":"AZN 100,000","az":"AZN 100,000","oc":"permanent","q1":"u100","q2":null,"q3":"permanent","q4":"property_one_of_several","q5":null},{"i":"north-macedonia","f":"🇲🇰","je":"North Macedonia","jz":"北馬其頓","le":"Temporary residence, art. 119(1)","lz":"暫時居留（第 119(1) 條）","ae":"EUR 40,000","az":"EUR 40,000","oc":"renewable","q1":"u100","q2":"requires","q3":"renewable","q4":"property_is_route","q5":null},{"i":"albania","f":"🇦🇱","je":"Albania","jz":"阿爾巴尼亞","le":"Permit for owners, art. 84","lz":"業主居留許可（第 84 條）","ae":"No minimum","az":"未設下限","oc":"permanent","q1":"no_min","q2":"requires","q3":"permanent","q4":"property_is_route","q5":"yes"},{"i":"andorra","f":"🇦🇩","je":"Andorra","jz":"安道爾","le":"Passive residence","lz":"被動居留","ae":"EUR 1,000,000","az":"EUR 1,000,000","oc":"not_established","q1":"o600","q2":"requires","q3":null,"q4":"property_one_of_several","q5":"yes"},{"i":"san-marino","f":"🇸🇲","je":"San Marino","jz":"聖馬利諾","le":"Residenza elettiva","lz":"選擇性居留","ae":"EUR 500,000","az":"EUR 500,000","oc":"not_established","q1":"b300_600","q2":null,"q3":null,"q4":"property_one_of_several","q5":"yes"},{"i":"gibraltar","f":"🇬🇮","je":"Gibraltar","jz":"直布羅陀","le":"Category 2 Individual","lz":"第二類個人（Cat 2）","ae":"No minimum","az":"未設下限","oc":"not_established","q1":"no_min","q2":null,"q3":null,"q4":"property_one_of_several","q5":null},{"i":"jersey","f":"🇯🇪","je":"Jersey","jz":"澤西島","le":"High Value Residency","lz":"高價值居留","ae":"GBP 3,500,000","az":"GBP 3,500,000","oc":"not_established","q1":"o600","q2":"requires","q3":null,"q4":"property_is_route","q5":null},{"i":"guernsey","f":"🇬🇬","je":"Guernsey","jz":"根西島","le":"Open Market Part A","lz":"公開市場甲部","ae":"No minimum","az":"未設下限","oc":"not_established","q1":"no_min","q2":null,"q3":null,"q4":"property_is_route","q5":"yes"},{"i":"thailand","f":"🇹🇭","je":"Thailand","jz":"泰國","le":"Investment extension of stay: the THB 3m limb","lz":"投資型延長居留：300 萬泰銖分項","ae":"THB 3,000,000","az":"THB 3,000,000","oc":"renewable","q1":"u100","q2":"no_min","q3":"renewable","q4":"property_one_of_several","q5":"yes"},{"i":"thailand-2","f":"🇹🇭","je":"Thailand","jz":"泰國","le":"LTR: Wealthy Global Citizen","lz":"長期居留 LTR：高資產全球公民","ae":"US$500,000","az":"US$500,000","oc":"renewable","q1":"b300_600","q2":"no_min","q3":"renewable","q4":"property_one_of_several","q5":"yes"},{"i":"malaysia","f":"🇲🇾","je":"Malaysia","jz":"馬來西亞","le":"MM2H Silver","lz":"MM2H 銀級","ae":"MYR 600,000","az":"MYR 600,000","oc":"renewable","q1":"b100_300","q2":"requires","q3":"renewable","q4":"property_one_of_several","q5":"yes"},{"i":"vanuatu","f":"🇻🇺","je":"Vanuatu","jz":"萬那杜","le":"Residence Visa: Leasehold Holder","lz":"居留簽證：租賃權持有人","ae":"VUV 10,000,000","az":"VUV 10,000,000","oc":"not_established","q1":"u100","q2":null,"q3":null,"q4":"property_is_route","q5":"yes"},{"i":"philippines","f":"🇵🇭","je":"Philippines","jz":"菲律賓","le":"SRRV Classic","lz":"SRRV Classic 退休居留","ae":"US$50,000","az":"US$50,000","oc":"permanent","q1":"u100","q2":"no_min","q3":"permanent","q4":"property_one_of_several","q5":"yes"},{"i":"hong-kong-sar","f":"🇭🇰","je":"Hong Kong SAR","jz":"香港特別行政區","le":"New CIES","lz":"新資本投資者入境計畫","ae":"HKD 30,000,000","az":"HKD 30,000,000","oc":"renewable","q1":"o600","q2":null,"q3":"renewable","q4":"property_one_of_several","q5":"yes"},{"i":"mauritius","f":"🇲🇺","je":"Mauritius","jz":"模里西斯","le":"Scheme property or a G+2 apartment","lz":"計畫類物件或 G+2 公寓","ae":"US$375,000","az":"US$375,000","oc":"renewable","q1":"b300_600","q2":"no_min","q3":"renewable","q4":"property_is_route","q5":"yes"},{"i":"sri-lanka","f":"🇱🇰","je":"Sri Lanka","jz":"斯里蘭卡","le":"Investor Visa","lz":"投資人簽證","ae":"US$100,000","az":"US$100,000","oc":"not_established","q1":"b100_300","q2":null,"q3":null,"q4":"property_one_of_several","q5":"yes"},{"i":"sri-lanka-2","f":"🇱🇰","je":"Sri Lanka","jz":"斯里蘭卡","le":"Golden Paradise","lz":"黃金天堂簽證","ae":"US$200,000","az":"US$200,000","oc":"not_established","q1":"b100_300","q2":null,"q3":null,"q4":"property_one_of_several","q5":"yes"},{"i":"indonesia","f":"🇮🇩","je":"Indonesia","jz":"印尼","le":"Second Home ITAS","lz":"第二家園 ITAS","ae":"US$1,000,000","az":"US$1,000,000","oc":"permanent","q1":"o600","q2":null,"q3":"permanent","q4":"property_one_of_several","q5":"yes"},{"i":"indonesia-2","f":"🇮🇩","je":"Indonesia","jz":"印尼","le":"Golden Visa: individual investor","lz":"黃金簽證：個人投資人","ae":"US$1,000,000","az":"US$1,000,000","oc":"permanent","q1":"o600","q2":null,"q3":"permanent","q4":"property_one_of_several","q5":"yes"},{"i":"south-korea","f":"🇰🇷","je":"South Korea","jz":"南韓","le":"Tourism and resort investment immigration","lz":"觀光休閒設施投資移民","ae":"KRW 1,000,000,000","az":"KRW 1,000,000,000","oc":"permanent","q1":"o600","q2":null,"q3":"permanent","q4":"property_is_route","q5":null},{"i":"uae","f":"🇦🇪","je":"UAE","jz":"阿聯","le":"Golden Visa: property route","lz":"黃金簽證：不動產途徑","ae":"AED 2,000,000","az":"AED 2,000,000","oc":"renewable","q1":"b300_600","q2":null,"q3":"renewable","q4":"property_one_of_several","q5":"yes"},{"i":"uae-2","f":"🇦🇪","je":"UAE","jz":"阿聯","le":"Real Estate Owner permit, art. 53","lz":"不動產業主居留許可（第 53 條）","ae":"No minimum","az":"未設下限","oc":"not_established","q1":"no_min","q2":null,"q3":null,"q4":"property_is_route","q5":null},{"i":"st-kitts-and-nevis","f":"🇰🇳","je":"St Kitts and Nevis","jz":"聖克里斯多福及尼維斯","le":"CBI: Developer’s Real Estate Option","lz":"投資入籍：開發商不動產選項","ae":"US$325,000","az":"US$325,000","oc":"citizenship","q1":"b300_600","q2":"no_min","q3":"citizenship","q4":"property_one_of_several","q5":"yes"},{"i":"antigua-and-barbuda","f":"🇦🇬","je":"Antigua and Barbuda","jz":"安地卡及巴布達","le":"CBI: Real Estate Option","lz":"投資入籍：不動產選項","ae":"US$300,000","az":"US$300,000","oc":"citizenship","q1":"b300_600","q2":"requires","q3":"citizenship","q4":"property_one_of_several","q5":"yes"},{"i":"dominica","f":"🇩🇲","je":"Dominica","jz":"多米尼克","le":"CBI: Real Estate Option","lz":"投資入籍：不動產選項","ae":"US$200,000","az":"US$200,000","oc":"citizenship","q1":"b100_300","q2":"no_min","q3":"citizenship","q4":"property_one_of_several","q5":"yes"},{"i":"saint-lucia","f":"🇱🇨","je":"Saint Lucia","jz":"聖露西亞","le":"CBI: Real Estate Project Option","lz":"投資入籍：不動產建案選項","ae":"US$300,000","az":"US$300,000","oc":"citizenship","q1":"b300_600","q2":null,"q3":"citizenship","q4":"property_one_of_several","q5":"yes"},{"i":"jordan","f":"🇯🇴","je":"Jordan","jz":"約旦","le":"Five-year residency by property purchase","lz":"購屋五年居留許可","ae":"JOD 150,000","az":"JOD 150,000","oc":"renewable","q1":"b100_300","q2":null,"q3":"renewable","q4":"property_is_route","q5":null},{"i":"qatar","f":"🇶🇦","je":"Qatar","jz":"卡達","le":"Property-linked residency","lz":"不動產連結居留","ae":"QAR 730,000","az":"QAR 730,000","oc":"renewable","q1":"b100_300","q2":null,"q3":"renewable","q4":"property_is_route","q5":null},{"i":"bahrain","f":"🇧🇭","je":"Bahrain","jz":"巴林","le":"Golden Residency: Property Owner","lz":"黃金居留：不動產業主","ae":"BHD 130,000","az":"BHD 130,000","oc":"permanent","q1":"b300_600","q2":"no_min","q3":"permanent","q4":"property_one_of_several","q5":"yes"},{"i":"oman","f":"🇴🇲","je":"Oman","jz":"阿曼","le":"Residence visa for ITC property owners","lz":"綜合旅遊綜合體業主居留簽證","ae":"No minimum","az":"未設下限","oc":"not_established","q1":"no_min","q2":null,"q3":null,"q4":"property_one_of_several","q5":"yes"},{"i":"cape-verde","f":"🇨🇻","je":"Cape Verde","jz":"維德角","le":"Green Card","lz":"綠卡","ae":"EUR 80,000","az":"EUR 80,000","oc":"permanent","q1":"u100","q2":"no_min","q3":"permanent","q4":"property_is_route","q5":"yes"},{"i":"panama","f":"🇵🇦","je":"Panama","jz":"巴拿馬","le":"Qualified Investor","lz":"合格投資人","ae":"US$300,000","az":"US$300,000","oc":"permanent","q1":"b300_600","q2":"no_min","q3":"permanent","q4":"property_one_of_several","q5":"yes"},{"i":"costa-rica","f":"🇨🇷","je":"Costa Rica","jz":"哥斯大黎加","le":"Inversionista, Ley 9996","lz":"投資人（第 9996 號法律）","ae":"US$150,000","az":"US$150,000","oc":"permanent","q1":"b100_300","q2":"no_min","q3":"permanent","q4":"property_one_of_several","q5":"yes"},{"i":"mexico","f":"🇲🇽","je":"Mexico","jz":"墨西哥","le":"Temporary residence by economic solvency","lz":"經濟能力型暫時居留","ae":"Not established","az":"未能確立","oc":"not_established","q1":null,"q2":"no_min","q3":null,"q4":"property_one_of_several","q5":null},{"i":"saudi-arabia","f":"🇸🇦","je":"Saudi Arabia","jz":"沙烏地阿拉伯","le":"Real Estate Owner Residency","lz":"不動產持有人居留","ae":"SAR 4,000,000","az":"SAR 4,000,000","oc":"renewable","q1":"o600","q2":"no_min","q3":"renewable","q4":"property_is_route","q5":"yes"},{"i":"egypt","f":"🇪🇬","je":"Egypt","jz":"埃及","le":"Citizenship by Real Estate Investment","lz":"不動產投資入籍","ae":"US$300,000","az":"US$300,000","oc":"citizenship","q1":"b300_600","q2":"no_min","q3":"citizenship","q4":"property_one_of_several","q5":"yes","ce":"Partial: minor children are covered. Spouse coverage was not confirmed in any source found — a gap in the record, not a confirmed exclusion.","cz":"部分：涵蓋未成年子女。配偶是否納入，未於任何查得來源中獲得確認——屬記錄缺口，非已確認之排除。"},{"i":"brazil","f":"🇧🇷","je":"Brazil","jz":"巴西","le":"Real Estate Investor Residence","lz":"不動產投資居留","ae":"BRL 1,000,000","az":"BRL 1,000,000","oc":"permanent","q1":"b100_300","q2":"requires","q3":"permanent","q4":"property_is_route","q5":null},{"i":"ecuador","f":"🇪🇨","je":"Ecuador","jz":"厄瓜多","le":"Investor Visa — real estate route","lz":"投資人簽證——不動產路徑","ae":"US$48,200","az":"US$48,200","oc":"renewable","q1":"u100","q2":null,"q3":"renewable","q4":"property_one_of_several","q5":null},{"i":"paraguay","f":"🇵🇾","je":"Paraguay","jz":"巴拉圭","le":"Paraguay Investor Pass","lz":"巴拉圭投資人通行證","ae":"US$200,000","az":"US$200,000","oc":"permanent","q1":"b100_300","q2":null,"q3":"permanent","q4":"property_one_of_several","q5":null}];
+
+var QUESTIONS = [
+  { key:'q1', options:[{v:'no_min'},{v:'u100'},{v:'b100_300'},{v:'b300_600'},{v:'o600'}] },
+  { key:'q2', options:[{v:'requires'},{v:'no_min'},{v:'__any',noop:true}] },
+  { key:'q3', options:[{v:'citizenship'},{v:'permanent'},{v:'renewable'}] },
+  { key:'q4', options:[{v:'property_is_route'},{v:'property_one_of_several'}] },
+  { key:'q5', options:[{v:'yes'},{v:'__any',noop:true}] }
+];
+var QLABEL = {
+  q1:{en:'the minimum threshold', zh:'門檻金額'},
+  q2:{en:'whether you have to actually live there', zh:'居留意願'},
+  q3:{en:'what the route confers', zh:'拿到的身分'},
+  q4:{en:'whether property itself is the route', zh:'買房是不是途徑'},
+  q5:{en:'family details', zh:'家屬細節'}
+};
+var OC_LABEL = {
+  citizenship:{en:'Citizenship', zh:'公民身分'},
+  permanent:{en:'Permanent status', zh:'永久身分'},
+  renewable:{en:'Renewable only', zh:'僅可續期'},
+  not_established:{en:'Not established', zh:'未查證'}
+};
+
+function vfEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* Build the {q1:{active,values}, ...} selection state from the checkboxes
+   currently checked in the DOM, optionally forcing one extra option on —
+   used both for the real render and for each checkbox's own live count. */
+function vfBuildSelections(overrideQ, overrideV, overrideNoop){
+  var sel = {};
+  QUESTIONS.forEach(function(q){
+    var vals = [], noop = false;
+    document.querySelectorAll('input[data-q="'+q.key+'"]:checked').forEach(function(cb){
+      if(cb.getAttribute('data-noop')==='1') noop = true; else vals.push(cb.getAttribute('data-v'));
+    });
+    if(q.key === overrideQ){
+      if(overrideNoop){ noop = true; }
+      else if(vals.indexOf(overrideV)===-1){ vals.push(overrideV); }
+    }
+    sel[q.key] = { active: vals.length>0 && !noop, values: vals };
+  });
+  return sel;
+}
+
+/* A record is excluded outright if any active question's field is known
+   and does not match the selected values (hard fail). Otherwise, if any
+   active question's field could not be established, the record goes to
+   "unresolved" (never silently counted as a match or a non-match). Only
+   when every active question is a confirmed match does a record count as
+   matched. */
+function vfCompute(sel){
+  var matched = [], unresolved = [];
+  VFD.forEach(function(r){
+    var fail = false, unresQs = [];
+    QUESTIONS.forEach(function(q){
+      var s = sel[q.key];
+      if(!s.active) return;
+      var v = r[q.key];
+      if(v == null) unresQs.push(q.key);
+      else if(s.values.indexOf(v) === -1) fail = true;
+    });
+    if(fail) return;
+    if(unresQs.length) unresolved.push({ r:r, qs:unresQs });
+    else matched.push(r);
+  });
+  return { matched:matched, unresolved:unresolved };
+}
+
+function vfItemHtml(r, isUnresolved, qs){
+  var oc = OC_LABEL[r.oc] || OC_LABEL.not_established;
+  var reason = '';
+  if(isUnresolved){
+    var enList = qs.map(function(k){ return QLABEL[k].en; }).join(', ');
+    var zhList = qs.map(function(k){ return QLABEL[k].zh; }).join('、');
+    reason = '<span class="vreason"><span class="lang-en">Can\'t tell — '+vfEsc(enList)+' not established for this one</span>'+
+             '<span class="lang-zh">無法判定——這一筆的'+vfEsc(zhList)+'查無可靠依據</span></span>';
+  }
+  var caveat = '';
+  if(r.ce){
+    caveat = '<span class="vcaveat"><span class="lang-en">⚠ '+vfEsc(r.ce)+'</span><span class="lang-zh">⚠ '+vfEsc(r.cz)+'</span></span>';
+  }
+  var cls = 'vitem'+(isUnresolved?' vunk':(r.ce?' vpartial':''));
+  return '<a class="'+cls+'" href="/global/visa#'+vfEsc(r.i)+'">'+
+    '<span class="vfl">'+r.f+'</span>'+
+    '<span class="vinfo">'+
+      '<span class="vjur"><span class="lang-en">'+vfEsc(r.je)+'</span><span class="lang-zh">'+vfEsc(r.jz)+'</span></span>'+
+      '<span class="vprog"><span class="lang-en">'+vfEsc(r.le)+'</span><span class="lang-zh">'+vfEsc(r.lz)+'</span></span>'+
+    '</span>'+
+    '<span class="vamt"><span class="lang-en">'+vfEsc(r.ae)+'</span><span class="lang-zh">'+vfEsc(r.az)+'</span></span>'+
+    '<span class="voc '+r.oc+'"><span class="lang-en">'+oc.en+'</span><span class="lang-zh">'+oc.zh+'</span></span>'+
+    reason+caveat+
+  '</a>';
+}
+
+function vfRenderResults(sel, res){
+  var el = document.getElementById('vres');
+  if(!el) return;
+  var anyActive = QUESTIONS.some(function(q){ return sel[q.key].active; });
+  var html = '';
+
+  html += '<div class="vres-sum">'+
+    '<span class="vsn ok"><b>'+res.matched.length+'</b> <span class="lang-en">match</span><span class="lang-zh">套符合</span></span>'+
+    (res.unresolved.length ? '<span class="vsn unk"><b>'+res.unresolved.length+'</b> <span class="lang-en">can\'t tell</span><span class="lang-zh">套無法判定</span></span>' : '')+
+  '</div>';
+
+  if(!anyActive){
+    html += '<p class="vres-note"><span class="lang-en">No conditions selected yet — all 49 programmes are shown below. Start checking boxes above to narrow it down.</span><span class="lang-zh">尚未選擇任何條件——以下顯示全部 49 套。開始勾選上面的選項以縮小範圍。</span></p>';
+  }
+
+  if(anyActive && res.matched.length===0){
+    var sugg = [];
+    QUESTIONS.forEach(function(q){
+      if(!sel[q.key].active) return;
+      var relaxed = {};
+      QUESTIONS.forEach(function(q2){ relaxed[q2.key] = q2.key===q.key ? {active:false,values:[]} : sel[q2.key]; });
+      var n = vfCompute(relaxed).matched.length;
+      if(n>0) sugg.push({ q:q.key, n:n });
+    });
+    html += '<div class="vres-hint">';
+    if(sugg.length){
+      html += '<span class="lang-en">No programme satisfies every condition selected. Loosening one might help: '+
+        sugg.map(function(s){ return '<b>'+s.n+'</b> if you drop the "'+QLABEL[s.q].en+'" condition'; }).join('; ')+'.</span>'+
+        '<span class="lang-zh">沒有制度同時符合這些條件。放寬其中一項可能有結果：'+
+        sugg.map(function(s){ return '若不限制「'+QLABEL[s.q].zh+'」，會有 <b>'+s.n+'</b> 套'; }).join('；')+'。</span>';
+    } else {
+      html += '<span class="lang-en">No programme satisfies every condition selected, even relaxing any single one. Try clearing more than one question.</span>'+
+        '<span class="lang-zh">即使只放寬其中一項，也沒有制度同時符合。試著清空一題以上。</span>';
+    }
+    html += '</div>';
+  }
+
+  if(res.unresolved.length){
+    var reasonCounts = {};
+    res.unresolved.forEach(function(u){ u.qs.forEach(function(k){ reasonCounts[k] = (reasonCounts[k]||0)+1; }); });
+    var parts = Object.keys(reasonCounts).map(function(k){ return {k:k, n:reasonCounts[k]}; });
+    html += '<p class="vres-note">'+
+      '<span class="lang-en">Breakdown of why: '+parts.map(function(p){ return p.n+' × '+QLABEL[p.k].en; }).join('; ')+'.</span>'+
+      '<span class="lang-zh">無法判定的原因：'+parts.map(function(p){ return p.n+' 套是「'+QLABEL[p.k].zh+'」查無可靠依據'; }).join('；')+'。</span>'+
+    '</p>';
+  }
+
+  if(res.matched.length){
+    html += '<div class="vgroup-h"><span class="lang-en">Matches your conditions</span><span class="lang-zh">符合你的條件</span></div>';
+    html += '<div class="vres-list">'+res.matched.map(function(r){ return vfItemHtml(r,false,null); }).join('')+'</div>';
+  } else if(anyActive && !res.unresolved.length){
+    html += '<p class="vempty"><span class="lang-en">Nothing matched.</span><span class="lang-zh">沒有制度同時符合這些條件。</span></p>';
+  }
+
+  if(res.unresolved.length){
+    html += '<div class="vgroup-h"><span class="lang-en">Can\'t tell — data does not answer this for these</span><span class="lang-zh">無法判定——這些制度的資料回答不了你這題</span></div>';
+    html += '<div class="vres-list">'+res.unresolved.map(function(u){ return vfItemHtml(u.r,true,u.qs); }).join('')+'</div>';
+  }
+
+  el.innerHTML = html;
+}
+
+function vfRenderCounts(){
+  document.querySelectorAll('#vfilter input[type=checkbox]').forEach(function(cb){
+    var q = cb.getAttribute('data-q'), v = cb.getAttribute('data-v'), noop = cb.getAttribute('data-noop')==='1';
+    var sel = vfBuildSelections(q, v, noop);
+    var n = vfCompute(sel).matched.length;
+    var span = cb.closest('.vopt').querySelector('.ocnt');
+    if(span) span.textContent = n;
+  });
+}
+
+function vfRender(){
+  var sel = vfBuildSelections(null, null, false);
+  var res = vfCompute(sel);
+  vfRenderCounts();
+  vfRenderResults(sel, res);
+  document.querySelectorAll('#vfilter .vopt').forEach(function(l){
+    var cb = l.querySelector('input');
+    l.classList.toggle('checked', cb.checked);
+  });
+}
+
+document.addEventListener('change', function(ev){
+  if(ev.target && ev.target.matches('#vfilter input[type=checkbox]')) vfRender();
+});
+vfRender();
+</script>
 
 </main>
 

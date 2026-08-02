@@ -807,6 +807,24 @@ function setLang(lang){
 }
 window.setLang = setLang;
 
+/* Deep-link support: /global/visa#<id> lands here from the homepage filter
+   (index.html) or any other page linking to a specific programme. The table
+   is rebuilt fresh on every setLang() call, so this runs once after the
+   initial render rather than trying to survive a rebuild. */
+function jumpToHash(){
+  var id = (location.hash || '').replace(/^#/, '');
+  if(!id) return;
+  var row = document.querySelector('tr.pr[data-id="'+id.replace(/"/g,'')+'"]');
+  if(!row) return;
+  var det = row.nextElementSibling;
+  if(det && det.className==='det'){
+    det.style.display = '';
+    var tgl = row.querySelector('.tgl');
+    if(tgl) tgl.textContent = '−';
+  }
+  row.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
 window.addEventListener('load', function(){
   document.querySelectorAll('.lang-btn').forEach(function(b){
     b.addEventListener('click', function(){ setLang(b.dataset.lang); });
@@ -814,6 +832,7 @@ window.addEventListener('load', function(){
   var lang='en';
   try{ lang = localStorage.getItem('lang') || 'en'; }catch(e){}
   setLang(lang);
+  jumpToHash();
 });
 window.addEventListener('resize', function(){ allCharts.forEach(function(c){ if(c) c.resize(); }); });
 </script>
