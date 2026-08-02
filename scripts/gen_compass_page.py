@@ -29,11 +29,15 @@ PAGES = [
     {'out': 'my/clock.html', 'markets': ['my'], 'default': 'my',
      'title': 'Property Compass | Malaysia · Property Check',
      'desc': 'Malaysia property compass: momentum × credit, a supply-glut risk gauge and a valuation / population / supply report card.'},
-    {'out': 'global/compass.html', 'markets': ['us', 'tw', 'jp', 'au'], 'default': 'us',
-     'title': 'Other Markets — Property Compass | Cross-market · Property Check',
-     'desc': 'The property compass for the United States, Taiwan, Japan and Australia: momentum × credit, a supply-glut risk gauge and a report card per market.',
-     'h1_en': 'The Property Compass — Other Markets',
-     'h1_zh': '房產羅盤 — 其他市場'},
+    # global/compass.html 已於 2026-08-02 搬到 tools repo（tools.investmquest.com），
+    # 本站 /global/compass 現為 301 轉址。這一筆刻意停用：留著的話，生成器每跑一次
+    # 就會把檔案重新產回 global/，靜默撤銷搬遷並讓 _redirects 被同路徑的靜態檔蓋過。
+    # 要更新那頁請在 tools repo 跑，或先把 'out' 改指到該 repo 的路徑。
+    # {'out': 'global/compass.html', 'markets': ['us', 'tw', 'jp', 'au'], 'default': 'us',
+    #  'title': 'Other Markets — Property Compass | Cross-market · Property Check',
+    #  'desc': 'The property compass for the United States, Taiwan, Japan and Australia: momentum × credit, a supply-glut risk gauge and a report card per market.',
+    #  'h1_en': 'The Property Compass — Other Markets',
+    #  'h1_zh': '房產羅盤 — 其他市場'},
     {'out': 'th/clock.html', 'markets': ['th'], 'default': 'th',
      'title': 'Property Compass | Thailand · Property Check',
      'desc': 'Thailand property compass: Bangkok momentum × credit, a report card on valuation and population, and a supply gauge that reads not measurable because no Thai supply series exists.'},
