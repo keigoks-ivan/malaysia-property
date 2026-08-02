@@ -57,6 +57,7 @@ var MARKETS = [
     prefixes: ['/global/'],
     links: [
       { href: '/global/compass',   en: 'Other Markets',        zh: '其他市場羅盤' },
+      { href: '/global/quadrant',  en: 'Four-Quadrant',        zh: '四象限' },
       { href: '/global/visa',      en: 'Residency by Property', zh: '買房換居留' }
     ] }
 ];
