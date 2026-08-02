@@ -33,7 +33,6 @@
 /tr/macro.html       ← 土耳其：總經 × 房產（四部＋結論篇、15 圖）
 /gr/report.html      ← 希臘：雅典住宅市場報告（七部、28 圖）
 /gr/macro.html       ← 希臘：總經 × 房產（四部＋結論篇、15 圖）
-/global/compass.html ← 跨市場：其他市場羅盤（美／台／日／澳，含市場切換）
 /global/visa.html    ← 跨市場：買房換居留（44 套現行制度／24 個確認無途徑／6 套已關閉；資料 data/visa-property.json 內嵌於頁面）
 /kl/SC_*.html        ← 建案評分卡（en/zh 成對；用 kl-property-scorecard skill 產生）
 /kl/viewing.html     ← 看房檢核工具

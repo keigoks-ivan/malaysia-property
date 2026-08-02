@@ -53,11 +53,9 @@ var MARKETS = [
       { href: '/gr/report', en: 'Athens Report', zh: '雅典報告' },
       { href: '/gr/macro',  en: 'Macro',         zh: '總經' }
     ] },
-  { k: 'global', flag: '🌐', en: 'Cross-market', zh: '跨市場', home: '/global/compass',
+  { k: 'global', flag: '🌐', en: 'Cross-market', zh: '跨市場', home: '/global/visa',
     prefixes: ['/global/'],
     links: [
-      { href: '/global/compass',   en: 'Other Markets',        zh: '其他市場羅盤' },
-      { href: '/global/quadrant',  en: 'Four-Quadrant',        zh: '四象限' },
       { href: '/global/visa',      en: 'Residency by Property', zh: '買房換居留' }
     ] }
 ];
