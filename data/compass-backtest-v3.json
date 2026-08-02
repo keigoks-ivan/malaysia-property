@@ -5321,5 +5321,660 @@
       "pre_existing_xc_drift_found": "Rebuilding all markets today would change every market's xc block, because data/markets-summary.json was updated in commit 03a7a79 (Thailand's yield 6.5->5.0, mortgageRate 7.00->7.38, populationGrowth 0.5->-0.2, priceIncomeRatio 21->19) after the compass files were last generated, which moves the 12-market cross-sectional medians. This drift is PRE-EXISTING and independent of adding Thailand to MKTS (verified with the HEAD script). It was NOT accepted here: the five existing markets' files were restored byte-identical and only data/compass-th.json was written (build_compass.py now takes an optional market-name argv filter for exactly this)."
     },
     "verdict": "Thailand's four-cell ordering HOLDS, and more strongly than any market except Malaysia: rho = 0.527 over 111 scored quarters (1995Q3-2023Q1), 5/6 declared pairs concordant, with fuelled the best cell (median 18.8% 3y forward, n=29) and starved the worst (median 7.1%, n=49). The single inversion is draining (7.3%, n=24) below reflating (11.0%, n=9) -- reflating is the thinnest cell in the sample. The result survives the overlap correction directionally (non-overlapping median rho 0.483, all three offsets positive, n=9-10 each) and both era halves (pre-2010 0.424, post-2010 0.697). Unlike Australia's hold-out, this is a positive out-of-sample result for the ORDERING claim only. It says nothing about the risk gauge, which is NOT EVALUABLE for Thailand because the supply-glut term does not exist -- and it must not be read as evidence that Thailand carries no supply risk: the supply state is UNKNOWN TO THIS ENGINE, while the site's own market report documents a severe Bangkok glut."
+  },
+  "gr_holdout": {
+    "amendment": "Amendment 5 -- Greece added to the data layer; ordering check PASSES, risk gauge EVALUABLE and FAILS",
+    "amendment_text_verbatim": "## Amendment 5 — 2026-08-02, adding Greece to the data layer (seventh market; first hold-out on which the risk gauge is actually evaluable)\nGreece is added as a 7th market AFTER the v3 risk claim was frozen and published on\n{US, TW, MY, JP}, after Australia (Amendment 3) and Thailand (Amendment 4). Frozen\ntreatment, unchanged from those two:\n- The PRIMARY validated claim is unchanged: 4-market set, ABS on US+JP, MH pooled\n  13.53 / 16.07. Greece does not enter it and no pooled figure is restated with\n  Greece folded in; the 7-market pooled ORs below are LABELLED \"with GR\n  (out-of-sample)\" and never substituted for the frozen figures.\n- Greece is evaluated with the IDENTICAL v3 machinery (both targets, the >=8\n  matured-3y-loss applicability gate, per-market 2x2 / OR / precision / recall,\n  overlap robustness, episode analysis) and, separately, with the Test-8 four-cell\n  ordering check at the thresholds already applied to TW, AU and TH\n  (rho >= 0.3 HOLDS, 0.1-0.3 WEAK, < 0.1 BREAKS).\n- WHAT IS NEW: unlike Australia (gauge computable but only 2 loss quarters, so NOT\n  RATED) and Thailand (gauge structurally NOT EVALUABLE, no supply series at all),\n  Greece CAN form W_PRIM and DOES pass the applicability gate. It is the first\n  hold-out on which the risk gauge is genuinely testable: a completed multi-year\n  crash (real prices -48.0%, 2007Q3 -> 2017Q2) plus a populated supply axis.\n- THE SUPPLY AXIS RESTS ON A SINGLE COMPONENT. `months` (Eurostat sts_cobp_q,\n  dwellings authorised, quarterly, NSA, 117/117 present) is the only supply input;\n  `vacancy` is null for every quarter because Greece's only tier-1 vacancy data is\n  the 2011 and 2021 censuses, two points ten years apart. So the glut term is a\n  pure permits-FLOW reading with no inventory or empty-homes cross-check, and\n  build_compass.py correctly does NOT emit \"supply_available\": false for Greece.\n- The result is published whichever way it falls, as Australia's rho = -0.156\n  BREAKS was. Because Greece is the best-suited sample the methodology has met, a\n  failure here is strong evidence against the instrument and is to be stated as\n  such, not softened.\n- Adding Greece does not alter any existing market's arrays (regression guard: the\n  six existing markets' clock-*.json and compass-*.json are byte-identical after\n  Greece is wired into build_compass.py, and a blanket rebuild with the Greece-\n  enabled script is byte-identical to a blanket rebuild with the unmodified HEAD\n  script for all six).\n- Greece is ABSENT from data/markets-summary.json (the 12-market cross-sectional\n  universe), so its `xc` block is null rather than computed against a set it is not\n  in. No other market's xc moves as a result.\nTIMING DISCLOSURE, stated plainly because it differs from Amendment 3: Amendment 3's\ntext was written before any Australian number existed. THIS text was drafted after\nthe Greek tables were computed in the same session. What was frozen in advance and\ncould not be tuned is the entire instrument — both targets, both classifiers, the\napplicability gate, the Haldane/Q25/episode/overlap conventions, the success\nthresholds and the ordering thresholds are exactly those frozen 2026-07-14 and were\napplied to Greece unchanged; no Greece-specific cut, window or variant was searched,\nand no threshold was moved after seeing a Greek number. What is retrospective is\nonly this prose. One additional table is reported below — W_PRIM_EXP on the\nexpanding warn basis — solely because Amendment 2 already declared that variant for\nevery market; it does not rescue the result and the verdict rides on W_PRIM alone.",
+    "protocol_file_status": "This amendment text is recorded in this JSON only. scripts/compass_v3_protocol.md was NOT edited in this pass (that file is outside this workstream's ownership); append this text verbatim as Amendment 5 when the protocol file is next touched.",
+    "gate": {
+      "n_bad_abs": 36,
+      "rated_abs": true,
+      "threshold": 8,
+      "status_note": "RATED (36 matured 3-year nominal-loss quarters, >= the 8 gate). Greece is the FIRST hold-out market to pass the applicability gate: AU had 2 loss quarters and was NOT RATED; TH could not form the classifier at all. The gauge is therefore genuinely testable here, and it was tested.",
+      "loss_episode": "One contiguous T_ABS episode: 2006Q4-2015Q3 (36 quarters in which the 3-year-forward nominal return was negative). Real prices fell -48.0% from 2007Q3 to 2017Q2."
+    },
+    "market_results": {
+      "market": "gr",
+      "n_quarters": 117,
+      "afs_note": "GR: cpi inspected as an INDEX LEVEL (range 51.56-101.07, not a YoY% series) -> computed cpi_yoy=yoy(cpi) [build_compass.py yoy()], then r = rate - cpi_yoy, joined onto compass q axis by label (raw q axis identical to compass q axis: True).",
+      "demo_note": "demo file absent (/Users/ivanchang/malaysia-property/scripts/.grdata/gr_demo.json) -> W_DEMO NOT EVALUATED for GR",
+      "demo_available": false,
+      "n_bad_abs": 36,
+      "rated_abs": true,
+      "results": {
+        "T_ABS": {
+          "W_MOM": {
+            "OR": 36.75,
+            "haldane_applied": false,
+            "precision": 0.8235,
+            "recall": 0.7778,
+            "base_rate": 0.3429,
+            "w_quarters": 34,
+            "cells": {
+              "a": 28,
+              "b": 6,
+              "c": 8,
+              "d": 63,
+              "n_used": 105,
+              "n_excluded": 12,
+              "n_total": 117
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 21.667,
+                  "n_used": 9,
+                  "w_count": 2,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 25.667,
+                  "n_used": 9,
+                  "w_count": 4,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 10.0,
+                  "n_used": 9,
+                  "w_count": 3,
+                  "bad_count": 3,
+                  "haldane_applied": false,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 21.667
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 1,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2006Q4",
+                  "end_q": "2015Q3",
+                  "length": 36,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_PRIM": {
+            "OR": 0.26,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.3429,
+            "w_quarters": 3,
+            "cells": {
+              "a": 0,
+              "b": 3,
+              "c": 36,
+              "d": 66,
+              "n_used": 105,
+              "n_excluded": 12,
+              "n_total": 117
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.857,
+                  "n_used": 9,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 1.857,
+                  "n_used": 9,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 1.857,
+                  "n_used": 9,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.857
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2006Q4",
+                  "end_q": "2015Q3",
+                  "length": 36,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_AFS": {
+            "OR": 0.186,
+            "haldane_applied": true,
+            "precision": 0.0,
+            "recall": 0.0,
+            "base_rate": 0.4186,
+            "w_quarters": 3,
+            "cells": {
+              "a": 0,
+              "b": 3,
+              "c": 36,
+              "d": 47,
+              "n_used": 86,
+              "n_excluded": 31,
+              "n_total": 117
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.286,
+                  "n_used": 7,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 1.286,
+                  "n_used": 7,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 1.571,
+                  "n_used": 8,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.286
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 0,
+              "missed": 1,
+              "details": [
+                {
+                  "start_q": "2006Q4",
+                  "end_q": "2015Q3",
+                  "length": 36,
+                  "caught": false
+                }
+              ]
+            }
+          },
+          "W_DEMO": {
+            "status": "NOT EVALUATED (no demo data)"
+          }
+        },
+        "T_REL": {
+          "W_MOM": {
+            "OR": 261.941,
+            "haldane_applied": true,
+            "precision": 1.0,
+            "recall": 0.7895,
+            "base_rate": 0.5135,
+            "w_quarters": 30,
+            "cells": {
+              "a": 30,
+              "b": 0,
+              "c": 8,
+              "d": 36,
+              "n_used": 74,
+              "n_excluded": 43,
+              "n_total": 117
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 11.667,
+                  "n_used": 6,
+                  "w_count": 2,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 49.0,
+                  "n_used": 6,
+                  "w_count": 3,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 16.333,
+                  "n_used": 7,
+                  "w_count": 3,
+                  "bad_count": 4,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 16.333
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 1,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2004Q4",
+                  "end_q": "2014Q1",
+                  "length": 38,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_PRIM": {
+            "OR": 2.92,
+            "haldane_applied": true,
+            "precision": 1.0,
+            "recall": 0.0263,
+            "base_rate": 0.5135,
+            "w_quarters": 1,
+            "cells": {
+              "a": 1,
+              "b": 0,
+              "c": 37,
+              "d": 36,
+              "n_used": 74,
+              "n_excluded": 43,
+              "n_total": 117
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.0,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 1.0,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 0.778,
+                  "n_used": 7,
+                  "w_count": 0,
+                  "bad_count": 4,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.0
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 1,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2004Q4",
+                  "end_q": "2014Q1",
+                  "length": 38,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_AFS": {
+            "OR": 2.92,
+            "haldane_applied": true,
+            "precision": 1.0,
+            "recall": 0.0263,
+            "base_rate": 0.5135,
+            "w_quarters": 1,
+            "cells": {
+              "a": 1,
+              "b": 0,
+              "c": 37,
+              "d": 36,
+              "n_used": 74,
+              "n_excluded": 43,
+              "n_total": 117
+            },
+            "overlap": {
+              "per_offset": {
+                "0": {
+                  "OR": 1.0,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "4": {
+                  "OR": 1.0,
+                  "n_used": 6,
+                  "w_count": 0,
+                  "bad_count": 3,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                },
+                "8": {
+                  "OR": 0.778,
+                  "n_used": 7,
+                  "w_count": 0,
+                  "bad_count": 4,
+                  "haldane_applied": true,
+                  "small_n_caveat": true
+                }
+              },
+              "median_OR": 1.0
+            },
+            "episodes": {
+              "episodes_total": 1,
+              "caught": 1,
+              "missed": 0,
+              "details": [
+                {
+                  "start_q": "2004Q4",
+                  "end_q": "2014Q1",
+                  "length": 38,
+                  "caught": true
+                }
+              ]
+            }
+          },
+          "W_DEMO": {
+            "status": "NOT EVALUATED (no demo data)"
+          }
+        }
+      }
+    },
+    "supplementary_expanding_basis_amendment2": {
+      "note": "SUPPLEMENTARY and PRE-DECLARED: Amendment 2 (2026-07-14) declared the expanding-basis warn variant W_PRIM_EXP for every market and kept the trailing basis live. It is reported here only to show that the Greek failure is NOT an artefact of the trailing window -- it is not a rescue candidate and the verdict rides on W_PRIM.",
+      "T_ABS": {
+        "OR": 0.199,
+        "haldane_applied": true,
+        "precision": 0.0,
+        "recall": 0.0,
+        "base_rate": 0.3429,
+        "w_quarters": 4,
+        "cells": {
+          "a": 0,
+          "b": 4,
+          "c": 36,
+          "d": 65,
+          "n_used": 105,
+          "n_excluded": 12,
+          "n_total": 117
+        }
+      },
+      "T_REL": {
+        "OR": 2.92,
+        "haldane_applied": true,
+        "precision": 1.0,
+        "recall": 0.0263,
+        "base_rate": 0.5135,
+        "w_quarters": 1,
+        "cells": {
+          "a": 1,
+          "b": 0,
+          "c": 37,
+          "d": 36,
+          "n_used": 74,
+          "n_excluded": 43,
+          "n_total": 117
+        }
+      },
+      "T_ABS_episodes": {
+        "episodes_total": 1,
+        "caught": 0,
+        "missed": 1
+      },
+      "warn_exp_true_runs": "2001Q2-2003Q4, 2004Q2, 2004Q4, 2005Q2-2005Q4, 2006Q2 -- i.e. the expanding basis switches the glut flag OFF for the whole 2017Q4-2024Q4 permits recovery but STILL never turns it on during the 2007-2013 crash, because Greek permits collapsed with prices. W_PRIM_EXP true in 4 quarters, all pre-2006; a=0 against T_ABS.",
+      "verdict": "No rescue. W_PRIM_EXP OR(T_ABS) = 0.199 with zero true positives -- worse than the trailing basis, not better. The failure is in the glut CONCEPT for a permits-flow series, not in the window."
+    },
+    "ordering_check": {
+      "test": "Test 8 -- declared four-cell ordering Fuelled >= Draining >= Reflating >= Starved",
+      "method": "scripts/backtest_compass.py analyze() run unmodified on data/compass-gr.json (the script's own MKTS list was not edited); quarter-level Spearman rho of declared cell rank (fuelled=4 .. starved=1) against realised fwd12 (3-year forward NOMINAL price return), over every quarter with a non-null fwd12 and a non-warmup cell.",
+      "target": "fwd12 = 3-year forward NOMINAL Greek house-price return (BIS QGRN628BIS). Nominal, not real: Greek prices are +9.5% above their 2008Q3 nominal peak while still -18.9% below their 2007Q3 REAL peak, so this target understates the crash a Greek owner actually lived through.",
+      "scored_span": {
+        "first_q": "2000Q4",
+        "last_q": "2023Q1",
+        "n_scored": 90
+      },
+      "medians_pct": {
+        "fuelled": 22.0,
+        "draining": 15.0,
+        "reflating": 8.4,
+        "starved": -16.6
+      },
+      "n_per_cell": {
+        "fuelled": 33,
+        "draining": 15,
+        "reflating": 8,
+        "starved": 34
+      },
+      "pairwise": {
+        "fuelled>draining": {
+          "holds": true,
+          "med_a": 22.0,
+          "med_b": 15.0
+        },
+        "fuelled>reflating": {
+          "holds": true,
+          "med_a": 22.0,
+          "med_b": 8.4
+        },
+        "fuelled>starved": {
+          "holds": true,
+          "med_a": 22.0,
+          "med_b": -16.6
+        },
+        "draining>reflating": {
+          "holds": true,
+          "med_a": 15.0,
+          "med_b": 8.4
+        },
+        "draining>starved": {
+          "holds": true,
+          "med_a": 15.0,
+          "med_b": -16.6
+        },
+        "reflating>starved": {
+          "holds": true,
+          "med_a": 8.4,
+          "med_b": -16.6
+        }
+      },
+      "concordant_pairs": "6/6",
+      "starved_is_min": true,
+      "fuelled_is_max": true,
+      "rho": 0.601,
+      "verdict": "HOLDS",
+      "thresholds": "rho >= 0.3 HOLDS; 0.1-0.3 WEAK; < 0.1 BREAKS (unchanged from the TW/AU/TH runs)",
+      "supplementary_non_overlapping": {
+        "note": "SUPPLEMENTARY, not the headline: 3-year forward windows overlap, so the 90 scored quarters are far from independent. Every 12th quarter, offsets {0,4,8}, same rho convention. n is 7-8 per offset, so each is noisy and all three carry the small-n caveat.",
+        "per_offset": {
+          "0": {
+            "rho": 0.617,
+            "n": 7,
+            "small_n_caveat": true,
+            "first_q": "2003Q1",
+            "last_q": "2021Q1"
+          },
+          "4": {
+            "rho": 0.546,
+            "n": 8,
+            "small_n_caveat": true,
+            "first_q": "2001Q1",
+            "last_q": "2022Q1"
+          },
+          "8": {
+            "rho": 0.451,
+            "n": 8,
+            "small_n_caveat": true,
+            "first_q": "2002Q1",
+            "last_q": "2023Q1"
+          }
+        },
+        "median_rho": 0.546
+      },
+      "supplementary_era_split": {
+        "note": "SUPPLEMENTARY: same 2010Q1 boundary as qstat_era. Greece's pre-2010 half is short (the axis starts 1997Q1 and the first scored quarter is 2000Q4).",
+        "pre_2010": {
+          "rho": 0.31,
+          "n": 37
+        },
+        "post_2010": {
+          "rho": 0.778,
+          "n": 53
+        }
+      },
+      "cross_market_context": {
+        "us": 0.58,
+        "tw": 0.081,
+        "my": 0.71,
+        "jp": 0.4,
+        "au": -0.156,
+        "th": 0.527,
+        "gr": 0.601
+      }
+    },
+    "mh_pooled_with_gr": {
+      "label": "with GR (out-of-sample) -- shown alongside, NOT a replacement for the frozen 4-market MH. AU and TH are not in these strata: AU is NOT RATED for T_ABS and was already reported separately, TH cannot form W_PRIM at all.",
+      "T_ABS": {
+        "markets": [
+          "us",
+          "tw",
+          "jp",
+          "gr"
+        ],
+        "OR_MH": 9.589,
+        "n_strata": 4,
+        "gr_entered": true,
+        "frozen_4market_OR_MH": 13.529,
+        "recomputed_frozen_OR_MH": 13.529,
+        "delta_vs_frozen": -3.94,
+        "note": "Greece is the first hold-out to ENTER the T_ABS pool (it passes the >=8 gate), and it enters with a = 0: it drags the pooled OR down from 13.53 to 9.589. This figure is informational and does not restate the frozen claim."
+      },
+      "T_REL": {
+        "markets": [
+          "us",
+          "tw",
+          "my",
+          "jp",
+          "gr"
+        ],
+        "OR_MH": 16.256,
+        "n_strata": 5,
+        "frozen_4market_OR_MH": 16.07,
+        "recomputed_frozen_OR_MH": 16.07,
+        "delta_vs_frozen": 0.186,
+        "note": "Greece contributes a single W_PRIM quarter here (2005Q2), so the pooled T_REL figure is essentially unmoved -- that is a statement about how rarely the classifier fires in Greece, not about how well it works."
+      }
+    },
+    "current_quarter_state": {
+      "q": "2026Q1",
+      "quad": "warmup",
+      "mom": -0.369,
+      "cred": null,
+      "warn": false,
+      "supply_available": true,
+      "supply_components": [
+        "months"
+      ],
+      "W_PRIM": false,
+      "note": "2026Q1 is warmup because BIS household credit ends 2025Q4 while BIS prices run to 2026Q1; the last credit value is deliberately NOT carried forward. The last COMPLETE compass reading is 2025Q4.",
+      "last_complete": {
+        "q": "2025Q4",
+        "quad": "reflating",
+        "mom": -0.132,
+        "cred": 0.853,
+        "warn": true,
+        "W_PRIM": false
+      },
+      "card_now": {
+        "valuation": -1.67,
+        "population": 0.31,
+        "supply": 0.08,
+        "availability": "valuation from 2001Q4 (price/income; no pti exists), population from 1998Q1, supply from 1999Q4 (permits flow only, no vacancy component); xc = null (Greece is not in data/markets-summary.json)."
+      },
+      "glut_ring_now": "LIVE. warn = true at 2025Q4 and false at 2026Q1 -- both readings sit on the NOK-suspension base (filings were frozen Dec 2024 - May 2025), so the current flicker of the ring is partly a regulatory artefact and must be captioned as such.",
+      "forward_check_freeze": {
+        "quarter": "2025Q4",
+        "cell": "reflating",
+        "checkable": "2028Q4"
+      },
+      "clock_structure_axis": {
+        "available": true,
+        "note": "Unlike Thailand, Greece CAN build the Structure x Flow clock X axis (months + population + valuation >= 3 components), from 2001Q4."
+      }
+    },
+    "data_limitations": [
+      "SUPPLY RESTS ON ONE COMPONENT. months (Eurostat sts_cobp_q dwellings authorised, quarterly index 2021=100, NSA, 117/117) is the only supply input; vacancy is null for all 117 quarters (Greece's only tier-1 vacancy data is the 2011 and 2021 censuses). The glut ring and the supply gauge are a pure permits-FLOW reading with no inventory cross-check, and any page must say so.",
+      "TWO REGULATORY ARTEFACTS IN THE PERMITS SERIES. 2005Q4 = 1505.0 is a VAT pull-forward (19% VAT on buildings permitted from 2006-01-01); 2025 is depressed by the suspension of the NOK floor-area/height bonuses (Dec 2024 - May 2025), so 2026Q1's +70.2% y/y sits on an artificial base. Neither may be allowed to drive a glut flag without a caption -- and the current ring state (warn true at 2025Q4, false at 2026Q1) sits directly on that artificial base.",
+      "THE GLUT TERM IS PROCYCLICAL IN GREECE -- the central finding. Greek permits collapsed from ~500 (index) in 2005 to 20.3 in 2016Q1, i.e. together with prices, so the trailing 24q z of permits read TIGHT (+0.7 to +1.9) through the entire 2007Q1-2013Q4 starved run and the glut flag was OFF for every quarter of the crash. It was ON in 2001-2005 (permit boom, prices rising) and 2017Q4-2024Q4 (permit recovery, prices rising strongly). A permits-flow glut signal fires in booms and switches off in busts.",
+      "rate IS NOT A GREEK MONETARY CONDITION AFTER 2001. From 2001Q1 the field is the ECB deposit facility rate (Greece has had no national policy rate since euro entry), and in 2010-2018 Greek financial conditions were violently disconnected from it -- the Greek 10-year yield peaked at 29.24% in Feb 2012 while the ECB sat at 1.00%. The rate component of the money axis, and the W_AFS conditioner built on it, are unreliable across that decade and must not be silently averaged over. The splice at 2000Q4/2001Q1 is a -3.427pp step, so YoY through 2001 is not clean either.",
+      "credit IS ALL-LENDER, NOT BANKS -- deliberately. BIS credit to households fell -32.3% from its 2010Q3 peak (EUR 139.3bn -> 94.3bn at 2025Q4) while the ECB bank housing-loan stock fell -68.6%; the difference is the Hercules/HAPS securitisations moving loans to servicers and SPVs, not repayment. The credit-impulse axis therefore measures lender-universe credit. A page describing Greek deleveraging off the bank series alone, or off the %-of-GDP ratio alone, is wrong.",
+      "credit ENDS ONE QUARTER EARLY (2025Q4 vs prices 2026Q1) and is not carried forward, so the compass credit axis and the current cell are null at 2026Q1. The last complete reading is 2025Q4.",
+      "cpi IS HICP, NOT BIS's OWN DEFLATOR. The national CPI that is exactly BIS's deflator is discontinued at 2025-04; HICP is used throughout, at a maximum level divergence of 2.15% over 29 years. Anything described as 'the BIS real house price index' must use FRED QGRR628BIS directly, never price/cpi recomputed here. Both cpi and months are NSA -- year-on-year comparisons only.",
+      "THE TARGET IS NOMINAL. fwd12 is a 3-year forward NOMINAL return. Greek nominal prices are +9.5% above their 2008Q3 peak while real prices are still -18.9% below their 2007Q3 peak; the -48.0% drawdown is a real-terms fact. The 36 nominal-loss quarters that make Greece RATED are therefore a conservative count.",
+      "NO pti, AND NO INDEPENDENT PRICE CROSS-CHECK. Greece publishes no official price-to-income ratio and is absent from Eurostat's prc_hpi_q collection entirely, so the BIS series has no tier-1 corroboration (only the BoG Athens apartment index, a different concept). Valuation = price/income, income starts 1999Q1, so the first valuation z is 2001Q4 and the 24q window is not fully populated until ~2005.",
+      "NO CROSS-SECTIONAL BLOCK. Greece is not in data/markets-summary.json (the vetted 12-market universe), so compass-gr.json carries xc = null. A renderer must show the cross-country layer as UNAVAILABLE for Greece, never as neutral or zero. Adding Greece to MKTS does not move any other market's xc (proved by rebuilding all markets with the unmodified HEAD script and with the Greece-enabled script: byte-identical).",
+      "THE LAST FOUR price QUARTERS ARE PROVISIONAL (the Bank of Greece flags 2025Q2-2026Q1 as Provisional on its parallel index and revises it), as are the most recent gdp, income and months observations.",
+      "pop is the Eurostat national-accounts concept and diverges from World Bank by 70-126 thousand after 2021; do not mix the two in one chart. Its within-year shape is the compiler's interpolation of annual demography -- only YoY carries information. unemp 2026Q1 = 9.633% is a quarterly average of a volatile monthly series that printed 8.1% in May 2026, so it must not be quoted as 'the current Greek unemployment rate'.",
+      "W_DEMO is NOT EVALUATED for Greece: no 25-39 cohort file exists (scripts/.grdata/gr_demo.json absent). No proxy was substituted."
+    ],
+    "self_checks": {
+      "regression_guard_six_markets": {
+        "method": "byte comparison (cmp) of data/{clock,compass}-{us,tw,my,jp,au,th}.json against a copy of data/ taken outside the repo before any change; all 12 files identical.",
+        "all_identical": true,
+        "md5_after": {
+          "data/clock-us.json": "18fa16b0f492a99acbaa20fc94ea6262",
+          "data/compass-us.json": "f88cbd2788a3167f980f10792c07a6cd",
+          "data/clock-tw.json": "10a30c3127336e680daacbd2ca1c77a9",
+          "data/compass-tw.json": "75e147e2bd617c4771046e98ffafe51a",
+          "data/clock-my.json": "c724235c6c82d64528283105cfbeb840",
+          "data/compass-my.json": "d1ecdbd5c54248099bd5031411a6a9b7",
+          "data/clock-jp.json": "1daee431cc4c5b7366e0de256cd14759",
+          "data/compass-jp.json": "81fefa4d95dee77494008913402dcd01",
+          "data/clock-au.json": "acb88c87e78d191d2fd39ecb3184689b",
+          "data/compass-au.json": "7f9d998889d34b798bdacade6af11172",
+          "data/clock-th.json": "da92a205749bf024cbc0c366db9aff2c",
+          "data/compass-th.json": "1f1a6f4994ff1fa5c84f2863ca41e41d"
+        }
+      },
+      "engine_equivalence_head_vs_gr": "A blanket rebuild (all markets, no argv filter) run with the unmodified HEAD version of build_compass.py and with the Greece-enabled version produces byte-identical compass-{us,tw,my,jp,au,th}.json, confirming the MKTS / RAWF / supsrc-fallback changes are inert for every existing market. The supsrc fallback (use months when vacancy is absent or all-null) is inert for tw/my/jp/au because they have real vacancy values, and for th because its vacancy AND months are both all-null.",
+      "xc_drift_check": "No pre-existing xc drift this time: a blanket rebuild with the HEAD script reproduces the committed compass-*.json byte-for-byte, i.e. data/markets-summary.json is in sync with the committed files. Greece was nevertheless generated with the argv filter (`python3 scripts/build_compass.py gr`) so that only data/compass-gr.json was written.",
+      "truncation_lookahead_guard_gr": {
+        "market": "gr",
+        "k": 107,
+        "n_full": 117,
+        "checked": 107,
+        "pass": true,
+        "mismatches": []
+      },
+      "harnesses_unmodified": "scripts/backtest_compass_v3.py and scripts/backtest_compass.py were NOT edited. Both were imported as modules and their own analyze()/analyze_market() functions called with mkt=\"gr\"; their MKTS lists are untouched."
+    },
+    "verdict": "SPLIT RESULT, and the negative half is the important one. (1) ORDERING PASSES, strongly: rho = 0.601 over 90 scored quarters (2000Q4-2023Q1), 6/6 declared pairs concordant -- the only market of seven with a clean sweep -- fuelled best (median +22.0% 3y forward, n=33) and starved worst (median -16.6%, n=34), a 38.6pp spread. It survives the overlap correction directionally (non-overlapping median rho 0.546, all three offsets positive but n=7-8) and both era halves (pre-2010 0.310, post-2010 0.778). Second only to Malaysia (0.71) across the seven markets. (2) THE RISK GAUGE FAILS, on the best-suited sample the methodology has yet met. Greece PASSES the applicability gate (36 matured 3y nominal-loss quarters vs the >=8 threshold) -- the first hold-out to do so -- and W_PRIM = starved AND supply-glut then scores OR = 0.26 (Haldane; a=0, b=3, c=36, d=66), precision 0.000 against a base rate of 0.343, recall 0.000. It fired in only 3 matured quarters (2003Q3, 2004Q2, 2005Q2, all followed by +23% to +34% three-year gains) and MISSED the single 36-quarter loss episode (2006Q4-2015Q3) entirely. Against the frozen ABS success criteria it fails all three: OR 0.26 < 3, 3 W-quarters < 8, precision 0.000 < 2x base rate. On T_REL it fires once (2005Q2), scoring a nominal OR of 2.92 on a single Haldane-corrected concordant cell with recall 0.026 -- arithmetically above the >=2 bar and substantively meaningless. (3) THE GLUT TERM IS WHAT BREAKS IT, and the diagnosis is unambiguous. Momentum alone (W_MOM, which the protocol declares purely to isolate the glut term's contribution) scores OR = 36.75 on T_ABS with precision 0.824 and recall 0.778 and CATCHES the crash episode. Requiring supply glut on top takes that to zero. The mechanism: Greek dwellings authorised collapsed from an index of ~500 in 2005 to 20.3 in 2016Q1, i.e. permits fell WITH prices, so the trailing z of permits read TIGHT (+0.7 to +1.9) for every quarter of the 2007Q1-2013Q4 starved run and the glut flag stayed OFF; it was ON instead during the 2001-2005 permit boom and the 2017Q4-2024Q4 recovery, both of which were followed by strong price gains. A permits-FLOW glut proxy is procyclical with prices and therefore inverts the intended signal. The pre-declared expanding-basis variant (Amendment 2's W_PRIM_EXP) does not rescue it -- OR 0.199, still zero true positives -- so this is a fault in the glut concept for a flow series, not in the window. (4) WHAT THIS DOES AND DOES NOT OVERTURN. It does not restate the frozen 4-market claim (ABS on US+JP, MH 13.53/16.07); that claim is what is now under out-of-sample pressure. Greece is the first hold-out to enter the T_ABS pool and it drags the labelled 5-strata pooled OR from 13.53 to 9.59. The honest reading: the four-cell ORDERING generalises (5 of 7 markets hold, US 0.58, MY 0.71, TH 0.527, JP 0.40, GR 0.601, against TW 0.081 and AU -0.156), while the SUPPLY-GLUT RISK GAUGE has now been given its fair test on a market with a real crash and a real supply series and has failed it. Where the glut input is a permits-flow series rather than a vacancy or inventory stock, the gauge should be treated as NOT VALIDATED and should not be shown as a live warning."
   }
 }

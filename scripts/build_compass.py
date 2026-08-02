@@ -48,12 +48,94 @@ must be tested explicitly.
 Consequences for the report card: card.supply is an all-null array for such a
 market (no value to show), and the risk gauge (starved AND glut) is structurally
 NOT EVALUABLE there, because the glut term is undefined — not "off".
+
+SUPPLY HAS A BASIS, AND THE OVERLAY IS ONLY VALID ON A STOCK BASIS (added
+2026-08-02 with Greece)
+-----------------------------------------------------------------------------
+The glut overlay asks "is there unsold/unoccupied stock hanging over the market".
+Every market it was validated on answers that with a STOCK or ABSORPTION measure:
+US months-of-inventory plus rental vacancy, Taiwan low-electricity vacancy,
+Malaysia NAPIC unsold overhang, Japan 空き家率, Australia the SQM rental vacancy
+rate. Greece has no such series at all (vacancy exists only in the 2011 and 2021
+censuses) and its supply axis is a pure FLOW: Eurostat dwellings authorised, i.e.
+permits issued per quarter.
+
+A flow is not a small-sample version of a stock, it is procyclical with prices.
+Greek permits collapsed from an index near 500 in 2005 to 20.3 in 2016Q1 — they
+fell WITH prices — so the trailing z read "tight" through the whole 2007-2013
+crash and the glut flag stayed OFF for every quarter of it, while it was ON in
+2001-2005 and 2017-2024, both followed by strong gains. Under the frozen v3
+protocol (Amendment 5, data/compass-backtest-v3.json → gr_holdout) the classifier
+starved AND glut then scored OR 0.26, precision 0.000 and recall 0.000 on Greece,
+against OR 36.75 / precision 0.824 / recall 0.778 for momentum alone. The glut
+term did not add a warning, it destroyed one.
+
+So the rule is general, not a Greece special case: each market DECLARES the basis
+of every supply component it carries (SUPPLY_BASIS below), and the glut flag is
+emitted ONLY where at least one component present in the data is a stock or
+absorption measure. Declaring a component is mandatory — a component with values
+but no declared basis raises, so a future market cannot inherit the bug silently.
+
+    warn[i] == true    -> supply glut flagged in that quarter
+    warn[i] == false   -> supply measured on a stock basis, no glut that quarter
+    warn[i] == null    -> either NOT MEASURABLE (no supply data at all) or
+                          MEASURED ON A BASIS THE OVERLAY IS NOT VALID ON
+
+and the two null cases are told apart by market-level flags, each emitted only
+in its own case:
+
+    "supply_available": false                       -> not measurable (th)
+    "supply_basis": "flow", "glut_valid": false     -> measured, overlay invalid (gr)
+    neither key present                             -> stock basis, overlay live
+                                                       (us/tw/my/jp/au — bytes
+                                                       unchanged by this change)
+
+Renderers therefore face FOUR supply states, not three, and must test the flags
+explicitly and in order (supply_available, then glut_valid, then warn), because
+bool(null) is false in both Python and JS: an unguarded check renders Greece as
+"no glut", which is a false negative for a different reason than Thailand's.
+The report-card supply gauge STILL SHOWS A VALUE for a flow market — permits are
+a real measurement — but it must be labelled as a flow reading, never as a glut
+reading, and the risk gauge there is REFUTED (evaluated and failed), which is a
+different and stronger statement than Thailand's NOT EVALUABLE or Australia's
+NOT RATED.
+
+Mixed markets: Australia carries a stock component (SQM vacancy) alongside a flow
+one (ABS approvals) and both sit inside loose(). The gate is at market level — at
+least one stock component present — so Australia keeps its overlay and its exact
+previous bytes. Gating each component separately is a live question but would
+change a validated market's output and is deliberately not done here.
 """
 import json, os, math, sys
 import statistics as st
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MKTS = ['us', 'tw', 'my', 'jp', 'au', 'th']
+MKTS = ['us', 'tw', 'my', 'jp', 'au', 'th', 'gr']
+
+# Declared basis of every supply component a market carries (see module docstring).
+#   'stock' = a level or absorption measure: inventory, months-of-inventory,
+#             vacancy rate, unsold overhang, empty-homes share.
+#   'flow'  = new supply authorised or started per period: permits, approvals.
+# The glut overlay is emitted only where at least one PRESENT component is
+# 'stock'. A component that has values but no entry here raises in compute().
+SUPPLY_BASIS = {
+    # months-of-inventory (an absorption measure) + Census rental vacancy rate
+    'us': {'months': 'stock', 'vac': 'stock'},
+    # 低度使用（用電）住宅比率 vacancy + 使用執照 housing completions
+    'tw': {'vac': 'stock', 'months': 'flow'},
+    # NAPIC unsold-overhang units + NAPIC/DOSM completions
+    'my': {'vac': 'stock', 'months': 'flow'},
+    # 空き家率 (Housing and Land Survey) + 建築着工統計 housing starts
+    'jp': {'vac': 'stock', 'months': 'flow'},
+    # SQM rental vacancy rate + ABS building approvals
+    'au': {'vac': 'stock', 'months': 'flow'},
+    # no supply series at all: vacancy and months are both 0/141 present
+    'th': {},
+    # Eurostat sts_cobp_q dwellings authorised. THE ONLY MARKET WHOSE SUPPLY AXIS IS
+    # FLOW-ONLY: vacancy is 0/117 (Greece's only tier-1 vacancy data is the 2011 and
+    # 2021 censuses), so there is no stock component to anchor the overlay.
+    'gr': {'months': 'flow'},
+}
 
 def tz(series, win=24, minobs=12):
     out = [None]*len(series); h = []
@@ -153,7 +235,7 @@ def cell(mx, cy):
     up, fu = mx >= 0, cy >= 0
     return 'fuelled' if (up and fu) else 'draining' if (up and not fu) else 'reflating' if (not up and fu) else 'starved'
 
-def compute(d, valsrc=None, supsrc=None, popyoy=None, xc=None, win=24):
+def compute(d, valsrc=None, supsrc=None, popyoy=None, xc=None, win=24, basis=None):
     q = d['q']; n = len(q)
     hpi = d['hpi_yoy']; fwd = d['fwd12']
     mom = smooth(tz(hpi, win))                       # X: price momentum
@@ -165,11 +247,20 @@ def compute(d, valsrc=None, supsrc=None, popyoy=None, xc=None, win=24):
     def loose(i):
         vv = cs.get('vac', [None]*n)[i]; mm = cs.get('months', [None]*n)[i]
         return (vv is not None and vv <= -1) or (mm is not None and mm <= -1)
-    # THIRD STATE (see module docstring): a market with no supply series at all would
-    # score loose()=False everywhere and read as "no glut". Emit null instead of false.
-    sup_avail = any(cs.get('vac', [None]*n)[i] is not None or cs.get('months', [None]*n)[i] is not None
-                    for i in range(n))
-    warn = [loose(i) for i in range(n)] if sup_avail else [None]*n
+    # THIRD AND FOURTH STATES (see module docstring). Third: a market with no supply
+    # series at all would score loose()=False everywhere and read as "no glut". Fourth:
+    # a market whose only supply component is a FLOW (permits) would score a glut flag
+    # that is procyclical and inverts the intended signal. Both emit null, and are told
+    # apart by the market-level flags below.
+    cbasis = basis or {}
+    present = [k for k in ('vac', 'months') if any(v is not None for v in cs.get(k, [None]*n))]
+    undeclared = [k for k in present if k not in cbasis]
+    if undeclared:
+        raise ValueError(f"supply component(s) {undeclared} carry data but have no declared "
+                         f"basis in SUPPLY_BASIS; declare 'stock' or 'flow' before building")
+    sup_avail = bool(present)
+    glut_valid = any(cbasis[k] == 'stock' for k in present)
+    warn = [loose(i) for i in range(n)] if glut_valid else [None]*n
 
     def med(a):
         a = [x for x in a if x is not None]; return round(st.median(a), 1) if a else None
@@ -213,13 +304,18 @@ def compute(d, valsrc=None, supsrc=None, popyoy=None, xc=None, win=24):
         'xc': xc,   # cross-country report-card layer (vs the world now); None if unavailable
         'qstat_era': QSTAT_ERA, 'all_modern': ALL_MODERN,
     }
-    # emitted only when false, so markets with supply data keep their exact previous bytes
-    if not sup_avail: out['supply_available'] = False
+    # Each flag is emitted only in its own case, so a stock-basis market with supply data
+    # carries neither key and keeps its exact previous bytes.
+    if not sup_avail:
+        out['supply_available'] = False
+    elif not glut_valid:
+        out['supply_basis'] = 'flow'
+        out['glut_valid'] = False
     return out
 
 def main():
     RAWF = {'tw':'.twdata/tw_raw.json','my':'.mydata/my_raw.json','jp':'.jpdata/jp_raw.json','au':'.audata/au_raw.json',
-            'th':'.thdata/th_raw.json'}
+            'th':'.thdata/th_raw.json','gr':'.grdata/gr_raw.json'}
     XC = build_xc()
     # optional argv filter: `python3 scripts/build_compass.py th` rebuilds only the named
     # market(s). Needed because data/markets-summary.json (the xc source) drifts between
@@ -238,13 +334,26 @@ def main():
                 valsrc = [(rw['price'][i]/rw['income'][i]) if (rw.get('income') and rw['price'][i] and rw['income'][i]) else None
                           for i in range(len(rw['price']))]
             supsrc = rw.get('vacancy')                             # TW low-electricity vacancy / MY overhang / JP 空き家率
+            # GREECE (added 2026-08-02): vacancy is 117/117 null (only the 2011 and 2021
+            # censuses exist) while `months` — Eurostat quarterly dwellings authorised — is
+            # 117/117 present. Fall back to the months level so the report-card supply gauge
+            # has a value, matching the glut ring, which already reads comps_struct.months.
+            # Sign is the same as vacancy's (ez(..., -1): + = tight vs full history), because
+            # high permits = loose supply, exactly as in the clock builders' czlist(months, -1).
+            # INERT for every existing market: tw/my/jp/au have real vacancy values, and TH's
+            # vacancy and months are BOTH all-null so the fallback yields the same all-null
+            # gauge. Verified byte-identical for us/tw/my/jp/au/th.
+            if supsrc is None or all(v is None for v in supsrc):
+                supsrc = rw.get('months') or supsrc
             popyoy = yoy(rw['pop']) if rw.get('pop') else None
-        out = compute(d, valsrc, supsrc, popyoy, xc=XC.get(m))
+        assert m in SUPPLY_BASIS, f"market {m} must declare its supply basis in SUPPLY_BASIS"
+        out = compute(d, valsrc, supsrc, popyoy, xc=XC.get(m), basis=SUPPLY_BASIS[m])
         json.dump(out, open(os.path.join(ROOT, 'data', f'compass-{m}.json'), 'w'), separators=(',', ':'))
         i = len(out['q'])-1
         lab = {'fuelled':'上行·有燃料','draining':'上行·資金退','reflating':'下行·資金回流','starved':'下行·斷炊','warmup':'暖機'}
         w = out['warn'][i]
-        ws = 'n/a (no supply data)' if w is None else w
+        ws = w if w is not None else ('n/a (supply is a %s series, glut overlay not valid)' % out['supply_basis']
+                                      if out.get('glut_valid') is False else 'n/a (no supply data)')
         print(f"{m.upper()}: {out['q'][i]} → {lab[out['quad'][i]]}  mom={out['mom'][i]} cred={out['cred'][i]} warn={ws}")
 
 if __name__ == '__main__':

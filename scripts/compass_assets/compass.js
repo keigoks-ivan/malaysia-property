@@ -37,15 +37,27 @@ function useMarket(m){MKT=hasMkt(m)?m:DEF;
   D=CDATA[MKT];
   Q=D.q;MOM=D.mom;CRED=D.cred;QUAD=D.quad;WARN=D.warn;CARD=D.card;CUR=lastComplete(Q,QUAD,MOM,CRED);}
 useMarket(DEF);
-/* Supply is THREE-state, never two. A market with no supply series at all
-   (supply_available:false, or a null warn on the current quarter) must never
-   render as "no glut": null is falsy, and a falsy read here would print a false
-   negative. 'na' = not measurable, 'glut' = measured and loose, 'ok' = measured
-   and not loose. */
+/* Supply is FOUR-state, never two. WARN is null in two different situations and
+   null is falsy, so an unguarded read prints a false negative in both:
+     'na'   supply_available:false -- no supply series at all (Thailand)
+     'flow' glut_valid:false -- supply IS measured, but on a permits-FLOW basis the
+            glut overlay is not valid on. Greece: the flow is procyclical, the flag
+            was OFF through the entire 2007-2013 crash and ON through two booms, and
+            the pre-registered test scored it OR 0.26 / precision 0 / recall 0
+            against OR 36.75 for momentum alone. The gauge here is REFUTED, which is
+            neither "no glut" nor "unrated".
+     'glut' measured on a stock basis and loose
+     'ok'   measured on a stock basis and not loose
+   Test the flags in this order; never fall back on WARN[CUR] alone. */
 function supplyState(){
-  if(D.supply_available===false||WARN[CUR]==null)return 'na';
+  if(D.supply_available===false)return 'na';
+  if(D.glut_valid===false)return 'flow';
+  if(WARN[CUR]==null)return 'na';
   return WARN[CUR]?'glut':'ok';}
 var NA_INK='#475569', NA_LINE='#9aa7bb', NA_BG='#eef1f5';
+/* the refuted-instrument palette: gold, the site's methodology-caveat colour, never
+   red -- a failed gauge must not be dressed as a market warning. */
+var FL_INK='#8f6d2c', FL_LINE='#d8bc7a', FL_BG='#fbf3df';
 
 function fmtPc(x){return (x>=0?'+':'−')+Math.abs(x).toFixed(1)+'%';}
 function hexA(hex,a){var n=parseInt(hex.slice(1),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
@@ -85,25 +97,31 @@ function fillJudge(isZh){
   document.querySelectorAll('.now-'+QUAD[CUR]).forEach(function(e){e.textContent=isZh?' （現在）':' (now)';});
   document.querySelectorAll('.mtbl tr').forEach(function(t){t.classList.remove('hl');});
   document.querySelectorAll('.mtbl tr[data-ph="'+QUAD[CUR]+'"]').forEach(function(t){t.classList.add('hl');});
-  // supply bar: shown for a live glut (red, as before) AND for a market whose
-  // supply cannot be measured at all (slate/dashed) -- hidden only when supply
-  // was actually measured and is not loose.
+  // supply bar: shown for a live glut (red, as before), for a market whose supply
+  // cannot be measured at all (slate/dashed) and for a market measured on a basis
+  // the overlay is not valid on (gold/dashed) -- hidden only when supply was
+  // actually measured on a stock basis and is not loose.
   var w=document.querySelector('.jwarn');
   if(w){var ws=supplyState(), wd=w.querySelector('.dot');
+    var wink=ws==='na'?NA_INK:ws==='flow'?FL_INK:'';
+    var wbg =ws==='na'?NA_BG :ws==='flow'?FL_BG :'';
+    var wln =ws==='na'?NA_LINE:ws==='flow'?FL_LINE:'';
     w.style.display=ws==='ok'?'none':'inline-flex';
-    w.style.color = ws==='na'?NA_INK:'';
-    w.style.background = ws==='na'?NA_BG:'';
-    w.style.borderColor = ws==='na'?NA_LINE:'';
-    w.style.borderStyle = ws==='na'?'dashed':'';
-    if(wd){wd.style.background = ws==='na'?NA_LINE:'';
-      wd.style.boxShadow = ws==='na'?'0 0 0 3px rgba(154,167,187,.20)':'';}}
+    w.style.color=wink; w.style.background=wbg; w.style.borderColor=wln;
+    w.style.borderStyle=(ws==='na'||ws==='flow')?'dashed':'';
+    if(wd){wd.style.background=wln;
+      wd.style.boxShadow = ws==='na'?'0 0 0 3px rgba(154,167,187,.20)':
+        ws==='flow'?'0 0 0 3px rgba(184,146,74,.20)':'';}}
 }
 
 /* naTxt (optional): what to print when there is no value AND the absence is
    structural rather than a pending release. Without it a null renders as an
    empty track (used for a publication lag, e.g. AU population), which must not
    be reused for a series that will never exist. */
-function gauge(id,z,leftLab,rightLab,naTxt){
+/* tag (optional): a caption printed under the track when a value IS shown but the
+   reading needs its basis stated -- used for a supply gauge fed by a permits flow,
+   where the pin is a real measurement and the glut reading it looks like is not. */
+function gauge(id,z,leftLab,rightLab,naTxt,tag){
   var el=document.getElementById(id); if(!el)return;
   if(z==null){
     if(!naTxt){el.innerHTML='<div class="gtrack"></div><div class="gmid"></div>';return;}
@@ -114,19 +132,37 @@ function gauge(id,z,leftLab,rightLab,naTxt){
   var pct=Math.max(4,Math.min(96,50+(z/3)*45)), col=z>=0?C.green:C.red;
   el.innerHTML='<div class="gtrack"></div><div class="gmid"></div>'+
     '<div class="gends"><span>'+leftLab+'</span><span>'+rightLab+'</span></div>'+
-    '<div class="gpin" style="left:'+pct+'%;background:'+col+'"></div>';
+    '<div class="gpin" style="left:'+pct+'%;background:'+col+'"></div>'+
+    (tag?('<div style="position:absolute;top:23px;left:0;right:0;text-align:center;font-size:9px;font-weight:800;'+
+      'letter-spacing:.07em;text-transform:uppercase;color:'+FL_INK+'">'+tag+'</div>'):'');
 }
 function fillCard(isZh){
+  var sst=supplyState();
   gauge('g-val',CARD.valuation[CUR], isZh?'貴':'expensive', isZh?'便宜':'cheap');
   gauge('g-pop',CARD.population[CUR], isZh?'萎縮':'shrinking', isZh?'成長':'growing');
-  gauge('g-sup',CARD.supply[CUR], isZh?'過剩':'glut', isZh?'緊':'tight',
-    supplyState()==='na'?(isZh?'無供給數列 · 無法衡量':'no supply series · not measurable'):null);
+  /* On a flow basis the gauge keeps its value -- permits are a real measurement --
+     but its ends are relabelled from glut/tight to what is actually being read, and
+     it is tagged so the number is never taken for a glut reading. */
+  if(sst==='flow')
+    gauge('g-sup',CARD.supply[CUR], isZh?'核發量高':'permits high', isZh?'核發量低':'permits low',
+      null, isZh?'許可流量 · 非過剩讀數':'permits flow · not a glut reading');
+  else
+    gauge('g-sup',CARD.supply[CUR], isZh?'過剩':'glut', isZh?'緊':'tight',
+      sst==='na'?(isZh?'無供給數列 · 無法衡量':'no supply series · not measurable'):null);
 }
 
-/* rank bar: pin position = (n-rank)/(n-1) so rank 1 (best) sits at the right */
-function xcbar(barId,valId,v,unit,rank,n,isCarry){
+/* rank bar: pin position = (n-rank)/(n-1) so rank 1 (best) sits at the right.
+   naLabel (optional): print an explicit "unavailable" track and caption instead of
+   an empty one. A market absent from the 12-market universe has no rank at all, and
+   a blank bar there reads as neutral or as a pending value, which it is not. */
+function xcbar(barId,valId,v,unit,rank,n,isCarry,naLabel){
   var el=document.getElementById(barId), vel=document.getElementById(valId);
   if(!el)return;
+  if(naLabel&&(v==null||rank==null||n==null)){
+    el.innerHTML='<div class="xctrack" style="background:'+NA_BG+';box-shadow:0 0 0 1px '+NA_LINE+' inset"></div>';
+    if(vel){vel.textContent=naLabel;vel.style.color=NA_INK;}
+    return;}
+  if(vel)vel.style.color='';
   if(v==null||rank==null||n==null){el.innerHTML='<div class="xctrack"></div>';if(vel)vel.textContent='—';return;}
   var pct=n>1?Math.max(4,Math.min(96,((n-rank)/(n-1))*100)):50;
   var col=isCarry?C.gold:(pct>=50?C.green:C.red);
@@ -135,8 +171,16 @@ function xcbar(barId,valId,v,unit,rank,n,isCarry){
   if(vel) vel.textContent=(v<0?'−':'')+Math.abs(v).toFixed(1)+unit+' · #'+rank+'/'+n;
 }
 function fillXC(isZh){
-  if(D.xc==null)return;
   var X=D.xc;
+  /* A null xc means this market is not in data/markets-summary.json (the vetted
+     12-market universe), so no cross-sectional rank exists for it. Returning early
+     would leave the gauge an empty box and every bar blank, which reads as neutral;
+     it has to say unavailable. */
+  if(X==null){
+    gauge('g-xc-val',null,'','',isZh?'不在 12 市場樣本 · 無法排名':'not in the 12-market set · no rank');
+    ['pti','yield','carry','vac','pop'].forEach(function(k){
+      xcbar('g-xc-'+k,'v-xc-'+k,null,'',null,null,k==='carry',isZh?'無排名':'n/a');});
+    return;}
   gauge('g-xc-val', X.valcomp, isZh?'貴':'expensive', isZh?'便宜':'cheap');
   xcbar('g-xc-pti','v-xc-pti', X.pti&&X.pti.v, 'x', X.pti&&X.pti.rank, X.n);
   xcbar('g-xc-yield','v-xc-yield', X.yield&&X.yield.v, '%', X.yield&&X.yield.rank, X.n);
@@ -177,14 +221,20 @@ function initCharts(lang){
     {type:'scatter',data:medPts,z:6,symbolSize:1,itemStyle:{color:'transparent'},silent:true},
     {type:'scatter',data:cornLbl,z:6,symbolSize:1,itemStyle:{color:'transparent'},silent:true}
   ];
-  // supply ring on the current point: red for a measured glut, slate for a
-  // market whose supply cannot be measured, nothing when supply was measured and
-  // is not loose. An absent ring must only ever mean the third case.
+  // supply ring on the current point: red for a measured glut, slate for a market
+  // whose supply cannot be measured, gold for a market measured on a basis the glut
+  // overlay is not valid on, nothing when supply was measured on a stock basis and is
+  // not loose. An absent ring must only ever mean that last case, so the two null
+  // states each draw their own ring and say which one they are.
   var sst=supplyState();
+  var ringInk=sst==='na'?NA_INK:sst==='flow'?FL_INK:C.red;
+  var ringLine=sst==='na'?NA_LINE:sst==='flow'?FL_LINE:C.red;
+  var ringTxt=sst==='na'?(isZh?'供給：無數列，無法衡量':'supply: no series, not measurable')
+    :sst==='flow'?(isZh?'供給＝許可流量，過剩疊加在此不適用':'supply = permits flow, glut overlay not valid here')
+    :(isZh?'⚠ 供給過剩':'⚠ supply glut');
   if(sst!=='ok') series.push({type:'scatter',data:[{value:[MOM[CUR],CRED[CUR]]}],z:6,symbolSize:34,
-    itemStyle:{color:'transparent',borderColor:sst==='na'?NA_LINE:C.red,borderWidth:1.6,borderType:'dashed'},silent:true,
-    label:{show:true,position:'bottom',color:sst==='na'?NA_INK:C.red,fontSize:10,fontWeight:700,fontFamily:FF,
-      formatter:sst==='na'?(isZh?'供給：無數列，無法衡量':'supply: no series, not measurable'):(isZh?'⚠ 供給過剩':'⚠ supply glut')}});
+    itemStyle:{color:'transparent',borderColor:ringLine,borderWidth:1.6,borderType:'dashed'},silent:true,
+    label:{show:true,position:'bottom',color:ringInk,fontSize:10,fontWeight:700,fontFamily:FF,formatter:ringTxt}});
   cp.setOption({grid:{left:52,right:20,top:40,bottom:52},
     tooltip:Object.assign({},baseTip,{trigger:'item',formatter:function(o){
       if(o.data&&o.data.q){var i=Q.indexOf(o.data.q);

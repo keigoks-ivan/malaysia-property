@@ -37,12 +37,15 @@ PAGES = [
     {'out': 'th/clock.html', 'markets': ['th'], 'default': 'th',
      'title': 'Property Compass | Thailand · Property Check',
      'desc': 'Thailand property compass: Bangkok momentum × credit, a report card on valuation and population, and a supply gauge that reads not measurable because no Thai supply series exists.'},
+    {'out': 'gr/clock.html', 'markets': ['gr'], 'default': 'gr',
+     'title': 'Property Compass | 希臘 · Property Check',
+     'desc': 'Greece property compass: momentum × credit, whose four-cell ordering is the strongest of the seven markets tested (ρ=0.60, 6/6 pairs), and a supply-glut risk gauge that was evaluated here and failed, because the Greek supply axis is a permits flow rather than a stock.'},
 ]
 
 # Markets whose data/copy must always be loaded, regardless of which page is
 # being built: the honesty section and the pooled risk-gauge numbers quote the
 # US and Japan odds ratios on every page.
-ALL_MKTS = ['us', 'tw', 'my', 'jp', 'au', 'th']
+ALL_MKTS = ['us', 'tw', 'my', 'jp', 'au', 'th', 'gr']
 
 C = json.load(open(ASSETS + '/content.json'))
 DATA = {m: open(f'{ROOT}/data/compass-{m}.json').read().strip() for m in ALL_MKTS}
@@ -95,24 +98,51 @@ for m in ALL_MKTS:
     Dm = json.loads(DATA[m])
     i_cur = last_complete(Dm)
     cur_q = Dm['q'][i_cur]
-    # Supply is three-state, never two. A market that emits supply_available:false
-    # has no supply series at all, so the primary classifier (starved AND
-    # supply-glut) cannot be formed: there is no ON/OFF to compute and no v3
-    # result to quote. bool(None) would silently render that market as "warning
-    # off", i.e. a false negative, so the null is caught here explicitly.
+    # Markets added after the v3 claim was frozen (AU Amendment 3, TH Amendment 4,
+    # GR Amendment 5) live under <m>_holdout.market_results, not markets.<m> --
+    # same shape, evaluated as out-of-sample hold-outs rather than folded into the
+    # frozen 4-market result.
+    hold = V3.get(f'{m}_holdout')
+    # Supply is FOUR-state, never two, and warn is null in two of the four. bool(None)
+    # is False, so both nulls are caught explicitly before any warn is read.
+    #  (1) supply_available:false -- no supply series at all, so the primary classifier
+    #      (starved AND supply-glut) cannot be formed: nothing to compute, nothing to
+    #      quote. NOT EVALUABLE.
     if Dm.get('supply_available', True) is False:
-        RISKVALS[m] = {'CUR_Q': cur_q, 'ON': None, 'SUPPLY_OK': False,
+        RISKVALS[m] = {'CUR_Q': cur_q, 'ON': None, 'SUPPLY_OK': False, 'SUP': 'na',
                        'STATE_EN': 'NOT EVALUABLE', 'STATE_ZH': '無法評估'}
         continue
+    #  (2) glut_valid:false -- supply IS measured, on a permits-FLOW basis the overlay
+    #      is not valid on. The classifier could be formed, passed the applicability
+    #      gate and was run: it failed on every criterion. That is neither NOT EVALUABLE
+    #      (th, nothing to run) nor NOT RATED (au, too few loss quarters to score): it is
+    #      refuted, so the numbers ARE quoted, and there is no ON/OFF to render.
+    if Dm.get('glut_valid', True) is False:
+        ab = hold['market_results']['results']['T_ABS']
+        pr, mo = ab['W_PRIM'], ab['W_MOM']
+        ep = pr['episodes']['details'][0]
+        mh = hold['mh_pooled_with_gr']['T_ABS']
+        RISKVALS[m] = {
+            'CUR_Q': cur_q, 'ON': None, 'SUPPLY_OK': False, 'SUP': 'flow',
+            'STATE_EN': 'EVALUATED · FAILED', 'STATE_ZH': '已評估 · 未通過',
+            'BASIS_EN': 'permits-flow basis', 'BASIS_ZH': '許可流量基礎',
+            'N_BAD': hold['gate']['n_bad_abs'], 'GATE': hold['gate']['threshold'],
+            'OR_ABS': f"{pr['OR']:.2f}", 'PREC_ABS': fmtpct1(pr['precision']),
+            'RECALL_ABS': fmtpct1(pr['recall']), 'BASE_ABS': fmtpct1(pr['base_rate']),
+            'W_Q': pr['w_quarters'],
+            'OR_MOM': f"{mo['OR']:.2f}", 'PREC_MOM': fmtpct1(mo['precision']),
+            'RECALL_MOM': fmtpct1(mo['recall']),
+            'EP_START': ep['start_q'], 'EP_END': ep['end_q'], 'EP_LEN': ep['length'],
+            'MH_FROZEN': fmt1(mh['frozen_4market_OR_MH']), 'MH_WITH': fmt1(mh['OR_MH']),
+            'RHO': f"{hold['ordering_check']['rho']:.3f}",
+        }
+        continue
     on = (Dm['quad'][i_cur] == 'starved' and bool(Dm['warn'][i_cur]))
-    # AU was added after the v3 claim was frozen (Amendment 3) and lives under
-    # au_holdout.market_results, not markets.au -- same shape, evaluated as an
-    # out-of-sample hold-out rather than folded into the frozen 4-market result.
-    mres = V3['au_holdout']['market_results'] if m == 'au' else V3['markets'][m]
+    mres = hold['market_results'] if hold else V3['markets'][m]
     rated_abs = mres['rated_abs']
     abs_r = mres['results']['T_ABS']['W_PRIM']
     rel_r = mres['results']['T_REL']['W_PRIM']
-    v = {'CUR_Q': cur_q, 'ON': on, 'SUPPLY_OK': True,
+    v = {'CUR_Q': cur_q, 'ON': on, 'SUPPLY_OK': True, 'SUP': 'ok',
          'STATE_EN': 'ON' if on else 'OFF', 'STATE_ZH': '開啟' if on else '關閉'}
     v['OR_REL'] = fmt1(rel_r['OR']); v['PREC_REL'] = fmtpct1(rel_r['precision'])
     v['RECALL_REL'] = fmtpct1(rel_r['recall']); v['BASE_REL'] = fmtpct1(rel_r['base_rate'])
@@ -130,32 +160,46 @@ GV = {'MH_ABS': fmt1(V3['threshold_evaluation']['ABS']['MH_pooled_OR']),
       'OR_US_ABS': RISKVALS['us']['OR_ABS'], 'OR_JP_ABS': RISKVALS['jp']['OR_ABS']}
 
 MK = {'us': ('United States', '美國'), 'tw': ('Taiwan', '台灣'), 'my': ('Malaysia', '馬來西亞'),
-      'jp': ('Japan', '日本'), 'au': ('Australia', '澳洲'), 'th': ('Thailand', '泰國')}
+      'jp': ('Japan', '日本'), 'au': ('Australia', '澳洲'), 'th': ('Thailand', '泰國'),
+      'gr': ('Greece', '希臘')}
 SPAN = {'us': ('US · 1975–2026', '美國 · 1975–2026'), 'tw': ('Taiwan · 2001–2026', '台灣 · 2001–2026'),
         'my': ('Malaysia · 2000–2026', '馬來西亞 · 2000–2026'), 'jp': ('Japan · 1975–2025', '日本 · 1975–2025'),
         'au': ('Australia · 1994–2026', '澳洲 · 1994–2026'),
         # Thailand's price leg is the BIS Bangkok city index, so the badge names
         # the city rather than the country.
-        'th': ('Bangkok · 1991–2026', '曼谷 · 1991–2026')}
+        'th': ('Bangkok · 1991–2026', '曼谷 · 1991–2026'),
+        # Greece's price leg is the BIS nationwide index (the BoG Athens index starts
+        # only 2006Q1), so the badge names the country.
+        'gr': ('Greece · 1997–2026', '希臘 · 1997–2026')}
 
 BASE_CSS = open(ASSETS + '/compass.css', encoding='utf-8').read()
 
 
 def risk_light(m):
     v = RISKVALS[m]
-    dot, lstyle = '<span class="dot"></span>', ''
-    if not v['SUPPLY_OK']:
+    dot, lstyle, qual = '<span class="dot"></span>', '', ''
+    if v['SUP'] == 'na':
         # Slate + dashed, deliberately unlike rg-off (green) and rg-notval (gold):
         # the gauge is not computable here, which is not the same as "no warning"
         # and not the same as "computable but unvalidated".
         st, lab = 'noteval', dual('NOT EVALUABLE', '無法評估')
         lstyle = ' style="color:#475569;background:#eef1f5;border:1px dashed #9aa7bb"'
         dot = '<span class="dot" style="background:#9aa7bb;box-shadow:0 0 0 3px rgba(154,167,187,.20)"></span>'
+    elif v['SUP'] == 'flow':
+        # Solid gold, inverted: the strongest state in the gold "validation" family,
+        # a full step beyond Taiwan's soft rg-notval, and deliberately NOT red -- the
+        # instrument failed here, the market is not being warned about. The label
+        # carries the distinction in words, and the qualifier names the basis it
+        # failed on so the reading is never generalised to other markets.
+        st, lab = 'failed', dual('EVALUATED · FAILED', '已評估 · 未通過')
+        lstyle = ' style="color:#fff;background:#8f6d2c;border:1px solid #6f5320"'
+        dot = '<span class="dot" style="background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.28)"></span>'
+        qual = dual(f' · {v["BASIS_EN"]}', f' · {v["BASIS_ZH"]}')
     elif m == 'tw': st, lab = 'notval', dual('NOT VALIDATED', '未通過驗證')
     elif v['ON']: st, lab = 'on', dual('WARNING ON', '警示開啟')
     else: st, lab = 'off', dual('WARNING OFF', '警示關閉')
     return (f'<div class="rglight rg-{st}"{lstyle}>{dot}<span class="rglabel">{lab}</span>'
-            f'<span class="rgqtr">{dual("as of ","截至 ")}{v["CUR_Q"]}</span></div>')
+            f'<span class="rgqtr">{dual("as of ","截至 ")}{v["CUR_Q"]}{qual}</span></div>')
 
 
 def market_css(markets, default):
@@ -185,14 +229,20 @@ def build(page):
     def only(m, html): return html if has(m) else ''
 
     # A page carries the supply-glut/risk-gauge badges only if at least one of its
-    # markets actually has a supply series to form them from.
-    page_supply = any(RISKVALS[m]['SUPPLY_OK'] for m in MKTS)
+    # markets actually has a supply series to form them from -- and only if that
+    # series is on a basis the overlay is valid on.
+    sups = {RISKVALS[m]['SUP'] for m in MKTS}
+    page_supply = 'ok' in sups
+    page_flow_only = sups == {'flow'}
 
     def badges():
         b = [f'<span class="kpi-badge badge-blue">{dual("Momentum × Credit","動能 × 信貸")}</span>']
         if page_supply:
             b.append(f'<span class="kpi-badge badge-orange">{dual("+ supply-glut warning · report card","+ 供給警示 · 體檢表")}</span>')
             b.append(f'<span class="kpi-badge badge-orange">{dual("Risk gauge · validated on 2 busts","風險警報 · 驗證於兩次崩盤")}</span>')
+        elif page_flow_only:
+            b.append(f'<span class="kpi-badge badge-orange">{dual("+ report card · supply is a permits flow","+ 體檢表 · 供給為許可流量")}</span>')
+            b.append(f'<span class="kpi-badge badge-orange">{dual("Risk gauge · evaluated here and failed","風險警報 · 在此已評估且未通過")}</span>')
         else:
             b.append(f'<span class="kpi-badge badge-orange">{dual("+ report card · no supply series","+ 體檢表 · 無供給數列")}</span>')
             b.append(f'<span class="kpi-badge badge-orange">{dual("Risk gauge · not evaluable here","風險警報 · 此市場無法評估")}</span>')
@@ -236,6 +286,70 @@ def build(page):
     th_q = RISKVALS['th']['CUR_Q']
     th_note = only('th', f'''<p class="mkt-th" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual(f"reading as of {th_q}: BIS household credit ends one quarter behind the price index, so 2026Q1 has no complete cell and nothing is carried forward", f"讀數截至 {th_q}：BIS 家庭信貸數列較房價指數早一季結束，2026Q1 因此無完整格位，缺值未以前期數值填補")}</span></p>
     ''')
+    # Greece has the same one-quarter credit lag as Thailand, and additionally an
+    # ordering result strong enough that the panel states it up front.
+    gr_q = RISKVALS['gr']['CUR_Q']
+    gr_note = only('gr', f'''<p class="mkt-gr" style="margin:0 0 10px"><span class="rglight rg-notval" style="margin:0">{dual(f"reading as of {gr_q}: BIS household credit ends one quarter behind the price index, so 2026Q1 has no complete cell and nothing is carried forward. Cell ordering ρ = {RISKVALS['gr']['RHO']}, the strongest of the seven markets tested", f"讀數截至 {gr_q}：BIS 家庭信貸數列較房價指數早一季結束，2026Q1 因此無完整格位，缺值未以前期數值填補。四格排序 ρ = {RISKVALS['gr']['RHO']}，為受測七個市場中最強")}</span></p>
+    ''')
+
+    # Shared how-to copy that a flow-basis market contradicts if left alone. Each clause
+    # is appended by concatenation, for the same reason as the source note below.
+    compass_howto_en = C['howto']['compass_howto_en'] + only('gr',
+        " For Greece that warning is deliberately absent: its only supply series is a permits flow, the overlay "
+        "was tested on it and inverted, so the current point carries a basis note where a glut ring would be.")
+    compass_howto_zh = C['howto']['compass_howto_zh'] + only('gr',
+        "希臘的該項警示為刻意不顯示：其唯一的供給數列是許可流量，該疊加在其上受測且方向相反，因此當前點位以基礎說明"
+        "取代供給過剩環。")
+    risk_caveat_en = C['howto']['risk_caveat_en'] + only('gr',
+        " That third crash has since been met, in the hold-out set rather than in the frozen four: Greece's "
+        "2006Q4-2015Q3 loss episode was scored under this same protocol, and the gauge failed it.")
+    risk_caveat_zh = C['howto']['risk_caveat_zh'] + only('gr',
+        "該次崩盤其後已經遭遇，發生於樣本外市場，而非凍結的四個市場：希臘 2006Q4 至 2015Q3 的虧損期以同一套協定計分，"
+        "本警報未通過。")
+    xc_howto_en = C['howto']['xc_howto_en'] + only('gr',
+        " Greece is not one of those 12 markets, so this panel is unavailable for it: every bar below reads n/a "
+        "rather than a rank, and that is an absence of data rather than a middling score.")
+    xc_howto_zh = C['howto']['xc_howto_zh'] + only('gr',
+        "希臘不在該 12 個市場之列，此面板對希臘不適用：下方每一條均顯示無排名，而非任何名次，此為資料不存在，"
+        "不是居中的分數。")
+
+    # Per-market source notes. These are CONCATENATED, never embedded as {only(...)}
+    # inside a dual() argument: those arguments are plain strings, not f-strings, so a
+    # brace expression written inside one is emitted to the page verbatim (it was,
+    # for the Thailand clause, until 2026-08-02).
+    src_en = ("Inputs per market via FRED, BIS, DOSM/OpenDOSM, DGBAS, BNM, BOJ, e-Stat, NAPIC, World Bank, Eurostat "
+              "and the Sinyi index. The compass axes are trailing-z: momentum = trailing-z of nominal house-price YoY "
+              "(rolling window); credit = real (CPI-deflated) credit impulse, also trailing-z. The report card uses a "
+              "different basis per gauge: valuation and supply are expanding-z against a market's entire history, while "
+              "population is an absolute growth-direction reading on a fixed scale, not standardised against history. "
+              "Momentum is nominal while credit is deflated — the trailing window de-trends steady inflation, and the "
+              "validated downside target (the 3-year forward return) is itself a nominal figure, so the mismatch is by "
+              "design, not an oversight. Independent analysis, not investment advice."
+              + only('th', " Thailand adds ILOSTAT average monthly earnings per employee as the valuation denominator, "
+                           "and its price leg is the BIS Bangkok city index rather than a nationwide one.")
+              + only('gr', " Greek inputs are BIS nationwide house prices and BIS household credit (all lenders, not "
+                           "banks only), Eurostat for household gross disposable income, quarterly population, HICP and "
+                           "dwellings authorised, and the ECB deposit facility rate from 2001Q1, spliced onto the "
+                           "drachma-era interbank rate before it. Two disclosures attach to those axes. The policy rate "
+                           "has been the ECB's since euro entry and was disconnected from Greek financial conditions "
+                           "between 2010 and 2018, when the Greek 10-year yield peaked at 29.24% against an ECB rate of "
+                           "1.00%. And the credit leg is the all-lender household stock, down 32.3% from its 2010Q3 "
+                           "peak, against 68.6% for the bank-held housing-loan stock alone; the difference is the "
+                           "Hercules/HAPS securitisations moving loans to servicers and special-purpose vehicles, not "
+                           "households repaying them."))
+    src_zh = ("各市場輸入經 FRED、BIS、DOSM／OpenDOSM、主計總處、央行、日本央行、e-Stat、NAPIC、世界銀行、Eurostat 與信義指數。"
+              "羅盤軸為滾動 z：動能＝名目房價年增的滾動 z（滾動窗）；信貸＝經 CPI 平減的實質信貸脈衝，同樣是滾動 z。"
+              "體檢表各量表基準不同：估值與供給是相對該市場整段歷史的擴張型 z，人口則是固定尺度的絕對成長方向讀數，"
+              "不是相對歷史的標準化值。動能採名目、信貸採實質——滾動窗會抵銷穩定的通膨基期，而驗證用的下檔目標"
+              "（3年前向報酬）本身也是名目數字，因此這個不對稱是刻意設計，不是疏漏。獨立分析，不構成投資建議。"
+              + only('th', "泰國的估值分母採 ILOSTAT 平均每受僱者月收入，房價腿則為 BIS 曼谷市指數，非全國指數。")
+              + only('gr', "希臘的輸入為 BIS 全國房價與 BIS 家庭信貸（全體貸放機構，非僅銀行），家庭毛可支配所得、季度人口、"
+                           "HICP 與住宅核發戶數採自 Eurostat，政策利率自 2001Q1 起為歐洲央行存款便利利率，之前接續"
+                           "德拉克馬時期的隔夜拆款利率。這兩條軸線另有兩項揭露。其一，加入歐元區後政策利率即為歐洲央行利率，"
+                           "2010 年至 2018 年間與希臘本地金融條件嚴重脫節，希臘 10 年期公債殖利率一度達 29.24%，"
+                           "同期歐洲央行利率為 1.00%。其二，信貸腿採全體貸放機構的家庭債務餘額，自 2010Q3 高點下降 32.3%，"
+                           "而僅計銀行帳上的住宅貸款餘額降幅為 68.6%，兩者差額來自 Hercules／HAPS 證券化將貸款移轉至"
+                           "服務機構與特殊目的機構，並非家庭償還。"))
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -274,7 +388,7 @@ def build(page):
   <div class="judge">
     <p class="jlab">{dual('The reading right now · <span class="curQtr">—</span>','現在的判讀 · <span class="curQtr">—</span>')}</p>
     <p class="jphase curPhase">—</p>
-    {tw_note}{au_note}{th_note}<p class="jread">{market_block('judge')}</p>
+    {tw_note}{au_note}{th_note}{gr_note}<p class="jread">{market_block('judge')}</p>
     <div class="jwarn"><span class="dot"></span><span>{market_block('warn')}</span></div>
     <div class="jrow">
       <span class="jchip">{dual("Momentum: ","動能：")}<b class="jMom">—</b></span>
@@ -293,19 +407,19 @@ def build(page):
 
   <!-- risk gauge -->
   <div class="blk">
-    <h2>{dual("The Risk Gauge — a Validated Downside Warning","風險警報 · 已驗證的下檔警示")}</h2>
+    <h2>{dual("The Risk Gauge — Evaluated Here, and It Failed","風險警報 · 在此市場已評估，未通過") if page_flow_only else dual("The Risk Gauge — a Validated Downside Warning","風險警報 · 已驗證的下檔警示")}</h2>
     <p class="sub">{dual(C['howto']['risk_howto_en'].format(**GV), C['howto']['risk_howto_zh'].format(**GV))}</p>
     <div class="chartbox rgbox">
       {risk_lights_html()}
       <p class="rgnote">{risk_text_block()}</p>
-      <p class="rgcaveat">{dual(C['howto']['risk_caveat_en'], C['howto']['risk_caveat_zh'])}</p>
+      <p class="rgcaveat">{dual(risk_caveat_en, risk_caveat_zh)}</p>
     </div>
   </div>
 
   <!-- compass chart -->
   <div class="blk">
     <h2>{dual("The Compass — Momentum × Credit","羅盤 · 動能 × 信貸")}</h2>
-    <p class="sub">{dual(C['howto']['compass_howto_en'], C['howto']['compass_howto_zh'])}</p>
+    <p class="sub">{dual(compass_howto_en, compass_howto_zh)}</p>
     <div class="chartbox"><div id="chartCompass" class="ch" style="height:520px"></div></div>
   </div>
 
@@ -325,7 +439,7 @@ def build(page):
 
       <!-- versus the world -->
       <div class="xcdiv"><span class="xcdiv-line"></span><h3 class="xcdiv-h">{dual("Versus the world · where it sits among 12 markets now","與世界比 · 現在在 12 個市場中的位置")}</h3><span class="xcdiv-line"></span></div>
-      <p class="sub" style="margin:0 0 14px">{dual(C['howto']['xc_howto_en'], C['howto']['xc_howto_zh'])}</p>
+      <p class="sub" style="margin:0 0 14px">{dual(xc_howto_en, xc_howto_zh)}</p>
       <div class="card">
         <div class="crow"><div class="cl">{dual("Valuation","估值")}</div><div class="gauge" id="g-xc-val"></div></div>
         <p class="cnote">{market_block('xc_val')}</p>
@@ -377,12 +491,15 @@ def build(page):
         f"<b>風險警報是真實的，但驗證樣本很薄。</b>斷炊疊加供給過剩的季度，三年期名目虧損的勝算明顯偏高（美國勝算比{GV['OR_US_ABS']}倍、日本勝算比{GV['OR_JP_ABS']}倍、合併勝算比{GV['MH_ABS']}倍），落入市場自身最差四分之一表現的勝算也偏高（美國、馬來西亞、日本；合併勝算比{GV['MH_REL']}倍）——這是在凍結、預先設定門檻的條件下驗證出來的，不是事後套進資料調出來的。但絕對虧損這項宣稱，基本上只建立在樣本中僅有的兩次歷史崩盤上：美國2006年至2008年的崩盤，以及日本1990年代至2000年代的崩盤。下一次崩盤，不論何時到來，才是這頁尚未面對過的真正樣本外測試。")}</li>
       <li>{dual('<b>The four-cell return ordering is still descriptive, not a forecast.</b> A separate attempt to validate Fuelled-beats-Starved as a forward-return ranking failed its own pre-registered gates ; the compass panel and the forward-return table above describe the past, they are not a tested prediction of what comes next.',
         '<b>四格報酬排序仍是描述性的，不是預測。</b>另一次想把「助燃格贏過斷炊格」驗證為前向報酬排序的嘗試，未能通過自己預先凍結的門檻；上方的羅盤面板與前向報酬表描述的是過去，不是經過測試、對未來的預測。')}</li>
+      {(lambda g: f'''<li class="warn">{dual(
+        f"<b>Greece: the gauge finally met a real crash, and failed on it.</b> The bust this page said it was waiting for has arrived in the hold-out set. Greece is the first market outside the frozen four on which the starved-plus-glut classifier could be scored at all: it clears the applicability gate with {g['N_BAD']} matured three-year nominal-loss quarters against a pre-registered minimum of {g['GATE']}. Scored on the frozen thresholds it returned an odds ratio of {g['OR_ABS']}× with precision {g['PREC_ABS']}% and recall {g['RECALL_ABS']}%, missing the entire {g['EP_LEN']}-quarter loss episode of {g['EP_START']} to {g['EP_END']}, while momentum alone returned {g['OR_MOM']}× (precision {g['PREC_MOM']}%, recall {g['RECALL_MOM']}%) and caught it. Requiring a supply glut on top of momentum did not add a filter, it removed a working signal. The diagnosis is specific rather than general: Greece is the only market here whose glut term is a supply FLOW, quarterly dwellings authorised, instead of a stock or absorption measure, and Greek permits collapsed with prices rather than ahead of them. So the overlay is refuted on a flow basis and no warning is published for Greece; on the stock basis used by the other five it stands, now carrying one out-of-sample stratum against it, which pulls the labelled pooled odds ratio from {g['MH_FROZEN']}× to {g['MH_WITH']}×. The four-cell ordering was tested separately in Greece and held at ρ = {g['RHO']}, the strongest of the seven markets.",
+        f"<b>希臘：這套警報終於遇上一次真實崩盤，並且未通過。</b>本頁先前所稱、尚未面對的樣本外考驗，已由希臘提供。希臘是凍結四市場之外，第一個能完整計分「斷炊疊加供給過剩」分類規則的市場：已完成觀測的三年期名目虧損季度為 {g['N_BAD']} 個，高於預先設定的 {g['GATE']} 個門檻。以凍結門檻計分，勝算比為 {g['OR_ABS']} 倍，精確率 {g['PREC_ABS']}%，召回率 {g['RECALL_ABS']}%，完全錯過 {g['EP_START']} 至 {g['EP_END']} 這段長達 {g['EP_LEN']} 季的虧損期；同一份資料上，僅用動能的勝算比為 {g['OR_MOM']} 倍（精確率 {g['PREC_MOM']}%，召回率 {g['RECALL_MOM']}%），且抓到了該段虧損期。在動能之上追加供給過剩條件，並未增加一道篩選，而是消滅了一個有效訊號。此一診斷有明確範圍：希臘是本頁唯一以供給「流量」（季度住宅核發戶數）而非存量或去化指標構成過剩項的市場，而希臘的建照核發是與房價同步崩落，並未領先。因此，在流量基礎上此一疊加已被推翻，希臘不發布任何供給警示；在其餘五個市場所用的存量基礎上，原結論維持，惟已多出一個不利的樣本外分層，使標示為含希臘的合併勝算比由 {g['MH_FROZEN']} 倍降至 {g['MH_WITH']} 倍。四格排序在希臘另行檢定，ρ = {g['RHO']}，為受測七個市場中最強。")}</li>''')(RISKVALS['gr']) if 'gr' in page['markets'] else ''}
       {(f'''<li>{dual("<b>Taiwan: neither claim validated — read its compass as descriptive only.</b> The risk gauge above never caught Taiwan's one recorded loss episode (2013-2015) and fell short of the pass bar on both the absolute-loss and relative-weakness tests; the return-ordering claim fails there too, for the same reason (a short, almost one-directional history). Treat every reading for Taiwan on this page as a record of the past, not a validated signal.",
         "<b>台灣：兩項宣稱都未通過驗證——它的羅盤讀數請只當描述看待。</b>上方的風險警報從未抓到台灣紀錄中唯一一次虧損事件（2013年至2015年），在絕對虧損與相對弱勢兩項測試上都未達通過門檻；報酬排序的宣稱在台灣也因同樣原因（歷史短、且幾乎單向）而失敗。請把這一頁上所有台灣的讀數，都當作對過去的紀錄，而不是已驗證的訊號。")}</li>''') if 'tw' in page['markets'] else ''}
     </ul>
   </div>
 
-  <p class="src">{dual("Inputs per market via FRED, BIS, DOSM/OpenDOSM, DGBAS, BNM, BOJ, e-Stat, NAPIC, World Bank and the Sinyi index. The compass axes are trailing-z: momentum = trailing-z of nominal house-price YoY (rolling window); credit = real (CPI-deflated) credit impulse, also trailing-z. The report card uses a different basis per gauge: valuation and supply are expanding-z against a market's entire history, while population is an absolute growth-direction reading on a fixed scale, not standardised against history. Momentum is nominal while credit is deflated — the trailing window de-trends steady inflation, and the validated downside target (the 3-year forward return) is itself a nominal figure, so the mismatch is by design, not an oversight. Independent analysis, not investment advice.{only('th', ' Thailand adds ILOSTAT average monthly earnings per employee as the valuation denominator, and its price leg is the BIS Bangkok city index rather than a nationwide one.')}","各市場輸入經 FRED、BIS、DOSM／OpenDOSM、主計總處、央行、日本央行、e-Stat、NAPIC、世界銀行與信義指數。羅盤軸為滾動 z：動能＝名目房價年增的滾動 z（滾動窗）；信貸＝經 CPI 平減的實質信貸脈衝，同樣是滾動 z。體檢表各量表基準不同：估值與供給是相對該市場整段歷史的擴張型 z，人口則是固定尺度的絕對成長方向讀數，不是相對歷史的標準化值。動能採名目、信貸採實質——滾動窗會抵銷穩定的通膨基期，而驗證用的下檔目標（3年前向報酬）本身也是名目數字，因此這個不對稱是刻意設計，不是疏漏。獨立分析，不構成投資建議。{only('th', '泰國的估值分母採 ILOSTAT 平均每受僱者月收入，房價腿則為 BIS 曼谷市指數，非全國指數。')}")}</p>
+  <p class="src">{dual(src_en, src_zh)}</p>
 </main>
 
 <footer class="footer"><div class="footer-ornament" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
