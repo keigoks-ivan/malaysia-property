@@ -43,7 +43,7 @@ PAGES = [
      'desc': 'Thailand property compass: Bangkok momentum × credit, a report card on valuation and population, and a supply gauge that reads not measurable because no Thai supply series exists.'},
     {'out': 'gr/clock.html', 'markets': ['gr'], 'default': 'gr',
      'title': 'Property Compass | 希臘 · Property Check',
-     'desc': 'Greece property compass: momentum × credit, whose four-cell ordering is the strongest of the seven markets tested (ρ=0.60, 6/6 pairs), and a supply-glut risk gauge that was evaluated here and failed, because the Greek supply axis is a permits flow rather than a stock.'},
+     'desc': 'Greece property compass: momentum × credit, whose four-cell ordering is the strongest of the seven markets tested (ρ=0.60, 6/6 pairs), and a supply-glut risk gauge that is refuted in this market, because the Greek supply axis is a permits flow rather than a stock.'},
 ]
 
 # Markets whose data/copy must always be loaded, regardless of which page is
@@ -246,7 +246,7 @@ def build(page):
             b.append(f'<span class="kpi-badge badge-orange">{dual("Risk gauge · validated on 2 busts","風險警報 · 驗證於兩次崩盤")}</span>')
         elif page_flow_only:
             b.append(f'<span class="kpi-badge badge-orange">{dual("+ report card · supply is a permits flow","+ 體檢表 · 供給為許可流量")}</span>')
-            b.append(f'<span class="kpi-badge badge-orange">{dual("Risk gauge · evaluated here and failed","風險警報 · 在此已評估且未通過")}</span>')
+            b.append(f'<span class="kpi-badge badge-orange">{dual("Risk gauge · refuted in this market","風險警報 · 在此市場已被推翻")}</span>')
         else:
             b.append(f'<span class="kpi-badge badge-orange">{dual("+ report card · no supply series","+ 體檢表 · 無供給數列")}</span>')
             b.append(f'<span class="kpi-badge badge-orange">{dual("Risk gauge · not evaluable here","風險警報 · 此市場無法評估")}</span>')
@@ -305,11 +305,10 @@ def build(page):
         "希臘的該項警示為刻意不顯示：其唯一的供給數列是許可流量，該疊加在其上受測且方向相反，因此當前點位以基礎說明"
         "取代供給過剩環。")
     risk_caveat_en = C['howto']['risk_caveat_en'] + only('gr',
-        " That third crash has since been met, in the hold-out set rather than in the frozen four: Greece's "
-        "2006Q4-2015Q3 loss episode was scored under this same protocol, and the gauge failed it.")
+        " Greece's 2006Q4-2015Q3 loss episode has been scored under this same protocol, in the hold-out set "
+        "rather than the frozen four, and the gauge failed on it.")
     risk_caveat_zh = C['howto']['risk_caveat_zh'] + only('gr',
-        "該次崩盤其後已經遭遇，發生於樣本外市場，而非凍結的四個市場：希臘 2006Q4 至 2015Q3 的虧損期以同一套協定計分，"
-        "本警報未通過。")
+        "希臘 2006Q4 至 2015Q3 的虧損期已以同一套協定計分，屬樣本外市場而非凍結的四個市場，本警報於其上未通過。")
     xc_howto_en = C['howto']['xc_howto_en'] + only('gr',
         " Greece is not one of those 12 markets, so this panel is unavailable for it: every bar below reads n/a "
         "rather than a rank, and that is an absence of data rather than a middling score.")
@@ -411,7 +410,7 @@ def build(page):
 
   <!-- risk gauge -->
   <div class="blk">
-    <h2>{dual("The Risk Gauge — Evaluated Here, and It Failed","風險警報 · 在此市場已評估，未通過") if page_flow_only else dual("The Risk Gauge — a Validated Downside Warning","風險警報 · 已驗證的下檔警示")}</h2>
+    <h2>{dual("The Risk Gauge — Refuted in This Market","風險警報 · 在此市場已被推翻") if page_flow_only else dual("The Risk Gauge — a Validated Downside Warning","風險警報 · 已驗證的下檔警示")}</h2>
     <p class="sub">{dual(C['howto']['risk_howto_en'].format(**GV), C['howto']['risk_howto_zh'].format(**GV))}</p>
     <div class="chartbox rgbox">
       {risk_lights_html()}
@@ -493,11 +492,11 @@ def build(page):
       <li class="warn">{dual(
         f"<b>The risk gauge is real, but thinly tested.</b> Starved-plus-supply-glut quarters carried elevated odds of a 3-year nominal loss (US OR {GV['OR_US_ABS']}×, Japan OR {GV['OR_JP_ABS']}×, pooled OR {GV['MH_ABS']}×) and of landing in a market's own worst quartile (US, Malaysia, Japan; pooled OR {GV['MH_REL']}×) — validated on frozen, pre-registered thresholds, not fit to the data afterward. But the absolute-loss claim rests on essentially two historical busts in this sample: the US 2006-08 crash and Japan's 1990s-2000s crash. A third crash, whenever it comes, is the real out-of-sample test this page hasn't faced yet.",
         f"<b>風險警報是真實的，但驗證樣本很薄。</b>斷炊疊加供給過剩的季度，三年期名目虧損的勝算明顯偏高（美國勝算比{GV['OR_US_ABS']}倍、日本勝算比{GV['OR_JP_ABS']}倍、合併勝算比{GV['MH_ABS']}倍），落入市場自身最差四分之一表現的勝算也偏高（美國、馬來西亞、日本；合併勝算比{GV['MH_REL']}倍）——這是在凍結、預先設定門檻的條件下驗證出來的，不是事後套進資料調出來的。但絕對虧損這項宣稱，基本上只建立在樣本中僅有的兩次歷史崩盤上：美國2006年至2008年的崩盤，以及日本1990年代至2000年代的崩盤。下一次崩盤，不論何時到來，才是這頁尚未面對過的真正樣本外測試。")}</li>
-      <li>{dual('<b>The four-cell return ordering is still descriptive, not a forecast.</b> A separate attempt to validate Fuelled-beats-Starved as a forward-return ranking failed its own pre-registered gates ; the compass panel and the forward-return table above describe the past, they are not a tested prediction of what comes next.',
-        '<b>四格報酬排序仍是描述性的，不是預測。</b>另一次想把「助燃格贏過斷炊格」驗證為前向報酬排序的嘗試，未能通過自己預先凍結的門檻；上方的羅盤面板與前向報酬表描述的是過去，不是經過測試、對未來的預測。')}</li>
+      <li>{dual('<b>The four-cell return ordering is descriptive, not a forecast.</b> Fuelled-beats-Starved as a forward-return ranking does not clear its own pre-registered gates; the compass panel and the forward-return table above describe the past, they are not a tested prediction of what comes next.',
+        '<b>四格報酬排序是描述性的，不是預測。</b>「助燃格贏過斷炊格」作為前向報酬排序，未能通過預先凍結的門檻；上方的羅盤面板與前向報酬表描述的是過去，不是經過測試、對未來的預測。')}</li>
       {(lambda g: f'''<li class="warn">{dual(
-        f"<b>Greece: the gauge finally met a real crash, and failed on it.</b> The bust this page said it was waiting for has arrived in the hold-out set. Greece is the first market outside the frozen four on which the starved-plus-glut classifier could be scored at all: it clears the applicability gate with {g['N_BAD']} matured three-year nominal-loss quarters against a pre-registered minimum of {g['GATE']}. Scored on the frozen thresholds it returned an odds ratio of {g['OR_ABS']}× with precision {g['PREC_ABS']}% and recall {g['RECALL_ABS']}%, missing the entire {g['EP_LEN']}-quarter loss episode of {g['EP_START']} to {g['EP_END']}, while momentum alone returned {g['OR_MOM']}× (precision {g['PREC_MOM']}%, recall {g['RECALL_MOM']}%) and caught it. Requiring a supply glut on top of momentum did not add a filter, it removed a working signal. The diagnosis is specific rather than general: Greece is the only market here whose glut term is a supply FLOW, quarterly dwellings authorised, instead of a stock or absorption measure, and Greek permits collapsed with prices rather than ahead of them. So the overlay is refuted on a flow basis and no warning is published for Greece; on the stock basis used by the other five it stands, now carrying one out-of-sample stratum against it, which pulls the labelled pooled odds ratio from {g['MH_FROZEN']}× to {g['MH_WITH']}×. The four-cell ordering was tested separately in Greece and held at ρ = {g['RHO']}, the strongest of the seven markets.",
-        f"<b>希臘：這套警報終於遇上一次真實崩盤，並且未通過。</b>本頁先前所稱、尚未面對的樣本外考驗，已由希臘提供。希臘是凍結四市場之外，第一個能完整計分「斷炊疊加供給過剩」分類規則的市場：已完成觀測的三年期名目虧損季度為 {g['N_BAD']} 個，高於預先設定的 {g['GATE']} 個門檻。以凍結門檻計分，勝算比為 {g['OR_ABS']} 倍，精確率 {g['PREC_ABS']}%，召回率 {g['RECALL_ABS']}%，完全錯過 {g['EP_START']} 至 {g['EP_END']} 這段長達 {g['EP_LEN']} 季的虧損期；同一份資料上，僅用動能的勝算比為 {g['OR_MOM']} 倍（精確率 {g['PREC_MOM']}%，召回率 {g['RECALL_MOM']}%），且抓到了該段虧損期。在動能之上追加供給過剩條件，並未增加一道篩選，而是消滅了一個有效訊號。此一診斷有明確範圍：希臘是本頁唯一以供給「流量」（季度住宅核發戶數）而非存量或去化指標構成過剩項的市場，而希臘的建照核發是與房價同步崩落，並未領先。因此，在流量基礎上此一疊加已被推翻，希臘不發布任何供給警示；在其餘五個市場所用的存量基礎上，原結論維持，惟已多出一個不利的樣本外分層，使標示為含希臘的合併勝算比由 {g['MH_FROZEN']} 倍降至 {g['MH_WITH']} 倍。四格排序在希臘另行檢定，ρ = {g['RHO']}，為受測七個市場中最強。")}</li>''')(RISKVALS['gr']) if 'gr' in page['markets'] else ''}
+        f"<b>Greece: the gauge is refuted here, on a real crash it missed entirely.</b> Greece is the first market outside the frozen four on which the starved-plus-glut classifier could be scored at all: it clears the applicability gate with {g['N_BAD']} matured three-year nominal-loss quarters against a pre-registered minimum of {g['GATE']}. Scored on the frozen thresholds it returned an odds ratio of {g['OR_ABS']}× with precision {g['PREC_ABS']}% and recall {g['RECALL_ABS']}%, missing the entire {g['EP_LEN']}-quarter loss episode of {g['EP_START']} to {g['EP_END']}, while momentum alone returned {g['OR_MOM']}× (precision {g['PREC_MOM']}%, recall {g['RECALL_MOM']}%) and caught it. Requiring a supply glut on top of momentum did not add a filter, it removed a working signal. The diagnosis is specific rather than general: Greece is the only market here whose glut term is a supply FLOW, quarterly dwellings authorised, instead of a stock or absorption measure, and Greek permits collapsed with prices rather than ahead of them. So the overlay is refuted on a flow basis and no warning is published for Greece; on the stock basis used by the other five it stands, now carrying one out-of-sample stratum against it, which pulls the labelled pooled odds ratio from {g['MH_FROZEN']}× to {g['MH_WITH']}×. The four-cell ordering was tested separately in Greece and held at ρ = {g['RHO']}, the strongest of the seven markets.",
+        f"<b>希臘：這套警報在此市場已被推翻，錯過了一次真實崩盤。</b>希臘是凍結四市場之外，第一個能完整計分「斷炊疊加供給過剩」分類規則的市場：已完成觀測的三年期名目虧損季度為 {g['N_BAD']} 個，高於預先設定的 {g['GATE']} 個門檻。以凍結門檻計分，勝算比為 {g['OR_ABS']} 倍，精確率 {g['PREC_ABS']}%，召回率 {g['RECALL_ABS']}%，完全錯過 {g['EP_START']} 至 {g['EP_END']} 這段長達 {g['EP_LEN']} 季的虧損期；同一份資料上，僅用動能的勝算比為 {g['OR_MOM']} 倍（精確率 {g['PREC_MOM']}%，召回率 {g['RECALL_MOM']}%），且抓到了該段虧損期。在動能之上追加供給過剩條件，並未增加一道篩選，而是消滅了一個有效訊號。此一診斷有明確範圍：希臘是本頁唯一以供給「流量」（季度住宅核發戶數）而非存量或去化指標構成過剩項的市場，而希臘的建照核發是與房價同步崩落，並未領先。因此，在流量基礎上此一疊加已被推翻，希臘不發布任何供給警示；在其餘五個市場所用的存量基礎上，原結論維持，惟已多出一個不利的樣本外分層，使標示為含希臘的合併勝算比由 {g['MH_FROZEN']} 倍降至 {g['MH_WITH']} 倍。四格排序在希臘另行檢定，ρ = {g['RHO']}，為受測七個市場中最強。")}</li>''')(RISKVALS['gr']) if 'gr' in page['markets'] else ''}
       {(f'''<li>{dual("<b>Taiwan: neither claim validated — read its compass as descriptive only.</b> The risk gauge above never caught Taiwan's one recorded loss episode (2013-2015) and fell short of the pass bar on both the absolute-loss and relative-weakness tests; the return-ordering claim fails there too, for the same reason (a short, almost one-directional history). Treat every reading for Taiwan on this page as a record of the past, not a validated signal.",
         "<b>台灣：兩項宣稱都未通過驗證——它的羅盤讀數請只當描述看待。</b>上方的風險警報從未抓到台灣紀錄中唯一一次虧損事件（2013年至2015年），在絕對虧損與相對弱勢兩項測試上都未達通過門檻；報酬排序的宣稱在台灣也因同樣原因（歷史短、且幾乎單向）而失敗。請把這一頁上所有台灣的讀數，都當作對過去的紀錄，而不是已驗證的訊號。")}</li>''') if 'tw' in page['markets'] else ''}
     </ul>
