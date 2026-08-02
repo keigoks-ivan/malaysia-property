@@ -31,6 +31,8 @@
 /ae/macro.html       ← 阿聯：總經 × 房產（四部＋結論篇）
 /tr/report.html      ← 土耳其：伊斯坦堡住宅市場報告（七部、28 圖）
 /tr/macro.html       ← 土耳其：總經 × 房產（四部＋結論篇、15 圖）
+/ph/report.html      ← 菲律賓：馬尼拉住宅市場報告（七部、22 圖；NCR 全域口徑，無分區）
+/ph/macro.html       ← 菲律賓：總經 × 房產（四部＋結論篇、14 圖）
 /gr/report.html      ← 希臘：雅典住宅市場報告（七部、28 圖）
 /gr/macro.html       ← 希臘：總經 × 房產（四部＋結論篇、15 圖）
 /global/visa.html    ← 跨市場：買房換居留（44 套現行制度／24 個確認無途徑／6 套已關閉；資料 data/visa-property.json 內嵌於頁面）

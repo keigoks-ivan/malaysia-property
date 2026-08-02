@@ -57,6 +57,12 @@ var MARKETS = [
     links: [
       { href: '/gr/report', en: 'Athens Report', zh: '雅典報告' },
       { href: '/gr/macro',  en: 'Macro',         zh: '總經' }
+    ] },
+  { k: 'ph', flag: '🇵🇭', en: 'Philippines', zh: '菲律賓', home: '/ph/report',
+    prefixes: ['/ph/'],
+    links: [
+      { href: '/ph/report', en: 'Manila Report', zh: '馬尼拉報告' },
+      { href: '/ph/macro',  en: 'Macro',         zh: '總經' }
     ] }
 ];
 
