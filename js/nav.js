@@ -18,6 +18,11 @@
 'use strict';
 
 var MARKETS = [
+  { k: 'global', flag: '🛂', en: 'Residency by Property', zh: '買房換居留', home: '/global/visa',
+    prefixes: ['/global/'],
+    links: [
+      { href: '/global/visa', en: 'Residency by Property', zh: '買房換居留' }
+    ] },
   { k: 'my', flag: '🇲🇾', en: 'Malaysia', zh: '馬來西亞', home: '/kl-check',
     prefixes: ['/my/', '/kl/', '/kl-check'],
     links: [
@@ -52,11 +57,6 @@ var MARKETS = [
     links: [
       { href: '/gr/report', en: 'Athens Report', zh: '雅典報告' },
       { href: '/gr/macro',  en: 'Macro',         zh: '總經' }
-    ] },
-  { k: 'global', flag: '🌐', en: 'Cross-market', zh: '跨市場', home: '/global/visa',
-    prefixes: ['/global/'],
-    links: [
-      { href: '/global/visa',      en: 'Residency by Property', zh: '買房換居留' }
     ] }
 ];
 

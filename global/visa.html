@@ -137,6 +137,8 @@ body.zh .cmp tr.grp td{letter-spacing:0}
 body.zh .det-grid dt{letter-spacing:0;text-transform:none}
 .det-grid dd{margin:0;color:var(--text-soft)}
 .det-grid dd b{color:var(--navy)}
+.det-grid dd a.mkt-rpt{color:var(--gold-deep);font-weight:700}
+.det-grid dd a.mkt-rpt:hover{text-decoration:underline}
 .det-src{margin:0;padding:0;list-style:none;display:grid;gap:4px}
 .det-src li{font-size:11px;line-height:1.7}
 .det-src a{color:var(--gold-deep);word-break:break-all}
@@ -478,6 +480,18 @@ function mk(id){var el=document.getElementById(id); if(!el) return null; var c=e
 var D = window.VISA_DATA;
 var OC = {citizenship:'#234a86', permanent:'#15803d', renewable:'#d98b2b', not_established:'#a8b3c2'};
 
+/* Programmes with a market-depth report on this site. Only these five
+   jurisdictions (eight programme ids) get a report link in the detail
+   panel — the other 36 programmes have no market report and must not
+   link anywhere. */
+var MARKET_REPORTS = {
+  malaysia: '/my/report',
+  thailand: '/th/report', 'thailand-2': '/th/report',
+  uae: '/ae/report', 'uae-2': '/ae/report',
+  turkey: '/tr/report', 'turkey-2': '/tr/report',
+  greece: '/gr/report'
+};
+
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function money(cur,amt){
   if(amt==null||cur==null) return null;
@@ -508,6 +522,12 @@ function detailPanel(p, zh){
   }
   var h = '<dl class="det-grid">';
   h += row(zh?'制度全名':'Programme', esc(zh?(p.programme_zh||p.programme):p.programme));
+  if(MARKET_REPORTS[p.id]){
+    var rpt = zh
+      ? '<a class="mkt-rpt" href="'+MARKET_REPORTS[p.id]+'">查看'+esc(p.jurisdiction_zh)+'市場報告 →</a>'
+      : '<a class="mkt-rpt" href="'+MARKET_REPORTS[p.id]+'">Read the '+esc(p.jurisdiction)+' market report →</a>';
+    h += row(zh?'房市盡職調查':'Market report', rpt);
+  }
   if(p.min_value.basis) h += row(zh?'門檻適用條件（原文）':'Threshold basis', esc(p.min_value.basis)+tierTag(p.min_value.tier));
   if(p.extra_tiers && p.extra_tiers.length){
     var et = p.extra_tiers.map(function(t){
