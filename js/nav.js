@@ -34,8 +34,9 @@ var MARKETS = [
       { href: '/my/clock',          en: 'Compass',           zh: '羅盤' }
     ] },
   { k: 'th', flag: '🇹🇭', en: 'Thailand', zh: '泰國', home: '/th/report',
-    prefixes: ['/th/'],
+    prefixes: ['/th/', '/th-check'],
     links: [
+      { href: '/th-check',  en: 'Scorecards',     zh: '評分卡',   also: ['/th/SC_'] },
       { href: '/th/report', en: 'Bangkok Report', zh: '曼谷報告' },
       { href: '/th/macro',  en: 'Macro',          zh: '總經' },
       { href: '/th/clock',  en: 'Compass',        zh: '羅盤' }
