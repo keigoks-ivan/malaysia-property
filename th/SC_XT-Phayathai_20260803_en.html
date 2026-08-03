@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XT Phayathai — Bangkok Scorecard | Property Check</title>
+<meta name="description" content="Independent scorecard for XT Phayathai (Sansiri). Thai buyer 5.5 / Foreign buyer 5.4 (T4/T5 — a rare cross-tier split). 10-year hold, professional investor lens. Thailand v1.2 framework. Sources: Hipflat / FazWaz / DDproperty.">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Playfair Display','Noto Serif TC',serif}
+.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}
+.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{font-family:'Playfair Display','Noto Serif TC',serif;font-size:32px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{font-family:'Playfair Display','Noto Serif TC',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}
+.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{font-family:'Playfair Display','Noto Serif TC',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Playfair Display','Noto Serif TC',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Playfair Display','Noto Serif TC',serif}
+.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+.quota-box{background:linear-gradient(135deg,#fef2f2 0%, #fef9ed 100%);border:1px solid #e8c9a0;border-radius:14px;padding:18px 20px;margin-bottom:18px;font-size:12.5px;line-height:1.8;color:var(--text-soft)}
+.quota-box strong{color:var(--navy)}
+.tag{display:inline-block;border-radius:99px;padding:2px 10px;font-weight:700;font-size:11px}
+.tag-ok{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.tag-warn{background:#fef3c7;color:#a16207;border:1px solid #fcd34d}
+.tag-bad{background:#f1efe9;color:#6b7a92;border:1px solid #d9d3c4}
+.tag-unknown{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
+@media (max-width:768px){
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:24px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">TH Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/th-check">← All Scores</a>
+      <a class="lang-link" href="SC_XT-Phayathai_20260803_zh.html">中文</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Phaya Thai / Ratchathewi · Bangkok</span>
+    <span class="sep">◆</span>
+    <span>FREEHOLD CONDOMINIUM</span>
+    <span class="sep">◆</span>
+    <span>As of 2026-08-03</span>
+  </div>
+  <h1 class="proj-name">XT Phayathai</h1>
+  <p class="one-liner">
+    BTS Phaya Thai and the Airport Rail Link share the same interchange station near this project, but on-the-ground verification puts the walk at roughly 600-650 meters — the "130 meters" figure circulating in briefs turns out to be only the first leg of the route, not the total distance. At least 11 comparable projects sit in the same submarket, the project's own average asking price undercuts the district average, and the developer's financial figures don't reconcile across sources — three compounding unknowns for a 10-year exit. Foreign Quota units list at a double-digit premium over Thai Quota units for the same unit type, further compressing foreign-buyer net returns.
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇹🇭</span>Thai Buyer</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">5.5</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Right on the line, not a comfortable T4</span>
+      </div>
+      <div class="score-note">The total score lands exactly on the T4/T5 boundary (5.5) — the dual-rail commute is real, but an oversupplied comp set, a negative mortgage-vs-yield spread, and a 21% asking-to-transacted discount all point the same cautious direction; treat this as a boundary case, not a solid T4</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>Foreign Buyer</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.4</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T5">T5 · Clearly higher-risk, not a preferred pick</span>
+      </div>
+      <div class="score-note">Foreign-quota utilisation is undisclosed anywhere (the "unverified" tier); Foreign Quota transactions/listings run roughly 10%+ above Thai Quota for the identical unit type, meaning foreign buyers pay more for the same asset and end up with a wider net-yield-vs-opportunity-cost gap; this is the first case in this pilot pair where Thai and foreign scores land in different tiers</div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ Scoring Framework</span>
+  <h2 class="section-title">Seven-Dimension Scoring</h2>
+  <p class="section-sub">A 10-year professional-investor lens, Thailand framework (th-property-scorecard-v1 v1.2). Scarcity & location moat 20% · Connectivity 12% · Capital appreciation momentum 15% · Entry valuation discipline 13% · Holding cashflow 12% · Exit & next-buyer pool 18% · Developer & handover 10%. Cashflow and exit are scored separately for Thai vs foreign buyers; the other five dimensions share a single score.</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+<svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="Seven-dimension radar chart">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (Thai): [6.0, 6.0, 3.7, 5.0, 4.4, 6.4, 7.0] -->
+  <polygon points="140.0,72.8 192.6,98.1 180.4,149.2 164.3,190.5 118.6,184.4 70.1,156.0 78.7,91.1" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="72.8" r="3.5"/>
+    <circle cx="192.6" cy="98.1" r="3.5"/>
+    <circle cx="180.4" cy="149.2" r="3.5"/>
+    <circle cx="164.3" cy="190.5" r="3.5"/>
+    <circle cx="118.6" cy="184.4" r="3.5"/>
+    <circle cx="70.1" cy="156.0" r="3.5"/>
+    <circle cx="78.7" cy="91.1" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [6.0, 6.0, 3.7, 5.0, 4.1, 5.9, 7.0] -->
+  <polygon points="140.0,72.8 192.6,98.1 180.4,149.2 164.3,190.5 120.1,181.4 75.6,154.7 78.7,91.1" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="72.8" r="3.0"/>
+    <circle cx="192.6" cy="98.1" r="3.0"/>
+    <circle cx="180.4" cy="149.2" r="3.0"/>
+    <circle cx="164.3" cy="190.5" r="3.0"/>
+    <circle cx="120.1" cy="181.4" r="3.0"/>
+    <circle cx="75.6" cy="154.7" r="3.0"/>
+    <circle cx="78.7" cy="91.1" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Inter', sans-serif">
+    <text x="140" y="12" text-anchor="middle">Scarcity &amp; Location</text>
+    <text x="239" y="59" text-anchor="start">Connectivity</text>
+    <text x="263" y="168" text-anchor="start">Appreciation</text>
+    <text x="195" y="262" text-anchor="start">Valuation</text>
+    <text x="85" y="262" text-anchor="end">Cashflow</text>
+    <text x="17" y="168" text-anchor="end">Exit</text>
+    <text x="41" y="59" text-anchor="end">Developer</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>Thai 5.5</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>Foreign 5.4</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Scarcity &amp; Location Moat</span><span class="dim-weight">20% · Same for both</span></div>
+          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">6.0</span></span></div>
+        </div>
+        <p class="dim-rsn">Phaya Thai / Ratchathewi district baseline 6.5. Three-layer audit: land layer ✗ (the submarket keeps absorbing new supply — Baan Ratchathewi, expected to complete April 2027, is one confirmed example, not a land-capped location); product layer ✗ (at least 11 comparable projects sit in the same submarket — Supalai Elite Phayathai, The Room Phayathai, Noble Revent, The Extro Phayathai-Rangnam, Ideo Mobi Rangnam, Ideo Q Victory, Noble House Phayathai, Hampton Residence/Park Origin Phayathai, Rhythm Rangnam, M Phayathai, Payatai Plaza — a denser comp set than Life Asoke Rama 9's six); regulatory layer freehold ✓ but quota utilisation undisclosed, so no structural-scarcity credit applies. <strong>The effective-scarcity test clearly fails</strong>: Hipflat shows this project's own average asking price at USD 4,779/sqm, roughly <strong>4.4% below</strong> the Ratchathewi district average of USD 4,999/sqm — not merely "no clear premium" as in the Life Asoke case, but an outright discount, a more decisive disproof of scarcity. Net: 6.5 baseline − 0.5 (high replicability, better-evidenced than Life Asoke) = 6.0.</p>
+        <p class="dim-data">Three-layer audit: land ✗ / product ✗ (at least 11 comparable projects, denser than Life Asoke's 6) / regulatory (freehold) ✓ but quota unknown · Project average USD 4,779/sqm sits ~4.4% below the Ratchathewi district average of USD 4,999/sqm (a discount, not a premium)</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Connectivity</span><span class="dim-weight">12% · Same for both</span></div>
+          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">6.0</span></span></div>
+        </div>
+        <p class="dim-rsn"><strong>The walking-distance check is the single most important correction in this card.</strong> The "130 meters" figure circulating elsewhere turns out to be the <strong>first leg only</strong> of FazWaz's own turn-by-turn directions (130m along Phaya Thai Road from the station exit), not the total distance to the project. Adding the full route (130m + a right turn onto Si Ayutthaya Road, 290m + a further 190m) gives <strong>610 meters</strong>, closely matching an independent Google Maps walking-directions query (~600 meters / 9 minutes, via the same Si Ayutthaya Road), and corroborated by multiple 2026 rental listings quoting "600-700 meters." A separate FazWaz auto-generated FAQ claims "1.2 km," contradicting FazWaz's own turn-by-turn text — judged an algorithmic error and discarded. <strong>Final determination: approximately 600-650 meters, sitting right at the edge of Tier 6 (≤600m or shuttle needed); Tier 6 baseline of 6.0 applies, taken conservatively given the boundary position.</strong> No fully covered skywalk from the station entrance to the building was confirmed (its absence from the developer's own marketing copy — where such a feature would normally be highlighted — is suggestive evidence against it); no top-3 international hospital (Bumrungrad/Samitivej/BNH) confirmed within 2km — Phyathai 1 Hospital sits almost adjacent (~100-150m) but is a private, mid-tier hospital outside the framework's named list, Samitivej is confirmed at 2.8km (beyond the bonus threshold), and Bumrungrad/BNH "easy reach" claims are unverified agent marketing language; no walkable international school was found (only local Thai schools); Siam Square/Siam Center/Central World are 1-2 BTS stops away, not a direct walk. No bonus item applies. Net: 6.0.</p>
+        <p class="dim-data">BTS Phaya Thai + Airport Rail Link, same station, ~600-650m walk (corrected from the circulating 130m figure) · Phyathai 1 Hospital ~100-150m (private mid-tier, not one of the framework's top-3 international hospitals) · Ramathibodi / Rajavithi are nearby public hospitals (not scored) · Samitivej confirmed at 2.8km (beyond threshold) · No walkable international school found · Covered skywalk unconfirmed, likely absent</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Capital Appreciation Momentum</span><span class="dim-weight">15% · Same for both</span></div>
+          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">3.7</span></span></div>
+        </div>
+        <p class="dim-rsn">Phaya Thai / Ratchathewi is neither CBD-core-scarce (Langsuan/Thonglor/Asoke) nor New CBD (Rama 9), so it falls into the "generic Bangkok condo" baseline of 4.0. At least one confirmed nearby competing project (Baan Ratchathewi, expected completion April 2027) represents cyclical supply pressure, −0.3. <strong>No project-specific Hipflat price-trend percentage (YoY/YTD) could be found for this project</strong>, unlike the Life Asoke case — only citywide context is available: national price index 1Q2026 +1.26% y/y (Bangkok itself −0.18%), and a broad Greater Bangkok unsold-stock overhang of roughly 350,000 units (Knight Frank, a 5-6 year clearance horizon) — this backdrop is already embedded in the low "generic Bangkok condo" baseline and not double-counted. Net: 4.0 − 0.3 = 3.7.</p>
+        <p class="dim-data">Generic-Bangkok-condo baseline 4.0 · Confirmed nearby supply: Baan Ratchathewi (expected completion Apr 2027) · Project-specific price trend: not found (unlike Life Asoke, which had a concrete Hipflat YoY/YTD figure) · National price index 1Q2026 +1.26% y/y (Bangkok −0.18%) · Greater Bangkok unsold stock ~350,000 units, 5-6yr clearance (Knight Frank, ~Jul 2026)</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Entry Valuation Discipline</span><span class="dim-weight">13% · Same for both</span></div>
+          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">5.0</span></span></div>
+        </div>
+        <p class="dim-rsn">Representative unit (1BR M, 42 sqm) currently asks: <strong>Thai Quota ~THB 140,500/sqm, Foreign Quota ~THB 155,000/sqm</strong> (a same-unit-type quota premium of roughly 10.3% — this is the first project in this framework's pilot run where quota-split <strong>asking and transacted</strong> data are both actually available, an improvement in confidence over the Life Asoke case). Anchor: Hipflat's "Previous Sales" module shows 4 confirmed transactions (June 2021 to February 2026), averaging <strong>THB 133,000/sqm</strong> (Hipflat's own statistic). Against this transacted average, the blended Thai/Foreign Quota asking price (~THB 147,750/sqm) runs a premium of roughly <strong>+11.1%</strong>, landing in the "+10-20%" scoring band (~5.0). <strong>Confidence: medium</strong> — better than Life Asoke's "low" (there is genuine quota-split transacted evidence here), but the n=4 sample remains thin, and the most recent transaction (Feb 2026, Foreign Quota, THB 122,000/sqm) sits noticeably below the 2023 Thai Quota transaction (THB 150,487/sqm), suggesting recent softening worth monitoring. No original launch price could be found for this project, so a long-run appreciation calculation (unlike Life Asoke's 2017-launch comparison) is not possible here.</p>
+        <p class="dim-data">Representative 1BR M, 42 sqm: Thai Quota asking ~140,500/sqm, Foreign Quota asking ~155,000/sqm (~10.3% quota premium) · Hipflat transacted average 133,000/sqm (n=4, 2021-2026) · Asking premium over transacted ~+11.1% (confidence: medium) · Most recent transaction (Feb 2026, Foreign Quota) at 122,000/sqm below the 2023 Thai Quota transaction of 150,487/sqm — a softening signal · Original launch price: not found</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Holding Cashflow</span><span class="dim-weight">12% · Local vs Foreign</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">TH</span><span class="val local">4.4</span></span>
+            <span class="dim-score"><span class="lbl">FG</span><span class="val foreign">4.1</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">The representative 1BR M (42 sqm) rents for roughly THB 25,000/month (derived from Hipflat's project-average USD 18/sqm/month, converted at 33.65). For a <strong>Thai buyer</strong>, using the Thai Quota purchase price (THB 5.9m, 140,500/sqm) as the base, gross yield runs ~5.17%; against a mortgage rate of ~6.5% (Bangkok Bank/ICBC, reused from the same-period Life Asoke verification), the spread is <strong>−1.33pp</strong>, short of the positive-spread 6-point baseline. For a <strong>foreign buyer</strong>, with no mortgage available, the dimension is scored as "net yield vs opportunity cost": using the Foreign Quota purchase price (THB 6.51m, 155,000/sqm — the same unit but a higher entry cost due to the quota premium), gross yield is ~4.69%, and after 15% non-resident withholding, net yield is ~<strong>3.99%</strong>, a gap of <strong>−1.76pp</strong> below opportunity-cost benchmark two (USD 5.75%/year = US 10Y 4.74%-4.75% + 100bp, verified 2026-07-31, reused from the same-period Life Asoke figure) — clearly below benchmark, and a wider gap than Life Asoke's −1.38pp. <strong>The Foreign Quota premium is the direct driver of that wider gap: for the identical unit, the foreign buyer pays roughly 10% more to enter, collects exactly the same rent, and therefore ends up with a structurally lower net yield</strong> — an effect this project can quantify precisely because quota-split data actually exists here, unlike Life Asoke.</p>
+        <p class="dim-data">Representative 1BR M, 42 sqm, rent ~THB 25,000/mo (from Hipflat's project-average USD18/sqm/mo) · Thai buyer: gross yield 5.17% (Thai Quota price base) vs mortgage rate 6.5% = spread −1.33pp · Foreign buyer: gross yield 4.69% (Foreign Quota price base, same unit at a 10.3% premium), net yield 3.99% (after 15% non-resident withholding) vs opportunity-cost benchmark two 5.75% (USD, verified 2026-07-31) = gap −1.76pp</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Exit &amp; Next-Buyer Pool</span><span class="dim-weight">18% · Local vs Foreign</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">TH</span><span class="val local">6.4</span></span>
+            <span class="dim-score"><span class="lbl">FG</span><span class="val foreign">5.9</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>Step zero — quota check: this project's foreign-quota utilisation is not disclosed anywhere, placing it in the "quota status unverified" tier</strong> (−0.4 to −0.6, midpoint −0.5 taken). One indirect observation is worth recording but <strong>not used to move the adjustment</strong>: among active listings, a notably higher share is tagged Foreign Quota (roughly 20 of ~29 sampled, versus only 4 Thai Quota) — but this reflects only the current listing-supply mix, not official registered-ownership data, and cannot be used to infer whether the quota is ample or tight; the midpoint (−0.5) is retained rather than shifted, to avoid mistaking listing-sample noise for quota information. Thai buyer: freehold baseline 7.0; quantum THB 5.9m falls in the 4-10m band (no adjustment); turnover — Hipflat's "Previous Sales" shows only 4 transactions spanning June 2021 to February 2026, a span of nearly 5 years with too few data points and clearly a platform-curated subset rather than a complete record (far thinner than Life Asoke's 108), so no annualised turnover figure can be reasonably derived and per the rule this is <strong>excluded from scoring (neither added nor subtracted)</strong>; listing ratio — FazWaz's 82 listings against its own 1,435-unit count give ~5.7%, while Hipflat's 150 listings against its own 605-unit count give ~24.8%, a 4.4x variance (exceeding the 2x "range only" threshold, compounded by the unresolved total-unit-count conflict itself), so per the rule a fixed conservative −0.1 applies rather than a midpoint estimate; asking-to-transacted discount — Hipflat's own aggregate statistics state the project sells "21% below original asking price on average, with an average of 273 days on market," an official platform aggregate (not this card's own pairwise matching), medium confidence, and 21% exceeds the framework's 15% threshold, so −0.3 applies; nationwide resale-listing growth of 34.2% is a systemic drag, −0.2. Net: 7.0 − 0.1 − 0.3 − 0.2 = 6.4. Foreign buyer: quota unverified −0.5; <strong>the visa threshold is scored only as a binary flag</strong> — the representative unit at THB 6.51m sits well above the THB 3m line, so 0 adjustment; the MOTS certificate route (via TLS) is workable; the exit price sits in the THB 3-10m sweet spot, +0.3; nationwide foreign transfers fell 17.3% y/y (REIC projecting a further 20% decline in 2026), −0.3; this project is not on the "active foreign resale corridor" list (Sukhumvit core, Thonglor, etc.), so no bonus applies. Net: 6.4 − 0.5 + 0 + 0.3 − 0.3 = 5.9.</p>
+        <p class="dim-data">🔒 Foreign-quota utilisation: NOT VERIFIED (midpoint −0.5) · Active listings skew notably toward Foreign Quota tags (~20/29), noted qualitatively only, not used to adjust the quota tier · Visa threshold: THB 6.51m ✓ well above THB 3m (binary flag, not scored) · Quantum: Thai monthly-income threshold ~THB 82,600 (price × 1.4%, vs Bangkok average household income THB 39,100 — ~2.11x, higher than Life Asoke's 1.54x) · Turnover rate: N/A (only 4 transactions, too thin to score) · Listing ratio range 5.7%-24.8% (4.4x source variance, exceeding the 2x threshold, compounded by the total-unit-count conflict) · Asking-to-transacted discount ~−21% (Hipflat's official aggregate statistic, average 273 days on market)</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Developer &amp; Handover</span><span class="dim-weight">10% · Same for both</span></div>
+          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">7.0</span></span></div>
+        </div>
+        <p class="dim-rsn">Sansiri Public Co., Ltd. (SET-listed) — the company itself claims a cumulative 299 projects / 104,728 units, one of Thailand's largest integrated developers (a company-wide marketing statistic, not project-specific evidence). <strong>Two mutually inconsistent sets of 1Q2026 figures</strong> turned up in this search (from different Sansiri investor-relations page fragments, with revenue/net profit/total-assets numbers that don't reconcile), and Sansiri's own IR page could not be directly accessed this time either — listed as "not verified." Broker Finansia Syrus Securities (2026-07-24) forecasts 2Q26 net profit of THB 925m (+7% q-q but <strong>−24% y-y</strong>) — a forecast, not reported actuals, but directionally pointing to weaker profitability, treated with appropriate caution. <strong>Credit rating: no current TRIS Rating for Sansiri could be found</strong>, unlike the Life Asoke case where AP Thailand's A/Stable rating was directly citable. Compliance: secondary marketing material confirms this project holds EIA approval, consistent with its completed, occupied status; no Ashton-Asoke-style permit-revocation risk was found. One unverified individual-case signal did surface — social media content from a Thai property law firm referencing a "3-unit deposit refund" dispute tied to this project, with cause and outcome both unconfirmed, possibly an isolated buyer dispute rather than a systemic issue; <strong>not scored, but flagged as an item for buyers to verify independently</strong>. SET-listed large-developer baseline 7.5-8.0; given the unverified credit rating (data-gap discount −0.3) and the uncertainty from conflicting financials plus a forecast profit decline (−0.2), net: 7.5 − 0.3 − 0.2 = 7.0.</p>
+        <p class="dim-data">SET-listed, company scale 299 projects / 104,728 units (company-wide, not project-specific) · 1Q2026 financials: two inconsistent source sets, could not be reconciled (not verified) · Finansia Syrus forecasts 2Q26F net profit THB 925m, +7% q-q / −24% y-y (forecast, not actuals) · TRIS Rating: current rating not found (not verified) · EIA: approved (confirmed via secondary source) · No building-permit/EIA dispute found for this project · One unverified deposit-refund dispute signal (not scored, flagged for buyer follow-up)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ Key Facts</span>
+  <h2 class="section-title">Key Data</h2>
+  <p class="section-sub">Representative unit: <strong>42 sqm 1BR M, mid-floor</strong>, ~THB 5,900,000 for Thai Quota / ~THB 6,510,000 for Foreign Quota (≈ USD 175,400-193,500 / MYR 712,700-785,900 at THB/USD 33.65, USD/MYR 4.06, July 2026 — see th/report.html). The Thailand methodology uses 1BR rather than 2BR as the cross-project representative unit type; this project has no distinct official Studio size bracket, so the 1BR M range (40.50-49.75 sqm) is used, with a median of approximately 42 sqm.</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">Project Basics</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">Developer</td><td class="kv-val">Sansiri Public Co., Ltd. (SET: SIRI)<span class="kv-src">FazWaz / Hipflat; company-wide scale 299 projects / 104,728 units</span></td></tr>
+          <tr><td class="kv-label">Tenure</td><td class="kv-val">Freehold (standard 49% foreign quota)<span class="kv-src">DDproperty / Golden Emperor / Rumavi / Keller Henson, consistent across sources</span></td></tr>
+          <tr><td class="kv-label">Scale</td><td class="kv-val">~4,800 sqm (3 rai) · 2 towers (Tower A 40F, Tower B 37F, one source says 35F — not fully reconciled)<span class="kv-src">FazWaz; total unit count is <strong>disputed</strong>: FazWaz states 1,435 units / Hipflat states 605 units (its own body text says 589, an internal inconsistency), a 2.4x gap that could not be resolved — this card presents both denominators wherever unit-count math is involved</span></td></tr>
+          <tr><td class="kv-label">Unit mix</td><td class="kv-val">1BR S 25.25-33.75 sqm · 1BR M 40.50-49.75 sqm · 2BR S 61.00-74.75 sqm · 2BR M 82.25-101.00 sqm<span class="kv-src">FazWaz's official unit-type table; no distinct official Studio bracket — a small number of ~42sqm listings are tagged "Studio" on the market, likely a mislabeled open-plan 1BR</span></td></tr>
+          <tr><td class="kv-label">Representative price</td><td class="kv-val">42 sqm 1BR M, mid-floor: Thai Quota ≈THB 5.9m (140,500/sqm) / Foreign Quota ≈THB 6.51m (155,000/sqm)<span class="kv-src">FazWaz live listings, quota-split pricing; this is the first project in this framework's pilot run with both quota-split asking and transacted data</span></td></tr>
+          <tr><td class="kv-label">Completion</td><td class="kv-val">Aug 2022 (structural) / marketing copy elsewhere states 2023<span class="kv-src">FazWaz banner vs body text disagree; Golden Emperor states "2023 Q1"; this card uses the conservative range "2022-2023"</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">Location &amp; Connectivity</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">BTS (existing)</td><td class="kv-val">BTS Phaya Thai station, ~600-650m (corrected — not the circulating 130m figure)<span class="kv-src">FazWaz turn-by-turn directions summing to 610m, corroborated by an independent Google Maps query of 600m/9min — see the full walking-distance investigation in the seven dimensions above</span></td></tr>
+          <tr><td class="kv-label">Other rail</td><td class="kv-val">Airport Rail Link Phaya Thai station, same station complex as BTS, identical walking distance<span class="kv-src">Multiple sources confirm this is a genuine BTS/ARL interchange</span></td></tr>
+          <tr><td class="kv-label">Medical</td><td class="kv-val">Phyathai 1 Hospital ~100-150m (private, mid-tier, not one of the framework's top-3 international hospitals); Ramathibodi / Rajavithi are nearby public hospitals (not scored); Samitivej confirmed at 2.8km; Bumrungrad/BNH "easy reach" claims unverified<span class="kv-src">FazWaz / DDproperty / Trip.com / resident reviews / Facebook rental listings</span></td></tr>
+          <tr><td class="kv-label">International schools</td><td class="kv-val">No walkable international school found (only local Thai schools, e.g. Sri Ayutthaya PTA School)<span class="kv-src">Multiple searches yielded no confirmation, inconsistent with the "medical/education cluster" positioning suggested in the brief</span></td></tr>
+          <tr><td class="kv-label">Nearby comps</td><td class="kv-val">At least 11 (Supalai Elite Phayathai / The Room Phayathai / Noble Revent / The Extro Phayathai-Rangnam / Ideo Mobi Rangnam / Ideo Q Victory / Noble House Phayathai / Hampton Residence(Park Origin Phayathai) / Rhythm Rangnam / M Phayathai / Payatai Plaza)<span class="kv-src">FazWaz / Hipflat "Projects Nearby" modules</span></td></tr>
+          <tr><td class="kv-label">District average</td><td class="kv-val">Ratchathewi ~USD 4,999/sqm (≈THB 168,200/sqm); this project's own average USD 4,779/sqm (≈THB 160,800/sqm), <strong>~4.4% below</strong> the district average<span class="kv-src">Hipflat market statistics panel</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="assump-box" style="margin-top:18px">
+    <strong>⚠️ Valuation and pricing transparency note:</strong> The valuation dimension (13%) is anchored to "same location / same quota category <strong>actually transacted</strong> median THB/sqm." <strong>Confidence for this project: medium</strong> — unlike Life Asoke, quota-split asking and transacted data were both actually found on Hipflat here, the most complete quota-split evidence obtained in this pilot so far; however the transacted sample is only 4 deals (2021-2026), and the most recent one (Feb 2026, Foreign Quota, 122,000/sqm) sits well below the prior Thai Quota transaction (2023, 150,487/sqm), raising a possible recent-softening concern. Current asking (Thai Quota 140,500/sqm, Foreign Quota 155,000/sqm) runs roughly +11.1% above the Hipflat transacted average (133,000/sqm), not a clear discount — the valuation score (5.0) reflects this neutral-to-cautious read. Buyers should request recent same-unit-type, same-quota-category transaction evidence from an agent and confirm the quota category and remaining allocation of the specific unit in writing.
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:26%">Item</th>
+        <th class="local">🇹🇭 Thai Buyer</th>
+        <th class="foreign">🌏 Foreign Buyer</th>
+        <th style="width:18%">Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Transfer fee</td><td class="num">2% (usually split buyer/seller)<br><small style="color:var(--muted)">Buyer's share ~1%</small></td><td class="num">2% (same, no foreign penalty)</td><td><small>Land Department</small></td></tr>
+      <tr><td>Source-of-funds requirement</td><td class="num">None</td><td class="num"><strong>Must remit foreign currency from abroad</strong> and obtain an FET certificate — without it, registration and visa applications cannot proceed</td><td><small>Land Department / BOT</small></td></tr>
+      <tr><td>Purchase structure</td><td class="num">Mortgage, ~80% LTV (est.)</td><td class="num"><strong>Almost no THB mortgage available</strong>, structurally all-cash; a few foreign-currency channels (UOB Thailand/ICBC Thai/MBK Guarantee) at 6-8%, lower LTV</td><td><small>Banks / BOT</small></td></tr>
+      <tr><td>Mortgage rate</td><td class="num">~6.5%<br><small style="color:var(--muted)">Bangkok Bank/ICBC estimated midpoint, reused from the same-period Life Asoke card</small></td><td class="num">Not applicable (all-cash) or foreign-currency channels 6-8%</td><td><small>Bank rate sheets</small></td></tr>
+      <tr><td>Gross rental yield</td><td class="num">~5.2% (Thai Quota price base)</td><td class="num">~4.7% (Foreign Quota price base, same rent but higher entry cost)</td><td><small>Hipflat project average, converted</small></td></tr>
+      <tr><td>Sell-side tax, held &lt;5yrs</td><td class="num">Specific Business Tax 3.3%</td><td class="num">3.3% (same)</td><td><small>Revenue Dept./Land Dept.</small></td></tr>
+      <tr><td>Sell-side tax, held ≥5yrs</td><td class="num">Stamp duty 0.5%<br><small style="color:var(--muted)">Applies under this card's 10-year hold scenario</small></td><td class="num">0.5% (same)</td><td><small>Revenue Department</small></td></tr>
+      <tr><td>Rental income tax</td><td class="num">Progressive personal income<br><small style="color:var(--muted)">Estimated effective rate ~10.5%</small></td><td class="num">15% withholding (non-resident)<br><small style="color:var(--muted)">Whether this is a final tax could not be fully verified</small></td><td><small>Revenue Department</small></td></tr>
+      <tr><td>Foreign quota</td><td class="num">Not applicable</td><td class="num">≤49% of building (Condominium Act §19bis)<br><strong style="color:var(--warn-text)">Utilisation at this project: NOT VERIFIED</strong></td><td><small>Land Dept. / Condominium Act</small></td></tr>
+      <tr><td>Visa/residency threshold<br><small style="color:var(--muted)">Binary eligibility flag, not scored</small></td><td class="num">Not applicable</td><td class="num">THB 3m + MOTS / THB 10m no-certificate track<br><small style="color:var(--muted)">Representative unit THB 6.51m (Foreign Quota) ✓ well above THB 3m, not a boundary case</small></td><td><small>Immigration Bureau Orders 237/238-2568</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ Economics</span>
+  <h2 class="section-title">10-Year Total Cost of Ownership</h2>
+  <p class="section-sub">The Thai-buyer column is based on <strong>42 sqm 1BR M, mid-floor, Thai Quota, THB 5,900,000</strong>; the foreign-buyer column is based on the <strong>same unit type, Foreign Quota, THB 6,510,000</strong> — <strong>the two purchase prices genuinely differ because of a confirmed quota premium (~10.3%), not an assumption</strong>, a methodological difference from the Life Asoke card (which had no quota-split data and was forced to use one price for both) and arguably closer to the real market. Thai buyers also use ~80% mortgage leverage while foreign buyers are structurally all-cash, so absolute amounts shouldn't be compared directly — read alongside the rough annualised return figures below.</p>
+
+  <div class="assump-box">
+    <strong>Fixed assumptions:</strong>
+    Thai buyer <strong>42 sqm 1BR M (Thai Quota) @ THB 5,900,000</strong> / foreign buyer <strong>same unit (Foreign Quota) @ THB 6,510,000</strong> · 10-year hold · rent THB 25,000/month Y1 (same physical unit, rent doesn't vary by buyer's quota category), 3%/year growth (an estimated assumption, not a directly verified figure) · 1 month/year vacancy ·
+    management fee ~THB 55/sqm/month (estimated, not individually verified, reusing the same estimation approach as the Life Asoke card) · Thai mortgage 80% LTV, 6.5%, 30yr · foreign buyer 100% cash (structurally unleveraged) · opportunity-cost benchmark two (foreign-buyer scenario, USD, a cross-border-buyer-neutral reference not assuming any home currency) 5.75%/year = US 10Y 4.74%-4.75% (2026-07-31) + 100bp, cross-currency comparison with no FX adjustment · opportunity-cost benchmark one (Thai-buyer reference, THB) 3.0%/year = Thailand 10Y government bond yield ~2.0% (early July 2026, Tradingeconomics) + 100bp (both benchmarks reused from the same-period Life Asoke verification, within the 6-month re-check window) ·
+    sell-side tax follows the holding period (this 10-year hold scenario qualifies for the 0.5% stamp duty rather than the 3.3% Specific Business Tax) + personal income withholding tax (estimated at ~4%, a simplified approximation of the progressive assessed-value/holding-year formula, not itemised precisely). All amounts rounded to the nearest thousand.
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th class="local">🇹🇭 Thai (THB)</th>
+        <th class="foreign">🌏 Foreign (THB)</th>
+        <th>Diff (THB)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>Purchase costs</td><td></td><td></td><td></td></tr>
+      <tr><td>Down payment / full amount</td><td>1,180,000</td><td>6,510,000</td><td>+5,330,000</td></tr>
+      <tr><td>Transfer fee (buyer's share)</td><td>59,000</td><td>65,000</td><td>+6,000</td></tr>
+      <tr><td>Legal/registration (est.)</td><td>59,000</td><td>65,000</td><td>+6,000</td></tr>
+      <tr><td>FET remittance/agent fee (est.)</td><td>—</td><td>5,000</td><td>+5,000</td></tr>
+      <tr class="sum"><td>Purchase subtotal</td><td>1,298,000</td><td>6,645,000</td><td>+5,347,000</td></tr>
+
+      <tr class="cat"><td>Holding costs (10yr cumulative)</td><td></td><td></td><td></td></tr>
+      <tr><td>Total mortgage payments (P+I)</td><td>3,580,000</td><td>—</td><td>−3,580,000</td></tr>
+      <tr><td>Management fee (est.)</td><td>277,000</td><td>277,000</td><td>0</td></tr>
+      <tr><td>Property tax (est.)</td><td>41,000</td><td>45,000</td><td>+4,000</td></tr>
+      <tr><td>Insurance (est.)</td><td>27,000</td><td>30,000</td><td>+3,000</td></tr>
+      <tr class="sum"><td>Holding subtotal</td><td>3,925,000</td><td>352,000</td><td>−3,573,000</td></tr>
+
+      <tr class="cat"><td>Rental income (10yr cumulative, THB 25,000/mo Y1, 3%/yr growth, estimated assumption)</td><td></td><td></td><td></td></tr>
+      <tr><td>Gross rental income</td><td>3,153,000</td><td>3,153,000</td><td>0</td></tr>
+      <tr><td>Rental income tax</td><td>330,000</td><td>473,000</td><td>+143,000</td></tr>
+      <tr class="sum"><td>Net rent (after tax)</td><td>2,823,000</td><td>2,680,000</td><td>−143,000</td></tr>
+
+      <tr class="cat"><td>Sell-side costs (Year 10, 3%/yr scenario)</td><td></td><td></td><td></td></tr>
+      <tr><td>Exit price (3%/yr, 10yr)</td><td>7,929,000</td><td>8,749,000</td><td>+820,000</td></tr>
+      <tr><td>Transfer fee (seller's share)</td><td>79,000</td><td>87,000</td><td>+8,000</td></tr>
+      <tr><td>Stamp duty (0.5%, 10-year hold)</td><td>40,000</td><td>44,000</td><td>+4,000</td></tr>
+      <tr><td>Personal income withholding (est. ~4%)</td><td>317,000</td><td>350,000</td><td>+33,000</td></tr>
+      <tr><td>Remaining loan balance (after 10yr)</td><td>4,002,000</td><td>—</td><td>−4,002,000</td></tr>
+
+      <tr class="cat"><td>10-year net P&amp;L (by price-appreciation scenario, each on its own purchase price)</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0% appreciation</td><td>−827,000</td><td>+1,835,000</td><td>+2,662,000</td></tr>
+      <tr class="scenario"><td>3%/yr appreciation (base)</td><td>+1,091,000</td><td>+3,951,000</td><td>+2,860,000</td></tr>
+      <tr class="scenario"><td>5%/yr appreciation</td><td>+2,681,000</td><td>+5,704,000</td><td>+3,023,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    <strong>Unlike the Life Asoke card, the diff column here is not constant across scenarios</strong>: Life Asoke used the same purchase price for both buyer types, so the three-scenario diff was a fixed number; here the two purchase prices genuinely differ (quota premium), and each grows off its own base, so the diff drifts slightly across scenarios (+2.66m to +3.02m). <strong>The absolute-dollar gap is mostly a function of capital structure and purchase-price base, not tax policy</strong>: the foreign buyer's larger net P&amp;L reflects an all-cash capital base roughly 5-6x larger (THB 6.65m vs the Thai buyer's own THB 1.30m out of pocket), not "foreigners come out ahead." Converting to <strong>rough annualised returns</strong> is more comparable: the Thai buyer (80% leverage, mortgage rate 6.5% above gross yield 5.2%, negative-spread drag) runs roughly <strong>1-1.5%/year</strong> in the base case, slightly below Life Asoke's 1.5-2%; the foreign buyer (unleveraged all-cash, but the Foreign Quota premium inflates the entry cost) runs roughly <strong>3.5-4%/year</strong>, also slightly below Life Asoke's 4-5%. Both run lower mainly because this project's gross yield (4.5-5.2%) is itself below Life Asoke's 5.1%, with the foreign side further compressed by the quota-premium effect. (IRR figures are a simplified annuity-method estimate, not a year-by-year cashflow model.)
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ Exit Reality Check</span>
+  <h2 class="section-title">Exit Reality Check</h2>
+  <p class="section-sub">A 10-year hold's return is only real on the day it's sold. Data confidence for this project: medium-low (several key figures are unverified or conflict across sources, flagged item by item).</p>
+
+  <!-- 5A Scarcity audit -->
+  <div style="background:var(--navy-soft);border:1px solid #c7d5e8;border-radius:14px;padding:20px 22px;margin-bottom:18px">
+    <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:14px">5A · Scarcity Audit (three supply-side layers, incl. quota)</div>
+    <div style="display:flex;flex-direction:column;gap:12px;font-size:12.5px;line-height:1.75;color:var(--text-soft)">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <span class="tag tag-bad">✗ Land layer</span>
+        <span>Phaya Thai / Ratchathewi keeps absorbing new supply nearby; the confirmed Baan Ratchathewi (expected completion April 2027) is one example, not a land-capped location.</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <span class="tag tag-bad">✗ Product layer</span>
+        <span>At least 11 comparable projects sit in the same submarket (see Block 3), extremely high replicability, denser than Life Asoke Rama 9's 6 comparables.</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <span class="tag tag-ok">✓ Regulatory layer (partial)</span>
+        <span>Full freehold ownership confirmed; but the actual utilisation of the 49% foreign quota is undisclosed, so structural scarcity cannot be determined — left blank, neither bonused nor penalised here (shown independently as a risk in 5D).</span>
+      </div>
+    </div>
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid #c7d5e8;font-size:12.5px;line-height:1.75;color:var(--navy)">
+      <strong>Effective-scarcity verdict: clearly fails.</strong> Hipflat's project average (USD 4,779/sqm) sits roughly 4.4% below the Ratchathewi district average (USD 4,999/sqm) — not merely a lack of premium evidence, but an outright discount. Only the regulatory layer partially passes, and the quota status is unknown, so no structural bonus applies.
+    </div>
+  </div>
+
+  <!-- 5B Next-buyer pyramid -->
+  <div style="border:1px solid var(--border-soft);border-radius:14px;padding:20px 22px;margin-bottom:18px">
+    <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:12px">5B · Next-Buyer Pyramid</div>
+    <div style="background:var(--gold-bg);border-left:4px solid var(--gold);border-radius:8px;padding:12px 16px;font-size:12.5px;line-height:1.75;color:var(--text-soft);margin-bottom:14px">
+      <strong style="color:var(--navy)">Quantum test (Thai buyer):</strong> representative 1BR M (Thai Quota) THB 5.9m → next-buyer household monthly-income threshold ~<strong>THB 82,600</strong> (80% LTV, 6.5%, 30yr, 40% burden, Thailand-version coefficient ~price × 1.4%) → against Bangkok's average household income of THB 39,100, this is ~<strong>2.11x</strong> the average, notably higher than Life Asoke Rama 9's 1.54x under the same coefficient — a narrower local buyer pool; layer on Bangkok's 2026H1 mortgage rejection rate of 40-50%, and clearing the quantum test doesn't guarantee financing.<br><strong style="color:var(--navy)">Foreign buyer:</strong> no financing available, so quantum becomes a cash threshold, roughly THB 6.51m + fees (Foreign Quota price base, ≈USD 193,500 / MYR 785,900) in deployable offshore cash.
+    </div>
+    <table class="cmp-table">
+      <thead><tr><th style="width:24%">Next Buyer</th><th style="width:12%">Verdict</th><th>Basis</th></tr></thead>
+      <tbody>
+        <tr><td>Local first-time buyer</td><td><span class="tag tag-bad">✗</span></td><td>Quantum of THB 82,600/month is 2.11x Bangkok's average household income, and with rejection rates near 70% below THB 3m, first-time buyers are effectively locked out on the credit side — a tougher picture than Life Asoke.</td></tr>
+        <tr><td>Local upgrader</td><td><span class="tag tag-warn">△</span></td><td>Quantum falls in the upper-middle income band, but the 2026 credit environment isn't lenient at this price point, and at least 11 comparable projects in the same submarket compete for the same demand — sharper competition than Life Asoke.</td></tr>
+        <tr><td>Local investor</td><td><span class="tag tag-warn">△</span></td><td>Gross yield of ~5.2% (Thai Quota basis) is decent, but the 6.5% mortgage rate already exceeds it, so leveraged investment runs a negative spread — suits only all-cash or low-leverage buyers.</td></tr>
+        <tr><td>Foreign self-use (3M/10M visa track)</td><td><span class="tag tag-ok">✓</span></td><td>Visa threshold is a binary flag, not a bonus: THB 6.51m clears the THB 3m line, and the MOTS certificate route (via TLS) is workable; but no evidence of a foreign-resident cluster or international school/medical amenities was found near this project, at odds with the "medical/education cluster" positioning suggested in the brief, so appeal to expat families is uncertain.</td></tr>
+        <tr><td>Foreign investor</td><td><span class="tag tag-bad">✗</span></td><td>Unleveraged, net yield (~3.99%, THB, Foreign Quota basis) sits 1.76 percentage points below opportunity-cost benchmark two (5.75%, USD) — clear, and a wider gap than Life Asoke; unverified quota utilisation adds further uncertainty.</td></tr>
+        <tr><td>Institutional / bulk</td><td><span class="tag tag-bad">✗</span></td><td>Strata single units don't meet institutional specs; no sign of whole-building or bulk activity.</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:14px;display:flex;gap:12px;align-items:flex-start;font-size:12.5px;line-height:1.75;color:var(--text-soft)">
+      <span class="tag tag-warn">Foreign dependency: NOT VERIFIED</span>
+      <span>No disclosed figure for the share of foreign-held units at this project, so dependency cannot be precisely determined. Active listings skew notably toward Foreign Quota tags (~20 of ~29 sampled), but this reflects only the current listing-supply mix, not a reliable proxy for true dependency, and is not used to score.</span>
+    </div>
+  </div>
+
+  <!-- 5C Secondary market evidence -->
+  <div style="margin-bottom:18px">
+    <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:12px">5C · Secondary Market Evidence</div>
+    <p style="font-size:12px;color:var(--warn-text);background:var(--warn-bg);border:1px solid var(--gold-light);border-radius:8px;padding:10px 14px;margin-bottom:14px;line-height:1.7">⚠️ <strong>Methodology caveat:</strong> Thailand has no official transaction-by-transaction registry (unlike Malaysia's Brickz/NAPIC system). Hipflat/FazWaz/DDproperty "transaction records" are each platform's own self-collected <strong>visible-sample floor, not a full-market count</strong>. This project's own total-unit count is itself disputed (1,435 vs 605), so the metrics below that depend on that denominator (turnover, listing ratio) carry even lower confidence than usual — do not treat them as a precise liquidity conclusion.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px">
+      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">N/A</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Turnover rate<br>Only 4 transactions, too thin to score</div>
+        <div style="margin-top:8px;display:inline-block" class="tag tag-bad">NOT VERIFIED</div>
+      </div>
+      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">5.7-24.8%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Listing ratio (range)<br>82-150 listings ÷ 1,435 or 605 units</div>
+        <div style="margin-top:8px;display:inline-block" class="tag tag-warn">4.4x source variance</div>
+      </div>
+      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">−21%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Asking-to-transacted discount<br>Hipflat's own aggregate, avg 273 days on market</div>
+        <div style="margin-top:8px;display:inline-block" class="tag tag-warn">Medium confidence</div>
+      </div>
+      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">4</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Hipflat transactions<br>Jun 2021-Feb 2026, clearly a subset</div>
+        <div style="margin-top:8px;display:inline-block" class="tag tag-warn">Too thin</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5D Foreign quota box -->
+  <div class="quota-box">
+    <span class="tag tag-unknown" style="margin-bottom:8px;display:inline-block">🔒 Foreign quota check: NOT VERIFIED (exit, foreign, −0.5)</span><br>
+    <strong>No official or developer-disclosed figure exists for this project's foreign-held share or remaining quota</strong> (checked Sansiri's official site, Hipflat, FazWaz, and DDproperty — none list an official utilisation rate). The 49% cap is the statutory ceiling (Condominium Act B.E. 2522 §19 bis), but this project's actual utilisation cannot be determined as near-full, ample, or somewhere in between. Active listings skew notably toward Foreign Quota tags (~69%), but this is purely <strong>current listing-supply composition</strong>, not registered-ownership data, and cannot be used to infer actual utilisation — this card deliberately does not use that indirect signal to shift the adjustment, keeping the "unverified" tier's midpoint value (−0.5) to avoid mistaking listing-sample noise for quota information. <strong>Buyers should verify the current quota utilisation in writing with an agent or the Land Department before committing</strong> — this is the single largest unknown on the exit side, more directly determinative of whether the unit can be resold to another foreign buyer in 10 years than either fees or valuation premium; once the quota is full, existing foreign-held units can only be resold to Thai buyers (typically at a Thai Quota discount) or wait for another foreign holder's allocation to free up.
+  </div>
+
+  <div class="cost-bottom">
+    <strong>One-line summary:</strong> the most likely buyer in 10 years is a local upper-middle-income professional upgrader or a foreign self-use buyer on the MOTS certificate track — but three signals point toward caution simultaneously: at least 11 competing projects in the same submarket, a 21% asking-to-transacted discount, and unverified quota status. This project's exit-side uncertainty runs higher than the Life Asoke Rama 9 case.
+  </div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ Deep Dive</span>
+  <h2 class="section-title">Project Deep-Dive Summary</h2>
+
+  <div class="summary-text">
+    <p>XT Phayathai sits on Si Ayutthaya Road (address 515) in Bangkok's Ratchathewi district, developed by Sansiri, one of Thailand's largest integrated developers. Its two high-rise towers (Tower A, 40 floors; Tower B's floor count varies slightly by source, either 37 or 35) reached structural completion in August 2022 (some marketing copy states 2023, an unresolved discrepancy — this card uses the conservative range "2022-2023"). <strong>The single most important finding in this card's research is the correction to the walking distance.</strong> The commonly circulated claim of "just 130 meters to BTS Phaya Thai" turns out, on tracing FazWaz's own turn-by-turn directions, to be only the first leg of the route — the distance from the station exit to the corner where the path turns onto Phaya Thai Road. The full route continues by turning onto Si Ayutthaya Road for roughly another 480 meters, for a total of approximately 610 meters; an independent Google Maps walking-directions query returned an almost identical result (~600 meters, 9-minute walk), and several 2026 rental listings independently cite "600-700 meters," corroborating this reading. A separate auto-generated FAQ on FazWaz's own site claims "1.2 km," contradicting its own turn-by-turn text — judged an algorithmic error and discarded. Conclusion: this is a genuine same-station BTS/Airport Rail Link interchange, but the walking distance should be understood as roughly 600-650 meters, not the 130 meters circulating elsewhere — a correction that directly affects the connectivity score, and the first thing a buyer checking other sources on this project should verify independently.</p>
+
+    <p>On scarcity, the audit result is less favorable than the initial brief hoped. Phaya Thai / Ratchathewi continues to absorb new nearby supply (Baan Ratchathewi, expected to complete April 2027, is one confirmed example), so the land layer fails; at least 11 comparable projects were found in the same submarket (Supalai Elite Phayathai, The Room Phayathai, Noble Revent, The Extro Phayathai-Rangnam, Ideo Mobi Rangnam, Ideo Q Victory, Noble House Phayathai, Hampton Residence/Park Origin Phayathai, Rhythm Rangnam, M Phayathai, Payatai Plaza), a notably denser comp set than the 6 found for the Life Asoke Rama 9 case, so the product layer fails too; the regulatory layer is freehold, but foreign-quota utilisation is undisclosed, so no structural-scarcity credit applies. More decisively, Hipflat's market statistics show this project's own average asking price (USD 4,779/sqm) actually running roughly 4.4% <em>below</em> the Ratchathewi district average (USD 4,999/sqm) — not the ambiguous "no clear premium" outcome from the Life Asoke case, but an outright discount, a clean failure of the effective-scarcity test. The brief's suggested "multi-line transit hub plus medical/education cluster" positioning only holds up on its first half after verification: this project is indeed a genuine BTS/ARL interchange, but the "medical/education cluster" half lacks support — the nearby Phyathai 1 Hospital is a private, mid-tier facility rather than one of the framework's three named international hospitals (Bumrungrad/Samitivej/BNH), Ramathibodi and Rajavithi are public hospitals excluded from the framework's scoring, and no walkable international school could be found.</p>
+
+    <p>As a SET-listed company, Sansiri's overall scale (a cumulative 299 projects, 104,728 units) dwarfs AP Thailand, the developer behind the Life Asoke case, and should in theory carry stronger financial backing — but this search could not cleanly verify its current financial position: two mutually inconsistent sets of 1Q2026 figures turned up (from different investor-relations page fragments), and Sansiri's own IR site could not be directly accessed this time either, so this is listed as "not verified." Broker Finansia Syrus Securities (2026-07-24) forecasts second-quarter net profit up 7% quarter-on-quarter but down 24% year-on-year — directionally pointing to weaker profitability, though this is a forecast, not reported results. More notably, no current TRIS Rating for Sansiri could be found in this search, unlike the Life Asoke case, which had a directly citable A/Stable rating for AP Thailand — meaning the developer's financial-soundness judgment here rests more on indirect inference (company scale, listed status) than a direct credit-rating figure. On compliance, secondary marketing material confirms this project holds EIA approval, consistent with its completed and occupied status, and no Ashton-Asoke-style permit-revocation risk was found; one unverified individual-case signal did surface — social media content from a Thai property law firm referencing a "3-unit deposit refund" dispute tied to this project, with cause and outcome both unconfirmed. This card does not factor it into scoring, but flags it as an item buyers should verify independently.</p>
+
+    <p>On pricing and rent, this project delivers the first genuinely usable <strong>quota-split</strong> evidence in this framework's pilot run: both Hipflat and FazWaz show some listings and transactions explicitly tagged Foreign Quota or Thai Quota. The representative unit (1BR M, 42 sqm) asks roughly THB 140,500/sqm under Thai Quota versus THB 155,000/sqm under Foreign Quota — a same-unit-type quota premium of about 10.3%. Anchored against Hipflat's 4 confirmed transactions (June 2021 to February 2026, averaging THB 133,000/sqm), current asking runs roughly 11.1% above, and the valuation score (5.0) lands in a neutral-to-cautious band; but the most recent transaction (February 2026, Foreign Quota, THB 122,000/sqm) sits noticeably below the 2023 Thai Quota transaction (THB 150,487/sqm), hinting at possible recent softening worth continued tracking. On rent, the representative unit lets for roughly THB 25,000/month, translating to a gross yield of about 5.2% on a Thai Quota basis but only about 4.7% on a Foreign Quota basis — <strong>this is the direct cashflow impact of the quota premium: the foreign buyer pays roughly 10% more to enter for the identical unit, collects exactly the same rent, and ends up with a structurally lower yield</strong>. Thai buyers using a mortgage face a mortgage rate (~6.5%) that already exceeds gross yield, a negative leveraged spread; foreign buyers' after-tax net yield (~3.99%) sits 1.76 percentage points below opportunity-cost benchmark two (USD 5.75%/year), a wider gap than Life Asoke's 1.38 points, driven directly by the quota premium inflating the foreign buyer's cost base.</p>
+
+    <p>The exit side is likewise where this card discloses the most "not verified" and conflicting signals. This project's actual foreign-quota utilisation is undisclosed anywhere, placing it in the "unverified" tier with the same deduction as the Life Asoke case (midpoint −0.5); active listings skew notably toward Foreign Quota tags (roughly 70%), an interesting but unreliable indirect observation — it could reflect more active foreign-investor resale behavior, or simply a sampling artifact of the listings — and this card deliberately does not use it to shift the quota-deduction range, to avoid treating noise as information. Secondary-market liquidity data suffers from the same structural limitation as before — Thailand's lack of an official transaction-by-transaction registry — and if anything, this project's data is even thinner than Life Asoke's: Hipflat's "Previous Sales" module discloses only 4 transactions across nearly 5 years, clearly a platform-curated subset rather than a full record, too sparse for this card to force an annualised turnover estimate (unlike Life Asoke, which at least had 108 cumulative transactions to work from); the listing ratio spans 5.7% to 24.8% because the total-unit-count conflict (1,435 vs 605, a 2.4x gap) itself widens the range, and no midpoint is taken. The one relatively solid piece of secondary-market evidence is, ironically, Hipflat's own aggregate statistics: this project transacts at an average of 21% below original asking price, with an average of 273 days on market — a discount that clears the framework's 15% threshold and is a primary driver of the exit-score deduction. What can be said with confidence: the Thai-buyer quantum test shows a next-buyer household-income threshold at 2.11x Bangkok's average household income, higher than Life Asoke's 1.54x, narrowing the local buyer pool; and at least 11 comparable projects in the same submarket compete for the same demand, a sharper competitive landscape than Life Asoke faced. This project's foreign-buyer total score (5.4) falls into T5, while the Thai-buyer score (5.5) sits right at the lower edge of T4 — the first case in this pilot where Thai and foreign scores land in different tiers, a result of the quota premium, the asking-to-transacted discount, and a denser competing-supply pool acting together, not any single dimension's failure.</p>
+
+    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+      <strong style="color:var(--navy);font-weight:700">10-Year Scenario Baseline</strong>: assuming entry 2026-08, exit 2036-08:
+      <ul style="margin:8px 0 0 18px;padding:0">
+        <li><strong>Base case</strong>: price +3%/year (roughly Bangkok's long-run nominal average, though no project-specific price trend could be found to cross-check this project), rent +3%/year, 1 month/year vacancy. Thai buyer (80% leverage, Thai Quota entry) 10-year cumulative net P&amp;L ~<strong>THB +1.09m</strong>, roughly 1-1.5%/year annualised; foreign buyer (all-cash, Foreign Quota entry) ~<strong>THB +3.95m</strong> (a capital base 5-6x larger, not directly comparable to the Thai figure), roughly 3.5-4%/year annualised.</li>
+        <li><strong>Bull case</strong>: Bangkok's 2H2026 net absorption pace (REIC's full-year forecast of a ~21,000-unit net stock reduction) continues, and Phaya Thai's interchange-hub benefits gradually materialize, price +5%/year. Thai buyer ~2.5-3%/year annualised, foreign buyer ~5.5-6%/year.</li>
+        <li><strong>Bear case</strong>: Bangkok's credit environment stays tight, the 11 nearby competing projects continue splitting demand, and secondary-listing pressure persists, price flat at 0%/year. Thai buyer's 10-year net P&amp;L turns negative (~THB −827,000, eroded by the negative mortgage spread), foreign buyer stays positive (~THB +1.84m, unleveraged but still bearing the full opportunity cost on a quota-premium-inflated entry price).</li>
+      </ul>
+      <div style="margin-top:10px">10-year exit liquidity: Hipflat's own statistics — an average of 273 days on market and a 21% average discount to asking — are the most concrete listing-to-transaction timing evidence found anywhere in this framework so far, though this is an aggregate statistic, not this card's own transaction-by-transaction verification; a conservative assumption of 6-9 months on market and a 15-25% discount is used, and this should be treated as provisional pending quota-status verification.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ Conclusion</span>
+  <h2 class="section-title">Highlights &amp; Caveats</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ Highlights</div>
+      <ul class="pc-list">
+        <li>A genuine same-station BTS Phaya Thai + Airport Rail Link interchange, verified at roughly 600-650 meters walk — still a workable commuting base</li>
+        <li>Sansiri (SET-listed) is one of Thailand's largest integrated developers (a cumulative 299 projects / 104,728 units); the project is completed and occupied, no off-plan delivery risk, and no building-permit/EIA dispute was found</li>
+        <li>The first project in this framework's pilot run with genuine quota-split (Foreign/Thai Quota) asking and transacted data, giving better valuation confidence than the Life Asoke case</li>
+        <li>The representative unit (Foreign Quota THB 6.51m) clears the THB 3m visa threshold comfortably, and the MOTS certificate route is concretely workable, not a boundary case</li>
+        <li>Phyathai 1 private hospital sits almost adjacent (~100-150m), offering good day-to-day medical access (though not one of the framework's top-3 international hospitals)</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ Caveats</div>
+      <ul class="pc-list">
+        <li><strong>The commonly circulated "130 meters" walking-distance figure is a misreading</strong> — the actual distance is roughly 600-650 meters; buyers checking other sources on this project should verify this figure independently first</li>
+        <li>Total-unit-count conflict (1,435 vs 605, a 2.4x gap) could not be resolved, so turnover/listing-ratio metrics depending on that denominator carry lower confidence</li>
+        <li>At least 11 comparable projects sit in the same submarket, denser than Life Asoke, and the scarcity audit clearly fails (the project's own average asking price runs 4.4% below the district average)</li>
+        <li>Foreign Quota runs roughly 10.3% above Thai Quota for the same unit — foreign buyers pay more to enter, and the net-yield-vs-opportunity-cost gap (−1.76pp) is wider than Life Asoke's</li>
+        <li>Developer Sansiri's 1Q2026 financials could not be reconciled across two source sets, and no current TRIS Rating could be found — lower transparency than AP Thailand's rating in the Life Asoke case</li>
+        <li>Hipflat's own statistics show this project transacting 21% below asking on average with 273 days on market — a clear asking-to-transacted discount signal; foreign-quota utilisation remains undisclosed</li>
+        <li>No walkable international school was found, and nearby hospitals are either private mid-tier (Phyathai 1) or public (Ramathibodi/Rajavithi) rather than the framework's top-3 international hospitals — at odds with the "medical/education cluster" positioning suggested in the brief</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ Holding Purpose Mapping</span>
+  <h2 class="section-title">Holding Purpose Mapping</h2>
+  <p class="section-sub">The same scorecard means different things under different holding purposes. Readers can match their own situation against the "lifeline dimensions," "negotiable dimensions," and "fit for this project" below.</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>Main Residence</div>
+    <div class="profile-fit">
+      <strong>Lifeline dimensions</strong>: Connectivity (6.0), Developer &amp; Handover (7.0), visa/MOTS certificate stability (foreign buyers)<br>
+      <strong>Negotiable</strong>: Holding cashflow (imputed rent for own-use, doesn't matter), capital appreciation momentum<br>
+      <strong>Fit for this project</strong>: A same-station BTS/ARL interchange plus a completed, inspectable building makes this a practical choice for commuters needing a downtown Bangkok base, but this project lacks any international-school or medical-cluster foundation — better suited to expat individuals or couples without international-education needs, whose day-to-day medical needs are met by a general private hospital (Phyathai 1), not to families prioritising international education. Foreign self-use buyers should note the MOTS certificate's sequencing rule (principal applicant must complete a full 12-month extension before dependents can apply); local buyers should first confirm their income clears the tightened 2026 credit environment (the quantum-to-Bangkok-average-income ratio here is 2.11x, higher than typical).
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>Rental Investment</div>
+    <div class="profile-fit">
+      <strong>Lifeline dimensions</strong>: Holding cashflow (4.4 Thai / 4.1 foreign), Exit &amp; next-buyer pool (6.4 Thai / 5.9 foreign)<br>
+      <strong>Negotiable</strong>: Capital appreciation momentum (not this project's positioning, and its own asking price already sits below the district average)<br>
+      <strong>Fit for this project</strong>: Gross yield of roughly 4.7-5.2% (depending on quota category) runs below Life Asoke's 5.1%; the Thai mortgage rate already exceeds this yield, and the foreign buyer's net yield sits clearly below opportunity cost due to the quota premium. This project suits holders who already have THB cash exposure and can accept a below-peer yield, and should prioritise Thai Quota units for the lower entry cost where eligibility allows; it does not suit investors expecting high leverage multiples or holding a high yield bar.
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>Part-Time Use (occupied &lt;30% of the year)</div>
+    <div class="profile-fit">
+      <strong>Lifeline dimensions</strong>: Connectivity, Developer &amp; Handover<br>
+      <strong>Negotiable</strong>: Holding cashflow, capital appreciation momentum<br>
+      <strong>Fit for this project</strong>: The same-station BTS/ARL interchange offers real convenience for airport transfers and city movement (especially useful for those flying in and out of Bangkok frequently), and the completed community's facilities can be inspected in person; THB 6.51m (Foreign Quota) is a workable price point for buyers pursuing the MOTS certificate route to a long-term Thai residency visa. Short-term/Airbnb-style rental legality is separately constrained by Thai regulation (short-stays under 30 days generally require hotel licensing and are typically disallowed by condo juristic persons) — outside this card's scoring scope, but buyers should verify independently.
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>Generational Hold (20+ years)</div>
+    <div class="profile-fit">
+      <strong>Lifeline dimensions</strong>: Scarcity &amp; location moat (20%), Exit &amp; next-buyer pool (next generation's eventual exit)<br>
+      <strong>Negotiable</strong>: Short-term yield, short-term catalysts<br>
+      <strong>Fit for this project</strong>: This project's scarcity audit clearly fails (both land and product layers ✗, and its own average asking price sits below the district average), and at least 11 comparable projects will keep splitting demand in the same submarket over the long run — a more clearly unfavorable picture than Life Asoke's. Freehold, inheritable tenure is a structural advantage, but unresolved quota status directly affects whether the next generation can resell to a foreign buyer without friction — if the family succession chain anticipates a foreign-national heir, quota verification should be the top priority; developer financial transparency here also came up lower than the AP Thailand case in this search, so long-term holders should periodically track Sansiri's financial disclosures and any published TRIS Rating updates.
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>Sources</h4>
+    FazWaz 2026 (project basics, turn-by-turn walking directions, unit-size table, asking price ranges, quota tags, Rama9/Ratchathewi comparable-project listings) · Hipflat 2026 (Previous Sales transaction records including quota tags, project average price/rent statistics, market statistics panel, listing counts) · DDproperty (tenure confirmation) · Golden Emperor (completion-date marketing material) · Rumavi / Keller Henson / HomesThailand / Property Hua Hin Partner (49% foreign quota boilerplate) · Google Maps (independent walking-route verification, 600m/9min) · investbangkokproperty.com 2018 (historical walking-distance reference) · social media content from a Thai property law firm (unverified deposit-refund dispute signal) · Finansia Syrus Securities 2026-07-24 (Sansiri 2Q26F net profit forecast) · Sansiri investor-relations pages (financial figures; two source sets could not be reconciled in this search) · Knight Frank Thailand via The Nation Thailand, ~Jul 2026 (Greater Bangkok ~350,000-unit broad unsold stock, 5-6yr clearance) · Realestate.com.kh via Facebook (EIA approval reference) · Tradingeconomics.com (Thailand 10-year government bond yield, 2.05% on 2026-07-14 / 1.94% early July 2026; US 10-year Treasury yield, 4.74%-4.75% on 2026-07-31, reused from the same-period Life Asoke verification) · CNBC US10Y quote (cross-check on US Treasury yield) · Bank of Thailand MPC Decision 3/2026 (policy rate held at 1.00%) · th/report.html / th/macro.html (Bangkok market macro background, THB/USD 33.65 / USD/MYR 4.06, July 2026; MYR conversion is for scale reference only, not the opportunity-cost benchmark).
+  </div>
+  <div class="footer-disclaimer">
+    <h4>Disclaimer</h4>
+    This scorecard is independent analysis for reference only and does not constitute investment advice. Scoring is based on publicly verifiable data as of 2026-08-03. <strong>Scorer's lens: a professional real estate investor on a 10-year hold basis, holding purpose unspecified (own-use / rental / part-time residence / generational hold).</strong> Amounts are primarily in Thai baht (THB), with approximate USD/MYR conversions in parentheses (exchange rates in the sources section). <strong>Items marked "NOT VERIFIED" or "conflicting data" — including total unit count, the developer's 2026 financial figures, TRIS Rating, foreign-quota utilisation, the effective non-resident rental tax rate, and precise floor-count structure — indicate that no publicly verifiable authoritative source could be obtained, or that multiple sources could not be reconciled; buyers should confirm these in writing with a licensed lawyer or agent before any actual transaction, and should not treat this card's figures as final.</strong> The framework itself (th-property-scorecard-v1 v1.2) has not yet been cross-calibrated across a large number of cases (this is only the second pilot card); readers should treat the absolute level of each dimension's score with appropriate caution. Where this card's scores diverge from the Life Asoke Rama 9 case, the primary drivers have been noted in each dimension's reasoning for cross-case comparison.
+    <p style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:10.5px;font-style:italic;color:var(--muted)">This is the second pilot scorecard under the th-property-scorecard-v1 v1.2 Thailand framework, first published 2026-08-03. Pending human review before going live.</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
