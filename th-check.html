@@ -311,6 +311,7 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
 .card-meta .sep{color:var(--gold-light);font-size:14px;line-height:1}
 .card-meta .area{font-weight:600;color:var(--navy)}
 .card-verdict{font-size:14px;color:var(--text-soft);line-height:1.55}
+.rank-note{font-size:11px;color:var(--gold-deep);font-weight:600;letter-spacing:.02em;margin-bottom:6px}
 
 .scores{flex-shrink:0;display:flex;gap:14px;padding-left:8px;position:relative;z-index:1}
 .score-block{
@@ -726,6 +727,10 @@ body.zh h1, body.zh .serif{font-family:'Noto Serif TC','Playfair Display',serif}
     <span class="lang-en"><strong style="color:var(--gold-deep)">On the 49% foreign quota — read this before viewing any project.</strong> Under the Condominium Act, foreigners may own at most 49% of a building's floor area. It is the hardest gate a foreign buyer faces: it must have room at purchase, and it must still have room in ten years for the next foreign buyer. We searched developer sites, the three major aggregators and local forums for <strong>every</strong> Bangkok project screened — <strong style="color:var(--gold-deep)">not one discloses its actual quota utilisation.</strong> So this table carries no quota column: a field that reads "unverified" on every row tells you nothing about which project is better. It is not a small matter, though — each scorecard scores it as a deliberately conservative tier and flags it in its own section 5D. <strong style="color:var(--gold-deep)">Verify utilisation in writing with the agent or the Land Department before placing any deposit.</strong> Separately: <strong style="color:var(--gold-deep)">Thailand has no Brickz/NAPIC-equivalent</strong> official transaction register, so turnover and listing ratios here are platform-visible estimates, not full-market counts. <strong style="color:var(--gold-deep)">The price column shows a 1BR benchmark unit</strong>, not the project's full price span — 1BR is the liquid product across Bangkok's rail-walkable band under THB 8M, so it is the only layout that compares like for like between projects. Where a gross yield is shown as two figures, the second is the Foreign Quota basis: same rent, higher purchase price, lower yield.</span>
     <span class="lang-zh"><strong style="color:var(--gold-deep)">關於 49% 外籍配額——看任何一案之前請先讀這段。</strong>依 Condominium Act，外國人在同一棟建物可持有的樓地板面積上限為 49%。這是外籍買家面對的最硬閘門：買進時要有餘額，十年後要賣給下一個外國人時也還要有餘額。我們對篩選過的<strong>每一個</strong>曼谷建案，遍歷開發商官網、三大聚合平台與本地論壇——<strong style="color:var(--gold-deep)">沒有任何一案揭露實際配額使用率。</strong>因此本表不設配額欄：一個每列都寫「未能證實」的欄位，並不能告訴你哪一案比較好。但這不代表它不重要——各評分卡仍以刻意保守的檔位對它計分，並在各卡區塊 5D 獨立揭露。<strong style="color:var(--gold-deep)">下訂前請向代理或土地廳書面查證使用率。</strong>另外：<strong style="color:var(--gold-deep)">泰國沒有 Brickz／NAPIC 等價的官方逐筆過戶資料庫</strong>，本站的換手率與掛牌率皆為平台可見樣本估算，不是全市場精確值。<strong style="color:var(--gold-deep)">價格欄呈現的是代表戶型 1BR</strong>，不是全案價格帶——曼谷 800 萬泰銖以下、軌道步行帶的流動主力產品是 1BR，只有它能在建案之間做同口徑比較。毛租金率若標示兩個數字，第二個是 Foreign Quota 基礎：租金相同、購入成本更高，收益率因此更低。</span>
   </p>
+  <p class="method-note" style="max-width:1040px;margin:10px auto 0;padding:0 4px;font-size:11px;line-height:1.7;color:var(--muted);text-align:left">
+    <span class="lang-en"><strong style="color:var(--gold-deep)">On ranking with only four cards.</strong> Every project here passed a five-item eligibility gate first (completed and transferable, freehold, foreign quota not confirmed exhausted, no permit/EIA revocation or litigation on the project itself, price above the THB 3M visa floor) — gate failures are excluded outright rather than scored down, so nothing in this table has a fatal defect baked into a middling number. Within the survivors, total-score gaps under 0.3 are treated as statistical ties (three of the four cards sit within 0.09 of each other on the Thai score and 0.11 on the foreign score, and are shown as tied), not a forced 1-2-3 order; only XT Phayathai separates out clearly, explained by measurably weaker capital-appreciation momentum and entry-valuation discipline. The seven dimension weights are fixed and are not retuned to make gaps look bigger — see the framework's SKILL.md for the full derivation.</span>
+    <span class="lang-zh"><strong style="color:var(--gold-deep)">關於只有四案時的排序判讀。</strong>本表每一案都先通過五項資格閘門（已完工可過戶、freehold、外籍配額未確認打滿、本案本身無建照/EIA撤銷或現存訴訟、登記價高於 300 萬簽證門檻）——閘門不過直接排除，不是扣分了事，所以表上任何一案都沒有「致命缺陷被稀釋成普通分數」的情況。通過閘門後，總分差距 <0.3 視為統計並列（四案中有三案彼此差距在本國人分 0.09、外國人分 0.11 以內，呈現為並列），不強行排出 1、2、3 名；只有 XT Phayathai 明顯落後一段，由資本增值動能與進場估值紀律兩個維度的實測差距解釋。七個維度的權重是固定的，不會為了讓差距看起來更大而重新調整——完整推導見框架 SKILL.md。</span>
+  </p>
 </section>
 
 <section class="section">
@@ -836,6 +841,38 @@ function quotaClass(code){
   if(code === 'tight') return 'q-tight';
   if(code === 'full') return 'q-full';
   return 'q-unverified';
+}
+
+// 帶內排名（v2.0 新增）：依 th-property-scorecard-v1 SKILL.md【§Tier → 帶內排名】規則動態計算，
+// 不寫死文字——新增卡片後樣本數 N 與排名自動重算。規則：由高到低排序，
+// 與「目前分組最高分」差距 <0.3 視為同一並列組（同組內不分先後）；
+// 差距 ≥0.3 才開新組、名次跳號（如 1,1,1,4，不是 1,1,1,2）。
+function computeRanks(view){
+  const key = view === 'fg' ? 'scoreFG' : 'scoreMY';
+  const sorted = projects.slice().sort((a, b) => b[key] - a[key]);
+  const ranks = {};
+  let groupStart = 0;
+  for(let i = 0; i < sorted.length; i++){
+    if(i > 0 && (sorted[groupStart][key] - sorted[i][key]) >= 0.3){
+      groupStart = i;
+    }
+    ranks[sorted[i].name] = { rank: groupStart + 1, score: sorted[i][key] };
+  }
+  const groupSize = {};
+  Object.values(ranks).forEach(r => { groupSize[r.rank] = (groupSize[r.rank] || 0) + 1; });
+  Object.keys(ranks).forEach(name => { ranks[name].tied = groupSize[ranks[name].rank] > 1; });
+  return { ranks, n: sorted.length };
+}
+
+function rankLabel(p, lang){
+  const rMY = computeRanks('my').ranks[p.name];
+  const rFG = computeRanks('fg').ranks[p.name];
+  const n = projects.length;
+  const fmt = (r, l) => (r.tied ? (l === 'zh' ? `並列第 ${r.rank}` : `T-${r.rank}`) : (l === 'zh' ? `第 ${r.rank}` : `#${r.rank}`));
+  if(lang === 'zh'){
+    return `帶內排名（${n} 案樣本）：本 ${fmt(rMY,'zh')}・外 ${fmt(rFG,'zh')}`;
+  }
+  return `In-cohort rank (n=${n}): Thai ${fmt(rMY,'en')} · Foreign ${fmt(rFG,'en')}`;
 }
 
 function renderScoreboard(){
@@ -951,6 +988,7 @@ function renderCards(){
               <span class="sep">◆</span>
               <span>${p.tenure[lang]}</span>
             </div>
+            <div class="rank-note">${rankLabel(p, lang)}</div>
             <div class="card-verdict">${p.verdict[lang]}</div>
           </div>
           <div class="scores">
