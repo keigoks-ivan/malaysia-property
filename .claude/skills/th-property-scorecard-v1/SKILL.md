@@ -611,6 +611,9 @@ KL 的 ≥1.0（本國人）／≥1.3（外國人）門檻，是在 KL 23 案、
 | Phra Khanong / On Nut | 6.0 | BTS 延伸線帶動的新興生活圈，供給持續增加，稀缺性偏弱 |
 | Charoen Nakhon / 河岸（Thonburi 側）| 6.0 | Gold Line 延伸＋河景稀缺性，但過江通勤摩擦與供給快速增加並存 |
 | Samyan / Chula | 6.5 | Chulalongkorn 大學周邊都更區，MRT 直連，土地層近年才釋出，中期稀缺性尚在建立中 |
+| **Ari / Sanam Pao**（2026-08-04 新增）| **6.5** | 街區 identity 與生活機能強（創意／咖啡經濟），內巷維持低層；但**單線單站無轉乘**（Orange／Brown Line 規劃皆不經過，Brown 最近轉乘在數站外的 Kasetsart），且 Phahonyothin／Soi Ari 1 主軸線三年內連出 Noble Around Ari（39F/611戶,2023）、Nue Evo Ari（42F,2025）、Via Ari（2026）、Rhythm Phahol-Ari（53F/809戶）——**土地稀缺僅存於內巷，新案所在的主軸線持續產出供給**。價格與淨收益率帶與 Ratchathewi／Rama 9 相當，不足以支撐 7.0 |
+| **Ha Yaek Lat Phrao / Chatuchak-Chomphon**（2026-08-04 新增）| **6.0** | BTS Green Line 與 MRT Blue Line 由 2020-10 啟用之 300m 公共空橋相連（**兩個獨立站體，非同一轉乘複合體**），Central Ladprao 商圈級零售；但同一站節點五年內由三個開發商堆出約 3,695 戶（Life Ladprao 1,615＋Life Ladprao Valley 1,140＋The Line Vibe 940），成交價 108,611-122,500 THB/sqm 明顯低於 Ari 新案帶——供給持續產出，稀缺性弱 |
+| **Wongwian Yai / Khlong San（Thonburi 側，非河岸）**（2026-08-04 新增）| **6.0** | 與 Charoen Nakhon 同屬 Thonburi 側、共享過河摩擦（BTS 過河快，但道路過橋瓶頸實質存在：至 BNH 5.8km/20分、至 Bumrungrad 10.4km/43分）。**軌道入 CBD 優於 Gold Line**（Silom 線直達，數站抵 Saphan Taksin），但**無河景稀缺性**，一增一減取平；走廊內 Ideo／The Rich／Bright／The Room 等多案並存，另有 Supalai Premier Taksin-Wongwianyai 2028 完工，非土地封頂地段 |
 | 其他曼谷 | 5.0 | default baseline，市郊供給充裕（68% 新推案在此類地段，overhang 主力） |
 
 **稀缺性調整（cap ±1.0，同【§配額與稀缺性稽核設計】）**：三層全過（含配額結構性稀缺）+0.5~1.0；站前直連 +0.2~0.3；產品層稀缺且有 Hipflat 溢價佐證 +0.3；可複製性高（同區大量可開發地／市郊)−0.5；Leasehold −0.3。
@@ -778,6 +781,11 @@ SC_[建案名稱]_[YYYYMMDD]_en.html
 - [ ] 375px 手機寬度不破版？
 - [ ] 七邊形雷達圖正確渲染？
 - [ ] 資格閘門 box 已呈現？
+
+**跨卡宣稱（v2.1 新增，因八案批次實測發現的系統性錯誤）：**
+- [ ] **卡上是否出現任何跨卡最高級或序號？**（「框架五案中最低」「本框架以來最高」「第五張評分卡」「the lowest of the five cards」等）——**單張卡不得寫這類宣稱**。理由：多張卡平行產出時，寫卡者看不見其他卡的分數，跨卡宣稱在寫入當下就可能是錯的，且樣本每增加一張就會再錯一次。2026-08-04 八案批次實測到的實際錯誤包括：三張卡各自宣稱自己是「第五張」；一張宣稱增值分 4.0「為樣本中最低」（實際最低 3.5，且寫卡當下已發布的 XT Phayathai 就是 3.7）；兩張同日產出的卡對「毛收益率最高」互相矛盾；一張宣稱「資料最薄弱」（實際另一案為 0 筆成交）。
+- [ ] 需要比較脈絡時，改用**不依賴他卡的自述**（「掛牌率 2.2-2.3%，遠低於 10% 健康門檻」），或**指名比對特定已發布卡**（「較 Life Asoke Rama 9 的 1.54 倍為低」）——後者可在卡內查證，前者恆真。
+- [ ] **排名一律不寫死**：帶內名次與並列組別由 `/th-check.html` 的 `computeRanks()` 依當前樣本動態計算，卡上 rank-note 只陳述本卡總分與並列規則，不得出現名次數字。
 
 **中文標點（依站內 CLAUDE.md 規則）：**
 - [ ] `[一-鿿][,.;:!?]` 與 `[,;:][一-鿿]`（去 script/style 後）應為 0？
