@@ -9,720 +9,560 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
-  --border:#e5dfd0; --border-soft:#efe9da;
-  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
-  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
-  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
-  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
-  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
-  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
-  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
-  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
-  --local:#0d2244; --foreign:#b8924a;
-  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
-  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
-  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
-  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
-  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+<style>:root{
+ --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+ --border:#e5dfd0; --border-soft:#efe9da;
+ --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+ --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+ --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+ --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+ --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+ --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+ --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+ --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+ --local:#0d2244; --foreign:#b8924a;
+ --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+ --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+ --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+ --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+ --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 body{
-  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
-  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
-  background-attachment:fixed;
-}
-.serif{font-family:'Playfair Display','Noto Serif TC',serif}
-.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
-.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
-.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
-.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}
-.brand-text{display:flex;flex-direction:column;line-height:1.1}
-.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
-.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
-.nav-actions{display:flex;align-items:center;gap:10px}
-.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
-.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
-.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
-.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
-.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
-.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}
-.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}
-.hero-card > *{position:relative;z-index:1}
-.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
-.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
-.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
-.hero-meta .sep{color:rgba(212,181,118,.4)}
-.proj-name{font-family:'Noto Serif TC','Playfair Display',serif;font-size:32px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}
-.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
-.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
-.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}
-.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
-.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
-.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
-.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
-.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
-.score-flag{font-size:14px;margin-right:4px}
-.score-row{display:flex;align-items:baseline;gap:10px}
-.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
-.score-num.local{color:#f7eed3}
-.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
-.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
-.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
-.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
-.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
-.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
-.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
-.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
-.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
-.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
-.section-title{font-family:'Noto Serif TC','Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}
-.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}
-.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
-.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
-.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
-.radar-svg{width:290px;height:290px}
-.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
-.lg-item{display:inline-flex;align-items:center;gap:6px}
-.lg-dot{width:11px;height:11px;border-radius:2px}
-.lg-dot.local{background:var(--local)}
-.lg-dot.foreign{background:var(--foreign)}
-.dim-list{display:flex;flex-direction:column;gap:0}
-.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
-.dim:last-child{border-bottom:none}
-.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
-.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
-.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
-.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
-.dim-score{display:inline-flex;align-items:baseline;gap:4px}
-.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
-.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
-.dim-score .val.local{color:var(--local)}
-.dim-score .val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
-.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
-.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
-.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
-.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
-.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
-.kv-table tr:last-child td{border-bottom:none}
-.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
-.kv-val{font-weight:500;color:var(--text)}
-.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
-.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
-.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
-.cmp-table th.local{color:var(--local)}
-.cmp-table th.foreign{color:var(--gold-deep)}
-.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
-.cmp-table tr:last-child td{border-bottom:none}
-.cmp-table tr:hover td{background:var(--gold-bg)}
-.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
-.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
-.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
-.assump-box strong{color:var(--navy);font-weight:700}
-.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
-.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
-.cost-table th:first-child{text-align:left}
-.cost-table th.local{color:var(--local)}
-.cost-table th.foreign{color:var(--gold-deep)}
-.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
-.cost-table td:first-child{text-align:left}
-.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
-.cost-table tr.cat td:not(:first-child){color:transparent}
-.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
-.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
-.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
-.cost-bottom strong{color:var(--navy);font-weight:700}
-.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
-.summary-text p{margin-bottom:16px}
-.summary-text p:last-child{margin-bottom:0}
-.summary-text p:first-child::first-letter{font-family:'Noto Serif TC','Playfair Display',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}
-.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
-.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
-.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
-.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
-.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
-.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
-.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
-.pc-col.pros .pc-title{color:var(--pos-text)}
-.pc-col.cons .pc-title{color:var(--warn-text)}
-.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
-.pc-list li{padding-left:16px;position:relative}
-.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
-.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
-.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
-.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
-.profile:last-child{border-bottom:none;padding-bottom:0}
-.profile:first-child{padding-top:0}
-.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
-.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}
-.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
-.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}
-.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
-.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
-.footer-sources{margin-bottom:18px}
-.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
-.quota-box{background:linear-gradient(135deg,#fef2f2 0%, #fef9ed 100%);border:1px solid #e8c9a0;border-radius:14px;padding:18px 20px;margin-bottom:18px;font-size:12.5px;line-height:1.8;color:var(--text-soft)}
-.quota-box strong{color:var(--navy)}
-.gate-box{background:var(--navy-soft);border:1px solid var(--t2-bd);border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:12px;line-height:1.8;color:var(--text-soft)}
-.gate-box strong{color:var(--navy)}
-.gate-box .gate-sub{display:block;margin-top:8px;font-size:11px;color:var(--muted)}
-.rank-note{margin-top:14px;padding-top:12px;border-top:1px solid rgba(212,181,118,.18);font-size:11.5px;color:#c9b896;line-height:1.7}
-.tag{display:inline-block;border-radius:99px;padding:2px 10px;font-weight:700;font-size:11px}
-.tag-ok{background:#dcfce7;color:#15803d;border:1px solid #86efac}
-.tag-warn{background:#fef3c7;color:#a16207;border:1px solid #fcd34d}
-.tag-bad{background:#f1efe9;color:#6b7a92;border:1px solid #d9d3c4}
-.tag-unknown{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
-@media (max-width:768px){
-  .nav-inner{padding:12px 16px}
-  .wrap{padding:20px 14px 36px}
-  .hero-card{padding:22px 20px}
-  .proj-name{font-size:24px}
-  .dual-scores{grid-template-columns:1fr}
-  .section{padding:22px 20px}
-  .section-title{font-size:20px}
-  .radar-block{grid-template-columns:1fr;gap:22px}
-  .radar-svg{width:240px;height:240px}
-  .data-grid{grid-template-columns:1fr}
-  .pros-cons{grid-template-columns:1fr}
-  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
-  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
-  .profile-fit{padding-left:0;margin-top:6px}
+ font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+ background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+ background-image:
+ radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+ radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+ background-attachment:fixed;
+}.serif{font-family:'Playfair Display','Noto Serif TC',serif}.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}.brand-text{display:flex;flex-direction:column;line-height:1.1}.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}.nav-actions{display:flex;align-items:center;gap:10px}.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all.15s}.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all.15s}.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}.hero-card > *{position:relative;z-index:1}.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}.hero-ornament.line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}.hero-ornament.diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}.hero-meta.sep{color:rgba(212,181,118,.4)}.proj-name{font-family:'Noto Serif TC','Playfair Display',serif;font-size:32px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}.score-flag{font-size:14px;margin-right:4px}.score-row{display:flex;align-items:baseline;gap:10px}.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}.score-num.local{color:#f7eed3}.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}.section-title{font-family:'Noto Serif TC','Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}.radar-svg{width:290px;height:290px}.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}.lg-item{display:inline-flex;align-items:center;gap:6px}.lg-dot{width:11px;height:11px;border-radius:2px}.lg-dot.local{background:var(--local)}.lg-dot.foreign{background:var(--foreign)}.dim-list{display:flex;flex-direction:column;gap:0}.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}.dim:last-child{border-bottom:none}.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}.dim-score{display:inline-flex;align-items:baseline;gap:4px}.dim-score.lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}.dim-score.val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}.dim-score.val.local{color:var(--local)}.dim-score.val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}.kv-table tr:last-child td{border-bottom:none}.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}.kv-val{font-weight:500;color:var(--text)}.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}.cmp-table th.local{color:var(--local)}.cmp-table th.foreign{color:var(--gold-deep)}.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}.cmp-table tr:last-child td{border-bottom:none}.cmp-table tr:hover td{background:var(--gold-bg)}.cmp-table.num{font-variant-numeric:tabular-nums;font-weight:500}.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}.assump-box strong{color:var(--navy);font-weight:700}.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}.cost-table th:first-child{text-align:left}.cost-table th.local{color:var(--local)}.cost-table th.foreign{color:var(--gold-deep)}.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}.cost-table td:first-child{text-align:left}.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}.cost-table tr.cat td:not(:first-child){color:transparent}.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}.cost-bottom strong{color:var(--navy);font-weight:700}.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}.summary-text p{margin-bottom:16px}.summary-text p:last-child{margin-bottom:0}.summary-text p:first-child::first-letter{font-family:'Noto Serif TC','Playfair Display',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}.pc-col.pros.pc-title{color:var(--pos-text)}.pc-col.cons.pc-title{color:var(--warn-text)}.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}.pc-list li{padding-left:16px;position:relative}.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}.pc-col.pros.pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}.pc-col.cons.pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}.profile:last-child{border-bottom:none;padding-bottom:0}.profile:first-child{padding-top:0}.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}.footer h4::before{content:'◆';color:var(--gold);font-size:10px}.footer-sources{margin-bottom:18px}.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}.quota-box{background:linear-gradient(135deg,#fef2f2 0%, #fef9ed 100%);border:1px solid #e8c9a0;border-radius:14px;padding:18px 20px;margin-bottom:18px;font-size:12.5px;line-height:1.8;color:var(--text-soft)}.quota-box strong{color:var(--navy)}.gate-box{background:var(--navy-soft);border:1px solid var(--t2-bd);border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:12px;line-height:1.8;color:var(--text-soft)}.gate-box strong{color:var(--navy)}.gate-box.gate-sub{display:block;margin-top:8px;font-size:11px;color:var(--muted)}.rank-note{margin-top:14px;padding-top:12px;border-top:1px solid rgba(212,181,118,.18);font-size:11.5px;color:#c9b896;line-height:1.7}.tag{display:inline-block;border-radius:99px;padding:2px 10px;font-weight:700;font-size:11px}.tag-ok{background:#dcfce7;color:#15803d;border:1px solid #86efac}.tag-warn{background:#fef3c7;color:#a16207;border:1px solid #fcd34d}.tag-bad{background:#f1efe9;color:#6b7a92;border:1px solid #d9d3c4}.tag-unknown{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
+@media (max-width:768px){.nav-inner{padding:12px 16px}.wrap{padding:20px 14px 36px}.hero-card{padding:22px 20px}.proj-name{font-size:24px}.dual-scores{grid-template-columns:1fr}.section{padding:22px 20px}.section-title{font-size:20px}.radar-block{grid-template-columns:1fr;gap:22px}.radar-svg{width:240px;height:240px}.data-grid{grid-template-columns:1fr}.pros-cons{grid-template-columns:1fr}.cmp-table,.cost-table,.kv-table{font-size:11.5px}.cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}.profile-fit{padding-left:0;margin-top:6px}
 }
 </style>
 </head>
 <body>
 
 <nav class="nav">
-  <div class="nav-inner">
-    <a class="brand-wrap" href="/">
-      <span class="brand-mark">P</span>
-      <span class="brand-text">
-        <span class="brand">Property Check</span>
-        <span class="brand-by">TH Scorecards</span>
-      </span>
-    </a>
-    <div class="nav-actions">
-      <a class="back-link" href="/th-check">← All Scores</a>
-      <a class="lang-link" href="SC_Quintara-MHyGEN-Ratchada_20260804_zh.html">中文</a>
-    </div>
-  </div>
+ <div class="nav-inner">
+ <a class="brand-wrap" href="/">
+ <span class="brand-mark">P</span>
+ <span class="brand-text">
+ <span class="brand">Property Check</span>
+ <span class="brand-by">TH Scorecards</span>
+ </span>
+ </a>
+ <div class="nav-actions">
+ <a class="back-link" href="/th-check">← All Scores</a>
+ <a class="lang-link" href="SC_Quintara-MHyGEN-Ratchada_20260804_zh.html">中文</a>
+ </div>
+ </div>
 </nav>
 
 <div class="wrap">
 
 <!-- BLOCK 1: HEADER BAR -->
 <div class="hero-card">
-  <div class="hero-ornament" aria-hidden="true">
-    <span class="diamond"></span>
-    <span class="line"></span>
-  </div>
-  <div class="hero-meta">
-    <span>Huai Khwang / Din Daeng · Bangkok</span>
-    <span class="sep">◆</span>
-    <span>FREEHOLD CONDOMINIUM (medium confidence)</span>
-    <span class="sep">◆</span>
-    <span>Data as of 2026-08-04</span>
-  </div>
-  <h1 class="proj-name">Quintara MHy'GEN Ratchada-Huai Khwang</h1>
-  <p class="one-liner">
-    383 units across two low-rise buildings (8 storeys each); five sources give walking distance to MRT Huai Khwang as 350-470m, none route-verified. The one confirmed transaction dates to October 2025 (THB 3.2M, ≈27 sqm); the representative unit's price sits only ~6.7% above the THB 3M visa floor — below this framework's THB 3.6M boundary line — making this the <strong>first card to trigger the visa-threshold boundary-risk penalty</strong>. The same corridor already has 5,000+ confirmed comparable units, and the city plan is actively upzoning toward higher density, so the scarcity audit runs clearly against the project. Developer ESTAR is a SET-listed but distinctly small-cap issuer whose profitability has recovered sharply after a 2023 trough, though a sister-project delivery complaint pattern and a rating gap remain for buyers to verify.
-  </p>
-  <div class="dual-scores">
-    <div class="score-card local">
-      <div class="score-head">
-        <span><span class="score-flag">🇹🇭</span>Thai buyer</span>
-      </div>
-      <div class="score-row">
-        <span class="score-num local">5.4</span>
-        <span class="score-sfx">/ 10</span>
-        <span class="tier tier-T5">T5 · Clearly elevated risk, not a first choice</span>
-      </div>
-      <div class="score-note">All five eligibility-gate checks pass. The T5 score is driven mainly by capital appreciation momentum (4.0, low by the standards of this site’s published cards) and stacked exit-side deductions — 5,000+ corridor competing units, active upzoning, and only a single confirmed transaction all point the same direction, not one dimension's fluke.</div>
-    </div>
-    <div class="score-card foreign">
-      <div class="score-head">
-        <span><span class="score-flag">🌏</span>Foreign buyer</span>
-      </div>
-      <div class="score-row">
-        <span class="score-num foreign">5.2</span>
-        <span class="score-sfx">/ 10</span>
-        <span class="tier tier-T5">T5 · Clearly elevated risk, not a first choice</span>
-      </div>
-      <div class="score-note">This is the first card in the framework's Thailand pilot to <strong>trigger the "visa-threshold boundary risk" deduction</strong>: the representative unit's price is only ~6.7% above the THB 3M visa floor, well below the framework's THB 3.6M safety boundary — a 15-20% price decline could drop this unit out of visa eligibility entirely and remove the foreign buyer pool.</div>
-    </div>
-  </div>
-  <div class="rank-note">In-cohort rank: this card scores 5.4 (Thai buyer) / 5.2 (foreign buyer). The framework treats total-score gaps below 0.3 as statistical ties rather than forcing an order, and requires any ordering to be explained by at least two independent dimensions. <strong>Actual position and tied groupings are computed dynamically across the full current sample by computeRanks() on /th-check.html; this page hard-codes no rank</strong> — every card added to the sample recomputes both.</div>
+ <div class="hero-ornament" aria-hidden="true">
+ <span class="diamond"></span>
+ <span class="line"></span>
+ </div>
+ <div class="hero-meta">
+ <span>Huai Khwang / Din Daeng · Bangkok</span>
+ <span class="sep">◆</span>
+ <span>FREEHOLD CONDOMINIUM (medium confidence)</span>
+ <span class="sep">◆</span>
+ <span>Data as of 2026-08-04</span>
+ </div>
+ <h1 class="proj-name">Quintara MHy'GEN Ratchada-Huai Khwang</h1>
+ <p class="one-liner">
+ 383 units across two low-rise buildings (8 storeys each); five sources give walking distance to MRT Huai Khwang as 350-470m, none route-verified. The one confirmed transaction dates to October 2025 (THB 3.2M, ≈27 sqm); the representative unit's price sits only ~6.7% above the THB 3M visa floor — below this framework's THB 3.6M boundary line — which <strong>triggers the visa-threshold boundary-risk penalty</strong>. The same corridor already has 5,000+ confirmed comparable units, and the city plan is actively upzoning toward higher density, so the scarcity audit runs clearly against the project. Developer ESTAR is a SET-listed but distinctly small-cap issuer whose profitability has recovered sharply after a 2023 trough, though a sister-project delivery complaint pattern and a rating gap remain for buyers to verify.
+ </p>
+ <div class="dual-scores">
+ <div class="score-card local">
+ <div class="score-head">
+ <span><span class="score-flag">🇹🇭</span>Thai buyer</span>
+ </div>
+ <div class="score-row">
+ <span class="score-num local">5.4</span>
+ <span class="score-sfx">/ 10</span>
+ <span class="tier tier-T5">T5 · Clearly elevated risk, not a first choice</span>
+ </div>
+ <div class="score-note">All five eligibility-gate checks pass. The T5 score is driven mainly by capital appreciation momentum (4.0, low by the standards of this site’s published cards) and stacked exit-side deductions — 5,000+ corridor competing units, active upzoning, and only a single confirmed transaction all point the same direction, not one dimension's fluke.</div>
+ </div>
+ <div class="score-card foreign">
+ <div class="score-head">
+ <span><span class="score-flag">🌏</span>Foreign buyer</span>
+ </div>
+ <div class="score-row">
+ <span class="score-num foreign">5.2</span>
+ <span class="score-sfx">/ 10</span>
+ <span class="tier tier-T5">T5 · Clearly elevated risk, not a first choice</span>
+ </div>
+ <div class="score-note">This card to <strong>trigger the "visa-threshold boundary risk" deduction</strong>: the representative unit's price is only ~6.7% above the THB 3M visa floor, well below the framework's THB 3.6M safety boundary — a 15-20% price decline could drop this unit out of visa eligibility entirely and remove the foreign buyer pool.</div>
+ </div>
+ </div>
+ <div class="rank-note">In-cohort rank: this card scores 5.4 (Thai buyer) / 5.2 (foreign buyer). The framework treats total-score gaps below 0.3 as statistical ties rather than forcing an order, and requires any ordering to be explained by at least two independent dimensions. <strong>Actual position and tied groupings are computed dynamically across the full current sample by computeRanks() on /th-check.html; this page hard-codes no rank</strong> — every card added to the sample recomputes both.</div>
 </div>
 
 <div class="gate-box">
-  <strong>✅ Eligibility gate check (all five must pass before scoring below applies):</strong> Structure/architecture/systems 100% complete (developer's own site, shown 2024-09-21); aggregators cite Oct 2024 completion/transfer | Freehold (medium confidence — no title-deed-level source found) | Foreign quota not confirmed exhausted (unconfirmed, not "full" — every "49%" reference found is a restatement of the statutory cap, not a project-specific disclosure) | No building-permit/EIA revocation or existing litigation found for this project itself | Representative unit (27 sqm 1BR) sole confirmed transaction price THB 3,200,000 ≥ THB 3M threshold.
-  <span class="gate-sub">The gate and the seven-dimension scores below are independent: the gate asks "is this project worth scoring at all," the scores below ask "how does it compare." <strong>The registered price clears the THB 3M threshold by only ~6.7% (below the framework's THB 3.6M boundary line) — the gate itself still passes, but this thin margin is the direct source of the foreign-side exit deduction below, not a gate defect.</strong> Also flagged: two independent Pantip buyer threads allege that ESTAR's other project, "The Breeze" (Naradhiwat Rajanagarindra Rd, 37 floors, 294 units), suffered delivery delays and common-area specifications below what was advertised, with buyers organizing and reporting no resolution. This is forum-sourced buyer allegation, not a regulatory finding or court record — a <strong>medium-low confidence signal corroborated by two independent sources</strong>, not this project's own building-permit/EIA/litigation matter, so it does not trigger the gate; it is factored into the developer dimension and flagged for buyer due diligence.</span>
+ <strong>✅ Eligibility gate check (all five must pass before scoring below applies):</strong> Structure/architecture/systems 100% complete (developer's own site, shown 2024-09-21); aggregators cite Oct 2024 completion/transfer | Freehold (medium confidence — no title-deed-level source found) | Foreign quota not confirmed exhausted (unconfirmed, not "full" — every "49%" reference found is a restatement of the statutory cap, not a project-specific disclosure) | No building-permit/EIA revocation or existing litigation found for this project itself | Representative unit (27 sqm 1BR) sole confirmed transaction price THB 3,200,000 ≥ THB 3M threshold.
+ <span class="gate-sub">The gate and the seven-dimension scores below are independent: the gate asks "is this project worth scoring at all," the scores below ask "how does it compare." <strong>The registered price clears the THB 3M threshold by only ~6.7% (below the framework's THB 3.6M boundary line) — the gate itself still passes, but this thin margin is the direct source of the foreign-side exit deduction below, not a gate defect.</strong> Also flagged: two independent Pantip buyer threads allege that ESTAR's other project, "The Breeze" (Naradhiwat Rajanagarindra Rd, 37 floors, 294 units), suffered delivery delays and common-area specifications below what was advertised, with buyers organizing and reporting no resolution. This is forum-sourced buyer allegation, not a regulatory finding or court record — a <strong>medium-low confidence signal corroborated by two independent sources</strong>, not this project's own building-permit/EIA/litigation matter, so it does not trigger the gate; it is factored into the developer dimension and flagged for buyer due diligence.</span>
 </div>
 
 <!-- BLOCK 2: RADAR + DIMENSION SCORES -->
 <section class="section">
-  <span class="section-eyebrow">◆ Scoring framework</span>
-  <h2 class="section-title">Seven-dimension score</h2>
-  <p class="section-sub">10-year hold, professional investor lens, Thailand framework (th-property-scorecard-v1 v2.0). Scarcity & location moat 20% · Transport & accessibility 12% · Capital appreciation momentum 15% · Entry valuation discipline 13% · Holding cash flow 12% · Exit & next-buyer pool 18% · Developer & handover 10%. Cash flow and exit are scored separately for Thai/foreign buyers; the other five dimensions share a single score.</p>
+ <span class="section-eyebrow">◆ Scoring framework</span>
+ <h2 class="section-title">Seven-dimension score</h2>
+ <p class="section-sub">10-year hold, professional investor lens, Thailand framework (th-property-scorecard-v1 v2.0). Scarcity & location moat 20% · Transport & accessibility 12% · Capital appreciation momentum 15% · Entry valuation discipline 13% · Holding cash flow 12% · Exit & next-buyer pool 18% · Developer & handover 10%. Cash flow and exit are scored separately for Thai/foreign buyers; the other five dimensions share a single score.</p>
 
-  <div class="radar-block">
-    <div class="radar-wrap">
+ <div class="radar-block">
+ <div class="radar-wrap">
 <svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="Seven-dimension radar chart">
-  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
-    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
-    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
-    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
-    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
-    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
-  </g>
-  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
-    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
-    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
-    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
-    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
-    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
-    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
-    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
-  </g>
-  <!-- navy (Thai): [5.8, 6.0, 4.0, 4.5, 4.6, 6.6, 5.5] -->
-  <polygon points="140.0,75.0 192.5,98.1 183.7,150.0 161.9,185.4 117.6,186.4 67.9,156.5 91.8,101.6" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
-  <g fill="#0d2244">
-    <circle cx="140.0" cy="75.0" r="3.5"/>
-    <circle cx="192.5" cy="98.1" r="3.5"/>
-    <circle cx="183.7" cy="150.0" r="3.5"/>
-    <circle cx="161.9" cy="185.4" r="3.5"/>
-    <circle cx="117.6" cy="186.4" r="3.5"/>
-    <circle cx="67.9" cy="156.5" r="3.5"/>
-    <circle cx="91.8" cy="101.6" r="3.5"/>
-  </g>
-  <!-- gold (foreign): [5.8, 6.0, 4.0, 4.5, 4.3, 5.8, 5.5] -->
-  <polygon points="140.0,75.0 192.5,98.1 183.7,150.0 161.9,185.4 119.1,183.4 76.7,154.5 91.8,101.6" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
-  <g fill="#b8924a">
-    <circle cx="140.0" cy="75.0" r="3.0"/>
-    <circle cx="192.5" cy="98.1" r="3.0"/>
-    <circle cx="183.7" cy="150.0" r="3.0"/>
-    <circle cx="161.9" cy="185.4" r="3.0"/>
-    <circle cx="119.1" cy="183.4" r="3.0"/>
-    <circle cx="76.7" cy="154.5" r="3.0"/>
-    <circle cx="91.8" cy="101.6" r="3.0"/>
-  </g>
-  <g fill="#475569" font-size="10" font-weight="600" font-family="'Inter', sans-serif">
-    <text x="140" y="12" text-anchor="middle">Scarcity/Location</text>
-    <text x="239" y="59" text-anchor="start">Transport</text>
-    <text x="263" y="168" text-anchor="start">Appreciation</text>
-    <text x="195" y="262" text-anchor="start">Valuation</text>
-    <text x="85" y="262" text-anchor="end">Cash flow</text>
-    <text x="17" y="168" text-anchor="end">Exit</text>
-    <text x="41" y="59" text-anchor="end">Developer</text>
-  </g>
+ <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+ <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+ <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+ <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+ <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+ <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+ </g>
+ <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+ <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+ <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+ <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+ <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+ <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+ <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+ <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+ </g>
+ <!-- navy (Thai): [5.8, 6.0, 4.0, 4.5, 4.6, 6.6, 5.5] -->
+ <polygon points="140.0,75.0 192.5,98.1 183.7,150.0 161.9,185.4 117.6,186.4 67.9,156.5 91.8,101.6" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+ <g fill="#0d2244">
+ <circle cx="140.0" cy="75.0" r="3.5"/>
+ <circle cx="192.5" cy="98.1" r="3.5"/>
+ <circle cx="183.7" cy="150.0" r="3.5"/>
+ <circle cx="161.9" cy="185.4" r="3.5"/>
+ <circle cx="117.6" cy="186.4" r="3.5"/>
+ <circle cx="67.9" cy="156.5" r="3.5"/>
+ <circle cx="91.8" cy="101.6" r="3.5"/>
+ </g>
+ <!-- gold (foreign): [5.8, 6.0, 4.0, 4.5, 4.3, 5.8, 5.5] -->
+ <polygon points="140.0,75.0 192.5,98.1 183.7,150.0 161.9,185.4 119.1,183.4 76.7,154.5 91.8,101.6" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+ <g fill="#b8924a">
+ <circle cx="140.0" cy="75.0" r="3.0"/>
+ <circle cx="192.5" cy="98.1" r="3.0"/>
+ <circle cx="183.7" cy="150.0" r="3.0"/>
+ <circle cx="161.9" cy="185.4" r="3.0"/>
+ <circle cx="119.1" cy="183.4" r="3.0"/>
+ <circle cx="76.7" cy="154.5" r="3.0"/>
+ <circle cx="91.8" cy="101.6" r="3.0"/>
+ </g>
+ <g fill="#475569" font-size="10" font-weight="600" font-family="'Inter', sans-serif">
+ <text x="140" y="12" text-anchor="middle">Scarcity/Location</text>
+ <text x="239" y="59" text-anchor="start">Transport</text>
+ <text x="263" y="168" text-anchor="start">Appreciation</text>
+ <text x="195" y="262" text-anchor="start">Valuation</text>
+ <text x="85" y="262" text-anchor="end">Cash flow</text>
+ <text x="17" y="168" text-anchor="end">Exit</text>
+ <text x="41" y="59" text-anchor="end">Developer</text>
+ </g>
 </svg>
-      <div class="radar-legend">
-        <span class="lg-item"><span class="lg-dot local"></span>Thai buyer 5.4</span>
-        <span class="lg-item"><span class="lg-dot foreign"></span>Foreign buyer 5.2</span>
-      </div>
-    </div>
+ <div class="radar-legend">
+ <span class="lg-item"><span class="lg-dot local"></span>Thai buyer 5.4</span>
+ <span class="lg-item"><span class="lg-dot foreign"></span>Foreign buyer 5.2</span>
+ </div>
+ </div>
 
-    <div class="dim-list">
-      <div class="dim">
-        <div class="dim-head">
-          <div><span class="dim-name">Scarcity & location moat</span><span class="dim-weight">20% · shared score</span></div>
-          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">5.8</span></span></div>
-        </div>
-        <p class="dim-rsn">Anchored to the "Rama 9 / Huai Khwang" district row, baseline 6.5. Three-layer audit: land layer ✗ (Bangkok's city plan is actively upzoning Din Daeng / Huai Khwang toward higher density along mass-transit lines — a structural policy signal loosening future supply, more explicit and less favorable than the usual "nearby new supply" observation); product layer ✗ (at least 5 confirmed comparable projects, 5,000+ units, in the same corridor: XT Huaykwang 1,404 units/2021/75m from the station, Noble Revolve Ratchada 802 units/2015, The Stage Mindscape 477 units/Jul 2024/~250m from MRT Huai Khwang Exit 1, Landmark @MRTA Station 2,101 units/2024, Aspire Huai Khwang 1,274 units/pipeline 2027 — a materially denser competitive set than typical); regulatory layer freehold ✓ (medium confidence) but foreign quota utilization is undisclosed, so no structural-scarcity credit is added. <strong>The effective-scarcity test cannot be run reliably</strong> because the project's own pricing is highly dispersed across sources (THB 1.99M-4.95M depending on vintage), so no premium/discount credit is awarded. Net: 6.5 −0.4 (land layer, active upzoning is a structural signal) −0.3 (product layer, 5,000+ comparable units) = 5.8, staying within the framework's required ≤0.5 gap versus the already-published Life Asoke Rama 9 card (d1=6.0) in the same district.</p>
-        <p class="dim-data">Three-layer audit: land ✗ (active upzoning, not just nearby new supply) / product ✗ (≥5 comparable projects, 5,000+ units, same corridor) / regulatory (freehold, medium confidence) ✓ but quota unknown · effective-scarcity test unrunnable given dispersed pricing data · gap vs. Life Asoke Rama 9 (d1=6.0) is 0.2, within the framework's ≤0.5 consistency requirement</p>
-      </div>
-      <div class="dim">
-        <div class="dim-head">
-          <div><span class="dim-name">Transport & accessibility</span><span class="dim-weight">12% · shared score</span></div>
-          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">6.0</span></span></div>
-        </div>
-        <p class="dim-rsn">Five different sources give walking distance to MRT Huai Khwang, none consistent and <strong>none accompanied by a routed or turn-by-turn map</strong>: developer's own site 350m, Hipflat EN/TH both 350m, homenayoo 350m, one Thai aggregator 400m, another 430m (~5 min), PropertyScout 470m. All readings fall inside the 600m gate threshold, but this framework's own cautionary case (a project once advertising 130m that was really 600-650m) counsels reading un-routed figures conservatively: taking the upper end of the range (470m), against the boundary between Tier 6 (≤600m or shuttle-dependent) and Tier 7 (≤400m, crossing a junction/no full cover), the conservative call lands on Tier 6, starting at 6.0. Skywalk/covered connection: unconfirmed. Hospitals: Bumrungrad ≈3.4km, Samitivej Sukhumvit ≈3.8km (both straight-line estimates, not routed), neither walkable — <strong>no benchmark-hospital credit awarded</strong>; nearer alternatives are lower-tier (Rama 9 Hospital, Piyavej, Bangkok Hospital). International schools: one Thai aggregator lists nearby schools (Triam Udomsuksa Nom Klao, Triam Udomsuksa Ratchada, Prep International Kindergarten, Bangkok Bilingual School), but that list comes from a marketing proximity page whose own source attribution is uncertain, and <strong>none is verified as a top-tier international school</strong> — no credit. No add-on credit applies; net 6.0.</p>
-        <p class="dim-data">MRT Huai Khwang walking distance: 5 sources report 350-470m, none route-verified; conservative reading takes the upper band, corresponding to Tier 6 · Bumrungrad ≈3.4km / Samitivej Sukhumvit ≈3.8km (straight-line, not walkable, no credit) · nearby alternative hospitals: Rama 9 Hospital / Piyavej / Bangkok Hospital (below the framework's three benchmark hospitals) · aggregator school list not verified as top-tier international · skywalk: unconfirmed</p>
-      </div>
-      <div class="dim">
-        <div class="dim-head">
-          <div><span class="dim-name">Capital appreciation momentum</span><span class="dim-weight">15% · shared score</span></div>
-          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">4.0</span></span></div>
-        </div>
-        <p class="dim-rsn">The Din Daeng / Huai Khwang corridor sits in the "New CBD" bracket (MRT already in place, but value not yet fully realized), baseline 5.0. The corridor faces a double supply headwind: <strong>a large 5-year pipeline in the same location</strong> (5,000+ confirmed comparable units already, including Aspire Huai Khwang's 1,274 units due June 2027) −0.5; and the <strong>city plan actively adjusting zoning toward higher density</strong> — not merely a cyclical pipeline buildup but a structural policy signal that the planning authority is loosening future supply caps, a more persistent drag on medium-term price momentum than an ordinary pipeline observation, an additional −0.5. Bangkok's overall backdrop (national price index +1.26% y/y in 2026Q1, Bangkok itself −0.18%; ~350,000-unit broad overhang citywide, 5-6 year absorption) is already reflected in the "New CBD" baseline itself and is not double-counted. Net: 5.0−0.5−0.5=4.0, the lowest across the framework's five published cards, reflecting the clearest documented case yet of this double supply pressure (a large in-progress pipeline compounded by an active zoning loosening).</p>
-        <p class="dim-data">New CBD baseline 5.0 · corridor pipeline/under-construction confirmed at 5,000+ units (incl. Aspire Huai Khwang's 1,274 units, due June 2027) · city plan actively upzoning toward higher density (structural, not merely cyclical) · national price index 2026Q1 +1.26% y/y (Bangkok −0.18%)</p>
-      </div>
-      <div class="dim">
-        <div class="dim-head">
-          <div><span class="dim-name">Entry valuation discipline</span><span class="dim-weight">13% · shared score</span></div>
-          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">4.5</span></span></div>
-        </div>
-        <p class="dim-rsn">The representative unit's (1BR, 27 sqm) valuation anchor faces significant data limitations: no Foreign Quota / Thai Quota price split was found (unconfirmed), and different-vintage sources describe pricing very differently — a Thai pre-sale-era page quoting "from THB 1.99M / 2.09M" (one self-dated July 2022), the developer's current page quoting "from THB 2.59M" (likely a studio floor, not 1BR), PropertyScout citing THB 2.37-4.95M overall, and Hipflat citing a 1BR band of USD 85,274-128,360 (≈THB 3.0-4.5M at 33.65). <strong>The one verifiable data point</strong> is a confirmed 1BR sale on 2025-10-09: THB 3.2M, implying ≈THB 118,500/sqm at 27 sqm — the single most trustworthy per-sqm figure available, though n=1. Against this transacted anchor, a higher blended asking price of ≈THB 3.87M/27sqm (≈THB 143,300/sqm) implies an asking premium of roughly <strong>+21%</strong>, landing in the framework's "+20-30%" scoring band (≈4.5). <strong>Confidence: low</strong> — only one confirmed transaction is available, and original pricing itself diverges more than 2.5x across sources and vintages; buyers should request recent same-unit-type transaction evidence from the agent before relying on this figure.</p>
-        <p class="dim-data">Representative unit 27 sqm 1BR: sole confirmed transaction THB 3,200,000 (2025-10-09, ≈118,500/sqm) · higher blended asking ≈THB 3,870,000 (≈143,300/sqm) · asking premium over transaction ≈+21% (confidence: low, n=1) · Foreign/Thai Quota price split: unconfirmed · original launch pricing diverges across sources THB 1.99-2.59M (different vintages/floors, not reconcilable)</p>
-      </div>
-      <div class="dim">
-        <div class="dim-head">
-          <div><span class="dim-name">Holding cash flow</span><span class="dim-weight">12% · Thai/foreign split</span></div>
-          <div class="dim-scores-inline">
-            <span class="dim-score"><span class="lbl">TH</span><span class="val local">4.6</span></span>
-            <span class="dim-score"><span class="lbl">FG</span><span class="val foreign">4.3</span></span>
-          </div>
-        </div>
-        <p class="dim-rsn">Representative 1BR (27 sqm) rents cluster THB 14,000-18,000/month (≈26-30 sqm sample); this card uses THB 16,000/month as representative. <strong>No Foreign/Thai Quota price split was found for this project, so both buyer types share the same purchase-price basis (THB 3.2M, the sole confirmed transaction)</strong> — unlike the XT Phayathai card, which had a confirmed quota split. Two gross-yield bases are presented rather than one point figure: on the confirmed transaction price (THB 3.2M), gross yield ≈6.0%; on the higher blended asking (THB 3.87M), gross yield ≈5.0% — <strong>scoring uses the average of the two (≈5.5%)</strong> to avoid cherry-picking the more favorable transaction-based figure alone. <strong>Thai buyer</strong>: average gross yield 5.5% against the mortgage rate (≈6.5%, per the framework's same-period figure) implies a spread of roughly <strong>−1.0pp</strong>, negative but narrower than XT Phayathai's −1.33pp. <strong>Foreign buyer</strong>: structurally unable to access THB mortgages, so scoring switches to "net yield vs. opportunity cost"; average gross yield 5.5% less 15% non-resident withholding leaves net yield ≈<strong>4.68%</strong>, against opportunity-cost benchmark two (USD 5.75%/yr = US 10Y 4.74%-4.75% + 100bp, verified 2026-07-31), a gap of roughly <strong>−1.08pp</strong>, between Life Asoke's −1.38pp and XT Phayathai's −1.76pp.</p>
-        <p class="dim-data">Representative 1BR 27 sqm rent ≈THB 16,000/month (range 14,000-18,000) · two yield bases: 6.0% on confirmed transaction price / 5.0% on higher blended asking, scoring uses the average 5.5% · Thai buyer: average gross yield 5.5% vs. mortgage rate 6.5% = spread −1.0pp · Foreign buyer: net yield 4.68% (after 15% withholding) vs. opportunity-cost benchmark two 5.75% (USD) = gap −1.08pp</p>
-      </div>
-      <div class="dim">
-        <div class="dim-head">
-          <div><span class="dim-name">Exit & next-buyer pool</span><span class="dim-weight">18% · Thai/foreign split</span></div>
-          <div class="dim-scores-inline">
-            <span class="dim-score"><span class="lbl">TH</span><span class="val local">6.6</span></span>
-            <span class="dim-score"><span class="lbl">FG</span><span class="val foreign">5.8</span></span>
-          </div>
-        </div>
-        <p class="dim-rsn"><strong>Thai buyer</strong>: freehold baseline 7.0; quantum — the representative unit's THB 3.2M falls in the "≤THB 4M" bracket, good local credit accessibility (not low enough to trigger the extra deduction reserved for <THB 3M rejection-rate risk) +0.5; secondary-market transaction depth — within the observed 12-month window (as of 2026-08-04) only <strong>a single confirmed transaction</strong> was found, clearly below the <10-transaction thinness threshold, −0.3; listing ratio — active listings vary 5/13/16 across platforms, against 383 total units that implies ≈1.3%-4.2%, but source variance is 16/5≈3.2x (above the 2x threshold), so per the rules the range is reported without taking a midpoint, applying the fixed conservative −0.1; asking-vs-transaction discount — the higher blended asking (≈THB 3.87M) against the sole confirmed transaction (THB 3.2M) implies roughly +21%, above the 15% threshold, but <strong>this is this card's own derived estimate rather than a platform's official aggregate statistic, so confidence is lower than XT Phayathai's officially-sourced figure</strong> — still deducted per the rule but explicitly flagged low-confidence, −0.3; national secondary-listing systemic pressure (+34.2% y/y) −0.2. Net: 7.0+0.5−0.3−0.1−0.3−0.2=6.6. <strong>Foreign buyer</strong>: quota unconfirmed −0.5; visa threshold is a binary flag — the representative unit's THB 3.2M ✓ clears the THB 3M line, but <strong>only by ~6.7%, well below the framework's THB 3.6M boundary line — this is the first card in the framework's pilot to trigger this boundary-risk adjustment</strong>, <strong>−0.3</strong> (a 15-20% price decline could drop this unit entirely out of visa eligibility, structurally removing the foreign buyer pool — a mechanism that never triggered on the prior four cards, whose representative units all sat at THB 4.3-5.9M, well above the threshold); exit price of THB 3.2M falls in the THB 3-10M sweet band +0.3 (an independent effect from the boundary risk — one concerns affordability, the other visa-eligibility proximity, and both apply simultaneously); national foreign-transfer volume down 17.3% y/y (REIC forecasting a further ~20% decline for 2026) −0.3; the project is not on the active foreign-resale corridor list (Sukhumvit core / Thonglor etc.), no additional credit. Net: 6.6−0.5−0.3+0.3−0.3=5.8.</p>
-        <p class="dim-data">🔒 Foreign quota utilization: unconfirmed (−0.5) · Quantum: Thai buyer monthly-income threshold ≈THB 44,800 (price × 1.4%), against Bangkok's average household income of THB 39,100, ≈1.15x — the lowest threshold multiple across this site's published cards · Secondary transactions: only 1 confirmed (Oct 2025), too thin to annualize · Listing ratio range 1.3%-4.2% (source variance 3.2x >2x threshold, fixed −0.1 applied) · Asking-transaction discount ≈+21% (this card's own derivation, not an official aggregate, low confidence) · <strong>Visa-threshold boundary risk (new mechanism, first trigger): representative unit clears the THB 3M threshold by only 6.7%, below the framework's THB 3.6M safety line, −0.3</strong></p>
-      </div>
-      <div class="dim">
-        <div class="dim-head">
-          <div><span class="dim-name">Developer & handover</span><span class="dim-weight">10% · shared score</span></div>
-          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">5.5</span></span></div>
-        </div>
-        <p class="dim-rsn">Eastern Star Real Estate PCL (SET: ESTAR), listed since 1994, is a distinctly small, thinly-traded micro-cap issuer (market-cap estimates conflict across two sources, roughly THB 954M-1.26bn; 52-week share price range THB 0.17-0.27); <strong>Sansiri's market cap is roughly 27x ESTAR's</strong> — an unambiguously small secondary developer by scale, not a failing one, but clearly smaller than the framework's other published cases (AP, Sansiri). <strong>The financial trajectory needs correcting away from a "declining" framing</strong>: FY2023 was the trough (revenue THB 1,316M, −27.7%; net income THB 29.93M, −41.5%), FY2024 recovered to revenue THB 1,918M / net income THB 34.1M, and <strong>FY2025 shows revenue THB 2,054M (+7.12%) and net income sharply up to THB 126.4M (+270.6%)</strong> — a clear, substantial recovery, and this most recent year, not the 2023 trough, is the appropriate basis for judgment. No TRIS Rating record was found in either English or Thai searches — listed "unconfirmed." <strong>A developer-level delivery signal</strong> also surfaced: two independent Pantip buyer threads allege that ESTAR's <strong>other</strong> project, "The Breeze" (Naradhiwat Rajanagarindra Rd, 37 floors, 294 units), suffered delivery delays against the contracted timeline and common-area specifications below what was advertised, with buyers organizing but reporting no resolution — forum-sourced buyer allegation rather than a regulatory finding or court record, inherently medium-low confidence, but <strong>corroborated by two independent sources into a consistent pattern rather than a single-post rumor</strong>, warranting more weight in the developer dimension than a typical unconfirmed single signal (hence −0.3, larger than a generic single-signal deduction). A separate portfolio-summary scrape claiming "ESTAR: 7 condo projects, ~2,200 units, 100% completed, 90% sold" also surfaced two project names that appear not to be actual ESTAR developments — <strong>judged contaminated and not cited</strong>. No abandoned-project record found. No building-permit or EIA dispute or litigation was found for this project itself (as distinct from The Breeze) — all five eligibility-gate checks pass. Net: micro-cap baseline (mapped to the "SET-listed but recent financial concern" 6.0-6.5 bracket, taking 6.0 given clearly weaker scale/liquidity than a typical SET mid-cap developer) −0.3 (two-source-corroborated sister-project delivery complaint pattern) −0.2 (TRIS rating absence, conflicting market-cap sourcing) = 5.5.</p>
-        <p class="dim-data">SET: ESTAR, listed 1994, micro-cap (two conflicting market-cap sources, ≈THB 954M-1.26bn, roughly 1/27th of Sansiri's, 52-week share price 0.17-0.27) · FY2023 trough (revenue −27.7%/net income −41.5%) → FY2025 clear recovery (revenue +7.12%/net income +270.6%) · TRIS Rating: not found (unconfirmed) · two independent Pantip threads allege sister-project "The Breeze" delivery delay/common-area spec shortfall (medium-low confidence, two-source corroborated) · "7 projects/2,200 units" portfolio scrape contains apparently non-ESTAR project names, judged contaminated and not cited · no building-permit/EIA dispute found for this project itself</p>
-      </div>
-    </div>
-  </div>
+ <div class="dim-list">
+ <div class="dim">
+ <div class="dim-head">
+ <div><span class="dim-name">Scarcity & location moat</span><span class="dim-weight">20% · shared score</span></div>
+ <div class="dim-scores-inline"><span class="dim-score"><span class="val local">5.8</span></span></div>
+ </div>
+ <p class="dim-rsn">Anchored to the "Rama 9 / Huai Khwang" district row, baseline 6.5. Three-layer audit: land layer ✗ (Bangkok's city plan is actively upzoning Din Daeng / Huai Khwang toward higher density along mass-transit lines — a structural policy signal loosening future supply, more explicit and less favorable than the usual "nearby new supply" observation); product layer ✗ (at least 5 confirmed comparable projects, 5,000+ units, in the same corridor: XT Huaykwang 1,404 units/2021/75m from the station, Noble Revolve Ratchada 802 units/2015, The Stage Mindscape 477 units/Jul 2024/~250m from MRT Huai Khwang Exit 1, Landmark @MRTA Station 2,101 units/2024, Aspire Huai Khwang 1,274 units/pipeline 2027 — a materially denser competitive set than typical); regulatory layer freehold ✓ (medium confidence) but foreign quota utilization is undisclosed, so no structural-scarcity credit is added. <strong>The effective-scarcity test cannot be run reliably</strong> because the project's own pricing is highly dispersed across sources (THB 1.99M-4.95M depending on vintage), so no premium/discount credit is awarded. Net: 6.5 −0.4 (land layer, active upzoning is a structural signal) −0.3 (product layer, 5,000+ comparable units) = 5.8, staying within the framework's required ≤0.5 gap versus the already-published Life Asoke Rama 9 card (d1=6.0) in the same district.</p>
+ <p class="dim-data">Three-layer audit: land ✗ (active upzoning, not just nearby new supply) / product ✗ (≥5 comparable projects, 5,000+ units, same corridor) / regulatory (freehold, medium confidence) ✓ but quota unknown · effective-scarcity test unrunnable given dispersed pricing data · gap vs. Life Asoke Rama 9 (d1=6.0) is 0.2, within the framework's ≤0.5 consistency requirement</p>
+ </div>
+ <div class="dim">
+ <div class="dim-head">
+ <div><span class="dim-name">Transport & accessibility</span><span class="dim-weight">12% · shared score</span></div>
+ <div class="dim-scores-inline"><span class="dim-score"><span class="val local">6.0</span></span></div>
+ </div>
+ <p class="dim-rsn">Five different sources give walking distance to MRT Huai Khwang, none consistent and <strong>none accompanied by a routed or turn-by-turn map</strong>: developer's own site 350m, Hipflat EN/TH both 350m, homenayoo 350m, one Thai aggregator 400m, another 430m (~5 min), PropertyScout 470m. All readings fall inside the 600m gate threshold, but this framework's own cautionary case (a project once advertising 130m that was really 600-650m) counsels reading un-routed figures conservatively: taking the upper end of the range (470m), against the boundary between Tier 6 (≤600m or shuttle-dependent) and Tier 7 (≤400m, crossing a junction/no full cover), the conservative call lands on Tier 6, starting at 6.0. Skywalk/covered connection: unconfirmed. Hospitals: Bumrungrad ≈3.4km, Samitivej Sukhumvit ≈3.8km (both straight-line estimates, not routed), neither walkable — <strong>no benchmark-hospital credit awarded</strong>; nearer alternatives are lower-tier (Rama 9 Hospital, Piyavej, Bangkok Hospital). International schools: one Thai aggregator lists nearby schools (Triam Udomsuksa Nom Klao, Triam Udomsuksa Ratchada, Prep International Kindergarten, Bangkok Bilingual School), but that list comes from a marketing proximity page whose own source attribution is uncertain, and <strong>none is verified as a top-tier international school</strong> — no credit. No add-on credit applies; net 6.0.</p>
+ <p class="dim-data">MRT Huai Khwang walking distance: 5 sources report 350-470m, none route-verified; conservative reading takes the upper band, corresponding to Tier 6 · Bumrungrad ≈3.4km / Samitivej Sukhumvit ≈3.8km (straight-line, not walkable, no credit) · nearby alternative hospitals: Rama 9 Hospital / Piyavej / Bangkok Hospital (below the framework's three benchmark hospitals) · aggregator school list not verified as top-tier international · skywalk: unconfirmed</p>
+ </div>
+ <div class="dim">
+ <div class="dim-head">
+ <div><span class="dim-name">Capital appreciation momentum</span><span class="dim-weight">15% · shared score</span></div>
+ <div class="dim-scores-inline"><span class="dim-score"><span class="val local">4.0</span></span></div>
+ </div>
+ <p class="dim-rsn">The Din Daeng / Huai Khwang corridor sits in the "New CBD" bracket (MRT already in place, but value not yet fully realized), baseline 5.0. The corridor faces a double supply headwind: <strong>a large 5-year pipeline in the same location</strong> (5,000+ confirmed comparable units already, including Aspire Huai Khwang's 1,274 units due June 2027) −0.5; and the <strong>city plan actively adjusting zoning toward higher density</strong> — not merely a cyclical pipeline buildup but a structural policy signal that the planning authority is loosening future supply caps, a more persistent drag on medium-term price momentum than an ordinary pipeline observation, an additional −0.5. Bangkok's overall backdrop (national price index +1.26% y/y in 2026Q1, Bangkok itself −0.18%; ~350,000-unit broad overhang citywide, 5-6 year absorption) is already reflected in the "New CBD" baseline itself and is not double-counted. Net: 5.0−0.5−0.5=4.0, the lowest across the framework's five published cards, reflecting the clearest documented case yet of this double supply pressure (a large in-progress pipeline compounded by an active zoning loosening).</p>
+ <p class="dim-data">New CBD baseline 5.0 · corridor pipeline/under-construction confirmed at 5,000+ units (incl. Aspire Huai Khwang's 1,274 units, due June 2027) · city plan actively upzoning toward higher density (structural, not merely cyclical) · national price index 2026Q1 +1.26% y/y (Bangkok −0.18%)</p>
+ </div>
+ <div class="dim">
+ <div class="dim-head">
+ <div><span class="dim-name">Entry valuation discipline</span><span class="dim-weight">13% · shared score</span></div>
+ <div class="dim-scores-inline"><span class="dim-score"><span class="val local">4.5</span></span></div>
+ </div>
+ <p class="dim-rsn">The representative unit's (1BR, 27 sqm) valuation anchor faces significant data limitations: no Foreign Quota / Thai Quota price split was found (unconfirmed), and different-vintage sources describe pricing very differently — a Thai pre-sale-era page quoting "from THB 1.99M / 2.09M" (one self-dated July 2022), the developer's current page quoting "from THB 2.59M" (likely a studio floor, not 1BR), PropertyScout citing THB 2.37-4.95M overall, and Hipflat citing a 1BR band of USD 85,274-128,360 (≈THB 3.0-4.5M at 33.65). <strong>The one verifiable data point</strong> is a confirmed 1BR sale on 2025-10-09: THB 3.2M, implying ≈THB 118,500/sqm at 27 sqm — the single most trustworthy per-sqm figure available, though n=1. Against this transacted anchor, a higher blended asking price of ≈THB 3.87M/27sqm (≈THB 143,300/sqm) implies an asking premium of roughly <strong>+21%</strong>, landing in the framework's "+20-30%" scoring band (≈4.5). <strong>Confidence: low</strong> — only one confirmed transaction is available, and original pricing itself diverges more than 2.5x across sources and vintages; buyers should request recent same-unit-type transaction evidence from the agent before relying on this figure.</p>
+ <p class="dim-data">Representative unit 27 sqm 1BR: sole confirmed transaction THB 3,200,000 (2025-10-09, ≈118,500/sqm) · higher blended asking ≈THB 3,870,000 (≈143,300/sqm) · asking premium over transaction ≈+21% (confidence: low, n=1) · Foreign/Thai Quota price split: unconfirmed · original launch pricing diverges across sources THB 1.99-2.59M (different vintages/floors, not reconcilable)</p>
+ </div>
+ <div class="dim">
+ <div class="dim-head">
+ <div><span class="dim-name">Holding cash flow</span><span class="dim-weight">12% · Thai/foreign split</span></div>
+ <div class="dim-scores-inline">
+ <span class="dim-score"><span class="lbl">TH</span><span class="val local">4.6</span></span>
+ <span class="dim-score"><span class="lbl">FG</span><span class="val foreign">4.3</span></span>
+ </div>
+ </div>
+ <p class="dim-rsn">Representative 1BR (27 sqm) rents cluster THB 14,000-18,000/month (≈26-30 sqm sample); this card uses THB 16,000/month as representative. <strong>No Foreign/Thai Quota price split was found for this project, so both buyer types share the same purchase-price basis (THB 3.2M, the sole confirmed transaction)</strong> — unlike the XT Phayathai card, which had a confirmed quota split. Two gross-yield bases are presented rather than one point figure: on the confirmed transaction price (THB 3.2M), gross yield ≈6.0%; on the higher blended asking (THB 3.87M), gross yield ≈5.0% — <strong>scoring uses the average of the two (≈5.5%)</strong> to avoid cherry-picking the more favorable transaction-based figure alone. <strong>Thai buyer</strong>: average gross yield 5.5% against the mortgage rate (≈6.5%, per the framework's same-period figure) implies a spread of roughly <strong>−1.0pp</strong>, negative but narrower than XT Phayathai's −1.33pp. <strong>Foreign buyer</strong>: structurally unable to access THB mortgages, so scoring switches to "net yield vs. opportunity cost"; average gross yield 5.5% less 15% non-resident withholding leaves net yield ≈<strong>4.68%</strong>, against opportunity-cost benchmark two (USD 5.75%/yr = US 10Y 4.74%-4.75% + 100bp, verified 2026-07-31), a gap of roughly <strong>−1.08pp</strong>, between Life Asoke's −1.38pp and XT Phayathai's −1.76pp.</p>
+ <p class="dim-data">Representative 1BR 27 sqm rent ≈THB 16,000/month (range 14,000-18,000) · two yield bases: 6.0% on confirmed transaction price / 5.0% on higher blended asking, scoring uses the average 5.5% · Thai buyer: average gross yield 5.5% vs. mortgage rate 6.5% = spread −1.0pp · Foreign buyer: net yield 4.68% (after 15% withholding) vs. opportunity-cost benchmark two 5.75% (USD) = gap −1.08pp</p>
+ </div>
+ <div class="dim">
+ <div class="dim-head">
+ <div><span class="dim-name">Exit & next-buyer pool</span><span class="dim-weight">18% · Thai/foreign split</span></div>
+ <div class="dim-scores-inline">
+ <span class="dim-score"><span class="lbl">TH</span><span class="val local">6.6</span></span>
+ <span class="dim-score"><span class="lbl">FG</span><span class="val foreign">5.8</span></span>
+ </div>
+ </div>
+ <p class="dim-rsn"><strong>Thai buyer</strong>: freehold baseline 7.0; quantum — the representative unit's THB 3.2M falls in the "≤THB 4M" bracket, good local credit accessibility (not low enough to trigger the extra deduction reserved for <THB 3M rejection-rate risk) +0.5; secondary-market transaction depth — within the observed 12-month window (as of 2026-08-04) only <strong>a single confirmed transaction</strong> was found, clearly below the <10-transaction thinness threshold, −0.3; listing ratio — active listings vary 5/13/16 across platforms, against 383 total units that implies ≈1.3%-4.2%, but source variance is 16/5≈3.2x (above the 2x threshold), so per the rules the range is reported without taking a midpoint, applying the fixed conservative −0.1; asking-vs-transaction discount — the higher blended asking (≈THB 3.87M) against the sole confirmed transaction (THB 3.2M) implies roughly +21%, above the 15% threshold, but <strong>this is this card's own derived estimate rather than a platform's official aggregate statistic, so confidence is lower than XT Phayathai's officially-sourced figure</strong> — still deducted per the rule but explicitly flagged low-confidence, −0.3; national secondary-listing systemic pressure (+34.2% y/y) −0.2. Net: 7.0+0.5−0.3−0.1−0.3−0.2=6.6. <strong>Foreign buyer</strong>: quota unconfirmed −0.5; visa threshold is a binary flag — the representative unit's THB 3.2M ✓ clears the THB 3M line, but <strong>only by ~6.7%, well below the framework's THB 3.6M boundary line — this card trigger this boundary-risk adjustment</strong>, <strong>−0.3</strong> (a 15-20% price decline could drop this unit entirely out of visa eligibility, structurally removing the foreign buyer pool — a mechanism that never triggered on the prior four cards, whose representative units all sat at THB 4.3-5.9M, well above the threshold); exit price of THB 3.2M falls in the THB 3-10M sweet band +0.3 (an independent effect from the boundary risk — one concerns affordability, the other visa-eligibility proximity, and both apply simultaneously); national foreign-transfer volume down 17.3% y/y (REIC forecasting a further ~20% decline for 2026) −0.3; the project is not on the active foreign-resale corridor list (Sukhumvit core / Thonglor etc.), no additional credit. Net: 6.6−0.5−0.3+0.3−0.3=5.8.</p>
+ <p class="dim-data">🔒 Foreign quota utilization: unconfirmed (−0.5) · Quantum: Thai buyer monthly-income threshold ≈THB 44,800 (price × 1.4%), against Bangkok's average household income of THB 39,100, ≈1.15x — a notably low threshold multiple · Secondary transactions: only 1 confirmed (Oct 2025), too thin to annualize · Listing ratio range 1.3%-4.2% (source variance 3.2x >2x threshold, fixed −0.1 applied) · Asking-transaction discount ≈+21% (this card's own derivation, not an official aggregate, low confidence) · <strong>Visa-threshold boundary risk (new mechanism, first trigger): representative unit clears the THB 3M threshold by only 6.7%, below the framework's THB 3.6M safety line, −0.3</strong></p>
+ </div>
+ <div class="dim">
+ <div class="dim-head">
+ <div><span class="dim-name">Developer & handover</span><span class="dim-weight">10% · shared score</span></div>
+ <div class="dim-scores-inline"><span class="dim-score"><span class="val local">5.5</span></span></div>
+ </div>
+ <p class="dim-rsn">Eastern Star Real Estate PCL (SET: ESTAR), listed since 1994, is a distinctly small, thinly-traded micro-cap issuer (market-cap estimates conflict across two sources, roughly THB 954M-1.26bn; 52-week share price range THB 0.17-0.27); <strong>Sansiri's market cap is roughly 27x ESTAR's</strong> — an unambiguously small secondary developer by scale, not a failing one, but clearly smaller than the framework's other published cases (AP, Sansiri). <strong>The financial trajectory needs correcting away from a "declining" framing</strong>: FY2023 was the trough (revenue THB 1,316M, −27.7%; net income THB 29.93M, −41.5%), FY2024 recovered to revenue THB 1,918M / net income THB 34.1M, and <strong>FY2025 shows revenue THB 2,054M (+7.12%) and net income sharply up to THB 126.4M (+270.6%)</strong> — a clear, substantial recovery, and this most recent year, not the 2023 trough, is the appropriate basis for judgment. No TRIS Rating record was found in either English or Thai searches — listed "unconfirmed." <strong>A developer-level delivery signal</strong> also surfaced: two independent Pantip buyer threads allege that ESTAR's <strong>other</strong> project, "The Breeze" (Naradhiwat Rajanagarindra Rd, 37 floors, 294 units), suffered delivery delays against the contracted timeline and common-area specifications below what was advertised, with buyers organizing but reporting no resolution — forum-sourced buyer allegation rather than a regulatory finding or court record, inherently medium-low confidence, but <strong>corroborated by two independent sources into a consistent pattern rather than a single-post rumor</strong>, warranting more weight in the developer dimension than a typical unconfirmed single signal (hence −0.3, larger than a generic single-signal deduction). A separate portfolio-summary scrape claiming "ESTAR: 7 condo projects, ~2,200 units, 100% completed, 90% sold" also surfaced two project names that appear not to be actual ESTAR developments — <strong>judged contaminated and not cited</strong>. No abandoned-project record found. No building-permit or EIA dispute or litigation was found for this project itself (as distinct from The Breeze) — all five eligibility-gate checks pass. Net: micro-cap baseline (mapped to the "SET-listed but recent financial concern" 6.0-6.5 bracket, taking 6.0 given clearly weaker scale/liquidity than a typical SET mid-cap developer) −0.3 (two-source-corroborated sister-project delivery complaint pattern) −0.2 (TRIS rating absence, conflicting market-cap sourcing) = 5.5.</p>
+ <p class="dim-data">SET: ESTAR, listed 1994, micro-cap (two conflicting market-cap sources, ≈THB 954M-1.26bn, roughly 1/27th of Sansiri's, 52-week share price 0.17-0.27) · FY2023 trough (revenue −27.7%/net income −41.5%) → FY2025 clear recovery (revenue +7.12%/net income +270.6%) · TRIS Rating: not found (unconfirmed) · two independent Pantip threads allege sister-project "The Breeze" delivery delay/common-area spec shortfall (medium-low confidence, two-source corroborated) · "7 projects/2,200 units" portfolio scrape contains apparently non-ESTAR project names, judged contaminated and not cited · no building-permit/EIA dispute found for this project itself</p>
+ </div>
+ </div>
+ </div>
 </section>
 
 <!-- BLOCK 3: KEY DATA TABLES -->
 <section class="section">
-  <span class="section-eyebrow">◆ Key facts</span>
-  <h2 class="section-title">Key data</h2>
-  <p class="section-sub">Representative unit: <strong>27 sqm 1BR</strong>, sole confirmed transaction THB 3,200,000 (2025-10-09, ≈USD 95,100 / MYR 788,700 at THB/USD 33.65, USD/MYR 4.06, 2026-07, see th/report.html). The Thailand methodology uses 1BR rather than 2BR as the cross-project representative unit type; this project's official unit mix is Studio 21-23 sqm, 1BR 26-27 sqm, 2BR 41-42 sqm — the representative unit is set at the upper end of the 1BR band (27 sqm) to match the sole confirmed transaction sample.</p>
+ <span class="section-eyebrow">◆ Key facts</span>
+ <h2 class="section-title">Key data</h2>
+ <p class="section-sub">Representative unit: <strong>27 sqm 1BR</strong>, sole confirmed transaction THB 3,200,000 (2025-10-09, ≈USD 95,100 / MYR 788,700 at THB/USD 33.65, USD/MYR 4.06, 2026-07, see th/report.html). The Thailand methodology uses 1BR rather than 2BR as the cross-project representative unit type; this project's official unit mix is Studio 21-23 sqm, 1BR 26-27 sqm, 2BR 41-42 sqm — the representative unit is set at the upper end of the 1BR band (27 sqm) to match the sole confirmed transaction sample.</p>
 
-  <div class="data-grid">
-    <div>
-      <table class="kv-table">
-        <thead><tr><th colspan="2">Project basics</th></tr></thead>
-        <tbody>
-          <tr><td class="kv-label">Developer</td><td class="kv-val">Eastern Star Real Estate PCL (SET: ESTAR, listed 1994)<span class="kv-src">Developer's own site / SET disclosure; a Thai micro-cap issuer, far smaller than Sansiri/AP peers</span></td></tr>
-          <tr><td class="kv-label">Tenure</td><td class="kv-val">Freehold (medium confidence — no title-deed-level source found)<span class="kv-src">Developer's own site / multiple aggregators consistently state freehold, but no title-deed document was independently confirmed</span></td></tr>
-          <tr><td class="kv-label">Scale</td><td class="kv-val">383 units · 2 low-rise buildings (8 floors each) · land 2-1-79.5 rai (≈3,200 sqm project area)<span class="kv-src">Developer's own site; multiple sources cross-confirm a low-rise, not high-rise, product</span></td></tr>
-          <tr><td class="kv-label">Unit mix</td><td class="kv-val">Studio 21-23 sqm · 1BR 26-27 sqm · 2BR 41-42 sqm<span class="kv-src">Developer's official unit-type table</span></td></tr>
-          <tr><td class="kv-label">Representative price</td><td class="kv-val">27 sqm 1BR: sole confirmed transaction THB 3,200,000 (≈118,500/sqm) / higher blended asking ≈THB 3,870,000 (≈143,300/sqm)<span class="kv-src">Hipflat "Previous Sales" (transacted 2025-10-09) / Hipflat project rent-sale blended figures; no Foreign/Thai Quota price split was found</span></td></tr>
-          <tr><td class="kv-label">Completion</td><td class="kv-val">Structure/architecture/systems 100% complete (developer's own site, shown 2024-09-21); aggregators cite October 2024 completion, transfers around the same period<span class="kv-src">Developer's own progress page vs. FazWaz/Hipflat completion-month labels; this card uses "Sept 2024 structural completion / Oct 2024 transfers" as the conservative range. A previously circulated "Aug 2024" reading could not be reproduced from any source and is not used</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div>
-      <table class="kv-table">
-        <thead><tr><th colspan="2">Location & transport integration</th></tr></thead>
-        <tbody>
-          <tr><td class="kv-label">MRT</td><td class="kv-val">MRT Huai Khwang station, five sources report 350-470m, none route-verified<span class="kv-src">Developer's site 350m / Hipflat EN&TH 350m / homenayoo 350m / Thai aggregator A 400m / Thai aggregator B 430m (~5min) / PropertyScout 470m; none provided a mapped or turn-by-turn route</span></td></tr>
-          <tr><td class="kv-label">Hospitals</td><td class="kv-val">Bumrungrad ≈3.4km, Samitivej Sukhumvit ≈3.8km (from MRT Huai Khwang, straight-line estimates, not routed, neither walkable — no benchmark-hospital credit awarded); nearer alternatives: Rama 9 Hospital / Piyavej / Bangkok Hospital (lower-tier)<span class="kv-src">Multiple aggregators' straight-line distance estimates</span></td></tr>
-          <tr><td class="kv-label">International schools</td><td class="kv-val">One Thai aggregator lists nearby schools (Triam Udomsuksa Nom Klao / Triam Udomsuksa Ratchada / Prep International Kindergarten / Bangkok Bilingual School), but none is verified as a top-tier international school by this framework's standard, and the source's own attribution is uncertain<span class="kv-src">Single Thai-language marketing proximity page, no independent cross-source corroboration</span></td></tr>
-          <tr><td class="kv-label">Corridor comps</td><td class="kv-val">At least 5 confirmed, 5,000+ units: XT Huaykwang (Sansiri, 1,404 units, 2021, 75m from station) / Noble Revolve Ratchada (802 units, 2015) / The Stage Mindscape (477 units, Jul 2024, ≈250m from MRT Huai Khwang Exit 1) / Landmark @MRTA Station (Siamese Asset, 2,101 units, 2024) / Aspire Huai Khwang (AP, 1,274 units, pipeline June 2027)<span class="kv-src">FazWaz / Hipflat "Projects Nearby" module; full 2026-2028 pipeline: unconfirmed, likely larger still</span></td></tr>
-          <tr><td class="kv-label">City-plan trend</td><td class="kv-val">Bangkok's city plan is actively upzoning density along the Din Daeng / Huai Khwang mass-transit corridor — a structural policy signal expanding future supply<span class="kv-src">Bangkok City Planning public disclosure</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+ <div class="data-grid">
+ <div>
+ <table class="kv-table">
+ <thead><tr><th colspan="2">Project basics</th></tr></thead>
+ <tbody>
+ <tr><td class="kv-label">Developer</td><td class="kv-val">Eastern Star Real Estate PCL (SET: ESTAR, listed 1994)<span class="kv-src">Developer's own site / SET disclosure; a Thai micro-cap issuer, far smaller than Sansiri/AP peers</span></td></tr>
+ <tr><td class="kv-label">Tenure</td><td class="kv-val">Freehold (medium confidence — no title-deed-level source found)<span class="kv-src">Developer's own site / multiple aggregators consistently state freehold, but no title-deed document was independently confirmed</span></td></tr>
+ <tr><td class="kv-label">Scale</td><td class="kv-val">383 units · 2 low-rise buildings (8 floors each) · land 2-1-79.5 rai (≈3,200 sqm project area)<span class="kv-src">Developer's own site; multiple sources cross-confirm a low-rise, not high-rise, product</span></td></tr>
+ <tr><td class="kv-label">Unit mix</td><td class="kv-val">Studio 21-23 sqm · 1BR 26-27 sqm · 2BR 41-42 sqm<span class="kv-src">Developer's official unit-type table</span></td></tr>
+ <tr><td class="kv-label">Representative price</td><td class="kv-val">27 sqm 1BR: sole confirmed transaction THB 3,200,000 (≈118,500/sqm) / higher blended asking ≈THB 3,870,000 (≈143,300/sqm)<span class="kv-src">Hipflat "Previous Sales" (transacted 2025-10-09) / Hipflat project rent-sale blended figures; no Foreign/Thai Quota price split was found</span></td></tr>
+ <tr><td class="kv-label">Completion</td><td class="kv-val">Structure/architecture/systems 100% complete (developer's own site, shown 2024-09-21); aggregators cite October 2024 completion, transfers around the same period<span class="kv-src">Developer's own progress page vs. FazWaz/Hipflat completion-month labels; this card uses "Sept 2024 structural completion / Oct 2024 transfers" as the conservative range. A previously circulated "Aug 2024" reading could not be reproduced from any source and is not used</span></td></tr>
+ </tbody>
+ </table>
+ </div>
+ <div>
+ <table class="kv-table">
+ <thead><tr><th colspan="2">Location & transport integration</th></tr></thead>
+ <tbody>
+ <tr><td class="kv-label">MRT</td><td class="kv-val">MRT Huai Khwang station, five sources report 350-470m, none route-verified<span class="kv-src">Developer's site 350m / Hipflat EN&TH 350m / homenayoo 350m / Thai aggregator A 400m / Thai aggregator B 430m (~5min) / PropertyScout 470m; none provided a mapped or turn-by-turn route</span></td></tr>
+ <tr><td class="kv-label">Hospitals</td><td class="kv-val">Bumrungrad ≈3.4km, Samitivej Sukhumvit ≈3.8km (from MRT Huai Khwang, straight-line estimates, not routed, neither walkable — no benchmark-hospital credit awarded); nearer alternatives: Rama 9 Hospital / Piyavej / Bangkok Hospital (lower-tier)<span class="kv-src">Multiple aggregators' straight-line distance estimates</span></td></tr>
+ <tr><td class="kv-label">International schools</td><td class="kv-val">One Thai aggregator lists nearby schools (Triam Udomsuksa Nom Klao / Triam Udomsuksa Ratchada / Prep International Kindergarten / Bangkok Bilingual School), but none is verified as a top-tier international school by this framework's standard, and the source's own attribution is uncertain<span class="kv-src">Single Thai-language marketing proximity page, no independent cross-source corroboration</span></td></tr>
+ <tr><td class="kv-label">Corridor comps</td><td class="kv-val">At least 5 confirmed, 5,000+ units: XT Huaykwang (Sansiri, 1,404 units, 2021, 75m from station) / Noble Revolve Ratchada (802 units, 2015) / The Stage Mindscape (477 units, Jul 2024, ≈250m from MRT Huai Khwang Exit 1) / Landmark @MRTA Station (Siamese Asset, 2,101 units, 2024) / Aspire Huai Khwang (AP, 1,274 units, pipeline June 2027)<span class="kv-src">FazWaz / Hipflat "Projects Nearby" module; full 2026-2028 pipeline: unconfirmed, likely larger still</span></td></tr>
+ <tr><td class="kv-label">City-plan trend</td><td class="kv-val">Bangkok's city plan is actively upzoning density along the Din Daeng / Huai Khwang mass-transit corridor — a structural policy signal expanding future supply<span class="kv-src">Bangkok City Planning public disclosure</span></td></tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
 
-  <div class="assump-box" style="margin-top:18px">
-    <strong>⚠️ Valuation & entry-price transparency note:</strong>The valuation dimension (13%) anchors to "confirmed same-project transaction THB/sqm." <strong>Confidence for this project: low</strong> — unlike XT Phayathai, no Foreign/Thai Quota price split was found, and only <strong>one</strong> confirmed transaction is available (2025-10-09, THB 3.2M, ≈118,500/sqm), while different-vintage, different-source descriptions of this project's pricing diverge widely (THB 1.99M-4.95M), preventing convergence on a single reliable original price. Buyers should request actual transaction evidence for the same unit type within the past 6 months from an agent, and confirm the quota classification of any specific unit in writing.
-  </div>
+ <div class="assump-box" style="margin-top:18px">
+ <strong>⚠️ Valuation & entry-price transparency note:</strong>The valuation dimension (13%) anchors to "confirmed same-project transaction THB/sqm." <strong>Confidence for this project: low</strong> — unlike XT Phayathai, no Foreign/Thai Quota price split was found, and only <strong>one</strong> confirmed transaction is available (2025-10-09, THB 3.2M, ≈118,500/sqm), while different-vintage, different-source descriptions of this project's pricing diverge widely (THB 1.99M-4.95M), preventing convergence on a single reliable original price. Buyers should request actual transaction evidence for the same unit type within the past 6 months from an agent, and confirm the quota classification of any specific unit in writing.
+ </div>
 
-  <table class="cmp-table">
-    <thead>
-      <tr>
-        <th style="width:26%">Item</th>
-        <th class="local">🇹🇭 Thai buyer</th>
-        <th class="foreign">🌏 Foreign buyer</th>
-        <th style="width:18%">Source</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Transfer fee</td><td class="num">2% (usually split buyer/seller)<br><small style="color:var(--muted)">Buyer's share est. ~1%</small></td><td class="num">2% (same, no foreign penalty)</td><td><small>Land Department</small></td></tr>
-      <tr><td>Funding-source requirement</td><td class="num">No special requirement</td><td class="num"><strong>Must remit foreign currency from abroad</strong>, obtaining an FET certificate; without it, transfer or visa application cannot proceed</td><td><small>Land Department / BOT</small></td></tr>
-      <tr><td>Purchase method</td><td class="num">Mortgage ≈80% LTV (est.)</td><td class="num"><strong>THB mortgages are essentially unavailable</strong>; structurally all-cash; a few foreign-currency channels (UOB Thailand/ICBC Thai/MBK Guarantee) exist at 6-8%, lower LTV</td><td><small>Banks / BOT</small></td></tr>
-      <tr><td>Gross rental yield</td><td class="num">~5.5% (same purchase-price basis, average of two yield bases)</td><td class="num">~5.5% gross (same price basis; net yield lower after withholding)</td><td><small>Hipflat/developer rent-sale blends</small></td></tr>
-      <tr><td>Sale cost, held &lt;5 years</td><td class="num">Specific business tax 3.3%</td><td class="num">3.3% (same)</td><td><small>Revenue Dept./Land Dept.</small></td></tr>
-      <tr><td>Sale cost, held ≥5 years</td><td class="num">Stamp duty 0.5%<br><small style="color:var(--muted)">This card's 10-year base case applies this rate</small></td><td class="num">0.5% (same)</td><td><small>Revenue Dept.</small></td></tr>
-      <tr><td>Rental income tax</td><td class="num">Progressive personal income<br><small style="color:var(--muted)">Estimated effective rate ≈10.5%</small></td><td class="num">15% withholding (non-resident)<br><small style="color:var(--muted)">Whether this is the final tax liability is not fully confirmed</small></td><td><small>Revenue Dept.</small></td></tr>
-      <tr><td>Foreign quota</td><td class="num">N/A</td><td class="num">≤49% of building (Condominium Act §19bis)<br><strong style="color:var(--warn-text)">This project's utilization: unconfirmed</strong></td><td><small>Land Dept. / Condominium Act</small></td></tr>
-      <tr><td>Visa/residency threshold<br><small style="color:var(--muted)">Binary flag, plus a separate boundary-risk deduction</small></td><td class="num">N/A</td><td class="num">THB 3M + MOTS / THB 10M no-certificate track<br><small style="color:var(--warn-text)">Representative unit's THB 3.2M clears the threshold by only ~6.7%, below the framework's THB 3.6M boundary — the first card to trigger this boundary-risk deduction</small></td><td><small>Immigration Bureau Order 237/238-2568</small></td></tr>
-    </tbody>
-  </table>
+ <table class="cmp-table">
+ <thead>
+ <tr>
+ <th style="width:26%">Item</th>
+ <th class="local">🇹🇭 Thai buyer</th>
+ <th class="foreign">🌏 Foreign buyer</th>
+ <th style="width:18%">Source</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td>Transfer fee</td><td class="num">2% (usually split buyer/seller)<br><small style="color:var(--muted)">Buyer's share est. ~1%</small></td><td class="num">2% (same, no foreign penalty)</td><td><small>Land Department</small></td></tr>
+ <tr><td>Funding-source requirement</td><td class="num">No special requirement</td><td class="num"><strong>Must remit foreign currency from abroad</strong>, obtaining an FET certificate; without it, transfer or visa application cannot proceed</td><td><small>Land Department / BOT</small></td></tr>
+ <tr><td>Purchase method</td><td class="num">Mortgage ≈80% LTV (est.)</td><td class="num"><strong>THB mortgages are essentially unavailable</strong>; structurally all-cash; a few foreign-currency channels (UOB Thailand/ICBC Thai/MBK Guarantee) exist at 6-8%, lower LTV</td><td><small>Banks / BOT</small></td></tr>
+ <tr><td>Gross rental yield</td><td class="num">~5.5% (same purchase-price basis, average of two yield bases)</td><td class="num">~5.5% gross (same price basis; net yield lower after withholding)</td><td><small>Hipflat/developer rent-sale blends</small></td></tr>
+ <tr><td>Sale cost, held &lt;5 years</td><td class="num">Specific business tax 3.3%</td><td class="num">3.3% (same)</td><td><small>Revenue Dept./Land Dept.</small></td></tr>
+ <tr><td>Sale cost, held ≥5 years</td><td class="num">Stamp duty 0.5%<br><small style="color:var(--muted)">This card's 10-year base case applies this rate</small></td><td class="num">0.5% (same)</td><td><small>Revenue Dept.</small></td></tr>
+ <tr><td>Rental income tax</td><td class="num">Progressive personal income<br><small style="color:var(--muted)">Estimated effective rate ≈10.5%</small></td><td class="num">15% withholding (non-resident)<br><small style="color:var(--muted)">Whether this is the final tax liability is not fully confirmed</small></td><td><small>Revenue Dept.</small></td></tr>
+ <tr><td>Foreign quota</td><td class="num">N/A</td><td class="num">≤49% of building (Condominium Act §19bis)<br><strong style="color:var(--warn-text)">This project's utilization: unconfirmed</strong></td><td><small>Land Dept. / Condominium Act</small></td></tr>
+ <tr><td>Visa/residency threshold<br><small style="color:var(--muted)">Binary flag, plus a separate boundary-risk deduction</small></td><td class="num">N/A</td><td class="num">THB 3M + MOTS / THB 10M no-certificate track<br><small style="color:var(--warn-text)">Representative unit's THB 3.2M clears the threshold by only ~6.7%, below the framework's THB 3.6M boundary — triggering this boundary-risk deduction</small></td><td><small>Immigration Bureau Order 237/238-2568</small></td></tr>
+ </tbody>
+ </table>
 </section>
 
 <!-- BLOCK 3.5: 10-YEAR COST -->
 <section class="section">
-  <span class="section-eyebrow">◆ Economics</span>
-  <h2 class="section-title">10-year total cost of ownership</h2>
-  <p class="section-sub">Both Thai and foreign buyers are modeled on <strong>27 sqm 1BR, THB 3,200,000</strong> (the sole confirmed transaction) — <strong>no Foreign/Thai Quota price split was found for this project, so both buyer types share the same purchase price</strong>, unlike the XT Phayathai card (which had a confirmed quota split), and closer to how the Life Asoke Rama 9 card was handled. Thai buyers are modeled with ≈80% mortgage leverage; foreign buyers are structurally all-cash — the capital bases differ, so absolute figures should not be compared directly; use the rough annualized return figures below instead.</p>
+ <span class="section-eyebrow">◆ Economics</span>
+ <h2 class="section-title">10-year total cost of ownership</h2>
+ <p class="section-sub">Both Thai and foreign buyers are modeled on <strong>27 sqm 1BR, THB 3,200,000</strong> (the sole confirmed transaction) — <strong>no Foreign/Thai Quota price split was found for this project, so both buyer types share the same purchase price</strong>, unlike the XT Phayathai card (which had a confirmed quota split), and closer to how the Life Asoke Rama 9 card was handled. Thai buyers are modeled with ≈80% mortgage leverage; foreign buyers are structurally all-cash — the capital bases differ, so absolute figures should not be compared directly; use the rough annualized return figures below instead.</p>
 
-  <div class="assump-box">
-    <strong>Fixed assumptions:</strong>
-    Both buyer types <strong>27 sqm 1BR @ THB 3,200,000</strong> · 10-year hold · rent THB 16,000/month Year 1 (same physical unit, mid-point of the observed 14,000-18,000 range), 3%/year growth (an estimation assumption, not a directly sourced figure) · 1 month vacancy/year ·
-    management fee ≈THB 55/sqm/month (estimated, not individually verified, following the same estimation method used on other cards in this framework) · Thai mortgage 80% LTV, 6.5%, 30 years · Foreign buyer 100% cash (structurally unleveraged) · opportunity-cost benchmark two (foreign-buyer case, USD, a cross-border reference not tied to any specific buyer's home currency) 5.75%/yr = US 10Y 4.74%-4.75% (2026-07-31) + 100bp, cross-currency comparison with no FX adjustment · opportunity-cost benchmark one (Thai-buyer reference, THB) 3.0%/yr = Thailand 10Y government bond yield ≈2.0% (2026-07, Tradingeconomics) + 100bp (both benchmarks carry forward the framework's same-period verified figures, not yet due for re-verification within 6 months) ·
-    Sale-side taxes follow the holding period (this card's 10-year base case applies the 0.5% stamp duty rather than the 3.3% specific business tax) + personal income withholding tax (estimated ≈4%, a simplified approximation of the assessed-value/holding-period progressive formula, not itemized). Mortgage amortization figures use a proportional estimation method (not a month-by-month calculation); all amounts rounded to the nearest thousand.
-  </div>
+ <div class="assump-box">
+ <strong>Fixed assumptions:</strong>
+ Both buyer types <strong>27 sqm 1BR @ THB 3,200,000</strong> · 10-year hold · rent THB 16,000/month Year 1 (same physical unit, mid-point of the observed 14,000-18,000 range), 3%/year growth (an estimation assumption, not a directly sourced figure) · 1 month vacancy/year ·
+ management fee ≈THB 55/sqm/month (estimated, not individually verified, following the same estimation method used on other cards in this framework) · Thai mortgage 80% LTV, 6.5%, 30 years · Foreign buyer 100% cash (structurally unleveraged) · opportunity-cost benchmark two (foreign-buyer case, USD, a cross-border reference not tied to any specific buyer's home currency) 5.75%/yr = US 10Y 4.74%-4.75% (2026-07-31) + 100bp, cross-currency comparison with no FX adjustment · opportunity-cost benchmark one (Thai-buyer reference, THB) 3.0%/yr = Thailand 10Y government bond yield ≈2.0% (2026-07, Tradingeconomics) + 100bp (both benchmarks carry forward the framework's same-period verified figures, not yet due for re-verification within 6 months) ·
+ Sale-side taxes follow the holding period (this card's 10-year base case applies the 0.5% stamp duty rather than the 3.3% specific business tax) + personal income withholding tax (estimated ≈4%, a simplified approximation of the assessed-value/holding-period progressive formula, not itemized). Mortgage amortization figures use a proportional estimation method (not a month-by-month calculation); all amounts rounded to the nearest thousand.
+ </div>
 
-  <table class="cost-table">
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th class="local">🇹🇭 Thai (THB)</th>
-        <th class="foreign">🌏 Foreign (THB)</th>
-        <th>Difference (THB)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="cat"><td>Purchase costs</td><td></td><td></td><td></td></tr>
-      <tr><td>Down payment / full price</td><td>640,000</td><td>3,200,000</td><td>+2,560,000</td></tr>
-      <tr><td>Transfer fee (buyer's share)</td><td>32,000</td><td>32,000</td><td>0</td></tr>
-      <tr><td>Legal/registration (est.)</td><td>32,000</td><td>32,000</td><td>0</td></tr>
-      <tr><td>FET remittance/agent fee (est.)</td><td>—</td><td>5,000</td><td>+5,000</td></tr>
-      <tr class="sum"><td>Purchase subtotal</td><td>704,000</td><td>3,269,000</td><td>+2,565,000</td></tr>
+ <table class="cost-table">
+ <thead>
+ <tr>
+ <th>Item</th>
+ <th class="local">🇹🇭 Thai (THB)</th>
+ <th class="foreign">🌏 Foreign (THB)</th>
+ <th>Difference (THB)</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr class="cat"><td>Purchase costs</td><td></td><td></td><td></td></tr>
+ <tr><td>Down payment / full price</td><td>640,000</td><td>3,200,000</td><td>+2,560,000</td></tr>
+ <tr><td>Transfer fee (buyer's share)</td><td>32,000</td><td>32,000</td><td>0</td></tr>
+ <tr><td>Legal/registration (est.)</td><td>32,000</td><td>32,000</td><td>0</td></tr>
+ <tr><td>FET remittance/agent fee (est.)</td><td>—</td><td>5,000</td><td>+5,000</td></tr>
+ <tr class="sum"><td>Purchase subtotal</td><td>704,000</td><td>3,269,000</td><td>+2,565,000</td></tr>
 
-      <tr class="cat"><td>Holding costs (10-year cumulative)</td><td></td><td></td><td></td></tr>
-      <tr><td>Mortgage payments (principal+interest, est.)</td><td>1,941,000</td><td>—</td><td>−1,941,000</td></tr>
-      <tr><td>Management fee (est.)</td><td>178,000</td><td>178,000</td><td>0</td></tr>
-      <tr><td>Property tax (est.)</td><td>22,000</td><td>24,000</td><td>+2,000</td></tr>
-      <tr><td>Insurance (est.)</td><td>15,000</td><td>16,000</td><td>+1,000</td></tr>
-      <tr class="sum"><td>Holding subtotal</td><td>2,156,000</td><td>218,000</td><td>−1,938,000</td></tr>
+ <tr class="cat"><td>Holding costs (10-year cumulative)</td><td></td><td></td><td></td></tr>
+ <tr><td>Mortgage payments (principal+interest, est.)</td><td>1,941,000</td><td>—</td><td>−1,941,000</td></tr>
+ <tr><td>Management fee (est.)</td><td>178,000</td><td>178,000</td><td>0</td></tr>
+ <tr><td>Property tax (est.)</td><td>22,000</td><td>24,000</td><td>+2,000</td></tr>
+ <tr><td>Insurance (est.)</td><td>15,000</td><td>16,000</td><td>+1,000</td></tr>
+ <tr class="sum"><td>Holding subtotal</td><td>2,156,000</td><td>218,000</td><td>−1,938,000</td></tr>
 
-      <tr class="cat"><td>Rental income (10-year cumulative, THB 16,000/mo Year 1, 3%/yr growth, an estimation assumption)</td><td></td><td></td><td></td></tr>
-      <tr><td>Gross rental income</td><td>2,018,000</td><td>2,018,000</td><td>0</td></tr>
-      <tr><td>Rental income tax</td><td>212,000</td><td>303,000</td><td>+91,000</td></tr>
-      <tr class="sum"><td>Net rental (after tax)</td><td>1,806,000</td><td>1,715,000</td><td>−91,000</td></tr>
+ <tr class="cat"><td>Rental income (10-year cumulative, THB 16,000/mo Year 1, 3%/yr growth, an estimation assumption)</td><td></td><td></td><td></td></tr>
+ <tr><td>Gross rental income</td><td>2,018,000</td><td>2,018,000</td><td>0</td></tr>
+ <tr><td>Rental income tax</td><td>212,000</td><td>303,000</td><td>+91,000</td></tr>
+ <tr class="sum"><td>Net rental (after tax)</td><td>1,806,000</td><td>1,715,000</td><td>−91,000</td></tr>
 
-      <tr class="cat"><td>Exit costs (Year 10, 3%/year appreciation scenario)</td><td></td><td></td><td></td></tr>
-      <tr><td>Exit price (3%/yr, 10 years)</td><td>4,300,000</td><td>4,300,000</td><td>0</td></tr>
-      <tr><td>Transfer fee (seller's share)</td><td>43,000</td><td>43,000</td><td>0</td></tr>
-      <tr><td>Stamp duty (0.5%, 10-year base case)</td><td>22,000</td><td>22,000</td><td>0</td></tr>
-      <tr><td>Personal income withholding (est. ≈4%)</td><td>172,000</td><td>172,000</td><td>0</td></tr>
-      <tr><td>Remaining loan balance (Year 10, est.)</td><td>2,171,000</td><td>—</td><td>−2,171,000</td></tr>
+ <tr class="cat"><td>Exit costs (Year 10, 3%/year appreciation scenario)</td><td></td><td></td><td></td></tr>
+ <tr><td>Exit price (3%/yr, 10 years)</td><td>4,300,000</td><td>4,300,000</td><td>0</td></tr>
+ <tr><td>Transfer fee (seller's share)</td><td>43,000</td><td>43,000</td><td>0</td></tr>
+ <tr><td>Stamp duty (0.5%, 10-year base case)</td><td>22,000</td><td>22,000</td><td>0</td></tr>
+ <tr><td>Personal income withholding (est. ≈4%)</td><td>172,000</td><td>172,000</td><td>0</td></tr>
+ <tr><td>Remaining loan balance (Year 10, est.)</td><td>2,171,000</td><td>—</td><td>−2,171,000</td></tr>
 
-      <tr class="cat"><td>10-year net P&L (by appreciation scenario, same purchase price for both)</td><td></td><td></td><td></td></tr>
-      <tr class="scenario"><td>0% appreciation</td><td>−201,000</td><td>+1,252,000</td><td>+1,453,000</td></tr>
-      <tr class="scenario"><td>3%/yr appreciation (base)</td><td>+838,000</td><td>+2,291,000</td><td>+1,453,000</td></tr>
-      <tr class="scenario"><td>5%/yr appreciation</td><td>+1,701,000</td><td>+5,154,000</td><td>+3,453,000</td></tr>
-    </tbody>
-  </table>
+ <tr class="cat"><td>10-year net P&L (by appreciation scenario, same purchase price for both)</td><td></td><td></td><td></td></tr>
+ <tr class="scenario"><td>0% appreciation</td><td>−201,000</td><td>+1,252,000</td><td>+1,453,000</td></tr>
+ <tr class="scenario"><td>3%/yr appreciation (base)</td><td>+838,000</td><td>+2,291,000</td><td>+1,453,000</td></tr>
+ <tr class="scenario"><td>5%/yr appreciation</td><td>+1,701,000</td><td>+5,154,000</td><td>+3,453,000</td></tr>
+ </tbody>
+ </table>
 
-  <div class="cost-bottom">
-    <strong>The purchase price is identical for both buyer types</strong> (no quota-split data was found), so the difference is mainly driven by capital structure — Thai buyers put in THB 704,000 of own equity against 80% leverage, foreign buyers deploy THB 3,269,000 all-cash (≈4.6x the Thai buyer's own contribution); <strong>the absolute figures should not be read as "foreign buyers do better."</strong> In rough annualized-return terms: Thai buyers (80% leverage, mortgage rate 6.5% above the average gross yield of 5.5%, a negative-spread drag) land around <strong>2-2.5%/year</strong> in the base case; foreign buyers (unleveraged, all-cash) land around <strong>5-5.5%/year</strong>. Neither figure <strong>reflects the foreign-side visa boundary risk</strong> — if the price falls rather than rises, and the decline reaches 15-20%, the representative unit could drop out of the THB 3M visa threshold entirely, a further downside not captured in this table but disclosed independently in the exit dimension (foreign −0.3). (IRR figures use a simplified annuity approximation, not a year-by-year cash-flow model; mortgage amortization uses a proportional estimation method.)
-  </div>
+ <div class="cost-bottom">
+ <strong>The purchase price is identical for both buyer types</strong> (no quota-split data was found), so the difference is mainly driven by capital structure — Thai buyers put in THB 704,000 of own equity against 80% leverage, foreign buyers deploy THB 3,269,000 all-cash (≈4.6x the Thai buyer's own contribution); <strong>the absolute figures should not be read as "foreign buyers do better."</strong> In rough annualized-return terms: Thai buyers (80% leverage, mortgage rate 6.5% above the average gross yield of 5.5%, a negative-spread drag) land around <strong>2-2.5%/year</strong> in the base case; foreign buyers (unleveraged, all-cash) land around <strong>5-5.5%/year</strong>. Neither figure <strong>reflects the foreign-side visa boundary risk</strong> — if the price falls rather than rises, and the decline reaches 15-20%, the representative unit could drop out of the THB 3M visa threshold entirely, a further downside not captured in this table but disclosed independently in the exit dimension (foreign −0.3). (IRR figures use a simplified annuity approximation, not a year-by-year cash-flow model; mortgage amortization uses a proportional estimation method.)
+ </div>
 </section>
 
 <!-- BLOCK 5: EXIT REALITY CHECK -->
 <section class="section">
-  <span class="section-eyebrow">◆ Exit reality check</span>
-  <h2 class="section-title">Exit reality check</h2>
-  <p class="section-sub">A 10-year hold's return is only real on the day it's sold. Data confidence for this project: low (original pricing, transaction depth, and quota utilization are unconfirmed or highly dispersed across several key figures — flagged item by item).</p>
+ <span class="section-eyebrow">◆ Exit reality check</span>
+ <h2 class="section-title">Exit reality check</h2>
+ <p class="section-sub">A 10-year hold's return is only real on the day it's sold. Data confidence for this project: low (original pricing, transaction depth, and quota utilization are unconfirmed or highly dispersed across several key figures — flagged item by item).</p>
 
-  <!-- 5A Scarcity audit -->
-  <div style="background:var(--navy-soft);border:1px solid #c7d5e8;border-radius:14px;padding:20px 22px;margin-bottom:18px">
-    <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:14px">5A · Scarcity audit (three supply-side layers, incl. quota)</div>
-    <div style="display:flex;flex-direction:column;gap:12px;font-size:12.5px;line-height:1.75;color:var(--text-soft)">
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <span class="tag tag-bad">✗ Land layer</span>
-        <span>Bangkok's city plan is actively upzoning density along the Din Daeng / Huai Khwang mass-transit corridor — a structural policy signal expanding future supply, not merely a "nearby new project" observation.</span>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <span class="tag tag-bad">✗ Product layer</span>
-        <span>At least 5 confirmed comparable projects, 5,000+ units, in the same corridor (XT Huaykwang, Noble Revolve Ratchada, The Stage Mindscape, Landmark @MRTA Station, Aspire Huai Khwang) — materially denser than the framework's other four cards.</span>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <span class="tag tag-ok">✓ Regulatory layer (partial)</span>
-        <span>Freehold ownership (medium confidence); the 49% foreign quota's actual utilization is undisclosed, so no structural-scarcity determination can be made — left neutral (neither credited nor debited), with the risk disclosed independently in 5D.</span>
-      </div>
-    </div>
-    <div style="margin-top:14px;padding-top:14px;border-top:1px solid #c7d5e8;font-size:12.5px;line-height:1.75;color:var(--navy)">
-      <strong>Effective-scarcity determination: cannot be reliably run.</strong> This project's original pricing diverges more than 2.5x across sources (THB 1.99M-4.95M), leaving no stable district benchmark against which to measure premium or discount, and both the land and product layers fail — no structural credit is awarded.
-    </div>
-  </div>
+ <!-- 5A Scarcity audit -->
+ <div style="background:var(--navy-soft);border:1px solid #c7d5e8;border-radius:14px;padding:20px 22px;margin-bottom:18px">
+ <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:14px">5A · Scarcity audit (three supply-side layers, incl. quota)</div>
+ <div style="display:flex;flex-direction:column;gap:12px;font-size:12.5px;line-height:1.75;color:var(--text-soft)">
+ <div style="display:flex;gap:12px;align-items:flex-start">
+ <span class="tag tag-bad">✗ Land layer</span>
+ <span>Bangkok's city plan is actively upzoning density along the Din Daeng / Huai Khwang mass-transit corridor — a structural policy signal expanding future supply, not merely a "nearby new project" observation.</span>
+ </div>
+ <div style="display:flex;gap:12px;align-items:flex-start">
+ <span class="tag tag-bad">✗ Product layer</span>
+ <span>At least 5 confirmed comparable projects, 5,000+ units, in the same corridor (XT Huaykwang, Noble Revolve Ratchada, The Stage Mindscape, Landmark @MRTA Station, Aspire Huai Khwang) — materially denser than the framework's other four cards.</span>
+ </div>
+ <div style="display:flex;gap:12px;align-items:flex-start">
+ <span class="tag tag-ok">✓ Regulatory layer (partial)</span>
+ <span>Freehold ownership (medium confidence); the 49% foreign quota's actual utilization is undisclosed, so no structural-scarcity determination can be made — left neutral (neither credited nor debited), with the risk disclosed independently in 5D.</span>
+ </div>
+ </div>
+ <div style="margin-top:14px;padding-top:14px;border-top:1px solid #c7d5e8;font-size:12.5px;line-height:1.75;color:var(--navy)">
+ <strong>Effective-scarcity determination: cannot be reliably run.</strong> This project's original pricing diverges more than 2.5x across sources (THB 1.99M-4.95M), leaving no stable district benchmark against which to measure premium or discount, and both the land and product layers fail — no structural credit is awarded.
+ </div>
+ </div>
 
-  <!-- 5B Next-buyer pyramid -->
-  <div style="border:1px solid var(--border-soft);border-radius:14px;padding:20px 22px;margin-bottom:18px">
-    <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:12px">5B · Next-buyer pyramid</div>
-    <div style="background:var(--gold-bg);border-left:4px solid var(--gold);border-radius:8px;padding:12px 16px;font-size:12.5px;line-height:1.75;color:var(--text-soft);margin-bottom:14px">
-      <strong style="color:var(--navy)">Quantum test (Thai buyer):</strong> Representative 1BR (THB 3.2M) → next buyer's household monthly-income threshold ≈<strong>THB 44,800</strong> (80% LTV, 6.5%, 30 years, 40% burden ratio, Thailand's ≈price×1.4% coefficient) → against Bangkok's average household income of THB 39,100, ≈<strong>1.15x</strong> — the lowest threshold multiple and theoretically the widest local buyer pool across this site's published cards (though still exposed to the 2026H1 credit-tightening environment, with mortgage rejection rates of 40-50%). <br><strong style="color:var(--navy)">Foreign buyer:</strong> no mortgage available, so quantum becomes a cash threshold — roughly THB 3.2M plus fees (≈USD 95,100 / MYR 788,700) in deployable offshore cash, but <strong>that total is itself right at the visa threshold</strong>, which is the central constraint on foreign exit here, not simple purchasing power.
-    </div>
-    <table class="cmp-table">
-      <thead><tr><th style="width:24%">Buyer type</th><th style="width:12%">Rating</th><th>Basis</th></tr></thead>
-      <tbody>
-        <tr><td>Local first-time buyer</td><td><span class="tag tag-warn">△</span></td><td>Quantum of THB 44,800/month is only 1.15x Bangkok's average household income, a low price barrier — but 2026H1 credit conditions are tight overall, and mortgage rejection rates near 70% below THB 3M make this price band (THB 3.2M is only slightly above that line) exposed to the same tightening.</td></tr>
-        <tr><td>Local upgrader</td><td><span class="tag tag-warn">△</span></td><td>The low total price limits appeal to upgraders (the product reads more as first-home/small-family), and 5,000+ corridor competing units dilute demand.</td></tr>
-        <tr><td>Local investor</td><td><span class="tag tag-warn">△</span></td><td>Average gross yield ≈5.5% is workable, but the mortgage rate of 6.5% already exceeds it, so leveraged buyers face a negative spread — suitable mainly for all-cash or low-leverage investors.</td></tr>
-        <tr><td>Foreign owner-occupier (3M/10M visa track)</td><td><span class="tag tag-warn">△</span></td><td>THB 3.2M clears the THB 3M line and the MOTS Certification Letter path (via TLS agent) is theoretically workable, but the <strong>margin is only ≈6.7%</strong> — any price decline could push it out of visa eligibility, a boundary case that warrants more buyer scrutiny than a simple "already cleared" reading.</td></tr>
-        <tr><td>Foreign investor</td><td><span class="tag tag-bad">✗</span></td><td>Unleveraged net yield (≈4.68%, THB) against opportunity-cost benchmark two (5.75%, USD) leaves a gap of ≈1.08pp, clearly below the opportunity cost; unconfirmed quota utilization and the boundary risk add further uncertainty.</td></tr>
-        <tr><td>Institutional / bulk</td><td><span class="tag tag-bad">✗</span></td><td>A 383-unit low-rise strata project doesn't fit institutional specifications; no sign of whole-building or bulk activity.</td></tr>
-      </tbody>
-    </table>
-    <div style="margin-top:14px;display:flex;gap:12px;align-items:flex-start;font-size:12.5px;line-height:1.75;color:var(--text-soft)">
-      <span class="tag tag-warn">Foreign-buyer dependence: unconfirmed</span>
-      <span>No disclosed figure for foreign ownership share exists for this project, so dependence cannot be precisely determined, and — unlike the XT Phayathai card — no listing-level quota-label sample was found to even offer an indirect read.</span>
-    </div>
-  </div>
+ <!-- 5B Next-buyer pyramid -->
+ <div style="border:1px solid var(--border-soft);border-radius:14px;padding:20px 22px;margin-bottom:18px">
+ <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:12px">5B · Next-buyer pyramid</div>
+ <div style="background:var(--gold-bg);border-left:4px solid var(--gold);border-radius:8px;padding:12px 16px;font-size:12.5px;line-height:1.75;color:var(--text-soft);margin-bottom:14px">
+ <strong style="color:var(--navy)">Quantum test (Thai buyer):</strong> Representative 1BR (THB 3.2M) → next buyer's household monthly-income threshold ≈<strong>THB 44,800</strong> (80% LTV, 6.5%, 30 years, 40% burden ratio, Thailand's ≈price×1.4% coefficient) → against Bangkok's average household income of THB 39,100, ≈<strong>1.15x</strong> — the lowest threshold multiple and theoretically a comparatively wide local buyer pool (though still exposed to the 2026H1 credit-tightening environment, with mortgage rejection rates of 40-50%). <br><strong style="color:var(--navy)">Foreign buyer:</strong> no mortgage available, so quantum becomes a cash threshold — roughly THB 3.2M plus fees (≈USD 95,100 / MYR 788,700) in deployable offshore cash, but <strong>that total is itself right at the visa threshold</strong>, which is the central constraint on foreign exit here, not simple purchasing power.
+ </div>
+ <table class="cmp-table">
+ <thead><tr><th style="width:24%">Buyer type</th><th style="width:12%">Rating</th><th>Basis</th></tr></thead>
+ <tbody>
+ <tr><td>Local first-time buyer</td><td><span class="tag tag-warn">△</span></td><td>Quantum of THB 44,800/month is only 1.15x Bangkok's average household income, a low price barrier — but 2026H1 credit conditions are tight overall, and mortgage rejection rates near 70% below THB 3M make this price band (THB 3.2M is only slightly above that line) exposed to the same tightening.</td></tr>
+ <tr><td>Local upgrader</td><td><span class="tag tag-warn">△</span></td><td>The low total price limits appeal to upgraders (the product reads more as first-home/small-family), and 5,000+ corridor competing units dilute demand.</td></tr>
+ <tr><td>Local investor</td><td><span class="tag tag-warn">△</span></td><td>Average gross yield ≈5.5% is workable, but the mortgage rate of 6.5% already exceeds it, so leveraged buyers face a negative spread — suitable mainly for all-cash or low-leverage investors.</td></tr>
+ <tr><td>Foreign owner-occupier (3M/10M visa track)</td><td><span class="tag tag-warn">△</span></td><td>THB 3.2M clears the THB 3M line and the MOTS Certification Letter path (via TLS agent) is theoretically workable, but the <strong>margin is only ≈6.7%</strong> — any price decline could push it out of visa eligibility, a boundary case that warrants more buyer scrutiny than a simple "already cleared" reading.</td></tr>
+ <tr><td>Foreign investor</td><td><span class="tag tag-bad">✗</span></td><td>Unleveraged net yield (≈4.68%, THB) against opportunity-cost benchmark two (5.75%, USD) leaves a gap of ≈1.08pp, clearly below the opportunity cost; unconfirmed quota utilization and the boundary risk add further uncertainty.</td></tr>
+ <tr><td>Institutional / bulk</td><td><span class="tag tag-bad">✗</span></td><td>A 383-unit low-rise strata project doesn't fit institutional specifications; no sign of whole-building or bulk activity.</td></tr>
+ </tbody>
+ </table>
+ <div style="margin-top:14px;display:flex;gap:12px;align-items:flex-start;font-size:12.5px;line-height:1.75;color:var(--text-soft)">
+ <span class="tag tag-warn">Foreign-buyer dependence: unconfirmed</span>
+ <span>No disclosed figure for foreign ownership share exists for this project, so dependence cannot be precisely determined, and — unlike the XT Phayathai card — no listing-level quota-label sample was found to even offer an indirect read.</span>
+ </div>
+ </div>
 
-  <!-- 5C Secondary-market evidence -->
-  <div style="margin-bottom:18px">
-    <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:12px">5C · Secondary-market evidence</div>
-    <p style="font-size:12px;color:var(--warn-text);background:var(--warn-bg);border:1px solid var(--gold-light);border-radius:8px;padding:10px 14px;margin-bottom:14px;line-height:1.7">⚠️ <strong>Methodology warning:</strong>Thailand has no official parcel-level transfer database (unlike Malaysia's Brickz/NAPIC system) — "transaction records" on Hipflat/FazWaz/DDproperty are each platform's own visible sample, a <strong>lower bound, not the full market</strong>. This project has the thinnest data across this site's published cards: <strong>only one confirmed transaction in the trailing 12 months</strong>, so denominators-dependent metrics (turnover, listing ratio) carry the lowest confidence. These figures are already factored into the exit score at right; this section unpacks the raw inputs — please do not treat them as a precise liquidity conclusion.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px">
-      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
-        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">N/A</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Annual turnover<br>Only 1 confirmed transaction, too thin to score</div>
-        <div style="margin-top:8px;display:inline-block" class="tag tag-bad">Unconfirmed</div>
-      </div>
-      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
-        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">1.3-4.2%</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Listing ratio (range)<br>5-16 listings ÷ 383 units</div>
-        <div style="margin-top:8px;display:inline-block" class="tag tag-warn">3.2x source variance</div>
-      </div>
-      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
-        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">≈+21%</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Asking-transaction discount (derived)<br>This card's own estimate, not an official aggregate</div>
-        <div style="margin-top:8px;display:inline-block" class="tag tag-warn">Low confidence</div>
-      </div>
-      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
-        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">1</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Hipflat transaction<br>Just 2025-10-09, observed as of 2026-08-04</div>
-        <div style="margin-top:8px;display:inline-block" class="tag tag-warn">Extremely thin sample</div>
-      </div>
-    </div>
-  </div>
+ <!-- 5C Secondary-market evidence -->
+ <div style="margin-bottom:18px">
+ <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:12px">5C · Secondary-market evidence</div>
+ <p style="font-size:12px;color:var(--warn-text);background:var(--warn-bg);border:1px solid var(--gold-light);border-radius:8px;padding:10px 14px;margin-bottom:14px;line-height:1.7">⚠️ <strong>Methodology warning:</strong>Thailand has no official parcel-level transfer database (unlike Malaysia's Brickz/NAPIC system) — "transaction records" on Hipflat/FazWaz/DDproperty are each platform's own visible sample, a <strong>lower bound, not the full market</strong>. Secondary-market data for this project is extremely thin: <strong>only one confirmed transaction in the trailing 12 months</strong>, so denominators-dependent metrics (turnover, listing ratio) carry the lowest confidence. These figures are already factored into the exit score at right; this section unpacks the raw inputs — please do not treat them as a precise liquidity conclusion.</p>
+ <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px">
+ <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+ <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">N/A</div>
+ <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Annual turnover<br>Only 1 confirmed transaction, too thin to score</div>
+ <div style="margin-top:8px;display:inline-block" class="tag tag-bad">Unconfirmed</div>
+ </div>
+ <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+ <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">1.3-4.2%</div>
+ <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Listing ratio (range)<br>5-16 listings ÷ 383 units</div>
+ <div style="margin-top:8px;display:inline-block" class="tag tag-warn">3.2x source variance</div>
+ </div>
+ <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+ <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">≈+21%</div>
+ <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Asking-transaction discount (derived)<br>This card's own estimate, not an official aggregate</div>
+ <div style="margin-top:8px;display:inline-block" class="tag tag-warn">Low confidence</div>
+ </div>
+ <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+ <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">1</div>
+ <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">Hipflat transaction<br>Just 2025-10-09, observed as of 2026-08-04</div>
+ <div style="margin-top:8px;display:inline-block" class="tag tag-warn">Extremely thin sample</div>
+ </div>
+ </div>
+ </div>
 
-  <!-- 5D Foreign quota box -->
-  <div class="quota-box">
-    <span class="tag tag-unknown" style="margin-bottom:8px;display:inline-block">🔒 Foreign quota check: unconfirmed (exit (foreign) −0.5)</span><br>
-    <strong>No official or developer-disclosed figure exists for this project's foreign ownership share or quota balance</strong> (the developer's own site, Hipflat, FazWaz, and DDproperty all lack an official quota-utilization figure; every "49%" reference found in this research is a restatement of the statutory cap, not a project-specific disclosure). The 49% cap is a statutory ceiling (Condominium Act B.E. 2522 §19 bis), but this project's actual utilization cannot be determined. <strong>Buyers should verify current quota utilization in writing with an agent or the Land Department before committing</strong> — this is one of the largest unknowns on the exit side, more directly determinative of whether the unit can be resold to another foreign buyer in 10 years than fees or valuation premium; once a quota is exhausted, existing foreign-held units can only be resold to Thai buyers or await another foreign holder freeing up quota.<br><br>
-    <span class="tag tag-unknown" style="margin-bottom:8px;display:inline-block">🔒 Visa-threshold boundary risk (new mechanism, first triggered here): exit (foreign) −0.3</span><br>
-    <strong>The representative unit's registered price of THB 3.2M clears the THB 3M visa threshold by only ≈6.7%</strong>, falling below the framework's THB 3.6M "boundary risk" line. The framework's four previously published cards all had representative units at THB 4.3-5.9M, well above the threshold — this mechanism has never actually been triggered until now. A price decline of just 15-20% could drop this project's representative unit entirely out of visa eligibility, structurally excluding the foreign buyer pool and leaving only THB 10M no-certificate-track buyers or local buyers to absorb it.
-  </div>
+ <!-- 5D Foreign quota box -->
+ <div class="quota-box">
+ <span class="tag tag-unknown" style="margin-bottom:8px;display:inline-block">🔒 Foreign quota check: unconfirmed (exit (foreign) −0.5)</span><br>
+ <strong>No official or developer-disclosed figure exists for this project's foreign ownership share or quota balance</strong> (the developer's own site, Hipflat, FazWaz, and DDproperty all lack an official quota-utilization figure; every "49%" reference found in this research is a restatement of the statutory cap, not a project-specific disclosure). The 49% cap is a statutory ceiling (Condominium Act B.E. 2522 §19 bis), but this project's actual utilization cannot be determined. <strong>Buyers should verify current quota utilization in writing with an agent or the Land Department before committing</strong> — this is one of the largest unknowns on the exit side, more directly determinative of whether the unit can be resold to another foreign buyer in 10 years than fees or valuation premium; once a quota is exhausted, existing foreign-held units can only be resold to Thai buyers or await another foreign holder freeing up quota.<br><br>
+ <span class="tag tag-unknown" style="margin-bottom:8px;display:inline-block">🔒 Visa-threshold boundary risk (new mechanism, first triggered here): exit (foreign) −0.3</span><br>
+ <strong>The representative unit's registered price of THB 3.2M clears the THB 3M visa threshold by only ≈6.7%</strong>, falling below the framework's THB 3.6M "boundary risk" line. The framework's four previously published cards all had representative units at THB 4.3-5.9M, well above the threshold — this mechanism has never actually been triggered until now. A price decline of just 15-20% could drop this project's representative unit entirely out of visa eligibility, structurally excluding the foreign buyer pool and leaving only THB 10M no-certificate-track buyers or local buyers to absorb it.
+ </div>
 
-  <div class="cost-bottom">
-    <strong>One-line summary:</strong>10 years from now, the most likely buyer is a lower-to-middle-income local first-time buyer or small family (this project has the lowest quantum threshold across this site's published cards); but 5,000+ corridor competing units diluting demand, only a single confirmed transaction, unconfirmed quota status, and this project's first-ever trigger of the visa-boundary-risk mechanism together point toward caution — exit-side uncertainty here is the highest across this site's published cards, and foreign buyers in particular should treat "a price decline that also strips visa eligibility" as an additional, atypical downside scenario.
-  </div>
+ <div class="cost-bottom">
+ <strong>One-line summary:</strong>10 years from now, the most likely buyer is a lower-to-middle-income local first-time buyer or small family (this project has a low quantum threshold); but 5,000+ corridor competing units diluting demand, only a single confirmed transaction, unconfirmed quota status, and this project's first-ever trigger of the visa-boundary-risk mechanism together point toward caution — exit-side uncertainty here is substantial, and foreign buyers in particular should treat "a price decline that also strips visa eligibility" as an additional, atypical downside scenario.
+ </div>
 </section>
 
 <!-- BLOCK 4A: DEEP SUMMARY -->
 <section class="section">
-  <span class="section-eyebrow">◆ Deep dive</span>
-  <h2 class="section-title">Project deep dive</h2>
+ <span class="section-eyebrow">◆ Deep dive</span>
+ <h2 class="section-title">Project deep dive</h2>
 
-  <div class="summary-text">
-    <p>Quintara MHy'GEN Ratchada-Huai Khwang is a low-rise condominium developed by SET-listed Eastern Star Real Estate PCL (SET: ESTAR, listed 1994), with 383 units spread across two 8-storey buildings on the Ratchada-Huai Khwang corridor in Bangkok, on a land parcel of ≈2-1-79.5 rai (≈3,200 sqm project area). The developer's own site shows structure, architecture, and systems all reaching 100% progress as of September 21, 2024, while multiple aggregators cite an October 2024 completion date; this card uses the conservative range of "September 2024 structural completion, October transfers." A previously circulated "August 2024" reading could not be reproduced from any source in this research and is not used. The unit mix skews small: Studio 21-23 sqm, 1BR 26-27 sqm, and 2BR 41-42 sqm, with the representative unit set at the upper end of the 1BR band, 27 sqm.</p>
+ <div class="summary-text">
+ <p>Quintara MHy'GEN Ratchada-Huai Khwang is a low-rise condominium developed by SET-listed Eastern Star Real Estate PCL (SET: ESTAR, listed 1994), with 383 units spread across two 8-storey buildings on the Ratchada-Huai Khwang corridor in Bangkok, on a land parcel of ≈2-1-79.5 rai (≈3,200 sqm project area). The developer's own site shows structure, architecture, and systems all reaching 100% progress as of September 21, 2024, while multiple aggregators cite an October 2024 completion date; this card uses the conservative range of "September 2024 structural completion, October transfers." A previously circulated "August 2024" reading could not be reproduced from any source in this research and is not used. The unit mix skews small: Studio 21-23 sqm, 1BR 26-27 sqm, and 2BR 41-42 sqm, with the representative unit set at the upper end of the 1BR band, 27 sqm.</p>
 
-    <p>The single most important finding in this research sits at the <strong>intersection of pricing and the visa threshold</strong>. The 1BR price anchor originally assumed in the briefing could not be reproduced: pricing descriptions diverge sharply across vintages and sources — a Thai pre-sale-era page quoting "from THB 1.99M / 2.09M" (one self-dated July 2022), the developer's current page quoting "from THB 2.59M" (likely a studio floor, not a 1BR), PropertyScout citing a broad THB 2.37-4.95M range, and Hipflat citing a 1BR band of roughly USD 85,274-128,360 (≈THB 3.0-4.5M). Amid this highly dispersed pricing picture, the one verifiable anchor is a transaction disclosed in Hipflat's "Previous Sales": a 1BR sold on October 9, 2025 for THB 3.2M, implying ≈THB 118,500/sqm at 27 sqm — the single most credible per-sqm figure available for this project, and the shared basis for both this card's valuation and exit calculations, though it must be acknowledged that the sample size is just one. <strong>That transacted price sits only about 6.7% above the THB 3M property-visa floor</strong>, below this framework's THB 3.6M "boundary risk" line — this is, for the first time in the Thailand pilot, a genuine case requiring the "representative unit near the visa threshold" boundary-risk deduction. The four previously published cards (Life Asoke Rama 9, Life Rama 4-Asoke, Noble Revo Silom, XT Phayathai) all had representative units in the THB 4.3-5.9M range, well above the threshold, so this mechanism had never actually fired before now. For a foreign buyer, this means a price decline of only 15-20% could drop this unit entirely out of visa eligibility, structurally removing the foreign buyer pool — a more fundamental exit risk than an ordinary listing discount, disclosed independently here in both the exit dimension (foreign −0.3) and the 5D disclosure box.</p>
+ <p>The single most important finding in this research sits at the <strong>intersection of pricing and the visa threshold</strong>. The 1BR price anchor originally assumed in the briefing could not be reproduced: pricing descriptions diverge sharply across vintages and sources — a Thai pre-sale-era page quoting "from THB 1.99M / 2.09M" (one self-dated July 2022), the developer's current page quoting "from THB 2.59M" (likely a studio floor, not a 1BR), PropertyScout citing a broad THB 2.37-4.95M range, and Hipflat citing a 1BR band of roughly USD 85,274-128,360 (≈THB 3.0-4.5M). Amid this highly dispersed pricing picture, the one verifiable anchor is a transaction disclosed in Hipflat's "Previous Sales": a 1BR sold on October 9, 2025 for THB 3.2M, implying ≈THB 118,500/sqm at 27 sqm — the single most credible per-sqm figure available for this project, and the shared basis for both this card's valuation and exit calculations, though it must be acknowledged that the sample size is just one. <strong>That transacted price sits only about 6.7% above the THB 3M property-visa floor</strong>, below this framework's THB 3.6M "boundary risk" line — this is, for the first time in the Thailand pilot, a genuine case requiring the "representative unit near the visa threshold" boundary-risk deduction. The four previously published cards (Life Asoke Rama 9, Life Rama 4-Asoke, Noble Revo Silom, XT Phayathai) all had representative units in the THB 4.3-5.9M range, well above the threshold, so this mechanism had never actually fired before now. For a foreign buyer, this means a price decline of only 15-20% could drop this unit entirely out of visa eligibility, structurally removing the foreign buyer pool — a more fundamental exit risk than an ordinary listing discount, disclosed independently here in both the exit dimension (foreign −0.3) and the 5D disclosure box.</p>
 
-    <p>On scarcity, the audit result is equally unfavorable, and arguably more clearly so than any of the framework's other four cards. The Din Daeng / Huai Khwang corridor doesn't just have generic new supply nearby — Bangkok's city plan is <strong>actively upzoning density along this mass-transit corridor</strong>, a structural policy signal that the planning authority is deliberately expanding future supply caps, more persistent and less favorable than an ordinary "new project under construction nearby" observation; the land layer clearly fails. The product layer fails too: at least 5 confirmed comparable projects, totaling 5,000+ units, sit in the same corridor, including XT Huaykwang (Sansiri, 1,404 units, completed 2021, just 75m from the station), Noble Revolve Ratchada (802 units, completed 2015), The Stage Mindscape (477 units, completed July 2024, ≈250m from MRT Huai Khwang Exit 1), Landmark @MRTA Station (Siamese Asset, 2,101 units, completed 2024), and the still-in-pipeline Aspire Huai Khwang (AP, 1,274 units, expected June 2027) — a materially denser comparable set than found for any of the framework's other four cards. The regulatory layer, while freehold (medium confidence), offers no quota disclosure and thus no structural-scarcity credit. Combined with highly dispersed original pricing and no stable district benchmark to compare against, the effective-scarcity test simply cannot be reliably run — leaving this project's scarcity score (5.8), while still inside the framework's required same-district consistency band (a 0.2 gap versus Life Asoke Rama 9, within the ≤0.5 threshold), resting on distinctly weaker underlying evidence.</p>
+ <p>On scarcity, the audit result is equally unfavorable, and arguably more clearly so than any of the framework's other four cards. The Din Daeng / Huai Khwang corridor doesn't just have generic new supply nearby — Bangkok's city plan is <strong>actively upzoning density along this mass-transit corridor</strong>, a structural policy signal that the planning authority is deliberately expanding future supply caps, more persistent and less favorable than an ordinary "new project under construction nearby" observation; the land layer clearly fails. The product layer fails too: at least 5 confirmed comparable projects, totaling 5,000+ units, sit in the same corridor, including XT Huaykwang (Sansiri, 1,404 units, completed 2021, just 75m from the station), Noble Revolve Ratchada (802 units, completed 2015), The Stage Mindscape (477 units, completed July 2024, ≈250m from MRT Huai Khwang Exit 1), Landmark @MRTA Station (Siamese Asset, 2,101 units, completed 2024), and the still-in-pipeline Aspire Huai Khwang (AP, 1,274 units, expected June 2027) — a materially denser comparable set than found for any of the framework's other four cards. The regulatory layer, while freehold (medium confidence), offers no quota disclosure and thus no structural-scarcity credit. Combined with highly dispersed original pricing and no stable district benchmark to compare against, the effective-scarcity test simply cannot be reliably run — leaving this project's scarcity score (5.8), while still inside the framework's required same-district consistency band (a 0.2 gap versus Life Asoke Rama 9, within the ≤0.5 threshold), resting on distinctly weaker underlying evidence.</p>
 
-    <p>At the developer level, ESTAR is an unambiguously small Thai micro-cap: market-cap estimates conflict across two sources (roughly THB 954M-1.26bn), the 52-week share price range is only THB 0.17-0.27, and Sansiri's market cap is roughly 27x ESTAR's — a completely different scale bracket than the framework's other published cases (AP, Sansiri). <strong>But the financial trajectory needs a correction against an easy-to-form wrong impression</strong>: ESTAR's trough was FY2023 (revenue THB 1,316M, down 27.7%; net income just THB 29.93M, down 41.5%), FY2024 already recovered to revenue THB 1,918M / net income THB 34.1M, and <strong>the most recent FY2025 results show revenue of THB 2,054M (up 7.12%) and net income sharply up to THB 126.4M (up 270.6%)</strong> — a clear and substantial recovery; citing only the 2023 trough would systematically understate the company's current financial position, and this card weighs the most recent year accordingly. No TRIS Rating record could be found in either English or Thai searches, listed as "unconfirmed." Buyers should also note a developer-level delivery signal: two independent Pantip buyer threads allege that ESTAR's other project, "The Breeze" (Naradhiwat Rajanagarindra Rd, 37 floors, 294 units), suffered delivery delays against the contracted timeline and common-area specifications below what was advertised, with buyers organizing but reporting no resolution to date — this is forum-sourced buyer allegation, not a regulatory finding or court record, and is inherently medium-low confidence, but <strong>two independent sources corroborating into a consistent pattern, rather than a single isolated post</strong>, warrants more weight in the developer dimension than a typical unconfirmed single signal (hence a −0.3 deduction here, larger than a generic single-source deduction). A separate portfolio-summary scrape claiming "ESTAR: 7 condo projects, ~2,200 units, 100% completed, 90% sold" also surfaced two project names that appear not to be actual ESTAR developments; this card judges that scrape contaminated and does not cite it. No abandoned-project record was found for the ESTAR group, and this project itself (as distinct from The Breeze) has no building-permit or EIA revocation or existing litigation on record — all five eligibility-gate checks pass.</p>
+ <p>At the developer level, ESTAR is an unambiguously small Thai micro-cap: market-cap estimates conflict across two sources (roughly THB 954M-1.26bn), the 52-week share price range is only THB 0.17-0.27, and Sansiri's market cap is roughly 27x ESTAR's — a completely different scale bracket than the framework's other published cases (AP, Sansiri). <strong>But the financial trajectory needs a correction against an easy-to-form wrong impression</strong>: ESTAR's trough was FY2023 (revenue THB 1,316M, down 27.7%; net income just THB 29.93M, down 41.5%), FY2024 already recovered to revenue THB 1,918M / net income THB 34.1M, and <strong>the most recent FY2025 results show revenue of THB 2,054M (up 7.12%) and net income sharply up to THB 126.4M (up 270.6%)</strong> — a clear and substantial recovery; citing only the 2023 trough would systematically understate the company's current financial position, and this card weighs the most recent year accordingly. No TRIS Rating record could be found in either English or Thai searches, listed as "unconfirmed." Buyers should also note a developer-level delivery signal: two independent Pantip buyer threads allege that ESTAR's other project, "The Breeze" (Naradhiwat Rajanagarindra Rd, 37 floors, 294 units), suffered delivery delays against the contracted timeline and common-area specifications below what was advertised, with buyers organizing but reporting no resolution to date — this is forum-sourced buyer allegation, not a regulatory finding or court record, and is inherently medium-low confidence, but <strong>two independent sources corroborating into a consistent pattern, rather than a single isolated post</strong>, warrants more weight in the developer dimension than a typical unconfirmed single signal (hence a −0.3 deduction here, larger than a generic single-source deduction). A separate portfolio-summary scrape claiming "ESTAR: 7 condo projects, ~2,200 units, 100% completed, 90% sold" also surfaced two project names that appear not to be actual ESTAR developments; this card judges that scrape contaminated and does not cite it. No abandoned-project record was found for the ESTAR group, and this project itself (as distinct from The Breeze) has no building-permit or EIA revocation or existing litigation on record — all five eligibility-gate checks pass.</p>
 
-    <p>The exit side discloses the most "unconfirmed" figures and data limitations of any dimension in this card, and this project has the thinnest data across this site's published cards. On secondary-market liquidity, within the trailing 12-month observation window (as of 2026-08-04), only <strong>a single confirmed transaction</strong> was found, well thinner than any of the framework's other four cards, making annual turnover impossible to estimate reasonably; current active listings vary across platforms at 5, 13, and 16, against 383 total units implying roughly 1.3%-4.2%, but the sources diverge by 3.2x (above the 2x threshold), so per the rules this card reports only the range without claiming a precise midpoint. The estimated asking-to-transaction premium (comparing the higher blended asking of ≈THB 3.87M against the sole confirmed transaction of THB 3.2M, roughly +21%) is this card's own derivation rather than a platform's official aggregate statistic, distinctly lower confidence than the XT Phayathai card's officially-sourced figure, though still deducted per the framework's rule with explicit low-confidence flagging. What can be said with more confidence: the Thai-buyer quantum test shows a next-buyer household-income threshold of only ≈1.15x Bangkok's average household income — the lowest multiple across this site's published cards, theoretically the widest local buyer pool — but this "locally affordable" advantage is substantially diluted by 5,000+ corridor competing units simultaneously diverting demand, combined with the pricing and data-quality weaknesses described above. This project's Thai-buyer total (5.4) and foreign-buyer total (5.2) both land in T5, the lowest across this site's published cards — not the result of any single dimension's error, but the combined effect of a low capital-appreciation score (4.0), stacked exit-side deductions (a single confirmed transaction, source-divergent listing ratio, and the newly triggered visa boundary risk), and comparatively weak developer transparency.</p>
+ <p>The exit side discloses the most "unconfirmed" figures and data limitations of any dimension in this card, and secondary-market data for this project is extremely thin. On secondary-market liquidity, within the trailing 12-month observation window (as of 2026-08-04), only <strong>a single confirmed transaction</strong> was found, well thinner than any of the framework's other four cards, making annual turnover impossible to estimate reasonably; current active listings vary across platforms at 5, 13, and 16, against 383 total units implying roughly 1.3%-4.2%, but the sources diverge by 3.2x (above the 2x threshold), so per the rules this card reports only the range without claiming a precise midpoint. The estimated asking-to-transaction premium (comparing the higher blended asking of ≈THB 3.87M against the sole confirmed transaction of THB 3.2M, roughly +21%) is this card's own derivation rather than a platform's official aggregate statistic, distinctly lower confidence than the XT Phayathai card's officially-sourced figure, though still deducted per the framework's rule with explicit low-confidence flagging. What can be said with more confidence: the Thai-buyer quantum test shows a next-buyer household-income threshold of only ≈1.15x Bangkok's average household income — a low multiple, implying a comparatively wide local buyer pool — but this "locally affordable" advantage is substantially diluted by 5,000+ corridor competing units simultaneously diverting demand, combined with the pricing and data-quality weaknesses described above. This project's Thai-buyer total (5.4) and foreign-buyer total (5.2) both land in T5 — not the result of any single dimension's error, but the combined effect of a low capital-appreciation score (4.0), stacked exit-side deductions (a single confirmed transaction, source-divergent listing ratio, and the newly triggered visa boundary risk), and comparatively weak developer transparency.</p>
 
-    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
-      <strong style="color:var(--navy);font-weight:700">10-year scenario baseline</strong>: Assuming entry 2026-08, exit 2036-08:
-      <ul style="margin:8px 0 0 18px;padding:0">
-        <li><strong>Base case</strong>: price +3%/year (broadly matching Bangkok's long-run nominal average, though this project has no dedicated price-trend data for cross-checking), rent +3%/year, 1 month vacancy/year. Thai buyer (80% leverage) 10-year cumulative net P&L ≈<strong>THB +838,000</strong>, rough annualized return ≈2-2.5%; foreign buyer (all-cash) ≈<strong>THB +2,291,000</strong> (a capital base roughly 4.6x larger — figures should not be compared directly), rough annualized return ≈5-5.5%. <strong>Neither figure reflects the foreign-side visa boundary risk.</strong></li>
-        <li><strong>Bull case</strong>: Bangkok's 2026H2 absorption acceleration continues and the corridor digests supply faster than expected, price +5%/year. Thai buyer annualized ≈3.5-4%, foreign buyer ≈7-7.5%.</li>
-        <li><strong>Bear case (the key scenario for this project)</strong>: the corridor's 5,000+ competing units continue diverting demand and the upzoning effect on supply materializes, price flat or a modest decline. Thai buyer 10-year net P&L turns negative (≈THB −201,000, eroded by the negative mortgage spread); foreign buyer stays positive (≈THB +1,252,000, no leverage cost) — <strong>but if the price decline reaches 15-20%, the representative unit could simultaneously drop out of the THB 3M visa threshold</strong>, at which point the foreign buyer faces not just reduced capital gains but a compound risk of shrinking visa eligibility and buyer pool together — a downside scenario unique to this project among this site's published cards.</li>
-      </ul>
-      <div style="margin-top:10px">10-year exit liquidity: only a single confirmed transaction is available as a reference point; the estimated asking-transaction discount (≈+21%) is this card's own derivation rather than an official platform aggregate, so confidence is low. A conservative assumption of 9-12 months on market and a 15-25% discount should be treated as provisional pending quota-status confirmation and a larger transaction sample, and foreign buyers should factor the visa boundary risk into their exit-timing expectations as well.</div>
-    </div>
-  </div>
+ <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+ <strong style="color:var(--navy);font-weight:700">10-year scenario baseline</strong>: Assuming entry 2026-08, exit 2036-08:
+ <ul style="margin:8px 0 0 18px;padding:0">
+ <li><strong>Base case</strong>: price +3%/year (broadly matching Bangkok's long-run nominal average, though this project has no dedicated price-trend data for cross-checking), rent +3%/year, 1 month vacancy/year. Thai buyer (80% leverage) 10-year cumulative net P&L ≈<strong>THB +838,000</strong>, rough annualized return ≈2-2.5%; foreign buyer (all-cash) ≈<strong>THB +2,291,000</strong> (a capital base roughly 4.6x larger — figures should not be compared directly), rough annualized return ≈5-5.5%. <strong>Neither figure reflects the foreign-side visa boundary risk.</strong></li>
+ <li><strong>Bull case</strong>: Bangkok's 2026H2 absorption acceleration continues and the corridor digests supply faster than expected, price +5%/year. Thai buyer annualized ≈3.5-4%, foreign buyer ≈7-7.5%.</li>
+ <li><strong>Bear case (the key scenario for this project)</strong>: the corridor's 5,000+ competing units continue diverting demand and the upzoning effect on supply materializes, price flat or a modest decline. Thai buyer 10-year net P&L turns negative (≈THB −201,000, eroded by the negative mortgage spread); foreign buyer stays positive (≈THB +1,252,000, no leverage cost) — <strong>but if the price decline reaches 15-20%, the representative unit could simultaneously drop out of the THB 3M visa threshold</strong>, at which point the foreign buyer faces not just reduced capital gains but a compound risk of shrinking visa eligibility and buyer pool together — a downside scenario unique to this project among this site's published cards.</li>
+ </ul>
+ <div style="margin-top:10px">10-year exit liquidity: only a single confirmed transaction is available as a reference point; the estimated asking-transaction discount (≈+21%) is this card's own derivation rather than an official platform aggregate, so confidence is low. A conservative assumption of 9-12 months on market and a 15-25% discount should be treated as provisional pending quota-status confirmation and a larger transaction sample, and foreign buyers should factor the visa boundary risk into their exit-timing expectations as well.</div>
+ </div>
+ </div>
 </section>
 
 <!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
 <section class="section">
-  <span class="section-eyebrow">◆ Conclusion</span>
-  <h2 class="section-title">Highlights & caveats</h2>
-  <div class="pros-cons">
-    <div class="pc-col pros">
-      <div class="pc-title">✦ Highlights</div>
-      <ul class="pc-list">
-        <li>Completed and immediately transferable (structure/architecture/systems 100%, shown as of 2024-09-21) — no off-plan delivery risk</li>
-        <li>Thai-buyer quantum threshold is only ≈1.15x Bangkok's average household income — the lowest across this site's published cards, implying the widest local buyer pool of the set</li>
-        <li>Developer ESTAR's most recent FY2025 results show a clear recovery (revenue +7.12%, net income +270.6%) — the 2023 trough has passed, not an ongoing decline case</li>
-        <li>The sole confirmed transaction's per-sqm price (≈THB 118,500/sqm) is relatively low for this corridor, suggesting a friendlier entry point if the price holds</li>
-        <li>No building-permit/EIA revocation or existing litigation found for this project itself; all five eligibility-gate checks pass</li>
-      </ul>
-    </div>
-    <div class="pc-col cons">
-      <div class="pc-title">⚠ Caveats</div>
-      <ul class="pc-list">
-        <li><strong>The representative unit's registered price clears the THB 3M visa threshold by only ≈6.7%</strong> — the first card in the framework to trigger the "visa-threshold boundary risk" deduction: a 15-20% price decline could structurally remove the foreign buyer pool</li>
-        <li>The same corridor already has 5,000+ confirmed competing units (including pipeline supply), and the city plan is actively upzoning toward higher density — both the scarcity audit and capital appreciation momentum (4.0, low across this site’s published cards) are clearly under pressure</li>
-        <li>Only a single confirmed transaction was found in the trailing 12 months — the thinnest secondary-market data across this site's published cards, with low confidence in both the turnover and asking-discount estimates</li>
-        <li>This project's original pricing diverges enormously across sources (THB 1.99-4.95M), and no Foreign/Thai Quota price split was found — the lowest valuation confidence across this site's published cards</li>
-        <li>Developer ESTAR is a distinctly small, thinly-traded micro-cap (roughly 1/27th of Sansiri's market cap), with no TRIS Rating found</li>
-        <li>Two independent Pantip threads allege delivery delays and common-area spec shortfalls on the developer's other project, "The Breeze" — not this project, and not regulator-confirmed, but still a developer-level credibility concern</li>
-        <li>Foreign quota utilization is undisclosed; no walkable access to any of the framework's three benchmark international hospitals or a verified top-tier international school was found</li>
-      </ul>
-    </div>
-  </div>
+ <span class="section-eyebrow">◆ Conclusion</span>
+ <h2 class="section-title">Highlights & caveats</h2>
+ <div class="pros-cons">
+ <div class="pc-col pros">
+ <div class="pc-title">✦ Highlights</div>
+ <ul class="pc-list">
+ <li>Completed and immediately transferable (structure/architecture/systems 100%, shown as of 2024-09-21) — no off-plan delivery risk</li>
+ <li>Thai-buyer quantum threshold is only ≈1.15x Bangkok's average household income — a low multiple, implying a comparatively wide local buyer pool</li>
+ <li>Developer ESTAR's most recent FY2025 results show a clear recovery (revenue +7.12%, net income +270.6%) — the 2023 trough has passed, not an ongoing decline case</li>
+ <li>The sole confirmed transaction's per-sqm price (≈THB 118,500/sqm) is relatively low for this corridor, suggesting a friendlier entry point if the price holds</li>
+ <li>No building-permit/EIA revocation or existing litigation found for this project itself; all five eligibility-gate checks pass</li>
+ </ul>
+ </div>
+ <div class="pc-col cons">
+ <div class="pc-title">⚠ Caveats</div>
+ <ul class="pc-list">
+ <li><strong>The representative unit's registered price clears the THB 3M visa threshold by only ≈6.7%</strong> — this card triggers the "visa-threshold boundary risk" deduction: a 15-20% price decline could structurally remove the foreign buyer pool</li>
+ <li>The same corridor already has 5,000+ confirmed competing units (including pipeline supply), and the city plan is actively upzoning toward higher density — both the scarcity audit and capital appreciation momentum (4.0, low) are clearly under pressure</li>
+ <li>Only a single confirmed transaction was found in the trailing 12 months — extremely thin secondary-market data, with low confidence in both the turnover and asking-discount estimates</li>
+ <li>This project's original pricing diverges enormously across sources (THB 1.99-4.95M), and no Foreign/Thai Quota price split was found — low valuation confidence</li>
+ <li>Developer ESTAR is a distinctly small, thinly-traded micro-cap (roughly 1/27th of Sansiri's market cap), with no TRIS Rating found</li>
+ <li>Two independent Pantip threads allege delivery delays and common-area spec shortfalls on the developer's other project, "The Breeze" — not this project, and not regulator-confirmed, but still a developer-level credibility concern</li>
+ <li>Foreign quota utilization is undisclosed; no walkable access to any of the framework's three benchmark international hospitals or a verified top-tier international school was found</li>
+ </ul>
+ </div>
+ </div>
 </section>
 
 <!-- BLOCK 4C: HOLDING PURPOSE MAPPING -->
 <section class="section">
-  <span class="section-eyebrow">◆ Holding-purpose fit</span>
-  <h2 class="section-title">Holding-purpose mapping</h2>
-  <p class="section-sub">The same score means different things depending on holding purpose. Readers can map their own profile against "lifeline dimensions," "dimensions that can be compromised," and "fit for this project."</p>
+ <span class="section-eyebrow">◆ Holding-purpose fit</span>
+ <h2 class="section-title">Holding-purpose mapping</h2>
+ <p class="section-sub">The same score means different things depending on holding purpose. Readers can map their own profile against "lifeline dimensions," "dimensions that can be compromised," and "fit for this project."</p>
 
-  <div class="profile">
-    <div class="profile-head"><span class="profile-icon">🏠</span>Primary residence</div>
-    <div class="profile-fit">
-      <strong>Lifeline dimensions</strong>: Transport & accessibility (6.0), Developer & handover (5.5), visa/MOTS Certification Letter stability (foreign buyers)<br>
-      <strong>Can compromise</strong>: Holding cash flow (imputed rent for owner-occupiers, no impact), capital appreciation momentum<br>
-      <strong>Fit for this project</strong>: Already completed and inspectable on-site, within an MRT walking band (though the distance itself is unverified — measure it in person), a basically workable choice for commuters, though this project lacks an international-school/international-medical cluster and nearby hospitals are lower-tier options. Foreign owner-occupiers <strong>should first confirm their own visa needs against this unit's boundary margin</strong> — clearing the THB 3M threshold by only ≈6.7% is a thin cushion, and any price movement could affect visa continuity, a factor that demands more upfront planning here than on a typical owner-occupier case; local buyers benefit relatively from this project's low quantum threshold, but should still account for the 2026 credit-tightening environment.
-    </div>
-  </div>
-  <div class="profile">
-    <div class="profile-head"><span class="profile-icon">📈</span>Rental investment</div>
-    <div class="profile-fit">
-      <strong>Lifeline dimensions</strong>: Holding cash flow (4.6 TH / 4.3 FG), Exit & next-buyer pool (6.6 TH / 5.8 FG)<br>
-      <strong>Can compromise</strong>: Capital appreciation momentum (this project isn't an appreciation play and faces corridor supply pressure)<br>
-      <strong>Fit for this project</strong>: Average gross yield ≈5.5% (below the Thai mortgage rate of 6.5%, a negative-spread drag on leverage), so local investors should be all-cash or low-leverage only; foreign buyers face a clear negative net-yield-vs-opportunity-cost gap and must additionally absorb the visa boundary risk's potential impact on exit liquidity. This project suits holders who already carry Thai-currency cash positions and can accept both a below-average yield and thin liquidity data; it doesn't suit investors seeking high leverage multiples or requiring stronger data transparency.
-    </div>
-  </div>
-  <div class="profile">
-    <div class="profile-head"><span class="profile-icon">🏖</span>Part-time / secondary home (&lt;30% annual use)</div>
-    <div class="profile-fit">
-      <strong>Lifeline dimensions</strong>: Transport & accessibility, Developer & handover<br>
-      <strong>Can compromise</strong>: Holding cash flow, capital appreciation momentum<br>
-      <strong>Fit for this project</strong>: A low-rise, already-completed and inspectable community, with a low total price (THB 3.2M) that appears to make the MOTS Certification Letter visa path accessible at a lower capital outlay — but <strong>this is precisely the source of the boundary risk</strong>: because the total price sits so close to the THB 3M threshold, any price decline could jeopardize the long-term stability of that visa path. Buyers planning to rely on this visa route long-term should prioritize options with a higher total price and wider margin, or plan an explicit capital buffer. Short-term/Airbnb-style rental legality is separately constrained by Thai regulation and is outside this card's scoring — buyers should verify independently.
-    </div>
-  </div>
-  <div class="profile">
-    <div class="profile-head"><span class="profile-icon">🌳</span>Generational hold (20+ years)</div>
-    <div class="profile-fit">
-      <strong>Lifeline dimensions</strong>: Scarcity & location moat (20%), Exit & next-buyer pool (next generation's exit)<br>
-      <strong>Can compromise</strong>: Short-term yield, short-term catalysts<br>
-      <strong>Fit for this project</strong>: This project's scarcity audit clearly fails (both the land layer, due to active upzoning, and the product layer, due to 5,000+ competing units, are ✗) — the clearest unfavorable evidence of any across this site's published cards, meaning long-term holders must accept the risk that ongoing corridor supply expansion will keep diluting any existing premium. Freehold tenure being inheritable is a structural advantage, but uncertain quota status directly affects whether the next generation can resell smoothly to a foreign buyer; ESTAR's financial transparency (no TRIS rating, conflicting market-cap data) and the sister-project delivery complaint signal also mean long-term holders should track the developer's latest public disclosures more actively than they would for the framework's more financially transparent AP/Sansiri cases.
-    </div>
-  </div>
+ <div class="profile">
+ <div class="profile-head"><span class="profile-icon">🏠</span>Primary residence</div>
+ <div class="profile-fit">
+ <strong>Lifeline dimensions</strong>: Transport & accessibility (6.0), Developer & handover (5.5), visa/MOTS Certification Letter stability (foreign buyers)<br>
+ <strong>Can compromise</strong>: Holding cash flow (imputed rent for owner-occupiers, no impact), capital appreciation momentum<br>
+ <strong>Fit for this project</strong>: Already completed and inspectable on-site, within an MRT walking band (though the distance itself is unverified — measure it in person), a basically workable choice for commuters, though this project lacks an international-school/international-medical cluster and nearby hospitals are lower-tier options. Foreign owner-occupiers <strong>should first confirm their own visa needs against this unit's boundary margin</strong> — clearing the THB 3M threshold by only ≈6.7% is a thin cushion, and any price movement could affect visa continuity, a factor that demands more upfront planning here than on a typical owner-occupier case; local buyers benefit relatively from this project's low quantum threshold, but should still account for the 2026 credit-tightening environment.
+ </div>
+ </div>
+ <div class="profile">
+ <div class="profile-head"><span class="profile-icon">📈</span>Rental investment</div>
+ <div class="profile-fit">
+ <strong>Lifeline dimensions</strong>: Holding cash flow (4.6 TH / 4.3 FG), Exit & next-buyer pool (6.6 TH / 5.8 FG)<br>
+ <strong>Can compromise</strong>: Capital appreciation momentum (this project isn't an appreciation play and faces corridor supply pressure)<br>
+ <strong>Fit for this project</strong>: Average gross yield ≈5.5% (below the Thai mortgage rate of 6.5%, a negative-spread drag on leverage), so local investors should be all-cash or low-leverage only; foreign buyers face a clear negative net-yield-vs-opportunity-cost gap and must additionally absorb the visa boundary risk's potential impact on exit liquidity. This project suits holders who already carry Thai-currency cash positions and can accept both a below-average yield and thin liquidity data; it doesn't suit investors seeking high leverage multiples or requiring stronger data transparency.
+ </div>
+ </div>
+ <div class="profile">
+ <div class="profile-head"><span class="profile-icon">🏖</span>Part-time / secondary home (&lt;30% annual use)</div>
+ <div class="profile-fit">
+ <strong>Lifeline dimensions</strong>: Transport & accessibility, Developer & handover<br>
+ <strong>Can compromise</strong>: Holding cash flow, capital appreciation momentum<br>
+ <strong>Fit for this project</strong>: A low-rise, already-completed and inspectable community, with a low total price (THB 3.2M) that appears to make the MOTS Certification Letter visa path accessible at a lower capital outlay — but <strong>this is precisely the source of the boundary risk</strong>: because the total price sits so close to the THB 3M threshold, any price decline could jeopardize the long-term stability of that visa path. Buyers planning to rely on this visa route long-term should prioritize options with a higher total price and wider margin, or plan an explicit capital buffer. Short-term/Airbnb-style rental legality is separately constrained by Thai regulation and is outside this card's scoring — buyers should verify independently.
+ </div>
+ </div>
+ <div class="profile">
+ <div class="profile-head"><span class="profile-icon">🌳</span>Generational hold (20+ years)</div>
+ <div class="profile-fit">
+ <strong>Lifeline dimensions</strong>: Scarcity & location moat (20%), Exit & next-buyer pool (next generation's exit)<br>
+ <strong>Can compromise</strong>: Short-term yield, short-term catalysts<br>
+ <strong>Fit for this project</strong>: This project's scarcity audit clearly fails (both the land layer, due to active upzoning, and the product layer, due to 5,000+ competing units, are ✗) — clearly unfavorable evidence, meaning long-term holders must accept the risk that ongoing corridor supply expansion will keep diluting any existing premium. Freehold tenure being inheritable is a structural advantage, but uncertain quota status directly affects whether the next generation can resell smoothly to a foreign buyer; ESTAR's financial transparency (no TRIS rating, conflicting market-cap data) and the sister-project delivery complaint signal also mean long-term holders should track the developer's latest public disclosures more actively than they would for the framework's more financially transparent AP/Sansiri cases.
+ </div>
+ </div>
 </section>
 
 <!-- BLOCK 5: FOOTER -->
 <div class="footer">
-  <div class="footer-sources">
-    <h4>Sources</h4>
-    Eastern Star Real Estate PCL developer's own site (project basics, progress page 2024-09-21, unit-mix table, listing ranges) · Hipflat 2026 (Previous Sales showing the sole confirmed 2025-10-09 transaction, project/district statistics, active listing counts, rent-sale blended figures) · FazWaz ("Projects Nearby" corridor comps module) · homenayoo (walking distance) · PropertyScout (pricing range, walking distance) · Thai-language property aggregator (walking distance, nearby-school list, source attribution not fully confirmed) · developer's Thai-language pre-sale-era historical page (self-dated 2022-07 pricing) · Pantip.com buyer threads x2 (The Breeze delivery delay/common-area spec dispute, not regulator-confirmed) · SET (ESTAR listing information, FY2023-FY2025 financials) · brokerage/financial-media market-cap estimates (two conflicting sources) · Bangkok City Planning (Din Daeng/Huai Khwang corridor upzoning disclosure) · Knight Frank Thailand via The Nation Thailand, ≈2026-07 (Greater Bangkok's ≈350,000-unit broad overhang, 5-6 year absorption) · Tradingeconomics.com (Thailand 10-year government bond yield ≈2.0%, 2026-07; US 10-year Treasury yield 4.74%-4.75%, 2026-07-31) · CNBC US10Y quote (cross-check on the US Treasury yield) · Bank of Thailand MPC Decision 3/2026 (policy rate held at 1.00%) · th/report.html / th/macro.html (Bangkok market macro backdrop, FX rates THB/USD 33.65 / USD/MYR 4.06, 2026-07 — MYR conversion for scale reference only, not the opportunity-cost benchmark).
-  </div>
-  <div class="footer-disclaimer">
-    <h4>Disclaimer</h4>
-    This scorecard is an independent analytical reference and does not constitute investment advice. Scores are based on publicly verifiable data as of 2026-08-04. <strong>Scoring lens: a professional real estate investor evaluating on a 10-year hold, regardless of holding purpose (owner-occupier / rental / part-time / generational).</strong> Amounts are denominated in Thai Baht (THB), with approximate USD/MYR conversions in parentheses (see the sources section for FX rates). <strong>This project's original pricing, title-deed-level source, TRIS Rating, developer market cap, foreign quota utilization, non-resident effective rental tax rate, walking distances, precise floor counts, and city-planning details are marked "unconfirmed" or "conflicting sources" where noted, meaning no publicly verifiable authoritative source could be obtained or multiple sources could not be reconciled — please confirm in writing with a licensed lawyer/agent before any actual transaction, and do not treat this card's figures as final.</strong> This is the fifth published card under this framework (th-property-scorecard-v1 v2.0), and the first to trigger the "visa-threshold boundary risk" deduction — readers should note that this project's foreign-buyer exit score includes an independent deduction never present on the prior four cards, and that the resulting gap widening does not indicate a calibration failure, but rather this new mechanism firing for the first time in an actual case. Passing the eligibility gate does not constitute a purchase recommendation — it only means this project has not tripped any of this framework's defined fatal-exclusion conditions. Actual investment decisions should involve professional advisors and an on-site inspection.
-    <p style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:10.5px;font-style:italic;color:var(--muted)">This is the fifth pilot scorecard under the th-property-scorecard-v1 v2.0 Thailand framework, first published 2026-08-04. Publication follows human review.</p>
-  </div>
+ <div class="footer-sources">
+ <h4>Sources</h4>
+ Eastern Star Real Estate PCL developer's own site (project basics, progress page 2024-09-21, unit-mix table, listing ranges) · Hipflat 2026 (Previous Sales showing the sole confirmed 2025-10-09 transaction, project/district statistics, active listing counts, rent-sale blended figures) · FazWaz ("Projects Nearby" corridor comps module) · homenayoo (walking distance) · PropertyScout (pricing range, walking distance) · Thai-language property aggregator (walking distance, nearby-school list, source attribution not fully confirmed) · developer's Thai-language pre-sale-era historical page (self-dated 2022-07 pricing) · Pantip.com buyer threads x2 (The Breeze delivery delay/common-area spec dispute, not regulator-confirmed) · SET (ESTAR listing information, FY2023-FY2025 financials) · brokerage/financial-media market-cap estimates (two conflicting sources) · Bangkok City Planning (Din Daeng/Huai Khwang corridor upzoning disclosure) · Knight Frank Thailand via The Nation Thailand, ≈2026-07 (Greater Bangkok's ≈350,000-unit broad overhang, 5-6 year absorption) · Tradingeconomics.com (Thailand 10-year government bond yield ≈2.0%, 2026-07; US 10-year Treasury yield 4.74%-4.75%, 2026-07-31) · CNBC US10Y quote (cross-check on the US Treasury yield) · Bank of Thailand MPC Decision 3/2026 (policy rate held at 1.00%) · th/report.html / th/macro.html (Bangkok market macro backdrop, FX rates THB/USD 33.65 / USD/MYR 4.06, 2026-07 — MYR conversion for scale reference only, not the opportunity-cost benchmark).
+ </div>
+ <div class="footer-disclaimer">
+ <h4>Disclaimer</h4>
+ This scorecard is an independent analytical reference and does not constitute investment advice. Scores are based on publicly verifiable data as of 2026-08-04. <strong>Scoring lens: a professional real estate investor evaluating on a 10-year hold, regardless of holding purpose (owner-occupier / rental / part-time / generational).</strong> Amounts are denominated in Thai Baht (THB), with approximate USD/MYR conversions in parentheses (see the sources section for FX rates). <strong>This project's original pricing, title-deed-level source, TRIS Rating, developer market cap, foreign quota utilization, non-resident effective rental tax rate, walking distances, precise floor counts, and city-planning details are marked "unconfirmed" or "conflicting sources" where noted, meaning no publicly verifiable authoritative source could be obtained or multiple sources could not be reconciled — please confirm in writing with a licensed lawyer/agent before any actual transaction, and do not treat this card's figures as final.</strong> This is the fifth published card under this framework (th-property-scorecard-v1 v2.0), and the first to trigger the "visa-threshold boundary risk" deduction — readers should note that this project's foreign-buyer exit score includes an independent deduction never present on the prior four cards, and that the resulting gap widening does not indicate a calibration failure, but rather this new mechanism firing for the first time in an actual case. Passing the eligibility gate does not constitute a purchase recommendation — it only means this project has not tripped any of this framework's defined fatal-exclusion conditions. Actual investment decisions should involve professional advisors and an on-site inspection.
+ <p style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:10.5px;font-style:italic;color:var(--muted)">This is the fifth pilot scorecard under the th-property-scorecard-v1 v2.0 Thailand framework, first published 2026-08-04. Publication follows human review.</p>
+ </div>
 </div>
 
 </div>

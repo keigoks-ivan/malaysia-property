@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scope Langsuan — 曼谷建案評分卡 | Property Check</title>
+<meta name="description" content="Scope Langsuan（SCOPE Co., Ltd.／SC Asset 持股90%合資）獨立評分卡。本國人 5.9 / 外國人 6.0（皆 T4）。10 年持有專業投資人視角 · 泰國版七維度框架 v2.0 · 資格閘門五項全過 · 量化測試在此案接近失效，如實揭露。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}
+.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{font-family:'Noto Serif TC','Playfair Display',serif;font-size:32px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{font-family:'Noto Serif TC','Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}
+.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{font-family:'Noto Serif TC','Playfair Display',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+.quota-box{background:linear-gradient(135deg,#fef2f2 0%, #fef9ed 100%);border:1px solid #e8c9a0;border-radius:14px;padding:18px 20px;margin-bottom:18px;font-size:12.5px;line-height:1.8;color:var(--text-soft)}
+.quota-box strong{color:var(--navy)}
+.gate-box{background:var(--navy-soft);border:1px solid var(--t2-bd);border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:12px;line-height:1.8;color:var(--text-soft)}
+.gate-box strong{color:var(--navy)}
+.gate-box .gate-sub{display:block;margin-top:8px;font-size:11px;color:var(--muted)}
+.rank-note{margin-top:14px;padding-top:12px;border-top:1px solid rgba(212,181,118,.18);font-size:11.5px;color:#c9b896;line-height:1.7}
+.tag{display:inline-block;border-radius:99px;padding:2px 10px;font-weight:700;font-size:11px}
+.tag-ok{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.tag-warn{background:#fef3c7;color:#a16207;border:1px solid #fcd34d}
+.tag-bad{background:#f1efe9;color:#6b7a92;border:1px solid #d9d3c4}
+.tag-unknown{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
+@media (max-width:768px){
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:24px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">TH Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/th-check">← 全部評分</a>
+      <a class="lang-link" href="SC_Scope-Langsuan_20260804_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Langsuan / Chidlom（曼谷傳統頂級地段）· Bangkok</span>
+    <span class="sep">◆</span>
+    <span>FREEHOLD CONDOMINIUM</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-08-04</span>
+  </div>
+  <h1 class="proj-name">Scope Langsuan</h1>
+  <p class="one-liner">
+    本卡的量化測試（quantum test）在本國人一側接近失效：83 sqm 代表 1BR 開價 THB 4,400 萬，換算本地家庭月收門檻約 THB 61.6 萬，是曼谷家庭均月收（THB 39,100）的約 <strong>15.8 倍</strong>——本地買家池在數學上已趨近於零。這不是建案品質的判決，而是產品定位本身的證明：Scope Langsuan 從設計、定價到行銷，鎖定的始終是全球資產配置型買家，不是曼谷本地家庭。獨立地理座標核算顯示，本案距 BTS Chidlom 站約 <strong>210-260 公尺</strong>，比開發商官網標題主打的「140 公尺」更遠，落在開發商自己引用的 120-230 公尺區間上緣，且應被歸入框架 Tier 7（≤400m）而非 Tier 8（≤200m）。Lumphini 公園旁的地段稀缺性（8.0）與開發商財務體質（7.0，SC Asset：TRIS BBB+）是本卡七維度中分數最高的兩項，但槓桿現金流結構性負利差、退場證據高度稀薄，把持有現金流與退場兩個分項拖到本卡最弱處。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇹🇭</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">5.9</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · 高端稀缺，現金流結構性失衡</span>
+      </div>
+      <div class="score-note">稀缺性（8.0）與開發商（7.0）撐起分數上緣，但持有現金流（2.6，本卡最低）反映槓桿買家在近乎零毛收益率資產上的負利差侵蝕；量化測試本身即是本國人一側最沈重的扣分來源</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">6.0</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · 高端稀缺，全球買家產品</span>
+      </div>
+      <div class="score-note">外國人總分略高於本國人（差距 0.1，屬統計並列），並非本案對外國人「更划算」，而是全現金買家不承受本國人一側的房貸負利差侵蝕——退場與現金流兩個維度的本外差距方向因此罕見地反轉，詳見下方維度說明的專門解釋</div>
+    </div>
+  </div>
+  <div class="rank-note">帶內排名：本卡總分 5.9（本國人）／6.0（外國人）。框架規則規定，相鄰總分差距 &lt;0.3 視為統計並列、不強行排序，且任何排序須由至少兩個獨立維度解釋。<strong>實際名次與並列組別由 /th-check.html 依 computeRanks() 對當前全部樣本動態計算，本頁不寫死排名數字</strong>——樣本每增加一張卡，名次與並列結構都會重算。本卡代表戶型總價（THB 4,400 萬）遠高於本站現行已發布卡片的代表戶型價格帶（約 THB 320-590 萬），跨卡比較時請務必先讀下方「方法論警語」區塊。</div>
+</div>
+
+<div class="gate-box">
+  <strong>✅ 資格閘門檢查（五項全數通過，才進入以下評分）：</strong>已完工可過戶（2023 完工，隨時可入住）｜Freehold（多方獨立來源一致確認，明確以自由地契行銷）｜外籍配額未確認打滿（未能證實，非已滿）｜本案本身與 SC Asset／SCOPE 集團均無建照/EIA撤銷或現存訴訟（查證範圍內無不利發現）｜代表戶型（1BR，83 sqm）登記價約 THB 4,400 萬 ≥ 300 萬門檻，且遠高於 1,000 萬無 MOTS 證明信門檻。
+  <span class="gate-sub">閘門判定與下方七維度分數彼此獨立：閘門確認的是「這個案子值不值得評分」，下方分數評的是「相對優劣」。<strong>合規查證附註</strong>：本案及開發商 SCOPE Co., Ltd. 未查得任何訴訟、EIA 或建照爭議；SC Asset 集團另一案（Scope Prasanmitr，另一 SCOPE 項目）曾「等待 EIA 核准」，屬正常前期審批排隊程序，非爭議或撤銷，且與本案（已完工）無關。另有一筆與本案<strong>無關</strong>的個案訊號——SC Asset 另一產品線（Grand Bangkok Boulevard，透天別墅項目，2016 年泰媒報導白蟻損害／屋頂漏水／地基下陷投訴）——不同產品線與專案，列入揭露供讀者參考但不影響本案閘門判定，處理方式與既有 Reference Sathorn-Wongwianyai 卡一致。</span>
+</div>
+
+<!-- BLOCK 1.6: METHOD WARNING -->
+<div class="quota-box">
+  <strong>⚠️ 方法論警語（本卡專屬，請優先閱讀）：</strong>本案代表戶型總價 THB 4,400 萬，遠超出本站現行已發布曼谷卡片的代表戶型價格帶（約 THB 320-590 萬），且與帶內其他卡不屬同一產品類別——那些是曼谷捷運步行帶的流動主力 1BR，本案是超豪宅（ultra-luxury）單一豪宅塔樓。框架選擇 1BR 作為跨案代表戶型，原始理由是「曼谷 800 萬泰銖以下、捷運步行帶的流動主力產品」（見 SKILL.md §代表戶型），本案的 83 sqm 1BR 完全超出這個定義範圍，此處比較不是同類產品的並列，讀者不應把本卡與帶內其他卡的維度分數或總分做逐點類比。<strong>量化測試（quantum test）在本案的意義也隨之改變</strong>：本國人一側的「家庭月收門檻」計算得出約 15.8 倍曼谷家庭均月收，這個數字量測的是「這個產品完全不是為本地家庭需求而設計」，不是「這棟樓有什麼缺陷」——本卡在退場與現金流兩個維度會如實反映這個結構性事實，但讀者應把它理解為產品市場定位的準確測量，而非品質判決。
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">七維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角，泰國版框架（th-property-scorecard-v1 v2.0）。稀缺性與地段護城河 20% · 交通與可達性 12% · 資本增值動能 15% · 進場估值紀律 13% · 持有現金流 12% · 退場與接手人群 18% · 開發商與管理移交 10%。現金流與退場本外分開，其餘五維同分。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+<svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="七維度雷達圖">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): [8.0, 7.3, 5.0, 5.7, 2.6, 5.1, 7.0] -->
+  <polygon points="140.0,50.4 203.9,89.0 194.6,152.5 167.7,197.5 127.4,166.2 84.3,152.7 78.7,91.1" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="50.4" r="3.5"/>
+    <circle cx="203.9" cy="89.0" r="3.5"/>
+    <circle cx="194.6" cy="152.5" r="3.5"/>
+    <circle cx="167.7" cy="197.5" r="3.5"/>
+    <circle cx="127.4" cy="166.2" r="3.5"/>
+    <circle cx="84.3" cy="152.7" r="3.5"/>
+    <circle cx="78.7" cy="91.1" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [8.0, 7.3, 5.0, 5.7, 2.9, 5.5, 7.0] -->
+  <polygon points="140.0,50.4 203.9,89.0 194.6,152.5 167.7,197.5 125.9,169.3 79.9,153.7 78.7,91.1" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="50.4" r="3.0"/>
+    <circle cx="203.9" cy="89.0" r="3.0"/>
+    <circle cx="194.6" cy="152.5" r="3.0"/>
+    <circle cx="167.7" cy="197.5" r="3.0"/>
+    <circle cx="125.9" cy="169.3" r="3.0"/>
+    <circle cx="79.9" cy="153.7" r="3.0"/>
+    <circle cx="78.7" cy="91.1" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+    <text x="140" y="12" text-anchor="middle">稀缺與地段</text>
+    <text x="239" y="59" text-anchor="start">交通與可達性</text>
+    <text x="263" y="168" text-anchor="start">資本增值動能</text>
+    <text x="195" y="262" text-anchor="start">進場估值紀律</text>
+    <text x="85" y="262" text-anchor="end">持有現金流</text>
+    <text x="17" y="168" text-anchor="end">退場與接手</text>
+    <text x="41" y="59" text-anchor="end">開發商與交付</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 5.9</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 6.0</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">稀缺性與地段護城河</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">8.0</span></span></div>
+        </div>
+        <p class="dim-rsn">Langsuan / Chidlom district 起跳 8.0——框架錨表最高一檔，理由是 Lumphini 公園旁的大面積可開發自由地契土地已近枯竭。三層稽核：<strong>土地層 △</strong>（Soi Lang Suan 本身是條極短的巷弄，過去多為大使館與獨棟宅邸，可供整合開發的完整大面積地塊確實稀少；但「Langsuan」作為行銷地段品牌，近年在周邊區塊仍有 NIMIT Langsuan〔54層，同樣自我行銷為「最後一塊自由地契土地」〕、Sindhorn Residence／Park View 系列〔合計約690戶〕、Muniq Langsuan、Langsuan Ville、Q Langsuan 等多案冠名launch，顯示「Langsuan」品牌本身的供給並未完全枯竭，只是真正緊鄰本案這條巷弄的整合型大地塊確實稀少）；<strong>產品層 △</strong>（本案 34 層單塔、158戶低密度自由地契超豪宅並非絕對唯一產品——同樣主打「Langsuan 最後自由地契土地」的 NIMIT Langsuan 是直接對位的可比競品，代表本案的產品定位可被複製，但複製門檻仍然很高，非一般標準塔樓）；<strong>法規層 ✓</strong>（Freehold 多方確認，惟 49% 外籍配額實際使用率未見揭露，無法計入結構性稀缺加分）。<strong>有效稀缺檢驗：強烈通過</strong>——本案代表戶型每坪均價與二手市場交易紀錄，量級遠高於一般曼谷公寓、也高於多數同屬超豪宅級的曼谷案例（見下方估值區塊），這種等級的價格溢價若沒有真實稀缺性支撐難以長期維持，「有效稀缺檢驗」在此案的證據明顯強於缺乏溢價佐證的一般情形。淨得：起跳 8.0，土地/產品層的部分保留（-0.3，反映 Langsuan 品牌供給並未真正枯竭）與有效稀缺檢驗強力通過（+0.3，價格溢價證據扎實）互相抵銷，維持 8.0。</p>
+        <p class="dim-data">三層稽核：土地△（巷弄本身地塊稀少，惟「Langsuan」品牌周邊近年仍有 NIMIT Langsuan／Sindhorn Residence／Park View／Muniq Langsuan／Langsuan Ville／Q Langsuan 等多案冠名launch）／產品△（NIMIT Langsuan 為直接可比的自由地契超豪宅競品）／法規✓（Freehold確認，配額未知）· 有效稀缺檢驗：強烈通過（實際交易價格溢價扎實，見估值區塊）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與可達性</span><span class="dim-weight">12% · 本外同分</span></div>
+          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">7.3</span></span></div>
+        </div>
+        <p class="dim-rsn"><strong>本案距離數字須被誠實重新核算</strong>：開發商官網標題主打「距 BTS Chidlom 140 公尺」，這個數字剛好落在開發商自己另外引用的「120-230公尺」區間下緣，本身即是可疑的行銷選取。本卡不採信開發商自報數字，改用獨立地理座標核算：以 OpenStreetMap 社群協作地圖各自獨立收錄的 BTS Chidlom 站座標（13.7440953, 100.5430622）與 Scope Langsuan 建物座標（13.7424491, 100.5441013，登記地址「29, ถนนหลังสวน」，與行銷地址「25 Lang Suan Road」門牌號有微小出入但同棟建物同條巷弄）計算，兩點直線（大圓）距離約 <strong>215 公尺</strong>；由於 Lang Suan 路本身是條由 Ploenchit/Chidlom 路口一路直行到底的直線巷弄，中途無需繞行，實際步行路線距離應僅略高於直線距離，合理估計落在 <strong>約 220-260 公尺</strong>區間——這個獨立核算結果比開發商主打的 140 公尺更接近開發商自己引用區間的上緣（230公尺），也接近其他第三方聚合網站常見的「230公尺／4-5分鐘」說法。<strong>依框架 Tier 表，220-260 公尺已超出 Tier 8（≤200m）門檻，落入 Tier 7（≤400m）</strong>，起跳 7.0。項目調整：Bumrungrad Hospital（框架認定三大國際醫院之一）獨立座標核算直線距離約 1.1 公里，實際車行/步行路線距離估計約 1.3-1.8 公里，落在 ≤2km 門檻內，+0.3；未查得完整覆蓋 skywalk 遮蔭連接本案（Ploenchit/Chidlom 一帶的空橋網絡沿 Ploenchit 路連接 Central Embassy／Central Chidlom／Gaysorn 等商場，但未見證據顯示空橋延伸進入 Lang Suan 巷弄本身，第三方資料亦明確指出本案「無直接空橋連接」），不予加分；Regent's International School Langsuan Campus 與本案同條巷弄（65 Soi Langsuan），步行可達，惟未能在 5 公里內另外獨立核實第二所國際學校的精確距離（St Andrews International School Sathorn 需經捷運/計程車轉乘，一筆資料顯示車程約 20-25 分鐘，不計入步行範圍），故不套用「≥2國際學校」加分項，僅在文字敘述中記錄此一正面因子；未查得 mall 級零售直連本案（Central Chidlom 等商場需先走到路口再轉入商場動線），不予加分。淨得 7.0+0.3=7.3。</p>
+        <p class="dim-data">BTS Chidlom：獨立座標核算直線距離≈215m，估計實際步行路線≈220-260m（落入Tier7≤400m，非開發商主打的Tier8等級140m）；開發商自報120-230m區間，本案採信獨立核算而非開發商數字 · Bumrungrad Hospital 直線≈1.1km，估計路線1.3-1.8km，≤2km加分 · Regent's International School Langsuan Campus 同巷弄（未計入正式加分，僅質化記錄）· 未見skywalk延伸至本巷弄</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值動能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">5.0</span></span></div>
+        </div>
+        <p class="dim-rsn">Langsuan/Chidlom 屬框架「CBD 核心稀缺型」錨表分類，惟該分類需要「明確催化劑」才能達到 5.5 起跳，非自動套用。本案確有若干正向的自身價格動能證據：開發商方（PRNewswire，2024/2025）宣稱二手市場已寫下每坪逾 USD 34,500 的新高、全案均價站上 USD 20,000/sqm 以上；獨立資料庫 thelist.group/realist 的 2023年12月快照顯示全案均價約 THB 537,000/sqm、已售 75%，與 2024/2025 稍晚的 「售出約80%」數字比對，隱含期間內均價與去化率同步上升，方向與開發商宣稱一致。惟這些「創新高」的敘事主要來自開發商自身的公關稿與被聚合網站轉引的搜尋摘要（thelist.group/realist 原始頁面本次查詢遭 403 拒絕直接讀取，數字為搜尋引擎摘要轉述，非本卡直接核對原始交易表），信心度應與本卡稍早已經質疑「140公尺」說法時採用的同一套懷疑標準對待。已知逐筆交易僅 3 筆（2023-09、2023-10、2025-12），樣本量極薄，任何「創新高」的單筆極端值都可能大幅扭曲均價敘事。同時，Langsuan 品牌本身近年有多案冠名launch（NIMIT Langsuan 等），構成同地段的潛在供給壓力。綜合：CBD核心起跳5.5，扣除催化劑證據薄弱與可比競品供給（-0.5），加回自身觀察到的正向價格區間變動（+0.3、Thai/foreign 均適用因為是同一組項目層級數字)相抵銷後落於一般「New CBD」量級的5.0。</p>
+        <p class="dim-data">CBD核心稀缺型錨表5.5起跳，需明確催化劑方可達成，本案催化劑證據主要來自開發商公關稿（信心度需打折）· thelist.group/realist：2023-12快照均價≈THB537,000/sqm、75%已售；PRNewswire 2024/2025：均價>USD20,000/sqm、二手峰值>USD34,500/sqm、≈80%已售 · 已知逐筆交易僅3筆（2023-09-07 THB85M／2023-10-27 THB95M／2025-12-03 THB45M，各筆戶型未標明）· NIMIT Langsuan等同品牌競品構成供給壓力</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">進場估值紀律</span><span class="dim-weight">13% · 本外同分</span></div>
+          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">5.7</span></span></div>
+        </div>
+        <p class="dim-rsn">代表戶型（1BR，官方戶型表 83-85 sqm，取 83 sqm）目前開價 THB 44,000,000（REm Magazine 引用開發商報價，2024-12），較早期價目表 richmonts.com 引用的 THB 42.5M 起價略高，方向與上方資本增值敘事一致；換算 <strong>THB 530,120/sqm</strong>。真實成交錨點：thelist.group/realist 資料庫（2023年12月快照，經搜尋引擎摘要轉述，非本卡直接核對原始表）顯示全案均價約 <strong>THB 537,000/sqm</strong>、premium 戶型高達 THB 671,000/sqm。以此作為錨點，本案代表戶型開價（530,120/sqm）與全案均價幾乎完全重合（差距僅約-1.3%），落在框架「+0-10%」帶的中性區間，理論起跳約6.0；惟須誠實揭露兩項confidence折讓：其一，錨點數字為搜尋引擎摘要轉述而非本卡直接核對thelist.group/realist原始交易表（原始頁面本次查詢遭403拒絕），信心度中等；其二，全案均價是混合了1BR至Penthouse（最大逾440 sqm）各戶型的加權平均，並非1BR專屬均價，兩者未必完全可比——一般而言，較小坪數戶型的每坪單價通常高於整案均價，若做此調整，本案1BR開價相對錨點更可能是折讓而非持平。淨得：起跳6.0，扣除錨點信心度折讓(-0.3)。</p>
+        <p class="dim-data">代表戶型1BR 83sqm：開價THB44,000,000（≈THB530,120/sqm，REm Magazine引用開發商報價2024-12；另有richmonts.com引用較早THB42.5M起價）· 真實成交錨點（thelist.group/realist，2023-12快照，經搜尋摘要轉述）：全案均價≈THB537,000/sqm，premium戶型達671,000/sqm，75%已售 · 二手掛牌（Hipflat）：1BR 83sqm現掛牌US$1.51M-1.79M（≈THB50.8M-60.2M，即612,000-725,800/sqm），明顯高於原始開價，與資本增值動能維度觀察到的漲勢方向一致 · 信心度：中等（錨點經搜尋摘要轉述，非直接核對原始表；且為全案混合均價非1BR專屬）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">12% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">2.6</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">2.9</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>本維度是本卡分數最低的一項，且理由與「壓縮的超豪宅收益率」直接相關，須完整揭露計算過程。</strong>租金數字本身跨度極大：多個聚合平台（livinginsider、bangkokresidential、thailand-property）現掛牌 83-85 sqm 單位月租普遍落在 <strong>THB 140,000-230,000</strong>；REm Magazine（引述開發商方說法）宣稱本案是「全曼谷每坪租金最高」，THB 2,500/sqm/月，換算 83sqm 約 THB 207,500/月；但另一筆較低區間的資料顯示實際成交或更保守的估算落在 <strong>THB 45,000-65,000/月</strong>（該資料來源在本案基本規格上有其他明顯錯誤，信心度低，僅供參考）。<strong>本卡的立場：與本卡稍早已經質疑「140公尺」「創新高」等開發商方數字的一貫標準一致，優先採用區間中低段作為保守工作假設</strong>——一方面全球超豪宅資產的實際毛收益率普遍遠低於主流住宅（結構性壓縮，資金追求的是資本保值而非現金流），另一方面 Hipflat 自身趨勢評論指出本案成交價常較原始開價低約19%，顯示本案掛牌數字本就有系統性偏高的既定模式，類推到租金掛牌同樣需要打折。本卡以 <strong>THB 58,000/月</strong>（區間中低段的代表值）作為評分與10年成本表的工作假設，對應毛收益率約 <strong>1.6%</strong>——處於全球超豪宅資產典型壓縮收益率的低段；同時在頁面上完整揭露 1.6%-5.7% 的資料來源全區間，讀者可依自身對「開發商方數字可信度」的判斷自行調整。<strong>本國人</strong>：毛收益率1.6% 對房貸利率6.5%，利差 <strong>-4.9pp</strong>，是一個財務上無法用房貸覆蓋的資產，槓桿買家必須用其他收入長期貼補負現金流。<strong>外國人</strong>：全現金情境下毛收益率1.6%，扣15%非居民預扣稅後淨收益率≈1.36%，對機會成本基準二（USD 5.75%/年）缺口達 <strong>-4.4pp</strong>，同樣是深度負值；惟因無房貸負利差侵蝕，外國人一側承受的年度現金流出遠小於本國人（僅缺少「本可獲得的機會成本收益」，而非實際負現金流出），這是外國人分數（2.9）略高於本國人（2.6）的核心原因。</p>
+        <p class="dim-data">代表1BR 83sqm，購入價THB44,000,000。租金資料全區間：多平台現掛牌THB140,000-230,000/月；REm Magazine引開發商方「全曼谷最高租金」THB2,500/sqm/月(≈207,500/月)；另有低區間估算THB45,000-65,000/月(來源信心度低)。本卡評分採保守工作假設THB58,000/月(≈毛收益率1.6%) · 本國人：毛1.6% vs房貸利率6.5% = 利差-4.9pp · 外國人：淨收益率≈1.36%(扣15%預扣稅) vs機會成本基準二5.75%(USD) = 缺口-4.4pp，惟無房貸負利差侵蝕</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場與接手人群</span><span class="dim-weight">18% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">5.1</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">5.5</span></span></div>
+        </div>
+        <p class="dim-rsn">（見下方退場現實檢驗區塊完整拆解，此處僅摘要計算式。）<strong>本國人</strong>：freehold基準7.0起跳。<strong>Quantum test（決定性因子）</strong>：代表戶型THB4,400萬 × 1.4% ≈ 月收門檻THB616,000，對照曼谷家庭均月收THB39,100，約<strong>15.8倍</strong>——落入框架quantum階梯最嚴苛一檔「>4,000萬 −1.0」，且此檔位是階梯的地板，THB4,400萬與理論上更高的總價在這條線上會得到相同扣分，這是框架本身在極端高端案例上鑑別力耗盡的具體例證。換手率：已知3筆交易分布於2023-09至2025-12約27個月，年化約0.84%/158戶，落入「&lt;1%淡薄」，依Hipflat覆蓋率侷限規則扣分上限收窄至-0.3並標低信心度。掛牌-成交折讓：Hipflat自身趨勢評論指出實際成交價常較原始開價低約19%，超過15%門檻，-0.3。當前掛牌數（DDproperty 132筆／Hipflat約120筆，對比158戶總盤）比例異常偏高，幾乎可以確定是同一戶被多家仲介重覆刊登所致，而非158戶中逾七成同時求售（否則與「約80%已售」的累計去化率互相矛盾），故不套用掛牌率的正常判讀階梯，改採資料品質不足的保守扣分-0.1。全國二手掛牌年增34.2%系統性壓力-0.2。淨得7.0-1.0-0.3-0.3-0.1-0.2=<strong>5.1</strong>。<strong>外國人</strong>：與本國人不同，外國人一側的「買不買得起」不是月收門檻而是「有沒有現金」（框架明文規定），且本案已有截至2025年底的實際成交紀錄（THB45M-95M不等）與約80%的累計去化率，證明確實存在一個真實運作中的全球現金買家池——<strong>因此外國人一側不套用本國人的quantum扣分</strong>，這正是本卡最重要的方法論判斷：THB4,400萬對曼谷本地家庭是不可能的數字，對全球資產配置型買家池，市場證據顯示是一個持續在成交的數字。外國人淨得＝同一freehold基準7.0起跳，套用與本國人相同的換手率(-0.3)、掛牌折讓(-0.3)、掛牌率資料品質(-0.1)後，另加配額狀態未能證實（-0.5，無任何官方或開發商揭露的配額使用率數字，超豪宅產品外籍買家占比一般偏高，惟本案無直接數字可據）、全國外資過戶年減17.3%系統性逆風(-0.3)。淨得7.0-0.3-0.3-0.1-0.5-0.3=<strong>5.5</strong>。外國人(5.5)高於本國人(5.1)，差距0.4——這與框架既有四張卡「本國人恆高於外國人」的既定模式方向相反，原因並非本案對外國買家更有利，而是本國人一側承受了外國人一側不適用的quantum結構性懲罰，讀者不應把這個差距讀成「本案更適合外國人」，而應讀成「本地買家池在數學上不存在，全球買家池則有實際成交證據支撐」。</p>
+        <p class="dim-data">Freehold基準7.0 · 本國人quantum：代表戶型THB4,400萬→月收門檻≈THB616,000，為曼谷家庭均月收(THB39,100)的≈15.8倍，落入quantum階梯最嚴苛檔(&gt;4,000萬，-1.0，階梯地板) · 換手率：3筆交易/27個月/158戶≈0.84%/年(&lt;1%，低信心度，扣分上限-0.3) · 掛牌-成交折讓：Hipflat自身評論約19%(&gt;15%門檻，-0.3) · 掛牌數異常偏高(DDproperty132/Hipflat≈120，對158戶)判定為多重仲介重覆刊登非真實求售比例，保守扣-0.1 · 外籍配額使用率：未能證實(-0.5) · 已知逐筆成交：2023-09-07 THB85M／2023-10-27 THB95M／2025-12-03 THB45M（戶型未標明）· 累計去化率時序：2019首週≈19%(30/158)→約60%(日期不確定)→2023-12：75%→2024/2025(PRNewswire)：≈80%</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline"><span class="dim-score"><span class="val local">7.0</span></span></div>
+        </div>
+        <p class="dim-rsn">本案由 <strong>SCOPE Co., Ltd.</strong> 開發——這是一家 2017-07-19 成立的合資公司，註冊資本 THB 1 億，由 <strong>SC Asset Corporation PCL（SET: SC）持股 90%</strong>，其餘10%由一名個人股東持有（英文報導與泰文原始報導對此股東姓名有些微出入，惟兩者對90/10股權結構的描述一致）。這個結構<strong>與既有 Reference Sathorn-Wongwianyai 卡的 SC Asset Three（SC Asset 55%＋Tokyo Tatemono 機構合資）明確不同</strong>——本案的10%股權方是個人而非機構型外資共同開發商，故<strong>不適用框架「機構級合資+0.5」加分項</strong>，這一點必須明確區分，不能因為都掛「SC Asset合資」字樣就套用相同加分。依§開發商分級表，SC Asset Corporation 基準分7.0，本案維持此基準不變。SC Asset本身信評 <strong>TRIS BBB+</strong>（與既有卡片同期查證數字一致，本次查證的搜尋結果對「Stable」展望用字未能重新獨立確認，惟評等本身確認），FY2025營業收入 <strong>THB 20,233M</strong>、淨利 <strong>THB 1,533M</strong>、預售額 THB 20,348M（與既有Reference卡數字一致），非住宅業務佔獲利結構逾兩成，ESG評級上調至AAA。SCOPE Co., Ltd.本身作為未上市合資子公司，未查得獨立公開財報（合乎其法律地位，財務併入SC Asset合併報表），惟SCOPE品牌旗下已有多個項目的公開紀錄：Scope Langsuan（本案，THB84億，2019launch/2023完工）、Scope Promsri（Sukhumvit Soi 39，THB11億）、Scope Prasanmitr（Sukhumvit Soi 23，THB20億，曾處於EIA審批排隊中，屬正常前期程序非爭議）、Scope Thonglor（另案，細節未深入查證）——顯示SCOPE作為品牌已有一定的多案交付track record。合規查證：本案本身與SC Asset／SCOPE集團均未查得建照撤銷、EIA撤銷或現存訴訟；另查得一筆與本案無關的個案訊號（SC Asset另一產品線Grand Bangkok Boulevard，2016年建築品質投訴，不同產品線與專案），列入揭露但不影響本案評分，處理方式與既有卡片一致。淨得：7.0（SC Asset基準，不套用機構合資加分）。</p>
+        <p class="dim-data">SCOPE Co., Ltd.＝SC Asset Corporation PCL(SET:SC)持股90%＋個人股東10%（2017-07-19成立，註冊資本THB1億）；與Reference卡SC Asset Three（55%＋Tokyo Tatemono機構合資）結構不同，不適用機構合資+0.5 · SC Asset：TRIS BBB+ · FY2025營收THB20,233M/淨利THB1,533M/預售THB20,348M（與既有卡片同期數字一致）· SCOPE品牌旗下已知項目：Scope Langsuan(本案)／Scope Promsri／Scope Prasanmitr(EIA審批中，非爭議)／Scope Thonglor · 本案與SC Asset/SCOPE均無建照/EIA撤銷或訴訟；集團另一產品線(Grand Bangkok Boulevard,2016)投訴與本案無關</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+  <p class="section-sub">代表戶型：<strong>83 sqm 1BR</strong>，現開價 THB 44,000,000（≈USD 1.28M 開發商方引用／以本站標準匯率 THB/USD 33.65 換算約 USD 1.31M，兩者大致一致；≈MYR 520-530萬，匯率見資料來源段，僅供尺度感參考）。本案未查得 Foreign/Thai Quota 價格分流，故本外採同一估算價。泰國版方法論採 1BR 而非 2BR 為跨建案代表戶型。</p>
+
+  <div class="assump-box">
+    <strong>⚠️ 代表戶型基準失去原始意義的揭露：</strong>框架選擇 1BR 作為跨案代表戶型，原始理由是「曼谷 800 萬泰銖以下、捷運步行帶的流動主力產品」（見 SKILL.md §代表戶型）。本案 83 sqm 1BR 開價 THB 4,400 萬，是這個定義區間的 <strong>5.5 倍</strong>，本質上是超豪宅產品而非流動性基準品。本卡仍遵循框架規則採用 1BR 以維持跨案結構一致，但這裡的「代表」二字不應被理解為「本案最容易成交、最貼近市場主流」——它只是框架為了跨案比較而選用的固定戶型錨點，讀者比較本卡與帶內其他卡的估值/現金流/退場數字時，務必先理解這個基準錯位，不宜直接類比。
+  </div>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">SCOPE Co., Ltd.（SC Asset Corporation PCL〔SET: SC〕持股 90%＋個人股東10%，2017-07-19成立，註冊資本THB1億）<span class="kv-src">Bangkok Post 報導；泰文財經媒體 yusabuy.com／thinkofliving.com 交叉確認90/10股權結構；未能直接於SC Asset官方IR網站的Form56-1核對原始文件（頁面為JS動態渲染或PDF過大未能解析），股權結構信心度中高而非第一手文件確證</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">Freehold（多方獨立來源一致，明確以自由地契行銷）<span class="kv-src">開發商官方文案；kellerhenson.com等多個代理網站一致確認</span></td></tr>
+          <tr><td class="kv-label">規模</td><td class="kv-val">158戶住宅＋1戶零售，共159個可售單位；單一34層塔樓，約3,520 sqm基地面積<span class="kv-src">Bangkok Post 2019-06-29開盤報導；開發商官方文案。另有次要來源顯示133-159戶不等的變體數字（可能反映在建/可售/已登記等不同計數口徑），本卡採信最初開盤報導與官方文案交叉確認的158+1版本</span></td></tr>
+          <tr><td class="kv-label">單位坪數</td><td class="kv-val">1BR 83-85 sqm · 2BR 154-169 sqm · 3BR 239-247 sqm · Penthouse最大約443-463 sqm（不同來源對頂層坪數量測口徑略有差異）<span class="kv-src">richmonts.com官方戶型表；Bangkok Post／PRNewswire交叉比對</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">1BR 83 sqm，現開價 THB 44,000,000（≈THB530,120/sqm）<span class="kv-src">REm Magazine引用開發商報價，2024-12；較早期價目表(richmonts.com)顯示約THB42.5M起，價格隨時間走高，方向與資本增值動能維度觀察一致</span></td></tr>
+          <tr><td class="kv-label">完工/推案</td><td class="kv-val">2019-06開盤，項目總值約THB84億；2023完工，已可入住</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與交通整合</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">BTS</td><td class="kv-val">獨立座標核算：直線距離≈215m，估計實際步行路線≈220-260m<span class="kv-src">開發商自報120-230m（官網標題主打140m），本卡不採信開發商自報數字，改用OpenStreetMap獨立收錄座標核算，詳見交通維度說明</span></td></tr>
+          <tr><td class="kv-label">Skywalk</td><td class="kv-val">未查得延伸至本巷弄的完整遮蔭空橋連接<span class="kv-src">Ploenchit/Chidlom一帶空橋網絡連接Central Embassy／Central Chidlom／Gaysorn等商場，止於路口，未延伸進入Lang Suan巷弄</span></td></tr>
+          <tr><td class="kv-label">醫療</td><td class="kv-val">Bumrungrad Hospital 獨立座標核算直線≈1.1km（估計實際路線1.3-1.8km）；BNH Hospital直線≈2.2km；Samitivej Sukhumvit旗艦分院直線≈3.6km<span class="kv-src">OpenStreetMap獨立座標核算（大圓直線距離，非實際路線）；Samitivej另設有其他分院，本次未逐一核實是否有更近的分院</span></td></tr>
+          <tr><td class="kv-label">國際學校</td><td class="kv-val">Regent's International School Langsuan Campus 與本案同條巷弄（65 Soi Langsuan），步行可達；St Andrews International School Sathorn需捷運/計程車轉乘（一筆資料顯示車程約20-25分鐘）<span class="kv-src">多方獨立來源確認Regent's地址；St Andrews車程數字來自單一房產聚合網站資料</span></td></tr>
+          <tr><td class="kv-label">同地段競品</td><td class="kv-val">98 Wireless（Wireless Road，均價約THB550,000/sqm，是本次查證中資料最完整的同地段可比psf數字）；NIMIT Langsuan（同巷弄，自我行銷「最後一塊自由地契土地」，直接可比自由地契超豪宅競品，價格未能證實）；另有Sindhorn Residence／Park View系列（合計約690戶）、Muniq Langsuan、Langsuan Ville、Q Langsuan等「Langsuan」品牌供給<span class="kv-src">多方市場列表交叉比對</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="assump-box" style="margin-top:18px">
+    <strong>⚠️ 估值與買價透明度說明：</strong>估值維度（13%）以「同地段／同配額類別<strong>真實成交</strong>中位 THB/sqm」為錨。<strong>本案信心度：中等</strong>——與同系列 Reference Sathorn-Wongwianyai 案（完全查無成交紀錄）不同，本案確有 thelist.group/realist 資料庫記錄的逐筆交易與一筆全案均價快照，但本次查詢該平台原始頁面遭 HTTP 403 拒絕直接存取，所引用數字（2023年12月快照均價THB537,000/sqm、75%已售、3筆逐筆交易日期與金額）均經由搜尋引擎摘要轉述，<strong>非本卡直接核對原始交易表</strong>，讀者若需要用於實際交易決策，應另行透過持牌代理取得原始成交憑證。全案均價亦混合了1BR至Penthouse各戶型，非1BR專屬均價，兩者未必完全可比。
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:26%">項目</th>
+        <th class="local">🇹🇭 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>過戶費</td><td class="num">2%（買賣多半各半）<br><small style="color:var(--muted)">買方份額估 ~1%</small></td><td class="num">2%（同，無外籍 penalty）</td><td><small>土地廳</small></td></tr>
+      <tr><td>資金來源要求</td><td class="num">無特別要求</td><td class="num"><strong>須自海外以外幣匯入</strong>，取得 FET 憑證；無此憑證無法過戶或申辦簽證</td><td><small>土地廳／泰國央行</small></td></tr>
+      <tr><td>購屋方式</td><td class="num">房貸約 80% LTV（估，惟本卡明確揭露此假設在THB4,400萬價位帶脫離現實常態，詳見下方10年成本表方法論警語）</td><td class="num"><strong>幾乎無泰銖房貸可用</strong>，結構性全現金；本案價位帶亦與典型全現金超高淨值買家輪廓相符</td><td><small>各行 / BOT</small></td></tr>
+      <tr><td>房貸利率</td><td class="num">約 6.5%<br><small style="color:var(--muted)">沿用同期查證數字，Bangkok Bank/ICBC估算中位</small></td><td class="num">不適用（全現金）</td><td><small>各行公告</small></td></tr>
+      <tr><td>毛租金收益率</td><td class="num">~1.6%（保守工作假設，見現金流維度）</td><td class="num">~1.6%（同一購入價，未查得配額分流）</td><td><small>多平台租金掛牌換算</small></td></tr>
+      <tr><td>持有 &lt;5 年賣出稅費</td><td class="num">特種商業稅 3.3%</td><td class="num">3.3%（同）</td><td><small>稅務廳/土地廳</small></td></tr>
+      <tr><td>持有 ≥5 年賣出稅費</td><td class="num">印花稅 0.5%<br><small style="color:var(--muted)">本卡以 10 年持有為基準情境，適用此項</small></td><td class="num">0.5%（同）</td><td><small>稅務廳</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">個人所得累進<br><small style="color:var(--muted)">估算有效稅率約 10.5%（沿用站內慣用估算，THB44M買家實際邊際稅率可能更高，詳見10年成本表方法論警語）</small></td><td class="num">15% 預扣稅（非居民）<br><small style="color:var(--muted)">是否為最終稅負未能完全證實</small></td><td><small>稅務廳</small></td></tr>
+      <tr><td>外籍配額</td><td class="num">不適用</td><td class="num">同棟 ≤49%（Condominium Act §19bis）<br><strong style="color:var(--warn-text)">本案使用率：未能證實</strong></td><td><small>土地廳／Condominium Act</small></td></tr>
+      <tr><td>簽證/居留門檻<br><small style="color:var(--muted)">二元資格旗標，不進評分</small></td><td class="num">不適用</td><td class="num">登記價≥THB1,000萬：<strong>無需MOTS證明信</strong>（直接免證明軌）<br><small style="color:var(--muted)">代表戶型THB4,400萬遠高於THB1,000萬門檻，TLS代辦路線（一次性THB4,000＋年費THB27,000）完全不適用本案</small></td><td><small>入出境事務局237/238-2568</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">本國人與外國人均以 <strong>83 sqm 代表 1BR、開價 THB 44,000,000</strong> 為基礎——本案未查得配額分流價格，故本外採同一購入價。本國人 80% 房貸槓桿與外國人結構性全現金，資金結構天差地遠，絕對金額不宜直接互比。</p>
+
+  <div class="assump-box">
+    <strong>⚠️ 方法論警語（本卡專屬）：</strong>下方本國人一側沿用框架標準的「80% LTV / 6.5% / 30年」房貸假設以維持跨卡計算方法一致，<strong>但這個假設在THB4,400萬價位帶已明顯脫離現實</strong>——泰國零售銀行罕見為此等總價的個人自住房貸提供標準化80% LTV產品，實際買家（無論本國或外國）在此價位帶更接近全現金或私人銀行融資的輪廓。本表刻意保留標準假設是為了讓讀者看清「若真的用標準房貸槓桿操作，數字會有多不堪」，而不是宣稱這是本案買家的真實融資方式。
+  </div>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    本國人／外國人均 <strong>83 sqm 代表 1BR @ THB 44,000,000</strong>（未查得配額分流，同一價格）· 10 年持有 · 租金 THB 58,000/月 Y1（區間中低段保守工作假設，見持有現金流維度說明，完整區間THB45,000-230,000/月已於該維度揭露），年漲幅 3%（估算假設），空置 1 個月/年 ·
+    管理費約 THB 90/sqm/月（估算，超豪宅全服務物業，未逐一查證）· 本國人房貸 80% LTV、6.5%、30 年（見上方方法論警語）· 外國人 100% 現金 · 機會成本基準二（外國人情境，USD）5.75%/年＝US 10Y 4.74%-4.75%（2026-07-31）＋100bp，跨幣別比較未做匯率調整 · 機會成本基準一（本國人參考，THB）3.0%/年＝泰國10Y公債殖利率約2.0%（2026-07初）＋100bp（兩條基準沿用既有卡片同期查證數字）·
+    賣出稅費依10年持有基準情境（0.5%印花稅）+ 個人所得預扣稅（估算約4%，依評定價與持有年限累進公式簡化）。所有金額四捨五入至千位。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇹🇭 本國人 (THB)</th>
+        <th class="foreign">🌏 外國人 (THB)</th>
+        <th>差額 (THB)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款／全額</td><td>8,800,000</td><td>44,000,000</td><td>+35,200,000</td></tr>
+      <tr><td>過戶費（買方份額）</td><td>440,000</td><td>440,000</td><td>0</td></tr>
+      <tr><td>律師/登記費（估）</td><td>150,000</td><td>150,000</td><td>0</td></tr>
+      <tr><td>FET匯款／代辦費（估）</td><td>—</td><td>15,000</td><td>+15,000</td></tr>
+      <tr class="sum"><td>買入小計</td><td>9,390,000</td><td>44,605,000</td><td>+35,215,000</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額（本金+利息）</td><td>26,693,000</td><td>—</td><td>−26,693,000</td></tr>
+      <tr><td>管理費（估）</td><td>900,000</td><td>900,000</td><td>0</td></tr>
+      <tr><td>房產稅（估）</td><td>90,000</td><td>90,000</td><td>0</td></tr>
+      <tr><td>保險（估）</td><td>150,000</td><td>150,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>27,833,000</td><td>1,140,000</td><td>−26,693,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，月租 THB 58,000 Y1，3%/年成長，保守假設）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>7,314,000</td><td>7,314,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>768,000</td><td>1,097,000</td><td>+329,000</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>6,546,000</td><td>6,217,000</td><td>−329,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，3%/年漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>賣出價（3%/年，10年）</td><td>59,132,000</td><td>59,132,000</td><td>0</td></tr>
+      <tr><td>過戶費（賣方份額，1%）</td><td>591,000</td><td>591,000</td><td>0</td></tr>
+      <tr><td>印花稅（0.5%，10年持有基準）</td><td>296,000</td><td>296,000</td><td>0</td></tr>
+      <tr><td>個人所得預扣稅（估算約4%）</td><td>2,365,000</td><td>2,365,000</td><td>0</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>29,844,000</td><td>—</td><td>−29,844,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅情境，本外同一購入價）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0% 漲幅</td><td>−18,941,000</td><td>+2,052,000</td><td>+20,993,000</td></tr>
+      <tr class="scenario"><td>3%/年 漲幅（base）</td><td>−4,641,000</td><td>+16,352,000</td><td>+20,993,000</td></tr>
+      <tr class="scenario"><td>5%/年 漲幅</td><td>+7,208,000</td><td>+28,201,000</td><td>+20,993,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    <strong>這張表最重要的訊息不是絕對金額，是本國人一側連續兩個情境（0%、3%基準）都是虧損。</strong>以80%槓桿操作，本國人買家即使房價維持框架基準情境的3%/年漲幅，10年後仍淨虧約THB464萬；必須漲幅達到約4%/年以上才勉強打平，5%/年情境也僅小幅轉正（+約721萬）——這不是「槓桿放大報酬」的正常故事，而是槓桿在近乎零毛收益率（1.6%）資產上被房貸利率（6.5%）持續倒貼負利差，10年累積的利息侵蝕遠超過房價增值貢獻。外國人（全現金）三種情境全部為正，即使0%情境仍小幅獲利（+約205萬），差別在於沒有負利差侵蝕，但代價是投入資本基數達本國人自付現金的<strong>約4.75倍</strong>（THB4,460.5萬 vs 939萬），兩者economics完全不同、風險承擔完全不同，不宜把「外國人數字比較正」讀成「外國人比較划算」。粗估年化報酬率：本國人（80%槓桿）base情境約<strong>-1%至-2%/年</strong>，需5%/年情境才轉正至約2%/年附近；外國人（全現金）base情境約<strong>3%/年</strong>，0%情境仍有小幅正報酬（約0.5%/年）。（IRR為簡化年金法估算，非逐年現金流精算，且如上方方法論警語所述，本國人房貸槓桿假設本身已明顯偏離此價位帶的市場常態。）
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ 退場現實檢驗</span>
+  <h2 class="section-title">退場現實檢驗</h2>
+  <p class="section-sub">10 年持有的回報，只有在賣掉那天才實現。本案的量化測試（quantum test）結果極端，請優先閱讀下方 Quantum test 區塊。</p>
+
+  <!-- 5A 稀缺性稽核 -->
+  <div style="background:var(--navy-soft);border:1px solid #c7d5e8;border-radius:14px;padding:20px 22px;margin-bottom:18px">
+    <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:14px">5A · 稀缺性稽核（供給側三層，含配額）</div>
+    <div style="display:flex;flex-direction:column;gap:12px;font-size:12.5px;line-height:1.75;color:var(--text-soft)">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <span class="tag tag-warn">△ 土地層</span>
+        <span>Soi Lang Suan本身是條極短巷弄，可供整合開發的完整大面積地塊確實稀少；惟「Langsuan」作為行銷地段品牌，周邊近年仍有NIMIT Langsuan、Sindhorn Residence/Park View系列、Muniq Langsuan、Langsuan Ville、Q Langsuan等多案冠名launch，品牌層級供給並未完全枯竭。</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <span class="tag tag-warn">△ 產品層</span>
+        <span>34層單塔、158戶低密度自由地契超豪宅並非絕對唯一產品——NIMIT Langsuan是直接對位的可比競品，同樣主打「Langsuan最後自由地契土地」的敘事，代表本案產品定位可被複製，惟複製門檻仍遠高於一般標準塔樓。</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <span class="tag tag-ok">✓ 法規層</span>
+        <span>Freehold多方獨立來源一致確認；49%外籍配額實際使用率查無揭露，無法判定是否構成結構性稀缺，此項留白不予加分亦不予扣分。</span>
+      </div>
+    </div>
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid #c7d5e8;font-size:12.5px;line-height:1.75;color:var(--navy)">
+      <strong>有效稀缺判定：強烈通過。</strong>本案代表戶型每坪價格與二手市場交易紀錄，量級遠高於一般曼谷公寓，這種等級的價格溢價若無真實稀缺性支撐難以長期維持，是本卡七維度中證據最扎實的通過項之一，惟土地層與產品層仍有Langsuan品牌供給的保留意見，未給滿分。
+    </div>
+  </div>
+
+  <!-- 5B 接手人群金字塔 -->
+  <div style="border:1px solid var(--border-soft);border-radius:14px;padding:20px 22px;margin-bottom:18px">
+    <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:12px">5B · 接手人群金字塔</div>
+    <div style="background:var(--gold-bg);border-left:4px solid var(--gold);border-radius:8px;padding:12px 16px;font-size:12.5px;line-height:1.75;color:var(--text-soft);margin-bottom:14px">
+      <strong style="color:var(--navy)">Quantum test（本國人，決定性因子）：</strong>代表戶型THB4,400萬 → 下一手家庭月收門檻約<strong>THB616,000</strong>（80%LTV、6.5%、30年、負擔40%，泰國版係數約總價×1.4%）→ 對照曼谷家庭均月收THB39,100，約為平均值的<strong>15.8倍</strong>——這個倍數遠超過框架quantum階梯設定的最嚴苛檔位（總價逾4,000萬即封頂扣分-1.0，44,000,000本身已是該檔位的2倍以上）。疊加2026H1曼谷房貸退件率40-50%的授信緊縮環境，即使假設存在達到此月收的家庭，一般零售銀行也極不可能為此總價提供標準化個人房貸產品，本地買家池在數學上趨近於零。<br><strong style="color:var(--navy)">外國人：</strong>無貸款可用，quantum改為現金門檻，約需THB4,400萬+費用（≈USD131萬／MYR約530萬）可動用海外現金——與本國人門檻性質不同，這個門檻確實有真實買家池支撐：已知逐筆交易顯示THB4,500萬-9,500萬區間的成交持續發生（2023-09至2025-12），累計去化率報稱已達約80%，證明存在一個持續運作中的全球現金買家池，quantum test在外國人一側實質是<strong>通過</strong>的。
+    </div>
+    <table class="cmp-table">
+      <thead><tr><th style="width:24%">接手者</th><th style="width:12%">判定</th><th>判定依據</th></tr></thead>
+      <tbody>
+        <tr><td>本地首購</td><td><span class="tag tag-bad">✗</span></td><td>quantum月收門檻THB616,000為曼谷家庭均月收的15.8倍，完全超出可負擔範圍，非授信緊縮的程度問題，是絕對不可及。</td></tr>
+        <tr><td>本地upgrader</td><td><span class="tag tag-bad">✗</span></td><td>即使是曼谷中高收入家庭，quantum門檻仍遠超一般認知的可負擔範圍，本地upgrader買家池同樣趨近於零。</td></tr>
+        <tr><td>本地投資客</td><td><span class="tag tag-bad">✗</span></td><td>保守估算毛收益率約1.6%，遠低於房貸利率6.5%，槓桿投資呈嚴重負利差；全現金本地投資人面對的收益率同樣遠低於THB機會成本基準（3.0%），本地投資動機薄弱。</td></tr>
+        <tr><td>外籍自住（3M/10M簽證軌）</td><td><span class="tag tag-ok">✓</span></td><td>簽證門檻為二元旗標（非加分項）：THB4,400萬遠高於1,000萬無證明軌門檻，直接適用無需MOTS證明信的免證明軌，無需經過MOTS證明信與TLS代辦流程；惟本案步行可達的國際學校僅Regent's同巷弄一所，對有子女教育需求的外派家庭吸引力可能受限。</td></tr>
+        <tr><td>外籍投資</td><td><span class="tag tag-warn">△</span></td><td>已知確有全球買家持續成交（THB4,500萬-9,500萬區間，累計約80%去化），quantum實質通過；惟毛收益率同樣壓縮（約1.6%），淨收益率遠低於機會成本基準二（USD5.75%），這類買家的動機更可能是資本保值/全球資產配置而非現金流，需與投資人自身動機是否契合，非傳統意義的「投資回報」買家。</td></tr>
+        <tr><td>機構／大宗</td><td><span class="tag tag-bad">✗</span></td><td>strata單戶不符機構規格，無整棟／大宗跡象。</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:14px;display:flex;gap:12px;align-items:flex-start;font-size:12.5px;line-height:1.75;color:var(--text-soft)">
+      <span class="tag tag-warn">外籍依賴度：未能證實</span>
+      <span>本案無外籍持有比例官方揭露數字，無法精確判定依賴度；超豪宅產品類別按產業一般認知外籍買家占比通常偏高，惟本案無直接數字佐證此推斷，不作為評分依據，僅供質化參考。</span>
+    </div>
+  </div>
+
+  <!-- 5C 二手市場證據 -->
+  <div style="margin-bottom:18px">
+    <div style="font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;margin-bottom:12px">5C · 二手市場證據</div>
+    <p style="font-size:12px;color:var(--warn-text);background:var(--warn-bg);border:1px solid var(--gold-light);border-radius:8px;padding:10px 14px;margin-bottom:14px;line-height:1.7">⚠️ <strong>方法論警語：</strong>泰國無官方逐筆過戶公開資料，Hipflat／FazWaz／DDproperty的「掛牌數」是各平台自行蒐集的<strong>可見樣本，不是全市場成交數</strong>。本案的掛牌數字存在一個額外的資料品質問題：DDproperty顯示132筆求售、Hipflat約120筆，對比全案僅158戶——這個比例（約76-84%）若字面解讀等於「全案逾七成同時求售」，與官方報稱累計約80%已售的去化率明顯矛盾，幾乎可以確定是同一戶被多家仲介重覆刊登所致。本卡不採信這個字面比例，改採資料品質不足的保守扣分處理，詳見下方掛牌率格。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px">
+      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">≈0.84%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">年換手率<br>3筆交易/27個月/158戶</div>
+        <div style="margin-top:8px;display:inline-block" class="tag tag-bad">淡薄（低信心度）</div>
+      </div>
+      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">N/A</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">掛牌率<br>132/158筆字面值疑似重覆刊登污染</div>
+        <div style="margin-top:8px;display:inline-block" class="tag tag-bad">未採用（資料品質不足）</div>
+      </div>
+      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">≈19%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">掛牌-成交折讓<br>Hipflat自身趨勢評論</div>
+        <div style="margin-top:8px;display:inline-block" class="tag tag-warn">弱（&gt;15%門檻）</div>
+      </div>
+      <div style="background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);border:1px solid var(--border-soft);border-radius:12px;padding:16px 14px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em">3 筆</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45">確認成交紀錄<br>2023-09至2025-12，經搜尋摘要轉述</div>
+        <div style="margin-top:8px;display:inline-block" class="tag tag-warn">薄（低信心度）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5D 外籍配額餘額 box -->
+  <div class="quota-box">
+    <span class="tag tag-unknown" style="margin-bottom:8px;display:inline-block">🔒 外籍配額檢查：未能證實（退場（外）−0.5）</span><br>
+    <strong>本案外籍持有比例／配額餘額查無官方或開發商揭露數字</strong>（SC Asset／SCOPE官網、Hipflat、FazWaz、DDproperty均未列示官方配額使用率）。49%上限為法定天花板（Condominium Act B.E. 2522 §19 bis）。2019年開盤週報導顯示早期買家中約20%為外籍，惟該數字距今已逾6年、去化率已從當時個位數百分比升至約80%，早已不具代表性。超豪宅產品類別按產業一般認知外籍買家占比通常偏高（本案THB4,400萬總價本身即遠超本地家庭負擔能力，見quantum test），惟本案無直接數字佐證此推斷，不強行套用更嚴苛的檔位判定，仍以「未能證實」的標準檔位（−0.4~−0.6，本卡取−0.5）處理。買家應於下訂前向代理或土地廳書面查證當前配額使用率。
+  </div>
+
+  <div class="cost-bottom">
+    <strong>一句話總結：</strong>10年後最可能的接手者是持續存在且已有實際成交證據的全球現金買家，本地買家池在quantum test下實質為零；配額狀態未經揭露、逐筆成交樣本薄（3筆）、掛牌率數據因重覆刊登污染而不可用，多重資料缺口疊加在「本地買家池不存在」這個結構性事實之上——本案退場面的核心風險不是流動性枯竭的訊號不明，而是流動性從一開始就只鎖定極窄的一群全球買家，市場深度先天有限。
+  </div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>Scope Langsuan 座落於曼谷 Lumphini 公園旁的 Soi Lang Suan，由 SCOPE Co., Ltd.（SC Asset Corporation PCL〔SET: SC〕持股90%、個人股東持股10%，2017年成立的合資公司）開發，2019年6月開盤、項目總值約THB84億，2023年完工，共158戶住宅＋1戶零售，單一34層自由地契塔樓。代表戶型83 sqm 1BR現開價THB4,400萬，換算約THB53萬/sqm，是本框架選定的「1BR跨案代表戶型」定義區間（800萬泰銖以下捷運步行帶流動主力產品）的5.5倍。這個落差不是資料錯誤，是提醒：本卡從第一個數字開始，就在測量一個為全球資產配置買家而非曼谷本地家庭打造的產品。</p>
+
+    <p>本案最重要的查證發現，是重新核算了開發商官網標題主打的「距BTS Chidlom站140公尺」這個數字。這個數字剛好落在開發商自己另外引用的「120-230公尺」區間下緣——本身就是一個可疑的行銷選取模式，本卡選擇不採信。改用OpenStreetMap獨立收錄的座標系統，分別核算BTS Chidlom站與Scope Langsuan建物的地理座標，計算出兩點直線距離約215公尺；考慮到Lang Suan路本身是條由Ploenchit/Chidlom路口一路直行到底的巷弄、中途無需繞行，實際步行路線距離合理估計落在220-260公尺區間。這個數字比開發商主打的140公尺更貼近開發商自己引用範圍的上緣（230公尺），也更接近多個第三方聚合網站常見的說法。依框架Tier表，這個距離已超出Tier8（≤200m）門檻，落入Tier7（≤400m）——不是災難性的落差，但足以說明：即使是頂級開發商的頂級案子，行銷數字仍需要獨立核算，不能照單全收。</p>
+
+    <p>本案真正的核心故事，是quantum test在這裡近乎徹底失效。框架的量化測試邏輯，原本是用來衡量「下一手買家的家庭月收能否負擔這個總價」——這套邏輯在代表戶型總價遠低於本案的卡片上（約THB320-590萬價格帶）都還算得出有意義的倍數。但本案代表戶型THB4,400萬，換算月收門檻約THB616,000，是曼谷家庭均月收（THB39,100）的<strong>約15.8倍</strong>。這不是「授信偏緊」的程度問題，是本地買家池在數學上完全不存在的問題——不會有曼谷本地家庭以正常房貸負擔這個總價，這個事實與建案本身的品質、地段、開發商實力毫無關係，它測量的是這個產品從設計之初就沒有把曼谷本地家庭當作目標客群。與此同時，外國人一側的quantum test講的是完全不同的故事：本案已有截至2025年底、跨度超過兩年的實際成交紀錄（THB4,500萬、8,500萬、9,500萬），累計去化率報稱已達約80%，證明確實存在一個持續運作中、有真金白銀成交的全球現金買家池。這正是本卡刻意讓外國人退場分數（5.5）略高於本國人（5.1）的原因——不是本案對外國人更有利，而是本地買家池的懲罰不適用於已經證明存在的全球買家池，讀者切勿把這個反轉讀成「本案品質對外國人更好」。</p>
+
+    <p>稀缺性維度上，Lumphini公園旁的Langsuan/Chidlom地段確實是曼谷傳統頂級地段，框架錨表給出全曼谷最高一檔的8.0起跳。三層供給稽核顯示這個地段的稀缺性有真實成分，也有需要誠實面對的另一面：Soi Lang Suan這條短巷弄本身，可供整合開發的完整大面積地塊確實稀少；但「Langsuan」作為行銷地段品牌，周邊近年仍有NIMIT Langsuan（同樣自我行銷為「最後一塊自由地契土地」）、Sindhorn Residence/Park View系列、Muniq Langsuan、Langsuan Ville、Q Langsuan等多案冠名launch，品牌層級的供給並未真正枯竭。這種張力最終體現在分數上：起跳8.0，土地/產品層的保留意見與有效稀缺檢驗（實際交易價格溢價扎實、遠高於一般曼谷公寓）的強力通過互相抵銷，維持8.0——是本卡七個維度中最高的一項，但這個高分是經過真實稽核、而非單純套用地段錨表得出的。</p>
+
+    <p>持有現金流是本卡分數最低的一項（本國人2.6、外國人2.9），也是最需要誠實揭露計算過程的一項。租金掛牌數字跨度極大：多平台現掛牌普遍落在THB140,000-230,000/月，開發商方（經REm Magazine引述）宣稱本案是「全曼谷每坪租金最高」的產品，換算約THB207,500/月；但另有一筆較保守的估算落在THB45,000-65,000/月。本卡選擇用區間中低段（THB58,000/月）作為評分與10年成本表的保守工作假設——理由與本卡稍早已經質疑「140公尺」數字時採用的同一套標準一致：全球超豪宅資產的實際毛收益率普遍遠低於主流住宅（資金追求的是資本保值而非現金流），而Hipflat自身趨勢評論也指出本案成交價常較原始開價低約19%，顯示掛牌數字本就有系統性偏高的既定模式。以此假設計算，毛收益率約1.6%，換算到10年成本表：本國人以框架標準的80%槓桿假設操作，即使房價維持基準情境3%/年漲幅，10年後仍淨虧約THB464萬——這不是槓桿的正常故事，是槓桿在近乎零毛收益率資產上被房貸利率持續倒貼的負利差侵蝕。外國人（全現金）因無此負利差，三種情境下皆為正值，但代價是投入資本基數達本國人自付現金的約4.75倍，兩者economics完全不同。</p>
+
+    <p>開發商層面，SCOPE Co., Ltd.的股權結構（SC Asset持股90%＋個人股東10%）與同系列Reference Sathorn-Wongwianyai案的SC Asset Three（55%＋Tokyo Tatemono機構合資）明確不同——本案不適用框架「機構級合資+0.5」加分項，因為10%的個人股東不構成機構型外資共同開發商。開發商分數因此維持SC Asset本身的基準7.0，不額外加分。SC Asset集團財務體質健康（TRIS BBB+，FY2025營收THB202.3億、淨利15.3億，與同系列既有卡片查證數字一致），本案及SCOPE集團均未查得建照撤銷、EIA撤銷或現存訴訟。綜合七個維度，本案最終總分（本國人5.9、外國人6.0，皆T4）呈現的是一個真實而罕見的畫面：地段、開發商、簽證程序三項近乎滿分，退場與現金流兩項因產品定位的極端性而深度承壓——這正是超豪宅產品在一套為主流曼谷公寓設計的評分框架下，誠實運轉應該呈現的樣子。</p>
+
+    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+      <strong style="color:var(--navy);font-weight:700">10 年情境基準</strong>：假設 2026-08 進場、2036-08 退場：
+      <ul style="margin:8px 0 0 18px;padding:0">
+        <li><strong>合理情境</strong>（base case）：房價 +3%/年、租金年漲3%、空置1月/年。本國人（80%槓桿，方法論警語：此假設在此價位帶明顯脫離現實常態）10年累計淨損失約<strong>THB -464萬</strong>，粗估年化報酬率約-1至-2%；外國人（全現金）約<strong>THB +1,635萬</strong>（資本基數大4.75倍，不宜與本國人直接比金額），粗估年化報酬率約3%。</li>
+        <li><strong>上行情境</strong>（bull case）：全球資產配置需求延續、Langsuan品牌溢價持續兌現，房價+5%/年。本國人轉正約+72萬（年化約2%附近）；外國人約+2,820萬（年化約5%）。</li>
+        <li><strong>下行情境</strong>（bear case）：全球資金流動性收緊、Langsuan品牌周邊供給（NIMIT Langsuan等）分流買家，房價0%/年。本國人淨損失擴大至約-1,894萬（相當於自付現金939萬的兩倍以上，房貸負利差侵蝕的極端例證）；外國人仍為正值約+205萬（因無槓桿成本）。</li>
+      </ul>
+      <div style="margin-top:10px">10年退場流動性：已知逐筆成交僅3筆（跨2023-09至2025-12），掛牌率數據因疑似多重仲介重覆刊登污染而不可用，保守假設掛牌9-18個月、折讓15-25%（區間刻意放寬，反映「資料缺口＋買家池窄」的雙重風險，而非僅資料缺口本身）。</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>Lumphini公園旁自由地契超豪宅塔樓，稀缺性維度8.0，是本卡七維度中最高一項，且經三層供給稽核與有效稀缺檢驗雙重驗證</li>
+        <li>SC Asset持股90%，集團財務體質健康（TRIS BBB+，FY2025營收THB202.3億/淨利15.3億），本案及SCOPE集團均無建照/EIA撤銷或現存訴訟</li>
+        <li>已完工可即時過戶（2023），登記價遠高於THB1,000萬無MOTS證明信門檻，直接適用免證明軌，無需經過MOTS證明信與TLS代辦流程</li>
+        <li>已有截至2025年底、跨度逾兩年的實際成交紀錄（THB4,500萬-9,500萬區間），累計去化率報稱約80%——證明確實存在持續運作中的全球現金買家池，非僅行銷宣稱</li>
+        <li>Regent's International School Langsuan Campus與本案同巷弄，步行可達</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li><strong>開發商主打的「距BTS Chidlom 140公尺」經獨立座標核算應更正為約220-260公尺</strong>，落入框架Tier7而非開發商暗示的Tier8等級</li>
+        <li><strong>量化測試（quantum test）在本案接近失效</strong>：代表戶型對本地家庭的月收門檻達曼谷均值的15.8倍，本地買家池在數學上不存在——這測量的是產品定位而非建築品質，惟買家仍應清楚認知這代表退場時幾乎必然只能賣給另一位全球買家</li>
+        <li>持有現金流是本卡最弱一項（本2.6/外2.9）：保守估計毛收益率僅約1.6%，本國人以框架標準80%槓桿假設操作，10年基準情境下淨虧約THB464萬，需房價漲幅達約4%/年以上才勉強打平</li>
+        <li>掛牌數字（132/158戶）疑似遭多家仲介重覆刊登污染，不能作為真實求售比例解讀，退場流動性的真實圖像因此更難判斷</li>
+        <li>外籍配額使用率、SCOPE Co., Ltd.精確股權結構文件未獲官方原始文件核對（依賴財經媒體與泰文報導交叉確認），需買家自行向代理或土地廳查證</li>
+        <li>「Langsuan」地段品牌周邊近年多案冠名launch（NIMIT Langsuan等直接可比自由地契超豪宅競品），土地/產品層稀缺性並非絕對唯一，長期持有需追蹤此類供給節奏</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（8.0，本卡最高分項）、開發商與管理移交（7.0）、簽證程序簡化（外籍，登記價遠超1,000萬無證明軌門檻）<br>
+      <strong>可妥協</strong>：持有現金流（自住設算租金，不影響現金流評分意義）、資本增值動能<br>
+      <strong>本案 fit</strong>：適合把本單位當作曼谷長期落腳點、且不期待現金流打平的全球資產配置型買家；Lumphini公園旁的地段與自由地契確實提供難以複製的居住品質。惟本卡查證的國際學校覆蓋僅Regent's同巷弄一所，對有子女教育需求且希望多校選擇的外派家庭，需另行評估是否符合需求；本地買家因quantum test顯示的授信現實，此案並非本地自住族群的可及選項。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（2.6本/2.9外，本卡最弱一項）、退場與接手人群（5.1本/5.5外）<br>
+      <strong>可妥協</strong>：資本增值動能<br>
+      <strong>本案 fit</strong>：不適合以收租現金流為主要目的的投資人——保守估計毛收益率僅約1.6%，本國人若以按揭槓桿操作，10年基準情境下是淨虧損而非獲利，此案完全不建議以房貸槓桿方式購入收租；外國人全現金情境下淨收益率同樣遠低於機會成本基準，若以「跑贏什麼都不做」為投資標準，本案並不達標，除非投資人本身把資本保值置於現金流之上。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：交通與可達性（7.3）、開發商與管理移交（7.0）<br>
+      <strong>可妥協</strong>：持有現金流、資本增值動能<br>
+      <strong>本案 fit</strong>：對本就以全現金持有、把資產保值與偶爾居住需求放在首位的買家，本案的地段、建築品質、已完工社區設施可即時查驗等條件均具備；THB4,400萬總價對希望以無證明信路徑取得泰國長期居留簽證的買家也是可行選擇。惟短租/Airbnb合規性受泰國本身法規限制（一般condo juristic多不允許短天期出租），非本卡評分範圍但買家應另行查證，且以本案的價位帶與定位，短租收益模式本就不是這類買家的主要考量。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（20%）、退場與接手人群（下一代脫手）<br>
+      <strong>可妥協</strong>：短期yield、短期催化<br>
+      <strong>本案 fit</strong>：Freehold地契可繼承是結構性優勢，惟本卡稀缺性稽核顯示土地/產品層仍有Langsuan品牌周邊供給的保留意見（NIMIT Langsuan等直接可比競品），長期持有者應定期追蹤此類供給節奏。<strong>更關鍵的是quantum test揭示的接手對象結構</strong>：若家族傳承鏈中的下一代持有泰國本地身份、且沒有本身的全球資產配置需求，本案在10年甚至20年後的脫手對象幾乎必然仍是另一位全球買家而非本地家庭——這個結構性限制不會隨時間改變，應及早認知並規劃退場對象，而非假設「持有夠久自然會有本地買家接手」。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    Bangkok Post（2019-06-29開盤報導；另一篇未確定確切日期的60%去化率報導）· PRNewswire（2024/2025，開發商方均價/二手峰值/約80%去化率新聞稿，多處數字經本卡與其他來源交叉比對後標示信心度）· REm Magazine（2024-12，代表戶型開價THB44M、「全曼谷最高租金」引用，經Bangkok Post關聯媒體發布）· richmonts.com（官方戶型表、較早期價目表）· kellerhenson.com／sunwayestates.com／homethailandestates.com等多個代理網站（規模、地契、行銷文案交叉確認）· thelist.group/realist（2023年12月快照：全案均價、75%已售、3筆逐筆交易；原始頁面本次查詢遭HTTP 403拒絕直接存取，數字經搜尋引擎摘要轉述）· Hipflat（現掛牌價格區間、成交價較原始開價低約19%之趨勢評論；原始頁面查詢遭403拒絕）· DDproperty／FazWaz（現掛牌與租賃筆數）· 泰文財經媒體 yusabuy.com／thinkofliving.com（SCOPE Co., Ltd. 90/10股權結構、成立日期與註冊資本）· OpenStreetMap／Nominatim地理編碼服務（BTS Chidlom站、Scope Langsuan建物、Bumrungrad／BNH／Samitivej Sukhumvit醫院之獨立座標與大圓距離核算，2026-08-04查證）· superagent.co（第三方步行時間敘述，惟該來源對本案樓層/戶數/完工年份/戶型坪數等基本規格與其他多方來源明顯不一致，信心度低，僅列入距離資料的來源區間供完整揭露）· sindhornmidtown.com（同巷弄参考點BNH距離數據）· SC Asset Corporation PCL FY2025 Form 56-1 One Report／Info Meeting簡報（TRIS BBB+信評、FY2025營收/淨利/預售額，與既有Reference Sathorn-Wongwianyai卡同期查證數字一致）· Tradingeconomics.com（泰國10年期公債殖利率2026-07約2.0%；美國10年期公債殖利率2026-07-31報4.74%-4.75%，沿用既有卡片同期查證數字）· Bank of Thailand MPC Decision 3/2026 · Knight Frank Thailand／REIC via th/report.html／th/macro.html（曼谷市場總體背景、全國房價指數、二手掛牌年增34.2%、外資過戶年減17.3%、曼谷家庭均月收THB39,100）· th/report.html／th/macro.html（匯率THB/USD 33.65／USD/MYR 4.06，2026-07，MYR換算僅供尺度感參考，非機會成本基準）。
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-08-04。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限（自住／出租／備用居所／世代傳承）。</strong>金額以泰銖（THB）為主，括號內附約當美元／馬來西亞令吉換算（匯率見資料來源段）。<strong>本案代表戶型總價（THB4,400萬）遠高於本站現行已發布卡片的代表戶型價格帶（約THB320-590萬），量化測試（quantum test）在本國人一側接近失效——這反映的是產品市場定位（全球買家而非本地家庭），不是建築品質判斷，請勿將本國人一側的低分誤讀為品質缺陷。</strong>開發商股權結構、外籍配額使用率、逐筆成交數字、非居民租金有效稅率等項目標示「未能證實」「經搜尋摘要轉述」或「信心度中高」，代表未能取得可公開查證之權威第一手來源、數字為間接轉述、或信心度未達第一手文件確證等級，請於實際交易前向持牌律師／代理書面確認（尤須查驗權狀正本、配額使用率、以及原始成交憑證），不得逕以本卡數字作為最終依據。本卡為 th-property-scorecard-v1 v2.0 泰國版本框架評分卡，2026-08-04 首發。本卡與帶內其他卡片的代表戶型不屬同一產品類別（超豪宅 vs 捷運步行帶主流1BR），跨卡比較時請優先參閱上方「方法論警語」區塊。
+    <p style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:10.5px;font-style:italic;color:var(--muted)">由人工審核後決定是否正式上線。</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
