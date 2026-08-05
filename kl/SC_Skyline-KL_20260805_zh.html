@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skyline KL @ Pudu — KL 建案評分卡 | Property Check</title>
+<meta name="description" content="Skyline KL @ Pudu 獨立評分卡。本國人 6.3 / 外國人 5.5。10 年持有專業投資人視角 · 7 維度框架 · TSLAW Land / Brickz / NAPIC / DOSM 公開資料源。全案戶型開價皆低於 KL 外籍購屋門檻 RM 1,000,000，外籍買家法律上無法購買本案任何戶型。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:'Inter','Noto Sans TC',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;background-image:radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);background-attachment:fixed}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}
+.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{font-family:'Noto Serif TC','Playfair Display',serif;font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+
+.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{font-family:'Noto Serif TC','Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}
+.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{font-family:'Noto Serif TC','Playfair Display',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+@media (max-width:768px){
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+.brand-warn{background:linear-gradient(135deg,#fef9ed 0%, #fbf3df 100%);border:1px solid var(--gold);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.brand-warn::before{content:'⚠';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.brand-warn strong{color:var(--navy);font-weight:700}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">KL Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/kl-check">← 全部評分</a>
+      <a class="back-link" href="viewing.html?b=Skyline%20KL&amp;lang=zh&amp;mode=completed" style="color:var(--gold-deep);font-weight:600">📋 看房</a>
+      <a class="lang-link" href="SC_Skyline-KL_20260805_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Jalan Pudu · Pudu · KL City Centre</span>
+    <span class="sep">◆</span>
+    <span>LEASEHOLD · 住宅地契 · TOD</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-08-05</span>
+  </div>
+  <h1 class="proj-name">Skyline KL @ Pudu</h1>
+  <p class="one-liner">
+    直連捷運的舊城親民盤——代表戶入場僅約 RM 58.3 萬，下一手家庭月收門檻約 RM 6,400，遠低於 KL 家庭月收中位 RM 10,805，本地接手池深且廣。但代價同樣結構性：全案戶型開價皆低於 KL 外籍購屋門檻 RM 100 萬（含最大 1,080 sqft 戶型，僅約 RM 75.1 萬），外籍買家在現行定價下法律上無法購買本案任何一戶，退場 10 年後注定 100% 由本地市場決定。開發商 TSLAW Land 宣稱「四十年地產歷史」，惟查證顯示其行銷所舉案例（Shamelin Star）實為關聯公司交付，本案很可能是 TSLAW Land 本身第一個完工交屋的高樓案。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.3</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">退場與接手 7.3（quantum 遠低於 RM 80 萬首購帶、首購印花稅優惠價格帶）＋交通 7.2（直連 Pudu LRT、步行可達 Bukit Bintang 零售圈）＋估值 6.2（較同區真實成交僅溢價約 2.6-5%）為支柱；被稀缺性 5.2（Pudu 屬 URA 都更目標區、供給非封頂）與資本增值 5.9 拉住上限</div>
+      </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.5</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note"><strong>本案代表戶 RM 583,200 遠低於 KL 聯邦直轄區外籍購屋門檻 RM 1,000,000</strong>，退場外 4.3 已計入「無法達門檻」的 −1.0 扣分——這不是邊界風險，是全面排除。外籍依賴度結構性趨近於零，但這代表買家池永遠不存在，而非韌性優勢</div>
+    </div>
+  </div>
+</div>
+
+<!-- 外籍門檻警示：全面排除，非邊界案例 -->
+<div class="brand-warn">
+  <strong>外籍購買門檻提醒（本案為全面排除案例，非邊界案例）：</strong>KL（聯邦直轄區）外籍購屋最低門檻為 <strong>RM 1,000,000</strong>。本案全部五種戶型的開價皆低於此門檻——代表戶 Type B 695 sqft 2 房約 <strong>RM 583,200</strong>，即使是全案最大的 Type E 1,080 sqft 3 房，開價也僅約 <strong>RM 751,096</strong>，仍差約 RM 25 萬才達標。換言之，<strong>在目前的定價下，外國買家（不論持有 MM2H 銀卡、金卡或白金卡）在法律上都無法購買本案任何一個戶型</strong>。這與同期評分過的其他 KL 建案（代表戶恰好跨過門檻、僅有窄緩衝）性質不同——本案是結構性、全面性的排除，不是邊界風險。除非房價在 10 年內大幅飆漲站上 RM 100 萬（本卡基準情境下不會發生，即使樂觀情境 5%/年複合 10 年後代表戶也僅約 RM 95 萬），外籍買家池將持續維持在零。若外籍投資人仍有興趣，僅能考慮同案中價格較高、樓層較高的個別單位是否可能議價突破門檻，並應向開發商或代理書面確認實際淨成交價。
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">七維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。稀缺性與地段護城河 20% · 交通與可達性 12% · 資本增值動能 15% · 進場估值紀律 13% · 持有現金流 12% · 退場與接手人群 18% · 開發商與管理移交 10%。5 個維度本外同分、2 個維度本外分開（現金流 + 退場）。核心信仰：buy the land, buy the exit —— 地是地板，退場是實現。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+      <svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="七維度雷達圖">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): [5.2, 7.2, 5.9, 6.2, 6.0, 7.3, 6.5] -->
+  <polygon points="140.0,81.8 203.1,89.7 204.4,154.7 170.1,202.6 110.8,200.6 60.3,158.2 83.1,94.6" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="81.8" r="3.5"/>
+    <circle cx="203.1" cy="89.7" r="3.5"/>
+    <circle cx="204.4" cy="154.7" r="3.5"/>
+    <circle cx="170.1" cy="202.6" r="3.5"/>
+    <circle cx="110.8" cy="200.6" r="3.5"/>
+    <circle cx="60.3" cy="158.2" r="3.5"/>
+    <circle cx="83.1" cy="94.6" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [5.2, 7.2, 5.9, 6.2, 4.0, 4.3, 6.5] -->
+  <polygon points="140.0,81.8 203.1,89.7 204.4,154.7 170.1,202.6 120.6,180.4 93.0,150.7 83.1,94.6" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="81.8" r="3.0"/>
+    <circle cx="203.1" cy="89.7" r="3.0"/>
+    <circle cx="204.4" cy="154.7" r="3.0"/>
+    <circle cx="170.1" cy="202.6" r="3.0"/>
+    <circle cx="120.6" cy="180.4" r="3.0"/>
+    <circle cx="93.0" cy="150.7" r="3.0"/>
+    <circle cx="83.1" cy="94.6" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+    <text x="140" y="12" text-anchor="middle">稀缺與地段</text>
+    <text x="239" y="59" text-anchor="start">交通與可達性</text>
+    <text x="263" y="168" text-anchor="start">資本增值動能</text>
+    <text x="195" y="262" text-anchor="start">進場估值紀律</text>
+    <text x="85" y="262" text-anchor="end">持有現金流</text>
+    <text x="17" y="168" text-anchor="end">退場與接手</text>
+    <text x="41" y="59" text-anchor="end">開發商與交付</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 6.3</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 5.5</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">稀缺性與地段護城河</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.2</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">district 錨定「其他 KL（含 Pudu）」6.0 起跳（稀缺調整 cap ±1.0）。供給側三層稽核：土地層 <strong>✗</strong>——都市更新法（URA，2025 年生效）已將 Pudu 列為 KL 139 個改造地點之一，鄰近 Plaza Rakyat 舊巴士總站等閒置地塊仍待重建，共識門檻降至 75-80%，未來供給端非封頂，可複製性高 −0.5。產品層 <strong>✗</strong>——2,218 戶大型 TOD 標準投資盤，480-1,080 sqft 五種戶型皆屬可複製規格；同開發商本身也在 Skyline Kuchai（1,838 戶）與 Skyline Embassy（1,296 戶）複製同一套模板，非本案獨有配置。法規層 <strong>✗</strong>——Leasehold（非永久地權，租約至 2119 年），同街區其他新供給亦多為類似規格 −0.3。淨值 6.0 −0.5 −0.3 ＝ 5.2。本案稀缺性主要來自「舊城核心區暫時缺乏同等規模新供給」的時效性優勢，而非結構性封頂。</p>
+        <p class="dim-data">Jalan Pudu，55100 KL · 4 棟 47-49 層、2,218 戶 · Urban Renewal Act 2025 生效，Pudu 列 KL 139 個都更目標地點之一（共識門檻降至樓齡 30 年以上建物 75-80%） · 租約至 2119 年（約 99 年期，2026 年起約餘 93 年） · 同開發商同模板：Skyline Kuchai（1,838 戶，2027 完工）、Skyline Embassy（1,296 戶，2028 完工，前身為 Agile Property 爛尾案）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與可達性</span><span class="dim-weight">12% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">7.2</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Tier 7 基線（MRT ≤600m 或車程 5min ＋國際學校/診所有限）：開發商宣稱「directly linked to Pudu LRT station」（Ampang 線）；官方資料顯示 1 站可達 Chan Sow Lin LRT 轉乘站、1 站可達 Hang Tuah 單軌／LRT 轉乘樞紐（Hang Tuah 兩站間有蓋天橋直連）。<strong>惟「direct link」是否為實體天橋／地下通道直連車站，或僅為近距離步行，目前查證資料未明確描述基礎設施形式，買家應向開發商或代理書面確認</strong>。步行可達 Bukit Bintang 零售圈（Pavilion、Berjaya Times Square、Fahrenheit88、BBCC）+0.3——這是本案交通維度的第二支柱，且屬 Pavilion 級零售步行可達而非直連整合。本區缺乏國際醫院（Gleneagles 在 Jalan Ampang，車程約 15 分鐘）與國際學校群聚（ISKL 在 Ampang Hilir，非步行可達），故未能達 Tier 8/9。KLCC 車程／轉乘約 15-20 分鐘。淨值 7.0 +0.3 ≈ 7.2（取整）。</p>
+        <p class="dim-data">Pudu LRT（Ampang 線）「直連」聲稱，實體整合形式待買家自行核實 · 1 站至 Chan Sow Lin LRT 轉乘站 · 1 站至 Hang Tuah 單軌／LRT 樞紐（覆蓋天橋轉乘） · 步行可達 Bukit Bintang（Pavilion／Berjaya Times Square／Fahrenheit88／BBCC） · 最近國際醫療級設施 Gleneagles KL（Jalan Ampang，車程約 15 分鐘） · KLCC 車程／轉乘約 15-20 分鐘</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值動能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.9</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">基線 6.0（Residential strata）＋ TRX 金融區已營運、Merdeka 118（KL118）已完工，外溢效應部分已被定價 +0.2 ＋ 產業顧問對 Imbi-Pudu 邊緣地帶預估 4-6% 年增值、優於 KL 大盤 +0.3 − Leasehold 99 年遞減 −0.3 − Pudu 列入 URA 都更目標區，周邊 5-10 年內供給非封頂、舊城區形象轉型尚在進行中 −0.3 ＝ 5.9。MRT／Merdeka 118 皆已通車／完工，屬已被定價的既成事實，不重複計入催化劑。</p>
+        <p class="dim-data">Imbi-Pudu 邊緣地帶產業預估年增值 4-6%（優於 KL 大盤） · TRX 金融區已營運、Merdeka 118（KL118，全球第二高樓）已完工 · Urban Renewal Act 2025：Pudu 列 KL 139 個都更目標地點之一 · Leasehold 租約至 2119 年</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">進場估值紀律</span><span class="dim-weight">13% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.2</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">代表 Type B 2 房 695 sqft 中層約 RM 583,200（≈ RM 839 psf）。對照同區（Pudu／KL City Centre）真實成交錨——<strong>Residensi Pudu Alam</strong>（同區完工服務式公寓）Brickz 成交中位 <strong>RM 799 psf</strong>（9 筆，2023-12 至 2024-10）——本案<strong>溢價約 +5.0%</strong>，落在框架的「+0%～+10%：合理新品溢價」階梯，起跳 6.0，取上緣 6.2（新品對比二手完工案的正常溢價幅度）。信心度：<strong>中</strong>——同區、非同建案，且比較基準的成交資料距今已逾一年，需留意近期價格可能已再變動。同業侵略性：本區未見具規模的直接競品新盤可供比較，暫不調整。</p>
+        <p class="dim-data">錨點：Residensi Pudu Alam（KL City Centre／Pudu）Brickz 成交中位 RM 799 psf、中位總價 RM 690,000（9 筆，2023-12 至 2024-10） · 本案代表 RM 839 psf（Type B 695 sqft 約 RM 558,000-583,200，即 RM 803-839 psf） · 全案開發商價格帶約 RM 360,000（Type A 480 sqft）至 RM 751,096（Type E 1,080 sqft） · 溢價 +5.0%（以 RM 839 psf 對 RM 799 psf 計）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">12% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">6.0</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">4.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">毛收益率約 5.35%（RM 2,600／月 ÷ RM 583,200）落在 anchor「4.5-5.0% → 5.0-5.5」與「5.5%+ → 7.0」之間偏下緣，取「5.0-5.5% → 6.0」起跳。管理費含沉澱基金合計僅 RM 0.35 psf／月（低於框架 RM 0.6 psf 門檻），不觸發扣分，維持 6.0。稅後淨收益率本國人約 4.0%、利差約 −0.6%——雖仍為輕微負利差，但幅度遠小於同期評分過的多數 KL 建案（多在 −2%～−3% 區間），是本案現金流分數的主要支撐。外籍 ＝ 本 −2.0 ＝ 4.0（30% 非居民租金稅），稅後淨收益率約 3.3%、利差約 −1.8%。</p>
+        <p class="dim-data">代表 695 sqft 整租估 RM 2,600／月（≈ RM 3.74 psf，對照 Pudu 區 2-3 房 695-850 sqft 實際掛租 RM 2,600-3,200／月） · 管理費含沉澱基金 RM 0.35 psf／月（開發商公告） · 稅後淨收益率 本 ~4.0% ／外 ~3.3% · 房貸利率 本 4.55%／外 5.05%（OPR 2.75%）→ 利差 本 ~−0.6% ／外 ~−1.8%</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場與接手人群</span><span class="dim-weight">18% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">7.3</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">4.3</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">本地：<strong>Leasehold 住宅地契（租約至 2119 年，剩餘約 93 年，符合 ≥70 年門檻）6.5 基線</strong>；quantum RM 583,200 遠低於 RM 80 萬首購帶 +0.5；本案價格帶落在常見首購印花稅減免區間 +0.3；換手率／掛牌-成交折讓／Brickz 深度因項目剛完工、尚無足夠獨立登記歷史，不予加減（見區塊 5）＝ 7.3。外籍：本地 −2.0 ＝ 5.3，<strong>再 −1.0（無法達門檻——代表戶 RM 583,200 遠低於 KL 外籍購屋門檻 RM 1,000,000，且全案最大戶型 Type E 1,080 sqft 約 RM 751,096 仍未達標）</strong>＝ 4.3。此為「全面排除」而非「邊界緩衝」情境，故不適用「逼近門檻 −0.3」（該項專指價格已過門檻但緩衝薄的情境）；外籍依賴度結構性趨近於零，惟這是門檻鎖死的結果，不視為韌性加分。</p>
+        <p class="dim-data">Leasehold 住宅地契，租約至 2119 年（約餘 93 年） · Quantum RM 583,200 × 1.1% ＝ 月收門檻 RM 6,415 · KL 家庭月收中位 RM 10,805（DOSM HIS 2024，全國最高） · 全案戶型開價區間 RM 360,000（Type A）至 RM 751,096（Type E），<strong>皆低於外籍 RM 1,000,000 門檻</strong> · 剛完工，尚無足夠 Brickz 登記歷史</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">私有開發商分級：查證顯示 <strong>TSLAW Land Sdn Bhd 這個具體法人單位，本案很可能是它第一個真正完工交屋的高樓 strata 案</strong>——行銷宣稱「四十年地產歷史」並舉 Cheras 的 Shamelin Star 與森美蘭 Bandar Prima Senawang 為例，惟查證發現 Shamelin Star 實際開發商為 Landmark Zone Sdn Bhd，其母公司 Perduren（M）Berhad 為 Bursa 主板上市物業投資控股公司，TSLAW 集團創辦人拿督斯里 David Law Tien Seng 僅持有 Perduren 約 19.27% 股權，屬重要但非控股股東，並非 TSLAW Land 本身的交付紀錄；Bandar Prima Senawang 則查無獨立可證的完工/交付細節。故按「私有 &lt;5 個案或首案 ＝ 6.0」起跳。正向訊號：Skyline KL 與姊妹案 Skyline Kuchai 兩個自建案的封頂進度皆早於原訂時間表（本案原訂 2026 年 12 月完工，開發商宣稱已提前至 2025 年 12 月）+0.2；KPKT（地方政府發展部）公開肯定 TSLAW 對 Skyline Embassy（前身為 Agile Property 爛尾案，2023 年 11 月接手）的重整成效，屬少見的第三方官方背書 +0.3 ＝ 6.5。TSLAW 集團本身為未上市多元集團（鋼鐵貿易、礦業、地產），無公開季報可查證財務狀況，此為資訊缺口而非負面證據。</p>
+        <p class="dim-data">TSLAW Land Sdn Bhd（TSLAW Group 旗下，1980 年創立，多元集團含鋼鐵貿易與礦業，未上市無公開季報） · StarProperty Real Estate Developer Awards 2026：TSLAW Land 獲選「All-Stars 非上市開發商」第一名 · Skyline KL 原訂 2026-12 完工，開發商宣稱提前至 2025-12（買家應自行核實實際 VP／CCC 日期） · Shamelin Star 實際開發商 Landmark Zone Sdn Bhd（100% 由 Perduren (M) Berhad 持有，2015 完工、630 戶）；David Law Tien Seng 持有 Perduren 約 19.27% 股權 · Skyline Embassy：2023-11 接手 Agile Property Development Sdn Bhd 爛尾案，KPKT 公開讚揚重整成效，80% 認購率，預計 2028 完工</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+  <p class="section-sub">代表戶型：<strong>Type B 2 房 695 sqft 中層約 RM 583,200</strong>（@ ≈ RM 839 psf）。本案 4 棟 47-49 層共 2,218 戶（Tower A／D 49 層、每層 13 戶；Tower B／C 46 層、每層 16 戶），戶型 Type A 480 sqft（1 房，664 戶）／Type B 695 sqft（2 房，444 戶）／Type C 850 sqft（2+1 房，876 戶）／Type D 850 sqft（雙鑰匙，74 戶）／Type E 1,080 sqft（3 房，160 戶）。<strong>≤650 sqft 投資型小戶（Type A）占比約 30%</strong>（664／2,218），未觸及框架 &gt;60% 的扣分門檻。<strong>採 Type B 為代表戶的理由</strong>：它是本案最接近「2 房級距」的標準戶型；惟即使取全案最大的 Type E（1,080 sqft，約 RM 751,096），仍低於 KL 外籍購屋門檻 RM 1,000,000，故本案的外籍排除結論不因代表戶選取而改變。</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">TSLAW Land Sdn Bhd（TSLAW Group 旗下）<span class="kv-src">TSLAW Group 1980 年創立，多元集團涵蓋鋼鐵貿易、製造、礦業與地產 · 未上市，無公開季報</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">Leasehold（租賃地權）· <strong>住宅地契</strong>公寓<span class="kv-src">租約至 2119 年（約 99 年期），2026 年起約餘 93 年，符合框架 ≥70 年門檻 · 假設為新案標準租期，確切起租年份未獨立驗證</span></td></tr>
+          <tr><td class="kv-label">規模</td><td class="kv-val">4 棟 47-49 層 · 2,218 戶 · 13 個店鋪<span class="kv-src">Tower A／D 49 層每層 13 戶、Tower B／C 46 層每層 16 戶 · GDV RM 12 億 · 逾 50 項設施分布三層平台</span></td></tr>
+          <tr><td class="kv-label">單位坪數</td><td class="kv-val">480-1,080 sqft（A 480 / B 695 / C 850 / D 850 雙鑰匙 / E 1,080）<span class="kv-src">Type A 664 戶（1 房）· Type B 444 戶（2 房）· Type C 876 戶（2+1 房）· Type D 74 戶（雙鑰匙）· Type E 160 戶（3 房）</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">Type B 695 sqft 中層 @ ≈ RM 583,200（RM 839 psf）<span class="kv-src">近期轉售掛牌區間 RM 530,000-583,200（RM 758-839 psf）· 全案開發商價格帶 RM 360,000（Type A）-751,096（Type E）</span></td></tr>
+          <tr><td class="kv-label">完工時間</td><td class="kv-val"><strong>原訂 2026 年 12 月</strong>，開發商宣稱已提前至 2025 年 12 月（封頂已完成）<span class="kv-src">⚠ 已宣稱 90%+ 認購率並進入次級市場轉售階段（iProperty 2026-06 顯示 191 戶掛售），惟實際 VP／CCC 核發日期未獨立驗證，買家應向開發商或律師書面確認</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與生活圈</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">微觀位置</td><td class="kv-val">Jalan Pudu，55100 KL City Centre<span class="kv-src">Pudu 舊城核心區，緊鄰 Bukit Bintang（一路之隔） · Brickz／iProperty 歸類為 KL City Centre／Pudu</span></td></tr>
+          <tr><td class="kv-label">最近捷運</td><td class="kv-val">Pudu LRT（Ampang 線）「直連」聲稱<span class="kv-src">實體整合形式（天橋／地下通道 vs 步行鄰近）未獨立驗證，買家應自行核實 · 1 站至 Chan Sow Lin LRT 轉乘站 · 1 站至 Hang Tuah 單軌／LRT 轉乘樞紐</span></td></tr>
+          <tr><td class="kv-label">醫療</td><td class="kv-val">無國際醫院步行可達<span class="kv-src">Gleneagles KL（Jalan Ampang）車程約 15 分鐘 · 本區缺乏國際醫療級設施密集覆蓋</span></td></tr>
+          <tr><td class="kv-label">商業/生活</td><td class="kv-val">步行可達 Bukit Bintang 零售核心圈<span class="kv-src">Pavilion KL、Berjaya Times Square、Fahrenheit88、BBCC 步行可達 · 非直連整合，屬步行零售街區</span></td></tr>
+          <tr><td class="kv-label">土地背景</td><td class="kv-val">舊城核心區，Urban Renewal Act 2025 都更目標地點<span class="kv-src">Pudu 列 KL 139 個 URA 改造地點之一 · 鄰近 Plaza Rakyat 舊巴士總站等閒置地塊待重建，共識門檻降至 75-80%</span></td></tr>
+          <tr><td class="kv-label">同地段直接對照</td><td class="kv-val">Residensi Pudu Alam（同區完工服務式公寓）<span class="kv-src">Brickz 成交中位 RM 799 psf、中位總價 RM 690,000（9 筆，2023-12 至 2024-10）</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-4% 階梯制<br><small style="color:var(--muted)">RM 11,000</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 47,000</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">10%（住宅地契 LTV 90%）<br><small style="color:var(--muted)">RM 58,000</small></td><td class="num">30%（LTV 70%）<br><small style="color:var(--muted)">RM 175,000</small></td><td><small>BNM / 銀行政策</small></td></tr>
+      <tr><td>房貸利率</td><td class="num">4.55%</td><td class="num">5.05%</td><td><small>BNM OPR 2.75%</small></td></tr>
+      <tr><td>毛租金收益率（整租）</td><td class="num">~5.35%</td><td class="num">~5.35%（同）</td><td><small>RM 2,600/月 / RM 583,200</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">0-30% 累進<br><small style="color:var(--muted)">估約 15%</small></td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>稅後淨收益率（含 1 月空置）</td><td class="num">~4.0%</td><td class="num">~3.3%</td><td><small>計算（管理費 + 稅後）</small></td></tr>
+      <tr><td>利差（淨 yield − 房貸利率）</td><td class="num">~−0.6%</td><td class="num">~−1.8%</td><td><small>計算</small></td></tr>
+      <tr><td>最低購買門檻（KL）</td><td class="num">無</td><td class="num">RM 1,000,000<br><small style="color:var(--muted)">✗ 代表戶 RM 583,200、全案最大戶型 RM 751,096，皆未達標——全面排除</small></td><td><small>聯邦直轄區</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>MM2H 合規</td><td class="num">—</td><td class="num">✗ 全案戶型皆不符<br><small style="color:var(--muted)">不論銀卡／金卡／白金卡，KL 門檻皆需 ≥RM 1,000,000</small></td><td><small>MM2H 黃金計畫</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 4: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>Type B 695 sqft 中層 RM 583,200</strong>（@ ≈ RM 839 psf）為基礎——本國人 vs 外國人 10 年總成本與淨損益對照。<strong>外國人欄位為假設性／對照用途</strong>：本案代表戶實際上因低於 KL 外籍購屋門檻而無法由外籍買家合法購買，此欄僅用以呈現「若門檻不存在」時的假設經濟性差異，並凸顯門檻本身造成的機會成本。</p>
+
+  <div class="assump-box" style="background:linear-gradient(135deg,#fef9ed 0%, #fbf3df 100%);border:1px solid var(--gold);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative">
+    <strong>⚠️ 估值與買價透明度說明：</strong>進場估值紀律維度（13%）以「同地段／同類型<strong>真實成交</strong>中位 PSF」為錨。本案錨點：<strong>Residensi Pudu Alam（同區完工服務式公寓）Brickz 成交中位 RM 799 psf</strong>（9 筆，2023-12 至 2024-10）；本案代表 PSF <strong>RM 839</strong>；<strong>溢價約 +5.0%</strong>（信心度：<strong>中</strong>——同區非同建案，且比較基準資料距今已逾一年）。注意實際成交價可能因早鳥折扣、免律師費、家具配套等議價空間而低於掛牌價 5-15%，買家仍應向代理或開發商書面確認最終實際淨價。<strong>外籍買家特別注意</strong>：即使淨價因議價而進一步下降，也不影響本案結論——因為代表戶開價本已遠低於 RM 1,000,000 門檻，議價只會使其更遠離而非接近門檻。
+  </div>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>Type B 2 房 695 sqft 中層 @ RM 583,200</strong> · 10 年持有 · 30 年房貸 · 租金 RM 2,600/月 Y1，年漲幅 3% · 空置 1 個月/年 ·
+    管理費 RM 0.35/sqft/月（含沉澱基金，開發商公告） · 本國人利率 4.55%（LTV 90%）、外國人利率 5.05%（LTV 70%，假設性）· 仲介費 2.16%（2% ＋8% SST）· 機會成本基準 5%/年（MGS 10Y ＋100bp）。
+    所有金額四捨五入至千位。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM，假設性)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>58,000</td><td>175,000</td><td>+117,000</td></tr>
+      <tr><td>印花稅（MOT）</td><td>11,000</td><td>47,000</td><td>+36,000</td></tr>
+      <tr><td>律師費 ＋貸款印花稅</td><td>9,000</td><td>10,000</td><td>+1,000</td></tr>
+      <tr><td>州政府批准費</td><td>—</td><td>4,000</td><td>+4,000</td></tr>
+      <tr class="sum"><td>買入小計</td><td>78,000</td><td>236,000</td><td>+158,000</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額</td><td>321,000</td><td>264,000</td><td>−57,000</td></tr>
+      <tr><td>管理費 ＋沉澱基金</td><td>29,000</td><td>29,000</td><td>0</td></tr>
+      <tr><td>門牌稅 ＋地稅</td><td>10,000</td><td>10,000</td><td>0</td></tr>
+      <tr><td>保險</td><td>8,000</td><td>8,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>368,000</td><td>311,000</td><td>−57,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，月租 RM 2,600 Y1，3%/年成長，空置 1 月/年）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>328,000</td><td>328,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>49,000</td><td>98,000</td><td>+49,000</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>279,000</td><td>230,000</td><td>−49,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，3%/年 漲幅情境，售價 RM 784,000）</td><td></td><td></td><td></td></tr>
+      <tr><td>仲介費（2.16%）</td><td>17,000</td><td>17,000</td><td>0</td></tr>
+      <tr><td>賣方法律費</td><td>5,000</td><td>5,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>12,000</td><td>+12,000</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>421,000</td><td>332,000</td><td>−89,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>1%/年 漲幅</td><td>+37,000</td><td>−24,000</td><td>−61,000</td></tr>
+      <tr class="scenario"><td>3%/年 漲幅</td><td>+174,000</td><td>+101,000</td><td>−73,000</td></tr>
+      <tr class="scenario"><td>5%/年 漲幅</td><td>+336,000</td><td>+247,000</td><td>−89,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在基準假設（3% 年漲、10 年滿租 ＋1 月空置、機會成本 5%/年）下，假設性外國人欄位 10 年淨損益比本國人少約 <strong>RM 73,000（相當於房價的 12.5%）</strong>。但<strong>這個對照本身在本案沒有實際意義</strong>——因為代表戶 RM 583,200 遠低於 KL 外籍購屋門檻 RM 1,000,000，外籍買家根本無法完成這筆交易，兩欄的差距只反映「若門檻不存在」的假設經濟性，而非真實可行的投資選擇。真正對外籍投資人有意義的訊息是：<strong>本案在現行定價下不是一個可投資標的</strong>。本國人角度，打平全部成本與 5% 機會成本所需的房價年漲幅約 <strong>2.0%/年</strong>——遠低於 Imbi-Pudu 邊緣地帶產業預估的 4-6% 年增值，屬本卡已分析建案中門檻最低的一檔，反映代表戶較佳的租金收益率（毛 5.35%）與較低的入場摩擦成本。下行情境若房價僅 1%/年，本國人仍為正報酬（+RM 3.7 萬）。
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ 退場現實檢驗</span>
+  <h2 class="section-title">退場現實檢驗</h2>
+  <p class="section-sub">v5.0 三件套：稀缺性稽核（供給側有沒有護城河）＋接手人群金字塔（10 年後誰接手）＋二手市場證據（換手／掛牌／折讓）。本案剛完工／即將完工，尚無足夠獨立 Brickz 登記歷史；二手證據以同區完工案 <strong>Residensi Pudu Alam</strong> 的成交行情為估值錨（非換手率 proxy），掛牌率則直接採本案自身在售掛牌數，資料信心度：中。</p>
+
+  <!-- 5A Scarcity audit -->
+  <div style="background:var(--navy-soft);border:1px solid #c5d4ea;border-radius:12px;padding:18px 20px;margin-bottom:18px">
+    <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px">5A · 稀缺性稽核（供給側三層）</div>
+    <div style="font-size:11.5px;color:var(--muted);margin-bottom:12px">10 年後市場能否再生產一個一樣的東西？本案三層皆未通過。</div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:12.5px;line-height:1.7;color:var(--text-soft)">
+      <div><span style="display:inline-block;min-width:22px;color:#b91c1c;font-weight:800">✗</span><strong>土地層：</strong>都市更新法（URA，2025 年生效）已將 Pudu 列為 KL 139 個改造地點之一，鄰近 Plaza Rakyat 舊巴士總站等閒置／老舊建物地塊仍待重建，共識門檻降至樓齡 30 年以上建物的 75-80%，未來供給端非封頂。</div>
+      <div><span style="display:inline-block;min-width:22px;color:#b91c1c;font-weight:800">✗</span><strong>產品層：</strong>2,218 戶大型 TOD 標準投資盤，480-1,080 sqft 五種戶型皆屬可複製規格；同開發商本身也在 Skyline Kuchai（1,838 戶）與 Skyline Embassy（1,296 戶）複製同一套 TOD 模板，配置可複製。</div>
+      <div><span style="display:inline-block;min-width:22px;color:#b91c1c;font-weight:800">✗</span><strong>法規層：</strong>Leasehold（租約至 2119 年），未見 height cap 或 master plan 封頂資訊；同街區其他新供給亦多為類似規格。</div>
+    </div>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid #c5d4ea;font-size:12.5px;line-height:1.7;color:var(--navy)"><strong>有效稀缺判定：</strong>三層皆未通過，本案的「稀缺性」主要來自「舊城核心區暫時缺乏同等規模新供給」的時效性優勢，而非結構性封頂。隨著 URA 推進，Pudu 周邊 5-10 年內很可能出現更多同類 TOD 競品，此稀缺屬性應被視為暫時而非永久，稀缺調整因此取偏保守的負值（見稀缺性維度計算）。</div>
+  </div>
+
+  <!-- 5B Next-buyer pyramid -->
+  <div style="margin-bottom:18px">
+    <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">5B · 接手人群金字塔</div>
+    <div style="background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:8px;padding:10px 14px;font-size:12px;line-height:1.7;color:var(--text-soft);margin-bottom:12px">
+      <strong style="color:var(--navy)">Quantum test：</strong>代表戶 <strong>RM 583,200</strong> → 下一手家庭月收門檻約 <strong>RM 6,415</strong>（總價 × 1.1%：90% LTV、4.3%、30 年、房貸負擔 40%）→ 對照 KL 家庭月收中位 <strong>RM 10,805</strong>（DOSM 家庭收入調查 2024，全國最高），代表戶的負擔門檻僅為 KL 中位家庭收入的 <strong>59%</strong>，接手池幾乎涵蓋 KL 全體家庭，甚至下探至首購族群。這是本案退場論點最核心的支柱。
+    </div>
+    <table class="cmp-table" style="margin-top:0">
+      <thead><tr><th style="width:26%">接手者</th><th style="width:10%;text-align:center">判定</th><th>判定依據</th></tr></thead>
+      <tbody>
+        <tr><td>本地首購</td><td style="text-align:center;color:#15803d;font-weight:800">✓</td><td>quantum RM 6,415 遠低於 RM 80 萬首購帶對應門檻，且落在常見首購印花稅減免價格區間，是本案退場論點的核心買家。</td></tr>
+        <tr><td>本地 upgrader</td><td style="text-align:center;color:#15803d;font-weight:800">✓</td><td>對中低收入雙薪家庭而言性價比高，兼具直連捷運與步行市中心零售圈的機能優勢，是次要接手主力。</td></tr>
+        <tr><td>本地投資客</td><td style="text-align:center;color:#a16207;font-weight:800">△</td><td>毛收益率約 5.35%、稅後淨利差僅輕微為負（本 ~−0.6%），屬 KL 平均水準以上但非頂尖收益盤；同區同類投資型小戶（Type A）供給亦不小，租客端存在一定競爭。</td></tr>
+        <tr><td>外籍自住（MM2H）</td><td style="text-align:center;color:#6b7a92;font-weight:800">✗</td><td>代表戶 RM 583,200 遠低於 KL 外籍購屋門檻 RM 1,000,000，不論 MM2H 銀卡／金卡／白金卡皆不得購買。</td></tr>
+        <tr><td>外籍投資</td><td style="text-align:center;color:#6b7a92;font-weight:800">✗</td><td>同上，法規門檻直接排除；全案最大戶型 Type E（1,080 sqft，約 RM 751,096）仍未達標，差約 RM 25 萬。</td></tr>
+        <tr><td>機構／大宗</td><td style="text-align:center;color:#6b7a92;font-weight:800">✗</td><td>標準 strata 分戶產品，無整層／整棟釋出跡象。</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;font-size:12px;line-height:1.75;color:var(--text-soft)"><span style="display:inline-block;padding:2px 10px;border-radius:99px;background:#dcfce7;color:#15803d;font-weight:700;font-size:11px;border:1px solid #86efac">外籍依賴度：結構性趨近於零（&lt;20%）</span> <strong>這不是韌性優勢，而是門檻鎖死的結果</strong>——只要代表戶價格仍低於 RM 100 萬，外籍買家池就永遠不會出現，10 年後的退場完全、僅由本地市場決定。與典型「外籍依賴度低因而抗政策波動」的正面情境不同，本案是「外籍買家從一開始就被排除在外」，兩者性質不同，不應混為一談。</div>
+  </div>
+
+  <!-- 5C Secondary market evidence -->
+  <div>
+    <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">5C · 二手市場證據<span style="font-size:11px;font-weight:500;color:var(--muted)">（項目剛完工，年換手率與掛牌-成交折讓尚無足夠登記歷史，標「N/A」）</span></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:14px 12px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy)">N/A</div>
+        <div style="font-size:11px;color:var(--muted);margin:4px 0 6px">年換手率</div>
+        <div style="font-size:10px;font-weight:700;color:#6b7a92;background:#e2e8f0;border-radius:99px;padding:2px 8px;display:inline-block">資料不足</div>
+        <div style="font-size:9.5px;color:var(--muted);margin-top:6px;line-height:1.5">剛完工，Brickz 登記歷史通常需 1-3 年後才會累積</div>
+      </div>
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:14px 12px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy)">~8.6%</div>
+        <div style="font-size:11px;color:var(--muted);margin:4px 0 6px">在售掛牌率<span style="color:var(--gold-deep)">（估算）</span></div>
+        <div style="font-size:10px;font-weight:700;color:#15803d;background:#dcfce7;border-radius:99px;padding:2px 8px;display:inline-block">健康</div>
+        <div style="font-size:9.5px;color:var(--muted);margin-top:6px;line-height:1.5">iProperty 191 戶掛售 ÷ 2,218 戶（2026-06）；PropertyGuru 同期僅顯示個位數，跨平台落差大</div>
+      </div>
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:14px 12px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy)">N/A</div>
+        <div style="font-size:11px;color:var(--muted);margin:4px 0 6px">掛牌-成交折讓</div>
+        <div style="font-size:10px;font-weight:700;color:#6b7a92;background:#e2e8f0;border-radius:99px;padding:2px 8px;display:inline-block">資料不足</div>
+        <div style="font-size:9.5px;color:var(--muted);margin-top:6px;line-height:1.5">尚無本案獨立 Brickz 成交可比對掛牌價</div>
+      </div>
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:14px 12px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy)">0 筆</div>
+        <div style="font-size:11px;color:var(--muted);margin:4px 0 6px">Brickz 深度</div>
+        <div style="font-size:10px;font-weight:700;color:#6b7a92;background:#e2e8f0;border-radius:99px;padding:2px 8px;display:inline-block">尚無登記</div>
+        <div style="font-size:9.5px;color:var(--muted);margin-top:6px;line-height:1.5">分層地契與過戶登記通常需完工後 1-3 年才反映在 Brickz</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding:12px 16px;background:#fef9ed;border:1px solid var(--gold-soft);border-radius:10px;font-size:12px;line-height:1.75;color:var(--text-soft)">
+      <strong style="color:var(--navy)">估值錨改用同區完工案：</strong>由於本案自身尚無 Brickz 成交歷史，估值維度（d7）改採同區完工案 Residensi Pudu Alam 的成交中位 RM 799 psf 作為真實成交錨，而非本案自身數據。待本案完工滿 1-2 年、累積獨立過戶紀錄後，應以自身 Brickz 資料重新校準本頁的估值與退場分數。
+    </div>
+  </div>
+
+  <!-- bottom summary -->
+  <div style="margin-top:18px;padding:14px 18px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border-left:4px solid var(--gold);border-radius:10px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+    <strong style="color:var(--navy)">一句話總結：</strong>10 年後最可能的接手者是<strong>KL 本地首購與升級族家庭（月收約 RM 6,400 以上即可負擔，遠低於 KL 中位）</strong>，退場完全依賴本地市場；<strong>除非房價十年內站上 RM 100 萬</strong>（在基準情境下不會發生，即使樂觀情境 5%/年複合 10 年後代表戶也僅約 RM 95 萬），否則外籍買家池將持續維持在零，而屆時同時在賣的，還有本案另外 2,217 戶與同開發商姊妹案（Skyline Kuchai、Skyline Embassy）陸續完工釋出的競爭供給。
+  </div>
+</section>
+
+<!-- BLOCK 6A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>Skyline KL 座落於吉隆坡舊城核心 Pudu，緊鄰武吉免登（Bukit Bintang）一路之隔，由 TSLAW Land Sdn Bhd 開發，是該集團「Skyline」捷運導向系列的旗艦案之一——四棟 47 至 49 層高樓、2,218 戶、總發展值 RM 12 億，戶型從 480 平方英尺的 1 房到 1,080 平方英尺的 3 房共五種規格，主打親民入場價與直達輕快鐵的機能訴求。</p>
+
+    <p>本案的稀缺性稽核結果並不樂觀：都市更新法（URA）已在 2025 年將 Pudu 列為吉隆坡 139 個改造地點之一，鄰近廣場人民（Plaza Rakyat）舊巴士總站等閒置地塊都在等待重建，加上同開發商本身也在吉隆坡另兩處（Skyline Kuchai、Skyline Embassy）複製同一套 TOD 模板，本案的「稀缺」更接近「舊城區暫時缺貨」而非結構性供給封頂——五到十年內，Pudu 周邊很可能出現更多同類競品。租約至 2119 年的 leasehold 地契，也意味著本案不具備永久地權案在退場端的天然優勢。</p>
+
+    <p>開發商背景是本卡最值得買家自行查證的一點。行銷素材宣稱 TSLAW「四十年地產歷史」，並舉 Cheras 的 Shamelin Star 與森美蘭 Bandar Prima Senawang 為例——但查證後發現，Shamelin Star 的實際開發商是 Landmark Zone Sdn Bhd，其母公司 Perduren（M）Berhad 是一家 Bursa 主板上市的物業投資控股公司，TSLAW 集團創辦人拿督斯里 David Law Tien Seng 僅持有 Perduren 約 19.27% 股權，是重要但非控股的少數股東，並非 TSLAW Land 本身的交付紀錄。換言之，以 TSLAW Land 這個具體法人單位而言，<strong>Skyline KL 很可能是它第一個真正完工交付的高樓 strata 案</strong>——Skyline Kuchai 仍在興建中，Skyline Embassy 則是接手 Agile Property 爛尾案後的重整項目。正面的一面是：兩個自建案的封頂進度都提前於原訂時間表，且 KPKT（地方政府發展部）公開肯定 TSLAW 對 Skyline Embassy 的爛尾重整成效，這是少見的第三方官方背書，加上 StarProperty 2026 年獎項評選其為「非上市開發商」第一名。整體而言，本案的開發商分數反映的是「零完工紀錄但執行訊號正向」的中段評價，而非行銷語言暗示的成熟老牌開發商。</p>
+
+    <p>租金市場方面，Pudu 區域可比行情約 RM 2.6 至 3.8／psf，代表戶 695 平方英尺 2 房估租約 RM 2,600／月，毛收益率約 5.35%，扣稅後淨利差僅輕微為負，屬 KL 平均水準以上但稱不上頂尖。管理費含沉澱基金僅 RM 0.35 psf／月，屬合理水準。價格定位上，本案代表戶開價約 RM 839／psf，對照同區完工案 Residensi Pudu Alam 的 Brickz 成交中位 RM 799／psf，溢價僅約 5.0%，落在「合理新品溢價」區間，進場紀律優於多數同期評分過的 KL 建案。</p>
+
+    <p>本案退場圖景最鮮明的訊號，是全案戶型的價格結構：即便是最大的 1,080 平方英尺三房戶型，開價也僅約 RM 75.1 萬，遠低於吉隆坡聯邦直轄區 RM 100 萬的外籍購屋門檻。也就是說，在目前的定價下，外國買家——無論持有哪個等級的 MM2H——在法律上都無法購買本案任何一個戶型。這不是邊界風險，而是全面排除。10 年後的接手者，幾乎注定 100% 是本地買家，而代表戶 RM 58.3 萬的入場價，換算下一手家庭月收門檻僅約 RM 6,415，遠低於吉隆坡家庭月收中位 RM 10,805，接手池深且廣，是本案退場分數的主要支撐，也是它與同期評分過的多數 KL 建案最本質的差異：<strong>那些案子擔心的是外籍門檻的「窄緩衝」，本案要面對的是外籍門檻的「全面缺席」</strong>。</p>
+
+    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+      <strong style="color:var(--navy);font-weight:700">10 年情境基準</strong>：假設 2026 年進場（代表戶 RM 583,200，項目已近完工或剛完工，租金現金流自 Y1 起算）：
+      <ul style="margin:8px 0 0 18px;padding:0">
+        <li><strong>合理情境</strong>（base case，房價 +3%/年）：URA 都更帶動舊城區逐步升級，TRX／Merdeka 118 外溢持續，租賃需求穩定。本國人 10 年累計淨報酬約 <strong>RM 17.4 萬</strong>、IRR 約 <strong>5.8%</strong>；外國人（假設性，實際無法購買）約 <strong>RM 10.1 萬</strong>、IRR 約 <strong>3.0%</strong>。</li>
+        <li><strong>上行情境</strong>（bull case，房價 +5%/年）：Pudu 都更加速兌現、Bukit Bintang 溢出效應強化。本國人約 <strong>RM 33.6 萬</strong>、IRR 約 <strong>10.6%</strong>；外國人（假設性）約 <strong>RM 24.7 萬</strong>、IRR 約 <strong>7.4%</strong>——即使在此樂觀情境下，代表戶 10 年後價值也僅約 RM 95 萬，<strong>仍未站上 RM 100 萬外籍門檻</strong>。</li>
+        <li><strong>下行情境</strong>（bear case，房價 +1%/年）：URA 都更進度延宕、同開發商姊妹案與 Pudu 都更新供給同期釋出加壓。本國人 10 年仍為正報酬約 <strong>RM 3.7 萬</strong>、IRR 約 <strong>−1.2%</strong>；外國人（假設性）轉虧約 <strong>RM 2.4 萬</strong>、IRR 約 <strong>−4.8%</strong>。</li>
+      </ul>
+      <div style="margin-top:10px">10 年退場流動性：本案自身在售掛牌率約 8.6%（健康區間），惟尚無獨立 Brickz 成交歷史可估算換手率與掛牌-成交折讓，需待完工滿 1-2 年後重新校準。打平全部成本與 5% 機會成本所需房價年漲幅：本國人約 <strong>2.0%/年</strong>、外國人（假設性）約 <strong>4.0%/年</strong>——惟外籍欄位在本案不具實際意義，因為代表戶價格本已被 RM 100 萬門檻結構性排除在外籍買家池之外。</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 6B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>退場與接手 7.3（本國人）：quantum 遠低於 KL 中位家庭收入，接手池深且廣，涵蓋本地首購與 upgrader 雙主力</li>
+        <li>估值 6.2：代表戶較同區真實成交（Residensi Pudu Alam）僅溢價約 5.0%，進場紀律優於多數同期評分過的 KL 建案</li>
+        <li>現金流 6.0（本國人）：毛收益率約 5.35%、利差僅輕微為負（~−0.6%），遠優於多數同期評分過的 KL 建案（多在 −2%～−3% 區間）</li>
+        <li>交通 7.2：直連（聲稱）Pudu LRT，步行可達 Bukit Bintang 核心零售圈（Pavilion、Berjaya Times Square、BBCC 等）</li>
+        <li>開發商正向訊號：兩個自建 Skyline 案封頂皆提前於原訂時間表；KPKT 公開肯定 TSLAW 對 Skyline Embassy 爛尾案的重整成效；StarProperty 2026「非上市開發商」第一名</li>
+        <li>≤650 sqft 投資型小戶占比約 30%，未觸及框架 &gt;60% 的集中拋售風險扣分門檻</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li><strong>全案戶型皆低於 KL 外籍購屋門檻 RM 1,000,000</strong>：即使全案最大 Type E（1,080 sqft）開價也僅約 RM 751,096——外籍買家（不論 MM2H 等級）在現行定價下法律上無法購買本案任何戶型，這是結構性、全面性的排除，非邊界風險</li>
+        <li><strong>開發商交付紀錄查證落差</strong>：行銷宣稱「四十年地產歷史」並舉 Shamelin Star 為例，惟該案實際開發商為關聯公司 Landmark Zone Sdn Bhd 而非 TSLAW Land 本身；就 TSLAW Land 這個法人單位而言，本案可能是它第一個完工交屋的高樓案</li>
+        <li>稀缺性 5.2：土地層、產品層、法規層三層供給側稽核皆未通過，Pudu 被列入 URA 都更目標區，5-10 年內可能有更多同類競品出現</li>
+        <li>Leasehold 租約至 2119 年（非永久地權），資本增值 5.9 已計入租約遞減與都更區供給不確定性的雙重扣分</li>
+        <li>本案剛完工／即將完工，尚無足夠獨立 Brickz 登記歷史，年換手率與掛牌-成交折讓暫標「N/A」，需待完工滿 1-2 年後重新校準</li>
+        <li>完工日期與 VP／CCC 核發狀態未獨立驗證：原訂 2026 年 12 月完工，開發商宣稱已提前至 2025 年 12 月，惟資料來源多為開發商公告與媒體報導，買家應向開發商或律師書面確認實際狀態</li>
+        <li>本區缺乏國際醫院／國際學校群聚覆蓋，交通分 7.2 主要由捷運可達性與步行零售圈支撐，非全方位機能成熟區</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 6C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。<strong>以下四種持有目的皆以本國人買家為前提</strong>——外籍買家因 RM 100 萬門檻已被結構性排除，不適用本表。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：交通與可達性（7.2）、進場估值紀律（6.2）、持有現金流（自住設算，6.0）<br>
+      <strong>可妥協</strong>：稀缺性與地段護城河（自住重視當下機能勝於長期稀缺性）<br>
+      <strong>本案 fit</strong>：這是本案最順的一個用途之一。直連（聲稱）Pudu LRT、步行可達 Bukit Bintang 核心零售圈，對在市中心上班、預算有限的年輕家庭或雙薪夫妻 fit 度高；代表戶入場僅約 RM 58.3 萬，遠低於多數 KL 核心區同機能新盤。需接受：①本區缺乏國際醫院／國際學校群聚，非全方位機能成熟區；②舊城核心區的街景與居住氛圍與 Mont Kiara、Desa ParkCity 等成熟高階地段不同；③Leasehold 地契意味著長期持有需留意租約遞減對後續轉手的潛在影響（惟目前餘 93 年，短中期影響有限）。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（6.0）、退場與接手人群（7.3）、進場估值（6.2）<br>
+      <strong>可妥協</strong>：稀缺性（收益型可接受非頂級地段）<br>
+      <strong>本案 fit</strong>：在本卡已分析的 KL 建案中，本案是<strong>現金流體質相對健康的一檔</strong>。毛收益率約 5.35%、稅後淨利差僅輕微為負（~−0.6%），遠優於多數同期評分過的 KL 建案；管理費含沉澱基金僅 RM 0.35 psf／月，持有成本可控。惟需留意：Type A（480 sqft）等投資型小戶在同案內占比約 30%，租客端存在一定同質競爭；本區並非傳統高階租賃熱區，租客結構以本地上班族為主，非國際企業高管客群。整體而言，適合追求「合理正向 carry ＋深廣本地退場池」而非「頂級租金收益率」的投資人。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：交通與可達性（7.2）、進場估值（6.2）<br>
+      <strong>可妥協</strong>：持有現金流、資本增值<br>
+      <strong>本案 fit</strong>：對需要 KL 市中心落腳點、以大眾運輸移動的本地買家而言 fit 度中等——直連（聲稱）捷運與步行零售圈是實質便利，入場價也遠低於同機能等級的其他 KL 核心區選項。惟本區缺乏國際醫療與國際學校配套，對需要這類支援的家庭吸引力有限；舊城核心區的長期環境改善程度也需觀察 URA 推進進度。<strong>本用途以本國人買家為前提</strong>——外籍買家因 RM 100 萬門檻已被排除於外，無法將本案作為 MM2H 或其他外籍身分下的備用居所。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：退場與接手人群（7.3，下一代脫手池深）、進場估值（6.2）<br>
+      <strong>可妥協</strong>：短期 yield、稀缺性（傳承重視接手池深度勝於地段稀缺敘事）<br>
+      <strong>本案 fit</strong>：本案在傳承維度的優勢<strong>不在地段稀缺性，而在接手池的深度與廣度</strong>——下一代或下一手接手時，quantum 門檻遠低於 KL 中位家庭收入，退場摩擦小、變現速度預期較快。但仍需誠實看待兩項限制：①Leasehold 租約至 2119 年，20 年以上的時間尺度下，租約遞減會逐步侵蝕產品的長期保值能力，與 Damansara Heights 或 Desa ParkCity 那類永久地權標的性質不同；②Pudu 的都更軌跡與長期地段定位仍在演變中，2,218 戶大型社區在 20 年後的建物折舊與管委會維護品質，也是需要追蹤的變數。相較於稀缺性維度分數更高的成熟高階地段標的，本案在傳承維度屬中段偏下，但接手池深度部分抵銷了這個劣勢。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 7: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    TSLAW Land 官網／Skyline KL 專案頁（skylinekl.com，4 棟 47-49 層、2,218 戶、五種戶型 480-1,080 sqft、開發商 TSLAW Land Sdn Bhd、直連 Pudu LRT 聲稱） · The Edge Malaysia（"Skyline KL by TSLAW Land records 90% take-up"：90% 認購率、GDV RM 12 億、原訂 2026-12 完工提前至 2025-12） · StarProperty（TSLAW 舉行 Skyline KL 封頂儀式：Level 50 封頂、2,218 戶、13 個店鋪；"KPKT lauds TSLAW Land's turnaround of Skyline Embassy Project"：2023-11 接手 Agile Property 爛尾案，80% 認購率，2028 完工；StarProperty Real Estate Developer Awards 2026：TSLAW Land 獲選 All-Stars 非上市開發商第一名，Seri Pajam Development 第二、KLK Land 第三） · PropertyGuru / iProperty / EdgeProp — Skyline KL 掛牌（Type B 695 sqft RM 558,000-583,200 ≈ RM 803-839 psf；iProperty 2026-06 顯示 191 戶掛售；PropertyGuru 同期個位數掛牌，跨平台落差） · Skyline KL Sales Kit（2021-11-20 版，Type A-E 戶數分佈：A 332／B 222／C 438／D 雙鑰匙 37／E 80，Tower A/D 與 B/C 對稱雙塔加總為 2,218 戶） · <strong>Brickz — Residensi Pudu Alam</strong>（KL City Centre／Pudu 服務式公寓；成交中位 RM 799 psf、中位總價 RM 690,000；9 筆，2023-12 至 2024-10） · iProperty / Mudah — Pudu 區域租金行情（2-3 房 695-850 sqft，RM 2,600-3,200／月，約 RM 3.74-3.76 psf） · TSLAW Group 官網 tslaw.com.my（集團 1980 年創立，涵蓋鋼鐵貿易、製造、礦業與地產；"The Rise and Vision of TSLAW"：Skyline KL／Skyline Kuchai／Skyline Embassy 為現行 Skyline 系列） · Shamelin Star 查證：PropertyGuru／NuProp／PROPCAFE（實際開發商 Landmark Zone Sdn Bhd，2015 完工、630 戶、Taman Shamelin Perkasa Cheras）；CreditScan／CTOS（Landmark Zone Sdn Bhd 100% 由 Perduren (M) Berhad 持有）；The Edge Malaysia（David Law Tien Seng 以 RM 26M 取得 Perduren 約 19.29% 股權；Perduren 為 Bursa 主板上市物業投資控股公司，1992 年成立） · Moovit（Hang Tuah LRT／單軌轉乘天橋、Pudu／Chan Sow Lin 轉乘資訊） · New Straits Times／The Star（Urban Renewal Act 2025 生效，Pudu 列 KL 139 個都更目標地點之一，共識門檻降至樓齡 30 年以上建物 75-80%；Plaza Rakyat 舊巴士總站重建仍在協商） · <strong>DOSM 家庭收入調查 2024</strong>（W.P. Kuala Lumpur 家庭月收中位 RM 10,805、平均 RM 13,985，2025-10-08 發布） · BNM OPR 2.75% · LHDN Finance Act 2026（外籍 stamp duty 8%，2026-01-01 起生效，較先前 4% 倍增；非居民 30% 租金稅；10% 永久 RPGT） · 聯邦直轄區外籍購屋門檻 RM 1,000,000（全部物業類型、全部 MM2H 等級皆適用） · MM2H 2026 規則（銀卡 RM 60 萬／金卡 RM 100 萬／白金卡 RM 200 萬物業門檻，另須持有滿 10 年；KL 境內購屋仍須同時滿足聯邦直轄區 RM 100 萬門檻）。
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-08-05。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限（自住／出租／備用居所／世代傳承）。</strong>本案為 Pudu 舊城核心區的 leasehold 住宅地契公寓；核心強項為深廣的本地接手池（本 7.3）＋合理現金流（本 6.0）＋直連捷運機能，核心 caveat 為<strong>全案戶型開價皆低於 KL 外籍購屋門檻 RM 1,000,000，外籍買家在現行定價下法律上無法購買本案任何戶型</strong>＋稀缺性稽核三層皆未通過（Pudu 列 URA 都更目標區）＋開發商 TSLAW Land 就本案而言可能是其第一個完工交屋的高樓案（行銷所舉 Shamelin Star 案例經查證實為關聯公司 Landmark Zone Sdn Bhd 交付，非 TSLAW Land 本身）。代表戶型採 Type B 695 sqft，理由為其為本案最接近「2 房級距」的標準戶型；惟即使改採全案最大戶型（Type E 1,080 sqft），仍低於外籍門檻，故外籍排除的結論不因代表戶選取而改變。管理費、租金與部分二手市場指標為估算或依開發商公告，已於卡上逐項標註；年換手率與掛牌-成交折讓因項目剛完工標「N/A」。<strong>完工日期與 VP／CCC 核發狀態未獨立驗證，買家應向開發商或律師書面確認。</strong>作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+    <p style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:10.5px;font-style:italic;color:var(--muted)">本卡依 scorecard v5.0 框架產出（權重 20/12/15/13/12/18/10）：稀缺性稽核與接手人群四步程序皆採實查數據，外籍現金流／退場相關數字因代表戶已被門檻結構性排除而屬假設性對照，已逐項標註「假設性」。</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
