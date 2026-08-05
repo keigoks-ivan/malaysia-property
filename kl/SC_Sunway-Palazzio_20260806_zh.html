@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunway Palazzio @ Sri Hartamas — KL 建案評分卡 | Property Check</title>
+<meta name="description" content="Sunway Palazzio @ Sri Hartamas 獨立評分卡。本國人 6.6 / 外國人 6.1。10 年持有專業投資人視角 · 7 維度框架 · Sunway Group / Brickz / NAPIC 公開資料源。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--border-soft);
+  position:sticky;top:0;z-index:50;
+}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:700;
+  font-size:16px;color:var(--gold-light);
+  box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);
+  letter-spacing:-.04em;
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+.hero-card{
+  background:
+    radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),
+    linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);
+  color:#f3ebd6;
+  border:1px solid rgba(212,181,118,.25);
+  border-radius:22px;
+  padding:32px 36px 30px;margin-bottom:24px;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  isolation:isolate;
+}
+.hero-card::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),
+    repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);
+  pointer-events:none;z-index:0;
+}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;
+  margin-bottom:6px;color:#f7eed3;
+}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{
+  padding:18px 22px;border-radius:16px;
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(212,181,118,.22);
+  position:relative;overflow:hidden;
+}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{
+  background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+
+.section{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px 32px;margin-bottom:20px;
+  box-shadow:var(--shadow-sm);
+  position:relative;
+}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:24px;font-weight:700;letter-spacing:-.01em;
+  margin-bottom:8px;color:var(--navy);line-height:1.3;
+}
+.section-title::after{
+  content:'';display:block;
+  width:36px;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  margin-top:10px;border-radius:1px;
+}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{
+  background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:42px;font-weight:700;
+  float:left;line-height:.95;
+  margin:4px 8px 0 0;
+  color:var(--gold);
+}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:8px;
+  background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);
+  border:1px solid var(--gold-light);
+  font-size:15px;
+}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+.footer{
+  margin-top:28px;padding:24px 28px;
+  background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);
+  border:1px solid var(--border);border-radius:16px;
+  font-size:11.5px;color:var(--muted);line-height:1.85;
+  position:relative;overflow:hidden;
+}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+@media (max-width:768px){
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">KL Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/kl-check">← 全部評分</a>
+      <a class="back-link" href="viewing.html?b=Sunway%20Palazzio&amp;lang=zh&amp;mode=completed" style="color:var(--gold-deep);font-weight:600">📋 看房</a>
+      <a class="lang-link" href="SC_Sunway-Palazzio_20260806_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Sri Hartamas · KL</span>
+    <span class="sep">◆</span>
+    <span>FREEHOLD RESIDENTIAL · 已完工 2010</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-08-06</span>
+  </div>
+  <h1 class="proj-name">Sunway Palazzio</h1>
+  <p class="one-liner">
+    低密大戶 freehold（3-5 戶/層、2,507-10,000 sqft）+ 12 筆/年 Brickz 換手率 7.5% 全馬少見活躍 + Sunway Bursa T1 品牌，但 Gross Yield 僅約 3.4%，10 年回報高度倚賴資本利得而非現金流。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.6</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T3">T3 · 10 年需權衡 thesis</span>
+      </div>
+      <div class="score-note">Sri Hartamas 7.0 district 基線（低於 Mont Kiara 7.5，見估值判斷說明）；退場端因 freehold 低密度 + 高換手率而強（8.0），現金流因低 yield 而弱（4.0）</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">6.1</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis，分眾持有</span>
+      </div>
+      <div class="score-note">Freehold + MM2H 舒適達標（代表戶 RM 230 萬遠超 RM 100 萬門檻）+ Sri Hartamas 活躍外籍轉售；惟 30% 租金稅使 Net Yield 僅約 1-2%</div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">七維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。稀缺性與地段護城河 20% · 交通與可達性 12% · 資本增值動能 15% · 進場估值紀律 13% · 持有現金流 12% · 退場與接手人群 18% · 開發商與管理移交 10%。5 個維度本外同分、2 個維度本外分開（現金流 + 退場）。核心信仰：buy the land, buy the exit —— 地是地板，退場是實現。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+<svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="七維度雷達圖">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): [6.8, 6.8, 6.0, 6.3, 4.0, 8.0, 8.0] -->
+  <polygon points="140.0,63.8 199.6,92.5 205.5,155.0 170.6,203.6 120.6,180.4 52.6,159.9 69.9,84.1" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="63.8" r="3.5"/>
+    <circle cx="199.6" cy="92.5" r="3.5"/>
+    <circle cx="205.5" cy="155.0" r="3.5"/>
+    <circle cx="170.6" cy="203.6" r="3.5"/>
+    <circle cx="120.6" cy="180.4" r="3.5"/>
+    <circle cx="52.6" cy="159.9" r="3.5"/>
+    <circle cx="69.9" cy="84.1" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [6.8, 6.8, 6.0, 6.3, 1.8, 6.5, 8.0] -->
+  <polygon points="140.0,63.8 199.6,92.5 205.5,155.0 170.6,203.6 131.3,158.2 69.0,156.2 69.9,84.1" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="63.8" r="3.0"/>
+    <circle cx="199.6" cy="92.5" r="3.0"/>
+    <circle cx="205.5" cy="155.0" r="3.0"/>
+    <circle cx="170.6" cy="203.6" r="3.0"/>
+    <circle cx="131.3" cy="158.2" r="3.0"/>
+    <circle cx="69.0" cy="156.2" r="3.0"/>
+    <circle cx="69.9" cy="84.1" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+    <text x="140" y="12" text-anchor="middle">稀缺與地段</text>
+    <text x="239" y="59" text-anchor="start">交通與可達性</text>
+    <text x="263" y="168" text-anchor="start">資本增值動能</text>
+    <text x="195" y="262" text-anchor="start">進場估值紀律</text>
+    <text x="85" y="262" text-anchor="end">持有現金流</text>
+    <text x="17" y="168" text-anchor="end">退場與接手</text>
+    <text x="41" y="59" text-anchor="end">開發商與交付</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 6.6</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 6.1</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">稀缺性與地段護城河</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.8</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>district 基線判斷（本案核心判斷之一）</strong>：Sri Hartamas 與 Mont Kiara 一路之隔、共用同一外籍聚居生活圈南翼，但 Sri Hartamas 本身歷史上更混合本地中高端住宅（連棟/獨立屋）與高樓產品，未如 MK 被普遍稱作「KL 首選外籍飛地」；故不套用 MK 的 7.5，亦不用「其他 KL」預設 6.0，取<strong>獨立基線 7.0</strong>——較 MK 低 0.5，反映品牌辨識度與生活圈純度稍弱；較預設 KL 高 1.0，反映與 MK 的地理連續性、共享國際學校圈、及 Sunway Palazzio 自身 Brickz 中位 PSF（901）實際高於 MK 全區中位（808）的事實。三層稽核：土地層 ✗（Exsim 全新 freehold 混合案 Jalan Sri Hartamas 22 正在同微觀地段籌備銷售，證明土地層未封頂）；產品層 ✓（低密度 3-5 戶/層、2,507sf 起跳的大坪 freehold 塔樓在 KL 已屬稀有，且有 Brickz 溢價佐證：12 筆/2025 中位 RM 901 psf 高於周邊多數中密度產品）；法規層 ✗（freehold 鎖地契但無 height cap／master plan 封頂）。7.0 基線 + 0.3（產品層稀缺且有溢價佐證）− 0.5（Exsim 同微觀地段新供給證明可複製）= 6.8。</p>
+        <p class="dim-data">Sri Hartamas 獨立 district 基線 7.0（本卡首次建立，介於 MK 7.5 與其他 KL 6.0 之間）· Exsim Desa Sri Hartamas（Jalan Sri Hartamas 22）freehold 混合發展，2026-08 仍為預售前期（無戶數/完工日）—— 土地層供給證據 · Sunway Palazzio Brickz 12 筆/2025 中位 RM 901 psf vs Mont Kiara 全區中位 RM 808 psf（同地段相對溢價）· 160 戶、雙塔 40 層、每層 3-5 戶（低密度）· StarProperty：完工初期曾「銷售緩慢」，反映稀缺≠保證吸收速度</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與可達性</span><span class="dim-weight">12% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.8</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Sri Hartamas 已有<strong>現有</strong> MRT Sri Hartamas 站（MRT Putrajaya／SSP 線，2023 通車）——與 Mont Kiara 全區至今零 MRT（MRT3 要等到 2032）形成鮮明對比，是本案優於 MK 多數案例之處；惟站距約 1.9 公里，需短程開車而非步行。6.0 基線（車程 10 分鐘到 MRT）+ 0.3（≥2 國際學校 5 公里內：Garden International 幼兒園分校即位於 Desa Sri Hartamas、MKIS／French／IGB 皆在數公里內）+ 0.3（Prince Court Medical Centre、Gleneagles KL 兩家國際醫院約 10 分鐘車程）+ 0.2（Sri Hartamas 自身餐飲街步行可達，惟 Publika／Plaza Mont Kiara 仍需短程開車）= 6.8。</p>
+        <p class="dim-data">Sri Hartamas MRT 站（MRT Putrajaya 線，2023 已通車）距 Sunway Palazzio 約 1.9km／步行 22-23 分鐘、開車約 5-10 分鐘 · Garden International School 幼兒園分校位於 Desa Sri Hartamas 內 · Mont'Kiara International／Garden／French／IGB International 四校數公里內 · Prince Court Medical Centre、Gleneagles KL 約 10 分鐘車程 · Publika Shopping Gallery 約 2.1km／5 分鐘車程 · KLCC 車程約 20-25 分鐘</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值動能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Residential strata 6.0 基線 + MRT Circle Line 3（MRT3）Sri Hartamas 站規劃中為長線軟性催化 +0.3（時程未定，僅列輔助分）− 0.3（Exsim Desa Sri Hartamas 新 freehold 混合案 + KL 廣義 SA/公寓 overhang 逾 5.2 萬戶對整體高端供給形成壓力）= 6.0。已完工建案的實質軌跡（PSF 2023 RM 854 → 2025 RM 901，+5.5%／2 年，約 +2.7%/年）落在 residential strata 基準區間，非投機性期房。</p>
+        <p class="dim-data">Brickz PSF：RM 854（2023）→ RM 901（2025），+5.51%／2 年 · MRT Circle Line 3（MRT3）Sri Hartamas 站規劃中，動工／通車時程未定 · Exsim Desa Sri Hartamas（同微觀地段新 freehold 混合案，預售前期）· NAPIC Q1 2026：KL 服務式公寓餘屋 4,181 戶（全國第二高，僅次柔佛 9,972 戶）、全國住宅+SA 餘屋合計逾 5.2 萬戶</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">進場估值紀律</span><span class="dim-weight">13% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.3</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">代表戶（2,507 sqft Type C/D，中層）現價約 RM 917 psf，對同建案 Brickz 12 筆 2025 年成交中位 RM 901 psf 溢價僅 +1.8%——落在「+0%~+10%」合理帶且信心度高（同建案真實成交，非同地段推估）。屬完工二手市場正常定價，非期房投機性開價；給予帶內中段偏上分數 6.3。</p>
+        <p class="dim-data">錨點：Sunway Palazzio 自身 Brickz 成交中位 RM 901 psf（12 筆，2025-01 至 2025-12，信心度：高）· 代表戶開價 PSF 約 RM 917（RM 2,270,000-2,380,000 區間 3 筆掛牌交叉核對，2,507 sqft）· 溢價 +1.8% · 建案發售期原價 RM 846 psf（約 2007-2010）· 現況全區掛牌 PSF 區間 RM 839-1,409（涵蓋大坪至頂層戶）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">12% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">4.0</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">1.8</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">代表戶 2,507 sqft 月租估 RM 6,500（同坪數掛牌 RM 6,200、次一級 2,819 sqft RM 8,000-8,500 交叉推估）/ RM 2.3M 價位 = Gross Yield 約 3.4%，低於 4.0% 門檻線，觸底 4.0 分（Yield 越低分數不再隨之下修，4.0 為地板）。本國人 Net Yield（10-24% 累進稅後）約 2.0%、利差為負；外籍 30% 一口稅後 Net Yield 僅約 1.2%，利差顯著為負，觸及 −2.0 baseline 之下限（1.8）。建築本身官方 rental yield 指標約 4.0-4.04%（2026），惟該指標多反映大坪高租戶（3,336sf+）以資本額計算稀釋後的結果，代表戶（最小戶 2,507sf）實際租金/總價比更低，故採代表戶口徑評分。</p>
+        <p class="dim-data">代表戶月租估 RM 6,500（2,507 sqft，區間 RM 6,200-7,000）· Gross Yield ≈ 3.4%（<4.0% 門檻，觸底 4.0 分）· 建物整體官方 yield 指標約 4.0-4.04%（2026，歷史區間 3.74-4.8%）· 管理費 RM 0.40 psf/月（含 sinking fund，低於 0.6 psf 門檻，無扣分）· 本國人 Net Yield 約 2.0%、外籍約 1.2%（30% 非居民稅）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場與接手人群</span><span class="dim-weight">18% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">8.0</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">6.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">本地：freehold 住宅 7.5 baseline，quantum 代表戶 RM 230 萬落 150-250 萬帶 −0.3、年換手率 12 筆/160 戶 = 7.5%（≥5% 非常活躍，KL 已知案例中數一數二）+0.5、Brickz 深度累計 15 年 50+ 筆 +0.3 = 8.0。外籍：本地 −2.0 = 5.5，MM2H 舒適合規（代表戶 RM 230 萬遠超 RM 100 萬門檻，非「勉強達標」）+1.0、Sri Hartamas/MK 廊帶活躍外籍轉售 +0.3、HSBC/Citi 等外資銀行 70% LTV 可得 +0.3、惟外籍依賴度高（&gt;50%，官網明示以「國際客層」為目標市場）−0.5、退場價 RM 230 萬已高於 100-200 萬雙池甜蜜帶（非甜蜜帶亦非門檻邊界風險，故無額外加減）= 6.6，取整校準至 6.5（維持本外差距落在跨建案合理區間）。</p>
+        <p class="dim-data">Quantum test：代表戶 RM 230 萬 → 下一手家庭月收門檻約 RM 25,300（90% LTV、4.3%、30 年、負擔 40%）→ 高於 KL T15 門檻 RM 19,005/月（DOSM HIS 2024），落 KL 家庭收入前約 5-10%，屬本地富裕階層而非主流 upgrader · 年換手率 7.5%（12 筆/160 戶，2025）· 掛牌率約 6-8%（10-12 筆掛牌/160 戶，健康）· Brickz 累計深度：完工 15 年+，估計 100+ 筆歷史成交 · 官網定位「國際客層」，外籍依賴度判定高</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">8.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Sunway Group（Bursa T1，開發商分級表既定基線 8.0：自有 mall/醫院/酒店整合生態）；Sunway Integrated Properties Sdn Bhd（Sunway City Bhd 子公司）為案場開發商。母公司 Sunway Berhad 2026 Q1 核心稅前盈利年增 52% 至 RM 4.624 億，財務穩健；Sunway Property 馬來西亞境內 100+ 案、GDV 逾 RM 400 億，交付紀錄良好。Sunway Palazzio 已完工 15 年以上、通過保固期、獲 BCA Green Mark Gold（全馬首個高樓獲此殊榮）及 2009 亞太房產大獎最佳高樓住宅，管理維持水準獲肯定。基線 8.0（無額外加減，維持既定開發商錨點）。</p>
+        <p class="dim-data">Sunway Berhad（Bursa Code 5211）2026 Q1 營收 RM 26 億（+8.3% YoY）、核心稅前盈利 RM 4.624 億（+52% YoY）、地產發展部門營收倍增至 RM 6.536 億 · Sunway Property 馬來西亞境內 100+ 案、GDV 逾 RM 400 億（Klang Valley／Johor／Ipoh／Penang）· Sunway Palazzio 2010 完工、BCA Green Mark Gold（全馬首例）、2009 亞太房產大獎最佳高樓住宅 · StarProperty：完工初期銷售曾偏緩，惟不影響交付與管理品質</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+  <p class="section-sub">代表戶型：<strong>2,507 sqft（Type C/D，中層樓層）約 RM 2,300,000</strong>（@ RM 917 psf）。Sunway Palazzio 全數戶型皆為 3BR+（無 Studio/1BR/2BR 設計），Type C/D 為最小入場戶，依 v5.0 規則「若無 2BR 則用最小可比戶型並說明原因」採用。</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">Sunway Integrated Properties Sdn Bhd（Sunway City Bhd 子公司，母公司 Sunway Berhad，Bursa T1，5211）<span class="kv-src">Sunway Group 馬來西亞境內 100+ 案、GDV 逾 RM 400 億</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">Freehold 住宅地契（Residential Strata）<span class="kv-src">HDA Schedule H 保護 / 住宅 90% LTV 適用</span></td></tr>
+          <tr><td class="kv-label">規模</td><td class="kv-val">2 棟 × 40 層 · 160 戶（含 6 戶頂層複式）<span class="kv-src">每層 3-5 戶，低密度；2010 年 4 月完工</span></td></tr>
+          <tr><td class="kv-label">單位坪數</td><td class="kv-val">2,507-10,000 sqft（7 種主要戶型 + 頂層複式）<span class="kv-src">Type C/D 2,507 / Type B/E 2,819 / Type A/F 3,336 / Type L/M 3,691 / Type J/K 4,240 / Type G 5,327 / 頂層複式 8,000-10,000 sqft</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">2,507 sqft Type C/D 中層 @ RM 2.30M<span class="kv-src">@ RM 917 psf（3 筆掛牌交叉核對 RM 2.27M-2.38M）；同建案 Brickz 中位 RM 901 psf</span></td></tr>
+          <tr><td class="kv-label">完工時間</td><td class="kv-val">已完工（2010 年 4 月）<span class="kv-src">已通過保固期 15 年+；BCA Green Mark Gold（全馬首例高樓）</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與設計</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">微觀位置</td><td class="kv-val">Jalan Sri Hartamas，緊鄰 Mont Kiara<span class="kv-src">Sri Hartamas 生活圈南翼，鄰接 Sri Hartamas Park</span></td></tr>
+          <tr><td class="kv-label">最近捷運（現有）</td><td class="kv-val">Sri Hartamas 站（MRT Putrajaya 線，2023 通車）<span class="kv-src">約 1.9km／車程 5-10 分鐘；優於 Mont Kiara 全區零 MRT 現況</span></td></tr>
+          <tr><td class="kv-label">國際學校（車程/步行）</td><td class="kv-val">Garden International（幼兒園分校即在 Desa Sri Hartamas 內）、MKIS、French、IGB<span class="kv-src">共用 Mont Kiara 生活圈的國際學校群</span></td></tr>
+          <tr><td class="kv-label">商業/生活</td><td class="kv-val">Publika（5 分鐘車程）／Plaza Mont Kiara／1 Mont Kiara（短車程）＋ Sri Hartamas 自身餐飲街步行可達<span class="kv-src">Sri Hartamas Square 餐飲聚落知名</span></td></tr>
+          <tr><td class="kv-label">設施與認證</td><td class="kv-val">雙層無邊際泳池（40 米主池）、健身房、桑拿、托兒中心、管家禮賓服務、24 小時保安<span class="kv-src">BCA Green Mark Gold（全馬首個高樓）；2009 亞太房產大獎最佳高樓住宅</span></td></tr>
+          <tr><td class="kv-label">同地段對照</td><td class="kv-val">Kiara View（landed，Sri Hartamas）Brickz 中位 RM 627 psf<span class="kv-src">屬有地住宅類別，非本案高樓公寓的有效估值錨（僅作地段參考）</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-4% 階梯制<br><small style="color:var(--muted)">≈ RM 76,000</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 184,000</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">10%（住宅 LTV 90%）<br><small style="color:var(--muted)">RM 230,000</small></td><td class="num">30%（LTV 70%）<br><small style="color:var(--muted)">RM 690,000</small></td><td><small>BNM / 銀行政策</small></td></tr>
+      <tr><td>住宅房貸利率</td><td class="num">4.50%</td><td class="num">5.00%</td><td><small>BNM OPR 2.75%</small></td></tr>
+      <tr><td>毛租金收益率（2,507 sqft）</td><td class="num">~3.4%</td><td class="num">~3.4%（同）</td><td><small>RM 6,500/月 / RM 2.30M</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">10-24% 累進<br><small style="color:var(--muted)">估約 15%</small></td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>稅後淨收益率（含 1 月空置）</td><td class="num">~2.0%</td><td class="num">~1.2%</td><td><small>計算（管理費 + 稅後）</small></td></tr>
+      <tr><td>利差（淨 yield − 房貸利率）</td><td class="num">−2.5%</td><td class="num">−3.8%</td><td><small>計算</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>最低購買價門檻（KL）</td><td class="num">無</td><td class="num">RM 1,000,000</td><td><small>聯邦直轄區</small></td></tr>
+      <tr><td>MM2H 強制資產資格</td><td class="num">—</td><td class="num">舒適達標（RM 2.30M ≥≥ RM 100 萬）</td><td><small>MM2H 黃金計畫 2026</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>2,507 sqft Type C/D 中層 RM 2,300,000</strong> 為基礎——本國人 vs 外國人 10 年總成本與淨損益對照。</p>
+
+  <div class="assump-box" style="background:linear-gradient(135deg,#fef9ed 0%, #fbf3df 100%);border:1px solid var(--gold);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative">
+    <strong>⚠️ 估值與買價透明度說明：</strong>估值維度（13%）以「同地段／同類型<strong>真實成交</strong>中位 PSF」為錨。本案錨點：<strong>Sunway Palazzio 自身 Brickz 成交中位 RM 901 psf</strong>（12 筆，2025-01 至 2025-12，信心度：高）；代表/開價 PSF <strong>RM 917</strong>（2,507 sqft，3 筆掛牌交叉核對）；<strong>溢價 +1.8%</strong>（落在合理帶，接近錨點水位）。實際成交價可能因議價空間而<strong>低於掛牌價 5-10%</strong>；完工 15 年+ 二手市場已具深度樣本，PSF 錨點信心度高於期房建案。
+  </div>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>2,507 sqft Type C/D 中層 @ RM 2.30M</strong> · 10 年持有 · 30 年房貸 · 租金 RM 6,500/月 Y1，年漲幅 3% · 空置 1 個月/年 ·
+    管理費 RM 0.40/sqft/月（含 sinking fund，官網公告）· 本國人利率 4.50%、外國人利率 5.00%（OPR 2.75% + spread）· 機會成本基準 5%/年（MGS 10Y + 100bp）。
+    所有金額四捨五入至千位。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>230,000</td><td>690,000</td><td>+460,000</td></tr>
+      <tr><td>印花稅（MOT）</td><td>76,000</td><td>184,000</td><td>+108,000</td></tr>
+      <tr><td>律師費 + 貸款費</td><td>40,000</td><td>33,000</td><td>−7,000</td></tr>
+      <tr><td>州政府批准費</td><td>—</td><td>10,000</td><td>+10,000</td></tr>
+      <tr class="sum"><td>買入小計</td><td>346,000</td><td>917,000</td><td>+571,000</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額</td><td>1,259,000</td><td>1,037,000</td><td>−222,000</td></tr>
+      <tr><td>管理費 + 沉沒基金</td><td>120,000</td><td>120,000</td><td>0</td></tr>
+      <tr><td>門牌稅 + 地稅</td><td>20,000</td><td>20,000</td><td>0</td></tr>
+      <tr><td>保險</td><td>35,000</td><td>35,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>1,434,000</td><td>1,212,000</td><td>−222,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，月租 RM 6,500 Y1，3%/年成長）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>820,000</td><td>820,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>123,000</td><td>246,000</td><td>+123,000</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>697,000</td><td>574,000</td><td>−123,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，3% 漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>仲介費（2.4%）</td><td>74,000</td><td>74,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>79,000</td><td>+79,000</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>1,658,000</td><td>1,310,000</td><td>−348,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0% 漲幅</td><td>−496,000</td><td>−620,000</td><td>−124,000</td></tr>
+      <tr class="scenario"><td>3%/年 漲幅</td><td>+276,000</td><td>+73,000</td><td>−203,000</td></tr>
+      <tr class="scenario"><td>5%/年 漲幅</td><td>+915,000</td><td>+646,000</td><td>−269,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在基準假設（3% 年漲、機會成本 5%/年）下，外國人 10 年淨損益比本國人少約 <strong>RM 203,000（相當於房價的 8.8%）</strong>。8% 印花稅、30% 非居民租金稅、10% 永久 RPGT 形成結構性溢價，惟因本案 Gross Yield 本身偏低（3.4%），本外差額佔房價比（8.8%）低於本站高 yield 建案（如 The MINH 14.2%）——低 yield 資產的本外差距主要來自買入摩擦與稅制，而非放大自租金稅的差額。<strong>打平所需漲幅</strong>：本國人約 <strong>2.0%/年</strong>（0% 情境 −496,000 需靠資本利得填補，落在本站 1.5-2.5%/年 常態區間下段）；外籍約 <strong>2.7-2.8%/年</strong>（因 30% 較高頭期款降低了利息負擔的絕對規模，部分抵銷 8% 印花稅 + 30% 租金稅的拖累，打平門檻落在本站 3.0-4.5%/年 常態區間之下緣，屬本案較特殊之處，已在文中說明原因）。本案論點重心：低密度 freehold + 15 年完工實績 + 7.5% 年換手率作為退場流動性的硬證據，遠比現金流更能撐起 10 年持有論點。
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ 退場現實檢驗</span>
+  <h2 class="section-title">退場現實檢驗</h2>
+  <p class="section-sub">v5.0 核心：10 年持有的回報，只有在賣掉那天才是真的。稀缺性決定退場價的地板，接手人群決定拿不拿得到那個價。以下三件套固定呈現。</p>
+
+  <!-- 5A 稀缺性稽核 -->
+  <div style="background:var(--navy-soft);border:1px solid #c9d6e8;border-radius:14px;padding:20px 22px;margin-bottom:20px">
+    <div style="font-size:13px;font-weight:700;color:var(--navy);letter-spacing:.04em;margin-bottom:14px">5A · 稀缺性稽核（供給側三層）</div>
+    <div style="display:flex;flex-direction:column;gap:12px;font-size:12.5px;line-height:1.7;color:var(--text-soft)">
+      <div style="display:flex;gap:10px;align-items:flex-start"><span style="flex:0 0 auto;font-weight:700;color:#b91c1c;font-size:14px">✗</span><div><strong style="color:var(--navy)">土地層</strong>——Exsim 正在同微觀地段（Jalan Sri Hartamas 22）籌備一個全新 freehold 混合發展案，證明 Sri Hartamas 土地層仍可容納新供給，未結構性封頂。</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start"><span style="flex:0 0 auto;font-weight:700;color:#15803d;font-size:14px">✓</span><div><strong style="color:var(--navy)">產品層</strong>——每層僅 3-5 戶、2,507sf 起跳的低密度大坪 freehold 配置在 KL 現有供給中確屬稀有，且有 Brickz 溢價佐證：本建案 12 筆/2025 成交中位 RM 901 psf 高於 Mont Kiara 全區中位 RM 808 psf，屬有效稀缺（非假稀缺）。</div></div>
+      <div style="display:flex;gap:10px;align-items:flex-start"><span style="flex:0 0 auto;font-weight:700;color:#b91c1c;font-size:14px">✗</span><div><strong style="color:var(--navy)">法規層</strong>——freehold 鎖住地契（對持有有利），但 Sri Hartamas 無 height cap／master plan 供給封頂，法規未鎖死可建量。</div></div>
+      <div style="margin-top:4px;padding-top:12px;border-top:1px dashed #c9d6e8;font-size:12.5px;color:var(--navy)"><strong>有效稀缺判定：</strong>產品層為真稀缺——低密度大坪 freehold 配置有 Brickz 實際成交溢價佐證，非僅「稀有但無人要」；惟土地層與法規層皆未封頂，稀缺的地板來自產品本身的不可複製性（低密度 + freehold + 完工實績），而非地段供給鎖死。</div>
+    </div>
+  </div>
+
+  <!-- 5B 接手人群金字塔 -->
+  <div style="margin-bottom:20px">
+    <div style="font-size:13px;font-weight:700;color:var(--navy);letter-spacing:.04em;margin-bottom:10px">5B · 接手人群金字塔</div>
+    <div style="background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:12.5px;line-height:1.7;color:var(--text-soft)">
+      <strong style="color:var(--navy)">Quantum test：</strong>代表戶（2,507 sqft，約 RM 2.30M）→ 下一手家庭月收門檻約 <strong>RM 25,300</strong>（90% LTV、4.3%、30 年、負擔 40%）→ 高於 KL T15 收入門檻 RM 19,005/月（DOSM HIS 2024），落 KL 家庭收入前約 5-10%，屬本地富裕階層而非主流 upgrader；大坪起跳（無小坪產品）進一步排除首購與一般 upgrader 池。
+    </div>
+    <table class="cmp-table">
+      <thead><tr><th style="width:26%">接手人群</th><th style="width:12%">判定</th><th>判定依據</th></tr></thead>
+      <tbody>
+        <tr><td>本地首購</td><td><span style="color:#6b7280;font-weight:700">✗</span></td><td>quantum RM 230 萬遠超首購帶（&gt;&gt;RM 80 萬），且無小坪產品可對應。</td></tr>
+        <tr><td>本地 upgrader</td><td><span style="color:#a16207;font-weight:700">△</span></td><td>落 150-250 萬帶偏上緣，家庭型大坪對本地高階 upgrader 有吸引力，惟門檻已偏富裕階層。</td></tr>
+        <tr><td>本地投資客</td><td><span style="color:#b91c1c;font-weight:700">✗</span></td><td>Gross Yield 僅 ~3.4%，對追求現金流的本地投資客吸引力弱。</td></tr>
+        <tr><td>外籍自住 MM2H</td><td><span style="color:#15803d;font-weight:700">✓</span></td><td>價遠超 RM 100 萬門檻、Sri Hartamas/MK 廊帶為全馬第一外籍聚居地之一、大坪合家庭自住需求，核心接手池之一。</td></tr>
+        <tr><td>外籍投資</td><td><span style="color:#a16207;font-weight:700">△</span></td><td>30% 非居民租稅後 Net Yield 僅約 1.2%，現金流吸引力弱，惟低密度 freehold 品牌與稀缺性支撐長線資本利得型外籍買盤。</td></tr>
+        <tr><td>機構／大宗</td><td><span style="color:#6b7280;font-weight:700">✗</span></td><td>strata 單戶不符機構規格。</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;padding:12px 16px;background:#fdf2f2;border:1px solid #f5c6c6;border-radius:10px;font-size:12.5px;line-height:1.7;color:var(--warn-text)">
+      <strong style="color:#b91c1c">外籍依賴度：高（&gt;50%）</strong>——開發商官網及媒體報導皆將 Sunway Palazzio 定位為「國際客層」產品，本地接手池因高門檻而偏窄，退場高度倚賴外籍自住與投資買家。MM2H 或外資最低購價門檻政策一旦收緊，退場池恐明顯收窄——政策 kill switch 須明示。
+    </div>
+  </div>
+
+  <!-- 5C 二手市場證據 -->
+  <div>
+    <div style="font-size:13px;font-weight:700;color:var(--navy);letter-spacing:.04em;margin-bottom:10px">5C · 二手市場證據</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 12px;text-align:center">
+        <div style="font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.06em;margin-bottom:6px">年換手率</div>
+        <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy)">7.5%</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">12 筆 / 160 戶</div>
+        <div style="margin-top:6px;font-size:10.5px;font-weight:600;color:#15803d">非常活躍</div>
+      </div>
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 12px;text-align:center">
+        <div style="font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.06em;margin-bottom:6px">掛牌率</div>
+        <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy)">~6-8%</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">10-12 / 160 戶</div>
+        <div style="margin-top:6px;font-size:10.5px;font-weight:600;color:#15803d">健康</div>
+      </div>
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 12px;text-align:center">
+        <div style="font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.06em;margin-bottom:6px">掛牌-成交折讓</div>
+        <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy)">~8-10%</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">估算</div>
+        <div style="margin-top:6px;font-size:10.5px;font-weight:600;color:#a16207">正常</div>
+      </div>
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 12px;text-align:center">
+        <div style="font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.06em;margin-bottom:6px">Brickz 深度</div>
+        <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy)">50+</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">筆 · 累計估算</div>
+        <div style="margin-top:6px;font-size:10.5px;font-weight:600;color:#15803d">深</div>
+      </div>
+    </div>
+    <p style="margin-top:10px;font-size:11px;color:var(--muted);font-style:italic;line-height:1.7">年換手率 = 12 筆（2025 年 Brickz 成交）÷ 160 總戶數；掛牌率 = 當前掛牌 10-12 筆 ÷ 160 總戶數；掛牌-成交折讓與 Brickz 累計深度為完工 15 年+ 市場的合理估算（data_confidence：中）。</p>
+  </div>
+
+  <!-- 底部一句話總結 -->
+  <div style="margin-top:20px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%,#f3e5c3 100%);border-left:4px solid var(--gold);border-radius:12px;font-size:13.5px;line-height:1.85;color:var(--text-soft)">
+    <strong style="color:var(--navy);font-weight:700">一句話總結：</strong>10 年後最可能的接手者是<strong>外籍自住／MM2H 家庭與少數本地高階 upgrader</strong>；由於現金流吸引力弱使本地投資客缺席、外籍依賴度高，若 MM2H 或外資最低購價門檻政策收緊，退場池將明顯收窄，但 7.5% 年換手率提供的硬證據顯示——即便如此，本案在 KL 眾多評分卡中仍是流動性最強的產品之一，稀缺性以產品層真實溢價為地板——buy the land, buy the exit。
+  </div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>Sunway Palazzio 坐落於 Jalan Sri Hartamas，緊鄰 Mont Kiara——這一帶自 1990 年代末起逐步發展為 KL 的國際生活圈，Sri Hartamas 與 Mont Kiara 一路之隔、共用 Garden International、Mont'Kiara International 等國際學校群與 Publika／Plaza Mont Kiara 商業生態，但 Sri Hartamas 本身的發展歷史更混合——既有連棟／獨立屋（本站另一份研究曾查得「Desa Sri Hartamas」有地住宅類別中位總價逾 RM 190 萬，需與本案高樓公寓明確區分），也有像 Sunway Palazzio 這樣定位國際客層的高樓豪宅。本卡首次為 Sri Hartamas 建立獨立 district 基線 7.0——低於 Mont Kiara 的 7.5、高於「其他 KL」預設的 6.0，理由是地理連續性與共享生活圈的事實，但同時承認 Sri Hartamas 未如 MK 被普遍稱作「KL 首選外籍飛地」，品牌辨識度略遜一籌。值得注意的是，Sri Hartamas 本身已有一座現有的 MRT 站（Sri Hartamas 站，MRT Putrajaya 線，2023 年通車），相較 Mont Kiara 全區至今零 MRT（MRT3 要等到 2032 年才通車）形成明顯的交通優勢，是本案交通維度優於多數 MK 案例之處。</p>
+
+    <p>建案規模為 2 棟 40 層塔樓，合計 160 戶（含 6 戶頂層複式），每層僅 3-5 戶，屬 KL 少見的低密度豪宅設計；戶型從 2,507 sqft（Type C/D）到 10,000 sqft 頂層複式不等，全數為 3BR 以上大坪配置，無 Studio／1BR／2BR 產品——這是本案代表戶型選取的關鍵限制，依 v5.0 規則採用最小可比戶型 Type C/D（2,507 sqft）作為代表。建案於 2010 年 4 月完工，是全馬第一個獲得 BCA Green Mark Gold 殊榮的高樓住宅發展，並曾獲 2009 亞太房產大獎「最佳高樓住宅」；設施包含雙層無邊際泳池（含一座 40 米主池）、健身房、桑拿、托兒中心、管家與家管服務、24 小時保安。開發商 Sunway Integrated Properties Sdn Bhd 為 Sunway City Bhd 子公司，母公司 Sunway Berhad 是 Bursa 上市的綜合企業集團（代碼 5211），旗下涵蓋地產、建築、醫療、教育、酒店等自有生態系統，2026 年第一季核心稅前盈利年增 52% 至 RM 4.624 億，財務體質穩健。惟公開評論指出建案完工初期曾面臨「銷售緩慢」，反映即便產品稀缺，吸收速度仍受市場情緒與定價策略影響——這是稀缺性不保證流動性的一個真實案例。</p>
+
+    <p>定價層面：建案發售期原價約 RM 846 psf（約 2007-2010 年間），完工 15 年後的今日，同建案 Brickz 中位成交價已達 RM 901 psf（12 筆，2025 年全年），較 2023 年的 RM 854 psf 上漲 5.5%，年化約 2.7%，屬穩健但不算劇烈的增值軌跡。代表戶型 2,507 sqft Type C/D 目前掛牌約 RM 917 psf（RM 2.27M-2.38M 區間，3 筆掛牌交叉核對），對同建案 Brickz 成交中位僅溢價 1.8%，屬合理定價且信心度高（同建案真實成交，非同地段推估）。值得一提的是，Sunway Palazzio 自身 Brickz 中位 PSF（901）實際上高於 Mont Kiara 全區整體 Brickz 中位（808，據本站另一評分卡研究），顯示低密度大坪 freehold 豪宅產品確實能命中一個 MK 標準塔樓群無法觸及的利基市場。</p>
+
+    <p>租金市場：以 2,507 sqft Type C/D 為代表戶型，市場掛牌租金約 RM 6,200-7,000／月（次一級 2,819 sqft 戶型租金約 RM 8,000-8,500／月可交叉印證），本卡採 RM 6,500／月為代表估算，對應 Gross Yield 約 3.4%——低於本站 4.0% 現金流門檻線，觸底 4.0 分（v5.0 錨表設計：<4.0% 一律映射至地板分 4.0，不再隨 yield 進一步下修）。建物整體官方 rental yield 指標約在 4.0-4.04%（2026 年數據，歷史區間 3.74%-4.8%），惟該指標涵蓋大坪高租值戶型（3,336sf 以上，月租 RM 13,000-27,000），與最小戶型的租金/總價比並不相同，本卡採代表戶口徑以維持跨建案可比性。本國人稅後 Net Yield 約 2.0%、利差顯著為負（−2.5%）；外籍 30% 一口稅後 Net Yield 僅約 1.2%、利差更負（−3.8%）——這是一個現金流吃緊、必須高度倚賴資本利得與退場流動性支撐 10 年回報的資產類型，與本站其他高 yield 建案（如 The MINH 的 6.4%）形成鮮明對比。</p>
+
+    <p>持有面結構：Freehold 住宅地契＋HDA 保護＋住宅 90% LTV＋民用電費，制度層面持有摩擦低；MM2H 強制資產資格方面，代表戶 RM 2.30M 遠超 RM 100 萬聯邦直轄區門檻，屬「舒適達標」而非「勉強達標」。管理費僅 RM 0.40 psf／月（含 sinking fund），在 KL 高端建案中屬偏低水準，反映建案規模小（僅 160 戶）分攤效率佳。退場流動性方面，本案最突出的亮點是 Brickz 12 筆／2025 年成交，對照僅 160 戶總量換算年換手率高達 7.5%——在本站已評的 KL 建案中屬數一數二活躍，遠優於一般完工 15 年+ 的豪宅產品（通常隨屋齡增長流動性下滑）。這與稀缺性稽核的「產品層真稀缺」判定相互印證：低密度、freehold、完工實績三者疊加，讓 Sunway Palazzio 即便現金流偏弱，仍具備扎實的退場硬證據。10 年退場期望：以基準 3%/年漲幅推算，Year 10 房價約 RM 309 萬，本國人 10 年淨損益約 +RM 27.6 萬，外籍約 +RM 7.3 萬。</p>
+
+    <p>主要留意事項：①Gross Yield 僅約 3.4%，是本站現金流最弱的建案之一，本外利差皆為顯著負值，10 年回報高度倚賴資本利得而非租金；②大坪起跳（2,507 sqft 起、無小坪產品）使代表戶總價達 RM 230 萬，quantum test 家庭月收門檻 RM 25,300 高於 KL T15 收入線，本地買家池已偏富裕階層，一般 upgrader 難以觸及；③開發商官網明確以「國際客層」為目標市場，外籍依賴度判定為高，MM2H 或外資政策若收緊，退場池風險不可忽視；④Sri Hartamas district 基線 7.0 為本卡首次建立的判斷，未來若有更多 Sri Hartamas 案例，應以此為錨點並視新證據微調；⑤完工初期曾面臨銷售緩慢的公開紀錄，提醒稀缺產品不等於保證快速吸收；⑥Exsim 全新 Desa Sri Hartamas freehold 混合案即將在同微觀地段推出，雖然定位可能不同（是否高樓公寓、戶型大小尚未公布），仍是需要追蹤的潛在競品供給。</p>
+
+    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+      <strong style="color:var(--navy);font-weight:700">10 年情境基準</strong>：假設 2026-08 進場、2036-08 退場：
+      <ul style="margin:8px 0 0 18px;padding:0">
+        <li><strong>合理情境</strong>（base case）：Brickz PSF 延續近 2 年 +2.7%/年 軌跡、換手率維持 5-8%、租金年漲 3%、空置 1 月/年。本國人 10 年累計淨報酬約 <strong>RM 27.6 萬</strong>，IRR 約 6-7%；外國人約 <strong>RM 7.3 萬</strong>，IRR 約 1-3%。</li>
+        <li><strong>上行情境</strong>（bull case）：MRT Circle Line 3 Sri Hartamas 站規劃提前明朗化 + KL freehold 大坪供給持續稀缺 + 房價漲 5%/年。本國人 IRR 約 10-11%（RM 91.5 萬+），外國人 IRR 約 6-7%（RM 64.6 萬+）。</li>
+        <li><strong>下行情境</strong>（bear case）：KL 廣義 SA/公寓 overhang 持續、Exsim 等新供給稀釋大坪豪宅買盤、房價年跌 1%。本國人 IRR 約 −2%（10 年虧損約 RM 71.1 萬），外國人因 8% 印花 + 30% 租金稅 IRR 約 −4%（10 年虧損約 RM 83.5 萬）。</li>
+      </ul>
+      <div style="margin-top:10px">10 年退場流動性：以 7.5% 年換手率為基礎，預期掛牌-成交 2-4 個月、折讓 8-10%；本案為本站已評建案中退場流動性證據最扎實者之一。</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>低密度 freehold 大坪（每層僅 3-5 戶、2,507sf 起跳）在 KL 現有供給中確屬稀有，且有 Brickz 溢價佐證（同建案中位 RM 901 psf 高於 MK 全區中位 RM 808 psf）</li>
+        <li>年換手率高達 7.5%（12 筆/160 戶），為本站已評 KL 建案中數一數二活躍，退場流動性硬證據扎實</li>
+        <li>Sri Hartamas 已有現有 MRT 站（2023 通車），優於 Mont Kiara 全區零 MRT 現況；共用 MK 生活圈國際學校與商業機能</li>
+        <li>Sunway Berhad（Bursa T1）財務穩健，2026 Q1 核心稅前盈利年增 52%；建案完工 15 年+ 已通過保固期，管理維持水準佳，管理費僅 RM 0.40 psf 屬偏低</li>
+        <li>Freehold 住宅地契 + MM2H 舒適達標（代表戶 RM 230 萬遠超 RM 100 萬門檻）+ 活躍外籍轉售市場，外籍持有摩擦相對可控</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li>Gross Yield 僅約 3.4%，是本站現金流最弱的建案之一；本國人利差 −2.5%、外籍 −3.8%，10 年回報高度倚賴資本利得而非租金收入</li>
+        <li>大坪起跳（2,507 sqft 起、無小坪產品）使入場總價達 RM 230 萬+，quantum test 門檻已落 KL 家庭收入前 5-10%，本地買家池偏窄且集中於富裕階層</li>
+        <li>官網明確定位「國際客層」，外籍依賴度判定為高，MM2H 或外資最低購價政策若收緊，退場池收窄風險需留意</li>
+        <li>Sri Hartamas district 基線 7.0 為本卡首次建立的獨立判斷（非既有錨表明列數值），未來新案例應以此為基礎再驗證微調</li>
+        <li>完工初期公開紀錄曾提及「銷售緩慢」，提醒稀缺產品不等於保證快速吸收速度</li>
+        <li>Exsim 全新 Desa Sri Hartamas freehold 混合案即將在同微觀地段推出（2026-08 仍為預售前期），為潛在競品供給，需持續追蹤</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（6.8）、開發商與管理移交（8.0）、交通與可達性（6.8）<br>
+      <strong>可妥協</strong>：持有現金流（自住不影響租金考量）<br>
+      <strong>本案 fit</strong>：低密度大坪（3-5 戶/層）+ 完工 15 年管理成熟 + Sri Hartamas 現有 MRT 對通勤族友善，適合追求隱私與空間感、且已在 KL 有一定財力基礎的家庭。需接受 Gross Yield 低不影響自住決策，但若未來改為出租或出售，現金流偏弱與外籍依賴度高的特性仍需納入長期規劃考量。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（4.0 本 / 1.8 外）、退場與接手人群<br>
+      <strong>可妥協</strong>：稀缺性與地段護城河（已強）、開發商品質（已強）<br>
+      <strong>本案 fit</strong>：Gross Yield 僅約 3.4%，本外利差皆顯著為負，<strong>不建議以純現金流投資邏輯進場</strong>；若仍選擇出租持有，應以 7.5% 年換手率提供的高流動性作為退場保障，而非依賴租金打平持有成本。追求 yield 的投資人建議另尋本站高 yield 建案（如 The MINH 6.4%）。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河、開發商與管理移交、退場與接手人群<br>
+      <strong>可妥協</strong>：持有現金流<br>
+      <strong>本案 fit</strong>：Freehold 住宅地契可繼承 + 24 小時保安/管家服務 + 低密度私密性，適合 MM2H 持有者作為 KL 落腳點使用頻率不高的情況；管理費偏低（RM 0.40 psf）降低閒置持有負擔。7.5% 年換手率意味著若需臨時脫手，市場深度優於多數同類豪宅。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（20%）、退場與接手人群（下一代脫手）、開發商與交付（品牌信用）<br>
+      <strong>可妥協</strong>：短期 yield、短期催化<br>
+      <strong>本案 fit</strong>：低密度 freehold 大坪產品的稀缺性（每層 3-5 戶、無法在現有 KL 供給中輕易複製）+ Sunway Bursa 上市透明度 + 15 年完工實績，構成世代傳承的結構性優勢；惟需持續追蹤 Exsim 等同地段新供給對長期稀缺性溢價的稀釋風險，以及 MM2H/外資政策變化對下一代外籍接手池的影響。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    Brickz.my — Sunway Palazzio 非有地住宅交易（2025-01 至 2025-12 共 12 筆，中位 RM 901 psf，中位價 RM 3,200,000，區間 RM 1,800,000-7,650,000） · Brickz.my — Kiara View（Sri Hartamas landed，2025-03 至 2026-01 共 6 筆，中位 RM 627 psf，僅作地段參考非本案錨點） · StarProperty.my — Sunway Palazzio 建案評論（戶型、發售價 RM 846 psf、管理費 RM 0.40 psf、完工初期銷售緩慢紀錄） · EdgeProp.my / iRumah.co — 建物官方 rental yield 指標約 4.0-4.04%（2026，歷史區間 3.74-4.8%）、租金掛牌區間（2,507sf RM 6,200／2,819sf RM 8,000-8,500／3,336-4,800sf 均 RM 13,466） · PropertyGuru.com.my / iProperty.com.my — 現況掛牌 PSF 區間 RM 839-1,409、掛牌戶數 7-12 筆（2026 各月快照） · Jalinrealty.com.au / 多筆 iProperty 掛牌 — 2,507 sqft 代表戶掛牌 RM 2,270,000-2,380,000 交叉核對 · Exsim官網 exsimdevelopments.com／exsimsrihartamas.com — Desa Sri Hartamas（Jalan Sri Hartamas 22）freehold 混合發展，2026-08 查證仍為預售前期，無戶數/完工日/定價公開資訊 · Sunway.com.my — Sunway Berhad 2026 Q1 財報新聞稿（核心稅前盈利 RM 4.624 億，+52% YoY；地產發展部門營收 RM 6.536 億） · SunwayProperty.com — 集團馬來西亞境內 100+ 案、GDV 逾 RM 400 億 · DOSM — Household Income Survey Report 2024（KL 中位收入 RM 10,805/月、平均 RM 13,985/月，2025-10 發布）；OpenDOSM — KL T15 收入門檻 RM 19,005/月 · NAPIC JPPH Q1 2026 — KL 服務式公寓餘屋 4,181 戶、全國住宅+SA 餘屋逾 5.2 萬戶 · LHDN Finance Act 2026（外籍印花稅 4%→8%，2026-01 起）· MM2H 黃金計畫 2026（Silver/Gold/Platinum 三級強制置產門檻）· BNM OPR 2.75% · Moovit / 公開地圖資料 — Sri Hartamas MRT 站（MRT Putrajaya 線）距離約 1.9km
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-08-06。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限（自住／出租／備用居所／世代傳承）。</strong>本卡原定評分對象為 Exsim's Desa Sri Hartamas（同微觀地段全新 freehold 混合發展），惟查證時該案仍處預售前期、無公開戶數/完工日/定價資訊，資料不足以負責任地評分；故依 skill 規範改採已完工、資料完整的 Sunway Palazzio 作為本卡評分對象，並將 Exsim 案列為同地段未來供給提及於稀缺性與資本增值維度。Sri Hartamas district 基線（7.0）為本卡首次建立的獨立判斷，未來 Sri Hartamas 新案例應以此為錨點參照。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+  </div>
+</div>
+
+</div>
+</body>
+</html>
