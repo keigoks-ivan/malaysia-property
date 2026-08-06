@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Botanica.CT @ Balik Pulau — 檳城建案評分卡 | Property Check</title>
+<meta name="description" content="Botanica.CT @ Balik Pulau（MTT Properties，300 英畝花園城鎮）獨立評分卡。本國人 4.9 / 外國人 4.3。10 年持有專業投資人視角 · 7 維度框架 · 檳城框架內唯一的假稀缺實證：全島物理限制最硬的區，成交中位 RM 300 psf 卻低於對岸 Butterworth。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}
+.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{font-family:'Noto Serif TC','Playfair Display',serif;font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+.ruler-note{font-size:10.5px;color:#93a2ba;margin-top:16px;padding-top:12px;border-top:1px solid rgba(212,181,118,.18);line-height:1.7}
+
+.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{font-family:'Noto Serif TC','Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}
+.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{font-family:'Noto Serif TC','Playfair Display',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+.sub-eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--gold-deep);margin:22px 0 10px;text-transform:uppercase}
+.sub-eyebrow:first-of-type{margin-top:4px}
+.scarcity-box{background:var(--navy-soft);border:1px solid #c9d6e8;border-radius:12px;padding:8px 20px}
+.scarcity-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(13,34,68,.08);align-items:flex-start}
+.scarcity-row:last-of-type{border-bottom:none}
+.scarcity-mark{flex:0 0 auto;width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:1px}
+.scarcity-mark.pass{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.scarcity-mark.fail{background:#f1f0ec;color:#8a8577;border:1px solid #ddd8ca}
+.scarcity-layer{flex:0 0 60px;font-weight:700;font-size:13px;color:var(--navy);padding-top:2px}
+.scarcity-txt{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.scarcity-verdict{margin-top:12px;padding:12px 16px;background:linear-gradient(135deg,#fef9ed,#fbf3df);border-left:3px solid var(--gold);border-radius:8px;font-size:12.5px;line-height:1.75;color:var(--navy)}
+.scarcity-verdict strong{color:var(--gold-deep)}
+.quantum-line{background:linear-gradient(135deg,var(--bg-soft),#fbf3df);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px;margin-bottom:14px;font-size:12.5px;line-height:1.8;color:var(--text-soft)}
+.quantum-line strong{color:var(--navy)}
+.pyramid-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.pyramid-table th{text-align:left;padding:9px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.pyramid-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.65}
+.pyramid-table tr:last-child td{border-bottom:none}
+.pyramid-table td.seg{font-weight:600;color:var(--navy);white-space:nowrap}
+.pyramid-v{font-weight:700;text-align:center;font-size:15px}
+.pyramid-v.yes{color:#15803d}
+.pyramid-v.mid{color:#a16207}
+.pyramid-v.no{color:#9a9488}
+.dep-tag{padding:12px 16px;border-radius:10px;font-size:12.5px;line-height:1.75}
+.dep-mid{background:#fef3c7;border:1px solid #fcd34d;color:#713f12}
+.dep-low{background:#f1f0ec;border:1px solid #ddd8ca;color:#5b564a}
+.dep-tag strong{font-weight:700}
+.evid-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.evid-card{padding:14px 12px;border:1px solid var(--border-soft);border-radius:12px;background:linear-gradient(180deg,var(--bg-soft),#fff);text-align:center}
+.evid-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);letter-spacing:-.02em;line-height:1.1}
+.evid-lbl{font-size:10.5px;color:var(--muted);font-weight:600;letter-spacing:.03em;margin-top:6px;line-height:1.3}
+.evid-tag{display:inline-block;margin-top:8px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px}
+.evid-tag.hot{background:#dcfce7;color:#15803d}
+.evid-tag.warm{background:#fef3c7;color:#a16207}
+.evid-tag.norm{background:var(--navy-soft);color:var(--navy-mid)}
+.evid-tag.cold{background:#f1f0ec;color:#8a8577}
+.exit-summary{margin-top:18px;padding:16px 20px;background:linear-gradient(135deg,var(--navy-deep),var(--navy));color:#f3ebd6;border-radius:12px;font-size:13px;line-height:1.85}
+.exit-summary strong{color:var(--gold-light)}
+.hardrule-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.hardrule-tag{font-size:10.5px;font-weight:700;padding:5px 10px;border-radius:8px;background:#fdf0ed;border:1px solid #f0c9bd;color:#7a3b28;letter-spacing:.02em}
+.gate-box{margin-top:16px;padding:14px 18px;background:linear-gradient(135deg,#fee2e2,#fecaca);border:1px solid #fca5a5;border-left:4px solid #b91c1c;border-radius:10px;font-size:12.5px;line-height:1.8;color:#7f1d1d}
+.gate-box strong{color:#7f1d1d;font-weight:700}
+
+@media (max-width:768px){
+  .evid-strip{grid-template-columns:repeat(2,1fr)}
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">Penang Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/penang-check.html">← 全部評分</a>
+      <a class="lang-link" href="SC_Botanica-CT_20260806_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Balik Pulau · Jalan Sungai Air Putih</span>
+    <span class="sep">◆</span>
+    <span>永久地契 · 住宅 landed（排屋）</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-08-06</span>
+  </div>
+  <h1 class="proj-name">Botanica.CT @ Balik Pulau</h1>
+  <p class="one-liner">
+    檳城框架內最清楚的一則假稀缺實證：Balik Pulau 是全島物理限制最硬的區——山、農地、單向動線——但住宅成交中位僅 RM 300 psf，<strong>低於對岸 Butterworth 的 RM 310 psf</strong>。稀有而沒有需求佐證，就不是稀缺。本案 300 英畝、九期、freehold 花園城鎮本身完成度高（1881 年英式莊園會所、輔警巡邏、TF Value-Mart／KFC／Starbucks 已交付），本地承接池是全站最深的一案（月收門檻約 P60）；但毛收益率僅約 2.8%（估算，全鎮僅約 5 筆掛租）、島上排屋房價指數 2024 年 −0.9%／2025P +0.4%，而打平全部現金成本需約 2.2%／年。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">4.9</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T5">T5 · Thesis 偏弱，需深度評估</span>
+      </div>
+      <div class="score-note">退場 7.2 是全站最高（freehold 排屋 baseline 7.5、quantum RM 77.5 萬落 P60 深池、Brickz 同案 6 筆）+ 開發商 6.1 + 地段 5.0（假稀缺，三層全 ✗）+ 增值 4.5（島上排屋指數 2024 −0.9%）+ 估值 4.5（新期較同案二手中位溢價約 17%）+ 交通 4.0（島西邊緣，Bukit Hukus 配對路僅 2.8km 通車）+ 現金流 2.5（觸底 clamp）</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">4.3</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T5">T5 · Thesis 偏弱，需深度評估</span>
+      </div>
+      <div class="score-note">⚠️ <strong>一般外籍買家法定不可購買</strong>——島上 landed 門檻 RM 300 萬，本案 RM 77.5 萬遠低於門檻。唯一路徑是 MM2H 持有人（州門檻 RM 50 萬、聯邦銀卡 RM 60 萬，本案達標）。R3 觸發：島上 landed → 外籍退場 cap 4.0、外籍依賴度強制記 ≈0；現金流觸底 clamp 1.5</div>
+    </div>
+  </div>
+  <div class="ruler-note">※ 本卡採檳城內部尺規校準，與 KL／曼谷等其他市場評分卡分數不可直接比較；跨市場比較請見 markets-summary 國際比較頁。</div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">七維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。稀缺性與地段護城河 20% · 交通與可達性 12% · 資本增值動能 15% · 進場估值紀律 13% · 持有現金流 12% · 退場與接手人群 18% · 開發商與管理移交 10%。5 個維度本外同分、2 個維度本外分開（現金流 + 退場）。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+<svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="七維度雷達圖">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): [5.0, 4.0, 4.5, 4.5, 2.5, 7.2, 6.1] -->
+  <polygon points="140.0,84.0 175.0,112.1 189.1,151.2 161.9,185.4 127.9,165.2 61.4,157.9 86.6,97.4" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="84.0" r="3.5"/>
+    <circle cx="175.0" cy="112.1" r="3.5"/>
+    <circle cx="189.1" cy="151.2" r="3.5"/>
+    <circle cx="161.9" cy="185.4" r="3.5"/>
+    <circle cx="127.9" cy="165.2" r="3.5"/>
+    <circle cx="61.4" cy="157.9" r="3.5"/>
+    <circle cx="86.6" cy="97.4" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [5.0, 4.0, 4.5, 4.5, 1.5, 4.0, 6.1] -->
+  <polygon points="140.0,84.0 175.0,112.1 189.1,151.2 161.9,185.4 132.7,155.1 96.3,150.0 86.6,97.4" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="84.0" r="3.0"/>
+    <circle cx="175.0" cy="112.1" r="3.0"/>
+    <circle cx="189.1" cy="151.2" r="3.0"/>
+    <circle cx="161.9" cy="185.4" r="3.0"/>
+    <circle cx="132.7" cy="155.1" r="3.0"/>
+    <circle cx="96.3" cy="150.0" r="3.0"/>
+    <circle cx="86.6" cy="97.4" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+    <text x="140" y="12" text-anchor="middle">稀缺與地段</text>
+    <text x="239" y="59" text-anchor="start">交通與可達性</text>
+    <text x="263" y="168" text-anchor="start">資本增值動能</text>
+    <text x="195" y="262" text-anchor="start">進場估值紀律</text>
+    <text x="85" y="262" text-anchor="end">持有現金流</text>
+    <text x="17" y="168" text-anchor="end">退場與接手</text>
+    <text x="41" y="59" text-anchor="end">開發商與交付</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 4.9</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 4.3</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">稀缺性與地段護城河</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Balik Pulau 錨定 <strong>5.5</strong> 起跳，錨表已標註「無成交深度改善應下修 5.0」。三層稽核全為 ✗：土地層——同 district 的 Permatang Pasir 有 71.62 公頃（約 177 英畝）、GDV RM 17 億、15 年期的開發案，第一期即 1,026 戶可負擔住宅（930-1,000 sqft），後續期別為豪宅、商業、醫院與療養院；本案自身 300 英畝九期至今仍有 Botanica 6B 未推。產品層——20×70 的二層排屋是全馬最可複製的產品，同一城鎮在連續期別重複供應同款。法規層——無任何供給鎖，且 RSNPP 2040 正把 76 公尺全面禁令改為依地形個案評估（目標 2026 Q3 憲報），連坡地這道準約束都在鬆綁（依 R5，山坡限制最多只能打 ✓、不得打 ✓✓，此處因政策正被移除而判 ✗）。<strong>有效稀缺檢驗：Balik Pulau 住宅成交中位 RM 300 psf 低於對岸 Butterworth 的 RM 310 psf</strong>——全島物理限制最硬的一區，價格卻低於土地實質無限的本島外，這是本框架內最明確的「稀有但沒有需求佐證」。調整：<strong>可複製性高 −0.5</strong>。淨值 5.5−0.5=5.0（與 Seberang Perai 其餘地區同級）。R6 不適用（非填海）。</p>
+        <p class="dim-data">Balik Pulau 住宅成交中位 RM 300 psf／RM 380,000（119 筆，39 個建案／城鎮，2024-05 至 2025-04，brickz）vs Butterworth RM 310 psf（錨表） · Permatang Pasir：71.62 公頃、RM 17 億 GDV、15 年期，第一期 1,026 戶可負擔住宅（930-1,000 sqft）＋豪宅、商業、醫院、療養院（Tiara Sumberjaya × Koperasi Kampung Melayu Balik Pulau × MBPP） · 本案 300 英畝、九期，Botanica 6B 尚未推出 · R5 常設檢查：RSNPP 2040 未憲報，目標 2026 Q3，76 公尺全面禁令將改為依地形評估（BERNAMA）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與可達性</span><span class="dim-weight">12% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">4.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">島西／島南邊緣（Batu Ferringhi／Balik Pulau／Teluk Bahang）Tier 4，帶寬 3.5-4.0。取帶內<strong>上限 4.0</strong>，理由有二：(1) Balik Pulau 並非真正的單一動線末端——對外有三條路（經 Paya Terubong 的 Jalan Balik Pulau、經 Teluk Bahang 的海岸路、經 Teluk Kumbar 往 Bayan Lepas 的南線），故不套用「單一進出道路 −0.4」；(2) 城鎮內已交付 Botanica CT Centre 商業區（TF Value-Mart、KFC、Starbucks），日常採買不必出城。不另疊加加分項：三條路皆為蜿蜒雙車道，尖峰通行量有限；Bukit Kukus 配對路只有 2.8 公里段於 2022-01 通車（Paya Terubong-Relau），其餘 800 公尺（Geo Valley，2027）與 1.4 公里（PLB Land，2028）仍在施工，2024-11 已延期三年——依規則，未完工基建不計分。國際學校僅 Prince of Wales Island International School 一所（未達 ≥2 所門檻）；Selgate Specialist Hospital 為「coming soon」未交付，不計分。全島無營運中都市軌道，Balik Pulau 亦無 LRT 站。</p>
+        <p class="dim-data">到 George Town 約 29 分鐘車程（第三方評析所述，尖峰更長） · 到 Bayan Lepas FIZ 約 30-45 分鐘 · Bukit Kukus 配對路：2.8 公里段 2021-12 完工、2022-01 通車；餘 800 公尺（Geo Valley，2027）＋1.4 公里（PLB Land，2028），2024-11 報導延期三年 · 城鎮內 Botanica CT Centre（TF Value-Mart／KFC／Starbucks）已取得 CCC · Prince of Wales Island International School 位於 Balik Pulau · Selgate Specialist Hospital 標示 coming soon，未交付</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值動能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">4.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">島上 terraced／landed 基線 <strong>5.0</strong>（基準年增速僅約 +0.5-1.0%：NAPIC MHPI 島上 terraced 2024 年 −0.9%、2025P +0.4%）——注意檳城與 KL 相反，<strong>島上 strata 增值 &gt; landed</strong>，本案屬較弱的那一類。催化劑逐項為 0：LRT Mutiara Line Balik Pulau 無站（延伸線僅官員口頭「if there is a need」，無路線無預算無核准，依規則 0 分）；Bayan Lepas E&amp;E 車程 30-45 分鐘，未達 ≤15 分鐘門檻；機場擴建不在 15 分鐘圈；Batu Kawan 為本島外案專屬；Gurney Bay、Silicon Island、MM2H 聚居段皆非本區。減分：<strong>同地段 5 年內 ≥5 競品 −0.5</strong>——本案自身同時銷售 Botanica 3、5、5A、Tropical Hillside Villa 並預告 6B，加上同 district 的 Permatang Pasir 15 年期大案，內部與外部供給同時存在。淨值 5.0−0.5=4.5。未再扣「以未核准基建為主要賣點」，因開發商行銷主軸是花園城鎮與生活機能而非 Bukit Kukus 或未建醫院；惟「coming soon」的 Selgate 醫院與 McDonald's 屬未交付項目，讀者不應計入現值。</p>
+        <p class="dim-data">NAPIC MHPI 島上 terraced：2024 年 −0.9%、2025P +0.4%（島上 landed 為全州最弱的一類，與島上 high-rise 2025P +3.1% 對比） · 州整體 high-rise 指數 225.3 &gt; terraced 200.6（與全國 222.6 vs 262.6 相反） · 本案同時在售期別：Botanica 3（Carlina／Carissa／Camellia）、Botanica 5（46 半獨立＋12 獨立）、Botanica 5A（二／三層排屋）、Tropical Hillside Villa（7 款）、Eden 銀髮住宅；Botanica 6B 預告中 · Balik Pulau 無 LRT 站</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">進場估值紀律</span><span class="dim-weight">13% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">4.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">本案具備<strong>錨點優先序第一階的同建案真實成交</strong>：Bandar Botanica CT 二手 landed 6 筆（2025-01-21 至 2025-10-23），中位 <strong>RM 664,000</strong>（P25 RM 510,000／P75 RM 900,000，中位坪數約 2,252 sqft，含排屋與半獨立混合）。本案代表戶（Botanica 5A 二層排屋，20×70 地、建坪 1,959 sqft）開價 <strong>RM 775,000 起（全裝修）</strong>。兩種讀法：(1) 逐戶總價——新期 RM 77.5 萬 vs 同案二手中位 RM 66.4 萬 ＝<strong>+16.7%</strong>，且二手中位的坪數更大（2,252 vs 1,959 sqft），實質同規格溢價應高於此；(2) 建坪 psf——新期 RM 396 psf vs Balik Pulau 全區成交中位 RM 300 psf ＝<strong>+32%</strong>，惟全區中位含大量老舊村屋與公寓，會高估溢價。兩讀法取中，落「+20~30% developer stretch」帶，淨值 <strong>4.5</strong>。另兩項須誠實揭露：新期報價含全套裝修（部分溢價買的是家具而非土地與建物），且開價非成交價——本案至今無官方成交折讓數據。信心度：<strong>中</strong>（有同建案成交，但僅 6 筆且產品型態混合）。同業侵略性不調整（同區競品無公開定價）。</p>
+        <p class="dim-data">同建案錨點：Bandar Botanica CT 二手 landed 6 筆，中位 RM 664,000（P25 510,000／P75 900,000），中位坪數約 2,252 sqft，2025-01 至 2025-10（brickz） · 本案代表戶：Botanica 5A 二層排屋 20×70 地、建坪 1,959 sqft，RM 775,000 起（全裝修）＝RM 396 psf 建坪 · 同城鎮其他期別報價：三層排屋（2,480 sqft）RM 737,000 起；半獨立（3,000-3,300 sqft）RM 1,044,000-1,101,000＝約 RM 367 psf；獨立（3,200-3,500 sqft）RM 1,440,000-1,863,000＝約 RM 582 psf · Balik Pulau 全區成交中位 RM 300 psf／RM 380,000</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">12% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">2.5</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">1.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">毛租金收益率估算約 <strong>2.79%</strong>（月租 RM 1,800 ÷ RM 775,000×12），落 &lt;3.0% 級距 → 基線 <strong>2.5</strong>（本國人 clamp 下限）。租金來源：全城鎮僅約 <strong>5 筆掛租</strong>、起價 RM 1,800／月——這個掛租數本身就是最重要的數據點：Balik Pulau 沒有就業腹地，長租需求池極薄，不是「租金低」而是「幾乎沒有租賃市場」。調整項：<strong>R4 觸發</strong>——本案位於檳城島（MBPP 轄區）住宅地契 landed，MBPP 禁止短租，不計任何短租收入、不給 Airbnb 加分；Balik Pulau 的鄉村／觀光氛圍容易讓買家預期民宿收益，此預期在本案<strong>不可執行</strong>。長租池淡薄本應再扣分（框架僅明列 Batu Ferringhi −0.3），惟本國人分已在 clamp 下限 2.5，扣分被 clamp 吸收，此處僅作揭露。外國人 ＝ 本國人 −2.0 ＝ 0.5，clamp 至 <strong>1.5</strong>——屬允許的 <strong>clamp 碰撞例外</strong>（本國人分 ≤3.5），本外差距壓縮至 1.0，非計算錯誤。</p>
+        <p class="dim-data">毛收益率約 2.79%（<strong>估算</strong>，入口網站掛牌推算，非機構數據——檳城無任何機構發布租金或收益率） · 全城鎮掛租約 5 筆，起價 RM 1,800／月；另有 3,000 sqft 商業店面掛租 RM 2,500-3,000 · 管理／保安費估約 RM 150／月（城鎮輔警巡邏，<strong>估算</strong>，本框架管理費基準 RM 0.6 psf 為 KL 數據、對 landed 城鎮不適用） · R4：MBPP 禁止島上住宅地契短租，任何民宿收益規劃不可執行</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場與接手人群</span><span class="dim-weight">18% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">7.2</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">4.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>第一步（本國人）：</strong>Freehold landed 排屋／半獨立（≤RM 230 萬）baseline <strong>7.5</strong>——這是本框架最高的產品 baseline，反映馬國本地買家對 freehold 有地產品的池最深。quantum RM 77.5 萬落 RM 60-120 萬帶（P43-P83，upgrader 主力）<strong>0</strong>；年換手率：同案 Brickz 6 筆／9 個月 ≈年化 8 筆，分母（已交付戶數）估 500-700 戶 → 約 1.1-1.6%，落「1-2.5% 正常」帶 <strong>0</strong>（分母為估算，見資料缺口）；Brickz 深度 6 筆落「5-20 筆」帶 <strong>0</strong>——比同批多數檳城案子更有實據；掛牌率因入口網站矛盾（Trovit 53 筆 vs EdgeProp 6 筆）不採計；R2 不觸發（Barat Daya 在建未售未達 1,200）；同棟小戶占比、商業地契融資摩擦皆不適用。<strong>額外扣分（書面理由）−0.3</strong>：開發商在同一城鎮同時銷售 Botanica 3／5／5A／Tropical Hillside Villa 並預告 6B，其中包含已完工現貨——一手貨可提供全裝修與回饋、且與二手屋在同一個買家池內直接競爭，二手賣方在價格上處於結構性劣勢。淨值 7.5−0.3=<strong>7.2</strong>。<strong>第二步（外國人）：</strong>起點為 clamp 後的本國人分 7.2，減 2.0：①<strong>門檻資格不達標</strong>——島上 landed 外籍門檻 RM 300 萬，本案 RM 77.5 萬遠低於門檻，<strong>一般外籍買家法定不可購買</strong>；唯一路徑為 MM2H 持有人（州門檻 RM 50 萬、聯邦銀卡 RM 60 萬，本案達標）→ ⑤MM2H 合規 <strong>+0.3</strong>；⑧州同意摩擦 <strong>−0.3</strong>、⑨三年禁售期 <strong>−0.2</strong>（皆必套用）。Σ ＝ −0.2 → 7.2−2.0−0.2=5.0，再套 <strong>R3（島上 landed）外籍退場 cap 4.0</strong> → <strong>4.0</strong>。不變量：4.0 ≤ 7.2−1.0=6.2 ✓。R1（Barat Daya 完工未售 883 套 &gt;800）亦觸發 cap 6.0，但 R3 的 4.0 更嚴，取嚴者。</p>
+        <p class="dim-data">quantum RM 775,000 → 家庭月收門檻 ≈RM 8,525（總價 × 1.1%：90% LTV、4.3%、30 年、負擔 40%）→ 約落檳城 P60（P50 RM 7,327／P75 RM 11,142），是本站五案中最深的本地池 · 換手率：同案 Brickz 6 筆／9 個月年化 8 筆 ÷ 估 500-700 已交付戶 ≈1.1-1.6%（分母為估算） · Brickz 深度 6 筆（2025-01 至 2025-10） · 掛牌率：Trovit 53 筆 vs EdgeProp 6 筆，矛盾，不採計 · Barat Daya：完工未售 883 套（R1 觸發）；R2 未觸發</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.1</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">MTT Properties &amp; Development Sdn Bhd 不在本框架鎖定的檳城開發商表內，依通用起跳「私有 5-10 案」取 <strong>6.8</strong>：2005 年購地、2006 年動工，20 年間交付多個期別（Botanica 2 Begonia 60 戶已取得 CCC、Botanica 5 58 戶、Botanica CT Centre 商業區已取得 CCC、Eden 銀髮住宅），母集團為 Malaysia Trade &amp; Transport Co Sdn Bhd（50 年航運物流歷史），具企業實體支撐。檳城特有扣分項：<strong>山坡地曝險 −0.3</strong>（城鎮背靠 Balik Pulau 山區，並明確設有 Tropical Hillside Villa 山坡期別；R5 下坡地政策正被檢討移除，法規保護不可依賴）；<strong>量產型去化 −0.2</strong>（多個期別長期並行銷售、完工現貨仍在市）；<strong>商業期別交付遲延 −0.2</strong>（Botanica CT Centre 原訂 2019-01 起 12 個月內完成第一期、整體 2021 年完工，實際延後才取得 CCC）。MBI／龐氏交易對手、分割式 strata 管理、填海規劃權限、George Town 遺產合規皆不適用。淨值 6.8−0.3−0.2−0.2=<strong>6.1</strong>。<strong>認識論註記</strong>：MTT 為私有公司，媒體報導極少，「查無糾紛」實為「幾乎查無報導」，非清白證明；本分數標 <strong>provisional</strong>，與 Bursa 掛牌者不同級別。</p>
+        <p class="dim-data">MTT Properties &amp; Development Sdn Bhd，母公司 Malaysia Trade &amp; Transport Co Sdn Bhd（航運／物流／報關／陸運，50 年） · 2005 年購入 300 英畝、2006 年動工、規劃九期 · Botanica 2（Begonia）60 戶二層半獨立 1,929-2,149 sqft，已取得 CCC · Botanica 5 共 58 戶（46 半獨立＋12 獨立） · Botanica CT Centre：原訂第一期（TF Value-Mart／KFC／Starbucks）自 2019-01 起 12 個月內完成、整體 2021 年，實際延後才取 CCC · 城鎮設施：1881 年英式 Botanica Mansion 會所（健身房、泳池、餐廳）、輔警巡邏、線形公園 · 私有公司、報導稀少，分數標 provisional</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+
+  <div class="assump-box">
+    <strong>⚠️ 估值與買價透明度說明：</strong>估值維度以「同地段／同類型<strong>真實成交</strong>中位」為錨。本案錨點：<strong>同建案 Bandar Botanica CT 二手 landed 6 筆，中位 RM 664,000</strong>（2025-01 至 2025-10，中位坪數約 2,252 sqft，含排屋與半獨立混合，<strong>信心度：中</strong>——樣本僅 6 筆且產品型態不一）；本案代表戶開價：<strong>RM 775,000 起（全裝修，建坪 1,959 sqft ＝RM 396 psf）</strong>；溢價：<strong>逐戶總價 +16.7%／建坪 psf 較全區中位 +32%</strong>。<strong>檳城無 MLS，無官方 days-on-market 或掛牌-成交折讓數據</strong>，實際成交價可能因議價空間低於開價；新期報價含全套裝修，部分溢價買的是家具而非土地與建物。買家應向開發商書面確認淨價、裝修清單與交屋條件。
+  </div>
+
+  <p class="section-sub">代表戶型：本框架規則為「島上精華區採 3 房 1,000-1,300 sqft，其餘地段沿用 2 房」——該規則針對 strata 產品，本案為 <strong>landed 城鎮、無 strata 產品線</strong>，故改採城鎮內最主流、買家池最深的 <strong>Botanica 5A 二層排屋（20×70 地、建坪 1,959 sqft）</strong>作代表戶型，並於此明確揭露偏離與理由。</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">MTT Properties &amp; Development Sdn Bhd<span class="kv-src">母集團 Malaysia Trade &amp; Transport Co（50 年航運物流）；私有公司、報導稀少，評分標 provisional</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">永久地契（Freehold）· 住宅 landed<span class="kv-src">檳城島 MBPP 轄區住宅地契，禁止短租（R4）；島上 landed 觸發 R3</span></td></tr>
+          <tr><td class="kv-label">城鎮規模</td><td class="kv-val">300 英畝、規劃九期<span class="kv-src">2005 年購地、2006 年動工；排屋／半獨立／獨立／山坡別墅／銀髮住宅／商業區；Botanica 6B 預告中</span></td></tr>
+          <tr><td class="kv-label">代表戶型</td><td class="kv-val">Botanica 5A 二層排屋，20×70 地、建坪 1,959 sqft<span class="kv-src">RM 775,000 起（全裝修）＝RM 396 psf 建坪；同期三層排屋 2,480 sqft RM 737,000 起</span></td></tr>
+          <tr><td class="kv-label">其他期別報價</td><td class="kv-val">半獨立 RM 104-110 萬起／獨立 RM 144-186 萬起<span class="kv-src">半獨立 3,000-3,300 sqft ≈RM 367 psf；獨立 3,200-3,500 sqft ≈RM 582 psf</span></td></tr>
+          <tr><td class="kv-label">狀態</td><td class="kv-val">完工現貨（move-in ready）與在售期別並存<span class="kv-src">Botanica 2、5、商業區皆已取得 CCC；多期別同時銷售中</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與供給</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">微觀位置</td><td class="kv-val">Jalan Sungai Air Putih，Bandar Baru Air Putih，11000 Balik Pulau<span class="kv-src">檳城島西南（Barat Daya district），沿 Sungai Air Putih 河谷</span></td></tr>
+          <tr><td class="kv-label">區域成交中位</td><td class="kv-val">RM 300 psf／RM 380,000（119 筆，39 案）<span class="kv-src">低於對岸 Butterworth RM 310 psf——本框架內唯一的假稀缺實證</span></td></tr>
+          <tr><td class="kv-label">同案二手錨</td><td class="kv-val">RM 664,000 中位（6 筆，2025-01～10）<span class="kv-src">P25 RM 510,000／P75 RM 900,000，中位坪數約 2,252 sqft</span></td></tr>
+          <tr><td class="kv-label">最大供給威脅</td><td class="kv-val">Permatang Pasir 71.62 公頃、RM 17 億、15 年期<span class="kv-src">第一期 1,026 戶可負擔住宅（930-1,000 sqft）＋豪宅、商業、醫院、療養院</span></td></tr>
+          <tr><td class="kv-label">對外動線</td><td class="kv-val">三條蜿蜒雙車道（Paya Terubong／Teluk Bahang／Teluk Kumbar）<span class="kv-src">Bukit Kukus 配對路僅 2.8 公里段通車（2022-01）；餘段 2027／2028，2024-11 延期三年</span></td></tr>
+          <tr><td class="kv-label">城鎮機能</td><td class="kv-val">Botanica CT Centre（TF Value-Mart／KFC／Starbucks）已交付<span class="kv-src">1881 年 Botanica Mansion 會所、輔警巡邏；Selgate 專科醫院與 McDonald's 為 coming soon，不計分</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="gate-box">
+    <strong>⚠️ 外籍資格閘門（先於一切評分）：</strong>本案為<strong>檳城島上 landed 住宅</strong>，外籍個人購買門檻為 <strong>RM 300 萬</strong>（PTG 指引 2024-08-01），本案代表戶 RM 77.5 萬<strong>遠低於門檻，一般外籍買家法定不可購買</strong>。唯一合法路徑是 <strong>MM2H 持有人</strong>：州級門檻 RM 50 萬（官方原文載明「僅住宅、最多 2 戶」，且島上 landed 亦適用州級門檻），聯邦級距獨立生效（銀卡 RM 60 萬／金卡 RM 100 萬／白金 RM 200 萬＋十年持有），<strong>取兩者之高者</strong>——本案 RM 77.5 萬達銀卡門檻。⚠️ PTG 一手文件與 visitpenang.com 說法相反，<strong>強烈建議律師逐案確認</strong>。下方外國人欄位與成本表皆以「MM2H 持有人」為前提計算。
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人（僅 MM2H）</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-3% 階梯制<br><small style="color:var(--muted)">RM 17,000</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 62,000</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">10%（90% LTV）<br><small style="color:var(--muted)">RM 78,000</small></td><td class="num">35%（估 65% LTV）<br><small style="color:var(--muted)">RM 271,000</small></td><td><small>BNM／銀行政策，外籍 LTV 未經檳城個案驗證</small></td></tr>
+      <tr><td>最低購買價門檻</td><td class="num">無</td><td class="num"><strong>島上 landed RM 300 萬</strong><br><small style="color:var(--muted)">本案 RM 77.5 萬未達 → 一般外籍不可購買；MM2H 州 RM 50 萬／聯邦銀卡 RM 60 萬達標</small></td><td><small>PTG 指引 2024-08-01</small></td></tr>
+      <tr><td>徵費（consent to transfer）</td><td class="num">—</td><td class="num">3%（landed 一律 3%，無甜蜜帶）<br><small style="color:var(--muted)">RM 23,000</small></td><td><small>州地政局 §5.1</small></td></tr>
+      <tr><td>州同意費</td><td class="num">—</td><td class="num">RM 10,000／地契</td><td><small>州地政局</small></td></tr>
+      <tr><td>三年禁售期</td><td class="num">無</td><td class="num">有（SPA 起算三年）</td><td><small>州地政局 §3.2(c)</small></td></tr>
+      <tr><td>州同意審批</td><td class="num">無</td><td class="num">需要，實務加 2-4 個月</td><td><small>州地政局</small></td></tr>
+      <tr><td>毛租金收益率</td><td class="num">~2.79%（估算）</td><td class="num">~2.79%（同，估算）</td><td><small>入口網站推算，非機構數據；全鎮僅約 5 筆掛租</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">10-24% 累進（估約 15%）</td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>MM2H 合規</td><td class="num">—</td><td class="num">✓（RM 77.5 萬 &gt; 州 RM 50 萬、聯邦銀卡 RM 60 萬）<br><small style="color:var(--muted)">但金卡／白金級距者若受十年持有等條件約束須另行確認</small></td><td><small>PTG 指引 §2.2；⚠️ 建議律師確認</small></td></tr>
+      <tr><td>短租（Airbnb）</td><td class="num">不可（MBPP 禁令，R4）</td><td class="num">不可（同）</td><td><small>MBPP；賣方任何短租收益宣稱皆不可執行</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 4: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>Botanica 5A 二層排屋，20×70 地、建坪 1,959 sqft，RM 775,000</strong>（全裝修開價）為基礎——本國人 vs 外國人（MM2H 持有人）10 年總成本與淨損益對照。</p>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>二層排屋 ＠ RM 775,000</strong> · 10 年持有 · 30 年房貸 · 毛租金收益率 Y1 約 2.79%（<strong>估算</strong>，RM 1,800／月），租金年漲幅 2%，空置率 10% · 房貸利率——本國人 4.3%、外國人 4.8%（估算 +0.5pp 溢價，外籍檳城融資可得性未經個案驗證）· 本國人 LTV 90%、外國人 LTV 65%（估算）· 城鎮管理／保安費估約 RM 150／月（<strong>估算</strong>，landed 城鎮無公開費率）· 門牌稅＋地稅估約 RM 1,000／年 · 租金所得稅按<strong>毛租金</strong>簡化計算：本國人估 15%、外國人 30%（非居民一口價）· 房價漲幅情境：<strong>0%／+1%（島上 terraced 基準年增速錨點 +0.5-1.0% 的上緣，base case）／+3%（樂觀情境——注意 +3% 是島上 <em>strata</em> 的基準速度，Balik Pulau landed 要達到它，等於要表現得像島上高樓）</strong> · 仲介費 3% · 所有金額四捨五入至千位。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人／MM2H (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>78,000</td><td>271,000</td><td>+193,000</td></tr>
+      <tr><td>印花稅（MOT）</td><td>17,000</td><td>62,000</td><td>+45,000</td></tr>
+      <tr><td>律師費＋貸款費＋貸款印花</td><td>19,000</td><td>16,000</td><td>−3,000</td></tr>
+      <tr><td>州同意費＋徵費（3%）</td><td>—</td><td>33,000</td><td>+33,000</td></tr>
+      <tr class="sum"><td>買入小計</td><td>114,000</td><td>382,000</td><td>+268,000</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額（本息）</td><td>414,000</td><td>317,000</td><td>−97,000</td></tr>
+      <tr><td>城鎮管理／保安費</td><td>18,000</td><td>18,000</td><td>0</td></tr>
+      <tr><td>門牌稅＋地稅</td><td>10,000</td><td>10,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>442,000</td><td>345,000</td><td>−97,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，Y1 約 RM 1,800／月，2%／年成長，已計 10% 空置）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>213,000</td><td>213,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>32,000</td><td>64,000</td><td>+32,000</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>181,000</td><td>149,000</td><td>−32,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，+1% 基準情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>退場價（+1%／年）</td><td>856,000</td><td>856,000</td><td>0</td></tr>
+      <tr><td>仲介費（3%）</td><td>26,000</td><td>26,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>8,000</td><td>+8,000</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>555,000</td><td>407,000</td><td>−148,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0%／年（下行情境）</td><td>−178,000</td><td>−233,000</td><td>−55,000</td></tr>
+      <tr class="scenario"><td>+1%／年（島上 terraced 基準，base case）</td><td>−100,000</td><td>−163,000</td><td>−63,000</td></tr>
+      <tr class="scenario"><td>+3%／年（樂觀＝表現得像島上 strata）</td><td>+81,000</td><td>−1,000</td><td>−82,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    這張表最重要的一行不是本外差距，而是<strong>基準情境本身就是虧的</strong>：在島上 terraced 房價指數自身的年增速（+0.5-1.0%，本表取上緣 +1%）下，本國人 10 年淨損約 <strong>RM 100,000</strong>、外籍 MM2H 持有人約 <strong>RM 163,000</strong>。<strong>打平全部現金成本</strong>（不含機會成本）所需房價年漲幅：本國人約 <strong>2.2%／年</strong>、外國人約 <strong>3.0%／年</strong>——這是島上 terraced 基準年增速的<strong>兩到四倍</strong>，而且要在一個成交中位（RM 300 psf）低於對岸 Butterworth（RM 310 psf）、同 district 正要進 1,026 戶可負擔住宅的區域達成。外籍側的差距（基準情境 −RM 6.3 萬，約房價的 8.1%）來自 8% 印花稅、<strong>3% 徵費（landed 無島上 strata 的 1.5% 甜蜜帶）</strong>、RM 1 萬同意費、30% 非居民租金稅與 10% 永久 RPGT。<strong>本表三個核心限制：</strong>（1）毛收益率 2.79% 為入口網站推算，且全城鎮僅約 5 筆掛租，租金樣本極薄；（2）城鎮管理／保安費 RM 150／月為估算，landed 城鎮無公開費率；（3）本表以開價 RM 775,000（含全裝修）計，實際成交淨價可能較低——同案二手成交中位為 RM 664,000。
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ 退場現實</span>
+  <h2 class="section-title">退場現實檢驗</h2>
+  <p class="section-sub">三件套：稀缺性稽核（供給側能不能複製）＋接手人群金字塔（10 年後誰接手、買不買得起）＋二手市場硬證據（換手率／掛牌率／折讓）。全部採 2026-08 實查數據。</p>
+
+  <div class="hardrule-strip">
+    <span class="hardrule-tag">R1 觸發：Barat Daya 完工未售 883 套 &gt;800 → 外籍退場 cap 6.0（R3 的 4.0 更嚴，取嚴者）</span>
+    <span class="hardrule-tag">R2 未觸發：Barat Daya 在建未售未達 1,200</span>
+    <span class="hardrule-tag">R3 觸發：島上 landed → 外籍退場 cap 4.0、外籍依賴度強制記 ≈0</span>
+    <span class="hardrule-tag">R4 觸發：島上住宅地契，MBPP 禁止短租，不計短租收入</span>
+    <span class="hardrule-tag">R5 常設檢查已執行：RSNPP 2040 未憲報，目標 2026 Q3，76m 禁令將改為依地形評估</span>
+  </div>
+
+  <div class="sub-eyebrow">5A · 稀缺性稽核（供給側三層）</div>
+  <div class="scarcity-box">
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">土地層</span>
+      <span class="scarcity-txt">同 district 的 Permatang Pasir 案佔地 71.62 公頃（約 177 英畝）、GDV RM 17 億、15 年開發期，第一期即 1,026 戶可負擔住宅，後續為豪宅、商業、醫院與療養院；本案自身 300 英畝九期至今仍有 Botanica 6B 未推。Balik Pulau 的限制是地形與農地分區，不是「無地可開發」。</span>
+    </div>
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">產品層</span>
+      <span class="scarcity-txt">20×70 二層排屋是全馬最可複製的產品配置；同一城鎮在連續期別（Botanica 3／5／5A）重複供應同款，且完工現貨與新期同時在售，一手貨可提供全裝修與回饋。</span>
+    </div>
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">法規層</span>
+      <span class="scarcity-txt">無任何供給鎖。76 公尺／25 度坡限是本區唯一準約束，而 RSNPP 2040 正把全面禁令改為依地形個案評估（目標 2026 Q3 憲報）——依 R5，山坡限制最多只能打 ✓、絕不打 ✓✓，此處因政策正被移除而判 ✗。另須記：「50% 最低森林覆蓋」是聯邦政策非檳城州政策，升旗山生物圈保留區無獨立法律效力，兩者皆不可當法規鎖計分。</span>
+    </div>
+    <div class="scarcity-verdict"><strong>有效稀缺判定：本框架內最明確的假稀缺實證，不加分。</strong>Balik Pulau 有全島最硬的物理限制——山地、農地、蜿蜒的對外動線——照直覺應該最稀缺；但住宅成交中位僅 RM 300 psf，<strong>低於土地實質無限的對岸 Butterworth（RM 310 psf）</strong>。稀缺 ＝ 稀有 × 有人要，這裡缺的是後者。同案二手 9 個月僅 6 筆成交、全城鎮僅約 5 筆掛租，也都指向同一件事：需求側沒有深度佐證。</div>
+  </div>
+
+  <div class="sub-eyebrow">5B · 接手人群金字塔</div>
+  <div class="quantum-line">
+    <strong>Quantum test：</strong>代表戶二層排屋 ＠ <strong>RM 775,000</strong> → 下一手家庭月收門檻約 <strong>RM 8,525</strong>（總價 × 1.1%：90% LTV、4.3%、30 年、負擔 40%）→ 約落檳城家庭月收 <strong>P60</strong>（P50 ＝RM 7,327、P75 ＝RM 11,142）。<strong>這是本站五案中最深的本地承接池</strong>，也是本案退場分（本國人 7.2）為全站最高的原因。惟須注意：門檻是對照<strong>全州</strong>所得分布，Balik Pulau 本地所得水準低於全州中位，在地買家的實際負擔能力應更緊。
+  </div>
+  <table class="pyramid-table">
+    <thead><tr><th style="width:22%">接手者</th><th style="width:10%">判定</th><th>判定依據</th></tr></thead>
+    <tbody>
+      <tr><td class="seg">本地首購</td><td><span class="pyramid-v mid">△</span></td><td>月收門檻 RM 8,525 落全州 P60，雙薪首購理論上可及；但 RM 77.5 萬的 freehold 排屋在馬國實務上多屬 upgrader 產品，且 Balik Pulau 在地所得低於全州中位。同 district 即將推出 1,026 戶可負擔住宅（930-1,000 sqft），首購族更可能被那批貨吸走。</td></tr>
+      <tr><td class="seg">本地 upgrader</td><td><span class="pyramid-v yes">✓</span></td><td>正落 RM 60-120 萬 upgrader 主力帶（P43-P83）；freehold 有地、家庭型格局（可達 5 房）、閘門城鎮＋輔警巡邏、城鎮內有超市與國際學校，是本案最實在的一段。檳城中位所得 CAGR 6.4%（全國最高）也支撐這一段的長期購買力。</td></tr>
+      <tr><td class="seg">外州／海外馬來西亞人</td><td><span class="pyramid-v mid">△</span></td><td>花園城鎮＋Eden 銀髮住宅＋1881 年莊園會所的定位，理論上對退休返鄉或第二居所買家具吸引力；但本案無買家籍貫、代理訪談等個案證據，依規則不預設 ✓。</td></tr>
+      <tr><td class="seg">本地投資客</td><td><span class="pyramid-v no">✗</span></td><td>毛收益率約 2.79%（估算）、全城鎮僅約 5 筆掛租——Balik Pulau 沒有就業腹地，長租市場幾乎不存在；R4 又禁止短租（MBPP），民宿路徑不可執行。以現金流為目的的買家在此無路可走。</td></tr>
+      <tr><td class="seg">外籍自住（MM2H）</td><td><span class="pyramid-v mid">△</span></td><td><strong>本案唯一的外籍路徑</strong>：一般外籍受島上 landed RM 300 萬門檻排除，只有 MM2H 持有人可買（州 RM 50 萬／聯邦銀卡 RM 60 萬，本案達標）。全國有效 MM2H 簽證僅 5,972 張（2025-08-31），且本案無外籍成交個案佐證，故 △ 而非 ✓。PTG 與 visitpenang.com 說法相反，建議律師確認。</td></tr>
+      <tr><td class="seg">外籍投資／機構</td><td><span class="pyramid-v no">✗</span></td><td>法定不可購買（未達 RM 300 萬島上 landed 門檻）；即使假設可買，2.79% 毛收益扣 30% 非居民租金稅、3% 徵費、10% 永久 RPGT 後 carry 為負，單戶排屋亦無機構級規模。</td></tr>
+    </tbody>
+  </table>
+  <div class="dep-tag dep-low"><strong>外籍依賴度：≈0（R3 觸發，強制記入）。</strong>島上 landed 產品實質上沒有外籍接手池——一般外籍買家法定不可購買，僅 MM2H 持有人可進場，而全國有效簽證僅 5,972 張。<strong>這對本案的意義是雙面的：</strong>退場完全不依賴外籍需求，因此對 MM2H 政策收緊、外籍印花稅或徵費調整<strong>幾乎免疫</strong>；但同時也意味著任何「外資推升檳城房價」的敘事對本案完全不適用，10 年後的退場價 100% 由本地 upgrader 的購買力決定。</div>
+
+  <div class="sub-eyebrow">5C · 二手市場證據</div>
+  <div class="evid-strip">
+    <div class="evid-card"><div class="evid-num">~1.1-1.6%</div><div class="evid-lbl">年換手率（估算）<br>6 筆／9 個月年化 ÷ 估 500-700 戶</div><div class="evid-tag norm">正常帶，分母為估算</div></div>
+    <div class="evid-card"><div class="evid-num">資料矛盾</div><div class="evid-lbl">掛牌率<br>（Trovit 53 vs EdgeProp 6）</div><div class="evid-tag cold">不採計，見缺口#6</div></div>
+    <div class="evid-card"><div class="evid-num">N/A</div><div class="evid-lbl">掛牌-成交折讓</div><div class="evid-tag cold">無公開數據</div></div>
+    <div class="evid-card"><div class="evid-num">6 筆</div><div class="evid-lbl">Brickz 深度（同建案）<br>2025-01～10，中位 RM 664,000</div><div class="evid-tag norm">5-20 帶，記 0</div></div>
+  </div>
+  <p style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.7">Barat Daya district：完工未售 883 套（R1 觸發，外籍退場 cap 6.0——但 R3「島上 landed」的 cap 4.0 更嚴，取嚴者）；在建未售未達 1,200，R2 不觸發。本案的二手證據品質其實優於同批多數檳城案子——<strong>有同建案真實成交（6 筆）而非只能靠同區 proxy</strong>；但換手率的分母（城鎮已交付戶數）無官方揭露，本卡以 500-700 戶估算，屬本案最大的量化不確定性。掛牌率因入口網站數字矛盾（Trovit 顯示 53 筆、EdgeProp 顯示 6 筆；馬國無 MLS、一屋多代理不去重）依已知資料缺口 #6 不採計為量化分數。另記一項須揭露的結構性事實：開發商在同一城鎮同時銷售多個期別、其中包含已完工現貨，二手賣方與一手貨在同一買家池內直接競爭。</p>
+
+  <div class="exit-summary">10 年後最可能的接手者是<strong>本地 upgrader 家庭（月收 P60-P83、看重 freehold 有地與閘門城鎮）</strong>——外籍那一段實質為零（R3），退場價完全由本地購買力決定。若 <strong>Permatang Pasir 的 1,026 戶可負擔住宅與後續豪宅期別如期釋出</strong>，Balik Pulau 的價格帶會被由下往上壓縮，本案二手屋將同時面對一手現貨與新區新貨；反之，本案真正的下檔支撐不是稀缺性，而是<strong>已交付的城鎮機能</strong>（超市／餐飲、輔警、會所、國際學校）——那是新推的孤立案短期做不出來的，也是本案二手中位（RM 66.4 萬）能站在全區中位（RM 38 萬）之上的原因。</div>
+</section>
+
+<!-- BLOCK 6A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>Botanica.CT 位於檳城島西南 Barat Daya district 的 Balik Pulau，沿 Sungai Air Putih 河谷展開，佔地 300 英畝、規劃九期，是檳城第一個以「花園城鎮」定位的整體開發案。開發商 MTT Properties &amp; Development Sdn Bhd 於 2005 年購地、2006 年動工，母集團 Malaysia Trade &amp; Transport Co 有 50 年航運與物流歷史。城鎮已交付的部分相當完整：1881 年的英式 Botanica Mansion 改作會所（健身房、泳池、餐廳）、輔警巡邏、線形公園，商業區 Botanica CT Centre 有 TF Value-Mart、KFC 與 Starbucks 並已取得 CCC，另有全檳城第一個整合式銀髮住宅 Eden。目前同時在售的期別包含 Botanica 3、Botanica 5（46 戶半獨立＋12 戶獨立）、Botanica 5A（二／三層排屋）與 Tropical Hillside Villa，並預告 Botanica 6B。</p>
+
+    <p>本卡選 Botanica 5A 的二層排屋（20×70 地、建坪 1,959 sqft、RM 775,000 起含全裝修）作代表戶型——它是城鎮內最主流、買家池最深的產品。這裡要先說明一項規則偏離：本框架的代表戶型規則（島上精華區 3 房 1,000-1,300 sqft、其餘 2 房）是為 strata 產品設計的，本案是 landed 城鎮、沒有 strata 產品線，故改採最主流的排屋並在卡上明示。</p>
+
+    <p>稀缺性是本卡最重要的一段，結論也最不客氣。Balik Pulau 有全島最硬的物理限制：山地、農業分區、三條蜿蜒雙車道的對外動線。照直覺，這應該是檳城最稀缺的地方。但成交數字說的是另一回事——Balik Pulau 住宅成交中位 <strong>RM 300 psf</strong>（119 筆、39 個建案，2024-05 至 2025-04），<strong>低於對岸土地實質無限的 Butterworth 的 RM 310 psf</strong>。三層稽核全為 ✗：土地層，同 district 的 Permatang Pasir 案有 71.62 公頃、RM 17 億 GDV、15 年開發期，第一期就是 1,026 戶可負擔住宅；產品層，20×70 排屋是全馬最可複製的配置，同一城鎮在連續期別重複供應；法規層，唯一的準約束（76 公尺／25 度坡限）正被 RSNPP 2040 改為依地形個案評估，目標 2026 年第三季憲報。<strong>稀缺 ＝ 稀有 × 有人要，這裡缺的是後者。</strong>依規則，假稀缺不加分，且「可複製性高」扣 0.5，地段分落在 5.0——與土地無限的 Seberang Perai 其餘地區同級。</p>
+
+    <p>租金與現金流是第二個硬約束，而且揭露必須直白：全城鎮的掛租數約 <strong>5 筆</strong>，起價 RM 1,800／月。這個數字本身比收益率更有資訊量——Balik Pulau 沒有就業腹地，長租市場幾乎不存在，不是「租金低」而是「幾乎沒有租客市場」。以 RM 1,800／月對 RM 775,000 計，毛收益率約 2.79%（估算，檳城無任何機構發布租金或收益率數據），落 &lt;3.0% 級距、本國人觸及 clamp 下限 2.5，外籍再減 2.0 後觸底 1.5（框架允許的 clamp 碰撞例外）。另須強調：本案位於 MBPP 轄區的島上住宅地契，<strong>MBPP 禁止短租</strong>——Balik Pulau 的鄉村與觀光氛圍很容易讓買家預期民宿收益，這個預期在本案<strong>不可執行</strong>，任何以短租收益為賣點的說法皆屬無效。</p>
+
+    <p>但本案有一個維度是全站最強的：<strong>退場的本地承接池</strong>。RM 775,000 對應的家庭月收門檻約 RM 8,525，落全州 P60，freehold 有地產品的 baseline 本身就是本框架最高的 7.5，加上同建案有 6 筆真實 Brickz 成交（中位 RM 664,000）——不必像同批多數檳城案子那樣只能靠同區 proxy。扣 0.3 的理由是開發商在同一城鎮同時賣多個期別、含已完工現貨，二手賣方與一手貨在同一個買家池裡直接競爭。外籍側則走到框架的邊界：<strong>一般外籍買家法定不可購買</strong>（島上 landed 門檻 RM 300 萬），唯一路徑是 MM2H 持有人（州 RM 50 萬／聯邦銀卡 RM 60 萬），R3 因此觸發，外籍退場封頂 4.0、外籍依賴度強制記 ≈0。這件事是雙面的：本案對 MM2H 政策收緊與外籍稅費調整幾乎免疫，但 10 年後的退場價也 100% 由本地 upgrader 的購買力決定。</p>
+
+    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+      <strong style="color:var(--navy);font-weight:700">10 年情境基準</strong>：假設 2026-08 進場、2036-08 退場（IRR 為權益 IRR，含頭期款、每年淨流出與退場淨額，估算）：
+      <ul style="margin:8px 0 0 18px;padding:0">
+        <li><strong>合理情境</strong>（base case，房價 +1%／年，島上 terraced 基準年增速 +0.5-1.0% 的上緣）：本國人 10 年<strong>淨損約 RM 10.0 萬</strong>、外籍 MM2H <strong>淨損約 RM 16.3 萬</strong>，<strong>兩者權益 IRR 皆為負</strong>。</li>
+        <li><strong>樂觀情境</strong>（bull case，房價 +3%／年——即 Balik Pulau landed 要表現得像島上 strata）：本國人約 +RM 8.1 萬，權益 IRR 約 3.1%；外籍 MM2H 約 −RM 0.1 萬，IRR 約 0%。</li>
+        <li><strong>下行情境</strong>（bear case，房價停滯 0%／年，與島上 terraced 2024 年 −0.9% 的實績相去不遠）：本國人淨損約 RM 17.8 萬、外籍約 RM 23.3 萬。</li>
+      </ul>
+      <div style="margin-top:10px">10 年退場流動性：檳城無 days-on-market 公開數據，以同建案換手率（估算約 1.1-1.6%，分母為估算）與 Brickz 深度（6 筆，落「正常」帶）替代判讀。<strong>核心風險不在交付或城鎮品質，而在算術：打平全部現金成本需 2.2%／年（本國人）或 3.0%／年（外籍），是島上 terraced 基準年增速的兩到四倍，且要在一個成交中位低於對岸 Butterworth、同 district 正要進 1,026 戶可負擔住宅的區域達成。</strong>本案的下檔支撐來自已交付的城鎮機能，不是來自稀缺性。</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 6B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>本地承接池是全站最深的一案：quantum RM 77.5 萬對應家庭月收門檻約 RM 8,525（全州 P60），落 upgrader 主力帶，freehold 有地產品 baseline 為本框架最高的 7.5</li>
+        <li>城鎮機能已交付而非承諾：Botanica CT Centre（TF Value-Mart／KFC／Starbucks）已取得 CCC、1881 年 Botanica Mansion 會所、輔警巡邏、線形公園、Prince of Wales 國際學校在同區，這是新推孤立案短期做不出來的下檔支撐</li>
+        <li>二手證據品質優於同批多數檳城案子：有<strong>同建案</strong>真實成交（6 筆，2025-01～10，中位 RM 664,000）作估值錨，不必只靠同區 proxy；同案中位站在全區中位（RM 38 萬）之上</li>
+        <li>退場對外籍政策幾乎免疫：外籍依賴度 ≈0（R3），MM2H 級距調整、外籍印花稅或徵費變動對本案退場池幾無影響</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li>【假稀缺】Balik Pulau 成交中位 RM 300 psf <strong>低於對岸 Butterworth 的 RM 310 psf</strong>——全島物理限制最硬的區，價格卻低於土地無限的本島外。三層稽核全 ✗，依規則不給任何稀缺加分</li>
+        <li>【打平門檻是關鍵數字】打平全部現金成本需 2.2%／年（本國人）或 3.0%／年（外籍），而島上 terraced 基準年增速僅 +0.5-1.0%（2024 年實績 −0.9%、2025P +0.4%）；基準情境下 10 年淨損</li>
+        <li>【R3】島上 landed：<strong>一般外籍買家法定不可購買</strong>（門檻 RM 300 萬），唯一路徑為 MM2H 持有人；外籍退場封頂 4.0、依賴度記 ≈0。PTG 與 visitpenang.com 說法相反，建議律師逐案確認</li>
+        <li>【R4】MBPP 禁止島上住宅地契短租——Balik Pulau 的鄉村觀光氛圍容易讓人預期民宿收益，此預期不可執行；長租側全城鎮僅約 5 筆掛租，租客市場幾乎不存在</li>
+        <li>【R1／供給】Barat Daya 完工未售 883 套；同 district 的 Permatang Pasir（71.62 公頃、RM 17 億、15 年期）第一期即 1,026 戶可負擔住宅，會由下往上壓縮本區價格帶</li>
+        <li>建議確認：城鎮已交付戶數（換手率分母，本卡以 500-700 戶估算）、Botanica 5／5A 各期的確切完工年與現貨庫存、城鎮管理／保安費實際費率、Selgate 專科醫院與 Bukit Kukus 餘段（2027／2028，已延期三年）的最新進度——後兩者皆為未交付項目，不應計入現值</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 6C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。注意：本卡評的是 10 年投資回報，不是居住品質——本案這兩者的落差比同批任何一案都大。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：開發商與管理移交（6.1）、退場與接手人群（7.2 本）、交通與可達性（4.0）<br>
+      <strong>可妥協</strong>：持有現金流（自住不涉及租金）、資本增值動能<br>
+      <strong>本案 fit</strong>：<strong>四種持有目的中 fit 度最高的一類，且與投資評分落差最大。</strong>freehold 有地、可達 5 房的家庭格局、閘門城鎮＋輔警巡邏、城鎮內超市與餐飲已營運、同區有國際學校、河谷與山景環境——以 RM 77.5 萬在檳城島上取得這個組合，居住性價比是同批案子裡最突出的。代價是通勤：到 George Town 約 29 分鐘、到 Bayan Lepas FIZ 約 30-45 分鐘，三條對外道路皆為蜿蜒雙車道，且 Bukit Kukus 餘段要到 2027／2028。適合在檳城島南／西工作或可遠距工作的家庭，不適合每日進出 George Town 或 FIZ 尖峰的通勤者。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（2.5 本／1.5 外）、退場與接手人群（7.2 本／4.0 外）<br>
+      <strong>可妥協</strong>：無——現金流本身就是這個目的的命脈<br>
+      <strong>本案 fit</strong>：<strong>fit 度最低，本卡不建議以此為主要目的。</strong>毛收益率約 2.79%（估算），而更關鍵的是<strong>全城鎮僅約 5 筆掛租</strong>——Balik Pulau 沒有就業腹地，租客市場幾乎不存在，空置風險不是「幾個月」而是「可能長期找不到租客」。<strong>R4 提醒：MBPP 禁止島上住宅地契短租</strong>，不能用民宿補足收益，任何以 Airbnb 或短租收益為賣點的說法皆不可執行。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：開發商與管理移交、稀缺性與地段護城河<br>
+      <strong>可妥協</strong>：持有現金流、交通<br>
+      <strong>本案 fit</strong>：中。閘門＋輔警的城鎮結構對長期空屋較友善，空置期成本低（管理／保安費估約 RM 150／月、門牌與地稅約 RM 1,000／年），Eden 銀髮住宅與會所定位也貼合退休或半年居住的用途。惟外籍買家須先過資格閘門——<strong>一般外籍不可購買</strong>，僅 MM2H 持有人可行，且須承擔 8% 印花稅、3% 徵費、三年禁售期與州同意審批（實務加 2-4 個月）。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（20%）、退場與接手人群（下一代脫手）<br>
+      <strong>可妥協</strong>：短期 yield、短期催化<br>
+      <strong>本案 fit</strong>：中低。永久地契＋有地產權對世代持有本身是正面條件，quantum 落 P60 也意味下一代脫手時的承接池夠寬。但傳承邏輯的核心是「20 年後這塊地還能不能被複製」——本案三層稽核全 ✗，Balik Pulau 的限制是地形與農地分區，而農地分區可被檢討、坡限正在鬆綁（RSNPP 2040），同 district 的 15 年期大案才剛開始。真正會傳下去的價值是<strong>已成熟的城鎮生活機能</strong>，而不是土地的不可複製性。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 7: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    botanica-ct.com.my（開發商官方：在售期別 Botanica 2 Begonia／Botanica 3 Carlina·Carissa·Camellia／Botanica 5／5A／Tropical Hillside Villa／Eden、Botanica CT Centre 商業區、Botanica 6B 預告、Selgate 專科醫院與 McDonald's coming soon、CCC 與交屋公告） · nuprop.my Botanica 5 頁（二層排屋 20×70 地／建坪 1,959 sqft／RM 775,000 起全裝修；三層排屋 2,480 sqft／RM 737,000 起；半獨立 46 戶 3,000-4,200 sqft 地／3,000-3,300 sqft 建坪／RM 1,044,000 起；獨立 12 戶 4,000-7,000 sqft 地／3,200-3,500 sqft 建坪／RM 1,440,000 起；狀態 move-in ready） · properly.com.my Botanica 5 評析（58 戶、freehold、完工年 2017、半獨立 RM 1,101,000 起 ≈RM 367 psf、獨立 RM 1,863,000 起 ≈RM 582 psf、Botanica Mansion 1881 年會所、輔警、到 George Town 約 29 分鐘） · penangpropertytalk.com（Begonia／Phase 2A 60 戶二層半獨立 1,929-2,149 sqft；Botanica CT Centre 2017 起報導與交付時程） · brickz.my Bandar Botanica CT landed（6 筆，2025-01-21 至 2025-10-23，中位 RM 664,000，P25 RM 510,000／P75 RM 900,000，中位坪數約 2,252 sqft）與 Balik Pulau 住宅（119 筆、39 案，2024-05 至 2025-04，中位 RM 300 psf／RM 380,000） · PropertyGuru／EdgeProp／Trovit Botanica.CT 掛售與掛租 listing（掛租約 5 筆、起價 RM 1,800／月；掛售數 Trovit 53 vs EdgeProp 6，矛盾） · The Vibes／The Edge／Penang Property Talk（Permatang Pasir：71.62 公頃、RM 17 億 GDV、15 年期、第一期 1,026 戶可負擔住宅 930-1,000 sqft＋豪宅／商業／醫院／療養院，Tiara Sumberjaya × Koperasi Kampung Melayu Balik Pulau × MBPP；「Balik Pulau 不應成為低價住宅傾倒場」爭議） · FMT／paultan／The Star／Wikipedia（Bukit Kukus 配對路：2.8 公里段 2021-12 完工、2022-01 通車；餘 800 公尺 Geo Valley 2027、1.4 公里 PLB Land 2028，2024-11 報導延期三年） · BERNAMA「Penang Revises Height Rules, Sensitive-Area Guidelines In RSNPP 2040」與 Henry Butcher Penang（76 公尺全面禁令改為依地形評估，目標 2026 Q3 憲報） · iProperty MTT Properties &amp; Development Sdn Bhd 開發商頁與母集團 Malaysia Trade &amp; Transport Co 公開資料 · NAPIC JPPH（Barat Daya 完工未售 883 套；MHPI 島上 terraced 2024 −0.9%、2025P +0.4%；州整體 high-rise 225.3 vs terraced 200.6） · DOSM 家庭收入調查（檳城 P50 RM 7,327／P75 RM 11,142／P90 RM 16,186／P99 RM 30,529） · PTG（檳城州地政局）外籍購屋門檻與徵費指引 2024-08-01 版 · MOTAC／MM2H（全國有效簽證 5,972 張，2025-08-31） · LHDN Finance Act（印花稅、RPGT、非居民租金稅率） · 本檔所依循之 penang-property-scorecard-v1 skill 鎖定錨表（ANCHORS.md，2026-08-06 版本）。
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-08-06。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限。</strong>本卡分數採檳城內部尺規校準，與其他市場（KL／曼谷等）評分卡分數不可直接比較。<strong>資料缺口誠實揭露</strong>：（1）毛租金收益率為入口網站掛牌價推算，非 NAPIC／Penang Institute／The Edge／Knight Frank 等機構數據，一律估算，且本案全城鎮僅約 5 筆掛租，租金樣本極薄；（2）檳城無 MLS，無公開 days-on-market 或掛牌-成交折讓數據；（3）掛牌率因入口網站數字矛盾（Trovit 53 筆 vs EdgeProp 6 筆；馬國無 MLS、一屋多代理不去重）不採計為量化分數；（4）<strong>城鎮已交付戶數無官方揭露</strong>，本卡以 500-700 戶估算作換手率分母，為本案最大的量化不確定性；（5）城鎮管理／保安費 RM 150／月為估算，landed 城鎮無公開費率，本框架的 RM 0.6 psf 基準為 KL strata 數據、不適用；（6）各期別完工年在不同第三方來源間不一致（Botanica 5 有 2017 年完工之說、同時期別仍標 move-in ready 在售），本卡以「完工現貨與在售期別並存」表述，讀者應向開發商書面確認各期交屋年與現貨庫存；（7）外籍融資 LTV／利率為估算，未經檳城個案驗證；（8）MM2H 州級門檻與聯邦級距的互動，PTG 一手文件與 visitpenang.com 說法相反，本案外籍資格完全取決於此，<strong>強烈建議律師逐案確認</strong>。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+  </div>
+</div>
+
+</div>
+</body>
+</html>
