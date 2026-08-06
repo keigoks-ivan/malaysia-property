@@ -178,6 +178,8 @@
 
 **已確認在檳城無住宅開發、不入表**：Gamuda Land（僅 LRT 一標與 Silicon Island 填海）、UOA、IOI Properties（僅一間酒店）
 
+**⚠️ 表列缺口（2026-08-06 首批產卡時發現）**：**YTL Land & Development**（Shorefront Residences 開發商，Bursa 主板）未列入本表——首輪 d5 研究未涵蓋。該案暫以「Bursa T1 通用起跳 7.5」外推並標 provisional。**下次錨表更新時應補做 YTL Land 的檳城交付紀錄與母公司財務查證**，在此之前所有引用 YTL Land 的卡片 d5 分數皆為暫定。此類「表外開發商」一律走 SKILL.md §5 的通用起跳＋檳城特有扣分項，並在卡上標 provisional。
+
 **檳城特有調整（KL 無對應）**：
 1. **MBI／龐氏交易對手曝險 −1.0 至 −2.0 或直接排除**（Penang World City 2025-05 起三名 AMLA 官員進駐董事會，RM66 億凍結）
 2. **分割式 strata 管理 −0.5 至 −1.0**（上訴庭 2026-02-03：住宅／商業分開管理自始無效且有追溯責任）
