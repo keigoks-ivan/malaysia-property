@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muze @ PICC（Penang International Commercial City）— 檳城建案評分卡 | Property Check</title>
+<meta name="description" content="Muze @ PICC（Bayan Baru，開發商 Hunza Properties）獨立評分卡。本國人 6.4 / 外國人 5.7。10 年持有專業投資人視角 · 7 維度框架 · 產品溢價 vs 地段非稀缺的正面對決、Senze 1,678 戶近鄰供給、LRT Mutiara 首張真實吃分卡 · Brickz / NAPIC 公開資料源。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--border-soft);
+  position:sticky;top:0;z-index:50;
+}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:700;
+  font-size:16px;color:var(--gold-light);
+  box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);
+  letter-spacing:-.04em;
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+.hero-card{
+  background:
+    radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),
+    linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);
+  color:#f3ebd6;
+  border:1px solid rgba(212,181,118,.25);
+  border-radius:22px;
+  padding:32px 36px 30px;margin-bottom:24px;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  isolation:isolate;
+}
+.hero-card::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),
+    repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);
+  pointer-events:none;z-index:0;
+}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;
+  margin-bottom:6px;color:#f7eed3;
+}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{
+  padding:18px 22px;border-radius:16px;
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(212,181,118,.22);
+  position:relative;overflow:hidden;
+}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{
+  background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+.ruler-note{font-size:10.5px;color:#a9b6cb;margin-top:16px;padding-top:14px;border-top:1px solid rgba(212,181,118,.2);line-height:1.7}
+
+.section{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px 32px;margin-bottom:20px;
+  box-shadow:var(--shadow-sm);
+  position:relative;
+}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:24px;font-weight:700;letter-spacing:-.01em;
+  margin-bottom:8px;color:var(--navy);line-height:1.3;
+}
+.section-title::after{
+  content:'';display:block;
+  width:36px;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  margin-top:10px;border-radius:1px;
+}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{
+  background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:42px;font-weight:700;
+  float:left;line-height:.95;
+  margin:4px 8px 0 0;
+  color:var(--gold);
+}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:8px;
+  background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);
+  border:1px solid var(--gold-light);
+  font-size:15px;
+}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+.footer{
+  margin-top:28px;padding:24px 28px;
+  background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);
+  border:1px solid var(--border);border-radius:16px;
+  font-size:11.5px;color:var(--muted);line-height:1.85;
+  position:relative;overflow:hidden;
+}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+@media (max-width:768px){
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">Penang Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/penang-check">← 全部評分</a>
+      <a class="lang-link" href="SC_Muze-PICC_20260806_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Bayan Baru · Penang International Commercial City（PICC）</span>
+    <span class="sep">◆</span>
+    <span>永久住宅地契（Freehold Residential Strata）</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-08-06</span>
+  </div>
+  <h1 class="proj-name">Muze @ PICC</h1>
+  <p class="one-liner">
+    Hunza 自建生態圈（自有 Gurney Paragon Mall＋PICC）撐出 Brickz 中位 RM 1,053 psf、遠高於 Bayan Baru／Sungai Ara 一般行情（RM 500 psf 上下）的產品溢價，換手率與掛牌深度俱佳；但地段三層供給稽核皆非稀缺，同一 PICC 基地內 Senze（1,678 戶）2026 年底完工在即，是本案最直接的近鄰供給壓力測試。本卡是站上首張真實吃到 LRT Mutiara 進度加分的卡片（距 Bukit Jambul 站約 600m，估算）。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.4</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis，分眾持有</span>
+      </div>
+      <div class="score-note">Bayan Baru／Sungai Ara 6.0 地段起跳（三層供給稽核皆非稀缺，MUZE 1,053 psf 的溢價來自產品非地段）+ 年換手率約 6.0%（非常活躍）與 Brickz 深度 51 筆撐出退場本國人 7.8；掛牌率約 5.2% 僅供揭露、不採計為量化分數；但毛收益率僅約 3.5%、現金流僅 4.0，資本增值仍受 Barat Daya 完工未售 883 套與 Senze 近鄰供給拖累</div>
+      </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.7</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis，分眾持有</span>
+      </div>
+      <div class="score-note">代表戶總價 RM 114.5 萬落入「門檻邊界 RM 100–120 萬」帶（−0.3，貼近島 strata 外籍最低門檻 RM 100 萬）+ 8% 印花 + 1.5% 徵費（RM 100–150 萬帶）+ RM 1 萬同意費 + 3 年禁售；Barat Daya 完工未售 883 套觸發 R1 外籍退場 cap 6.0（現值 5.0 尚未觸頂）；Bayan Baru 是租客市場非外籍業主市場，MM2H 聚居效應不適用</div>
+    </div>
+  </div>
+  <div class="ruler-note">※ 本卡分數採檳城內部尺規校準，與吉隆坡／曼谷等其他市場評分卡分數不可直接比較。</div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">七維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。稀缺性與地段護城河 20% · 交通與可達性 12% · 資本增值動能 15% · 進場估值紀律 13% · 持有現金流 12% · 退場與接手人群 18% · 開發商與管理移交 10%。5 個維度本外同分、2 個維度本外分開（現金流 + 退場）。檳城採自身內部尺規。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+      <svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="七維度雷達圖">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): [6.0, 6.6, 6.9, 6.3, 4.0, 7.8, 6.7] -->
+  <polygon points="140.0,72.8 197.8,93.9 215.3,157.2 170.6,203.6 120.6,180.4 54.8,159.4 81.3,93.2" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="72.8" r="3.5"/>
+    <circle cx="197.8" cy="93.9" r="3.5"/>
+    <circle cx="215.3" cy="157.2" r="3.5"/>
+    <circle cx="170.6" cy="203.6" r="3.5"/>
+    <circle cx="120.6" cy="180.4" r="3.5"/>
+    <circle cx="54.8" cy="159.4" r="3.5"/>
+    <circle cx="81.3" cy="93.2" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [6.0, 6.6, 6.9, 6.3, 2.0, 5.0, 6.7] -->
+  <polygon points="140.0,72.8 197.8,93.9 215.3,157.2 170.6,203.6 130.3,160.2 85.4,152.4 81.3,93.2" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="72.8" r="3.0"/>
+    <circle cx="197.8" cy="93.9" r="3.0"/>
+    <circle cx="215.3" cy="157.2" r="3.0"/>
+    <circle cx="170.6" cy="203.6" r="3.0"/>
+    <circle cx="130.3" cy="160.2" r="3.0"/>
+    <circle cx="85.4" cy="152.4" r="3.0"/>
+    <circle cx="81.3" cy="93.2" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+    <text x="140" y="12" text-anchor="middle">稀缺與地段</text>
+    <text x="239" y="59" text-anchor="start">交通與可達性</text>
+    <text x="263" y="168" text-anchor="start">資本增值動能</text>
+    <text x="195" y="262" text-anchor="start">進場估值紀律</text>
+    <text x="85" y="262" text-anchor="end">持有現金流</text>
+    <text x="17" y="168" text-anchor="end">退場與接手</text>
+    <text x="41" y="59" text-anchor="end">開發商與交付</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 6.4</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 5.7</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">稀缺性與地段護城河</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Bayan Baru／Sungai Ara（Barat Daya district）6.0 anchor 起跳。三層供給稽核：土地層 ✗——PICC 全案 43.35 英畝分三期、10 年開發期，同一基地內 Senze @ PICC（Phase 2，三塔 1,678 戶）預計 2026 年底完工，加上商業樞紐（購物中心、GBS 辦公塔、五星酒店）預計 2026 Q4 動工、2031 完工，土地與供給管道遠未見頂；產品層 ✗——846 戶雙塔標準高層公寓配置，Senze 三塔採用同一開發商同一基地的高度可複製格局；法規層 ✗——地勢平坦，無山坡限制（R5 不適用），非 UNESCO 遺產管制區。三層皆 ✗，不給三層全✓加分。<strong>有效稀缺檢驗（關鍵）</strong>：Muze 自身 Brickz 成交中位達 RM 1,053 psf，較同區 The Promenade（Bayan Baru，Brickz 中位 RM 515 psf）、Sungai Ara 一般行情（RM 407–572 psf）、Bayan Baru 整體均價（約 RM 500 psf）高出近一倍——這個溢價<strong>不是地段稀缺的證據</strong>（三層供給稽核皆 ✗，地段本身可複製），而是 Hunza 自建生態圈（自有 Gurney Paragon Mall 經營經驗＋PICC 一站式商業／醫療／酒店規劃）與產品定位（雙塔地標、52/58 層景觀）帶來的<strong>產品溢價</strong>。本卡刻意不讓地段錨吃掉這個溢價：d1 維持 anchor 6.0，溢價的認可留給 d5（開發商品牌）與 d7（估值紀律的錨點選擇），不重複計分於稀缺性維度。</p>
+        <p class="dim-data">Barat Daya district（NAPIC）· PICC 全案 43.35 英畝、三期 10 年開發 · Senze @ PICC 1,678 戶預計 2026 年底完工（同基地）· 商業樞紐 2026 Q4 動工、2031 完工 · Muze Brickz 中位 RM 1,053 psf vs The Promenade（Bayan Baru）RM 515 psf、Sungai Ara 一般 RM 407–572 psf、Bayan Baru 均價約 RM 500 psf</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與可達性</span><span class="dim-weight">12% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.6</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">南部 Bayan Baru／Queensbay tier 起跳 6.5（(a) 款：≤10 分鐘到 FIZ + ≤15 分鐘到機場，本案兩者皆輕鬆達標：Bayan Baru 到 FIZ 車程約 4 分鐘、到檳城國際機場約 6km／13 分鐘）。加分：機場 ≤15 分鐘圈 +0.2；Bayan Baru 由 Persiaran Mahsuri、Jalan Mayang Pasir、Bayan Lepas Expressway 多路網聯外，非單一進出道路 +0.2。減分：尖峰時段往喬治市方向須經 Tun Dr Lim Chong Eu Expressway 樽頸 −0.3。淨值 6.5+0.2+0.2−0.3=6.6。全島無營運中都市軌道，本維度以尖峰車程與樽頸箝制為主軸，非站距；PICC 自身商業樞紐（含購物中心）尚未動工（2026 Q4 動工、2031 完工），現況步行商業機能仍以既有 Sunshine Square（約 832m）與 Pantai Hospital Penang（同在 Persiaran Mahsuri／Jalan Tengah 路口）為主，未達 ≤400m 到 mall 或 ≥2 國際醫院 ≤3km 門檻，本卡不預先給未動工的 PICC 商業機能加分。</p>
+        <p class="dim-data">距 Bayan Lepas FIZ 約 4 分鐘車程 · 距檳城國際機場約 6km（約 13 分鐘車程）· Sunshine Square 約 832m · Pantai Hospital Penang 同路口 · 尖峰經 Tun Dr Lim Chong Eu Expressway</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值動能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.9</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">島上住宅 strata 6.0 基線（NAPIC MHPI 2025P 島上高層指數 228.5、2025P +3.1%、Q1 2026 +3.4%）。催化劑：島上 ≤15 分鐘到 FIZ／機場 +0.5；機場擴建（施工中，6.5m→12m 客運量，2028）≤15 分鐘圈 +0.3；<strong>LRT Mutiara Line</strong> 現況 8.99%（2026-06，已動工 &lt;25% 級距）——本案距最近 Bukit Jambul 站（S09，Jalan Tun Dr Awang，Bukit Jambul Complex 前）約 600m（估算：以 Wikipedia 標示 Muze 座標 5.331203°N,100.285291°E 與 penang-traveltips.com 標示 Bukit Jambul 站座標 5.33268°N,100.2906°E 計算直線距離，非步行距離），落 ≤800m 門檻 +0.4。減分：Barat Daya 完工未售 883 套（&gt;800 門檻，見 R1）反映島上大量 condo 供給段 −0.3。<strong>同地段 5 年內 ≥5 競品門檻——已查證，未達，不扣分</strong>：具名可查者僅 Sunway Dora（Bayan Baru，2022 推出／2025 完工）與同基地 Senze（三塔 1,678 戶，2026 年底完工）兩案信心度高；PIX 1 Residences（Bayan Baru，Ideal Property）推出年份未能查證、TreeO（Sungai Ara，Hunza，2023/2024 完工）動工於窗口外僅完工年落窗；Mahsuri Flats 重建案為安置型舊屋更新非公開市場產品，不應計入同一買家池的競品。湊整最多僅得 4 案且其一有效性存疑，未達錨表「≥5 競品」的具名門檻，本卡不硬湊名單、不扣此項，Senze 帶來的近鄰供給壓力已由上述 Barat Daya 島上供給段 −0.3 與下方定性揭露（5C、深度摘要）承擔。淨值 6.0+0.5+0.3+0.4−0.3=6.9。🔴 Intel 擴產不計入已入袋需求（見下方留意事項）。</p>
+        <p class="dim-data">島上高層 MHPI 指數 228.5、2025P +3.1%／Q1 2026 +3.4%（NAPIC）· LRT Mutiara 現況 8.99%（2026-06）、Bukit Jambul 站約 600m（估算） · 機場擴建施工中 2028 完工 · Barat Daya 完工未售 883 套 · Senze @ PICC 1,678 戶 2026 年底完工（同基地近鄰供給，定性揭露非量化扣分）· ≥5 競品門檻查證：僅得 2-4 案具名佐證，未達門檻</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">進場估值紀律</span><span class="dim-weight">13% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.3</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">錨點：本案自身 Brickz 中位 RM 1,053 psf（51 筆，2025-02~2026-01，同建案，屬 tier 1 最高信心度真實成交錨）。目前掛牌 PSF 區間約 RM 736–968（PropertyGuru，2026），對代表戶型尺寸（最小 3 房 1,087–1,098 sqft 段）掛牌中位約 RM 760 psf（iProperty）。掛牌中位低於全案 Brickz 中位，惟兩者比較基礎不同——全案 Brickz 中位（RM 1,053 psf，中位總價 RM 1,270,000，反推中位坪數約 1,206 sqft）明顯受較大戶型（Type B/C/H 等 1,300–1,550 sqft）成交拉高，而本案代表戶為全案最小戶型（1,087 sqft），兩者非同尺寸比較。起跳 6.0（+0%~+10% 合理新品溢價區間）+0.3（代表戶尺寸的掛牌價相對全案錨點呈現折讓跡象，但此折讓部分可能是「戶型組合效應」而非真實低估，不宜過度解讀為 margin of safety）=6.3。信心度：<strong>低</strong>——Brickz 51 筆樣本厚實（tier 1 錨點），但未能拆分至代表戶型專屬成交價，是本卡估值維度信心度受限的主因。</p>
+        <p class="dim-data">錨點：本案自身 Brickz 中位 RM 1,053 psf（51 筆，2025-02~2026-01，中位總價 RM 1,270,000）· 全案掛牌 PSF 區間約 RM 736–968（PropertyGuru）· 代表戶尺寸段（1,087–1,098 sqft）掛牌中位約 RM 760 psf（iProperty）· 信心度：低（未拆分戶型）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">12% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">4.0</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">2.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">毛收益率估算約 3.5%（代表戶 Type G1 1,087 sqft @ Brickz 中位 RM 1,053 psf = RM 1,145,000，估算月租 RM 3,400，以掛牌租金 PSF 約 RM 3.10 折算 1,087 sqft ≈ RM 3,370，取整），落 3.5–4.0% 帶，本國人基線 3.8。調整：Bayan Baru／Bayan Lepas／Queensbay E&E 企業租約（1-2 年、公司付租）+0.2。淨值 3.8+0.2=4.0，clamp [2.5, 8.0] 內。外國人＝本國人 −2.0=2.0，clamp [1.5, 8.0] 內（非 clamp 碰撞例外，因本國人 4.0&gt;3.5 門檻）。<strong>R4 適用</strong>：本案<strong>已查證</strong>為永久住宅地契（Residential Strata，非商業 SA／SOHO——PropertyGuru、iProperty、Wikipedia、Hunza 官網一致標示），短租收入一律不計、不得給 Airbnb 加分；本卡查無本案短租行銷宣稱。</p>
+        <p class="dim-data">代表戶 Type G1 1,087 sqft @ Brickz 中位 RM 1,053 psf = RM 1,145,000 · 估算月租 RM 3,400（RM 3.10 psf 掛牌租金率折算，估算）· 毛收益率約 3.5%（估算，另有入口網站彙總數字 3.96%／4.53%，惟未拆分戶型，本卡採自行折算之保守值）· 管理費暫用 KL 默認 RM 0.6 psf「待校準」· R4：住宅地契不得計短租收入</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場與接手人群</span><span class="dim-weight">18% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">7.8</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">5.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>第一步（本國人）</strong>：Freehold 住宅地契 condo baseline 7.0。Quantum test：代表戶 RM 1,145,000 落 RM 60–120 萬帶（本地 upgrader 主力），0；年換手率約 6.0%（Brickz 51 筆／846 戶，2025-02~2026-01 年化）落 ≥4% 非常活躍帶 +0.5；掛牌率約 5.2%（iProperty 44 戶／846 戶）<strong>不採計為量化分數</strong>——依 ANCHORS §9 已知資料缺口第 6 條，馬國無 MLS、掛牌重複係數未測量（一屋常委任 5-15 位代理、入口網站不去重），掛牌率僅供專案間相對排序，不得寫成「本棟 X% 在售」的量化陳述，本卡沿用同批四張既有檳城卡（Codrington／Shorefront／Botanica.CT）的處理慣例，僅揭露不計分；Brickz 深度 51 筆／年落 ≥20 筆帶 +0.3；同棟投資型小戶（≤650 sqft）占比——本案最小戶型 1,087 sqft，無 ≤650 sqft 產品，不適用；Barat Daya 在建未售未達 1,200 套門檻（R2 未觸發，沿用同區 Queens Q2 卡既有判定），0。淨值 7.0+0.5+0.3=7.8，clamp [1.5, 8.5] 內。⚠️ 需留意：完工約 3 年的高換手率（6.0%）可能部分反映早期投資者取得 VP 後的一次性拋售潮，長期是否維持同等活躍度需持續觀察，非保證常態。<strong>第二步（外國人）</strong>：起點為 clamp 後的 7.8。外籍調整：#2 門檻邊界（島 strata 退場價 RM 100–120 萬，本案 RM 114.5 萬落入此帶，貼近外籍最低門檻 RM 100 萬）−0.3；#7 Bayan Baru／Bayan Lepas／本島外＝租客市場非外籍業主市場，不套用 #6 轉售活躍段加分，記 0；#8 州同意摩擦 −0.3（必套用）；#9 三年禁售期 −0.2（必套用）；MM2H（#5）與外資銀行 LTV（#13）均查無本案個案佐證，記 0。Σ 外籍調整＝−0.3−0.3−0.2=−0.8。d6_外＝7.8−2.0−0.8=5.0。<strong>硬規則</strong>：R1 觸發（Barat Daya 完工未售 883 套 &gt;800）→外籍退場分 cap 6.0，現值 5.0 未觸頂（cap 不 binding）；R3 不適用（非島上 landed，為高層 strata）。不變量檢查：d6_外 (5.0) ≤ d6_本 (7.8) −1.0=6.8 ✓成立，餘裕 1.8。</p>
+        <p class="dim-data">總戶數 846（雙塔）· quantum 月收門檻約 RM 12,595（價格×1.1%，對照檳城 P75 RM 11,142／P90 RM 16,186，落 P75-P90 帶偏 P75 端）· 年換手率約 6.0%（51 筆／846 戶年化，計分）、掛牌率約 5.2%（iProperty 口徑，44／846，全批固定，僅供揭露不採計為量化分數，見已知資料缺口#6）· Brickz 深度 51 筆／12 個月（2025-02~2026-01）· R1 觸發：Barat Daya 完工未售 883 套（cap 6.0，未 binding）· R2 未觸發</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.7</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Hunza Properties（私有 ≥10 案 30+ 年）6.7 起跳——+0.5：自有 Gurney Paragon Mall＋PICC 一站式生態圈，是檳城少見的「開發商自己經營下游商場／醫療／酒店資產」對齊模式，Muze 的產品溢價（見 d1）一定程度即受益於此；−1.0：2026-02-03 上訴庭於 Badan Pengurusan Bersama Gurney Paragon Residential v Hunza Properties 一案判決 Hunza 主導的「住宅／商業分割式管理」自始無效（ultra vires），JMB 須以單一帳戶管理整棟。<strong>本案專屬查證</strong>：此案標的是 Gurney Paragon，非 PICC／Muze，判決未直接觸及本案；惟 PICC 是與 Gurney Paragon 同結構的混合開發（住宅 Muze＋Senze＋未來商場／酒店／辦公塔／醫療中心），一旦商業樞紐於 2031 完工，管理架構若同樣採分割式，即落入此判決的直接射程——本卡將此列為<strong>前瞻性治理風險</strong>，非已發生事件；−0.3：Hunza 於 2016 年自 Bursa 除牌後無公開財報。淨值維持 6.7，不另加減。開發商延遲交付方面：Muze 原定 2022 年完工，實際 2023 年完工，約 1 年溫和延遲，未達需額外扣分等級。</p>
+        <p class="dim-data">Hunza Properties Berhad（私有，2016-03 除牌）· 自有 Gurney Paragon Mall＋PICC · 上訴庭 2026-02-03 判 Gurney Paragon 分割式管理無效（Badan Pengurusan Bersama Gurney Paragon Residential v Hunza Properties [2026] CLJU 269）——標的非 PICC，惟結構性前瞻風險適用 · 自 2016 年無財報 · Muze 原定 2022 完工，實際 2023 完工（約 1 年延遲）</p>
+      </div></div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+  <p class="section-sub">代表戶型：<strong>Type G1 3 房 1,087 sqft 中層約 RM 1,145,000</strong>（@ RM 1,053 psf，同建案 Brickz 中位）。§8 規則：Bayan Baru 非島上精華區（Pulau Tikus／Gurney／Tanjung Tokong／STP／George Town），依規則應採 2BR 為代表戶型——惟<strong>已查證 Muze 的開發商實際 product menu 完全不含 2 房戶型</strong>（全案 10 種戶型 Type A–H 均為 3–5 房、1,087–1,862 sqft），依「坪數從開發商實際 product menu 選取，禁止虛構」原則，改採全案最小、最貼近入門價位的 Type G1（3 房 1,087 sqft）為代表戶型，卡上明確註記此例外。</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">Hunza Properties Berhad<span class="kv-src">私有（2016-03 自 Bursa 除牌），近 40 年紀錄，逾 10,000 戶累計交付</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">永久（Freehold）住宅地契 condominium（Residential Strata）<span class="kv-src">交叉查證：PropertyGuru、iProperty、Wikipedia、Hunza 官網皆一致標示 freehold 住宅地契，非商業 SA／SOHO；PICC 同基地 Phase 2 的 Senze 為服務式公寓（service residence），與 Muze 地契性質不同，本卡僅評 Muze</span></td></tr>
+          <tr><td class="kv-label">規模</td><td class="kv-val">846 戶 · 雙塔（Tower A 52 層 394 戶、Tower B 58 層 452 戶）<span class="kv-src">Muze 為 PICC Phase 1 住宅，Senze（Phase 2，1,678 戶服務式公寓）預計 2026 年底完工，另為商業樞紐（商場/GBS辦公塔/五星酒店，2026 Q4 動工、2031 完工）</span></td></tr>
+          <tr><td class="kv-label">單位坪數</td><td class="kv-val">1,087–1,862 sqft（10 種戶型 Type A–H，皆 3–5 房）<span class="kv-src">全案無 2 房戶型；最小 Type G/G1 1,087 sqft（3房）、最大 Type A 1,862 sqft</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">Type G1 1,087 sqft 中層 @ RM 1,145,000<span class="kv-src">RM 1,053 psf 為同建案 Brickz 中位（51 筆，2025-02~2026-01）</span></td></tr>
+          <tr><td class="kv-label">完工時間</td><td class="kv-val">2023 年 8 月（已完工約 3 年）<span class="kv-src">原定 2022 年，實際延遲約 1 年；現況：已完工，可即刻啟動租金現金流</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與生活機能</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">微觀位置</td><td class="kv-val">Persiaran Mahsuri, PICC, Bayan Baru（郵遞區號標示 Bayan Lepas）<span class="kv-src">PICC 全案 43.35 英畝，Muze 為 Phase 1 住宅塔樓</span></td></tr>
+          <tr><td class="kv-label">最近 FIZ</td><td class="kv-val">約 4 分鐘車程<span class="kv-src">Bayan Lepas Free Industrial Zone</span></td></tr>
+          <tr><td class="kv-label">最近機場</td><td class="kv-val">約 6km（約 13 分鐘車程）<span class="kv-src">Penang International Airport</span></td></tr>
+          <tr><td class="kv-label">LRT Mutiara</td><td class="kv-val">現況 8.99%（2026-06）<span class="kv-src">最近 Bukit Jambul 站（S09）約 600m（座標估算，非步行距離）；Hunza 官方行銷稱 PICC「直接連結 LRT 站」，本卡以獨立座標估算為準，未採信行銷用語的精確度</span></td></tr>
+          <tr><td class="kv-label">商業/生活</td><td class="kv-val">Sunshine Square 約 832m；Pantai Hospital Penang 同路口<span class="kv-src">PICC 自身商場／醫療中心尚未動工（2026 Q4 動工、2031 完工）</span></td></tr>
+          <tr><td class="kv-label">同區競品</td><td class="kv-val">Senze @ PICC（1,678 戶，同基地，2026 年底完工）<span class="kv-src">另有 Bayan Baru／Sungai Ara 周邊其他在建案</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-4% 階梯制<br><small style="color:var(--muted)">RM 29,800</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 91,600</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">10%（90% LTV）<br><small style="color:var(--muted)">RM 114,500</small></td><td class="num">假設 35%（65% LTV）<br><small style="color:var(--muted)">RM 400,750</small></td><td><small>BNM／各銀行政策</small></td></tr>
+      <tr><td>最低購買價門檻</td><td class="num">無</td><td class="num">島 strata 個人 RM 100 萬</td><td><small>PTG 指引 2024-08-01</small></td></tr>
+      <tr><td>徵費（consent to transfer）</td><td class="num">—</td><td class="num">1.5%（島 strata RM 100-150 萬帶）<br><small style="color:var(--muted)">RM 17,175</small></td><td><small>州地政局 §5.1</small></td></tr>
+      <tr><td>州同意費</td><td class="num">—</td><td class="num">RM 10,000／地契</td><td><small>州地政局</small></td></tr>
+      <tr><td>三年禁售期</td><td class="num">無</td><td class="num">有（SPA 起算三年）</td><td><small>州地政局 §3.2(c)</small></td></tr>
+      <tr><td>州同意審批</td><td class="num">無</td><td class="num">需要，實務加 2-4 個月</td><td><small>州地政局</small></td></tr>
+      <tr><td>毛租金收益率（估算）</td><td class="num">~3.5%</td><td class="num">~3.5%（同）</td><td><small>RM 3,400/月 ÷ RM 1,145,000，估算</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">10-24% 累進<br><small style="color:var(--muted)">估約 15%</small></td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>10 年平均淨收益率（估算）</td><td class="num">~3.2%</td><td class="num">~2.6%</td><td><small>計算（管理費 + 稅後 + 空置）</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>MM2H 合規</td><td class="num">—</td><td class="num">查無本案個案佐證，不預設判定</td><td><small>見【§6.1】MM2H 註</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>Type G1 3 房 1,087 sqft 中層 RM 1,145,000</strong>（@ RM 1,053 psf）為基礎——本國人 vs 外國人 10 年總成本與淨損益對照。建案已完工約 3 年，租金現金流可即刻啟動，無期房等待。</p>
+
+  <div class="assump-box" style="background:linear-gradient(135deg,#fef9ed 0%, #fbf3df 100%);border:1px solid var(--gold);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative">
+    <strong>⚠️ 估值與買價透明度說明：</strong>進場估值維度（13%）以「同地段／同類型<strong>真實成交</strong>中位 PSF」為錨。本案錨點：<strong>同建案 Brickz 中位 RM 1,053 psf</strong>（51 筆，2025-02~2026-01，信心度：低——樣本厚實但未拆分至代表戶型專屬尺寸）；代表戶尺寸段掛牌中位約 RM 760 psf（iProperty）。<strong>檳城無 MLS，無官方 days-on-market 或折讓數據</strong>，實際成交價可能因議價空間而低於掛牌價，買家仍應向代理或開發商書面確認最終實際淨價，並比對 Brickz 近期同層同向、同戶型成交。
+  </div>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>Type G1 1,087 sqft 中層 @ RM 1,145,000</strong> · 10 年持有 · 30 年房貸 · 估算月租 RM 3,400 Y1，年漲幅 3% · 空置 1 個月/年 ·
+    管理費暫用 KL 默認 RM 0.6 psf「待校準」（見已知資料缺口第 5 條）· 本國人利率 4.30%（OPR 2.75% 基準）、外國人假設同利率但頭期款較高（LTV 65%）· 門牌稅／地稅與保險為估算值（無檳城專屬公開資料）· 機會成本基準 5%/年（MGS 10Y + 100bp）。
+    所有金額四捨五入至百位或千位；房貸還款與餘額為標準等額本息公式估算值。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>114,500</td><td>400,750</td><td>+286,250</td></tr>
+      <tr><td>印花稅（MOT）</td><td>29,800</td><td>91,600</td><td>+61,800</td></tr>
+      <tr><td>徵費（consent to transfer）</td><td>—</td><td>17,175</td><td>+17,175</td></tr>
+      <tr><td>州同意費</td><td>—</td><td>10,000</td><td>+10,000</td></tr>
+      <tr><td>律師費 + 貸款費</td><td>14,900</td><td>14,900</td><td>0</td></tr>
+      <tr class="sum"><td>買入小計</td><td>159,200</td><td>534,425</td><td>+375,225</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額</td><td>612,000</td><td>442,000</td><td>−170,000</td></tr>
+      <tr><td>管理費（RM 0.6 psf，待校準）</td><td>78,000</td><td>78,000</td><td>0</td></tr>
+      <tr><td>門牌稅 + 地稅（估算）</td><td>18,000</td><td>18,000</td><td>0</td></tr>
+      <tr><td>保險（估算）</td><td>21,000</td><td>21,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>729,000</td><td>559,000</td><td>−170,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，估算月租 RM 3,400 Y1，3%/年成長，1 月/年空置）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入（已扣空置）</td><td>429,000</td><td>429,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>64,000</td><td>129,000</td><td>+65,000</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>365,000</td><td>300,000</td><td>−65,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，3% 漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>仲介費（2.4%）</td><td>37,000</td><td>37,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>39,000</td><td>+39,000</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>820,000</td><td>592,000</td><td>−228,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>下行情境 1.0%/年</td><td>−108,000</td><td>−162,000</td><td>−54,000</td></tr>
+      <tr class="scenario"><td>合理情境 3.0%/年</td><td>+159,000</td><td>+78,000</td><td>−81,000</td></tr>
+      <tr class="scenario"><td>上行情境 4.5%/年</td><td>+392,000</td><td>+287,000</td><td>−105,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在基準假設（3% 年漲、10 年滿租 + 1 月空置、機會成本 5%/年）下，外國人 10 年淨損益比本國人少約 <strong>RM 81,000（相當於房價的 7.1%）</strong>。8% 印花稅、1.5% 徵費（RM 100-150 萬帶）、RM 1 萬同意費、3 年禁售期、30% 非居民租金稅與 10% 永久 RPGT 形成結構性溢價（合計進場摩擦約 11.4%，與檳城州級 anchor 一致）。<strong>打平門檻</strong>：本國人約 <strong>1.8%/年</strong>即可打平（低於島上住宅 strata 基準年增速 3.0%），外籍約 <strong>2.4%/年</strong>（同樣低於基準但餘裕較薄）。換言之：本案現金流偏薄（毛收益率僅約 3.5%），但打平門檻不高，論點重心應放在「產品溢價撐出的高流動性 + 打平容易」，而非「地段稀缺帶來的資本利得」或「高收益現金流」。
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ 退場現實檢驗</span>
+  <h2 class="section-title">10 年後誰接手</h2>
+  <p class="section-sub">三件套：稀缺性稽核（供給側能否複製）＋ 接手人群金字塔（10 年後誰買得起）＋ 二手市場硬證據（換手率／掛牌率／折讓）。回報只有在賣掉那天才是真的——退場價的地板由稀缺性決定，退場的速度由接手人群深度決定。</p>
+
+  <!-- 5A Scarcity audit -->
+  <div style="background:var(--navy-soft);border:1px solid #c7d6ea;border-radius:12px;padding:18px 20px;margin-bottom:18px">
+    <div style="font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--navy);margin-bottom:12px">5A · 稀缺性稽核（供給側三層）</div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.7;color:var(--text-soft)">
+      <div style="display:flex;gap:10px"><span style="flex:0 0 auto;font-weight:700;color:#b91c1c">✗ 土地層</span><span>PICC 全案 43.35 英畝分三期、10 年開發，Senze（同基地 Phase 2，1,678 戶）2026 年底完工、商業樞紐 2026 Q4 動工，土地與供給管道遠未見頂，非結構性封頂。</span></div>
+      <div style="display:flex;gap:10px"><span style="flex:0 0 auto;font-weight:700;color:#b91c1c">✗ 產品層</span><span>846 戶雙塔標準高層公寓，同一基地 Senze 三塔（1,678 戶）即為高度可複製的近鄰同類產品，配置可複製性高。</span></div>
+      <div style="display:flex;gap:10px"><span style="flex:0 0 auto;font-weight:700;color:#b91c1c">✗ 法規層</span><span>地勢平坦，無山坡限制（R5 不適用），亦非 UNESCO 遺產管制區，無不可逆規劃鎖。</span></div>
+    </div>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid #c7d6ea;font-size:12.5px;line-height:1.7;color:var(--navy)"><strong>有效稀缺判定——不加分（R6 精神延伸）：</strong>三層皆 ✗，本案的高成交價（Brickz 中位 RM 1,053 psf，近同區行情兩倍）不是供給側稀缺的證據，而是 Hunza 產品／品牌溢價的證據；本卡不因「成交價高」自動推論地段稀缺，稀缺性與地段護城河維持 anchor 6.0，不另加減。</div>
+  </div>
+
+  <!-- 5B Next-buyer pyramid -->
+  <div style="margin-bottom:18px">
+    <div style="font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--navy);margin-bottom:10px">5B · 接手人群金字塔</div>
+    <div class="assump-box" style="margin-bottom:12px">
+      <strong>Quantum test：</strong>代表戶 RM 1,145,000 → 下一手家庭月收門檻約 <strong>RM 12,595</strong>（總價 × 1.1%）→ 對照檳城家庭月收百分位 P75 RM 11,142／P90 RM 16,186，落 <strong>P75-P90 帶偏 P75 端</strong>——高於檳城四分之三家庭，屬穩健的中高端本地接手池。
+    </div>
+    <table class="cmp-table">
+      <thead><tr><th style="width:20%">接手者</th><th style="width:12%">判定</th><th>依據</th></tr></thead>
+      <tbody>
+        <tr><td>本地首購</td><td style="color:#a16207;font-weight:700">△</td><td>quantum RM 114.5 萬超出典型首購價位（≤RM 60 萬 P43 帶），惟仍在雙薪 E&E 工程師／專業人士家庭可及範圍，非主力首購群。</td></tr>
+        <tr><td>本地 upgrader</td><td style="color:#15803d;font-weight:700">✓</td><td>檳城中位所得 CAGR 6.4%（全國最高）支撐 quantum 帶 upgrader 需求；6.0% 高換手率反映本地買賣兩旺，Bayan Baru／PICC 是資深 E&E 從業者升級置產的走廊之一。</td></tr>
+        <tr><td>外州／海外馬來西亞人</td><td style="color:#a16207;font-weight:700">△</td><td>⚠️ 檳城特有段，無可驗證規模數據——本案查無個案成交買家籍貫佐證，不預設判定；PICC 的品牌行銷面向全國／海外馬國人，惟未經證實。</td></tr>
+        <tr><td>本地投資客</td><td style="color:#a16207;font-weight:700">△</td><td>毛收益率約 3.5% 偏薄、R4 鎖死短租上限，惟高換手率與深 Brickz 記錄顯示流動性佳，屬「重流動性、輕現金流」的投資胃納。</td></tr>
+        <tr><td>外籍自住（MM2H）</td><td style="color:#6b7a92;font-weight:700">✗</td><td>查無本案 MM2H 買家個案佐證；MM2H 聚居段錨定於 Tanjung Tokong／Tanjung Bungah／Batu Ferringhi，Bayan Baru 不在此列，預設 ✗。</td></tr>
+        <tr><td>外籍投資／機構</td><td style="color:#6b7a92;font-weight:700">✗</td><td>Bayan Baru／Bayan Lepas＝租客市場非外籍業主市場（不套用外籍轉售活躍段加分）；8% 印花+30% 租金稅+3 年禁售侵蝕 carry，外籍投資型接手意願薄弱。</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;padding:12px 16px;background:linear-gradient(135deg,#fbf3df,#f3e5c3);border-left:4px solid var(--gold);border-radius:10px;font-size:12.5px;line-height:1.7;color:var(--warn-text)"><strong>外籍依賴度：低（&lt;20%）</strong>——六段中僅本地 upgrader 一段明確 ✓，外州／海外馬國人與本地投資客為 △（缺個案佐證），外籍自住與外籍投資皆 ✗。本案退場論點以本地池的高流動性為核心，非依賴外籍政策的 kill switch 等級。</div>
+  </div>
+
+  <!-- 5C Secondary market evidence -->
+  <div>
+    <div style="font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--navy);margin-bottom:10px">5C · 二手市場證據</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 12px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy);letter-spacing:-.02em">~6.0%</div>
+        <div style="font-size:10.5px;color:var(--muted);margin-top:2px">年換手率（51 筆／846 戶年化）</div>
+        <div style="font-size:10px;font-weight:700;color:#15803d;margin-top:6px;padding:2px 8px;background:#dcfce7;border-radius:99px;display:inline-block">非常活躍</div>
+      </div>
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 12px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy);letter-spacing:-.02em">~5.2%</div>
+        <div style="font-size:10.5px;color:var(--muted);margin-top:2px">掛牌率（iProperty 44／846）</div>
+        <div style="font-size:10px;font-weight:700;color:#6b7a92;margin-top:6px;padding:2px 8px;background:#e5dfd0;border-radius:99px;display:inline-block">不採計，見缺口#6</div>
+      </div>
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 12px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);letter-spacing:-.02em">無公開數據</div>
+        <div style="font-size:10.5px;color:var(--muted);margin-top:2px">掛牌-成交折讓</div>
+        <div style="font-size:10px;font-weight:700;color:#6b7a92;margin-top:6px;padding:2px 8px;background:#e5dfd0;border-radius:99px;display:inline-block">無 MLS</div>
+      </div>
+      <div style="background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 12px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy);letter-spacing:-.02em">51 筆</div>
+        <div style="font-size:10.5px;color:var(--muted);margin-top:2px">Brickz 深度（2025-02~2026-01）</div>
+        <div style="font-size:10px;font-weight:700;color:#15803d;margin-top:6px;padding:2px 8px;background:#dcfce7;border-radius:99px;display:inline-block">深</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);font-style:italic;margin-top:10px;line-height:1.6">分母＝總戶數 846（雙塔）。換手率為 Brickz 51 筆（2025-02~2026-01，約 12 個月）年化，計入 d6 量化分數；掛牌率採 iProperty 口徑（約 44 戶掛牌，2026 年中，PropertyGuru 另有 44–59 戶不等的計數，本卡固定採用 iProperty 較保守數字），惟依 ANCHORS §9 已知資料缺口第 6 條——馬國無 MLS、掛牌重複係數未測量（一屋常委任 5-15 位代理、入口網站不去重）——掛牌率僅供專案間相對排序參考，<strong>不採計為量化分數</strong>，與同批 Codrington／Shorefront／Botanica.CT 三張卡的處理慣例一致；掛牌-成交折讓因檳城無 MLS、無公開 days-on-market 數據，本格如實顯示「無公開數據」，不引用 bambooroutes 等黑名單來源。⚠️ 完工約 3 年的高換手率可能部分反映早期投資者取得 VP 後的一次性拋售潮，非保證長期常態，10 年持有應持續觀察後續年份是否維持同等活躍度。<strong>R2 檢查</strong>：Barat Daya 在建未售未達 1,200 套門檻，R2 未觸發，本國人退場分無需扣減。</p>
+  </div>
+
+  <div style="margin-top:18px;padding:16px 20px;background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:12px;color:#f3ebd6;font-size:13px;line-height:1.8">
+    <strong style="color:var(--gold-light)">一句話總結：</strong>10 年後最可能的接手者是本地 upgrader，憑藉本案罕見的高流動性（換手率、掛牌深度俱佳）快速換手；外州／海外馬國人與本地投資客為潛在補充池，外籍自住與外籍投資皆非本案退場論點的支柱。若 Senze（同基地 1,678 戶）完工後大量湧入二手／租賃市場、或 Barat Daya 完工待售水位持續攀升，退場速度可能放緩、目前的高換手率也可能隨完工年期拉長而回落至常態水準。
+  </div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>Muze @ PICC 位於 Bayan Baru 核心地帶 Persiaran Mahsuri，是 Hunza Properties Berhad（私有，2016 年自 Bursa 除牌，近 40 年紀錄逾 10,000 戶累計交付）於 2023 年 8 月完工的雙塔永久住宅地契公寓——Tower A 52 層 394 戶、Tower B 58 層 452 戶，合計 846 戶，是 Penang International Commercial City（PICC）43.35 英畝全案三期開發中的 Phase 1 住宅組成。原定 2022 年完工，實際延遲約 1 年，屬溫和延遲，未達需額外扣分的等級。</p>
+
+    <p>地段層面，Bayan Baru／Sungai Ara 於檳城 anchor 表中起跳 6.0，三層供給稽核（土地層、產品層、法規層）皆判 ✗：PICC 全案土地與供給管道遠未見頂——同一基地內 Senze @ PICC（Phase 2，三塔 1,678 戶服務式公寓）預計 2026 年底完工，商業樞紐（購物中心、GBS 辦公塔、五星酒店）預計 2026 年第四季動工、2031 年完工；產品層方面 846 戶雙塔標準高層配置與 Senze 高度可複製；法規層則地勢平坦、無山坡或遺產管制。這是本卡最需要處理的張力：Muze 自身 Brickz 成交中位達 RM 1,053 psf（51 筆，2025-02 至 2026-01），較同區 The Promenade（Bayan Baru，Brickz 中位 RM 515 psf）、Sungai Ara 一般行情（RM 407–572 psf）、Bayan Baru 整體均價（約 RM 500 psf）高出近一倍——但這個溢價的來源不是地段稀缺（三層皆 ✗，地段本身高度可複製），而是 Hunza 自建生態圈（自有 Gurney Paragon Mall 經營經驗＋PICC 一站式商業／醫療／酒店規劃）與雙塔地標產品定位帶來的<strong>產品溢價</strong>。本卡刻意不讓稀缺性維度吸收這個溢價，維持 anchor 6.0 不另加分，把溢價的認可留給開發商品牌與估值紀律兩個維度分別處理。</p>
+
+    <p>建案規模雙塔合計 846 戶，戶型從 3 房 1,087 sqft 到 5 房 1,862 sqft 共 10 種格局（Type A–H），<strong>全案完全不含 2 房戶型</strong>——這與檳城 anchor 表「Bayan Baru 非島上精華區、預設採 2BR 為代表戶型」的一般規則出現衝突：依「坪數從開發商實際 product menu 選取，禁止虛構」的更高位原則，本卡改採全案最小、最貼近入門價位的 Type G1（3 房 1,087 sqft）為代表戶型，卡上明確揭露此例外處理。生活機能上，PICC 自身規劃的商場／醫療中心尚未動工（2026 Q4 動工、2031 完工），現況步行機能仍以既有 Sunshine Square（約 832m）與 Pantai Hospital Penang（同在 Persiaran Mahsuri／Jalan Tengah 路口）為主；本卡未預先給尚未存在的 PICC 商業機能加分。LRT Mutiara Line 現況進度 8.99%（2026-06），距本案最近的 Bukit Jambul 站（S09）以座標估算約 600m（非步行實測距離），落入 ≤800m 加分門檻——這是本站首張真正吃到 LRT Mutiara 進度加分的卡片，惟距離估算方法與 Hunza 官方行銷宣稱的「PICC 直接連結 LRT 站」之間存在精確度落差，卡上如實揭露。</p>
+
+    <p>開發商層面，Hunza 自有 Gurney Paragon Mall 與 PICC，是檳城少見的「開發商自己經營下游商場／醫療／酒店資產」對齊模式，Muze 的產品溢價一定程度即受益於此。惟需留意兩項治理事項：其一，2026-02-03 上訴庭於 Badan Pengurusan Bersama Gurney Paragon Residential v Hunza Properties 一案判決 Hunza 主導的「住宅／商業分割式管理」自始無效，JMB 須以單一帳戶管理整棟——此案標的是 Gurney Paragon 非 PICC，判決未直接觸及 Muze，惟 PICC 是與 Gurney Paragon 同結構的混合開發，一旦 2031 年商業樞紐完工、管理架構若同樣採分割式，即落入此判決的直接射程，這是本卡列為前瞻性治理風險而非已發生事件的原因；其二，Hunza 自 2016 年除牌後無公開財報，財務狀況不透明。</p>
+
+    <p>定價層面，本案是站上罕見「同建案自身即為 Brickz 高信心度成交錨」的完工案——51 筆成交（2025-02 至 2026-01）中位 PSF RM 1,053，中位總價 RM 1,270,000（反推中位坪數約 1,206 sqft，明顯受較大戶型成交拉高）。全案目前掛牌 PSF 區間約 RM 736–968，其中代表戶尺寸段（1,087–1,098 sqft，全案最小戶型）掛牌中位約 RM 760 psf——低於全案 Brickz 中位，但兩者並非同尺寸比較，這個落差較可能反映「戶型組合效應」（小戶型 psf 天生低於大戶型／高樓層戶型）而非真實低估，本卡估值維度信心度因此標為「低」。租金市場方面，代表戶估算月租約 RM 3,400（以掛牌租金率 RM 3.10 psf 折算），毛收益率估算約 3.5%，落在檳城精華區普遍 2.7-3.8% 毛收益格局的中段；此類收益率仍屬入口網站掛牌推算，非機構數據，一律標「估算」。</p>
+
+    <p>持有面結構，永久住宅地契意味著 R4 適用：本卡已查證 Muze 為永久住宅地契 condominium（非商業 SA／SOHO——PropertyGuru、iProperty、Wikipedia、Hunza 官網一致標示），本案不得計入任何短租／Airbnb 收入，MBPP 針對住宅地契的短租限制對本案完全生效。退場面，本國人 quantum RM 114.5 萬落在檳城 P75-P90 收入帶偏 P75 端，是穩健的中高端本地池；本案最突出的特徵是高流動性——年換手率約 6.0%（計入量化分數）、Brickz 深度達 51 筆，兩項指標均優於站上其他檳城卡，本國人退場分因此拉高至 7.8（全表目前最高）；掛牌率約 5.2%（iProperty）僅供揭露，依 ANCHORS 已知資料缺口第 6 條不採計為量化分數。外籍面，Barat Daya district 完工未售 883 套已觸發 R1 硬規則，外籍退場分封頂 6.0（本案計算值 5.0 尚未觸頂），加上代表戶總價恰落在「門檻邊界 RM 100-120 萬」帶（貼近外籍最低門檻 RM 100 萬，−0.3），以及 Bayan Baru 被定位為「租客市場非外籍業主市場」，外籍投資型接手意願結構性偏薄。</p>
+
+    <p>主要留意事項：①稀缺性三層皆 ✗，10 年論點不能建立在「地段稀缺會推升退場價」，應建立在「產品溢價 + 高流動性」；②同一 PICC 基地內 Senze（1,678 戶，2026 年底完工）是本案最直接、最大量體的近鄰新增供給，10 年持有期內應持續追蹤其去化與租賃市場的擠壓效應；③完工約 3 年的高換手率（6.0%）可能部分反映早期投資者取得 VP 後的一次性拋售潮，長期是否維持同等活躍度需持續觀察；④Intel 復工但擴產人力未公布且已毀約一次，不應視為已入袋的租賃需求；⑤Hunza 治理事項（分割式管理判決的前瞻風險、自 2016 年無財報）需持續追蹤；⑥毛收益率僅約 3.5%，本案更適合以「流動性與換手速度」為核心的持有邏輯，而非高現金流故事。</p>
+
+    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+      <strong style="color:var(--navy);font-weight:700">10 年情境基準</strong>：假設 2026-08 進場、2036-08 退場：
+      <ul style="margin:8px 0 0 18px;padding:0">
+        <li><strong>合理情境</strong>（base case）：島上住宅 strata 基準 +3%/年、租金年漲 3%、空置 1 月/年、高流動性維持中等水準。本國人 10 年累計淨報酬約 <strong>RM 15.9 萬</strong>，外國人約 <strong>RM 7.8 萬</strong>（估算）。</li>
+        <li><strong>上行情境</strong>（bull case）：機場擴建 2028 完工 + LRT Mutiara 進度加速 + Senze 完工後帶動整個 PICC 生態圈估值上修 + 房價 +4.5%/年。本國人 10 年淨報酬約 <strong>RM 39.2 萬</strong>，外國人約 <strong>RM 28.7 萬</strong>（估算）。</li>
+        <li><strong>下行情境</strong>（bear case）：Senze 1,678 戶完工衝擊租賃與二手市場、Barat Daya 完工待售持續攀升、房價僅 +1%/年（低於基準）。本國人 10 年虧損約 <strong>RM 10.8 萬</strong>，外國人虧損約 <strong>RM 16.2 萬</strong>（估算）——此情境並非極端假設，而是近鄰巨量新供給壓力的合理延伸。</li>
+      </ul>
+      <div style="margin-top:10px">10 年退場流動性：檳城無 MLS、無公開 days-on-market 數據，本案以年換手率（~6.0%，非常活躍，計入量化分數）替代判讀，掛牌率（~5.2%，iProperty）僅供揭露、不採計為量化分數（見已知資料缺口#6），是站上檳城卡中流動性指標最強的案例之一，惟需留意此活躍度部分可能來自完工初期的一次性拋售潮。</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>本站二手市場流動性最強案例之一：年換手率約 6.0%（非常活躍，計入量化分數）、Brickz 深度達 51 筆，均遠優於同批檳城卡；掛牌率約 5.2%（iProperty）僅供揭露、不採計為量化分數</li>
+        <li>Hunza 自建生態圈（自有 Gurney Paragon Mall＋PICC）撐出明確產品溢價，Brickz 中位 RM 1,053 psf 較同區行情高近一倍，有真實成交佐證</li>
+        <li>已完工約 3 年，同建案 Brickz 自身即為高信心度真實成交估值錨（51 筆，樣本厚實）</li>
+        <li>Bayan Baru 到 FIZ 僅約 4 分鐘、到機場約 13 分鐘，E&E 就業腹地可達性佳</li>
+        <li>本站首張真實吃到 LRT Mutiara 進度加分的卡片（距 Bukit Jambul 站約 600m，估算）</li>
+        <li>10 年打平門檻不高：本國人約 1.8%/年、外國人約 2.4%/年，均低於島上住宅 strata 基準年增速 3.0%</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li>稀缺性稽核三層皆 ✗：土地層（PICC 全案土地與供給管道遠未見頂）、產品層（Senze 同基地高度可複製）、法規層（無規劃鎖）——高成交價是產品溢價，不是地段稀缺</li>
+        <li>同一 PICC 基地內 Senze（1,678 戶）預計 2026 年底完工，是本案最直接的近鄰新增供給壓力，須持續追蹤去化與租賃市場擠壓效應</li>
+        <li>毛收益率僅約 3.5%，落在檳城精華區偏薄格局；R4 適用：本案為永久住宅地契，不得計入任何短租／Airbnb 收入</li>
+        <li>完工約 3 年的高換手率可能部分反映早期投資者取得 VP 後的一次性拋售潮，非保證長期常態</li>
+        <li>Hunza 2026-02-03 遭上訴庭判決分割式管理無效（標的為 Gurney Paragon 非 PICC），惟 PICC 為同結構混合開發，2031 年商業樞紐完工後存在前瞻性治理風險；且自 2016 年無公開財報</li>
+        <li>Barat Daya district 完工未售已達 883 套（觸發 R1），外籍退場分結構性受壓（cap 6.0，本案現值 5.0）；代表戶總價落入外籍門檻邊界帶（RM 100-120 萬），退場買家池較窄</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：交通與可達性（6.6）、開發商與管理移交（6.7）<br>
+      <strong>可妥協</strong>：稀缺性與地段護城河（自住不追求退場稀缺溢價）<br>
+      <strong>本案 fit</strong>：Bayan Baru 核心地帶生活機能便利（Sunshine Square、Pantai Hospital 皆在步行/短程範圍），適合在 Bayan Lepas／Bayan Baru 上班的 E&E 從業者或雙薪家庭；惟 PICC 自身規劃的商場／醫療中心要到 2031 年才完工，現階段的機能便利主要來自既有周邊設施而非 PICC 本身，且尖峰時段往喬治市方向須過 Tun Dr Lim Chong Eu Expressway 樽頸。</div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（4.0 本 / 2.0 外）、退場與接手人群（7.8 本 / 5.0 外）<br>
+      <strong>可妥協</strong>：資本增值動能（基準溫和 +3.0%/年，且面臨 Senze 近鄰供給壓力）<br>
+      <strong>本案 fit</strong>：毛收益率約 3.5% 偏薄，且 R4 鎖死短租上限——現金流本身不是本案論點的核心，核心是本國人退場維度罕見拉高至 7.8（高換手率＋深 Brickz 記錄，掛牌率僅供揭露不計分）帶來的高流動性，適合「重視隨時能脫手」勝於「重視每月現金流」的投資邏輯。外籍投資人須額外承擔約 11.4% 進場摩擦與門檻邊界帶的退場池限縮，需誠實評估報酬預期。</div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：開發商與管理移交、持有現金流（空置期管理費負擔）<br>
+      <strong>可妥協</strong>：稀缺性與地段護城河、資本增值動能<br>
+      <strong>本案 fit</strong>：雙塔地標、Hunza 自建生態圈對備用居所有一定吸引力，惟 Bayan Baru 非傳統外籍／MM2H 聚居熱點（該效應錨定於北岸 Tanjung Tokong 一帶），此用途 fit 度中等偏低。長期空置成本主要為管理費（暫估 RM 0.6 psf × 1,087 sqft × 12 = RM 7,826/年，待校準）。</div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：開發商與管理移交（PICC 全案 10 年開發期的長期規劃延續性）、退場與接手人群（下一代脫手）<br>
+      <strong>可妥協</strong>：短期 yield、短期催化<br>
+      <strong>本案 fit</strong>：PICC 全案 2031 年完工後若商業樞紐（商場、辦公塔、酒店、醫療中心）如期落地，20 年維度下 Bayan Baru 這個微觀地段的機能會顯著提升；惟稀缺性三層皆 ✗ 意味著本案不具備「地段本身會因不可複製而增值」的傳承敘事，世代傳承者應以「PICC 生態圈成熟度」而非「地段稀缺」作為長期持有邏輯，並持續追蹤 Hunza 的治理事項（分割式管理判決的前瞻風險）與 Senze 完工後的供給消化情況。</div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    PropertyGuru Malaysia — Muze @ PICC 建案頁面（戶型、坪數、掛牌 PSF 區間 RM 736-968、租售掛牌） · iProperty Malaysia — 建案頁面（Tenure freehold、846 戶、掛牌數約 44 戶售、代表戶尺寸段掛牌中位 RM 760 psf） · Wikipedia — Muze @ PICC（座標、塔樓層數、完工年份、地段） · Hunza Properties Berhad 官網（hunzagroup.com、picc-penang.com）— Muze／Senze／PICC 全案官方項目頁與樓層平面圖 · Brickz — Muze @ PICC 非有地住宅成交（51 筆，2025-02~2026-01，中位 RM 1,053 psf，中位總價 RM 1,270,000） · NAPIC MHPI 2025P（島上高層指數 228.5、Barat Daya 完工未售 883 套） · LRT Mutiara Line 官方進度公告與站點資料（laluanmutiara.mymrt.com.my、railtravelstation.com、penang-traveltips.com，進度 8.99%，2026-06；Bukit Jambul 站座標） · The Star／FMT／Malay Mail（2026-05~08）— LRT Mutiara 施工進度報導 · Miranda & Samuel 法律事務所 — Badan Pengurusan Bersama Gurney Paragon Residential v Hunza Properties [2026] CLJU 269 上訴庭判決摘要（2026-02-03） · TheEdge Malaysia — Hunza PICC 開發計畫、Hunza 除牌歷史 · LHDN Finance Act 2026（外籍印花稅 8%、非居民 30% 租金稅、10% 永久 RPGT） · Penang PTG 州地政局指引（2024-08-01，外籍門檻、徵費、州同意、三年禁售期） · BNM OPR 2.75% · DOSM 檳城家庭收入百分位（本站鎖定事實）· 本卡「稀缺性稽核」「開發商分級」「地段 anchor」「退場公式」等市場層級事實引自 penang-property-scorecard-v1 skill 已鎖定 ANCHORS
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-08-06。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限（自住／出租／備用居所／世代傳承）。</strong>本卡分數採檳城內部尺規校準，與其他市場（KL／曼谷等）評分卡分數不可直接比較。租金／收益率、管理費、門牌稅／保險、LRT 站距（座標估算非步行實測）等項目因檳城無機構發布數據或無專屬公開資料，一律標「估算」或「待校準」，買家應向代理、開發商或律師書面確認最終實際數字。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+  </div>
+</div>
+
+</div>
+</body>
+</html>
