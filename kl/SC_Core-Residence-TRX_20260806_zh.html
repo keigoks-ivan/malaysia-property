@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Core Residence @ TRX — KL 建案評分卡 | Property Check</title>
+<meta name="description" content="Core Residence @ TRX 獨立評分卡。本國人 6.0 / 外國人 5.6。10 年持有專業投資人視角 · 7 維度框架 · CCCG × WCT Holdings JV / Brickz 轉手掛零 / NAPIC 公開資料源。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}
+.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{font-family:'Noto Serif TC','Playfair Display',serif;font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+
+.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{font-family:'Noto Serif TC','Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}
+.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{font-family:'Noto Serif TC','Playfair Display',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+.sub-eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--gold-deep);margin:22px 0 10px;text-transform:uppercase}
+.sub-eyebrow:first-of-type{margin-top:4px}
+.scarcity-box{background:var(--navy-soft);border:1px solid #c9d6e8;border-radius:12px;padding:8px 20px}
+.scarcity-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(13,34,68,.08);align-items:flex-start}
+.scarcity-row:last-of-type{border-bottom:none}
+.scarcity-mark{flex:0 0 auto;width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:1px}
+.scarcity-mark.pass{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.scarcity-mark.fail{background:#f1f0ec;color:#8a8577;border:1px solid #ddd8ca}
+.scarcity-layer{flex:0 0 60px;font-weight:700;font-size:13px;color:var(--navy);padding-top:2px}
+.scarcity-txt{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.scarcity-verdict{margin-top:12px;padding:12px 16px;background:linear-gradient(135deg,#fef9ed,#fbf3df);border-left:3px solid var(--gold);border-radius:8px;font-size:12.5px;line-height:1.75;color:var(--navy)}
+.scarcity-verdict strong{color:var(--gold-deep)}
+.quantum-line{background:linear-gradient(135deg,var(--bg-soft),#fbf3df);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px;margin-bottom:14px;font-size:12.5px;line-height:1.8;color:var(--text-soft)}
+.quantum-line strong{color:var(--navy)}
+.pyramid-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.pyramid-table th{text-align:left;padding:9px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.pyramid-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.65}
+.pyramid-table tr:last-child td{border-bottom:none}
+.pyramid-table td.seg{font-weight:600;color:var(--navy);white-space:nowrap}
+.pyramid-v{font-weight:700;text-align:center;font-size:15px}
+.pyramid-v.yes{color:#15803d}
+.pyramid-v.mid{color:#a16207}
+.pyramid-v.no{color:#9a9488}
+.dep-tag{padding:12px 16px;border-radius:10px;font-size:12.5px;line-height:1.75}
+.dep-high{background:#fdf0ed;border:1px solid #f0c9bd;color:#7a3b28}
+.dep-tag strong{font-weight:700}
+.evid-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.evid-card{padding:14px 12px;border:1px solid var(--border-soft);border-radius:12px;background:linear-gradient(180deg,var(--bg-soft),#fff);text-align:center}
+.evid-num{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);letter-spacing:-.02em;line-height:1}
+.evid-lbl{font-size:10.5px;color:var(--muted);font-weight:600;letter-spacing:.03em;margin-top:6px;line-height:1.3}
+.evid-tag{display:inline-block;margin-top:8px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px}
+.evid-tag.hot{background:#dcfce7;color:#15803d}
+.evid-tag.warm{background:#fef3c7;color:#a16207}
+.evid-tag.norm{background:var(--navy-soft);color:var(--navy-mid)}
+.evid-tag.cold{background:#f1f0ec;color:#8a8577}
+.exit-summary{margin-top:18px;padding:16px 20px;background:linear-gradient(135deg,var(--navy-deep),var(--navy));color:#f3ebd6;border-radius:12px;font-size:13px;line-height:1.85}
+.exit-summary strong{color:var(--gold-light)}
+
+@media (max-width:768px){
+  .evid-strip{grid-template-columns:repeat(2,1fr)}
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">KL Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/kl-check">← 全部評分</a>
+      <a class="back-link" href="viewing.html?b=Core%20Residence%20%40%20TRX&amp;lang=zh&amp;mode=completed" style="color:var(--gold-deep);font-weight:600">📋 看房</a>
+      <a class="lang-link" href="SC_Core-Residence-TRX_20260806_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>TRX · Persiaran TRX 2</span>
+    <span class="sep">◆</span>
+    <span>永久商業地契 SA</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-08-06</span>
+  </div>
+  <h1 class="proj-name">Core Residence @ TRX</h1>
+  <p class="one-liner">
+    與 TRX Residences by Lendlease 共享同一套 TRX MRT 兩線交會＋Exchange TRX mall 生活圈，開發商為 CCCG（中國交通建設集團，中國國企）× WCT Holdings Berhad 合資、CCCG 在馬來西亞的首個房產開發案；惟完工近 2 年 Brickz 查無一筆 subsale 成交，同時 217-238 戶（逾 35%）掛牌待售、516-578 戶掛租，退場證據明顯薄於同地段姊妹案，是本卡與 TRX Residences 分數分道揚鑣的核心原因。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.0</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">TRX 地段 6.5（district 真稀缺、整合強度略遜 TRX Residences）+ CCCG × WCT 開發商 6.5（CCCG 首發房產案、無政府共同持股）+ 退場與接手 4.6（Brickz 零成交 + 掛牌率 37-41%）+ 資本增值 5.7（缺乏自身升值實證）；gross ~5.4% yield 理論上優於同儕，但同時掛租 516-578 戶顯示競租壓力</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.6</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">永久商業 SA + MM2H 達門檻（RM 1.95M &gt; RM 1M）；但商業地契融資摩擦 + 8% 印花 + 30% 非居民租金稅 + CCCG 中資背景可能使買家池集中於特定來源、轉售時接手池較廣泛國際池窄 + 本案自身無轉手證據可佐證退場流動性</div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">七維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。稀缺性與地段護城河 20% · 交通與可達性 12% · 資本增值動能 15% · 進場估值紀律 13% · 持有現金流 12% · 退場與接手人群 18% · 開發商與管理移交 10%。5 個維度本外同分、2 個維度本外分開（現金流 + 退場）。核心信仰：buy the land, buy the exit —— 稀缺是地板、退場是實現。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+<svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="七維度雷達圖">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): [6.5, 8.0, 5.7, 5.8, 5.5, 4.6, 6.5] -->
+  <polygon points="140.0,67.2 210.1,84.1 202.2,154.2 168.2,198.5 113.3,195.5 89.8,151.5 83.1,94.6" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="67.2" r="3.5"/>
+    <circle cx="210.1" cy="84.1" r="3.5"/>
+    <circle cx="202.2" cy="154.2" r="3.5"/>
+    <circle cx="168.2" cy="198.5" r="3.5"/>
+    <circle cx="113.3" cy="195.5" r="3.5"/>
+    <circle cx="89.8" cy="151.5" r="3.5"/>
+    <circle cx="83.1" cy="94.6" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [6.5, 8.0, 5.7, 5.8, 3.5, 3.4, 6.5] -->
+  <polygon points="140.0,67.2 210.1,84.1 202.2,154.2 168.2,198.5 123.0,175.3 102.9,148.5 83.1,94.6" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="67.2" r="3.0"/>
+    <circle cx="210.1" cy="84.1" r="3.0"/>
+    <circle cx="202.2" cy="154.2" r="3.0"/>
+    <circle cx="168.2" cy="198.5" r="3.0"/>
+    <circle cx="123.0" cy="175.3" r="3.0"/>
+    <circle cx="102.9" cy="148.5" r="3.0"/>
+    <circle cx="83.1" cy="94.6" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+    <text x="140" y="12" text-anchor="middle">稀缺與地段</text>
+    <text x="239" y="59" text-anchor="start">交通與可達性</text>
+    <text x="263" y="168" text-anchor="start">資本增值動能</text>
+    <text x="195" y="262" text-anchor="start">進場估值紀律</text>
+    <text x="85" y="262" text-anchor="end">持有現金流</text>
+    <text x="17" y="168" text-anchor="end">退場與接手</text>
+    <text x="41" y="59" text-anchor="end">開發商與交付</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 6.0</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 5.6</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">稀缺性與地段護城河</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">TRX district 錨 7.0 起跳。v5.0 稀缺性稽核（cap ±1.0）：土地層 fail——TRX 70 英畝總體規劃內多棟供給共享（本案自身原規劃 3 座塔樓縮減為 2 座、TRX Residences 6 塔計畫、TRX City 其他住宅地塊尚未推出），供給端不封頂，計 −0.5；產品層 fail——商業 SA 產品同區高度可複製，同地段 Brickz 錨點 RM 2,293 psf 溢價反映的是 TRX district brand 而非產品獨特性，不予加分；整合強度：本案距 TRX MRT 站約 100 米（Kajang 線 + Putrajaya 線交會），與 TRX Residences 的 70 米相近，惟前往 Exchange TRX mall 為街面 5 分鐘步行、非室內直連天橋（TRX Residences 大樓直接坐落於 mall 正上方），未達「直連不可複製」門檻，不予 TRX Residences 曾獲得的 +0.3 整合加分。Freehold（SA 中少見）維持不扣，但 TRX 兩案皆為 freehold，稀有性已被稀釋，不加碼。淨值 7.0 −0.5 = 6.5，低於 TRX Residences 的 6.8，反映「共享地段光環但整合強度略遜、且自身缺乏轉手數據佐證溢價」的雙重下修。</p>
+        <p class="dim-data">TRX 70 英畝混合用途 master plan · TRX MRT 站（Kajang Line + Putrajaya Line 交會）約 100m 步行 · Exchange TRX mall 5 分鐘步行（街面，非室內直連） · Prince Court Medical Centre 900m · Pavilion KL 800m 步行 · Petronas Twin Towers 1.8km · GBI Gold + LEED 雙認證 · 原規劃 3 座塔樓／700 戶縮減為 2 座塔樓／580 戶</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與可達性</span><span class="dim-weight">12% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">8.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">TRX MRT 兩線交會約 100 米步行（與 TRX Residences 相近）+ Prince Court Medical Centre 900 米 + Pavilion KL 800 米步行 + Petronas Twin Towers 1.8 公里；惟 Exchange TRX mall 為 5 分鐘街面步行、非室內直連天橋，未達 TRX Residences「大樓坐落於 mall 正上方」的整合強度，故略低於 TRX Residences 的 8.5。</p>
+        <p class="dim-data">TRX MRT 站（Kajang + Putrajaya 兩線交會）約 100m／1-2 分鐘步行 · Exchange TRX mall 500 店／120,773 sqm，5 分鐘步行（街面） · Prince Court Medical Centre 900m · Pavilion KL 800m · Petronas Twin Towers 1.8km · TRX City Park 鄰近 · GBI Gold + LEED 雙認證</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值動能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.7</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Commercial SA 5.0 基線 + TRX 整體 ecosystem 已實現整合（MRT 通車、Exchange TRX mall 開幕、TRX City Park 啟用，與 TRX Residences 共享同一波已落地催化）+0.5 + MM2H 買盤持續導流 TRX 區 +0.3 + NAPIC Premium &gt;RM 1M 24 個月 78% 認購率穩健性（適用整個 TRX／KL 豪宅次市場）+0.2 − TRX 區內廣義未來供給壓力（TRX Residences Phase 2-6 共 4 棟塔樓、本案自身並發放售／放租房源顯示去化壓力）−0.3 = 5.7。與 TRX Residences 的 6.0 相比，本案無法比照援引「Brickz +4% 已實現升值」作為加分項——因本案自身無次級市場成交記錄可供驗證，此為兩案在增值維度上的核心差異，非本案地段條件更差，而是證據鏈更薄。</p>
+        <p class="dim-data">NAPIC 2024 KL RM 1M+ 成交量 +31% YoY · NAPIC Q3 2025 premium &gt;RM 1M 24 個月 78% 認購率 · TRX MRT 通車（2017）+ Exchange TRX mall 開幕（2023-11-29）+ TRX City Park 啟用 · MRT3 Circle Line 2032 通車 · 本案無 Brickz 轉手升值數據可查證（vs TRX Residences 有 +4% 12 個月實證）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">進場估值紀律</span><span class="dim-weight">13% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.8</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">本案缺乏同建案 Brickz 成交數據（次級市場薄，暫無 subsale 記錄可查），退而求其次採用同地段 3 年內新完工案的成交錨點：TRX Residences（Residensi TRX 1）Brickz 59 筆成交中位 RM 2,293 psf（信心度：中，同地段非同建案）。本案 asking RM 2,200-2,400 psf（中位 RM 2,300）較此錨點溢價約 +0.3%（幾乎持平）。若比照高信心度同建案錨點的計分邏輯，此溢價水準對應約 6.0 分；但因信心度僅為中（同地段而非同建案），且本案自身缺乏交易驗證定價合理性，扣減至 5.8。</p>
+        <p class="dim-data">錨點：同地段（非同建案）TRX Residences Brickz 59 筆成交中位 RM 2,293 psf（信心度：中） · 代表 Asking PSF RM 2,300（區間 RM 2,200-2,400） · 溢價約 +0.3% · 本案原發售價 RM 1,900-2,059 psf 起（2019-2020 launch）→ 現 RM 2,300 psf asking，隱含 +12-21% 累計，但無成交驗證 · 較 KLCC Four Seasons RM 3,010 psf 折讓約 24%</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">12% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">5.5</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">3.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">本案 asking 租金 RM 10-10.70 psf／月，2BR 850 sqft 代表戶約 RM 8,800／月（RM 10.35 psf），對應 RM 195 萬購入價毛收益率約 5.4%，落在 5.0-5.5% 區間，基線 6.0；+0.3 TRX 金融 CBD 企業派駐租客池（與 TRX Residences 共享同一批潛在租客：Exchange 106 跨國機構、Prudential、HSBC 等）；−0.3 商業地契管理費 RM 0.80 psf（TRX 同儕中最高，較 TRX Residences 的 0.55-0.70 psf 高 14-45%）+ 商業電費墊高持有成本；−0.5 同時掛租房源達 516-578 戶（幾近全案 580 戶），顯示激烈競租壓力，實際成交租金可能顯著低於 asking，故對 yield 估值保守處理。淨值 6.0 +0.3 −0.3 −0.5 = 5.5。外國人 = 本國人 −2.0 = 3.5（30% 非居民租金稅 + 融資利率結構性差距）。</p>
+        <p class="dim-data">2BR 850 sqft asking 租金約 RM 8,800／月（RM 10.35 psf，區間 RM 10-10.70 psf） · 對應 RM 195 萬購入毛 yield ≈5.4% · 管理費 RM 0.80 psf（TRX 同儕最高） · 本國人商業房貸利率 5.30%／外國人 5.80%（OPR 2.75% + 商業地契溢價） · PropertyGuru／iProperty 同時掛租 516-578 戶（近全案 580 戶）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場與接手人群</span><span class="dim-weight">18% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">4.6</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">3.4</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">本國人：商業 Freehold SA 地契 baseline 6.5 起跳。quantum RM 195 萬（RM 150-250 萬帶）−0.3；換手率 0 筆／580 戶（完工近 2 年零記錄成交，落「&lt;1%」帶）−0.5（vs TRX Residences 6.6% 獲 +0.5，方向完全相反）；掛牌率 217-238／580 = 37-41%（&gt;30%），且本案缺乏 TRX Residences 式「高換手佐證掛牌可以清得掉」的反證，故全額扣 −0.5（不比照 TRX Residences 打折至 −0.3）；Brickz 深度 0 筆（&lt;10 筆帶）−0.3；商業 SA 下一手融資摩擦（LTV 80-85%、利率 +0.5-1%）−0.3。淨值 6.5 −0.3 −0.5 −0.5 −0.3 −0.3 = 4.6。外國人：本國人 −2.0 = 2.6 起跳。MM2H 合規（RM 195 萬 &gt;&gt; RM 100 萬門檻）+1.0；退場價落「甜蜜帶 RM 100-200 萬」上緣 +0.3；外籍依賴度中高，且 CCCG 中資開發商可能使買家結構集中於特定來源（中國內地投資客池比廣泛國際池窄，參照 Agile Bukit Bintang 案例「中資轉售外籍池窄」先例）−0.5；淨值 2.6 +1.0 +0.3 −0.5 = 3.4。KL SA 廣義 overhang 4,181 套（NAPIC Q1 2026，&gt;3,000）觸發商業 SA 外籍退場 cap 6，3.4 未被夾。本外差距 1.2，主要反映本案在「轉手證據」這項本應最容易驗證的指標上明顯弱於 TRX Residences，而非制度性外籍門檻的差異。</p>
+        <p class="dim-data">商業地契 SA 70-85% LTV（vs 住宅 90%） · Commercial Strata（Commercial under HDA）地契，無 HDA Schedule H · iProperty／PropertyGuru 在售 217-238 戶（2026）／580 戶 = 37-41% 掛牌率 · 同時掛租 516-578 戶（2026） · 對照 TRX Residences（Residensi TRX 1）：59 筆／896 戶 = 6.6% 年換手率，vs 本案 0 筆可查證 subsale · 完工近 2 年（2024 完工）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">CCCG（中國交通建設集團，全球財富 500 強第 61 位，2025 年營收約 US$106.8B）持股 80% × WCT Holdings Berhad（Bursa 上市，KLSE：9679）持股 20%，透過 Core Precious Development Sdn Bhd 合資開發。CCCG 在馬來西亞已有 20 年基建工程經驗（巴生港填海工程、檳城蘇丹阿都哈林大橋等），母集團財務規模龐大穩健 +0.3；但本案是 CCCG 在馬來西亞的首個房產開發項目，無同類物業交付紀錄可供查證 −0.5；原定 2023 年完工，實際 2024 年交屋，約 1 年遲延 −0.3；WCT Holdings 2026 年第一季（截至 2026-03-31）淨利潤僅 RM 460 萬，較去年同期 RM 1,200 萬下滑 61.7%，獲利能力轉弱 −0.2；且本案 JV 結構純屬 CCCG × WCT 私人合資，並無如 TRX Residences 的 MOF（財政部全資子公司）政府機構共同持股背書 −0.3。基線 7.5（機構級 JV 起跳）經上述調整後 = 7.5 −0.5 −0.3 −0.2 +0.3 −0.3 = 6.5，低於 TRX Residences 的 7.5，主要差異來自 CCCG 首發案缺乏交付紀錄、無政府共同持股，以及合資方近期獲利轉弱。</p>
+        <p class="dim-data">CCCG 全球財富 500 強第 61 位，2025 年營收約 US$106.8B · Core Residence 為 CCCG 馬來西亞房產開發首案 · WCT Holdings Q1 FY2026 淨利潤 RM 460 萬（YoY −61.7%，去年同期 RM 1,200 萬） · WCT 20 年馬來西亞上市建築／地產紀錄 · 完工遲延約 1 年（原定 2023 → 實際 2024） · 無 MOF／政府共同持股（純商業 JV，vs TRX Residences 的 MOF 40% 股權）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+  <p class="section-sub">代表戶型：<strong>2BR 850 sqft 中層約 RM 1,955,000</strong>（@ RM 2,300 psf）。本案戶型結構為 624-1,022 sqft（1BR-3BR，7 種格局 A1/A2/B1/B2/B3/B4/C1）；採 2BR 850 sqft 為跨建案標準代表戶型，與 TRX Residences 卡直接可比，PSF 取自 asking 區間中段。</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">CCCG × WCT Holdings Berhad JV（80% / 20%）<span class="kv-src">China Communications Construction Group（中國國企，Fortune Global 500 第 61 位）+ WCT Holdings Berhad（Bursa 上市，KLSE：9679），透過 Core Precious Development Sdn Bhd 合資</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">永久商業地契 · serviced apartment（SA）<span class="kv-src">Commercial Strata（Commercial under HDA），無 HDA Schedule H · 70-85% LTV · 商業電費</span></td></tr>
+          <tr><td class="kv-label">規模</td><td class="kv-val">2 座塔樓，50 層，580 戶（原規劃 3 座塔樓／700 戶／GDV RM 14 億）<span class="kv-src">GBI Gold + LEED 雙綠建築認證；原定 2023 完工，實際 2024 交屋（約 1 年遲延）</span></td></tr>
+          <tr><td class="kv-label">單位坪數</td><td class="kv-val">624-1,022 sqft（1BR-3BR，7 種格局）<span class="kv-src">A1/A2/B1/B2/B3/B4/C1 共 7 種戶型；原發售價 RM 1,284,745-4,131,474</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">2BR 850 sqft 中層 @ RM 1.95M<span class="kv-src">RM 2,300 psf 為 asking 區間中段（RM 2,200-2,400），與 TRX Residences 卡代表戶跨建案可比</span></td></tr>
+          <tr><td class="kv-label">完工時間</td><td class="kv-val">2024 年完工（已完工 ~2 年）<span class="kv-src">原定 2023 完工；Brickz 迄今查無一筆 subsale 成交</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與品牌</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">微觀位置</td><td class="kv-val">Persiaran TRX 2, Tun Razak Exchange, 55188 Kuala Lumpur<span class="kv-src">TRX 70 英畝 master plan 核心，與 TRX Residences 共用同一波基礎設施</span></td></tr>
+          <tr><td class="kv-label">最近捷運</td><td class="kv-val">TRX MRT 站約 100m / 1-2 分鐘步行<span class="kv-src">Kajang Line（SBK）+ Putrajaya Line（SSP）兩線交會 · 2017 通車</span></td></tr>
+          <tr><td class="kv-label">商業/生活</td><td class="kv-val">Exchange TRX mall（500 店）5 分鐘步行（街面） + Pavilion KL 800m + Prince Court Medical Centre 900m<span class="kv-src">非室內直連天橋（與 TRX Residences 大樓坐落於 mall 正上方不同） · Petronas Twin Towers 1.8km</span></td></tr>
+          <tr><td class="kv-label">綠建築認證</td><td class="kv-val">GBI Gold + LEED 雙認證<span class="kv-src">與 TRX Residences 同級認證</span></td></tr>
+          <tr><td class="kv-label">管理費</td><td class="kv-val">RM 0.80 psf<span class="kv-src">高於 TRX Residences 的 RM 0.55-0.70 psf，為 TRX 同儕中最高</span></td></tr>
+          <tr><td class="kv-label">同地段直接對照</td><td class="kv-val">TRX Residences by Lendlease（本站已評分）<span class="kv-src">TRX Residences Brickz 59 筆中位 RM 2,293 psf、6.6% 年換手率；本案 0 筆可查證 subsale</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-4% 階梯制<br><small style="color:var(--muted)">RM 62,000</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 156,000</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">15%（商業 LTV 85%）<br><small style="color:var(--muted)">RM 293,000</small></td><td class="num">30%（LTV 70%）<br><small style="color:var(--muted)">RM 587,000</small></td><td><small>BNM / 銀行政策</small></td></tr>
+      <tr><td>商業房貸利率</td><td class="num">5.30%</td><td class="num">5.80%</td><td><small>BNM OPR 2.75% + 商業地契溢價約 +0.75%</small></td></tr>
+      <tr><td>毛租金收益率（2BR 850 sqft 長租）</td><td class="num">~5.4%</td><td class="num">~5.4%（同）</td><td><small>RM 8,800/月 / RM 1.95M</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">10-24% 累進<br><small style="color:var(--muted)">估約 15-20%</small></td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>稅後淨收益率（含 1 月空置）</td><td class="num">~3.4%</td><td class="num">~2.3%</td><td><small>計算（管理費 + 稅後）</small></td></tr>
+      <tr><td>利差（淨 yield − 房貸利率）</td><td class="num">−1.9%</td><td class="num">−3.5%</td><td><small>計算</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>最低購買門檻（KL）</td><td class="num">無</td><td class="num">RM 1,000,000</td><td><small>聯邦直轄區</small></td></tr>
+      <tr><td>MM2H 強制資產資格</td><td class="num">—</td><td class="num">達門檻（RM 1.95M &gt; RM 100 萬）</td><td><small>MM2H 黃金計畫</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>2BR 850 sqft 中層 RM 1,955,000</strong>（@ RM 2,300 psf）為基礎——本國人 vs 外國人 10 年總成本與淨損益對照。與 TRX Residences 卡採同一代表戶總價，僅租金與管理費依本案實際數據調整，兩案 10 年成本表可直接對照。</p>
+
+  <div class="assump-box" style="background:linear-gradient(135deg,#fef9ed 0%, #fbf3df 100%);border:1px solid var(--gold);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative">
+    <strong>⚠️ 估值與買價透明度說明：</strong>估值維度（13%）以「同地段／同類型<strong>真實成交</strong>中位 PSF」為錨。本案缺乏同建案 Brickz 成交數據，退而求其次採用<strong>同地段（TRX Residences）Brickz 59 筆成交中位 RM 2,293 psf</strong>（信心度：中，非同建案）；代表 Asking PSF RM 2,300（區間 RM 2,200-2,400）；<strong>溢價/折讓：約 +0.3%</strong>（幾乎持平，但因信心度僅中且無自身成交驗證，估值分較 TRX Residences 的 6.3 略低，取 5.8）。Peer：TRX Residences RM 2,200-2,941 psf（freehold + Lendlease 品牌溢價），較 KLCC Four Seasons RM 3,010 psf 折讓約 24%。亦注意本案原發售價 RM 1,900-2,059 psf 起（2019-2020 launch），現 asking 隱含 +12-21% 累計漲幅，但無 Brickz 成交可驗證是否真實 clearing 於此價位，建議向代理書面確認實際成交案例。
+  </div>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>2BR 850 sqft 中層 @ RM 1.95M</strong> · 10 年持有 · 30 年房貸 · 租金 RM 8,800/月 Y1（RM 10.35 psf，asking 區間 RM 10-10.70 psf 中段），年漲幅 3% · 空置 1 個月/年 ·
+    管理費 RM 0.80/sqft/月（含沉沒基金，本案官方揭露費率）· 商業房貸利率——本國人 5.30%、外國人 5.80%（OPR 2.75% + 商業地契溢價約 +0.75%，與 TRX Residences 同）· 機會成本基準 5%/年（MGS 10Y + 100bp）。
+    所有金額四捨五入至千位。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>293,000</td><td>587,000</td><td>+294,000</td></tr>
+      <tr><td>印花稅（MOT）</td><td>62,000</td><td>156,000</td><td>+94,000</td></tr>
+      <tr><td>律師費 + 貸款費</td><td>25,000</td><td>32,000</td><td>+7,000</td></tr>
+      <tr><td>州政府批准費</td><td>—</td><td>5,000</td><td>+5,000</td></tr>
+      <tr class="sum"><td>買入小計</td><td>381,000</td><td>780,000</td><td>+399,000</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額</td><td>1,108,000</td><td>963,000</td><td>−145,000</td></tr>
+      <tr><td>管理費 + 沉沒基金</td><td>82,000</td><td>82,000</td><td>0</td></tr>
+      <tr><td>門牌稅 + 地稅</td><td>20,000</td><td>20,000</td><td>0</td></tr>
+      <tr><td>保險</td><td>28,000</td><td>28,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>1,238,000</td><td>1,093,000</td><td>−145,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，月租 RM 8,800 Y1，3%/年成長）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>1,110,000</td><td>1,110,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>168,000</td><td>333,000</td><td>+165,000</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>942,000</td><td>777,000</td><td>−165,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，3% 漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>仲介費（2.4%）</td><td>63,000</td><td>63,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>67,000</td><td>+67,000</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>1,353,000</td><td>1,139,000</td><td>−214,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0% 漲幅</td><td>−121,000</td><td>−326,000</td><td>−205,000</td></tr>
+      <tr class="scenario"><td>3%/年 漲幅</td><td>+536,000</td><td>+263,000</td><td>−273,000</td></tr>
+      <tr class="scenario"><td>5%/年 漲幅</td><td>+1,080,000</td><td>+751,000</td><td>−329,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在基準假設（3% 年漲、10 年滿租 + 1 月空置、機會成本 5%/年）下，外國人 10 年淨損益比本國人少約 <strong>RM 273,000（相當於房價的 14.0%）</strong>。8% 印花稅、30% 非居民租金稅、10% 永久 RPGT，再加上商業地契融資溢價（15% 頭期 + 5.30-5.80% 利率），共同形成結構性溢價。<strong>跨建案比較</strong>：本/外差額佔房價比 14.0%，較 TRX Residences 的 13.2% 略高，主因是本案毛租金水位（asking 5.4%）優於 TRX Residences（4.9%），10 年租金稅絕對金額差距因此擴大。<strong>本案特色</strong>：3% 漲幅情境下本國人約需 ~1.4%/年單利房價漲幅損益兩平、外籍約需 ~2.4%/年，帳面上優於 TRX Residences（本案 asking 租金水位較高），<strong>但這張成本表假設「10 年後可依模型價位順利賣出」——本案的核心風險不在現金流數字，而在退場維度：完工近 2 年 Brickz 查無一筆成交、逾三分之一房源同時掛牌待售，意味著模型假設的退場時點與價格本身就不可靠</strong>；下行情境若持續無成交驗證、退場買家池未形成，本國人虧損 RM 12.1 萬、外籍虧損 RM 32.6 萬。
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ 退場現實</span>
+  <h2 class="section-title">退場現實檢驗</h2>
+  <p class="section-sub">v5.0 三件套：稀缺性稽核（供給側能不能複製）＋接手人群金字塔（10 年後誰接手、買不買得起）＋二手市場硬證據（換手率／掛牌率／折讓）。全部採 2026-08 實查數據，並與同地段姊妹案 TRX Residences 逐項對照。</p>
+
+  <div class="sub-eyebrow">5A · 稀缺性稽核（供給側三層）</div>
+  <div class="scarcity-box">
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">土地層</span>
+      <span class="scarcity-txt">TRX 70 英畝總體規劃內多棟／多開發商供給共享：本案自身原規劃 3 座塔樓已縮減為 2 座、TRX Residences 尚有 6 塔計畫（Phase 2-6）、TRX City 其他住宅地塊未來仍可能推出，土地層不封頂。</span>
+    </div>
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">產品層</span>
+      <span class="scarcity-txt">商業地契 SA 塔樓產品，TRX 區內本身多案同規格（本案、TRX Residences 6 塔），SA 高度可複製；且本案自身無 Brickz 成交紀錄可佐證溢價是否來自產品獨特性或純屬 asking 掛牌心理錨點。</span>
+    </div>
+    <div class="scarcity-row">
+      <span class="scarcity-mark pass">✓</span>
+      <span class="scarcity-layer">法規層</span>
+      <span class="scarcity-txt">Freehold（SA 塔中少見的永久地契）；但 TRX 兩案（本案與 TRX Residences）皆為 freehold，稀有性已被同地段對照案稀釋；地契仍為商業 SA，退場買家池與融資條件受限。</span>
+    </div>
+    <div class="scarcity-verdict"><strong>有效稀缺判定：</strong>地段品牌真稀缺（TRX 國際金融區稀缺定位，與 TRX Residences 共享），但產品層 SA 為假稀缺——且本案作為 CCCG 首個 MY 房產案、缺乏自身 Brickz 轉手證據佐證溢價的合理性，稀缺性判定較 TRX Residences 更保守。有效稀缺為「district 護城河與姊妹案共享、product moat 同樣弱，且自身證據鏈更薄」。</div>
+  </div>
+
+  <div class="sub-eyebrow">5B · 接手人群金字塔</div>
+  <div class="quantum-line">
+    <strong>Quantum test：</strong>代表 2BR 850 sqft 現價約 <strong>RM 195 萬</strong>（≈RM 2,300 psf）→ 下一手家庭月收門檻約 <strong>RM 21,500</strong>（總價 × 1.1%：90% LTV、4.3%、30 年、負擔 40%）→ 遠高於 DOSM 2024 KL 家庭月收中位 RM 10,805，落在 KL 家庭收入前 5%（T20 頂端）；本地自足池極窄，實質靠本地富豪 upgrader＋外籍雙池承接。
+  </div>
+  <table class="pyramid-table">
+    <thead><tr><th style="width:22%">接手者</th><th style="width:10%">判定</th><th>判定依據</th></tr></thead>
+    <tbody>
+      <tr><td class="seg">本地首購</td><td><span class="pyramid-v no">✗</span></td><td>quantum RM 195 萬遠超 RM 80 萬帶，且商業 SA 地契，首購族完全不在此價格帶。</td></tr>
+      <tr><td class="seg">本地 upgrader</td><td><span class="pyramid-v mid">△</span></td><td>RM 195 萬處 RM 80-250 萬帶頂端，僅金融區高薪頂層 upgrader 接得住；管理費 RM 0.80 psf 為 TRX 同儕最高，增加持有成本疑慮。</td></tr>
+      <tr><td class="seg">本地投資客</td><td><span class="pyramid-v mid">△</span></td><td>毛 yield ~5.4% 帳面優於同儕，但同時掛租 516-578 戶顯示競租壓力，實際成交租金可能顯著低於 asking，扣高管理費與商業房貸後利差薄。</td></tr>
+      <tr><td class="seg">外籍自住 MM2H</td><td><span class="pyramid-v yes">✓</span></td><td>RM 195 萬遠過 RM 100 萬 KL 門檻、MM2H Gold（RM 100 萬）合規；TRX 為國際金融區職住核心，與 TRX Residences 共享同一批外籍自住買家池。</td></tr>
+      <tr><td class="seg">外籍投資</td><td><span class="pyramid-v mid">△</span></td><td>TRX 整體為外籍活躍轉售段，但本案自身 Brickz 掛零筆成交，無法佐證本案具體流動性；CCCG 中資開發商背景亦可能使買家結構本身集中於特定來源，轉售時面臨較廣泛國際池更窄的接手池。</td></tr>
+      <tr><td class="seg">機構／大宗</td><td><span class="pyramid-v no">✗</span></td><td>strata 單戶不符機構規格，除非整層／整棟包銷，否則恆為 ✗。</td></tr>
+    </tbody>
+  </table>
+  <div class="dep-tag dep-high"><strong>外籍依賴度：中高（估 40-55%，數據不足以精確判定）。</strong>由於本案為 CCCG（中資國企）主導開發，銷售管道與買家結構可能較 TRX Residences 更集中於中國內地投資客——這類買家池比廣泛國際買家池窄，一旦兩地任一政策（外籍印花稅、資本管制、MM2H 條件）收緊，退場衝擊可能更集中；此為參照本站 Agile Bukit Bintang 案「中資轉售外籍池窄」先例的延伸判斷。</div>
+
+  <div class="sub-eyebrow">5C · 二手市場證據</div>
+  <div class="evid-strip">
+    <div class="evid-card"><div class="evid-num">0 筆</div><div class="evid-lbl">12 個月 Brickz 成交<br>（vs TRX Residences 59 筆）</div><div class="evid-tag cold">掛零 · 換手證據缺</div></div>
+    <div class="evid-card"><div class="evid-num">37-41%</div><div class="evid-lbl">掛牌率<br>（217-238／580 戶）</div><div class="evid-tag warm">偏高 · 出口擠兌區間</div></div>
+    <div class="evid-card"><div class="evid-num">N/A</div><div class="evid-lbl">掛牌-成交折讓</div><div class="evid-tag cold">無成交可驗證</div></div>
+    <div class="evid-card"><div class="evid-num">0 筆</div><div class="evid-lbl">Brickz 深度<br>（12 個月）</div><div class="evid-tag cold">薄 &lt;10</div></div>
+  </div>
+
+  <div class="exit-summary">10 年後最可能的接手者是<strong>本地金融區高薪買家與外籍（尤其中國內地）投資客的組合</strong>；但與姊妹案 TRX Residences 不同，本案完工近 2 年仍無 Brickz 記錄的轉手成交，加上 217-238 戶（逾 35%）同時掛牌待售、516-578 戶掛租（接近全案戶數）——這組合更像「投資盤集中進場後尚未找到退場買家」，而非 TRX Residences 那種「高週轉、清得掉」的健康活躍二手市場。這是本案退場維度明顯弱於同地段對照組的核心原因。</div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>Core Residence @ TRX 位於 Persiaran TRX 2, Tun Razak Exchange, 55188 Kuala Lumpur，是 TRX 70 英畝國際金融區總體規劃內兩座重要住宅項目之一（另一座為本站已評分的 TRX Residences by Lendlease）。建案由 Core Precious Development Sdn Bhd 開發——China Communications Construction Group（CCCG，中國交通建設集團，2025 年 Fortune Global 500 第 61 位，年營收約 US$106.8B）持股 80%，WCT Holdings Berhad（馬來西亞 Bursa 上市建築與地產集團，KLSE：9679）持股 20%。原規劃 3 座塔樓、700 戶、總發展值約 RM 14 億，最終以 2 座塔樓、580 戶完工，原定 2023 年完工，實際延至 2024 年交屋，約 1 年遲延。</p>
+
+    <p>地段層面，TRX district 在本站錨表為 7.0 基線。稀缺性稽核三層皆與 TRX Residences 面臨相同的結構性問題——土地層與產品層皆 fail：TRX 總體規劃內多棟供給共享（TRX Residences 6 塔計畫、本案自身原規劃亦縮減），商業 SA 產品同區高度可複製。法規層 Freehold 在 TRX 兩案間已不具差異化稀有性。整合強度上，本案距 TRX MRT 站（Kajang 線 + Putrajaya 線交會）約 100 米，與 TRX Residences 相近；但前往 Exchange TRX mall 為街面 5 分鐘步行，非 TRX Residences 那種大樓直接坐落於 mall 正上方的室內直連，整合強度略遜一籌。淨稀缺性分 6.5，略低於 TRX Residences 的 6.8。</p>
+
+    <p>開發商層面，CCCG 在馬來西亞已深耕 20 年基建工程（巴生港填海工程、檳城蘇丹阿都哈林大橋等），母集團財務規模龐大，是本案品牌背書的最大支柱；但這是 CCCG 在馬來西亞的首個房產開發項目，沒有同類物業交付紀錄可供查證，且本案 JV 結構純屬 CCCG × WCT 私人合資，不若 TRX Residences 有財政部全資子公司 TRX City 作為政府機構共同持股。WCT Holdings 2026 年第一季（截至 2026-03-31）淨利潤 RM 460 萬，較去年同期 RM 1,200 萬下滑 61.7%，獲利能力轉弱值得留意。開發商分 6.5，低於 TRX Residences 的 7.5。</p>
+
+    <p>定價層面，本案原發售價約 RM 1,900-2,059 psf 起（2019-2020 年 launch），現階段 asking 約 RM 2,200-2,400 psf，隱含累計漲幅可觀，但本案迄今並無 Brickz 可查證的 subsale 成交記錄——完工近兩年仍是一片空白，這與 TRX Residences 完工 14 個月即累積 59 筆成交、中位 RM 2,293 psf、12 個月 +4% 升值形成鮮明對比。退而求其次以 TRX Residences 的 Brickz 中位作同地段錨點比對，本案 asking 僅溢價約 +0.3%（幾乎持平），但信心度僅為中，估值分 5.8。</p>
+
+    <p>租金市場，代表 2BR 850 sqft 中層單位現價約 RM 195 萬（@ RM 2,300 psf），asking 租金 RM 10-10.70 psf／月（約 RM 8,800／月），對應毛收益率約 5.4%，理論上優於 TRX Residences 的 4.9%。但 iProperty／PropertyGuru 同時有 516-578 戶掛租——幾乎等同全案 580 戶——顯示租賃市場競爭激烈，實際成交租金很可能顯著低於 asking，故現金流分 5.5（本）／3.5（外），僅小幅優於 TRX Residences 的 5.2／3.2。</p>
+
+    <p>持有面為永久商業 serviced-apartment 地契（Commercial Strata under HDA），與 TRX Residences 同級，融資摩擦（LTV 80-85%、利率 +0.5-1%）相同。退場面才是本案與 TRX Residences 真正分道揚鑣之處：217-238 戶（逾 35%）同時掛牌待售，Brickz 卻查無一筆 subsale 成交——這個組合更像「投資盤集中進場、尚未找到退場買家」，而非 TRX Residences「高週轉、清得掉」的健康活躍二手市場。退場分僅 4.6（本）／3.4（外），較 TRX Residences 的 6.4／5.5 明顯偏弱，是本案評分卡與姊妹案最大的分歧點。</p>
+
+    <p>主要留意事項：①Brickz 零成交紀錄意味著沒有客觀第三方數據可驗證 asking 價格的真實性，買家議價籌碼與賣家心理錨點皆缺乏依據；②CCCG 作為首發房產案的開發商，交付品質與長期物業管理標準尚待時間驗證；③WCT 獲利轉弱值得追蹤下一季財報；④管理費 RM 0.80 psf 為 TRX 同儕最高，侵蝕淨收益率；⑤CCCG 中資背景可能使買家結構集中於特定來源，一旦相關政策（外籍印花稅、資本管制）收緊，退場衝擊可能較廣泛國際買家池更集中。</p>
+
+    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+      <strong style="color:var(--navy);font-weight:700">10 年情境基準</strong>：假設 2026-08 進場、2036-08 退場：
+      <ul style="margin:8px 0 0 18px;padding:0">
+        <li><strong>合理情境</strong>（base case）：房價年漲 3%、租金年漲 3%、空置 1 月/年，且 10 年內逐步形成可查證的二手成交市場。本國人 10 年累計淨報酬約 <strong>RM 53.6 萬</strong>；外國人約 <strong>RM 26.3 萬</strong>。</li>
+        <li><strong>上行情境</strong>（bull case）：TRX 金融區整體 ecosystem 成熟 + 找到穩定退場買家池 + 房價 +5%/年。本國人約 RM 108 萬+，外國人約 RM 75.1 萬+。</li>
+        <li><strong>下行情境</strong>（bear case）：持續無成交驗證、掛牌壓力不減、退場買家池未形成 + 房價 0%/年。本國人 10 年虧損 RM 12.1 萬，外國人虧損 RM 32.6 萬。</li>
+      </ul>
+      <div style="margin-top:10px">10 年退場流動性：核心風險在於——若 10 年後仍缺乏活躍二手市場作退場依托，即便房價帳面上漲，實際變現時點與價格都可能遠不如模型假設；這與 TRX Residences 憑 Brickz 50+ 厚度可預期 3-6 個月掛牌清倉的情境截然不同。</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>與 TRX Residences 共享同一套 TRX MRT 兩線交會（約 100m）+ Exchange TRX mall 生活圈基礎設施</li>
+        <li>CCCG 為全球財富 500 強第 61 位國企，母集團財務規模龐大，20 年馬來西亞基建工程經驗</li>
+        <li>Asking 毛收益率約 5.4%，帳面上優於 TRX Residences 的 4.9%</li>
+        <li>Freehold 永久商業地契，較同區 leasehold 產品在制度層面相對優勢</li>
+        <li>GBI Gold + LEED 雙綠建築認證，與 TRX Residences 同級</li>
+        <li>MM2H Gold 門檻輕鬆達標（RM 195 萬 &gt;&gt; RM 100 萬），外籍自住吸引力強</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li>完工近 2 年，Brickz 查無一筆 subsale 成交——退場流動性完全缺乏客觀證據，與 TRX Residences 59 筆形成鮮明對比</li>
+        <li>217-238 戶（逾 35%）同時掛牌待售 + 516-578 戶掛租（近全案戶數），顯示投資盤集中進場、去化承壓</li>
+        <li>CCCG 為其在馬來西亞的首個房產開發案，無同類物業交付紀錄可查證；原定 2023 完工延至 2024（約 1 年遲延）</li>
+        <li>WCT Holdings 2026 Q1 淨利潤 YoY −61.7%，合資方獲利能力轉弱</li>
+        <li>管理費 RM 0.80 psf 為 TRX 同儕最高，侵蝕淨收益率</li>
+        <li>CCCG 中資背景可能使買家結構集中於特定來源，轉售時接手池較廣泛國際池窄</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（6.5）、開發商與管理移交（6.5）、退場與接手人群（4.6 本 / 3.4 外）<br>
+      <strong>可妥協</strong>：持有現金流（自住設算租金，不影響）<br>
+      <strong>本案 fit</strong>：TRX 金融 CBD + MRT 兩線交會 100m 為通勤 fit 高的選擇，惟 Exchange TRX mall 需 5 分鐘步行，不若 TRX Residences 直連。對在 TRX 工作、預算敏感度較低的商務人士適合自住；但需接受完工近 2 年仍無成交紀錄可佐證重置價值、且未來若需搬遷／換屋，退場證據薄弱可能拉長脫手時間。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（5.5 本 / 3.5 外）、退場與接手人群（4.6 本 / 3.4 外）、資本增值（5.7）<br>
+      <strong>可妥協</strong>：稀缺性與地段護城河（已與姊妹案共享）<br>
+      <strong>本案 fit</strong>：asking gross ~5.4% 帳面優於 TRX Residences，但 516-578 戶同時掛租顯示競租激烈，實際成交租金與空置率是核心不確定性；建議實地查證真實出租狀況而非僅參考 asking。退場流動性是本案相對姊妹案的最大弱項，若計畫 5-7 年內脫手，應優先考慮這點。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河、開發商與管理移交<br>
+      <strong>可妥協</strong>：持有現金流<br>
+      <strong>本案 fit</strong>：TRX MRT 交會 + 步行圈生活機能為短住／商務出差合理選擇。永久商業 SA 地契可繼承。對頻繁往返 KL 的 MM2H 持有者、跨國商務人士 fit 度中等；長期空置成本主要為管理費 RM 0.80 psf × 850 sqft × 12 = RM 8,160/年，高於 TRX Residences。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（20%）、資本增值（長期 anchor）、退場與接手人群（下一代脫手）<br>
+      <strong>可妥協</strong>：短期 yield、短期催化<br>
+      <strong>本案 fit</strong>：TRX 70 英畝總體規劃 20 年內隨 MRT3、金融區成熟持續強化地段重置成本，這點與 TRX Residences 共享。但世代傳承的核心命題是「下一代能否順利脫手」——本案目前完全缺乏可查證的次級市場證據，CCCG 首發案的長期物業管理標準亦待驗證，20 年期的不確定性明顯高於 TRX Residences。若優先考慮世代傳承，TRX Residences 目前有更厚的證據支撐。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    coreresidence.com.my（官方：580 戶、2 座塔樓、624-1,022 sqft、MRT 約 100m、Prince Court Medical Centre 900m、Pavilion KL 800m、GBI Gold + LEED） · properly.com.my Core Residence @ TRX 深度分析（CCCG 80% / WCT 20%、Commercial under HDA、原規劃 700 戶／RM 1.4B GDV、管理費 RM 0.80 psf） · trxklccproperty.com Core Residence vs TRX Residences 比較（asking RM 2,200-2,400 psf、租金 RM 10-10.70 psf、gross 4-5%） · PropertyGuru / iProperty Core Residence 掛售 217-238 戶、掛租 516-578 戶（2026） · Brickz Residensi TRX 1（TRX Residences）59 筆 2024-04 至 2025-03（中位 RM 2,293 psf，同地段對照） · The Edge Malaysia「China's CCCG launches first project in Malaysia」（CCCG 首個馬來西亞房產案、Fortune Global 500 第 61 位、營收 US$106.8B、20 年馬來西亞基建紀錄：巴生港填海、檳城蘇丹阿都哈林大橋） · WCT Holdings Berhad Q1 FY2026 業績公告（截至 2026-03-31，淨利潤 RM 460 萬 vs 去年同期 RM 1,200 萬、營收 RM 455.3M） · NAPIC JPPH Q1 2026（KL 服務式公寓餘屋 4,181 套，Q3 2025 為 3,643） · NAPIC Q3 2025（KL RM 100 萬+ 成交 +31% YoY、premium &gt;RM 1M 24-mo 認購率 78%） · DOSM 家庭收入調查 2024（W.P. Kuala Lumpur 家庭月收中位 RM 10,805） · MRT Corp Tun Razak Exchange 站（Kajang Line + Putrajaya Line 交會，2017 通車） · BNM OPR 2.75% · LHDN Finance Act 2026（外籍印花稅 8%、非居民 30% 租金稅、10% 永久 RPGT） · 聯邦直轄區外籍購屋門檻 RM 1,000,000 · MM2H 黃金計畫（RM 1,000,000）
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-08-06。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限。</strong>作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。本卡最大的資料侷限是本案自身缺乏 Brickz subsale 成交紀錄，退場與估值兩維度因此需退而求其次採用同地段姊妹案（TRX Residences）數據作中信心度錨點，讀者應意識到此不確定性高於一般已有厚實 Brickz 樣本的建案。實際投資決策請諮詢專業顧問並進行實地考察。
+  </div>
+</div>
+
+</div>
+</body>
+</html>
