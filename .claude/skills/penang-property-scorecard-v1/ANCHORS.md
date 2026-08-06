@@ -39,7 +39,9 @@
 | Seberang Perai 其餘 | **5.0** | Butterworth 310 psf；土地實質無限 |
 
 **不給整體島嶼稀缺溢價的理由**（可直接引進卡片）：
-- Gurney 一塊 26 英畝**填海地**（freehold、容積 5:1）開價 RM1,400 psf ≈ 內陸 Pulau Tikus 真實成交價，市場只認 900–1,000，至今無 master developer。**製造出的海濱打七折仍無人接手＝假稀缺實證**
+- 一塊 26 英畝**填海地**（freehold、容積 5:1）開價 RM1,400 psf ≈ 內陸 Pulau Tikus 真實成交價，市場只認 900–1,000，至今無 master developer。**製造出的海濱打七折仍無人接手＝假稀缺實證**
+  **⚠️ 位置更正（2026-08-07）**：該地塊登記地址在 **Tanjong Tokong**（Jalan Peter Paul Dason，近 Andaman Island／Westin），**不在 Gurney Drive**，距 Gurney 前線各案約 1.5–2km。它是**全州級的假稀缺實證**（可引用於任何檳城卡的估值天花板論證），**不得當作 Gurney 前線個案的土地層 ✗ 依據**——2026-08-07 Gurney Paragon 卡初稿即因此誤扣 d1 0.5，已回檢。
+- **Gurney 前線土地層（2026-08-07 查證）**：Gurney Bay Phase 1（**24.28 公頃**、沿岸近 2km，2024-02 開放）涵蓋 Setia V 與 Gurney Paragon 兩者前線（二者相距僅約 500m，實質共位），該段濱海面已**永久轉為公共園區、不再是可開發私地** → Gurney 濱海第一排的**土地層可判 ✓**。⚠️ Phase 2 仍未完工（小販中心 2026-05 僅 4.16%，改期 Q1 2027），不得當已交付計分
 - 已憲報 RSNPP 2030 明列填海是「解決土地有限的有效替代方案」
 - 首長 2026-06-11：「土地稀缺不是障礙」，正收購 809–1,214 英畝
 - 首長 2026-05-14：「填海地出售是州政府主要收入來源，若枯竭將難以替代」→ **造地動機部分是財政而非空間**
@@ -333,7 +335,7 @@ MM2H 註（原文）：「hanya untuk kediaman sahaja dan terhad 2 unit sahaja�
 **Andaman／STP2 已有真實新品階梯（HIGH confidence 新品錨，LOW confidence 二手）**：
 The Lume ~1,280 psf（2024-08 推出）｜Maris ~1,100+（2024-12 推出，2026-06 售出 75%）｜Senna & Fera landed 800–900｜Arica ~845（完售，2027 完工）｜The Meg（1,020 戶，13 個月完售）
 
-**其他已驗證成交錨**：Gurney Paragon 1,188｜Straits 1,288｜Quayside 1,056｜Shorefront 1,319｜Setia V 1,193｜Cantonment 1,191｜Moulmein Rise 1,242｜The Tamarind 850｜Muze 875｜Queens Q2 1,243｜Light Collection II 1,041｜Middleton 1,035
+**其他已驗證成交錨**：Gurney Paragon 1,188｜Straits 1,288｜Quayside 1,056｜Shorefront 1,319｜Setia V 1,258（2026-08-07 同建案 Brickz 實查，6 筆／2023-06~2024-04；原鎖定值 1,193 已汰換）｜Cantonment 1,191｜Moulmein Rise 1,242｜The Tamarind 850｜Muze 875｜Queens Q2 1,243｜Light Collection II 1,041｜Middleton 1,035
 **州級**：島上 high-rise 成交 RM723–731 psf、本島外 RM444–447 psf
 
 **⚠️ 土地 psf 三種口徑差 2.5 倍**：Andaman 土地 Affin 基準 **RM391 psf**／KWAP 2017 進場 **~RM530**／Edge 報價 **RM1,000**。**引用檳城土地 psf 一律須註明用哪一種口徑，絕不可單獨引用 RM1,000。**
