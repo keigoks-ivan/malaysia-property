@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Batai @ Damansara Heights — KL 建案評分卡 | Property Check</title>
+<meta name="description" content="The Batai @ Damansara Heights 獨立評分卡。本國人 6.1 / 外國人 5.7。10 年持有專業投資人視角 · 7 維度框架 · Brickz / DOSM / LHDN / EdgeProp 資料源。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--border-soft);
+  position:sticky;top:0;z-index:50;
+}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:700;
+  font-size:16px;color:var(--gold-light);
+  box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);
+  letter-spacing:-.04em;
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+/* Block 1: Header */
+.hero-card{
+  background:
+    radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),
+    linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);
+  color:#f3ebd6;
+  border:1px solid rgba(212,181,118,.25);
+  border-radius:22px;
+  padding:32px 36px 30px;margin-bottom:24px;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  isolation:isolate;
+}
+.hero-card::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),
+    repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);
+  pointer-events:none;z-index:0;
+}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;
+  margin-bottom:6px;color:#f7eed3;
+}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{
+  padding:18px 22px;border-radius:16px;
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(212,181,118,.22);
+  position:relative;overflow:hidden;
+}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{
+  background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+
+/* Section */
+.section{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px 32px;margin-bottom:20px;
+  box-shadow:var(--shadow-sm);
+  position:relative;
+}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:24px;font-weight:700;letter-spacing:-.01em;
+  margin-bottom:8px;color:var(--navy);line-height:1.3;
+}
+.section-title::after{
+  content:'';display:block;
+  width:36px;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  margin-top:10px;border-radius:1px;
+}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+/* Block 2: Radar + dim scores */
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{
+  background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+/* Block 3: Data tables */
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+/* Block 3.5: Cost table */
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+/* Block 4A */
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:42px;font-weight:700;
+  float:left;line-height:.95;
+  margin:4px 8px 0 0;
+  color:var(--gold);
+}
+
+/* Block 4B */
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+/* Block 4C */
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:8px;
+  background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);
+  border:1px solid var(--gold-light);
+  font-size:15px;
+}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+/* Footer */
+.footer{
+  margin-top:28px;padding:24px 28px;
+  background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);
+  border:1px solid var(--border);border-radius:16px;
+  font-size:11.5px;color:var(--muted);line-height:1.85;
+  position:relative;overflow:hidden;
+}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+@media (max-width:768px){
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+
+/* Block 5: Exit reality check */
+.scarcity-box{background:var(--navy-soft);border:1px solid #cdd8e8;border-left:4px solid var(--navy);border-radius:12px;padding:18px 20px;margin-bottom:20px}
+.sb-title{font-size:11.5px;font-weight:700;letter-spacing:.08em;color:var(--navy);margin-bottom:12px}
+.sb-row{display:flex;gap:10px;margin-bottom:10px;font-size:12.5px;line-height:1.7;color:var(--text-soft)}
+.sb-row strong{color:var(--navy)}
+.sb-mark{flex:0 0 20px;font-weight:700;font-size:14px;text-align:center;line-height:1.5}
+.sb-mark.pass{color:#15803d}
+.sb-mark.fail{color:#b91c1c}
+.sb-mark.mid{color:#a16207}
+.sb-verdict{margin-top:12px;padding-top:12px;border-top:1px dashed #cdd8e8;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.sb-verdict strong{color:var(--navy)}
+.pyramid-quantum{background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:10px;padding:12px 16px;font-size:12.5px;line-height:1.75;color:var(--text-soft);margin-bottom:12px}
+.pyramid-quantum strong{color:var(--navy)}
+.pyramid-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.pyramid-table th{text-align:left;padding:9px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.pyramid-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.65;color:var(--text-soft)}
+.pyramid-table tr:last-child td{border-bottom:none}
+.pyramid-table td:nth-child(2){text-align:center;width:56px}
+.pm{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;font-weight:700;font-size:13px}
+.pm.yes{background:#dcfce7;color:#15803d}
+.pm.mid{background:#fef3c7;color:#a16207}
+.pm.no{background:#e8eaed;color:#6b7280}
+.dependency-tag{border-radius:10px;padding:12px 16px;font-size:12px;line-height:1.7;margin-bottom:20px}
+.dependency-tag.mid{background:#fef3c7;border:1px solid #fcd34d;color:#78350f}
+.dependency-tag.high{background:#fef2f2;border:1px solid #fca5a5;color:#7f1d1d}
+.dependency-tag strong{font-weight:700}
+.evidence-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:10px}
+.ev-cell{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 12px;text-align:center}
+.ev-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);letter-spacing:-.02em}
+.ev-est{font-family:'Inter',sans-serif;font-size:8.5px;font-weight:600;color:var(--muted);vertical-align:super;margin-left:3px;letter-spacing:.04em}
+.ev-lbl{font-size:11px;color:var(--muted);font-weight:600;margin-top:4px}
+.ev-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 9px;border-radius:99px;margin-top:8px;letter-spacing:.04em}
+.ev-tag.ok{background:#dcfce7;color:#15803d}
+.ev-tag.weak{background:#fee2e2;color:#b91c1c}
+.ev-tag.na{background:#e8eaed;color:#6b7280}
+.ev-sub{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5}
+.ev-note{font-size:11.5px;color:var(--muted);line-height:1.7;font-style:italic;margin-bottom:16px}
+.exit-summary{padding:16px 20px;background:linear-gradient(135deg,var(--navy-deep),var(--navy));color:#f3ebd6;border-radius:12px;font-size:13.5px;line-height:1.8}
+.exit-summary strong{color:var(--gold-light);font-weight:700}
+@media (max-width:768px){.evidence-strip{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">KL Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/kl-check">← 全部評分</a>
+      <a class="lang-link" href="SC_The-Batai_20260806_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Bukit Damansara · KL</span>
+    <span class="sep">◆</span>
+    <span>FREEHOLD RESIDENTIAL STRATA VILLA</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-08-06</span>
+  </div>
+  <h1 class="proj-name">The Batai <span style="font-size:20px;font-weight:500;font-style:italic;opacity:.75">@ Damansara Heights</span></h1>
+  <p class="one-liner">
+    DH 稀缺兌現、開發商穩健，但遠捷運、估值溢價與 RM700 萬門檻壓低回報——地板高、但接手池窄。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.1</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">稀缺（8.3）與開發商信用（7.8）站上本站前段，但 2.5km 遠離 MRT（d2 6.0）、估值較 DH 有地成交溢價 55%（d7 3.8）、RM700 萬門檻使本地接手池收窄（d6 5.7）——三缺口未破天花板</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.7</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">8% 印花稅 + 30% 租金稅壓低現金流（d3 2.5）；但 RM700 萬總價遠超 MM2H Platinum RM200 萬門檻，退場維度的外籍懲罰因此比本站其他案例窄（d6 4.7）</div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">七維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。稀缺性與地段護城河 20% · 交通與可達性 12% · 資本增值動能 15% · 進場估值紀律 13% · 持有現金流 12% · 退場與接手人群 18% · 開發商與管理移交 10%。5 個維度本外同分、2 個維度本外分開（現金流 + 退場）。核心信仰：buy the land, buy the exit —— 地是地板，退場是實現。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+<svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="七維度雷達圖">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): [8.3, 6.0, 6.0, 3.8, 4.5, 5.7, 7.8] -->
+  <polygon points="140.0,47.0 192.6,98.1 205.5,154.9 158.5,178.3 118.1,185.4 77.8,154.2 71.7,85.6" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="47.0" r="3.5"/>
+    <circle cx="192.6" cy="98.1" r="3.5"/>
+    <circle cx="205.5" cy="154.9" r="3.5"/>
+    <circle cx="158.5" cy="178.3" r="3.5"/>
+    <circle cx="118.1" cy="185.4" r="3.5"/>
+    <circle cx="77.8" cy="154.2" r="3.5"/>
+    <circle cx="71.7" cy="85.6" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [8.3, 6.0, 6.0, 3.8, 2.5, 4.7, 7.8] -->
+  <polygon points="140.0,47.0 192.6,98.1 205.5,154.9 158.5,178.3 127.9,165.2 88.7,151.7 71.7,85.6" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="47.0" r="3.0"/>
+    <circle cx="192.6" cy="98.1" r="3.0"/>
+    <circle cx="205.5" cy="154.9" r="3.0"/>
+    <circle cx="158.5" cy="178.3" r="3.0"/>
+    <circle cx="127.9" cy="165.2" r="3.0"/>
+    <circle cx="88.7" cy="151.7" r="3.0"/>
+    <circle cx="71.7" cy="85.6" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+    <text x="140" y="12" text-anchor="middle">稀缺與地段</text>
+    <text x="239" y="59" text-anchor="start">交通與可達性</text>
+    <text x="263" y="168" text-anchor="start">資本增值動能</text>
+    <text x="195" y="262" text-anchor="start">進場估值紀律</text>
+    <text x="85" y="262" text-anchor="end">持有現金流</text>
+    <text x="17" y="168" text-anchor="end">退場與接手</text>
+    <text x="41" y="59" text-anchor="end">開發商與交付</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 6.1</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 5.7</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">稀缺性與地段護城河</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">8.3</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Damansara Heights 錨 8.0 起跳。三層稽核：土地層 <strong>✓</strong>——4.8 英畝連續地塊在已幾乎全數建滿的成熟 DH 內極罕見，未來同等規模的一次性土地釋出機率低；產品層 <strong>△</strong>——48 戶、每畝約 10 戶的超低密度＋單一 5+1 房型（無小戶可稀釋）具真實結構性稀缺，惟本案僅開賣 5 個月，尚無 Brickz 轉售溢價可佐證「有人要」，故只給部分加分；法規層 <strong>✗</strong>——無 height cap／master-plan 正式鎖定供給，稀缺來自土地存量而非法規。淨值：8.0 ＋0.3（土地層＋產品層結構性稀缺，惟證據不完整）＋0.2（Jalan Batai 為 DH 內部安靜老牌地段）＝8.5，因缺乏 Brickz 溢價驗證下修至 8.3。</p>
+        <p class="dim-data">4.8 英畝、48 戶、每畝 ~10 戶（Kenny Hills Residence 每畝 13 戶做對照）· 開賣 5 個月取得約 50% 去化，轉角戶最先售罄（一手需求訊號，非二手溢價）· 無 Phase 2 供給風險（單一期別）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與可達性</span><span class="dim-weight">12% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Pusat Bandar Damansara MRT 站距本案約 2.5km，需開車，非步行可達；本案亦無直連任何商場——與同站 Pavilion Damansara Heights（200m 步行＋商場直連，交通 8.5）形成鮮明對比，誠實反映「別墅型社區天生遠離捷運節點」的結構性劣勢，故不照搬 Pavilion DH 分數。基準車程 10 分鐘級距（6 分）＋國際學校加分（0.3，Cempaka 5 分鐘車程、Mont Kiara Int'l／Garden Int'l 約 10-11 分鐘車程，多校在合理車程內）＝6.3，因車程存在尖峰時段不確定性下修至 6.0。</p>
+        <p class="dim-data">Pusat Bandar Damansara MRT 2.5km（moovit / EdgeProp）· Cempaka International School 5min、Mont Kiara International School 10min、Garden International School 11min、Alice Smith School 15min 車程 · KPJ Damansara Specialist Hospital 約 7km · 距 Bangsar／KL Sentral／Mid Valley City 均為數分鐘車程，惟均需開車，無步行零售或商場整合</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值動能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>本卡核心判斷：d4 採 residential strata 基準 6.0，而非 landed 7.0。</strong>關鍵佐證是 Kenny Hills Residence——同屬「成熟 KL 頂級地段內的超低密度 freehold strata villa」，2010-2012 年間以約 RM900 psf 發售，2024-2025 年 Brickz 轉售中位僅 RM715 psf，逾十年持有period 名目下跌 −20%。這證明「villa 產品型態」並不必然如同純有地般沿地價曲線增值——即使地段與 The Batai 同級（Bukit Tunku vs DH）、同為 freehold、同為超低密度（每畝 13 戶）。本案每畝密度更低（~10 戶）、無 Phase 2 供給風險（單一期別）給予 +0.3；DH 近年有地房本身有動能（psf 由 2022 RM802 → 2023 RM727 → 2024 RM839，回升明顯）給予地段外溢 +0.2；但 RM1,200 psf 較 DH 有地成交中位溢價高達 55%，重演 Kenny Hills 式「發售溢價過高、後續均值回歸」風險，扣 −0.5。三項抵銷後淨回到基準 6.0——誠實結論：<strong>villa 產品本身不足以支持 landed 7.0 的樂觀假設，即使地段、地契、密度條件都對本案有利。</strong></p>
+        <p class="dim-data">Kenny Hills Residence：Brickz 9 筆（2024-08~2025-07）中位 RM715 psf／RM320 萬，發售約 RM900 psf（約 2010-2012，Bukit Tunku）· DH 有地房均價 psf：2022 RM802 → 2023 RM727 → 2024 RM839（EdgeProp）· 本案僅開賣 5 個月，無自身 Brickz 資料，此為前瞻性判斷非既定事實</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">進場估值紀律</span><span class="dim-weight">13% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">3.8</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">本案是全新產品類型（strata villa），同建案／同類型皆無 Brickz 成交，依錨點優先序退至第三層——DH 有地房 Brickz 中位（50 筆，2025-02～2026-01，中位 RM773 psf／RM7,075,000）。代表戶 RM1,200 psf（起價 RM7,000,000 ÷ 5,844 sqft ≈ RM1,198 psf）較此錨溢價 <strong>約 +55%</strong>，落入「>+30% ~4.0」級距。信心度：medium（同地段但跨產品類型，非同建案／同類型）。同業侵略性檢查：Kenny Hills Residence 當年約 RM900 psf 發售已屬同類產品的歷史高溢價，其後十餘年未能守住——本案 55% 溢價幅度比 Kenny Hills 更陡，扣 −0.2 反映此歷史殷鑑。淨值 3.8。</p>
+        <p class="dim-data">錨點：DH 有地房 Brickz 中位 RM773 psf／RM7,075,000（50 筆，2025-02~2026-01，信心度 medium）· 代表戶起價 RM1,198 psf · 溢價 +55% · 對照 Kenny Hills Residence 發售溢價歷史前例（約 RM900 psf，其後回落至 RM715 psf）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">12% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">4.5</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">2.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">DH 大坪數 freehold bungalow／villa 租賃行情約 RM15,000-35,000/月（視坪數而定），估算代表戶（5,844 sqft）月租約 RM25,000-30,000，毛收益率約 4.5-5.0%——與一般認知「豪宅 yield 極低」不同，DH 活躍的外派高管／使館圈租賃需求給出還算合理的毛收益，但＜5% 基準線扣 1 分＝6 分基準降至 5 分；租客池極窄（僅企業高管、外交官、超高淨值家庭具備承租這種規格的能力與需求）使實際成交租金與空置期波動風險偏高，再扣 0.5，本國人淨得 4.5。外籍：30% 非居民租金稅使稅後淨收益率降至約本國人 7 折以下，維持本站慣常 −2.0 差距，得 2.5。</p>
+        <p class="dim-data">DH 大坪數 bungalow 租金：Country Heights Damansara 5,412 sqft RM19,000/月、6,000 sqft 一般 DH bungalow RM23,000/月、Jalan Batai 3,500 sqft 角戶 RM15,000/月（PropertyGuru/EdgeProp，估算）· 本案代表戶估算月租 RM25,000-30,000，毛收益率約 4.5-5.0%（估算，樣本稀薄）· 住宅地契（非商業）无需負擔商業電費，優於本站其他 DH 案例</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場與接手人群</span><span class="dim-weight">18% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">5.7</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">4.7</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>本案 quantum 極高（RM700 萬起），依規則如實計算，不套用甜蜜帶調整。</strong>本地：freehold 住宅（非商業）基準 7.5 起跳；quantum &gt;400 萬按規則最重一檔 −1.0（實際 700 萬遠超此級距上限，此為規則定義的最保守扣分）；換手率 0%（開賣僅 5 個月，尚無二手交易）落入 &lt;1% 級距 −0.5；Brickz 深度 0 筆 −0.3；住宅地契無商業融資摩擦（優於本站 Pavilion DH／Southpoint／Stonor 3 皆為商業地契），故不扣此項。本地淨得 5.7。外籍：本地 −2.0 基準＝3.7；RM700 萬總價遠超 MM2H Platinum RM200 萬門檻，合規毫無壓力 +1.0；私人銀行（HSBC/Citi 等）對此價位外籍買家提供 70% LTV 融資 +0.3（惟未計入額外強度，因無證據顯示本案有大量外籍實際承接）；外籍依賴度判定為中（非本站慣見的高依賴），不觸發 kill switch。外籍淨得 4.7。</p>
+        <p class="dim-data">quantum RM7,000,000 → 下一手家庭月收門檻 ≈RM77,000（總價×1.1%）→ 對照 KL 中位家庭月收 RM10,805（DOSM HIS 2024）約 7.1 倍，實質已超出絕大多數受薪家庭範圍，真正買家多為企業主／多代家族資產／現金買家而非靠薪資貸款 · MM2H Platinum 門檻 RM200 萬（2026），本案總價遠超 · 換手率／掛牌率／折讓：本案尚無二手數據（開賣 5 個月），以下為誠實揭露而非既定證據</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">7.8</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Tan &amp; Tan Developments Berhad（IGB Berhad 全資子公司，Bursa T1）7.5 基線。母公司財務：IGB Berhad FY2025 全年淨利年減 13% 至 RM361M（非重大虧損，仍獲利）；1Q2026 淨利因英國資產處分一次性收益大幅增長（核心零售／REIT 分部 NPI 同步成長逾 50%，體質穩健）。Tan &amp; Tan 本身（非 Pavilion Group 合資部分）近期交付紀錄良好——Southpoint Residences（2023 完工、無延誤）、Stonor 3（2019 完工、無延誤）皆準時交付，本案不涉及與外部發展商聯營的協調風險，給予 +0.3 直接交付紀錄加分。本案為標準期房銷售（非 Build-Then-Sell），完工 2029-01 前仍有正常期房風險，故不套用 Southpoint 的 BTS 零風險加分；本案也非依附 IGB 自有商場生態（不同於 Southpoint 的雙商場對齊），無地主對齊加分。淨值 7.8。</p>
+        <p class="dim-data">Tan &amp; Tan Developments Berhad 成立 1971 年，連續 15 年 The Edge Malaysia 十大發展商獎、FIABCI Award of Distinction（2002、2012）· IGB Berhad FY2025 淨利 RM361M（年減 13%）、1Q2026 因英國資產處分大增 · Southpoint Residences（2023 完工）、Stonor 3（2019 完工）皆為 Tan &amp; Tan 近期準時交付案例</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+  <p class="section-sub">代表戶型：<strong>本案唯一戶型，5,844 sqft 5+1 房起價 RM 7,000,000</strong>（≈RM1,198 psf）。本案 48 戶全數為 5,844-6,190 sqft 的同一 4 層別墅配置，無 2BR 或更小坪數可選，故以起價戶型作代表，並如實揭露「本案代表戶即全案唯一戶型」。</p>
+
+  <div class="assump-box" style="background:linear-gradient(135deg,#fef9ed 0%, #fbf3df 100%);border:1px solid var(--gold);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative">
+    <strong>⚠️ 估值與買價透明度說明：</strong>進場估值維度（13%）以「同地段／同類型<strong>真實成交</strong>中位 PSF」為錨，惟本案是全新產品類型（strata villa），同建案與同類型皆無 Brickz 成交，只能退至第三層錨點：<strong>Damansara Heights 有地房 Brickz 中位 RM773 psf／RM7,075,000</strong>（50 筆，2025-02~2026-01，信心度：medium——跨產品類型比較）；代表戶起價 RM1,198 psf；<strong>溢價：約 +55%</strong>（故進場估值僅 3.8）。歷史殷鑑：同類「超低密度 freehold strata villa」產品 Kenny Hills Residence 於 2010-2012 年間以約 RM900 psf 發售（相對當時 Bukit Tunku 有地房也是溢價），2024-2025 年 Brickz 轉售中位僅 RM715 psf，逾十年名目下跌約 −20%。買家應理解：本案 55% 的入場溢價，是否能被「私人電梯＋5+1 房＋全新交付＋超低密度共管」的產品優勢完全支撐，目前沒有本案自身的二手數據可驗證，需待 2029 年完工後、且累積實際轉售紀錄才能重新評估。
+  </div>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">Tan &amp; Tan Developments Berhad<span class="kv-src">IGB Berhad 全資子公司，Bursa T1</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">Freehold 住宅地契（Strata Villa）<span class="kv-src">非商業地契，享標準住宅融資條件</span></td></tr>
+          <tr><td class="kv-label">規模與密度</td><td class="kv-val">4.8 英畝 · 48 戶 4 層別墅<span class="kv-src">每畝約 10 戶，超低密度</span></td></tr>
+          <tr><td class="kv-label">單位坪數</td><td class="kv-val">5,844-6,190 sqft（單一戶型）<span class="kv-src">5+1 房、私人電梯、4-5 車位</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">5,844 sqft 起 @ RM 7,000,000<span class="kv-src">≈RM 1,198 psf，開發商起價</span></td></tr>
+          <tr><td class="kv-label">GDV／去化</td><td class="kv-val">GDV RM 358M · 約 50% 去化（轉角戶最快）<span class="kv-src">2026-03 開賣至今約 5 個月</span></td></tr>
+          <tr><td class="kv-label">完工時間</td><td class="kv-val">2029-01（VP）<span class="kv-src">The Edge / KL Property Talk</span></td></tr>
+          <tr><td class="kv-label">管理費</td><td class="kv-val">55 sen/sqft/月（含沉沒基金）<span class="kv-src">開發商公開資料</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與交通</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">最近捷運</td><td class="kv-val">Pusat Bandar Damansara MRT · 約 2.5km<span class="kv-src">需開車，非步行可達</span></td></tr>
+          <tr><td class="kv-label">商場整合</td><td class="kv-val">無直連商場<span class="kv-src">安靜住宅街區，非 TOD 產品</span></td></tr>
+          <tr><td class="kv-label">國際學校</td><td class="kv-val">Cempaka 5min、Mont Kiara Int'l 10min、Garden Int'l 11min（車程）<span class="kv-src">Maxland Real Estate 彙整</span></td></tr>
+          <tr><td class="kv-label">鄰近生活圈</td><td class="kv-val">Bangsar、KL Sentral、Mid Valley City 車程數分鐘<span class="kv-src">Tatler Asia／開發商資料</span></td></tr>
+          <tr><td class="kv-label">保安形式</td><td class="kv-val">Gated and guarded 別墅社區<span class="kv-src">The Edge Malaysia</span></td></tr>
+          <tr><td class="kv-label">同地段有地房錨點</td><td class="kv-val">中位 RM773 psf／RM7,075,000<span class="kv-src">Brickz 50 筆，2025-02~2026-01</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-4% 階梯制<br><small style="color:var(--muted)">≈ RM 264,000</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 560,000</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">20%（住宅 LTV 80%）<br><small style="color:var(--muted)">RM 1,400,000</small></td><td class="num">30%（LTV 70%）<br><small style="color:var(--muted)">RM 2,100,000</small></td><td><small>BNM / 銀行政策，jumbo loan 估算</small></td></tr>
+      <tr><td>住宅房貸利率</td><td class="num">~4.10%</td><td class="num">~4.60%</td><td><small>BNM OPR 2.75% + spread</small></td></tr>
+      <tr><td>毛租金收益率（代表戶）</td><td class="num">~4.5-5.0%</td><td class="num">~4.5-5.0%（同）</td><td><small>PropertyGuru／估算，樣本稀薄</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">10-24% 累進<br><small style="color:var(--muted)">估約 24%</small></td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>稅後淨收益率</td><td class="num">~3.4-3.8%</td><td class="num">~3.2-3.5%</td><td><small>計算</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>最低購買門檻（KL）</td><td class="num">無</td><td class="num">RM 1,000,000</td><td><small>聯邦直轄區</small></td></tr>
+      <tr><td>MM2H 強制資產資格</td><td class="num">—</td><td class="num">輕鬆合規（RM700 萬 ≥ Platinum RM200 萬門檻）</td><td><small>MM2H 2026 三級制</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>5,844 sqft，RM 7,000,000</strong> 為基礎——本國人 vs 外國人 10 年總成本與淨損益對照。</p>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>5,844 sqft @ RM 7,000,000</strong> · 10 年持有 · 30 年房貸 · 估算月租 RM25,000（Y1）、年漲幅 3%、空置 1 個月/年 ·
+    管理費 55 sen/sqft/月（已確認）· 本國人利率 4.10%／LTV 80% · 外國人利率 4.60%／LTV 70%（OPR 2.75% + spread，jumbo loan 估算）· 機會成本／租金稅率：本國人 24%、外國人 30% 一口價。
+    所有金額四捨五入至千位；租金為估算值，樣本稀薄，實際承租條件應另行議價確認。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>1,400,000</td><td>2,100,000</td><td>+700,000</td></tr>
+      <tr><td>印花稅（MOT）</td><td>264,000</td><td>560,000</td><td>+296,000</td></tr>
+      <tr><td>律師費 + 貸款費</td><td>85,000</td><td>95,000</td><td>+10,000</td></tr>
+      <tr><td>州政府批准費</td><td>—</td><td>8,000</td><td>+8,000</td></tr>
+      <tr class="sum"><td>買入小計</td><td>1,749,000</td><td>2,763,000</td><td>+1,014,000</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額</td><td>3,247,000</td><td>3,015,000</td><td>−232,000</td></tr>
+      <tr><td>管理費 + 沉沒基金</td><td>386,000</td><td>386,000</td><td>0</td></tr>
+      <tr><td>門牌稅 + 地稅</td><td>100,000</td><td>100,000</td><td>0</td></tr>
+      <tr><td>保險</td><td>30,000</td><td>30,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>3,763,000</td><td>3,531,000</td><td>−232,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，估算月租 RM25,000 起）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>3,153,000</td><td>3,153,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>757,000</td><td>946,000</td><td>+189,000</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>2,396,000</td><td>2,207,000</td><td>−189,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，3% 漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>仲介費（2.4%）</td><td>226,000</td><td>226,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>241,000</td><td>+241,000</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>4,427,000</td><td>3,937,000</td><td>−490,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0% 漲幅</td><td>−711,000</td><td>−1,192,000</td><td>−481,000</td></tr>
+      <tr class="scenario"><td>3%/年 漲幅</td><td>+1,638,000</td><td>+916,000</td><td>−722,000</td></tr>
+      <tr class="scenario"><td>5%/年 漲幅</td><td>+3,585,000</td><td>+2,664,000</td><td>−921,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在基準假設（3% 年漲、2029 交屋 + 10 年持有）下，外國人 10 年淨損益比本國人少約 <strong>RM 722,000（相當於房價的 10.3%）</strong>——結構性差距略低於本站其他 DH 案例（TS2 13.1% / PavDH 12.7% / PavSq 12.0%），原因是本案租金基期高、槓桿倍數大，稀釋了印花稅與 RPGT 佔比。<strong>打平門檻（估算）：</strong>本國人約 <strong>0.9%/年</strong>、外國人約 <strong>1.7%/年</strong>——低於本站同級案例常見的 1.5-2.5%／3.0-4.5% 區間，這是因為本案毛收益率（4.5-5.0%）意外優於一般認知的「豪宅低 yield」，加上住宅地契（非商業）享有較低融資成本。<strong>警示：</strong>此結論高度依賴租金假設（RM25,000/月，樣本稀薄）能否兌現——本案租客池極窄（僅企業高管／外交官／超高淨值家庭），若實際空置期遠高於 1 個月，打平門檻將顯著上修。
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ 退場現實檢驗</span>
+  <h2 class="section-title">退場現實檢驗</h2>
+  <p class="section-sub">v5.0 核心：10 年持有的回報只有在賣掉那天才是真的。三件套——稀缺性稽核（退場價地板）、接手人群金字塔（誰接手）、二手市場證據（多快接手、折讓多少）。本案開賣僅 5 個月，二手市場證據完全不存在——以下如實揭露此空白，不以估算數字冒充既定事實。</p>
+
+  <!-- 5A 稀缺性稽核 -->
+  <div class="scarcity-box">
+    <div class="sb-title">5A · 稀缺性稽核（供給側三層）</div>
+    <div class="sb-row"><span class="sb-mark pass">✓</span><div><strong>土地層</strong>：Damansara Heights 是已幾乎全數建滿的成熟頂級地段，4.8 英畝連續地塊在此類地區是罕見的一次性土地釋出；同開發商或其他發展商未來在 DH 內部找到同等規模地塊的機率結構性偏低。</div></div>
+    <div class="sb-row"><span class="sb-mark mid">△</span><div><strong>產品層</strong>：48 戶、每畝約 10 戶的超低密度＋單一 5+1 房型具真實結構性差異化，但「超低密度 freehold strata villa」本身不是本案首創——Kenny Hills Residence（Bukit Tunku，每畝 13 戶，2014 完工）是同類產品的直接先例，且其發售溢價（約 RM900 psf）在其後十餘年並未守住（回落至 RM715 psf）。產品概念可複製，本案僅密度更低，故列為 △ 而非 ✓。</div></div>
+    <div class="sb-row"><span class="sb-mark fail">✗</span><div><strong>法規層</strong>：無 height cap／master-plan 正式鎖定 DH 未來供給，稀缺依賴土地存量本身，非法規保護。</div></div>
+    <div class="sb-verdict"><strong>有效稀缺判定：土地層真稀缺、產品層歷史殷鑑須警惕、法規層未封頂。</strong>本案開賣僅 5 個月，尚無 Brickz 轉售溢價可驗證「有人要」，「稀缺＝稀有×有人要」的後半段目前只能以一手去化速度（約 50%、轉角戶最快售罄）作為較弱的替代訊號，非二手市場真實驗證。d1 綜合考量給到 8.3，但估值（d7）與增值（d4）維度已將 Kenny Hills 殷鑑的謹慎態度計入。</div>
+  </div>
+
+  <!-- 5B 接手人群金字塔 -->
+  <div class="sb-title" style="margin-top:18px">5B · 接手人群金字塔</div>
+  <div class="pyramid-quantum">
+    <strong>⚠️ 本案 quantum 極高（總價 RM700 萬起），遠超所有既定門檻級距——如實計算，不套用甜蜜帶調整。</strong>代表戶 RM7,000,000 → 下一手家庭月收門檻 ≈ <strong>RM77,000/月</strong>（總價×1.1%；90% LTV、4.3%、30 年、負擔 40%）→ 對照 KL 中位家庭月收 RM10,805（DOSM HIS 2024），約需 <strong>7.1 倍</strong>於中位收入，實質已排除絕大多數靠薪資貸款的受薪家庭。<strong>誠實揭露</strong>：在此價位級距，「家庭月收入門檻」框架本身的解釋力有限——真正買家多半是企業主、多代家族資產持有人，或以現金／企業資產結構購買，而非靠個人薪資收入通過房貸審核。
+  </div>
+  <table class="pyramid-table">
+    <thead><tr><th>接手人群</th><th>判定</th><th>依據</th></tr></thead>
+    <tbody>
+      <tr><td>本地首購</td><td><span class="pm no">✗</span></td><td>quantum RM700 萬遠超首購可及範圍（~RM80 萬），非首購產品。</td></tr>
+      <tr><td>本地 upgrader</td><td><span class="pm no">✗</span></td><td>RM700 萬遠超一般都會 upgrader 帶（80-250 萬），已進入超高淨值層級，非典型 upgrader 池。</td></tr>
+      <tr><td>本地投資客</td><td><span class="pm mid">△</span></td><td>毛收益率 4.5-5.0% 尚可，但租客池極窄（企業高管／外交官／超高淨值家庭），非典型收租型買家會選擇的資產。</td></tr>
+      <tr><td>本地超高淨值自住／多代家族</td><td><span class="pm yes">✓</span></td><td>DH 地段聲望＋5+1 房＋私人電梯＋超低密度共管，精準對應多代同堂或多物業家族的自住需求——本案最強承接段。</td></tr>
+      <tr><td>外籍自住（MM2H）</td><td><span class="pm yes">✓</span></td><td>RM700 萬遠超 MM2H Platinum RM200 萬門檻，合規毫無壓力；惟 DH 傳統上是外派高管「租」的市場而非外籍「買」的主力市場，實際外籍買家絕對數量預期偏低。</td></tr>
+      <tr><td>外籍投資／機構</td><td><span class="pm no">✗</span></td><td>8% 印花稅＋30% 租稅侵蝕加上租客池極窄，對純投資型外籍買家吸引力低；機構規格不符（單戶住宅非機構標的）。</td></tr>
+    </tbody>
+  </table>
+  <div class="dependency-tag mid"><strong>外籍依賴度：中（非本站慣見的高依賴）。</strong>本案退場池最強一段是本地超高淨值自住／多代家族買家，外籍 MM2H 雖技術上輕鬆合規，但 DH 歷史上更偏向外派高管「租」而非「買」，實際外籍承接量預期有限，非如 Pavilion DH 般高度依賴國際行銷與外籍買家。</div>
+
+  <!-- 5C 二手市場證據 -->
+  <div class="sb-title" style="margin-top:18px">5C · 二手市場證據</div>
+  <div class="evidence-strip">
+    <div class="ev-cell"><div class="ev-num">0%</div><div class="ev-lbl">年換手率</div><div class="ev-tag weak">無數據</div><div class="ev-sub">開賣僅 5 個月，尚無二手交易</div></div>
+    <div class="ev-cell"><div class="ev-num">n/a</div><div class="ev-lbl">掛牌率</div><div class="ev-tag na">不適用</div><div class="ev-sub">仍在一手銷售階段（~50% 去化）</div></div>
+    <div class="ev-cell"><div class="ev-num">n/a</div><div class="ev-lbl">掛牌-成交折讓</div><div class="ev-tag na">不適用</div><div class="ev-sub">無二手成交可比對</div></div>
+    <div class="ev-cell"><div class="ev-num">0 筆</div><div class="ev-lbl">Brickz 深度</div><div class="ev-tag weak">無數據</div><div class="ev-sub">FIX-03 不通過</div></div>
+  </div>
+  <p class="ev-note">誠實揭露：本案是全新建案，2026 年 3 月才開賣，2029 年 1 月才完工，目前不存在任何二手市場證據——換手率、掛牌率、折讓皆無法計算。上述四格刻意標示「無數據」而非填入估算值，避免製造虛假的精確度。退場維度（d6）已將此「證據空白」反映在較低的加分幅度上（相較於有 Brickz 溢價佐證的案例）。</p>
+
+  <div class="exit-summary">10 年後最可能的接手者是<strong>本地超高淨值自住／多代家族買家</strong>（DH 聲望地段 + 5+1 房 + 私人電梯 + 超低密度共管）；外籍 MM2H 雖技術上輕鬆合規，但 DH 歷史上偏「租」不偏「買」，實際外籍承接量預期有限。<strong>本案最大的退場風險不是政策 kill switch，而是「地板高但接手池窄」——RM700 萬的 quantum 天然把買家池壓縮到極小一群人，即使地段本身無可挑剔。</strong></div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>The Batai 座落於 Jalan Batai，Damansara Heights 內部一條安靜的老牌街道——這裡是 KL 使館圈與老牌世家聚居的核心地帶，也是 Tan &amp; Tan Developments（IGB Berhad 全資子公司）在此區域首次推出的低密度 strata villa 產品。整個開發僅 4.8 英畝、48 戶四層別墅，每畝密度約 10 戶，遠低於一般高樓公寓，也低於同類型先例 Kenny Hills Residence 的每畝 13 戶。每戶配備私人電梯、5+1 房格局、4 至 5 個車位，明確瞄準多代同堂或需要獨立空間的高淨值家庭，而非典型的都會小家庭買家。</p>
+
+    <p>本案的核心投資問題，是「稀缺性是否足以支撐溢價」。三層稽核顯示：土地層真稀缺——DH 已幾乎全數建滿，4.8 英畝連續地塊未來難以複製；產品層則要謹慎——超低密度 freehold strata villa 這個產品類型並非本案首創，Bukit Tunku（Kenny Hills）在十多年前就已推出同類概念的 Kenny Hills Residence，當年以約 RM900 psf 發售，如今 Brickz 轉售中位僅剩 RM715 psf，逾十年名目下跌約兩成。這個歷史殷鑑直接指向本卡最關鍵的判斷：資本增值動能維度（d4）該用「residential strata 6.0」還是「landed 7.0」作為基準？如果簡單以「freehold + 超低密度 + 頂級地段」推論本案會如同純有地般增值，會忽略掉 Kenny Hills 這個幾乎完全對照的真實案例——同樣的地契、同樣的密度邏輯、同樣的頂級地段標籤，卻沒有兌現「villa＝landed」的增值假設。本卡因此選擇保守的 residential strata 基準，僅因單一期別（無 Phase 2 供給風險）與更低密度給予小幅加分，最終回到 6.0——不是為了證明或推翻「villa 能否打破天花板」的假設而人為選邊，而是讓真實數據說話。</p>
+
+    <p>定價層面同樣誠實地不利：代表戶 RM1,198 psf，較 Damansara Heights 有地房 Brickz 真實成交中位（RM773 psf，50 筆，2025-02至2026-01）溢價高達 55%——這是一個相當陡峭的入場溢價，且與 Kenny Hills 當年的發售溢價路徑高度相似。由於本案是全新產品類型，沒有同建案或同類型的 Brickz 資料可供比對，只能退而求其次以「同地段但跨產品類型」的有地房作錨點，信心度只能標為 medium。</p>
+
+    <p>交通與可達性也不能照搬同站的 Pavilion Damansara Heights 卡（交通 8.5，200m 步行直連 MRT＋商場）。The Batai 距 Pusat Bandar Damansara MRT 約 2.5km，需開車，社區本身也無任何商場整合——這是別墅型低密度社區的天生代價：換取安靜與私密性，就要放棄步行可達的都市機能。國際學校（Cempaka、Mont Kiara International、Garden International）多在 10 分鐘車程內，是相對的加分項，但整體連通性只能落在中段。</p>
+
+    <p>退場與接手人群維度最能反映本案的真實處境：quantum 起價 RM700 萬，換算下一手家庭月收門檻約 RM77,000，是 KL 中位家庭月收（RM10,805，DOSM 2024）的 7.1 倍——這個門檻高到「家庭月收入」框架本身開始失去解釋力，真正的買家多半是企業主、多代家族資產或現金買家，而非靠薪資貸款過關的專業人士。有趣的是，正因為門檻如此之高，外籍買家的 MM2H 合規反而毫無壓力（RM700 萬遠超 Platinum 級 RM200 萬門檻），使得本案外籍懲罰幅度罕見地比同站其他 DH 案例更窄——但這不代表外籍買家池真的活躍，DH 傳統上是外派高管「租」的市場，而非外籍「買」的主力市場。</p>
+
+    <p>持有面，freehold 住宅地契（非商業）是本案相對本站其他 DH 案例（Pavilion DH、Southpoint、Stonor 3 皆為商業地契）的真實優勢——享有標準住宅 LTV 與較低融資利率、無需負擔商業電費。估算毛收益率 4.5-5.0% 也比外界對「豪宅低 yield」的刻板印象要好，這要歸功於 DH 活躍的外派高管租賃需求。但租客池極窄（僅企業高管、外交官、超高淨值家庭具備承租能力與需求）意味著實際成交租金與空置期存在真實波動風險，這個估算的可靠性需待實際交屋後累積數據才能驗證。開發商 Tan &amp; Tan 本身（不含與外部合資的 Pavilion Group 部分）近期交付紀錄良好，Southpoint 與 Stonor 3 均準時完工，是本案信心的一個真實支撐點。</p>
+  </div>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>Damansara Heights 是 KL 已幾乎全數建滿的頂級地段，4.8 英畝連續地塊未來難以複製，土地層稀缺為真</li>
+        <li>每畝僅約 10 戶的超低密度＋私人電梯＋5+1 房單一戶型，精準對應多代同堂／超高淨值自住需求</li>
+        <li>Freehold 住宅地契（非商業）——本站同區其他案例皆為商業地契，本案享標準住宅融資與電費，且無商業融資摩擦拉低退場分</li>
+        <li>單一期別、無 Phase 2 供給風險，開發商信用穩健（Tan &amp; Tan／IGB Bursa T1，近期準時交付紀錄）</li>
+        <li>quantum 極高使 MM2H Platinum 門檻毫無壓力，外籍合規容易（但需搭配下方留意事項一併理解）</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li><strong>Kenny Hills Residence 殷鑑</strong>：同類超低密度 freehold strata villa 產品，發售溢價約 RM900 psf，逾十年後 Brickz 轉售中位僅剩 RM715 psf——本案 55% 的入場溢價需被謹慎看待，不宜假設 villa 產品必然如純有地般增值</li>
+        <li>代表戶較 DH 有地房真實成交中位溢價約 55%，且無同建案／同類型 Brickz 資料佐證，估值信心度僅 medium</li>
+        <li>距 Pusat Bandar Damansara MRT 約 2.5km，需開車，無商場整合，交通機能明顯弱於同站的 Pavilion Damansara Heights</li>
+        <li>quantum RM700 萬起，遠超一般都會 upgrader／首購可及範圍，本地接手池收窄至超高淨值自住／多代家族一個很窄的區間</li>
+        <li>開賣僅 5 個月，完工要到 2029 年 1 月，目前完全沒有二手市場證據（換手率、掛牌率、折讓皆無法計算）；租金估算樣本稀薄，實際承租條件應另行議價確認</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（8.3）、開發商與管理移交（7.8）、退場與接手人群（5.7 本 / 4.7 外）<br>
+      <strong>可妥協</strong>：交通與可達性（車程可接受，換取安靜與私密性）、持有現金流（自住設算租金，不影響）<br>
+      <strong>本案 fit</strong>：本站契合度最高的持有目的——5+1 房、私人電梯、超低密度共管，精準對應多代同堂或需要獨立空間的超高淨值家庭。需接受「DH 內安靜街區」意味著遠離捷運與商場，一切依賴自駕。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（4.5 本 / 2.5 外）、退場與接手人群、資本增值（6.0）<br>
+      <strong>可妥協</strong>：稀缺性與地段護城河（已強，但租客池極窄限制了 yield 的可靠性）<br>
+      <strong>本案 fit</strong>：估算毛收益率 4.5-5.0% 尚可，但租客池極窄（僅企業高管／外交官／超高淨值家庭）使空置與議價風險偏高，不建議作為純收租標的，僅適合已規劃自住／備用交替使用的買家順帶考慮租金。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河、開發商與管理移交<br>
+      <strong>可妥協</strong>：持有現金流、交通與可達性<br>
+      <strong>本案 fit</strong>：DH 聲望地段 + Freehold 住宅地契可繼承，是 KL 落腳點的優選之一，尤其適合已有司機／車輛安排、不依賴步行機能的買家。閒置期間的管理費（55 sen/sqft/月，換算約 RM3,200/月）與機會成本需納入考量。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（20%）、資本增值（長期 anchor，惟採保守 residential strata 假設）、退場與接手人群（下一代脫手）<br>
+      <strong>可妥協</strong>：短期 yield、短期催化<br>
+      <strong>本案 fit</strong>：Damansara Heights 是 KL 20 年後仍 irreplaceable 的地段之一，Freehold 住宅地契可繼承，5+1 房格局天然適合多代同堂過渡。但 Kenny Hills Residence 的先例提醒買家：villa 產品的長期增值不能想當然爾地等同純有地，若以世代傳承為主要目的，應把「地段本身的保值」視為主要理由，而非期待 villa 溢價會隨時間持續放大。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    The Edge Malaysia — The Batai brings low-density strata villa living to Damansara Heights（48 戶、4.8 英畝、GDV RM358M、2026-03 開賣、2029-01 完工、55 sen psf 管理費，2026）· EdgeProp.my — Damansara Heights': New strata villas in Jalan Batai Barat（產品規格、5+1 房、私人電梯，2026）· KL Property Talk — The Batai（2025-12）· Tatler Asia — An address apart: step into the private luxury enclave of The Batai Damansara Heights（生活圈描述，2026）· KLSE Screener — The Batai brings low-density strata villa living to Damansara Heights（約 50% 去化、轉角戶最快售罄，2026）· Tan &amp; Tan Developments Berhad 官網 thebatai 專案頁 · moovitapp.com（Pusat Bandar Damansara MRT 距離約 2.5km）· Brickz — Damansara Heights 有地房住宅（50 筆成交，2025-02~2026-01，中位 RM773 psf／RM7,075,000）· EdgeProp.my — Damansara Heights' property values since the opening of Pavilion 3（有地房均價 psf：2022 RM802、2023 RM727、2024 RM839）· <strong>Brickz — Kenny Hills Residence</strong>（Bukit Tunku，2014 完工，63 戶／4.75 英畝／每畝 13 戶，發售約 RM900 psf ~2010-2012；2024-08~2025-07 轉售 9 筆，中位 RM715 psf／RM320 萬）· PropertyGuru／EdgeProp — Damansara Heights bungalow 租賃行情（Country Heights Damansara、Jalan Batai 角戶等比較案例，2026）· Maxland Real Estate Agency — Damansara Heights 鄰近國際學校／醫療機構彙整（2026）· BusinessToday.com.my — IGB Berhad First Quarter 2026 PAT Surge、IGB Berhad Saw Full Year Profit Decline 13%（FY2025 淨利 RM361M、1Q2026 因英國資產處分大增，2026）· PropSocial／PropertyGuru — Tan &amp; Tan Developments Berhad 公司背景（1971 年成立、15 年 The Edge 十大發展商獎、FIABCI Award of Distinction 2002/2012）· DOSM Household Income Survey Report 2024（W.P. Kuala Lumpur 家庭月收中位 RM10,805、平均 RM13,985，2025-10-08 發布）· LHDN Finance Act 2026（外籍 stamp duty 4%→8%，2026-01 起）· MM2H 2026 三級制（Platinum RM200 萬／Gold RM100 萬／Silver RM60 萬門檻）· BNM OPR 2.75%
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-08-06。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限（自住／出租／備用居所／世代傳承）。</strong>本案為全新開盤建案（2026-03 開賣、2029-01 完工），開賣僅 5 個月，完全沒有自身二手市場數據；估值錨點使用同地段跨產品類型的有地房 Brickz 成交，信心度僅 medium；租金與資本增值估算樣本稀薄，均已在對應段落逐項標註信心度與局限。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+    <p style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:10.5px;font-style:italic;color:var(--muted)">本卡於 2026-08-06 完成 v5.0 首次評分：稀缺性稽核與接手人群程序皆採實查數據（來源見上），並明確揭露本案尚無二手市場證據的空白。</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
