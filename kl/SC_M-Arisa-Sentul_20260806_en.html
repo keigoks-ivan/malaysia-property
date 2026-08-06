@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M Arisa @ Sentul — KL Property Scorecard | Property Check</title>
+<meta name="description" content="Independent scorecard for M Arisa @ Sentul. Malaysian buyer 6.3 / Foreign buyer 5.5. 10-year hold professional investor lens · 7-dimension framework · Brickz / DOSM / LHDN / MRT Corp sources.">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--border-soft);
+  position:sticky;top:0;z-index:50;
+}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:700;
+  font-size:16px;color:var(--gold-light);
+  box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);
+  letter-spacing:-.04em;
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+/* Block 1: Header */
+.hero-card{
+  background:
+    radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),
+    linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);
+  color:#f3ebd6;
+  border:1px solid rgba(212,181,118,.25);
+  border-radius:22px;
+  padding:32px 36px 30px;margin-bottom:24px;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  isolation:isolate;
+}
+.hero-card::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),
+    repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);
+  pointer-events:none;z-index:0;
+}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;
+  margin-bottom:6px;color:#f7eed3;
+}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{
+  padding:18px 22px;border-radius:16px;
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(212,181,118,.22);
+  position:relative;overflow:hidden;
+}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{
+  background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+
+/* Section */
+.section{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px 32px;margin-bottom:20px;
+  box-shadow:var(--shadow-sm);
+  position:relative;
+}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:24px;font-weight:700;letter-spacing:-.01em;
+  margin-bottom:8px;color:var(--navy);line-height:1.3;
+}
+.section-title::after{
+  content:'';display:block;
+  width:36px;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  margin-top:10px;border-radius:1px;
+}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+/* Block 2: Radar + dim scores */
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{
+  background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+/* Block 3: Data tables */
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+/* Block 3.5: Cost table */
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+/* Block 4A */
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:42px;font-weight:700;
+  float:left;line-height:.95;
+  margin:4px 8px 0 0;
+  color:var(--gold);
+}
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.scenario-card{background:var(--navy-soft);border:1px solid #c7d5e8;border-radius:14px;padding:16px 16px}
+.scenario-card h4{font-family:'Noto Serif TC','Playfair Display',serif;font-size:14px;color:var(--navy);margin-bottom:8px}
+.scenario-card .sc-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-soft);padding:4px 0;border-bottom:1px dashed #c7d5e8}
+.scenario-card .sc-row:last-child{border-bottom:none}
+.scenario-card .sc-row b{color:var(--navy)}
+
+/* Block 4B */
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+/* Block 4C */
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:8px;
+  background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);
+  border:1px solid var(--gold-light);
+  font-size:15px;
+}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+/* Footer */
+.footer{
+  margin-top:28px;padding:24px 28px;
+  background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);
+  border:1px solid var(--border);border-radius:16px;
+  font-size:11.5px;color:var(--muted);line-height:1.85;
+  position:relative;overflow:hidden;
+}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+@media (max-width:768px){
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .scenario-grid{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+
+/* Block 5: Exit reality check */
+.scarcity-box{background:var(--navy-soft);border:1px solid #cdd8e8;border-left:4px solid var(--navy);border-radius:12px;padding:18px 20px;margin-bottom:20px}
+.sb-title{font-size:11.5px;font-weight:700;letter-spacing:.08em;color:var(--navy);margin-bottom:12px}
+.sb-row{display:flex;gap:10px;margin-bottom:10px;font-size:12.5px;line-height:1.7;color:var(--text-soft)}
+.sb-row strong{color:var(--navy)}
+.sb-mark{flex:0 0 20px;font-weight:700;font-size:14px;text-align:center;line-height:1.5}
+.sb-mark.pass{color:#15803d}
+.sb-mark.fail{color:#b91c1c}
+.sb-mark.mid{color:#a16207}
+.sb-verdict{margin-top:12px;padding-top:12px;border-top:1px dashed #cdd8e8;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.sb-verdict strong{color:var(--navy)}
+.pyramid-quantum{background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:10px;padding:12px 16px;font-size:12.5px;line-height:1.75;color:var(--text-soft);margin-bottom:12px}
+.pyramid-quantum strong{color:var(--navy)}
+.pyramid-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.pyramid-table th{text-align:left;padding:9px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.pyramid-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.65;color:var(--text-soft)}
+.pyramid-table tr:last-child td{border-bottom:none}
+.pyramid-table td:nth-child(2){text-align:center;width:56px}
+.pm{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;font-weight:700;font-size:13px}
+.pm.yes{background:#dcfce7;color:#15803d}
+.pm.mid{background:#fef3c7;color:#a16207}
+.pm.no{background:#e8eaed;color:#6b7280}
+.dependency-tag{border-radius:10px;padding:12px 16px;font-size:12px;line-height:1.7;margin-bottom:20px}
+.dependency-tag.mid{background:#fef3c7;border:1px solid #fcd34d;color:#78350f}
+.dependency-tag.high{background:#fef2f2;border:1px solid #fca5a5;color:#7f1d1d}
+.dependency-tag.blocked{background:#e0f2fe;border:1px solid #7dd3fc;color:#0c4a6e}
+.dependency-tag strong{font-weight:700}
+.evidence-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:10px}
+.ev-cell{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 12px;text-align:center}
+.ev-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);letter-spacing:-.02em}
+.ev-est{font-family:'Inter',sans-serif;font-size:8.5px;font-weight:600;color:var(--muted);vertical-align:super;margin-left:3px;letter-spacing:.04em}
+.ev-lbl{font-size:11px;color:var(--muted);font-weight:600;margin-top:4px}
+.ev-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 9px;border-radius:99px;margin-top:8px;letter-spacing:.04em}
+.ev-tag.ok{background:#dcfce7;color:#15803d}
+.ev-tag.weak{background:#fee2e2;color:#b91c1c}
+.ev-tag.na{background:#e8eaed;color:#6b7280}
+.ev-sub{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5}
+.ev-note{font-size:11.5px;color:var(--muted);line-height:1.7;font-style:italic;margin-bottom:16px}
+.exit-summary{padding:16px 20px;background:linear-gradient(135deg,var(--navy-deep),var(--navy));color:#f3ebd6;border-radius:12px;font-size:13.5px;line-height:1.8}
+.exit-summary strong{color:var(--gold-light);font-weight:700}
+@media (max-width:768px){.evidence-strip{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">KL Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/kl-check">← All Scores</a>
+      <a class="lang-link" href="SC_M-Arisa-Sentul_20260806_zh.html">中文</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Sentul · KL</span>
+    <span class="sep">◆</span>
+    <span>FREEHOLD RESIDENTIAL STRATA SERVICE RESIDENCE</span>
+    <span class="sep">◆</span>
+    <span>Data as of 2026-08-06</span>
+  </div>
+  <h1 class="proj-name">M Arisa <span style="font-size:20px;font-weight:500;font-style:italic;opacity:.75">@ Sentul</span></h1>
+  <p class="one-liner">
+    Low entry price, near-5.4% gross yield — but the quantum sits well below KL's RM1M foreign-buyer floor, structurally excluding foreign buyers.
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>Malaysian buyer</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.3</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">Exit (7.5) and developer credit (7.5) lead the pack; cashflow (6.0) and valuation (6.3) are middling; scarcity (5.5) is marked down for heavy area supply, and connectivity/appreciation (6.0/5.8) reflect the real 2.4km+ distance to rail plus supply to absorb — a middling location moat carried by a wide buyer pool and a low cashflow break-even</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>Foreign buyer</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.5</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">8% stamp duty + 30% rental tax compress cashflow to 4.0; more critically, the representative unit (RM390,000) and even the largest unit type (under RM600,000) both sit below KL's RM1,000,000 foreign-buyer floor — foreign buyers cannot legally purchase any unit here under current rules, which is exactly what the 4.5 exit score reflects</div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ Scoring Framework</span>
+  <h2 class="section-title">Seven-Dimension Scoring</h2>
+  <p class="section-sub">10-year hold, professional investor lens. Scarcity & location moat 20% · Connectivity 12% · Capital appreciation momentum 15% · Entry valuation discipline 13% · Holding cashflow 12% · Exit & next-buyer pool 18% · Developer & handover 10%. Five dimensions score identically for both buyer types; two (cashflow, exit) split by buyer type. Core belief: buy the land, buy the exit — scarcity sets the floor, exit realizes the return.</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+<svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="Seven-dimension radar chart">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): [5.5, 6.0, 5.8, 6.3, 6.0, 7.5, 7.5] -->
+  <polygon points="140.0,78.4 192.5,98.1 203.3,154.5 170.6,203.6 110.8,200.5 58.1,158.7 74.3,87.6" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="78.4" r="3.5"/>
+    <circle cx="192.5" cy="98.1" r="3.5"/>
+    <circle cx="203.3" cy="154.5" r="3.5"/>
+    <circle cx="170.6" cy="203.6" r="3.5"/>
+    <circle cx="110.8" cy="200.5" r="3.5"/>
+    <circle cx="58.1" cy="158.7" r="3.5"/>
+    <circle cx="74.3" cy="87.6" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [5.5, 6.0, 5.8, 6.3, 4.0, 4.5, 7.5] -->
+  <polygon points="140.0,78.4 192.5,98.1 203.3,154.5 170.6,203.6 120.6,180.4 90.9,151.2 74.3,87.6" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="78.4" r="3.0"/>
+    <circle cx="192.5" cy="98.1" r="3.0"/>
+    <circle cx="203.3" cy="154.5" r="3.0"/>
+    <circle cx="170.6" cy="203.6" r="3.0"/>
+    <circle cx="120.6" cy="180.4" r="3.0"/>
+    <circle cx="90.9" cy="151.2" r="3.0"/>
+    <circle cx="74.3" cy="87.6" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Inter', sans-serif">
+    <text x="140" y="12" text-anchor="middle">Scarcity &amp; Location</text>
+    <text x="239" y="59" text-anchor="start">Connectivity</text>
+    <text x="263" y="168" text-anchor="start">Appreciation</text>
+    <text x="195" y="262" text-anchor="start">Valuation</text>
+    <text x="85" y="262" text-anchor="end">Cashflow</text>
+    <text x="17" y="168" text-anchor="end">Exit &amp; Buyer Pool</text>
+    <text x="41" y="59" text-anchor="end">Developer</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>Malaysian 6.3</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>Foreign 5.5</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Scarcity &amp; Location Moat</span><span class="dim-weight">20% · Same for both</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Sentul isn't in the existing district anchor table, so we start from the closest structural match — the "other KL" 6.0 baseline. Three-layer audit: land layer <strong>✗</strong> — the Sentul corridor has heavy in-build/pipeline supply, with at least 7 new launches competing in 2026, including the developer's own M Centura roughly 390m away selling a similar product concurrently, showing developable land is far from capped; product layer <strong>✗</strong> — a standardized 1-4 bedroom high-rise service residence (550-1,025 sqft) highly homogeneous with area comps like The Saffron, M Centura, and The Capers, with no distinctive spec to evidence effective scarcity; legal layer <strong>✗</strong> — no height cap or master-plan lock on future supply; freehold tenure is a product-level advantage here, not a legal-layer scarcity protection. High replicability (a same-developer comparable project steps away) triggers −0.5, all else at baseline. 6.0−0.5=5.5. Note: YTL's historic Sentul Park/Sentul Depot regeneration masterplan sits in a different Sentul precinct from M Arisa's Jalan Sentul Pasar micro-location and cannot be borrowed for this card's scarcity narrative.</p>
+        <p class="dim-data">3.31 acres, 2×55-storey towers, 1,598 units (GDV ~RM653M) · Same-developer M Centura ~390m away, selling concurrently · At least 7 new Sentul launches competing in 2026 (The Capers, Vista Sentul Residences, etc., NuProp)</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Connectivity</span><span class="dim-weight">12% · Same for both</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Verified distances show M Arisa sits roughly 2.4km from the nearest LRT Sentul Timur and 2.6km from KTM Sentul — far from the walkable-rail impression the "Sentul" name might suggest, requiring a car or the developer's private shuttle (not a standard-frequency public service). This lands on Tier 6 of the connectivity anchor table (roughly a 10-minute drive to rail + reachable international school + general hospital). Plus: Wesley Methodist School (International) is nearby. Minus: no integrated mall (Sentul has no Pavilion/IGB-grade retail). Net 6.0.</p>
+        <p class="dim-data">LRT Sentul Timur 2.4km, KTM Sentul 2.6km (moovitapp.com) · Developer shuttle service (private schedule) · Wesley Methodist School (International) nearby · Hospital Kuala Lumpur (public hospital) ~10-15 min drive (estimated)</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Capital Appreciation Momentum</span><span class="dim-weight">15% · Same for both</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.8</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Baseline 6.0 for residential strata (not commercial SA 5.0 — M Arisa is registered residential strata, not commercial title). Catalyst: MRT3 Circle Line received final approval in July 2025, with Sentul East/Sentul West slated as interchange stations integrating existing KTM/LRT — but as of August 2026, land acquisition is expected to finish by end-2026, construction is pegged to ~2027, phased operations as early as 2028, with the full line targeted for 2030-2032. Reports diverge on timing, signalling genuine uncertainty, and the new stations — by extrapolation from the existing Sentul station cluster — remain a meaningful physical distance from this project, so it is not a walkable TOD premium for M Arisa specifically. We therefore apply only the conservative "MRT3 pipeline" +0.3 rather than the full +1. Downside: real oversupply pressure in the Sentul corridor — market reports flag sub-60% occupancy at some newly completed high-rises in Sentul/Titiwangsa, and at least 5+ competing launches within 5 years in this corridor trigger the −0.5 same-area supply-pressure deduction. Net: 6.0+0.3−0.5=5.8.</p>
+        <p class="dim-data">MRT3 Circle Line final approval (2025-07, malaymail.com); Sentul East/West are among 10 interchange stations (mymrt.com.my) · Construction/opening timelines diverge across sources (2027 construction start / 2028 phased opening / 2030-2032 full line, soyacincau.com / paultan.org / kopiandproperty.com) · Sub-60% occupancy reported at some new Sentul/Titiwangsa high-rises (propcashflow.my market report, estimated in nature)</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Entry Valuation Discipline</span><span class="dim-weight">13% · Same for both</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.3</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Anchor is this project's own Brickz transacted median (first-priority tier): RM624 psf / RM500,000 (4 transactions, Aug 2024-Jul 2025) — but with only 4 transactions, confidence can only be labelled low-medium. The representative 2BR (708 sqft) currently indicates ~RM550 psf on the secondary market, roughly a 12% discount to the project's own Brickz median. A mechanical read of the discount ladder would land in the 7.0-7.5 band, but given the thin sample — and that the Brickz median may be skewed upward by a few larger-unit transactions within the same 4-transaction mix (not a like-for-like unit-type comparison) — we conservatively pull this back to 6.3, sitting at the boundary between "reasonable new-launch premium" and "discount," avoiding false precision on a thin sample. Aggressiveness check versus peers: concurrent Sentul new launches price at RM280-450 psf (The Capers, M Centura, Vista Sentul), below M Arisa's current secondary indicative RM550 psf — but this reflects M Arisa being a completed, handed-over (early 2025) mature product, not a like-for-like "new launch" pricing comparison, so no further penalty applies.</p>
+        <p class="dim-data">Project's own Brickz median RM624psf / RM500,000 (4 transactions, 2024-08~2025-07, confidence low-medium, brickz.my) · Representative 2BR 708sqft indicative ~RM550psf / RM390,000 · Area new-launch pricing: The Capers RM411psf, M Centura RM448psf, Vista Sentul RM284psf (all new-launch asking, not like-for-like)</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Holding Cashflow</span><span class="dim-weight">12% · Local vs Foreign</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">MY</span><span class="val local">6.0</span></span>
+            <span class="dim-score"><span class="lbl">FG</span><span class="val foreign">4.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Representative 2BR 708sqft, estimated monthly rent RM1,750 (actual same-building 702-708sqft listings range RM1,700-2,000, taking a conservative point in the range), gross yield ~5.4% — falling in the 5.0-5.5% bracket, baseline 6.0. Management fee estimated ~RM0.40/sqft/month, below the 0.6 threshold so no penalty; residential title (not commercial SA) means no financing-friction penalty. Malaysian buyer nets 6.0. Foreign: 30% non-resident rental tax compresses after-tax yield significantly, maintaining the site's usual −2.0 gap, landing at 4.0.</p>
+        <p class="dim-data">2BR 708sqft listed rent RM1,700-2,000/month (mudah.my / propertyguru.com.my, midpoint estimate) · Gross yield ~5.4% (estimated) · Residential strata title, not commercial SA, no financing friction</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Exit &amp; Next-Buyer Pool</span><span class="dim-weight">18% · Local vs Foreign</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">MY</span><span class="val local">7.5</span></span>
+            <span class="dim-score"><span class="lbl">FG</span><span class="val foreign">4.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Freehold residential strata (not commercial SA) baseline 7.5. Malaysian buyer: quantum RM390,000 ≤RM800,000 +0.5; annual turnover 0.25% (4 transactions / 1,598 units, 12 months) <1% −0.5; Brickz depth 4 transactions <10 −0.3; falls within the first-time-buyer stamp duty exemption band +0.3; listing rate ~4.3% (69/1,598) healthy, no penalty. Net: 7.5+0.5−0.5−0.3+0.3=7.5. Note: the turnover figure should be read cautiously — this project only handed over in early 2025, so the Brickz resale record covers a relatively early window; the thin sample partly reflects market immaturity rather than necessarily weak liquidity. <strong>Foreign: local baseline 7.5 −2.0 (foreign baseline gap) −1.0 (cannot meet threshold) = 4.5.</strong> The representative unit (RM390,000) and even the largest unit type (~1,025 sqft, estimated RM550,000-600,000) both fall below KL Federal Territory's RM1,000,000 foreign-buyer minimum purchase threshold — this is unrelated to any individual MM2H tier and is instead the higher-order Federal Territory transaction-value rule, meaning foreign individual buyers <strong>cannot legally purchase any unit in this project</strong> under current rules. The 4.5 score is the result of applying a fixed formula; in practice this is closer to "transaction impossible" than "transaction at a discount."</p>
+        <p class="dim-data">Quantum RM390,000 → next-buyer household income threshold ≈RM4,290 (price×1.1%) → against KL median household income RM10,805 (DOSM HIS 2024), only ~40% of the median — a wide local buyer pool · Turnover 0.25% (4 / 1,598 units), listing rate ~4.3% (69 listed / 1,598 units, propertyguru.com.my) · Both representative and largest unit types fall below KL's RM1,000,000 foreign-buyer minimum</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">Developer &amp; Handover</span><span class="dim-weight">10% · Same for both</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">7.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Mah Sing Group Berhad, Bursa Main Market listed (KLSE:MAHSING), Bursa Tier 1 baseline 7.5. Parent financials are solid: net income has held steady around RM66 million for the past two quarters (QoQ +0.37%), EBITDA margin ~16.4%, and analyst sentiment for 2026 is positive (average target price RM1.84). Delivery track record is strong: nearly 30 years of history, 50+ successfully delivered projects, roughly 14,000 units delivered over the past 4 years with an average QLASSIC score above 82%. M Arisa itself scored QLASSIC 84 and SHASSIC 5-star, completed on schedule in early 2025 and fully sold, with no reported delays. Recent examples (M Astra completed early, M Zenya topped out 13 months ahead of schedule) further evidence execution discipline. No major losses or abandoned-project history — baseline 7.5 holds with no further adjustment.</p>
+        <p class="dim-data">KLSE:MAHSING, Bursa Main Market · Net income steady over trailing 12 months, EBITDA margin 16.4% (stockanalysis.com) · M Arisa QLASSIC 84, SHASSIC 5-star, handed over 2025-02, fully sold (theedgemalaysia.com) · ~30-year, 50+ project track record, ~14,000 units delivered over the past 4 years (businesstoday.com.my)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ Key Facts</span>
+  <h2 class="section-title">Key Data</h2>
+  <p class="section-sub">Representative unit: <strong>2BR Type C, 708 sqft, mid-floor, ~RM 390,000</strong> (≈RM550 psf, estimated). M Arisa offers 1-4 bedroom units from 550-1,025 sqft; 2BR is the mainstream target unit type for a 10-year-hold professional investor, and this card takes the median size within the project's 2BR range.</p>
+
+  <div class="assump-box" style="background:linear-gradient(135deg,#fef9ed 0%, #fbf3df 100%);border:1px solid var(--gold);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative">
+    <strong>⚠️ Valuation &amp; Price Transparency Note:</strong> The valuation dimension (13%) anchors on the "same project / same type, <strong>actual transacted</strong> median PSF." This project's anchor: this project's own Brickz transacted median, <strong>RM624 psf / RM500,000</strong> (4 transactions, 2024-08~2025-07, confidence: low-medium — thin sample mixing unit types); representative unit indicative price: <strong>~RM550 psf</strong>; discount: approx. <strong>−12%</strong> (confidence low-medium, so the valuation score does not apply the top of the discount ladder). <strong>A more important price-transparency note:</strong> this project's representative unit (RM390,000) — and even its largest unit type (~1,025 sqft, estimated RM550,000-600,000) — both fall below KL Federal Territory's RM1,000,000 foreign-buyer minimum purchase threshold. Foreign buyers cannot legally purchase any unit in this project under current rules. Actual transacted prices may also differ from asking due to negotiation room, unit condition, and floor/facing — buyers should confirm final net pricing in writing with the agent or developer.
+  </div>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">Project Basics</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">Developer</td><td class="kv-val">Mah Sing Group Berhad<span class="kv-src">Bursa Main Market, KLSE:MAHSING</span></td></tr>
+          <tr><td class="kv-label">Tenure</td><td class="kv-val">Freehold residential strata (Service Residence)<span class="kv-src">Not commercial title — standard residential financing applies</span></td></tr>
+          <tr><td class="kv-label">Scale</td><td class="kv-val">3.31 acres · 2×55-storey towers<span class="kv-src">GDV ~RM653M</span></td></tr>
+          <tr><td class="kv-label">Total units</td><td class="kv-val">1,598 units<span class="kv-src">Some sources cite a rounded ~1,500; this card uses the project-specific 1,598 figure as the turnover/listing-rate denominator</span></td></tr>
+          <tr><td class="kv-label">Unit sizes</td><td class="kv-val">550-1,025 sqft (1-4 BR)<span class="kv-src">Representative unit: 2BR 708 sqft</span></td></tr>
+          <tr><td class="kv-label">Completion / handover</td><td class="kv-val">Early 2025 (QLASSIC 84, SHASSIC 5-star)<span class="kv-src">The Edge Malaysia, 2025-02</span></td></tr>
+          <tr><td class="kv-label">Take-up</td><td class="kv-val">80% at launch, now fully sold<span class="kv-src">2022 launch-stage take-up; fully sold by 2026</span></td></tr>
+          <tr><td class="kv-label">Management fee</td><td class="kv-val">~RM0.40/sqft/month (estimated)<span class="kv-src">No official published figure; estimated from comparable-tier product</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">Location &amp; Connectivity</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">Nearest rail</td><td class="kv-val">LRT Sentul Timur 2.4km / KTM Sentul 2.6km<span class="kv-src">Requires car or shuttle, not walkable</span></td></tr>
+          <tr><td class="kv-label">MRT3 catalyst</td><td class="kv-val">Sentul East/West interchange stations approved<span class="kv-src">Construction/opening timelines diverge, 2028-2032 range</span></td></tr>
+          <tr><td class="kv-label">International school</td><td class="kv-val">Wesley Methodist School (International)<span class="kv-src">Nearby, reachable</span></td></tr>
+          <tr><td class="kv-label">Neighbourhood</td><td class="kv-val">Around Sentul Pasar traditional market<span class="kv-src">No integrated mall, not a TOD product</span></td></tr>
+          <tr><td class="kv-label">Area new-launch comps</td><td class="kv-val">The Capers RM411psf, M Centura RM448psf<span class="kv-src">New-launch asking prices, not like-for-like</span></td></tr>
+          <tr><td class="kv-label">This project's Brickz anchor</td><td class="kv-val">Median RM624psf / RM500,000<span class="kv-src">4 transactions, 2024-08~2025-07</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">Item</th>
+        <th class="local">🇲🇾 Malaysian buyer</th>
+        <th class="foreign">🌏 Foreign buyer</th>
+        <th style="width:18%">Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Stamp duty (MOT)</td><td class="num">1-4% tiered<br><small style="color:var(--muted)">≈ RM 7,000</small></td><td class="num">8% flat<br><small style="color:var(--muted)">≈ RM 31,000</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>Down payment</td><td class="num">10% (90% LTV, residential)<br><small style="color:var(--muted)">RM 39,000</small></td><td class="num">30% (70% LTV)<br><small style="color:var(--muted)">RM 117,000</small></td><td><small>BNM / bank policy</small></td></tr>
+      <tr><td>Mortgage rate</td><td class="num">~4.10%</td><td class="num">~4.60%</td><td><small>BNM OPR 2.75% + spread</small></td></tr>
+      <tr><td>Gross rental yield (representative unit)</td><td class="num">~5.4%</td><td class="num">~5.4% (same)</td><td><small>propertyguru / mudah, estimated</small></td></tr>
+      <tr><td>Rental income tax</td><td class="num">Progressive, est. ~16%</td><td class="num">30% flat (non-resident)</td><td><small>LHDN</small></td></tr>
+      <tr><td>Net rental yield (after tax)</td><td class="num">~4.5%</td><td class="num">~3.8%</td><td><small>Calculated</small></td></tr>
+      <tr><td>Spread (net yield − mortgage rate)</td><td class="num">+0.4%</td><td class="num">−0.8%</td><td><small>Calculated</small></td></tr>
+      <tr><td>Minimum purchase threshold (KL)</td><td class="num">None</td><td class="num">RM 1,000,000<br><small style="color:var(--warn-text)">No unit in this project meets this</small></td><td><small>Federal Territory</small></td></tr>
+      <tr><td>RPGT (from year 6)</td><td class="num">0%</td><td class="num">10% permanent</td><td><small>LHDN</small></td></tr>
+      <tr><td>MM2H eligibility</td><td class="num">—</td><td class="num">✗ Cannot legally purchase any unit<br><small>Quantum below WPKL minimum, unrelated to MM2H tier</small></td><td><small>MM2H 2026 three-tier system / Federal Territory rule</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ Economics</span>
+  <h2 class="section-title">10-Year Total Cost Comparison</h2>
+  <p class="section-sub">Based on the representative unit <strong>2BR 708 sqft, RM 390,000</strong> — Malaysian buyer vs foreign buyer 10-year total cost and net P&amp;L comparison.</p>
+
+  <div class="assump-box">
+    <strong>Fixed assumptions:</strong>
+    Representative unit <strong>2BR 708 sqft @ RM 390,000</strong> · 10-year hold · 30-year mortgage · estimated monthly rent RM1,750 (Y1), 3%/year growth, 1 month/year vacancy ·
+    management fee ~RM0.40/sqft/month (estimated) · Malaysian rate 4.10% / 90% LTV, 10% down · Foreign rate 4.60% / 70% LTV, 30% down (OPR 2.75% + spread) · rental tax rate: Malaysian estimated marginal 16%, foreign 30% flat.
+    All figures rounded to the nearest thousand. <strong>⚠️ The foreign-buyer column is a methodology-completeness assumption</strong> — this project's price is well below KL Federal Territory's RM1,000,000 foreign-buyer minimum purchase threshold, so in practice a foreign individual buyer cannot complete a legal transaction on any unit here. The figures below are for methodological comparison only and do not represent an executable transaction path.
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th class="local">🇲🇾 Malaysian (RM)</th>
+        <th class="foreign">🌏 Foreign (RM)</th>
+        <th>Difference (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>Acquisition Cost</td><td></td><td></td><td></td></tr>
+      <tr><td>Down payment</td><td>39,000</td><td>117,000</td><td>+78,000</td></tr>
+      <tr><td>Stamp duty (MOT)</td><td>7,000</td><td>31,000</td><td>+24,000</td></tr>
+      <tr><td>Legal + loan fees</td><td>8,000</td><td>8,000</td><td>0</td></tr>
+      <tr class="sum"><td>Acquisition subtotal</td><td>54,000</td><td>156,000</td><td>+102,000</td></tr>
+
+      <tr class="cat"><td>Holding Cost (10-year cumulative)</td><td></td><td></td><td></td></tr>
+      <tr><td>Total mortgage payments</td><td>204,000</td><td>168,000</td><td>−36,000</td></tr>
+      <tr><td>Management fee + sinking fund</td><td>34,000</td><td>34,000</td><td>0</td></tr>
+      <tr><td>Assessment + quit rent</td><td>8,000</td><td>8,000</td><td>0</td></tr>
+      <tr><td>Insurance</td><td>3,000</td><td>3,000</td><td>0</td></tr>
+      <tr class="sum"><td>Holding subtotal</td><td>249,000</td><td>213,000</td><td>−36,000</td></tr>
+
+      <tr class="cat"><td>Rental Income (10-year cumulative, est. monthly rent RM1,750 starting)</td><td></td><td></td><td></td></tr>
+      <tr><td>Gross rental income</td><td>221,000</td><td>221,000</td><td>0</td></tr>
+      <tr><td>Rental income tax</td><td>35,000</td><td>66,000</td><td>+31,000</td></tr>
+      <tr class="sum"><td>Net rent (after tax)</td><td>186,000</td><td>155,000</td><td>−31,000</td></tr>
+
+      <tr class="cat"><td>Sale Cost (Year 10, 3% appreciation scenario)</td><td></td><td></td><td></td></tr>
+      <tr><td>Agent commission (2.4%)</td><td>13,000</td><td>13,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>13,000</td><td>+13,000</td></tr>
+      <tr><td>Loan balance (after 10 years)</td><td>277,000</td><td>219,000</td><td>−58,000</td></tr>
+
+      <tr class="cat"><td>10-Year Net P&amp;L (by price appreciation)</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0% appreciation</td><td>−13,000</td><td>−52,000</td><td>−39,000</td></tr>
+      <tr class="scenario"><td>3%/year appreciation</td><td>+117,000</td><td>+65,000</td><td>−52,000</td></tr>
+      <tr class="scenario"><td>5%/year appreciation</td><td>+226,000</td><td>+162,000</td><td>−64,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    Under the base case (3%/year appreciation, 2025 completion + 10-year hold), a foreign buyer's 10-year net P&amp;L is about <strong>RM 52,000 lower than a Malaysian buyer's (roughly 13.3% of the purchase price)</strong> — the structural gap comes mainly from the 30% rental tax and 8% stamp duty. <strong>Break-even threshold (estimated):</strong> Malaysian buyer ~<strong>0.5%/year</strong>, foreign buyer ~<strong>1.5%/year</strong> — both notably below the site's typical 1.5-2.5% / 3.0-4.5% ranges, because this project's gross yield (~5.4%) is relatively strong, letting cashflow alone carry most of the holding cost without relying on major price appreciation — this is the core reason this project remains investable despite a middling scarcity score. <strong>Warning:</strong> the foreign-buyer column above is a methodology-framework assumption — this project's price (from RM390,000, up to ~RM550,000-600,000 for the largest unit) is well below KL Federal Territory's RM1,000,000 foreign-buyer threshold, so a foreign individual buyer cannot legally complete a transaction on any unit here; this table is reference-only for foreign buyers, not an executable path.
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ Exit Reality Check</span>
+  <h2 class="section-title">Exit Reality Check</h2>
+  <p class="section-sub">The v5.0 core belief: a 10-year hold's return is only real on the day you sell. Three components — scarcity audit (the exit-price floor), next-buyer pyramid (who buys it), secondary-market evidence (how fast, at what discount). This project only handed over in early 2025, so secondary-market evidence remains thin — the data and its limits are disclosed honestly below.</p>
+
+  <!-- 5A Scarcity Audit -->
+  <div class="scarcity-box">
+    <div class="sb-title">5A · Scarcity Audit (Supply-Side, Three Layers)</div>
+    <div class="sb-row"><span class="sb-mark fail">✗</span><div><strong>Land layer</strong>: The Sentul corridor has heavy in-build/pipeline supply — at least 7 new launches competing in 2026, including the developer's own M Centura roughly 390m away selling a similar product concurrently. Developable land is far from capped.</div></div>
+    <div class="sb-row"><span class="sb-mark fail">✗</span><div><strong>Product layer</strong>: A standardized 1-4 bedroom high-rise service residence (550-1,025 sqft), highly homogeneous with area comps such as The Saffron, M Centura, and The Capers, with no distinctive spec to evidence effective scarcity.</div></div>
+    <div class="sb-row"><span class="sb-mark fail">✗</span><div><strong>Legal layer</strong>: No height cap or master-plan lock on future local supply; freehold tenure is a product-level advantage, not a legal scarcity protection — neighbouring parcels can equally be freehold.</div></div>
+    <div class="sb-verdict"><strong>Effective scarcity verdict: all three layers fail the structural audit.</strong> Sentul's current narrative is mainly a long-horizon MRT3 catalyst (already captured in appreciation) and a relatively low entry price, not traditional location scarcity — d1 therefore lands at 5.5, below the "other KL" 6.0 baseline, honestly reflecting that this is not a scarcity-type asset. The investment case here should rest on cashflow and buyer-pool depth, not a scarcity premium.</div>
+  </div>
+
+  <!-- 5B Next-Buyer Pyramid -->
+  <div class="sb-title" style="margin-top:18px">5B · Next-Buyer Pyramid</div>
+  <div class="pyramid-quantum">
+    <strong>Representative unit RM390,000 → next-buyer household income threshold ≈RM4,290/month</strong> (price×1.1%; 90% LTV, 4.3%, 30 years, 40% burden) → against KL median household income RM10,805 (DOSM HIS 2024), the threshold is only ~40% of the median — a wide local buyer pool, well below the threshold level seen at most other cards on this site; local first-time buyers and upgraders both clear it easily.
+  </div>
+  <table class="pyramid-table">
+    <thead><tr><th>Buyer segment</th><th>Verdict</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td>Local first-time buyer</td><td><span class="pm yes">✓</span></td><td>Quantum is far below the RM800,000 threshold and falls within the HOC/first-time-buyer stamp duty exemption band.</td></tr>
+      <tr><td>Local upgrader</td><td><span class="pm yes">✓</span></td><td>Low entry price makes this easy to add as a transitional or rental asset.</td></tr>
+      <tr><td>Local investor</td><td><span class="pm mid">△</span></td><td>Gross yield ~5.4% is decent, but Sentul-corridor supply pressure and reports of below-average occupancy at nearby projects are a rental-stability concern.</td></tr>
+      <tr><td>Foreign self-use (MM2H)</td><td><span class="pm no">✗</span></td><td>The representative unit (RM390,000) and even the largest unit type (~RM550,000-600,000) both sit below KL Federal Territory's RM1,000,000 foreign-buyer floor — no unit here qualifies for foreign individual purchase.</td></tr>
+      <tr><td>Foreign investment</td><td><span class="pm no">✗</span></td><td>Same as above — structurally excluded, not a matter of buyer preference.</td></tr>
+      <tr><td>Institutional / bulk</td><td><span class="pm no">✗</span></td><td>Individual strata units don't fit institutional-scale mandates.</td></tr>
+    </tbody>
+  </table>
+  <div class="dependency-tag blocked"><strong>Foreign dependency: structurally zero (not merely "low").</strong> This project's representative unit — and even its largest unit type — both price below KL Federal Territory's RM1,000,000 foreign-buyer threshold. This isn't a market outcome of "foreign buyers preferring not to buy here"; it's a hard rule excluding foreign individual buyers outright — more extreme than the "low foreign dependency" seen elsewhere on this site, and for that reason it does not carry the usual "policy shifts, exit pool halves" kill-switch risk (the foreign pool is already zero, so there's nothing left to halve).</div>
+
+  <!-- 5C Secondary Market Evidence -->
+  <div class="sb-title" style="margin-top:18px">5C · Secondary Market Evidence</div>
+  <div class="evidence-strip">
+    <div class="ev-cell"><div class="ev-num">0.25%</div><div class="ev-lbl">Annual turnover</div><div class="ev-tag weak">Thin</div><div class="ev-sub">4 / 1,598 units, 12 months (Brickz)</div></div>
+    <div class="ev-cell"><div class="ev-num">4.3%</div><div class="ev-lbl">Listing rate</div><div class="ev-tag ok">Healthy</div><div class="ev-sub">69 listed / 1,598 units (PropertyGuru)</div></div>
+    <div class="ev-cell"><div class="ev-num">n/a</div><div class="ev-lbl">Listing-to-transaction discount</div><div class="ev-tag na">Insufficient data</div><div class="ev-sub">Sample too thin to compute precisely</div></div>
+    <div class="ev-cell"><div class="ev-num">4 txns</div><div class="ev-lbl">Brickz depth</div><div class="ev-tag weak">Thin</div><div class="ev-sub">Below the 10-transaction threshold</div></div>
+  </div>
+  <p class="ev-note">Honest disclosure: this project only completed handover in early 2025, and its Brickz resale record shows just 4 transactions (2024-08~2025-07, some possibly pre-handover SPA transfers) — the thin sample partly reflects market immaturity rather than necessarily weak liquidity. The listing rate (4.3%) is relatively healthy, suggesting good initial market absorption; but turnover and discount ranges should be reassessed once more transactions accumulate over the next 1-2 years.</p>
+
+  <div class="exit-summary">The most likely next-buyer over 10 years is a <strong>local first-time buyer or upgrader</strong> (low quantum threshold, within the stamp duty exemption band); if Sentul-corridor supply continues to build and further softens rents/occupancy, local investor appetite could be dampened. <strong>The foreign buyer pool is structurally absent because the price sits below the RM1,000,000 Federal Territory threshold — this is not a policy-scenario risk but a fact under current rules, and unless a future unit type pushes the representative price above RM1,000,000, the foreign exit pool will remain zero.</strong></div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ Deep Dive</span>
+  <h2 class="section-title">Project Deep Dive</h2>
+
+  <div class="summary-text">
+    <p>M Arisa sits on Jalan Sentul Pasar, next to the Sentul traditional market, launched by Mah Sing Group in November 2019 and handed over in early 2025 — a flagship of Mah Sing's presence in the Sentul corridor and an extension of the group's affordable-boutique "M-series" line. Built on 3.31 acres across two 55-storey towers totalling 1,598 units, unit sizes range from 550 sqft one-bedrooms to 1,025 sqft four-bedrooms. The project achieved 80% take-up at launch and is now fully sold, with a QLASSIC score of 84 and SHASSIC 5-star rating — solid delivery quality for its price tier.</p>
+
+    <p>The project's location story needs to be unpacked in two layers. The first is the marketing narrative: "Sentul" as a place name has warmed up in recent years thanks to the MRT3 Circle Line plan — Sentul East and Sentul West are confirmed as interchange stations integrating with the existing KTM/LRT system, theoretically elevating Sentul from a peripheral residential area to a future multi-line node. The second layer is on-the-ground verification: M Arisa itself sits roughly 2.4km from the nearest LRT Sentul Timur station and 2.6km from KTM Sentul, requiring a car or the developer's shuttle — not the walkable rail-adjacent product the "Sentul" branding might imply. MRT3's own construction and opening timeline is also inconsistent across sources — land acquisition expected to finish by end-2026, construction pegged to around 2027, phased opening as early as 2028, with the full line targeted for 2030-2032 — a long-horizon catalyst with genuine timing uncertainty, not a reason for near-term urgency.</p>
+
+    <p>The scarcity audit reaches an equally conservative conclusion: the land layer is uncapped — the Sentul corridor has at least 7 more new launches competing in 2026, including Mah Sing's own M Centura selling a similar product 390 metres away; the product layer shows no distinctive configuration either — a standardized 1-4 bedroom high-rise service residence format highly homogeneous with area comps like The Saffron, M Centura, and The Capers; and the legal layer has no height cap or master plan locking in future supply. All three layers fail the audit, meaning this project's long-term value proposition cannot rest on "location scarcity" — it should instead rest on cashflow and buyer-pool depth.</p>
+
+    <p>On pricing, this project's own Brickz transacted median is RM624 psf / RM500,000 (just 4 transactions, August 2024 to July 2025); the representative 2BR unit (708 sqft) currently indicates around RM550 psf / RM390,000 on the secondary market, roughly a 12% discount to its own transacted median — though with such a thin sample, valuation confidence can only be labelled low-medium. Buyers should understand actual transacted prices may vary from asking due to negotiation room, renovation condition, and floor/facing, and shouldn't rely purely on listed prices.</p>
+
+    <p>On the rental market, actual listings for the same-building 708 sqft 2-bedroom type range from RM1,700 to RM2,000, implying a gross yield of roughly 5.4% — above-average for the KL market overall, and this project's strongest fundamental. Worth noting: market reports indicate sub-60% occupancy at some newly completed high-rises in the Sentul and neighbouring Titiwangsa corridor — not M Arisa's own data directly, but a signal of competitive pressure in the same corridor worth verifying independently for rental-focused buyers during due diligence.</p>
+
+    <p>The exit picture is the most critical, and most important-to-understand, part of this project: at a price of RM390,000, the next-buyer household income threshold is only around RM4,290, far below KL's median household income of RM10,805 — giving this project an unusually wide local first-time-buyer and upgrader pool, its most standout advantage relative to most cards on this site. But the foreign buyer pool is an entirely different story — this project's representative unit, and even its largest unit type (roughly RM550,000-600,000), both price below KL Federal Territory's RM1,000,000 foreign-buyer minimum threshold, meaning foreign individual buyers cannot legally purchase any unit here under current rules — unrelated to any specific MM2H tier, and instead the higher-order Federal Territory transaction-value rule excluding them outright. This isn't the familiar "high foreign dependency, high policy risk" script — it's the structural fact that foreign buyers were never in the exit pool to begin with. Developer Mah Sing, a Bursa Main Market-listed group with nearly 30 years and 50+ delivered projects, and this project's own on-schedule, fully-sold handover, provide a genuine confidence anchor.</p>
+  </div>
+
+  <div class="scenario-grid">
+    <div class="scenario-card">
+      <h4>Bear (0%/year, sustained Sentul supply pressure)</h4>
+      <div class="sc-row"><span>Malaysian 10-yr IRR</span><b>~ −1.3%/year</b></div>
+      <div class="sc-row"><span>Foreign 10-yr IRR</span><b>~ −2.9%/year (hypothetical)</b></div>
+      <div class="sc-row"><span>Scenario assumption</span><b>Area supply unabsorbed, rent and price flat</b></div>
+    </div>
+    <div class="scenario-card">
+      <h4>Base (3%/year, MRT3 long-term expectation partly priced in)</h4>
+      <div class="sc-row"><span>Malaysian 10-yr IRR</span><b>~ +9.3%/year</b></div>
+      <div class="sc-row"><span>Foreign 10-yr IRR</span><b>~ +3.2%/year (hypothetical)</b></div>
+      <div class="sc-row"><span>Scenario assumption</span><b>Residential strata baseline growth; high leverage (90% LTV) amplifies equity return</b></div>
+    </div>
+    <div class="scenario-card">
+      <h4>Bull (5%/year, MRT3 construction certainty rises)</h4>
+      <div class="sc-row"><span>Malaysian 10-yr IRR</span><b>~ +14.4%/year</b></div>
+      <div class="sc-row"><span>Foreign 10-yr IRR</span><b>~ +6.7%/year (hypothetical)</b></div>
+      <div class="sc-row"><span>Scenario assumption</span><b>MRT3 construction confirmed, Sentul supply absorbs faster</b></div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-top:12px;line-height:1.8">All three scenarios are estimated (confidence: low-medium; levered equity IRR). The Malaysian buyer's IRR is elevated mainly due to 90% LTV leverage amplifying equity returns (5.4% gross yield plus modest appreciation comfortably exceeds the 4.10% financing cost, a strong positive-leverage effect). The foreign column is a methodology-framework hypothetical — this project's price is below KL's foreign-buyer threshold and is not executable in practice. 10-year exit liquidity: this project's own verifiable Brickz transactions total just 4 (2024-08~2025-07), so listing-to-transaction time and discount range cannot be precisely estimated; the ~4.3% listing rate (69/1,598) serves as a liquidity reference and sits in a healthy range.</p>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ Conclusion</span>
+  <h2 class="section-title">Highlights &amp; Caveats</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ Highlights</div>
+      <ul class="pc-list">
+        <li>Low entry price: representative unit ~RM390,000 (≈RM550psf); next-buyer household income threshold only ~RM4,290, far below KL's median household income of RM10,805 — a wide local buyer pool</li>
+        <li>Gross rental yield ~5.4%, above-average among projects reviewed on this site; 10-year break-even threshold as low as ~0.5%/year (Malaysian buyer), not reliant on major price appreciation</li>
+        <li>Freehold residential title (not commercial SA) — the next buyer gets standard 90% LTV residential financing, avoiding the financing-friction penalty seen at commercial-titled projects</li>
+        <li>Developer Mah Sing Group is a Bursa Main Market-listed group with nearly 30 years and 50+ delivered projects; this project scored QLASSIC 84 and SHASSIC 5-star, completed on schedule in early 2025, fully sold</li>
+        <li>MRT3 Circle Line has received final approval; Sentul East/West interchange stations will integrate the existing KTM/LRT system — a long-term (2028-2032) positive catalyst</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ Caveats</div>
+      <ul class="pc-list">
+        <li>Actual distance to the nearest LRT/KTM station is ~2.4-2.6km, requiring a car or developer shuttle — the "Sentul" branding can mislead buyers into assuming rail-adjacent access; verify actual commute times on the ground</li>
+        <li>Price sits below KL Federal Territory's RM1,000,000 foreign-buyer minimum threshold (even the largest unit type falls short) — foreign individual buyers cannot legally purchase any unit here under current rules; this is a structural exclusion, not the usual "foreign penalty" seen elsewhere on this site</li>
+        <li>Real oversupply pressure exists in the Sentul corridor — at least 7 new launches compete in 2026, and market reports flag sub-60% occupancy at some newly completed high-rises in the area; rental-focused buyers should verify actual leasing demand on the ground</li>
+        <li>This project's own Brickz resale record is just 4 transactions (thin sample) — valuation and turnover-rate confidence is low-medium; verify actual transacted prices and liquidity independently</li>
+        <li>All three layers of the scarcity audit fail — this project's investment case should rest on cashflow and buyer-pool depth, not a "Sentul will become scarce" entry narrative</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ Holding Purpose Fit</span>
+  <h2 class="section-title">Holding Purpose Mapping</h2>
+  <p class="section-sub">The same score means different things depending on holding purpose. Match your own positioning against "core dimensions," "negotiable dimensions," and "fit for this project" below.</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>Main Residence</div>
+    <div class="profile-fit">
+      <strong>Core dimensions</strong>: Connectivity (real driving-commute needs), Developer &amp; handover (7.5)<br>
+      <strong>Negotiable</strong>: Scarcity &amp; location moat (not this project's strength, 5.5)<br>
+      <strong>Fit for this project</strong>: Suits first-time buyers or young families who can accept a car/shuttle commute and value a low entry price with solid community facilities (40+ amenities including a pool and gym); confirm your own commute pattern can accommodate the real 2.4-2.6km distance to rail — don't assume walkable rail access from the "Sentul" name alone.
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>Rental Investment</div>
+    <div class="profile-fit">
+      <strong>Core dimensions</strong>: Holding cashflow (6.0 MY / 4.0 FG), Exit &amp; next-buyer pool (7.5 MY / 4.5 FG)<br>
+      <strong>Negotiable</strong>: Capital appreciation (5.8, cautiously neutral)<br>
+      <strong>Fit for this project</strong>: One of this site's better fits for this purpose — a solid 5.4% gross yield and a wide local buyer pool, though Sentul-corridor supply pressure on rents/occupancy warrants on-the-ground verification of same-building rental demand before signing. This path is not viable for foreign investors given the price sits below the RM1,000,000 threshold.
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>Part-Time / Secondary Home (&lt;30% annual use)</div>
+    <div class="profile-fit">
+      <strong>Core dimensions</strong>: Developer &amp; handover (delivery quality, property management)<br>
+      <strong>Negotiable</strong>: Connectivity (if transport is already arranged)<br>
+      <strong>Fit for this project</strong>: Low price and full amenities (a 50m pool among 40+ facilities) make this a budget-friendly KL foothold, but the location is off the city centre with no mall integration and relies on driving — weigh whether that suits a part-time usage pattern.
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>Generational Hold (20+ years)</div>
+    <div class="profile-fit">
+      <strong>Core dimensions</strong>: Exit &amp; next-buyer pool (wide local pool, 7.5)<br>
+      <strong>Negotiable</strong>: Scarcity &amp; location moat, capital appreciation (not a scarcity-type asset)<br>
+      <strong>Fit for this project</strong>: A low local buyer-entry threshold is a genuine positive for generational transfer (easy for the next generation or a future buyer to take on), but this project lacks the traditional "location scarcity, only gets more valuable" transfer narrative — better viewed as "a steady-cashflow family asset" than a "heirloom-grade location asset." Heirs considering a sale to a foreign buyer would still face the RM1,000,000 threshold restriction.
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>Sources</h4>
+    DurianProperty.com — M Arisa, Sentul property listings · PropertyGuru Malaysia — M Arisa condo overview / for-sale / for-rent listings, new-launch review (80% take-up, developer Mah Sing Group) · iProperty.com.my — M Arisa building profile (freehold serviced residence, residential strata, completed 2024/2025) · TCS Group Holdings Berhad — M Arisa completed projects page, "Mah Sing tops out M Arisa" news · m-arisa.com.my — official floor plan / location pages · newpropertylaunch.com.my / newpropertylaunchguru.com — M Arisa unit types and sizes · The Edge Malaysia — "Mah Sing completes M Arisa serviced apartment project in Sentul" (2025-02 completion, QLASSIC 84, SHASSIC 5-star, fully sold), "Mah Sing's M Arisa in Sentul 80% taken up" (2022-04 launch take-up), "Mah Sing tops out M Arisa in Sentul" (topping-out report) · Brickz.my — Residensi M Arisa transaction records (4 transactions, 2024-08~2025-07, median RM624psf / RM500,000), The Saffron Sentul transaction records (area comp, median RM506-552psf) · mudah.my / SPEEDHOME / RizalRahman.com — M Arisa rental listings (RM1,700-2,000/month, 2BR range) · propcashflow.my — Sentul new-launch comparisons (The Capers, M Centura, Vista Sentul Residences pricing), KL property market 2026 outlook (Sentul/Titiwangsa sub-60% occupancy reports) · moovitapp.com — M Arisa to Sentul Timur LRT / KTM Sentul distance verification (2.4km / 2.6km) · mrt.com.my / mymrt.com.my — Sentul LRT / KTM Komuter station info, MRT3 Circle Line official pages · malaymail.com (2025-07) — MRT3 Circle Line final approval report, Sentul East/West interchange station positioning · paultan.org / soyacincau.com / kopiandproperty.com — MRT3 construction and opening timeline reports (2027 construction start, 2028 phased opening, 2030-2032 full line, timelines diverge across sources) · businesstoday.com.my — Mah Sing Group 2026 outlook and financial analysis · stockanalysis.com / TradingView — Mah Sing Group Berhad (KLSE:MAHSING) financial data (EBITDA margin 16.4%, stable net income growth) · DOSM Household Income Survey Report 2024 (KL median household income RM10,805) · LHDN Finance Act 2026 (foreign stamp duty 8%, effective 2026-01) · MM2H 2026 three-tier system (Silver RM600,000 / Gold RM1,000,000 / Platinum RM2,000,000 thresholds) · Federal Territory foreign-buyer minimum purchase threshold RM1,000,000 (site's existing vetted data) · BNM OPR 2.75%
+  </div>
+  <div class="footer-disclaimer">
+    <h4>Disclaimer</h4>
+    This scorecard is independent analysis for reference only and does not constitute investment advice. Scoring is based on publicly verifiable data as of 2026-08-06. <strong>Scorer's lens: a professional real estate investor benchmarked to a 10-year hold, regardless of holding purpose (own-stay / rental / secondary home / generational transfer).</strong> This project's representative unit and largest unit type both price below KL Federal Territory's RM1,000,000 foreign-buyer minimum threshold — the foreign-buyer score and 10-year cost table in this card exist for framework completeness and methodological comparison only, and do not represent an executable transaction path for a foreign individual buyer; confirm current rules with a lawyer or agent before any transaction. This project's own Brickz sample is only 4 transactions; valuation and turnover-rate confidence is labelled low-medium in the relevant sections. The author holds MM2H Silver status and is not a licensed real estate agent or financial advisor. Consult a professional advisor and conduct an on-site inspection before making any investment decision.
+    <p style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:10.5px;font-style:italic;color:var(--muted)">This card completed its first v5.0 scoring on 2026-08-06: the scarcity audit and next-buyer procedures both used verified data (sources above), and clearly disclose the structural fact that this project's price sits below KL's foreign-buyer purchase threshold.</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

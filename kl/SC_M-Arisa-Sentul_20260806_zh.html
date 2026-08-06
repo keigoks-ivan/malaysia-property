@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M Arisa @ Sentul — KL 建案評分卡 | Property Check</title>
+<meta name="description" content="M Arisa @ Sentul 獨立評分卡。本國人 6.3 / 外國人 5.5。10 年持有專業投資人視角 · 7 維度框架 · Brickz / DOSM / LHDN / MRT Corp 資料源。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--border-soft);
+  position:sticky;top:0;z-index:50;
+}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:700;
+  font-size:16px;color:var(--gold-light);
+  box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);
+  letter-spacing:-.04em;
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+/* Block 1: Header */
+.hero-card{
+  background:
+    radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),
+    linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);
+  color:#f3ebd6;
+  border:1px solid rgba(212,181,118,.25);
+  border-radius:22px;
+  padding:32px 36px 30px;margin-bottom:24px;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  isolation:isolate;
+}
+.hero-card::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),
+    repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);
+  pointer-events:none;z-index:0;
+}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;
+  margin-bottom:6px;color:#f7eed3;
+}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{
+  padding:18px 22px;border-radius:16px;
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(212,181,118,.22);
+  position:relative;overflow:hidden;
+}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{
+  background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+
+/* Section */
+.section{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px 32px;margin-bottom:20px;
+  box-shadow:var(--shadow-sm);
+  position:relative;
+}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:24px;font-weight:700;letter-spacing:-.01em;
+  margin-bottom:8px;color:var(--navy);line-height:1.3;
+}
+.section-title::after{
+  content:'';display:block;
+  width:36px;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  margin-top:10px;border-radius:1px;
+}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+/* Block 2: Radar + dim scores */
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{
+  background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+/* Block 3: Data tables */
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+/* Block 3.5: Cost table */
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+/* Block 4A */
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{
+  font-family:'Noto Serif TC','Playfair Display',serif;
+  font-size:42px;font-weight:700;
+  float:left;line-height:.95;
+  margin:4px 8px 0 0;
+  color:var(--gold);
+}
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.scenario-card{background:var(--navy-soft);border:1px solid #c7d5e8;border-radius:14px;padding:16px 16px}
+.scenario-card h4{font-family:'Noto Serif TC','Playfair Display',serif;font-size:14px;color:var(--navy);margin-bottom:8px}
+.scenario-card .sc-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-soft);padding:4px 0;border-bottom:1px dashed #c7d5e8}
+.scenario-card .sc-row:last-child{border-bottom:none}
+.scenario-card .sc-row b{color:var(--navy)}
+
+/* Block 4B */
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+/* Block 4C */
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:8px;
+  background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);
+  border:1px solid var(--gold-light);
+  font-size:15px;
+}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+/* Footer */
+.footer{
+  margin-top:28px;padding:24px 28px;
+  background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);
+  border:1px solid var(--border);border-radius:16px;
+  font-size:11.5px;color:var(--muted);line-height:1.85;
+  position:relative;overflow:hidden;
+}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+@media (max-width:768px){
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .scenario-grid{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+
+/* Block 5: Exit reality check */
+.scarcity-box{background:var(--navy-soft);border:1px solid #cdd8e8;border-left:4px solid var(--navy);border-radius:12px;padding:18px 20px;margin-bottom:20px}
+.sb-title{font-size:11.5px;font-weight:700;letter-spacing:.08em;color:var(--navy);margin-bottom:12px}
+.sb-row{display:flex;gap:10px;margin-bottom:10px;font-size:12.5px;line-height:1.7;color:var(--text-soft)}
+.sb-row strong{color:var(--navy)}
+.sb-mark{flex:0 0 20px;font-weight:700;font-size:14px;text-align:center;line-height:1.5}
+.sb-mark.pass{color:#15803d}
+.sb-mark.fail{color:#b91c1c}
+.sb-mark.mid{color:#a16207}
+.sb-verdict{margin-top:12px;padding-top:12px;border-top:1px dashed #cdd8e8;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.sb-verdict strong{color:var(--navy)}
+.pyramid-quantum{background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:10px;padding:12px 16px;font-size:12.5px;line-height:1.75;color:var(--text-soft);margin-bottom:12px}
+.pyramid-quantum strong{color:var(--navy)}
+.pyramid-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.pyramid-table th{text-align:left;padding:9px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.pyramid-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.65;color:var(--text-soft)}
+.pyramid-table tr:last-child td{border-bottom:none}
+.pyramid-table td:nth-child(2){text-align:center;width:56px}
+.pm{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;font-weight:700;font-size:13px}
+.pm.yes{background:#dcfce7;color:#15803d}
+.pm.mid{background:#fef3c7;color:#a16207}
+.pm.no{background:#e8eaed;color:#6b7280}
+.dependency-tag{border-radius:10px;padding:12px 16px;font-size:12px;line-height:1.7;margin-bottom:20px}
+.dependency-tag.mid{background:#fef3c7;border:1px solid #fcd34d;color:#78350f}
+.dependency-tag.high{background:#fef2f2;border:1px solid #fca5a5;color:#7f1d1d}
+.dependency-tag.blocked{background:#e0f2fe;border:1px solid #7dd3fc;color:#0c4a6e}
+.dependency-tag strong{font-weight:700}
+.evidence-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:10px}
+.ev-cell{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 12px;text-align:center}
+.ev-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);letter-spacing:-.02em}
+.ev-est{font-family:'Inter',sans-serif;font-size:8.5px;font-weight:600;color:var(--muted);vertical-align:super;margin-left:3px;letter-spacing:.04em}
+.ev-lbl{font-size:11px;color:var(--muted);font-weight:600;margin-top:4px}
+.ev-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 9px;border-radius:99px;margin-top:8px;letter-spacing:.04em}
+.ev-tag.ok{background:#dcfce7;color:#15803d}
+.ev-tag.weak{background:#fee2e2;color:#b91c1c}
+.ev-tag.na{background:#e8eaed;color:#6b7280}
+.ev-sub{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5}
+.ev-note{font-size:11.5px;color:var(--muted);line-height:1.7;font-style:italic;margin-bottom:16px}
+.exit-summary{padding:16px 20px;background:linear-gradient(135deg,var(--navy-deep),var(--navy));color:#f3ebd6;border-radius:12px;font-size:13.5px;line-height:1.8}
+.exit-summary strong{color:var(--gold-light);font-weight:700}
+@media (max-width:768px){.evidence-strip{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">KL Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/kl-check">← 全部評分</a>
+      <a class="lang-link" href="SC_M-Arisa-Sentul_20260806_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Sentul · KL</span>
+    <span class="sep">◆</span>
+    <span>FREEHOLD RESIDENTIAL STRATA SERVICE RESIDENCE</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-08-06</span>
+  </div>
+  <h1 class="proj-name">M Arisa <span style="font-size:20px;font-weight:500;font-style:italic;opacity:.75">@ Sentul</span></h1>
+  <p class="one-liner">
+    入場門檻低、毛收益近 5.4%，但總價遠低於外籍 RM100 萬購房門檻，本案事實上排除外籍買家。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.3</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">退場（7.5）與開發商信用（7.5）站上前段，現金流（6.0）與估值（6.3）中規中矩，但稀缺性（5.5）因同區大量新供給下修，交通與增值（6.0／5.8）反映實際距捷運 2.4km 以上、且需消化區域供給壓力——地段護城河一般，勝在接手池廣、現金流打平門檻低</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.5</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis</span>
+      </div>
+      <div class="score-note">8% 印花稅＋30% 租金稅使現金流（4.0）收窄；更關鍵的是代表戶 RM39 萬（含最大戶型仍不足 RM60 萬）遠低於 KL 聯邦直轄區 RM100 萬外籍購房門檻——外籍買家在現行規則下無法合法購入本案任一戶型，退場（4.5）反映的正是這個結構性障礙</div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">七維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。稀缺性與地段護城河 20% · 交通與可達性 12% · 資本增值動能 15% · 進場估值紀律 13% · 持有現金流 12% · 退場與接手人群 18% · 開發商與管理移交 10%。5 個維度本外同分、2 個維度本外分開（現金流 + 退場）。核心信仰：buy the land, buy the exit —— 地是地板，退場是實現。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+<svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="七維度雷達圖">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): [5.5, 6.0, 5.8, 6.3, 6.0, 7.5, 7.5] -->
+  <polygon points="140.0,78.4 192.5,98.1 203.3,154.5 170.6,203.6 110.8,200.5 58.1,158.7 74.3,87.6" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="78.4" r="3.5"/>
+    <circle cx="192.5" cy="98.1" r="3.5"/>
+    <circle cx="203.3" cy="154.5" r="3.5"/>
+    <circle cx="170.6" cy="203.6" r="3.5"/>
+    <circle cx="110.8" cy="200.5" r="3.5"/>
+    <circle cx="58.1" cy="158.7" r="3.5"/>
+    <circle cx="74.3" cy="87.6" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [5.5, 6.0, 5.8, 6.3, 4.0, 4.5, 7.5] -->
+  <polygon points="140.0,78.4 192.5,98.1 203.3,154.5 170.6,203.6 120.6,180.4 90.9,151.2 74.3,87.6" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="78.4" r="3.0"/>
+    <circle cx="192.5" cy="98.1" r="3.0"/>
+    <circle cx="203.3" cy="154.5" r="3.0"/>
+    <circle cx="170.6" cy="203.6" r="3.0"/>
+    <circle cx="120.6" cy="180.4" r="3.0"/>
+    <circle cx="90.9" cy="151.2" r="3.0"/>
+    <circle cx="74.3" cy="87.6" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+    <text x="140" y="12" text-anchor="middle">稀缺與地段</text>
+    <text x="239" y="59" text-anchor="start">交通與可達性</text>
+    <text x="263" y="168" text-anchor="start">資本增值動能</text>
+    <text x="195" y="262" text-anchor="start">進場估值紀律</text>
+    <text x="85" y="262" text-anchor="end">持有現金流</text>
+    <text x="17" y="168" text-anchor="end">退場與接手</text>
+    <text x="41" y="59" text-anchor="end">開發商與交付</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 6.3</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 5.5</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">稀缺性與地段護城河</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Sentul 不在既有錨表中，比照結構特徵最接近的「其他 KL」6.0 起跳。三層稽核：土地層 <strong>✗</strong>——Sentul 走廊持續有大量在建／待售供給，2026 年至少 7 個新 launch 同場競爭，其中開發商自家 M Centura 就在約 390m 外同期銷售類似產品，顯示可開發用地並未封頂；產品層 <strong>✗</strong>——1 至 4 房標準化高樓服務式公寓（550-1,025 sqft），與 The Saffron、M Centura、The Capers 等同區競品高度同質化，無獨特規格佐證有效稀缺；法規層 <strong>✗</strong>——無 height cap 或 master-plan 鎖定未來供給，freehold 地契是產品優勢而非法規稀缺保護。可複製性高（同開發商咫尺外已有同類案）觸發 −0.5，其餘維持基準。6.0−0.5＝5.5。註：YTL 主導的 Sentul Park／Sentul Depot 歷史性再生計畫屬 Sentul 東側另一街區，與本案所在的 Jalan Sentul Pasar 非同一微觀地段，不能借用其稀缺敘事。</p>
+        <p class="dim-data">3.31 英畝、2 棟 55 層、1,598 戶（GDV 約 RM653M）· 同開發商 M Centura 距離約 390m，同期在售 · Sentul 2026 年至少 7 個新 launch 競品（The Capers、Vista Sentul Residences 等，NuProp）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與可達性</span><span class="dim-weight">12% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">實查距離顯示，M Arisa 距最近的 Sentul Timur LRT 站約 2.4km、KTM Sentul 站約 2.6km——遠非「Sentul」品牌名稱給人的捷運直達印象，需開車或依賴開發商接駁車（私人班次，非公共運輸常態頻率）。落點對應交通錨表 Tier 6（車程約 10 分鐘級距＋國際學校可達＋一般醫療機構）。加分項：Wesley Methodist School (International) 鄰近可及；扣分項：無商場直連（Sentul 當地無 Pavilion／IGB 等級商場）。綜合落 6.0。</p>
+        <p class="dim-data">LRT Sentul Timur 2.4km、KTM Sentul 2.6km（moovitapp.com）· 開發商提供接駁車服務（私人班次）· Wesley Methodist School (International) 鄰近 · Hospital Kuala Lumpur（公立醫院）車程約 10-15 分鐘（估算）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值動能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.8</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">以 residential strata 基準 6.0 起跳（非 commercial SA 5.0，M Arisa 產品登記為 residential strata，非商業地契）。催化劑：MRT3 Circle Line 已於 2025 年 7 月獲最終核准，Sentul East／Sentul West 將作為與既有 KTM／LRT 系統整合的轉乘站之一；惟截至 2026 年 8 月，土地徵收預計 2026 年底完成、動工約落在 2027 年、分階段通車最快 2028 年、全線目標則落在 2030-2032 年間——各方報導時程並不一致，反映此催化劑仍具高度不確定性，且新站位置比照現有 Sentul 站群推算，與本案仍有相當實體距離，非本案步行可直接受惠的 TOD 溢價，故僅給保守的「MRT3 pipeline」加分 +0.3，不套用完整 +1。減項：Sentul 區域供給壓力真實存在——市場報告指出 Sentul／Titiwangsa 部分新完工高樓入住率低於 60%，加上本案所在走廊 5 年內至少 5 個以上競品 launch，觸發同地段供給壓力扣 −0.5。淨值：6.0+0.3−0.5＝5.8。</p>
+        <p class="dim-data">MRT3 Circle Line 最終核准（2025-07，malaymail.com）、Sentul East/West 為 10 個轉乘站之一（mymrt.com.my）· 動工／通車時程各方報導不一（2027 動工／2028 階段通車／2030-2032 全線，soyacincau.com／paultan.org／kopiandproperty.com）· Sentul／Titiwangsa 部分新高樓入住率低於 60%（propcashflow.my 市場報告，估算性質）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">進場估值紀律</span><span class="dim-weight">13% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.3</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">錨點取本建案 Brickz 真實成交中位（優先序第一層）：RM624 psf／RM50 萬（4 筆，2024-08~2025-07）——惟樣本僅 4 筆，信心度只能標為低中。代表戶 2BR（708 sqft）目前次級市場指示價約 RM550 psf（RM39 萬），較本案自身 Brickz 中位折讓約 12%。若單純套用階梯，折讓理應落入 7.0-7.5 區間，但考量樣本過薄、且 Brickz 中位可能受少數較大坪數成交拉高（4 筆混合不同戶型，非同戶型比較），對代表性存疑，故保守下修至 6.3，落在「合理新品溢價」與「折讓」兩區間交界，避免對薄樣本給予過度精確的信心。同業侵略性檢查：同期 Sentul 新 launch 開價普遍 RM280-450 psf（The Capers、M Centura、Vista Sentul 等），本案二手指示價 RM550 psf 已高於這些全新開盤價——惟這反映 M Arisa 是已完工交屋（2025 年初）的成熟產品，非同口徑的「新 launch」定價比較，故不視為侵略性溢價，不另外扣分。</p>
+        <p class="dim-data">本案 Brickz 中位 RM624psf／RM50 萬（4 筆，2024-08~2025-07，信心度低中，brickz.my）· 代表戶 2BR 708sqft 指示價約 RM550psf／RM39 萬 · 同區新 launch 開價：The Capers RM411psf、M Centura RM448psf、Vista Sentul RM284psf（皆全新開盤價，非同口徑比較）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">12% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">6.0</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">4.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">代表戶 2BR 708sqft，估算月租 RM1,750（同棟 702-708sqft 戶型實際掛牌租金 RM1,700-2,000 區間，取偏保守值），毛收益率約 5.4%——落入 5.0-5.5% 級距，基準 6.0。管理費估算約 RM0.40/sqft/月，低於 0.6 門檻不扣分；residential title（非 commercial SA）無融資摩擦扣分。本國人淨得 6.0。外國人：30% 非居民租金稅使稅後收益顯著壓縮，維持本站慣常 −2.0 差距，得 4.0。</p>
+        <p class="dim-data">2BR 708sqft 掛牌租金 RM1,700-2,000/月（mudah.my／propertyguru.com.my，估算取中）· 毛收益率約 5.4%（估算）· residential strata title，非 commercial SA，無融資摩擦</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場與接手人群</span><span class="dim-weight">18% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">7.5</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">4.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Freehold 住宅 strata（非 commercial SA）基準 7.5 起跳。本國人：quantum RM39 萬 ≤RM80 萬 +0.5；年換手率 0.25%（4 筆／1,598 戶，12 個月）<1% −0.5；Brickz 深度 4 筆 <10 筆 −0.3；首購印花稅減免價格帶 +0.3；掛牌率約 4.3%（69／1,598）健康，不扣分。淨值：7.5+0.5−0.5−0.3+0.3＝7.5。註：換手率數據需謹慎解讀——本案 2025 年初才完成交屋，Brickz 轉售紀錄僅涵蓋項目相對早期階段，樣本量小部分反映市場尚未成熟而非必然的低流動性。<strong>外國人：本地基準 7.5 −2.0（外籍基準差）−1.0（無法達門檻）＝4.5。</strong>本案代表戶 RM39 萬、乃至最大戶型（約 1,025 sqft，估算 RM55-60 萬）皆低於 KL 聯邦直轄區 RM100 萬外籍購房最低門檻——這與 MM2H 個別 tier 高低無關，是更上位的聯邦直轄區交易額規定，意味著外籍個人買家在現行規則下<strong>無法合法購入本案任何一個戶型</strong>。4.5 分是套用固定公式的結果，實務上更接近「不可能交易」而非「交易吃虧」。</p>
+        <p class="dim-data">quantum RM390,000 → 下一手家庭月收門檻 ≈RM4,290（總價×1.1%）→ 對照 KL 中位家庭月收 RM10,805（DOSM HIS 2024），僅約中位收入的 40%，本地接手池廣 · 換手率 0.25%（4 筆／1,598 戶）、掛牌率約 4.3%（69 掛牌／1,598 戶，propertyguru.com.my）· 代表戶與最大戶型總價皆低於 KL 外籍最低購買門檻 RM100 萬</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">7.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Mah Sing Group Berhad，Bursa 主板上市（KLSE:MAHSING），Bursa Tier 1 基準 7.5。母公司財務穩健：近兩季淨利穩定在約 RM6,600 萬（QoQ +0.37%），EBITDA margin 約 16.4%，分析師對 2026 年展望正面（目標價均值 RM1.84）。交付紀錄扎實：近 30 年歷史、逾 50 個成功交付案、近 4 年交付約 14,000 戶、平均 QLASSIC 評分逾 82%；M Arisa 本身 QLASSIC 84 分、SHASSIC 5 星，2025 年初如期完工交屋、全數售罄，未見延誤。近期案例（M Astra 提前完工、M Zenya 提前 13 個月封頂）進一步佐證執行紀律。無重大虧損或爛尾紀錄，維持基準 7.5，不另加減。</p>
+        <p class="dim-data">KLSE:MAHSING，Bursa 主板 · 近 12 個月淨利穩定成長、EBITDA margin 16.4%（stockanalysis.com）· M Arisa QLASSIC 84 分、SHASSIC 5 星、2025-02 交屋、全數售罄（theedgemalaysia.com）· 近 30 年逾 50 案交付紀錄，近 4 年約 14,000 戶（businesstoday.com.my）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+  <p class="section-sub">代表戶型：<strong>2BR Type C，708 sqft，中樓層，約 RM 390,000</strong>（≈RM550 psf，估算）。M Arisa 提供 1 至 4 房、550-1,025 sqft 多種戶型，2BR 為 10 年持有專業投資人主流目標戶型，本案取 2BR 範圍中位坪數對應。</p>
+
+  <div class="assump-box" style="background:linear-gradient(135deg,#fef9ed 0%, #fbf3df 100%);border:1px solid var(--gold);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:16px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative">
+    <strong>⚠️ 估值與買價透明度說明：</strong>進場估值維度（13%）以「同地段／同類型<strong>真實成交</strong>中位 PSF」為錨。本案錨點：本建案 Brickz 成交中位 <strong>RM624 psf／RM500,000</strong>（4 筆，2024-08~2025-07，信心度：低中——樣本薄且混合不同戶型）；代表戶指示價 <strong>約 RM550 psf</strong>；折讓：約 <strong>−12%</strong>（信心度低中，故估值分未套用最高階梯）。<strong>更重要的買價透明度提醒：</strong>本案代表戶總價 RM390,000、乃至本案最大戶型（約 1,025 sqft）估算總價約 RM55-60 萬，皆低於 KL 聯邦直轄區 RM1,000,000 外籍購房最低門檻——外籍買家在現行規則下無法合法購入本案任何一個戶型。實際成交價可能因議價空間、裝修狀況、樓層朝向而與掛牌價有所出入，買家仍應向代理或開發商書面確認最終實際淨價。
+  </div>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">Mah Sing Group Berhad<span class="kv-src">Bursa 主板上市，KLSE:MAHSING</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">Freehold 住宅 Strata（Service Residence）<span class="kv-src">非商業地契，享標準住宅融資條件</span></td></tr>
+          <tr><td class="kv-label">規模</td><td class="kv-val">3.31 英畝 · 2 棟 55 層塔樓<span class="kv-src">GDV 約 RM653M</span></td></tr>
+          <tr><td class="kv-label">總戶數</td><td class="kv-val">1,598 戶<span class="kv-src">部分資料源引用約 1,500 戶簡化數字；取項目專屬報導 1,598 為準，作為換手率／掛牌率分母</span></td></tr>
+          <tr><td class="kv-label">單位坪數</td><td class="kv-val">550-1,025 sqft（1-4 房）<span class="kv-src">代表戶 2BR 708 sqft</span></td></tr>
+          <tr><td class="kv-label">完工／交屋</td><td class="kv-val">2025 年初（QLASSIC 84、SHASSIC 5 星）<span class="kv-src">The Edge Malaysia，2025-02</span></td></tr>
+          <tr><td class="kv-label">去化狀態</td><td class="kv-val">開盤 80% 去化，現已全數售罄<span class="kv-src">2022 年報導開盤去化率，2026 全售完成</span></td></tr>
+          <tr><td class="kv-label">管理費</td><td class="kv-val">約 RM0.40/sqft/月（估算）<span class="kv-src">未見官方公開數字，同級距產品估算</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與交通</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">最近捷運</td><td class="kv-val">LRT Sentul Timur 2.4km／KTM Sentul 2.6km<span class="kv-src">需開車或接駁車，非步行可達</span></td></tr>
+          <tr><td class="kv-label">MRT3 催化劑</td><td class="kv-val">Sentul East/West 轉乘站已核准<span class="kv-src">動工／通車時程各方報導不一，2028-2032 區間</span></td></tr>
+          <tr><td class="kv-label">國際學校</td><td class="kv-val">Wesley Methodist School (International)<span class="kv-src">鄰近可及</span></td></tr>
+          <tr><td class="kv-label">生活圈</td><td class="kv-val">Sentul Pasar 傳統市場周邊<span class="kv-src">無商場直連，非 TOD 產品</span></td></tr>
+          <tr><td class="kv-label">同區新 launch 對照</td><td class="kv-val">The Capers RM411psf、M Centura RM448psf<span class="kv-src">全新開盤價，非同口徑比較</span></td></tr>
+          <tr><td class="kv-label">本案 Brickz 錨點</td><td class="kv-val">中位 RM624psf／RM500,000<span class="kv-src">4 筆，2024-08~2025-07</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-4% 階梯制<br><small style="color:var(--muted)">≈ RM 7,000</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">≈ RM 31,000</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">10%（住宅 LTV 90%）<br><small style="color:var(--muted)">RM 39,000</small></td><td class="num">30%（LTV 70%）<br><small style="color:var(--muted)">RM 117,000</small></td><td><small>BNM／銀行政策</small></td></tr>
+      <tr><td>住宅房貸利率</td><td class="num">~4.10%</td><td class="num">~4.60%</td><td><small>BNM OPR 2.75% + spread</small></td></tr>
+      <tr><td>毛租金收益率（代表戶）</td><td class="num">~5.4%</td><td class="num">~5.4%（同）</td><td><small>propertyguru／mudah，估算</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">累進，估約 16%</td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>淨租金收益率（稅後）</td><td class="num">~4.5%</td><td class="num">~3.8%</td><td><small>計算</small></td></tr>
+      <tr><td>利差（淨 yield − 房貸利率）</td><td class="num">+0.4%</td><td class="num">−0.8%</td><td><small>計算</small></td></tr>
+      <tr><td>最低購買價門檻（KL）</td><td class="num">無</td><td class="num">RM 1,000,000<br><small style="color:var(--warn-text)">本案所有戶型皆未達</small></td><td><small>聯邦直轄區</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>MM2H 強制資產資格</td><td class="num">—</td><td class="num">✗ 無法合規購入本案任何戶型<br><small>總價低於 WPKL 最低門檻，與 MM2H tier 無關</small></td><td><small>MM2H 2026 三級制／聯邦直轄區規定</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 3.5: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>2BR 708 sqft，RM 390,000</strong> 為基礎——本國人 vs 外國人 10 年總成本與淨損益對照。</p>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>2BR 708 sqft @ RM 390,000</strong> · 10 年持有 · 30 年房貸 · 估算月租 RM1,750（Y1）、年漲幅 3%、空置 1 個月/年 ·
+    管理費約 RM0.40/sqft/月（估算）· 本國人利率 4.10%／LTV 90%、頭期 10% · 外國人利率 4.60%／LTV 70%、頭期 30%（OPR 2.75% + spread）· 租金稅率：本國人估計邊際 16%、外國人 30% 一口價。
+    所有金額四捨五入至千位。<strong>⚠️ 外國人欄位為框架完整性所需之假設性計算</strong>——本案總價遠低於 KL 聯邦直轄區 RM100 萬外籍最低購買門檻，實務上外籍個人買家無法完成本案任一戶型的合法交易，以下外國人數字僅供方法論對照參考，不代表可執行的真實交易路徑。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>39,000</td><td>117,000</td><td>+78,000</td></tr>
+      <tr><td>印花稅（MOT）</td><td>7,000</td><td>31,000</td><td>+24,000</td></tr>
+      <tr><td>律師費 + 貸款費</td><td>8,000</td><td>8,000</td><td>0</td></tr>
+      <tr class="sum"><td>買入小計</td><td>54,000</td><td>156,000</td><td>+102,000</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額</td><td>204,000</td><td>168,000</td><td>−36,000</td></tr>
+      <tr><td>管理費 + 沉沒基金</td><td>34,000</td><td>34,000</td><td>0</td></tr>
+      <tr><td>門牌稅 + 地稅</td><td>8,000</td><td>8,000</td><td>0</td></tr>
+      <tr><td>保險</td><td>3,000</td><td>3,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>249,000</td><td>213,000</td><td>−36,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，估算月租 RM1,750 起）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>221,000</td><td>221,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>35,000</td><td>66,000</td><td>+31,000</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>186,000</td><td>155,000</td><td>−31,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，3% 漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>仲介費（2.4%）</td><td>13,000</td><td>13,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>13,000</td><td>+13,000</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>277,000</td><td>219,000</td><td>−58,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0% 漲幅</td><td>−13,000</td><td>−52,000</td><td>−39,000</td></tr>
+      <tr class="scenario"><td>3%/年 漲幅</td><td>+117,000</td><td>+65,000</td><td>−52,000</td></tr>
+      <tr class="scenario"><td>5%/年 漲幅</td><td>+226,000</td><td>+162,000</td><td>−64,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在基準假設（3% 年漲、2025 年完工＋10 年持有）下，外國人 10 年淨損益比本國人少約 <strong>RM 52,000（相當於房價的 13.3%）</strong>——結構性差距主要來自 30% 租金稅與 8% 印花稅。<strong>打平門檻（估算）：</strong>本國人約 <strong>0.5%/年</strong>、外國人約 <strong>1.5%/年</strong>——皆明顯低於本站同級案例常見的 1.5-2.5%／3.0-4.5% 區間，這是因為本案毛收益率（約 5.4%）相對優異，靠現金流本身就能扛住大部分持有成本，不需要依賴房價大幅增值——這是本案在「稀缺性一般」的前提下，仍具備投資可行性的核心原因。<strong>警示：</strong>以上外國人欄位是方法論框架下的假設性計算——本案總價（RM39 萬起，最大戶型約 RM55-60 萬）遠低於 KL 聯邦直轄區 RM100 萬外籍購房門檻，外籍個人買家在現行規則下無法完成本案任一戶型的合法交易，此表格對外籍買家而言僅具參考意義，不是可執行的路徑。
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ 退場現實檢驗</span>
+  <h2 class="section-title">退場現實檢驗</h2>
+  <p class="section-sub">v5.0 核心：10 年持有的回報只有在賣掉那天才是真的。三件套——稀缺性稽核（退場價地板）、接手人群金字塔（誰接手）、二手市場證據（多快接手、折讓多少）。本案 2025 年初才交屋，二手市場證據仍薄，以下如實揭露現有數據與其局限。</p>
+
+  <!-- 5A 稀缺性稽核 -->
+  <div class="scarcity-box">
+    <div class="sb-title">5A · 稀缺性稽核（供給側三層）</div>
+    <div class="sb-row"><span class="sb-mark fail">✗</span><div><strong>土地層</strong>：Sentul 走廊持續有大量在建／待售供給，2026 年至少 7 個新 launch 同場競爭，開發商自家 M Centura 就在約 390m 外同期銷售類似產品，可開發用地並未封頂。</div></div>
+    <div class="sb-row"><span class="sb-mark fail">✗</span><div><strong>產品層</strong>：1 至 4 房標準化高樓服務式公寓（550-1,025 sqft），與 The Saffron、M Centura、The Capers 等同區競品高度同質化，無獨特規格佐證有效稀缺。</div></div>
+    <div class="sb-row"><span class="sb-mark fail">✗</span><div><strong>法規層</strong>：無 height cap 或 master-plan 鎖定本地未來供給；freehold 地契是產品優勢而非法規稀缺保護，周邊地塊同樣可為 freehold。</div></div>
+    <div class="sb-verdict"><strong>有效稀缺判定：三層皆未通過結構性稽核。</strong>Sentul 目前的敘事主要是 MRT3 遠期催化劑（已歸入 d4）與相對親民的入場門檻，而非傳統意義上的地段稀缺——d1 因此落於 5.5，低於「其他 KL」6.0 基準，如實反映本案並非稀缺型資產。本案的投資邏輯應建立在現金流與接手池深度，而非稀缺溢價。</div>
+  </div>
+
+  <!-- 5B 接手人群金字塔 -->
+  <div class="sb-title" style="margin-top:18px">5B · 接手人群金字塔</div>
+  <div class="pyramid-quantum">
+    <strong>代表戶 RM390,000 → 下一手家庭月收門檻約 RM4,290/月</strong>（總價×1.1%；90% LTV、4.3%、30 年、負擔 40%）→ 對照 KL 中位家庭月收 RM10,805（DOSM HIS 2024），門檻僅為中位收入的約 40%——本地接手池「廣」，遠低於本站多數案例的門檻水位，本地首購與 upgrader 皆輕鬆納入。
+  </div>
+  <table class="pyramid-table">
+    <thead><tr><th>接手人群</th><th>判定</th><th>依據</th></tr></thead>
+    <tbody>
+      <tr><td>本地首購</td><td><span class="pm yes">✓</span></td><td>quantum 遠低於 RM80 萬門檻，且落入 HOC／首購印花稅減免價格帶。</td></tr>
+      <tr><td>本地 upgrader</td><td><span class="pm yes">✓</span></td><td>入場門檻低，可作為過渡性／收租資產輕鬆納入。</td></tr>
+      <tr><td>本地投資客</td><td><span class="pm mid">△</span></td><td>毛收益率約 5.4% 尚可，惟 Sentul 區域供給壓力與部分案例入住率偏低的市場報導，構成租金穩定性隱憂。</td></tr>
+      <tr><td>外籍自住（MM2H）</td><td><span class="pm no">✗</span></td><td>代表戶 RM39 萬及最大戶型（約 RM55-60 萬）皆低於 KL 聯邦直轄區外籍購房最低門檻 RM100 萬，任一戶型均不具備外籍個人買家合法購入資格。</td></tr>
+      <tr><td>外籍投資</td><td><span class="pm no">✗</span></td><td>同上，結構性排除，非市場偏好問題。</td></tr>
+      <tr><td>機構／大宗</td><td><span class="pm no">✗</span></td><td>strata 單戶規格不符機構標的。</td></tr>
+    </tbody>
+  </table>
+  <div class="dependency-tag blocked"><strong>外籍依賴度：結構性為零（非「低」）。</strong>本案代表戶乃至最大戶型的總價，均低於 KL 聯邦直轄區 RM100 萬外籍購房門檻——這不是「外籍買家偏好低」的市場自然選擇結果，而是規則直接排除外籍個人買家的既定事實，比本站其他案例常見的「外籍依賴度低」更為極端，也因此不構成「政策一變、退場池腰斬」式的 kill switch 風險（因為外籍池自始就是零，無從腰斬）。</div>
+
+  <!-- 5C 二手市場證據 -->
+  <div class="sb-title" style="margin-top:18px">5C · 二手市場證據</div>
+  <div class="evidence-strip">
+    <div class="ev-cell"><div class="ev-num">0.25%</div><div class="ev-lbl">年換手率</div><div class="ev-tag weak">淡薄</div><div class="ev-sub">4 筆／1,598 戶，12 個月（Brickz）</div></div>
+    <div class="ev-cell"><div class="ev-num">4.3%</div><div class="ev-lbl">掛牌率</div><div class="ev-tag ok">健康</div><div class="ev-sub">69 掛牌／1,598 戶（PropertyGuru）</div></div>
+    <div class="ev-cell"><div class="ev-num">n/a</div><div class="ev-lbl">掛牌-成交折讓</div><div class="ev-tag na">數據不足</div><div class="ev-sub">樣本過薄，無法精確計算</div></div>
+    <div class="ev-cell"><div class="ev-num">4 筆</div><div class="ev-lbl">Brickz 深度</div><div class="ev-tag weak">薄</div><div class="ev-sub">低於 10 筆門檻</div></div>
+  </div>
+  <p class="ev-note">誠實揭露：本案 2025 年初才完成交屋，Brickz 轉售紀錄僅 4 筆（2024-08~2025-07，部分為交屋前 SPA 轉讓），樣本量小部分反映市場尚未成熟而非必然的低流動性。掛牌率（4.3%）相對健康，顯示一手去化與初期市場接受度良好；但換手率與折讓區間仍需待未來 1-2 年累積更多交易後重新評估。</p>
+
+  <div class="exit-summary">10 年後最可能的接手者是<strong>本地首購與 upgrader 型買家</strong>（quantum 門檻低、落入印花稅減免帶內）；若 Sentul 區域供給持續放量導致租金／入住率進一步走弱，本地投資客的意願可能受抑。<strong>外籍買家池則因總價低於 RM100 萬聯邦直轄區門檻而結構性缺席——這不是政策情境變動的風險，而是當前規則下的既定事實，除非未來調高戶型規格使代表戶總價突破 RM100 萬，否則外籍退場池將持續為零。</strong></div>
+</section>
+
+<!-- BLOCK 4A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>M Arisa 座落於 Jalan Sentul Pasar，緊鄰 Sentul 傳統市場，由 Mah Sing Group 於 2019 年 11 月開盤、2025 年初交屋——這是 Mah Sing 在 Sentul 走廊的代表作之一，也是該集團「M 系列」親民精品公寓路線的延伸。項目在 3.31 英畝土地上興建兩棟 55 層塔樓，共 1,598 戶，戶型從 550 sqft 的 1 房到 1,025 sqft 的 4 房不等，開盤即獲 80% 去化率、目前已全數售罄，QLASSIC 評分 84 分、SHASSIC 五星，交付品質在同級距產品中屬中上水準。</p>
+
+    <p>本案的地段定位需要拆解為兩層來看。第一層是行銷敘事：「Sentul」這個地名近年因 MRT3 Circle Line 的規劃而升溫——Sentul East 與 Sentul West 已確定作為與既有 KTM／LRT 系統整合的轉乘站之一，理論上讓 Sentul 從邊陲住宅區晉升為未來多線交會的節點。但第二層是實地查證：M Arisa 本身距離最近的 Sentul Timur LRT 站與 KTM Sentul 站分別約 2.4 公里與 2.6 公里，需開車或搭乘開發商接駁車，並非「Sentul」品牌暗示的步行捷運盤。MRT3 本身的動工與通車時程，各方報導也不一致——土地徵收預計 2026 年底完成、動工約落在 2027 年、分階段通車最快 2028 年、全線目標則要到 2030 至 2032 年間，屬於長期、且時程仍具不確定性的催化劑，不宜作為短期進場理由。</p>
+
+    <p>稀缺性稽核同樣得出保守結論：土地層未封頂——Sentul 走廊 2026 年至少還有 7 個新 launch 同場競爭，其中 Mah Sing 自家的 M Centura 就在 390 公尺外同期銷售類似產品；產品層也未見獨特配置——1 到 4 房的標準化高樓服務式公寓格局，與 The Saffron、M Centura、The Capers 等同區競品高度同質化；法規層則無 height cap 或 master plan 鎖定未來供給。三層皆未通過稽核，意味著本案的長期價值主張不能建立在「地段稀缺」之上，而應回歸現金流與接手池深度本身。</p>
+
+    <p>定價面，本案自身 Brickz 真實成交中位為 RM624 psf／RM50 萬（僅 4 筆，2024 年 8 月至 2025 年 7 月），代表戶 2BR（708 sqft）目前次級市場指示價約 RM550 psf、總價約 RM39 萬，較自身成交中位有約 12% 折讓，惟樣本過薄，估值信心度只能標為低中。買家應理解實際成交價可能因議價空間、裝修狀況、樓層朝向而有所出入，不宜完全依賴掛牌價推算。</p>
+
+    <p>租金市場方面，同棟 708 sqft 2 房戶型的實際掛牌租金落在 RM1,700 至 RM2,000 之間，估算毛收益率約 5.4%，在 KL 整體市場中屬於中上水準，這是本案最扎實的一塊基本面。惟需留意的是，Sentul 及鄰近 Titiwangsa 走廊部分新完工高樓案，市場報告指出入住率低於 60%——雖非 M Arisa 本身的直接數據，但作為同走廊的競爭壓力訊號，值得租金投資型買家在盡職調查時額外查證實際出租狀況。</p>
+
+    <p>退場圖景是本案最關鍵、也最需要買家理解的部分：以總價 RM39 萬計算，下一手家庭月收門檻僅約 RM4,290，遠低於 KL 中位家庭月收 RM10,805，本地首購與 upgrader 買家池非常寬廣，這是本案相對本站多數案例最突出的優勢。但外籍買家池則完全不同——本案代表戶乃至最大戶型（約 RM55 至 60 萬）的總價，都低於 KL 聯邦直轄區 RM100 萬的外籍購房最低門檻，這意味著外籍個人買家在現行規則下無法合法購入本案任何一個戶型，與 MM2H 個別 tier 門檻高低無關，是更上位的聯邦直轄區交易額門檻直接排除。這不是「外籍依賴度高、政策風險大」的常見劇本，而是「外籍買家自始至終就不在退場池內」的結構性事實。開發商 Mah Sing 為 Bursa 主板上市集團，近 30 年逾 50 案交付紀錄扎實，本案本身如期交屋、全數售罄，是本案信心的真實支撐點。</p>
+  </div>
+
+  <div class="scenario-grid">
+    <div class="scenario-card">
+      <h4>Bear（0%/年，Sentul 供給壓力持續）</h4>
+      <div class="sc-row"><span>本國人 10 年 IRR</span><b>約 −1.3%/年</b></div>
+      <div class="sc-row"><span>外國人 10 年 IRR</span><b>約 −2.9%/年（假設性）</b></div>
+      <div class="sc-row"><span>情境假設</span><b>區域新供給未消化、租金與房價齊平盤</b></div>
+    </div>
+    <div class="scenario-card">
+      <h4>Base（3%/年，MRT3 長期預期部分反映）</h4>
+      <div class="sc-row"><span>本國人 10 年 IRR</span><b>約 +9.3%/年</b></div>
+      <div class="sc-row"><span>外國人 10 年 IRR</span><b>約 +3.2%/年（假設性）</b></div>
+      <div class="sc-row"><span>情境假設</span><b>residential strata 基準增速，高槓桿（90% LTV）放大股本報酬</b></div>
+    </div>
+    <div class="scenario-card">
+      <h4>Bull（5%/年，MRT3 通車確定性提升）</h4>
+      <div class="sc-row"><span>本國人 10 年 IRR</span><b>約 +14.4%/年</b></div>
+      <div class="sc-row"><span>外國人 10 年 IRR</span><b>約 +6.7%/年（假設性）</b></div>
+      <div class="sc-row"><span>情境假設</span><b>MRT3 動工確定、Sentul 供給消化加速</b></div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-top:12px;line-height:1.8">以上三情境均為估算（信心度：中低，槓桿股本 IRR）。本國人 IRR 偏高主要因 90% LTV 高槓桿放大股本報酬效果（毛收益 5.4% 加上溫和增值，遠高於 4.10% 融資成本，正向槓桿效應顯著）；外國人欄位為方法論框架下的假設性計算，本案總價低於 KL 外籍購房門檻，實務上不可執行。10 年退場流動性：本案自身 Brickz 可查證成交僅 4 筆（2024-08~2025-07），掛牌至成交時間與折讓區間無法精確估算；掛牌率約 4.3%（69/1,598）供流動性參考，屬健康區間。</p>
+</section>
+
+<!-- BLOCK 4B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>入場門檻低：代表戶約 RM39 萬（≈RM550psf），下一手家庭月收門檻僅約 RM4,290，遠低於 KL 中位家庭月收 RM10,805，本地接手池「廣」</li>
+        <li>毛租金收益率約 5.4%，在本站評查案例中屬中上水準，10 年打平門檻低至約 0.5%/年（本國人），不需仰賴大幅房價增值</li>
+        <li>Freehold 住宅地契（非 commercial SA），下一手買家享標準 90% LTV 住宅融資，無商業地契的融資摩擦扣分</li>
+        <li>開發商 Mah Sing Group 為 Bursa 主板上市集團，近 30 年逾 50 案交付紀錄，本案 QLASSIC 84 分、SHASSIC 五星，2025 年初如期完工、全數售罄</li>
+        <li>MRT3 Circle Line 已獲最終核准，Sentul East/West 轉乘站將整合既有 KTM/LRT 系統，屬長期（2028-2032）正向催化劑</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li>實際距最近 LRT/KTM 站約 2.4-2.6km，需開車或搭乘開發商接駁車，「Sentul」品牌名稱易讓人誤判為捷運直達盤，建議實地確認通勤時間</li>
+        <li>總價低於 KL 聯邦直轄區 RM100 萬外籍購房最低門檻（含最大戶型仍不足），外籍個人買家在現行規則下無法合法購入本案任何戶型，非本站常見的「外籍 penalty」而是結構性排除</li>
+        <li>Sentul 走廊供給壓力真實存在——2026 年至少 7 個新 launch 同場競爭，市場報告指出區域內部分新完工高樓入住率低於 60%，建議收租型買家實地查證出租需求</li>
+        <li>本案自身 Brickz 轉售紀錄僅 4 筆（樣本薄），估值與換手率判讀信心度低中，實際成交價與流動性應另行查證</li>
+        <li>稀缺性稽核三層皆未通過，本案投資邏輯應建立在現金流與接手池深度，而非地段稀缺溢價——不宜以「Sentul 未來很稀缺」作為進場敘事</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 4C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：交通與可達性（實際車程需求）、開發商與管理移交（7.5）<br>
+      <strong>可妥協</strong>：稀缺性與地段護城河（非本案強項，5.5）<br>
+      <strong>本案 fit</strong>：適合能接受開車／接駁車通勤、看重親民總價與扎實社區設施（含泳池、健身房等 40+ 種設施）的首購或年輕家庭；需事先確認自身通勤模式能否配合實際 2.4-2.6km 的捷運距離，不宜以「Sentul」品牌名稱直接假設捷運直達。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（6.0 本／4.0 外）、退場與接手人群（7.5 本／4.5 外）<br>
+      <strong>可妥協</strong>：資本增值（5.8，中性偏保守）<br>
+      <strong>本案 fit</strong>：本站契合度較高的持有目的之一——毛收益 5.4% 扎實、本地接手池廣，惟需留意 Sentul 區域供給壓力對租金／入住率的潛在影響，建議簽約前實地查證同棟出租行情。外籍買家因總價低於 RM100 萬門檻，此路徑對外籍投資人不可行。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：開發商與管理移交（交付品質、物業管理）<br>
+      <strong>可妥協</strong>：交通與可達性（若已有交通安排）<br>
+      <strong>本案 fit</strong>：總價親民、設施完整（含 50m 泳池等 40+ 設施），可作為預算有限的 KL 落腳點，惟區位偏離市中心且無商場直連，生活機能仰賴自駕，需衡量是否符合備用居所的使用習慣。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：退場與接手人群（本地池廣，7.5）<br>
+      <strong>可妥協</strong>：稀缺性與地段護城河、資本增值（本案非稀缺型資產）<br>
+      <strong>本案 fit</strong>：本地接手門檻低是世代傳承的正面因素（下一代或買家都容易承接），但本案不具備傳統「地段稀缺、只會越來越值錢」的傳承敘事，較適合視為「現金流穩健的家族資產之一」而非「傳家寶級地段資產」。外籍後代若考慮繼承後出售給外籍買方，仍受 RM100 萬門檻限制。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 5: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    DurianProperty.com — M Arisa, Sentul property listings · PropertyGuru Malaysia — M Arisa condo overview／for-sale／for-rent listings、new-launch review（80% take-up、開發商 Mah Sing Group）· iProperty.com.my — M Arisa building profile（freehold serviced residence、residential strata、完工 2024／2025）· TCS Group Holdings Berhad — M Arisa completed projects 頁、"Mah Sing tops out M Arisa" 報導 · m-arisa.com.my — 官方 floor plan／location 頁 · newpropertylaunch.com.my／newpropertylaunchguru.com — M Arisa 戶型與坪數資訊 · The Edge Malaysia — "Mah Sing completes M Arisa serviced apartment project in Sentul"（2025-02 完工、QLASSIC 84、SHASSIC 5 星、全數售罄）、"Mah Sing's M Arisa in Sentul 80% taken up"（2022-04 開盤去化）、"Mah Sing tops out M Arisa in Sentul"（topping out 報導）· Brickz.my — Residensi M Arisa 成交紀錄（4 筆，2024-08~2025-07，中位 RM624psf／RM50 萬）、The Saffron Sentul 成交紀錄（同區對照，中位 RM506-552psf）· mudah.my／SPEEDHOME／RizalRahman.com — M Arisa 租賃行情（RM1,700-2,000/月，2BR 區間）· propcashflow.my — Sentul 新 launch 比較（The Capers、M Centura、Vista Sentul Residences 開價）、KL 物業市場 2026 展望（Sentul／Titiwangsa 入住率 <60% 市場報導）· moovitapp.com — M Arisa 至 Sentul Timur LRT／KTM Sentul 距離查證（2.4km／2.6km）· mrt.com.my／mymrt.com.my — Sentul LRT／KTM Komuter 站資訊、MRT3 Circle Line 官方頁面 · malaymail.com（2025-07）— MRT3 Circle Line 最終核准報導、Sentul East／West 轉乘站定位 · paultan.org／soyacincau.com／kopiandproperty.com — MRT3 動工與通車時程報導（2027 動工、2028 階段通車、2030-2032 全線，各方時程不一）· businesstoday.com.my — Mah Sing Group 2026 年展望與財務分析 · stockanalysis.com／TradingView — Mah Sing Group Berhad（KLSE:MAHSING）財務數據（EBITDA margin 16.4%、淨利穩定成長）· DOSM Household Income Survey Report 2024（KL 家庭月收中位 RM10,805）· LHDN Finance Act 2026（外籍印花稅 8%，2026-01 起）· MM2H 2026 三級制（Silver RM60 萬／Gold RM100 萬／Platinum RM200 萬門檻）· 聯邦直轄區外籍購房最低門檻 RM100 萬（本站既有 vetted 數據）· BNM OPR 2.75%
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-08-06。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限（自住／出租／備用居所／世代傳承）。</strong>本案代表戶及最大戶型的總價，皆低於 KL 聯邦直轄區 RM1,000,000 外籍購房最低門檻，本卡對外籍買家的評分與 10 年成本表，僅供框架完整性與方法論對照之用，不代表外籍個人買家可執行的真實交易路徑，建議實際交易前向律師或代理確認最新規則。本案自身 Brickz 樣本僅 4 筆，估值與換手率判讀信心度已於對應段落標註為低中。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+    <p style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-soft);font-size:10.5px;font-style:italic;color:var(--muted)">本卡於 2026-08-06 完成 v5.0 首次評分：稀缺性稽核與接手人群程序皆採實查數據（來源見上），並明確揭露本案總價低於 KL 外籍購房門檻的結構性事實。</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
