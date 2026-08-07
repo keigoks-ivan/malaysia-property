@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BSG Waterstone @ Tanjung Bungah — 檳城建案評分卡 | Property Check</title>
+<meta name="description" content="BSG Waterstone（Tanjung Bungah，開發商 BSG Property／Oriental Holdings）獨立評分卡。本國人 5.6 / 外國人 5.1。10 年持有專業投資人視角 · 7 維度框架 · 開發商 SPV 與 2017 丹絨武雅山崩案為同一法人實體、卻無額外個案扣分；但同一 SPV 在同一地塊另有一段實質山坡地曝險史（19.08 英畝、914 戶、密度超標逾三倍的爭議提案），套用檳城特有扣分項 −0.3。本案自身也是 Azuria 卡列舉的走廊新供給之一。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}
+.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{font-family:'Noto Serif TC','Playfair Display',serif;font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+.ruler-note{font-size:10.5px;color:#93a2ba;margin-top:16px;padding-top:12px;border-top:1px solid rgba(212,181,118,.18);line-height:1.7}
+
+.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{font-family:'Noto Serif TC','Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}
+.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{font-family:'Noto Serif TC','Playfair Display',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+.sub-eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--gold-deep);margin:22px 0 10px;text-transform:uppercase}
+.sub-eyebrow:first-of-type{margin-top:4px}
+.scarcity-box{background:var(--navy-soft);border:1px solid #c9d6e8;border-radius:12px;padding:8px 20px}
+.scarcity-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(13,34,68,.08);align-items:flex-start}
+.scarcity-row:last-of-type{border-bottom:none}
+.scarcity-mark{flex:0 0 auto;width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:1px}
+.scarcity-mark.pass{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.scarcity-mark.fail{background:#f1f0ec;color:#8a8577;border:1px solid #ddd8ca}
+.scarcity-layer{flex:0 0 60px;font-weight:700;font-size:13px;color:var(--navy);padding-top:2px}
+.scarcity-txt{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.scarcity-verdict{margin-top:12px;padding:12px 16px;background:linear-gradient(135deg,#fef9ed,#fbf3df);border-left:3px solid var(--gold);border-radius:8px;font-size:12.5px;line-height:1.75;color:var(--navy)}
+.scarcity-verdict strong{color:var(--gold-deep)}
+.quantum-line{background:linear-gradient(135deg,var(--bg-soft),#fbf3df);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px;margin-bottom:14px;font-size:12.5px;line-height:1.8;color:var(--text-soft)}
+.quantum-line strong{color:var(--navy)}
+.pyramid-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.pyramid-table th{text-align:left;padding:9px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.pyramid-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.65}
+.pyramid-table tr:last-child td{border-bottom:none}
+.pyramid-table td.seg{font-weight:600;color:var(--navy);white-space:nowrap}
+.pyramid-v{font-weight:700;text-align:center;font-size:15px}
+.pyramid-v.yes{color:#15803d}
+.pyramid-v.mid{color:#a16207}
+.pyramid-v.no{color:#9a9488}
+.dep-tag{padding:12px 16px;border-radius:10px;font-size:12.5px;line-height:1.75}
+.dep-mid{background:#fef3c7;border:1px solid #fcd34d;color:#713f12}
+.dep-tag strong{font-weight:700}
+.evid-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.evid-card{padding:14px 12px;border:1px solid var(--border-soft);border-radius:12px;background:linear-gradient(180deg,var(--bg-soft),#fff);text-align:center}
+.evid-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);letter-spacing:-.02em;line-height:1.1}
+.evid-lbl{font-size:10.5px;color:var(--muted);font-weight:600;letter-spacing:.03em;margin-top:6px;line-height:1.3}
+.evid-tag{display:inline-block;margin-top:8px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px}
+.evid-tag.hot{background:#dcfce7;color:#15803d}
+.evid-tag.warm{background:#fef3c7;color:#a16207}
+.evid-tag.norm{background:var(--navy-soft);color:var(--navy-mid)}
+.evid-tag.cold{background:#f1f0ec;color:#8a8577}
+.exit-summary{margin-top:18px;padding:16px 20px;background:linear-gradient(135deg,var(--navy-deep),var(--navy));color:#f3ebd6;border-radius:12px;font-size:13px;line-height:1.85}
+.exit-summary strong{color:var(--gold-light)}
+.hardrule-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.hardrule-tag{font-size:10.5px;font-weight:700;padding:5px 10px;border-radius:8px;background:#fdf0ed;border:1px solid #f0c9bd;color:#7a3b28;letter-spacing:.02em}
+
+@media (max-width:768px){
+  .evid-strip{grid-template-columns:repeat(2,1fr)}
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">Penang Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/penang-check.html">← 全部評分</a>
+      <a class="lang-link" href="SC_BSG-Waterstone_20260807_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Jalan Sungai Kelian · Tanjung Bungah（Hillside）</span>
+    <span class="sep">◆</span>
+    <span>永久地契 · 住宅 Condominium · 期房 2028 Q4</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-08-07</span>
+  </div>
+  <h1 class="proj-name">BSG Waterstone</h1>
+  <p class="one-liner">
+    Waterstone 是丹絨武雅「Hillside」內陸坡地段的低密度雙塔（365 戶、每層僅 6 戶），開發商 BSG Property（Oriental Holdings 子公司）也是本站錨表唯一「開發商扣分事故地點與建案所在地重合」的個案——本卡查明開發商 SPV Taman Sri Bunga Sdn Bhd，不只是同一企業家族，而是與 2017 年造成 11 死的丹絨武雅山崩案（Granito @ Permai）<strong>同一家法人實體</strong>，卻在調查委員會究責工程師、非開發商的正式結論下，判定不加扣額外個案分數，理由詳見開發商維度。本案同時是 Azuria 卡用來論證丹絨武雅土地層 ✗ 的三條新供給之一，本卡誠實地把自己算進這個供給壓力裡，不因是新案而給稀缺溢價。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">5.6</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis，分眾持有</span>
+      </div>
+      <div class="score-note">地段 6.5（丹絨武雅走廊土地層 ✗，本案自身即為錨表列舉的三條新供給之一）+ 交通 6.8（3km 內國際學校群，CBD 樽頸 −0.3）+ 開發商 6.7（起跳 7.0 已含 2017 山崩 −0.5，不重複扣；另套錨表§5 山坡地曝險 −0.3，因同一 SPV 在同地塊有 19.08 英畝、914 戶、密度超標逾三倍的爭議提案史）+ 退場 6.4（quantum RM 128.7 萬落 120–180 萬帶 −0.3、R2 在建未售 −0.3）+ 增值 5.6（MM2H 聚居 +0.2、走廊供給 −0.3、期房 2+ 年 −0.3）+ 估值僅 4.0（信心度低，同地段二手中位 528 psf 溢價約 +83%）+ 現金流僅 2.5（毛收益約 2.8%，估算，觸 clamp 下限）</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.1</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T5">T5 · Thesis 偏弱，需深度評估</span>
+      </div>
+      <div class="score-note">五個共用維度與本國人同分（含開發商 6.7，見左欄）；現金流本外差距因本國人已觸底 clamp 而壓縮至 1.0（2.5→1.5，clamp 碰撞例外）；退場 4.5——本國人 6.4 起算 −2.0=4.4，徵費甜蜜帶 +0.3、MM2H 合規 +0.3、州同意 −0.3（必套用）、三年禁售 −0.2（必套用），Σ=+0.1；R1（Timur Laut 完工未售 973&gt;800）cap 6.0 未觸頂</div>
+    </div>
+  </div>
+  <div class="ruler-note">※ 本卡採檳城內部尺規校準，與 KL／曼谷等其他市場評分卡分數不可直接比較；跨市場比較請見 markets-summary 國際比較頁。</div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">七維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。稀缺性與地段護城河 20% · 交通與可達性 12% · 資本增值動能 15% · 進場估值紀律 13% · 持有現金流 12% · 退場與接手人群 18% · 開發商與管理移交 10%。5 個維度本外同分、2 個維度本外分開（現金流 + 退場）。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+<svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="七維度雷達圖">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): d1=6.5, d2=6.8, d4=5.6, d7=4.0, d3=2.5, d6=6.4, d5=6.7 -->
+  <polygon points="140.0,67.2 199.5,92.5 201.1,154.0 159.4,180.4 127.9,165.2 70.1,156.0 81.3,93.2" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="67.2" r="3.5"/>
+    <circle cx="199.5" cy="92.5" r="3.5"/>
+    <circle cx="201.1" cy="154.0" r="3.5"/>
+    <circle cx="159.4" cy="180.4" r="3.5"/>
+    <circle cx="127.9" cy="165.2" r="3.5"/>
+    <circle cx="70.1" cy="156.0" r="3.5"/>
+    <circle cx="81.3" cy="93.2" r="3.5"/>
+  </g>
+  <!-- gold (foreign): d1=6.5, d2=6.8, d4=5.6, d7=4.0, d3=1.5, d6=4.5, d5=6.7 -->
+  <polygon points="140.0,67.2 199.5,92.5 201.1,154.0 159.4,180.4 132.7,155.1 90.9,151.2 81.3,93.2" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="67.2" r="3.0"/>
+    <circle cx="199.5" cy="92.5" r="3.0"/>
+    <circle cx="201.1" cy="154.0" r="3.0"/>
+    <circle cx="159.4" cy="180.4" r="3.0"/>
+    <circle cx="132.7" cy="155.1" r="3.0"/>
+    <circle cx="90.9" cy="151.2" r="3.0"/>
+    <circle cx="81.3" cy="93.2" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+    <text x="140" y="12" text-anchor="middle">稀缺與地段</text>
+    <text x="239" y="59" text-anchor="start">交通與可達性</text>
+    <text x="263" y="168" text-anchor="start">資本增值動能</text>
+    <text x="195" y="262" text-anchor="start">進場估值紀律</text>
+    <text x="85" y="262" text-anchor="end">持有現金流</text>
+    <text x="17" y="168" text-anchor="end">退場與接手</text>
+    <text x="41" y="59" text-anchor="end">開發商與交付</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 5.6</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 5.1</span>
+      </div></div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">稀缺性與地段護城河</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Tanjung Bungah 錨定 <strong>6.8 ⚠️</strong> 起跳（中位 528 psf；坡限原為半結構性封頂，受 R5 影響暫緩加分）。三層稽核，且<strong>誠實處理本案自身即為供給來源之一</strong>：土地層 <strong>✗</strong>——Azuria 卡確認走廊內至少三條活躍新供給管道：Waterstone（本案）、Ascott Residences（99 戶，目標 2028）、Kerjaya Prospek 於 2025-07 取得聯營全權開發 Lot 2601／3603。本案不能拿自己的存在當稀缺性論據——本案<strong>本身就是這三條供給之一</strong>，其得以在 2018 年提案、2026 年在售，恰恰證明丹絨武雅 Hillside 段的土地並未鎖死（本案基地一部分可追溯至同一開發商 SPV 2020 年於 Lorong Sungai Kelian 10 提出的 342 戶「可負擔房」提案，後改劃為市場價位的 365 戶產品，顯示土地供給仍具彈性、可重新定位）。扣除本案自身後，走廊仍有 Ascott Residences 與 Kerjaya Prospek JV 兩條確認中的供給管道，土地層維持 ✗。產品層 <strong>✗</strong>（獨立判定，不重複引用土地層證據）——「每層僅 6 戶、低密度」是行銷定位選擇，不是技術或法規上的不可複製性；任何取得同段土地與坡地許可的開發商皆可複製此配置；本案尚未完工，無 Brickz 成交可驗證是否有真實需求溢價，未通過有效稀缺檢驗。法規層 <strong>✓（不給 ✓✓，依 R5）</strong>——RSNPP 2040 截至 2026-08 尚未憲報（州政府目標 2026 Q3，公眾意見期已於 2025-12-23 截止），現行 RSNPP 2030 的 76m／25° 坡限規則仍為現行法規，州政府正提案鬆綁，方向對稀缺性是下行風險而非上行；本案行銷明確以「hillview」與「sea view」兩類戶型定價區隔，佐證基地本身確有明顯地形高低差，落於「Hillside」地段分類，本卡因此不假設本案不受坡限規範，法規層維持保守的 ✓。三層皆未達「全 ✓」門檻，不給稀缺加分。可複製性高（走廊內另兩條確認中的新供給管道）<strong>−0.3</strong>。無 leasehold 扣分（freehold）。淨值 6.8−0.3=<strong>6.5</strong>。</p>
+        <p class="dim-data">Tanjung Bungah 中位 528 psf／141 筆成交（2024-05~2025-04，Brickz，Azuria 卡查證） · 本案為 Azuria 卡列舉走廊新供給三項之一；扣除本案自身後仍有 Ascott Residences（2028）、Kerjaya Prospek JV（Lot 2601／3603）兩條在途供給 · 本案基地追溯：2020-10 同一開發商 SPV Taman Sri Bunga Sdn Bhd 於 Lorong Sungai Kelian 10（緊鄰 POWIIS）提案 342 戶「可負擔房」33 層方案，其後改劃為本案現行 365 戶市場價位方案 · R5 常設檢查（2026-08-07 執行，同 Azuria 卡同日查證）：RSNPP 2040 尚未憲報，目標 2026 Q3；現行 76m／25° 坡限規則有效，州政府提案朝鬆綁方向修訂 · 官方行銷區分「hillview」（較低價）與「sea view」（較高價）兩類定價，佐證基地本身有明顯地形高低差</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與可達性</span><span class="dim-weight">12% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.8</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Tier 7(b)「Tanjung Bungah 國際學校群 ≤3km」起跳 <strong>6.8</strong>。調整：開發商自身行銷（waterstonepenang.com.my 官網實查）與獨立媒體（EdgeProp）皆確認 POWIIS Primary 緊鄰基地、Dalat International 車程 3 分鐘、Tenby Schools 5 分鐘、St. Christopher's 12 分鐘——3km 內至少 3 所國際學校，遠超 ≥2 所門檻 <strong>+0.3</strong>；國際級醫院未達 ≤3km 門檻（官網自陳 Gleneagles 12 分鐘、Penang Adventist 15 分鐘、Island Hospital 18 分鐘，皆集中於 Pulau Tikus／喬治市方向），不給分，與 Azuria 卡一致。減分：本案往 CBD／Komtar 方向的主要動線需經 Gurney／Tun Dr Lim Chong Eu Expressway 走廊，此路口是全州公認尖峰堵點 <strong>−0.3</strong>，與同走廊 Azuria 卡處理一致。本案所在 Jalan Sungai Kelian／Jalan Loh Poh Heng 為丹絨武雅「Hillside」內陸區的道路網（Jalan Loh Poh Heng 北接 Jalan Sungai Kelian、南接 Jalan Azyze），非單一死路孤島，故<strong>不套用</strong>「單一進出道路 −0.4」——已查證但證據不足以支持此項扣分。淨值 6.8+0.3−0.3=<strong>6.8</strong>，與 Azuria 卡同分，符合同 district 交通 ±1.0 校準規則。</p>
+        <p class="dim-data">Jalan Sungai Kelian，Tanjung Bungah「Hillside」內陸段 · 3km 內國際學校：POWIIS Primary（緊鄰）、Dalat International（3 分鐘）、Tenby Schools（5 分鐘）、St. Christopher's（12 分鐘）（waterstonepenang.com.my 官網實查，2026-08） · 國際級醫院：Gleneagles（12 分鐘）、Penang Adventist（15 分鐘）、Island Hospital（18 分鐘），皆未達 ≤3km 門檻 · Jalan Loh Poh Heng 北接 Jalan Sungai Kelian、南接 Jalan Azyze，非單一死路 · Gurney／Tun Dr Lim Chong Eu 樽頸為本案通勤市區的共同路徑 · 全島無營運中都市軌道；渡輪不載汽車，不可當跨島通勤替代</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值動能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.6</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">島上住宅 strata 基線 <strong>6.0</strong>（NAPIC MHPI 島上 high-rise 2025P +3.1%、Q1 2026 +3.4%）。催化劑：官方行銷與獨立報導皆明確以 MM2H 買家為目標客群之一（EdgeProp：「designed for families, retirees and MM2H buyers」），落 MM2H 聚居段（Tanjung Tokong／Tanjung Bungah／Batu Ferringhi）<strong>+0.2</strong>。<strong>已執行 LRT 延伸線行銷檢查（2026-08-07）</strong>：全線進度 8.99%（2026-06），Tanjung Bungah 不在現行路線；2026-06 MRT Corp 公開評論「Mutiara Line is expandable」並點名丹絨武雅為潛在延伸方向之一，但仍屬「若有需要」階段，無核准路線、無預算、無時間表，依錨表規則計 0 分。搜尋官方網站 waterstonepenang.com.my 全文、EdgeProp 報導、及多個代理評論頁，<strong>皆未發現任何 LRT／MRT／Mutiara Line 相關行銷宣稱</strong>——本案行銷主軸為海景／山景雙定價、低密度、freehold 純住宅地契、3 車位配置，不觸發 −0.3。減分：走廊內確認至少兩條額外新供給管道（Ascott Residences／Kerjaya Prospek JV，見稀缺性維度）構成島上大量 condo 供給段 <strong>−0.3</strong>；<strong>期房 2 年以上 −0.3</strong>——完工時程 2028 Q4，距資料截止日（2026-08）逾 2.3 年，觸發此項。淨值 6.0+0.2−0.3−0.3=<strong>5.6</strong>。</p>
+        <p class="dim-data">NAPIC MHPI 島上 high-rise 指數，2025P +3.1%，Q1 2026 +3.4% · LRT Mutiara Line 全線進度 8.99%（2026-06），Tanjung Bungah 無站；2026-06 MRT Corp 評論路線可延伸但無核准、無預算、無時間表 · LRT 行銷檢查：waterstonepenang.com.my 官網全文、EdgeProp 報導、多個代理評論頁，皆未見延伸線行銷宣稱，不觸發 −0.3 · 官方定位：「designed for families, retirees and MM2H buyers」 · 完工 2028 Q4，距今逾 2.3 年，期房 2+ 年扣分觸發 · 新供給：Ascott Residences（2028）、Kerjaya Prospek JV（2025-07，Lot 2601／3603）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">進場估值紀律</span><span class="dim-weight">13% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">4.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">本案為期房（2028 Q4 完工），無 Brickz 成交紀錄可用，<strong>錨點優先序第一、二階皆無法適用</strong>（無同建案成交、走廊內 Ascott Residences 與 Kerjaya Prospek JV 兩案亦皆未定價，無「同地段 3 年內新成屋」comp 可用）。依優先序第三階，改採<strong>同地段二手 Brickz 成交中位</strong>：Tanjung Bungah 全區中位 528 psf（141 筆，2024-05~2025-04，Azuria 卡查證）。代表戶（D2／E2 型，1,334 sqft，見區塊 3 說明）掛牌約 RM 1,287,000（≈RM 965 psf，落官方 PSF 區間 RM 810-999 內），較二手中位<strong>溢價約 +83%</strong>，落「&gt;+30% 且新成屋 comp 稀薄」帶，基線 <strong>4.0</strong>，<strong>信心度：低</strong>——這個溢價數字本質上是「新建期房 vs 老舊二手」的比較而非同類比較，機械式套用會系統性高估溢價；作為交叉參照（非正式錨點，因非同地段），STP2／Andaman 走廊近期新盤 psf 為 The Lume ~1,280、Maris ~1,100+，本案 810-999 的定價區間<strong>低於</strong>該走廊新盤水準，顯示本案並未以島內最激進的新盤定價策略叫價；但因 Ascott／Kerjaya JV 兩案均未定價，無法在「同地段」口徑下驗證這個交叉參照是否成立，本卡不因此上修分數，維持 4.0 並清楚揭露信心度限制。</p>
+        <p class="dim-data">代表戶 D2／E2 型，1,334 sqft，掛牌約 RM 1,287,000（≈RM 965 psf） · 官方 PSF 區間 RM 810-999（waterstonepenang.com.my 查證） · Tanjung Bungah 二手中位 528 psf／141 筆（2024-05~2025-04，Brickz，Azuria 卡查證）· 溢價約 +83%（信心度低，新建期房 vs 二手老盤比較，非同類） · 交叉參照（非正式錨點）：STP2／Andaman 走廊新盤 The Lume ~1,280 psf、Maris ~1,100+ psf；本案 810-999 psf 低於該走廊新盤水準 · 走廊內 Ascott Residences、Kerjaya Prospek JV 均未定價，無法建立同地段新launch正式錨</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">12% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">2.5</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">1.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">代表戶（D2／E2 型，1,334 sqft）估值約 <strong>RM 1,287,000</strong>。租金：本案自身無租賃掛牌數據（期房，2028 完工），依規則採同地段 proxy——Tanjung Bungah／Tanjung Tokong 全海景單位月租行情 RM 3,000-6,000（同批檳城卡搜尋鎖定數據），本案代表戶為入門級「hillview」（非全海景）小坪數戶型，估算落該區間下緣，取 <strong>RM 3,000／月</strong>（<strong>估算，低信心度</strong>）→ 毛收益率約 <strong>2.8%</strong>，落 &lt;3.0% 級距 → 基線 <strong>2.5</strong>，已觸 clamp 下限。調整項逐項檢查：<strong>R4 觸發</strong>——島上住宅地契，MBPP 禁止短租，不計任何短租收入；搜尋官網與代理頁未見任何 Airbnb／短租收益行銷宣稱，符合預期。非 E&amp;E 企業租約區、非 USM 分租區、非 Batu Ferringhi、非商業地契，其餘加減項皆不適用。管理費為<strong>本案自身官方報價</strong> RM 0.30-0.35 psf（含沉沒基金）——優於本框架 KL 待校準基準，取中值 RM 0.325 psf（≈RM 434／月），惟這是期房銷售階段的行銷報價，非既有 JMB 實際執行數字，仍應標記為估算並待完工後校準。淨值 2.5，已觸 clamp [2.5, 8.0] 下限。外國人 ＝ 本國人 −2.0 ＝ 0.5，觸底 clamp 至 <strong>1.5</strong>——因本國人分已 ≤3.5，屬允許的 <strong>clamp 碰撞例外</strong>，本外差距壓縮至 1.0（&lt;2.0），非計算錯誤。</p>
+        <p class="dim-data">毛收益率約 2.8%（<strong>估算，低信心度</strong>，同地段 proxy 租金 RM 3,000／月 ÷ 代表戶總價 RM 1,287,000；本案自身無租賃數據，2028 完工前無法驗證） · 同地段全海景行情 RM 3,000-6,000／月（Tanjung Tokong／Tanjung Bungah） · 管理費 RM 0.30-0.35 psf 含沉沒基金（<strong>官方期房報價</strong>，非既有 JMB 實查數字，待完工後校準） · R4：島上住宅地契，MBPP 禁止短租，官網與代理頁未見短租收益宣稱</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場與接手人群</span><span class="dim-weight">18% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">6.4</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">4.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>第一步（本國人）：</strong>Freehold 住宅地契 condo baseline 7.0。quantum RM 1,287,000 落 <strong>RM 120–180 萬</strong>帶（P83-P95）<strong>−0.3</strong>；年換手率／Brickz 深度：本案為期房，尚無二手成交可統計，依規則「完工前無足夠數據」處理，記 <strong>0</strong>（中性，非負向）；掛牌率（PropertyGuru 58 筆／iProperty 標示「364 units」）為<strong>主要市場（一手）銷售掛牌</strong>而非二手流動性訊號，期房階段的掛牌數本質上反映未售存量而非轉手意願，本卡明確揭露此口徑差異、<strong>不採計為量化分數</strong>；R2（Timur Laut 在建未售 1,618 套 &gt;1,200）強制 <strong>−0.3</strong>；同棟 ≤650 sqft 小戶占比——全案最小戶 1,334 sqft，未低於門檻，不適用；住宅地契無下一手融資摩擦，0。淨值 7.0−0.3−0.3=<strong>6.4</strong>，clamp [1.5,8.5] 內。<br><strong>第二步（外國人）：</strong>起點為 clamp 後的本國人分 6.4，減 2.0 得 4.4，加總外籍調整：①門檻資格達標（RM 1,287,000 超過島 strata 門檻 RM 100 萬）0；②③④三項互斥，quantum 落 <strong>RM 120–150 萬</strong>區間，符合<strong>徵費甜蜜帶</strong>（島 strata 僅付 1.5% 且已離門檻邊界）<strong>+0.3</strong>；⑤<strong>MM2H 合規 +0.3</strong>（RM 1,287,000 超過州門檻 RM 50 萬與聯邦 Gold 門檻 RM 100 萬，資格達標；官方行銷本身即以 MM2H 買家為目標客群之一，佐證更強）；⑥外籍轉售活躍段——Tanjung Bungah 在框架列舉名單內，惟本案無買家籍貫等個案佐證（期房尚無成交），依規則不給；⑬外資銀行 70% LTV 須逐案佐證，不給；⑧<strong>州同意摩擦 −0.3</strong>（必套用）；⑨<strong>三年禁售期 −0.2</strong>（必套用）；⑩外籍依賴度未達可確信 &gt;50% 的證據門檻，不套用 −0.5。Σ＝+0.3+0.3−0.3−0.2=+0.1。淨值 4.4+0.1=<strong>4.5</strong>。R1（Timur Laut 完工未售 973 套 &gt;800）觸發外籍 cap 6.0，本案 4.5 遠低於封頂，cap 不生效但已檢查。不變量：4.5 ≤ 6.4−1.0=5.4 ✓（差距 1.9）。</p>
+        <p class="dim-data">quantum RM 1,287,000 → 家庭月收門檻 ≈RM 14,157（總價 × 1.1%）→ 落檳城 P75-P90 之間（P75 RM 11,142／P90 RM 16,186），約 P83-85，本地房貸池已明顯收窄 · 本案為期房（2028 完工），無二手 Brickz 成交紀錄，年換手率／Brickz 深度記 0（中性） · 掛牌數（PropertyGuru 58／iProperty 約 364）為一手銷售掛牌，非二手流動性訊號，不採計 · Timur Laut：完工未售 973 套（R1）／在建未售 1,618 套（R2，已計入） · 外籍門檻比對：RM 1,287,000 超過個人／公司門檻 RM 100 萬、MM2H 門檻 RM 50 萬與聯邦 Gold 門檻 RM 100 萬，皆達標</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.7</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>本卡核心產出，含兩項獨立判定，不得互相混淆。</strong>BSG Property（Oriental Holdings 子公司）錨定 <strong>7.0 起跳</strong>——此起跳分已完整折入 <strong>−0.5：2017 丹絨武雅山崩 11 死（調查委員會究責工程師非開發商）</strong>，這是全表唯一「開發商扣分事故地點與建案所在地重合」的個案。<br><strong>判定一（歷史事故究責，不重複扣）：</strong>2017 年山崩發生於 Lorong Lembah Permai 3 附近工地，項目名稱為 <em>Granito @ Permai</em>（980 戶，2 棟 49 層，位於 Permai Village），開發商為 <strong>Taman Sri Bunga Sdn Bhd</strong>，主要營造承包商為 BSG Global Builders Sdn Bhd（SSM 註冊 201301000758）；州調查委員會正式裁定 15 項疏失皆由聘用的顧問工程師（Khoo Koon Tai）主要負責，developer 與 main contractor 皆被<strong>明文豁免究責</strong>；該項目最終於 2019 年完工。本卡查證企業登記資料（Intender.my）確認 <strong>Taman Sri Bunga Sdn Bhd 是 BSG Property 的子公司、Boon Siew Group 成員</strong>；再查證本案（Waterstone）多個獨立來源（含開發商合作方 uqs.com.my 工程顧問頁）一致確認 <strong>Waterstone 的開發實體同樣是 Taman Sri Bunga Sdn Bhd</strong>——這不是「同一企業家族」的鬆散關聯，而是<strong>同一家法人實體</strong>先後開發了 2017 事故項目與本案。本卡判定<strong>不對本案疊加額外的 d5 扣分</strong>，理由有三：（1）調查委員會的裁定是正式、明確、究責對象特定（顧問工程師），而非「查無定論」的灰色地帶；（2）本卡窮盡搜尋（官網、EdgeProp、代理評論、州府/MBPP/DOE 相關報導）<strong>未查得任何本案專屬的不利事實</strong>——無停工令、無 DOE 異議記錄、無邊坡工程糾紛；（3）與 Gurney Paragon 卡的 −0.2 個案裁決性質不同：該案是<strong>本案自身</strong>作為<strong>未了結、進行中</strong>訴訟標的物，本案則是<strong>已了結、有豁免結論</strong>的歷史事件，且事故發生在另一物理地點（Granito @ Permai / Permai Village，非本案基地），機制上更弱。<br><strong>判定二（錨表檳城特有扣分第 3 條「山坡地曝險 −0.3 至 −0.5」，獨立套用）：</strong>此條扣的不是開發商歷史紀錄，而是<strong>本案基地當下的坡地曝險</strong>（法規變動風險、工程風險、核准路徑風險），與判定一的 −0.5 是兩件不同的事，可並存而不構成重複扣分。本卡查得一份 2019-2020 年間居民 Change.org 陳情，指名 <strong>「Tetuan Taman Sri Bunga Sdn Bhd（Boon Siew Group SB）」</strong>在<strong>「Jalan Sungai Kelian 與 Jalan Loh Poh Heng 之間、Hillside」的 19.08 英畝地塊</strong>——與本案（Waterstone）地址描述完全重合——提案兩棟 50 層、一棟 49 層、一棟 LMC 34 層＋21 棟排屋，合計 914 戶，密度達每英畝 49 戶，<strong>超過檳城州結構計畫 2007 對丹絨武雅每英畝上限 15 戶的規定逾三倍</strong>。本卡判斷這是與 2020-10 該 SPV 於同地塊提案的 342 戶方案、以及本案現行 365 戶方案系出同源的同一片 19.08 英畝土地銀行的不同階段／規模版本，證明該 SPV 在這片經居民正式陳情究責過密度與坡地承載力的 Hillside 土地上，確有一段實質的高強度開發史。惟本卡<strong>未能查得</strong>本案基地精確的等高線／坡度測量數據，也未能查得本案最終核准路徑是否走過 R5 所述「特別專案」豁免（2008–2015 全州放行 56 案）。依框架「查無精確資料時取保守值、並說明是資料缺口而非確認結果」的一貫原則，本卡套用<strong>幅度下限 −0.3</strong>（而非上限 −0.5，因無法排除本案基地本身可能位於管制線以下緩坡的可能性），且明確標註<strong>這是基於「同一 SPV＋Hillside 地段＋密度爭議史」的保守估計，非確認本案基地本身已違規或走過特殊豁免</strong>。淨值 7.0−0.3=<strong>6.7</strong>。<strong>兩項判定皆指向同一份行動建議</strong>：本案迄今無公開揭露之獨立邊坡穩定性／地質工程報告，本卡在 6B 留意事項與頁尾資料缺口中明確提示買家，應在簽約前向開發商索取本案專屬的坡地工程與 JKR／MBPP 核准文件（尤其確認基地是否落入 76m／25° 管制範圍、有無走「特別專案」豁免路徑、最終核准戶數是否與本案 365 戶的密度相符）。</p>
+        <p class="dim-data">2017 山崩：Lorong Lembah Permai 3 附近，Granito @ Permai（Permai Village，980 戶），developer Taman Sri Bunga Sdn Bhd，main contractor BSG Global Builders Sdn Bhd（SSM 201301000758），11 死（1 名本地監工＋10 名外籍工人：印尼／巴基斯坦／孟加拉／緬甸），州調查委員會裁定 15 項疏失主責顧問工程師 Khoo Koon Tai，developer／main contractor 明文豁免；項目 2019 完工 · 企業登記查證（Intender.my）：Taman Sri Bunga Sdn Bhd 為 BSG Property 子公司、Boon Siew Group 成員 · 本案（Waterstone）開發實體同為 Taman Sri Bunga Sdn Bhd（多方來源交叉確認，含 uqs.com.my 工程顧問專案頁） · <strong>山坡地曝險新查證</strong>：Change.org 陳情「Stop overdevelopment in Tanjung Bungah」指名 Tetuan Taman Sri Bunga Sdn Bhd（Boon Siew Group SB）於 Jalan Sungai Kelian／Jalan Loh Poh Heng 之間、Hillside 之 19.08 英畝地塊提案 914 戶（兩棟 50 層＋一棟 49 層＋一棟 LMC 34 層＋21 排屋），密度每英畝 49 戶，超過檳城州結構計畫 2007 丹絨武雅上限（每英畝 15 戶）逾三倍 · 同一 SPV 2020-10 於同地塊（Lorong Sungai Kelian 10，鄰 POWIIS）另提案 342 戶可負擔房方案，後改劃為本案 365 戶市場價位方案，三者疑為同一片 19.08 英畝土地銀行的不同階段版本 · 本卡未查得本案基地精確坡度／等高線數據，亦未查得是否走過「特別專案」豁免路徑，−0.3 為資料缺口下的保守取值 · 本卡未查得本案專屬之停工令、DOE 異議或邊坡工程糾紛 · BSG Property 母公司 Oriental Holdings 為 Bursa 主板 1964 年上市公司，本卡未查得最新一期針對本案的專屬財報揭露</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+
+  <div class="assump-box">
+    <strong>⚠️ 估值與買價透明度說明：</strong>本案為期房（2028 Q4 完工），無同建案 Brickz 成交可用，估值改採<strong>同地段二手成交中位</strong>為錨（Tanjung Bungah 528 psf，141 筆，2024-05~2025-04）——這是「新建期房 vs 老舊二手」的跨類比較，<strong>信心度：低</strong>，機械套用溢價百分比會系統性高估真實溢價。本案代表 PSF：<strong>約 RM 965</strong>（官方 PSF 區間 RM 810-999）；<strong>溢價約 +83%</strong>（低信心度）。<strong>檳城無 MLS，無官方 days-on-market 或掛牌-成交折讓數據</strong>，實際成交價可能因議價空間而低於掛牌價，買家仍應向代理或開發商書面確認最終實際淨價。
+  </div>
+
+  <p class="section-sub"><strong>代表戶型選取：</strong>依框架規則，Tanjung Bungah 非「島上精華區」核心（Pulau Tikus／Gurney／Tanjung Tokong／STP／George Town），理論上應沿用 2BR 規則。但本案產品線<strong>全數為 3-4 房</strong>（A2 4 房 2,152 sqft、B2 3 房 1,636 sqft、C2 3 房 1,388 sqft、D2／E2 3 房 1,334 sqft），並無 2BR 產品可供選擇——與同走廊 Azuria 卡的處理邏輯一致（依實際產品線判定，而非機械套用 2BR 預設）。本卡採用<strong>全案最小標準戶型 D2／E2 型 3 房 1,334 sqft</strong>為代表戶，此為「hillview」（非全海景）定價，較能反映多數買家可及的入門價位；若以最大戶型（A2 型 4 房 2,152 sqft、全海景定價）為代表，quantum 與退場罰分將更重。</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">BSG Property（Oriental Holdings 子公司），項目 SPV：Taman Sri Bunga Sdn Bhd<span class="kv-src">與 2017 丹絨武雅山崩事故（Granito @ Permai）為同一 SPV，詳見開發商維度</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">永久（Freehold）· 純住宅地契（Residential Title）<span class="kv-src">島上住宅地契，MBPP 禁止短租（R4）；官方強調「純住宅」享較低住宅水電費率</span></td></tr>
+          <tr><td class="kv-label">規模</td><td class="kv-val">365 戶，2 棟 39 層（部分來源記 40-45 層），每層僅 6 戶<span class="kv-src">位於 Jalan Sungai Kelian，Tanjung Bungah「Hillside」內陸段；每戶配 3 車位</span></td></tr>
+          <tr><td class="kv-label">單位坪數</td><td class="kv-val">1,334-2,195 sqft（3-4 房），全案無 2BR 產品<span class="kv-src">A2 4房2,152｜B2 3房1,636｜C2 3房1,388｜D2/E2 3房1,334 sqft</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">D2／E2 型 3 房 1,334 sqft ≈RM 1,287,000<span class="kv-src">≈RM 965 psf；官方 PSF 區間 RM 810-999，官方報價「hillview 起 RM 1.2M～sea view RM 1.4M」</span></td></tr>
+          <tr><td class="kv-label">完工時間</td><td class="kv-val">2028 Q4（期房）<span class="kv-src">距資料截止日逾 2.3 年，觸發 d4「期房 2+ 年」扣分</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與供給</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">微觀位置</td><td class="kv-val">Jalan Sungai Kelian／Jalan Loh Poh Heng，Tanjung Bungah「Hillside」內陸段<span class="kv-src">緊鄰 POWIIS Tanjung Bungah Campus；官方定位「set between the hills and the coast」</span></td></tr>
+          <tr><td class="kv-label">土地層</td><td class="kv-val">✗（本案自身即為 Azuria 卡列舉之三條走廊新供給之一）<span class="kv-src">扣除本案後仍有 Ascott Residences（2028）、Kerjaya Prospek JV 兩條在途供給</span></td></tr>
+          <tr><td class="kv-label">2017 事故關聯</td><td class="kv-val">開發 SPV 與事故項目（Granito @ Permai）為同一法人 Taman Sri Bunga Sdn Bhd<span class="kv-src">調查委員會究責工程師非開發商；本卡判定不重複扣分，詳見 d5</span></td></tr>
+          <tr><td class="kv-label">RSNPP 2040 狀態</td><td class="kv-val">尚未憲報，目標 2026 Q3；提案朝鬆綁 76m 規則方向修訂<span class="kv-src">同 Azuria 卡 2026-08-07 同日查證</span></td></tr>
+          <tr><td class="kv-label">LRT Mutiara</td><td class="kv-val">無站（全線進度 8.99%，2026-06）<span class="kv-src">丹絨武雅未在現行路線；官方行銷未見延伸線宣稱</span></td></tr>
+          <tr><td class="kv-label">管理費</td><td class="kv-val">RM 0.30-0.35 psf 含沉沒基金（官方期房報價）<span class="kv-src">≈RM 434／月（代表戶），非既有 JMB 實際執行數字，待完工後校準</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-4% 階梯制<br><small style="color:var(--muted)">RM 35,000</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 103,000</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">10%（90% LTV）<br><small style="color:var(--muted)">RM 129,000</small></td><td class="num">35%（估 65% LTV）<br><small style="color:var(--muted)">RM 450,000</small></td><td><small>BNM／銀行政策，外籍 LTV 未經檳城個案驗證</small></td></tr>
+      <tr><td>最低購買價門檻</td><td class="num">無</td><td class="num">島 strata RM 100 萬<br><small style="color:var(--muted)">本案 RM 128.7 萬，達標</small></td><td><small>PTG 指引 2024-08-01</small></td></tr>
+      <tr><td>徵費（consent to transfer）</td><td class="num">—</td><td class="num">1.5%（RM 100-150 萬甜蜜帶）<br><small style="color:var(--muted)">RM 19,000</small></td><td><small>州地政局 §5.1</small></td></tr>
+      <tr><td>州同意費</td><td class="num">—</td><td class="num">RM 10,000／地契</td><td><small>州地政局</small></td></tr>
+      <tr><td>三年禁售期</td><td class="num">無</td><td class="num">有（SPA 起算三年）</td><td><small>州地政局 §3.2(c)</small></td></tr>
+      <tr><td>州同意審批</td><td class="num">無</td><td class="num">需要，實務加 2-4 個月</td><td><small>州地政局</small></td></tr>
+      <tr><td>毛租金收益率</td><td class="num">~2.8%（估算，低信心度）</td><td class="num">~2.8%（同，估算）</td><td><small>同地段 proxy，本案無自身租賃數據</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">10-24% 累進（估約 15%）</td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>MM2H 合規</td><td class="num">—</td><td class="num">✓（RM 128.7 萬超過州 RM 50 萬、聯邦 Gold 門檻 RM 100 萬）</td><td><small>PTG 指引 §2.2；官方行銷即以 MM2H 為目標客群之一</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 4: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>3 房 1,334 sqft，約 RM 1,287,000</strong>（≈RM 965 psf）為基礎——本國人 vs 外國人 10 年總成本與淨損益對照。假設 2028 Q4 完工後起算，簡化為單一 10 年持有窗口。</p>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>1,334 sqft ＠ RM 1,287,000</strong> · 10 年持有 · 30 年房貸 · 毛租金收益率 Y1 約 2.8%（<strong>估算，低信心度</strong>，同地段 proxy RM 3,000／月，本案無自身租賃數據），租金年漲幅 2%，空置率 10% · 房貸利率——本國人 4.3%、外國人 4.8%（估算 +0.5pp 溢價，外籍檳城融資可得性未經個案驗證）· 本國人 LTV 90%、外國人 LTV 65%（估算）· 管理費 RM 0.325／sqft／月（<strong>官方期房報價中值，非既有 JMB 實查數字</strong>）· 門牌稅＋地稅估約 RM 2,300／年（依單位總值級距估算）· 租金所得稅按<strong>毛租金</strong>簡化計算：本國人估 15%、外國人 30%（非居民一口價）——實務上利息與費用可抵扣，此為保守示意 · 房價漲幅情境：0%／+3%（島上住宅 strata 基準年增速）／+5.5%（樂觀情境）· 仲介費 3% · 所有金額四捨五入至千位。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>129,000</td><td>450,000</td><td>+321,000</td></tr>
+      <tr><td>印花稅（MOT）</td><td>35,000</td><td>103,000</td><td>+68,000</td></tr>
+      <tr><td>律師費＋貸款費＋貸款印花</td><td>16,000</td><td>14,000</td><td>−2,000</td></tr>
+      <tr><td>州同意費＋徵費（1.5%甜蜜帶）</td><td>—</td><td>29,000</td><td>+29,000</td></tr>
+      <tr class="sum"><td>買入小計</td><td>180,000</td><td>596,000</td><td>+416,000</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額（本息）</td><td>688,000</td><td>527,000</td><td>−161,000</td></tr>
+      <tr><td>管理費＋沉沒基金</td><td>52,000</td><td>52,000</td><td>0</td></tr>
+      <tr><td>門牌稅＋地稅</td><td>23,000</td><td>23,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>763,000</td><td>602,000</td><td>−161,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，Y1 約 RM 3,000／月，2%／年成長，已計 10% 空置）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>355,000</td><td>355,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>53,000</td><td>107,000</td><td>+54,000</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>302,000</td><td>248,000</td><td>−54,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，+3% 情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>退場價（+3%／年）</td><td>1,730,000</td><td>1,730,000</td><td>0</td></tr>
+      <tr><td>仲介費（3%）</td><td>52,000</td><td>52,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>44,000</td><td>+44,000</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>922,000</td><td>677,000</td><td>−245,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0%／年（下行情境）</td><td>−315,000</td><td>−379,000</td><td>−64,000</td></tr>
+      <tr class="scenario"><td>+3%／年（島上 strata 基準，base case）</td><td>+115,000</td><td>+7,000</td><td>−108,000</td></tr>
+      <tr class="scenario"><td>+5.5%／年（樂觀情境）</td><td>+570,000</td><td>+415,000</td><td>−155,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在基準情境（+3%／年，島上住宅 strata 錨點年增速）下，本國人 10 年淨損益約 <strong>+RM 115,000</strong>，外國人幾乎剛好打平（<strong>+RM 7,000</strong>）。<strong>打平全部現金成本</strong>（不含機會成本）所需房價年漲幅：本國人約 <strong>2.2%／年</strong>，低於 3.0% 基準有安全邊際；外國人約 <strong>2.95%／年</strong>——幾乎<strong>等於</strong>基準本身，意味著外國買家的打平門檻對「島上 strata 是否真能維持 +3%／年」這個假設高度敏感，且尚未計入外國人頭期款（是本國人的 3.5 倍）10 年間的機會成本，實際門檻應更高。<strong>本表核心限制：</strong>（1）毛收益率 2.8% 為同地段 proxy 推算，本案自身無租賃數據，信心度低；（2）管理費雖取自開發商官方期房報價，但非既有 JMB 實際執行數字，完工後可能上修；（3）2028 完工前的期房階段本身即帶有工期延遲、規格變更等一般期房風險，本表未量化。
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ 退場現實</span>
+  <h2 class="section-title">退場現實檢驗</h2>
+  <p class="section-sub">三件套：稀缺性稽核（供給側能不能複製）＋接手人群金字塔（10 年後誰接手、買不買得起）＋二手市場硬證據（換手率／掛牌率／折讓）。全部採 2026-08 實查數據。</p>
+
+  <div class="hardrule-strip">
+    <span class="hardrule-tag">R1 觸發：Timur Laut 完工未售 973 套 &gt;800 → 外籍退場 cap 6.0（本案值 4.5 未受影響）</span>
+    <span class="hardrule-tag">R2 觸發：Timur Laut 在建未售 1,618 套 &gt;1,200 → 本國人退場 −0.3（已計入）</span>
+    <span class="hardrule-tag">R4 觸發：島上住宅地契，MBPP 禁止短租，不計短租收入；官方行銷未見短租宣稱</span>
+    <span class="hardrule-tag">R5 常設檢查已執行：RSNPP 2040 未憲報，目標 2026 Q3；本案定價區分 hillview/sea view 佐證有地形高低差</span>
+  </div>
+
+  <div class="sub-eyebrow">5A · 稀缺性稽核（供給側三層）</div>
+  <div class="scarcity-box">
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">土地層</span>
+      <span class="scarcity-txt"><strong>本案誠實地把自己算進供給壓力裡：</strong>本案自身即為 Azuria 卡確認的丹絨武雅走廊三條活躍新供給管道之一（Waterstone／Ascott Residences／Kerjaya Prospek JV），本案得以在 2018 年提案、2026 年開賣，本身就是「土地並未鎖死」的直接證據——本案基地一部分可追溯至同一開發商 SPV 2020 年於緊鄰基地的 Lorong Sungai Kelian 10 提出的可負擔房方案，其後改劃為現行市場價位產品，顯示這片 Hillside 土地具備重新定位、持續開發的彈性。扣除本案自身後，走廊仍有 Ascott Residences（2028）、Kerjaya Prospek JV（Lot 2601／3603）兩條確認中的供給管道，未來 10 年仍會持續稀釋任何「稀缺性」論點。</span>
+    </div>
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">產品層</span>
+      <span class="scarcity-txt">獨立判定，不重複引用土地層證據：「每層僅 6 戶、低密度」是本案的行銷定位選擇，不構成技術或法規上的不可複製性——任何取得同段坡地開發許可的開發商皆可複製此配置。本案尚未完工，無 Brickz 成交可驗證市場是否真的為此配置支付溢價，未通過有效稀缺檢驗。</span>
+    </div>
+    <div class="scarcity-row">
+      <span class="scarcity-mark pass">✓</span>
+      <span class="scarcity-layer">法規層</span>
+      <span class="scarcity-txt">依 R5 指引，法規層最多打 ✓ 不打 ✓✓：現行 RSNPP 2030 的 76m／25° 坡限規則仍為現行法規（RSNPP 2040 尚未憲報，目標 2026 Q3），但州政府正積極提案鬆綁此規則——方向對稀缺性是下行風險。本案官方定價明確區分「hillview」與「sea view」兩類，佐證基地本身確有明顯地形高低差，本卡因此保守維持 ✓，不假設本案不受坡限規範。</span>
+    </div>
+    <div class="scarcity-verdict"><strong>有效稀缺判定：</strong>三層皆未達「全 ✓」門檻（土地層與產品層皆 ✗），本案不構成結構性稀缺。<strong>本案不能借用自己作為新供給的存在來論證稀缺——這正是它不稀缺的證據，而非稀缺的證據。</strong>其真正的競爭優勢來自低密度定位、freehold 純住宅地契與國際學校鄰近性等產品層面的差異化行銷，而非供給側的結構性封頂。</div>
+  </div>
+
+  <div class="sub-eyebrow">5B · 接手人群金字塔</div>
+  <div class="quantum-line">
+    <strong>Quantum test：</strong>代表戶 3 房 1,334 sqft ＠ <strong>RM 1,287,000</strong> → 下一手家庭月收門檻約 <strong>RM 14,157</strong>（總價 × 1.1%：90% LTV、4.3%、30 年、負擔 40%）→ 落檳城家庭月收 <strong>P75-P90 之間</strong>（P75 RM 11,142／P90 RM 16,186），約 P83-85——本地承接池已明顯窄於檳城中位家庭，接近上層 upgrader 帶的門檻邊界。
+  </div>
+  <table class="pyramid-table">
+    <thead><tr><th style="width:22%">接手者</th><th style="width:10%">判定</th><th>判定依據</th></tr></thead>
+    <tbody>
+      <tr><td class="seg">本地首購</td><td><span class="pyramid-v no">✗</span></td><td>quantum RM 128.7 萬遠超 RM 60 萬首購帶上限，月收門檻 RM 14,157 已超出多數首購族負擔能力。</td></tr>
+      <tr><td class="seg">本地 upgrader</td><td><span class="pyramid-v mid">△</span></td><td>落 RM 120-180 萬帶（P83-P95），屬中高收入 upgrader 可及但已非主力帶；檳城中位所得 CAGR 6.4%（全國最高）提供部分支撐，但 10 年後能負擔此 quantum 的家庭占比仍屬少數。</td></tr>
+      <tr><td class="seg">外州／海外馬來西亞人</td><td><span class="pyramid-v mid">△</span></td><td>國際學校鄰近性（POWIIS 緊鄰）與低密度海景/山景定位對外州馬國人與返鄉僑居家庭具吸引力，惟本案期房尚無成交個案佐證，依規則不預設 ✓。</td></tr>
+      <tr><td class="seg">本地投資客</td><td><span class="pyramid-v no">✗</span></td><td>毛收益率僅約 2.8%（估算，低信心度），RM 128.7 萬資金體量對一般本地投資客而言偏重；R4 禁短租使收益上限被法規鎖死。</td></tr>
+      <tr><td class="seg">外籍自住（MM2H）</td><td><span class="pyramid-v mid">△</span></td><td>RM 128.7 萬超過州門檻 RM 50 萬與聯邦 Gold 門檻 RM 100 萬，資格達標，且官方行銷本身即以 MM2H 買家為目標客群之一；惟全國有效 MM2H 簽證僅 5,972 張，本案無成交個案佐證，依規則預設 △。</td></tr>
+      <tr><td class="seg">外籍投資／機構</td><td><span class="pyramid-v no">✗</span></td><td>2.8% 毛收益扣 30% 非居民租金稅、10% 永久 RPGT、1.5% 徵費、三年禁售期後 carry 明顯為負；365 戶規模亦無機構級批量交易空間。</td></tr>
+    </tbody>
+  </table>
+  <div class="dep-tag dep-mid"><strong>外籍依賴度：中（估算，無精確數據）。</strong>不觸發 R3（非 landed），故不強制記 ≈0；quantum 帶已排除本地首購與多數一般 upgrader，剩餘買家池天然更偏外州／海外馬國人與 MM2H 外籍自住組合，但無足夠證據支持 &gt;50% 的判定。政策風險：若聯邦 MM2H 級距門檻上調，或檳城中位所得成長不足以在 10 年內把更多本地 upgrader 推入這個 quantum 帶，退場池會進一步收窄；若丹絨武雅走廊新供給（Ascott／Kerjaya JV）持續釋出，本案的「低密度」差異化賣點也會被稀釋。</div>
+
+  <div class="sub-eyebrow">5C · 二手市場證據</div>
+  <div class="evid-strip">
+    <div class="evid-card"><div class="evid-num">N/A</div><div class="evid-lbl">年換手率<br>（期房，無二手成交）</div><div class="evid-tag cold">2028 完工前無數據</div></div>
+    <div class="evid-card"><div class="evid-num">不採計</div><div class="evid-lbl">掛牌率<br>（一手銷售掛牌，非二手訊號）</div><div class="evid-tag cold">口徑不同，不計分</div></div>
+    <div class="evid-card"><div class="evid-num">N/A</div><div class="evid-lbl">掛牌-成交折讓</div><div class="evid-tag cold">無公開數據</div></div>
+    <div class="evid-card"><div class="evid-num">0 筆</div><div class="evid-lbl">Brickz 深度<br>（期房，尚無成交紀錄）</div><div class="evid-tag cold">2028 完工前無數據</div></div>
+  </div>
+  <p style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.7">Timur Laut district：完工未售 973 套（R1 觸發）／在建未售 1,618 套（R2 觸發，本國人退場 −0.3，已計入上方分項）——本案所在 district 是檳城島上供給最重的一區，本案完工後將再為該 district 增加 365 套新供給。本案為期房（2028 Q4 完工），截至 2026-08 尚無任何二手交易或轉售掛牌可統計，上述四格指標皆無法計分，僅供未來校準時參照；PropertyGuru／iProperty 現有的 58-364 筆「掛牌」實為開發商一手銷售通路的未售存量展示，與二手流動性訊號性質不同，本卡明確區分兩者、不將其誤用為換手率或掛牌率的替代指標。</p>
+
+  <div class="exit-summary">10 年後最可能的接手者是<strong>本地中高收入 upgrader 與外州／海外馬國人、MM2H 外籍自住的混合買家池</strong>——quantum 已把典型本地首購族排除在外，但尚未貴到只剩外籍買家可及。本案是本框架至今第一張<strong>完全處於期房階段</strong>的檳城卡，這意味著二手流動性、真實成交溢價、實際管理費水準三項關鍵事實<strong>要到 2028 年完工後才能驗證</strong>，10 年持有的前 2 年多本質上是對「開發商能否如期、如質交付」的信任下注。若<strong>丹絨武雅走廊新供給（Ascott Residences／Kerjaya Prospek JV）在完工前後集中入市</strong>，本案的低密度差異化賣點會被稀釋、退場議價力承壓；若<strong>本案能提供公開的獨立邊坡工程報告並順利如期交付</strong>，這個信任折讓應隨時間收斂。</div>
+</section>
+
+<!-- BLOCK 6A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>BSG Waterstone 位於 Jalan Sungai Kelian，是丹絨武雅「Hillside」內陸坡地段的低密度雙塔項目——2 棟 39 層樓（部分來源記 40-45 層，官方以 39 層為準），合計 365 戶，每層僅 6 戶，坪數 1,334-2,195 sqft（3-4 房家庭型），純住宅永久地契，預計 2028 年第四季完工。開發商 BSG Property 是 Oriental Holdings（1964 年上市，Bursa 主板）旗下的物業開發部門，項目法人為 SPV Taman Sri Bunga Sdn Bhd。官方行銷以海景／山景雙定價區隔（hillview 起 RM 1.2M、sea view 至 RM 1.4M 起），目標客群明確涵蓋家庭、退休人士與 MM2H 買家，並強調緊鄰 POWIIS Tanjung Bungah Campus、每戶配 3 車位、infinity pool 面向馬六甲海峽等賣點。</p>
+
+    <p>稀缺性層面，本卡刻意誠實處理一個結構性矛盾：本案<strong>自身正是</strong>同批 Azuria 卡用來論證丹絨武雅走廊土地層 ✗ 的三條新供給之一。三層稽核下，土地層 ✗——本案得以從 2018 年提案走到 2026 年開賣，本身就是「這片 Hillside 土地並未鎖死」的最直接證據，本卡查得同一開發商 SPV 早在 2020 年即於緊鄰基地的地塊提案過另一版本（342 戶可負擔房方案），後改劃為現行市場價位產品，顯示土地供給具備彈性、可重新定位；扣除本案自身後，走廊仍有 Ascott Residences 與 Kerjaya Prospek JV 兩條確認中的供給管道。產品層亦 ✗：「每層僅 6 戶」是行銷定位而非技術不可複製性，且期房階段無 Brickz 成交可驗證真實需求溢價。法規層依 R5 指引僅打 ✓：現行 76m／25° 坡限規則有效但州政府提案鬆綁，本案官方定價明確區分 hillview 與 sea view，佐證基地確有明顯地形高低差。三層皆未達加分門檻，d1 落在 6.5，較區域錨點 6.8 下修 0.3，與同走廊 Azuria 卡完全一致。</p>
+
+    <p><strong>本卡最重要的個案級查證是開發商維度，且分成兩項獨立判定。</strong>錨表已對 BSG Property 折入 −0.5，事由是 2017 年丹絨武雅山崩（11 死，調查委員會究責顧問工程師而非開發商），而本案恰好就位於丹絨武雅。本卡窮盡查證後發現：事故項目 Granito @ Permai 的開發商 <strong>Taman Sri Bunga Sdn Bhd</strong>，與本案（Waterstone）的開發實體<strong>是同一家法人</strong>——不是「同一企業家族」的鬆散關聯，而是同一 SPV 先後開發了兩個項目。本卡的判斷是：這個更緊密的事實<strong>不足以構成額外的量化扣分</strong>，因為調查委員會的裁定明確、正式、究責對象特定（顧問工程師），本卡也未查得本案自身有任何停工令、DOE 異議或邊坡糾紛等不利個案證據；這與 Gurney Paragon 卡因「本案自身是未了結訴訟標的物」而在退場維度加計 −0.2 個案摩擦性質不同——那是進行中、有明確經濟機制的事實，本案則是已了結、有正式豁免結論的歷史事件，且發生在另一物理地塊（Permai Village，非本案基地）。<strong>但這不是本案唯一與坡地相關的查證。</strong>本卡另查得一份居民 Change.org 陳情，指名同一 SPV Taman Sri Bunga Sdn Bhd 於「Jalan Sungai Kelian 與 Jalan Loh Poh Heng 之間、Hillside」的 19.08 英畝地塊（與本案地址描述完全重合）提案過 914 戶、密度達每英畝 49 戶、逾三倍超過丹絨武雅每英畝 15 戶法定上限的爭議方案——這是錨表§5 檳城特有扣分第 3 條「山坡地曝險 −0.3 至 −0.5」的獨立適用情境，扣的是本案基地當下的坡地曝險，而非開發商歷史紀錄，與前述 −0.5 可並存而不重複計分。因未能查得本案基地精確坡度數據或「特別專案」豁免路徑的確認，本卡依框架慣例取保守下限 <strong>−0.3</strong>，d5 最終為 <strong>6.7</strong>（7.0−0.3），並在留意事項與資料缺口中明確提示：本案迄今無公開揭露之獨立邊坡工程報告，買家應在簽約前向開發商索取確認。</p>
+
+    <p>定價層面，本案為期房，無同建案 Brickz 成交可用，只能退而採用 Tanjung Bungah 二手中位（528 psf）作為低信心度錨——代表戶 D2／E2 型 1,334 sqft 官方報價約 RM 1,287,000（≈965 psf），較二手中位溢價約 +83%，但這本質上是「新建期房 vs 老舊二手」的跨類比較，機械套用會系統性高估真實溢價；交叉參照 STP2／Andaman 走廊近期新盤（The Lume ~1,280 psf、Maris ~1,100+ psf），本案定價反而<strong>低於</strong>該走廊新盤水準。持有面，作為島上住宅地契物業，R4 適用：不得計入短租收入，本案官方行銷亦未見任何短租收益宣稱。毛收益率估算僅約 2.8%（低信心度，proxy 租金），管理費倒是難得取自開發商自身官方報價（RM 0.30-0.35 psf 含沉沒基金），優於本框架慣用的 KL 待校準基準，但仍屬期房銷售階段報價、非既有 JMB 實際執行數字。</p>
+
+    <p>退場層面，quantum RM 128.7 萬落 P83-85 帶，本地首購與多數一般 upgrader 已被排除，本國人退場分 6.4（quantum −0.3、R2 在建未售 −0.3）；外國人側則受惠於徵費甜蜜帶（+0.3）與 MM2H 合規（+0.3，官方本身即鎖定此客群），扣除州同意與三年禁售兩項必套用摩擦後，淨值 4.5，本外差距 1.9，符合不變量。所在 Timur Laut district 完工未售 973 套、在建未售 1,618 套，R1／R2 同時觸發。本案是本框架至今第一張完全處於期房階段的檳城卡——二手流動性、真實成交溢價、實際管理費水準三項關鍵事實，都要等到 2028 年完工後才能真正驗證。</p>
+
+    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+      <strong style="color:var(--navy);font-weight:700">10 年情境基準</strong>：假設完工後起算持有 10 年（IRR 為權益 IRR，含頭期款、每年淨流出與退場淨額，估算）：
+      <ul style="margin:8px 0 0 18px;padding:0">
+        <li><strong>合理情境</strong>（base case，房價 +3%／年，島上住宅 strata 基準年增速）：本國人 10 年累計淨報酬約 <strong>RM 11.5 萬</strong>，權益 IRR 約 <strong>5.1%</strong>；外國人約 <strong>RM 0.7 萬</strong>（幾乎打平），權益 IRR 約 <strong>0.1%</strong>。</li>
+        <li><strong>樂觀情境</strong>（bull case，走廊供給被吸收、國際學校鄰近性題材發酵，+5.5%／年）：本國人約 RM 57.0 萬，IRR 約 15.3%；外國人約 RM 41.5 萬，IRR 約 5.4%。</li>
+        <li><strong>下行情境</strong>（bear case，走廊新供給壓制房價、期房風險兌現，0%／年）：本國人 10 年淨損約 RM 31.5 萬、外國人約 RM 37.9 萬，兩者 IRR 皆為負（估算約 −8% 至 −12%）。</li>
+      </ul>
+      <div style="margin-top:10px">10 年退場流動性：檳城無 days-on-market 公開數據，本案期房階段更完全無二手流動性訊號可用。核心風險不在地段本身，而在三件事：本案能否如期如質交付（期房風險）、丹絨武雅走廊新供給（Ascott／Kerjaya JV）對本案差異化定位的稀釋速度，以及開發商 SPV 與 2017 山崩事故的歷史關聯是否會在完工後影響買家心理或融資意願（即使調查已正式豁免）。</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 6B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>低密度雙塔（每層僅 6 戶，365 戶）、每戶配 3 車位、純住宅永久地契，享較低住宅水電費率</li>
+        <li>緊鄰 POWIIS Tanjung Bungah Campus，3km 內另有 Dalat International、Tenby Schools 等國際學校，交通維度受惠於教育機能密度</li>
+        <li>管理費難得取自開發商自身官方報價（RM 0.30-0.35 psf 含沉沒基金），優於本框架多數檳城卡慣用的 KL 待校準基準</li>
+        <li>官方定價（PSF 810-999）低於同屬檳城北岸新盤定位的 STP2／Andaman 走廊近期新盤（The Lume ~1,280、Maris ~1,100+ psf），未走最激進的島內新盤定價策略</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li>【期房風險】2028 Q4 完工，距今逾 2.3 年，二手流動性、真實成交溢價、實際管理費水準三項關鍵事實皆無法在完工前驗證；d4 已扣「期房 2+ 年 −0.3」</li>
+        <li>【開發商 SPV 與 2017 事故關聯】本案開發實體 Taman Sri Bunga Sdn Bhd 與 2017 丹絨武雅山崩事故項目（Granito @ Permai）為<strong>同一法人</strong>；調查委員會已正式究責顧問工程師、豁免開發商，本卡判定不重複扣分於 d5</li>
+        <li>【山坡地曝險，錨表§5 獨立扣分項，已套用 −0.3】同一 SPV 於本案所在「Jalan Sungai Kelian／Jalan Loh Poh Heng 之間、Hillside」的 19.08 英畝地塊，經查證曾提案 914 戶、密度逾丹絨武雅法定上限三倍的爭議方案（居民曾正式陳情）；本卡未能查得本案基地精確坡度或「特別專案」豁免路徑，故 d5 已扣至 6.7，<strong>強烈建議簽約前向開發商索取本案專屬的獨立邊坡穩定性／地質工程報告</strong>，並確認基地是否落入 76m／25° 管制範圍</li>
+        <li>【土地層 ✗，本案自身即為供給之一】丹絨武雅走廊除本案外，仍有 Ascott Residences（2028）、Kerjaya Prospek JV 兩條確認中的新供給管道，10 年持有期內走廊供給壓力是真實威脅</li>
+        <li>【R1／R2】所在 Timur Laut 是島上供給最重的 district：完工未售 973 套觸發外籍退場封頂（本案未觸頂）、在建未售 1,618 套觸發本國人退場扣分</li>
+        <li>【R4】島上住宅地契，MBPP 禁止短租，官網與代理頁未見短租收益宣稱；毛收益率僅約 2.8%（估算，低信心度）</li>
+        <li>建議確認：完工樓層數來源不一致（39 vs 40-45 層）；本案專屬租賃數據要到完工後才會出現；徵費／MM2H 適用性建議律師書面確認</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 6C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：交通與可達性（6.8，國際學校鄰近性）、開發商與管理移交（6.7，惟需自行核實邊坡工程文件）<br>
+      <strong>可妥協</strong>：持有現金流（自住不涉租金）、進場估值紀律（自住不急於套利）<br>
+      <strong>本案 fit</strong>：中高。緊鄰 POWIIS、3 車位、低密度純住宅地契，對有國際學校需求的家庭是務實選項；但 2028 完工的期房等待期、以及開發商 SPV 與 2017 山崩事故的歷史關聯，是簽約前應主動向開發商索取邊坡工程報告確認的兩件事。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（2.5 本／1.5 外）、退場與接手人群（6.4 本／4.5 外）<br>
+      <strong>可妥協</strong>：稀缺性（本案非稀缺型論點）<br>
+      <strong>本案 fit</strong>：低。毛收益率估算僅約 2.8%（proxy，低信心度），扣管理費與稅後為負 carry，且<strong>R4 明文禁止短租</strong>——本案為島上住宅地契，MBPP 禁令下任何短租收益規劃不可執行。期房階段更完全無法驗證真實租賃需求，若以出租為主要目的，此刻進場的資訊確定性偏低。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：交通與可達性、開發商與管理移交<br>
+      <strong>可妥協</strong>：持有現金流、退場速度<br>
+      <strong>本案 fit</strong>：中高。官方行銷本身即鎖定 MM2H 買家，資格達標容易（RM 128.7 萬超過州與聯邦門檻），海景/山景雙定價與低密度配置對備用居所買家有吸引力；外籍須承擔 8% 印花稅、三年禁售期與州同意審批（實務加 2-4 個月），且需接受 2028 前的期房等待期。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（20%）、開發商與管理移交（治理與交付穩定性）<br>
+      <strong>可妥協</strong>：短期 yield、短期退場速度<br>
+      <strong>本案 fit</strong>：中等偏保守。永久地契具備一定合理性，但本案<strong>沒有任何不可逆的法規鎖</strong>，且本案自身正是走廊土地供給仍具彈性的直接證據——20 年期持有者應把丹絨武雅走廊未來新供給的持續釋出，以及開發商 SPV 能否在本案完工並長期管理中維持良好紀錄（尤其邊坡與結構安全），視為必須追蹤的核心變數。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 7: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    waterstonepenang.com.my（開發商官方：位置、坪數、戶型、PSF 區間、學校/醫院車程、管理費報價） · EdgeProp.my（2026）— Waterstone Penang 建案報導（定位、目標客群 MM2H／家庭／退休人士、設施清單） · PropertyGuru Malaysia／iProperty Malaysia — Waterstone 建案頁與掛售掛租 listing（PSF RM810-999、價格 RM1.3M-2.4M、掛牌數 58-364） · uqs.com.my（Unitech Consultancy Group）— BSG Waterstone 工程顧問專案頁（開發實體 Taman Sri Bunga Sdn Bhd） · Intender.my — Taman Sri Bunga Sdn Bhd 企業登記資料（BSG Property 子公司、Boon Siew Group 成員） · PenangPropertyTalk（2020-10）— Taman Sri Bunga Sdn Bhd 於 Lorong Sungai Kelian 10 之 342 戶可負擔房提案報導 · PropertyGenie.com.my — Granito @ Permai 建案頁（BSG Property，2019 完工，2017 山崩後續完工紀錄） · FreeMalaysiaToday（2019-08-28）、PropertyGuru News（2017-10）、The Star（2017-10-21）、AGU Landslide Blog（2017-10-23／24）— 2017 丹絨武雅山崩事故報導與調查委員會裁定（developer Taman Sri Bunga Sdn Bhd、main contractor BSG Global Builders Sdn Bhd 皆獲豁免究責，顧問工程師 Khoo Koon Tai 主責） · Experian Malaysia — BSG Global Builders Sdn Bhd 企業登記（SSM 201301000758） · Change.org — 「Stop overdevelopment in Tanjung Bungah and the rest of Penang」居民陳情（指名 Tetuan Taman Sri Bunga Sdn Bhd／Boon Siew Group SB 於 Jalan Sungai Kelian 與 Jalan Loh Poh Heng 之間、Hillside 之 19.08 英畝地塊提案 914 戶，密度每英畝 49 戶，逾檳城州結構計畫 2007 丹絨武雅上限每英畝 15 戶三倍以上；山坡地曝險 d5 −0.3 依據） · penang-traveltips.com — Jalan Sungai Kelian／Jalan Loh Poh Heng／Jalan Lembah Permai 街道資訊與道路連接關係 · doris.school／edarabia.com／powiis.edu.my — POWIIS Tanjung Bungah Campus 位置與地址（88 Jalan Loh Poh Heng） · 本檔所依循之 SC_Azuria-Condominium_20260807_zh.html（丹絨武雅走廊土地層新供給三項確認、Tanjung Bungah 二手 Brickz 中位 528 psf／141 筆、RSNPP 2040 常設查證 2026-08-07） · The Star／MRT Corp（2026-06）— LRT Mutiara Line 進度 8.99%、Mutiara Line 可延伸評論 · NAPIC JPPH（Timur Laut 完工未售 973 套、在建未售 1,618 套；MHPI 島上住宅 strata 2025P +3.1%、Q1 2026 +3.4%） · DOSM 家庭收入調查（檳城 P50 RM 7,327／P75 RM 11,142／P90 RM 16,186／P95 RM 19,855／P99 RM 30,529） · PTG（檳城州地政局）外籍購屋門檻與徵費指引 2024-08-01 版 · LHDN Finance Act（印花稅、RPGT、非居民租金稅率） · BNM OPR 2.75% · 本檔所依循之 penang-property-scorecard-v1 skill 鎖定錨表（ANCHORS.md，2026-08-06 版本，2026-08-07 掛牌率裁定更新）。
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-08-07。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限。</strong>本卡分數採檳城內部尺規校準，與其他市場（KL／曼谷等）評分卡分數不可直接比較。<strong>資料缺口誠實揭露</strong>：（1）本案為期房（2028 Q4 完工），<strong>無任何同建案 Brickz 成交或租賃數據</strong>，估值與現金流兩維度皆採同地段 proxy 或跨類比較，信心度低，需待完工後校準；（2）毛租金收益率為同地段 proxy 推算，非機構數據，非本案自身租賃紀錄；（3）檳城無 MLS，無公開 days-on-market 或掛牌-成交折讓數據；（4）本案完工樓層數來源不一致（39 vs 40-45 層），buyer 應向代理書面核實；（5）管理費雖取自開發商官方期房報價（RM 0.30-0.35 psf），非既有 JMB 實際執行數字，完工後可能調整；（6）<strong>開發商維度的核心查證，含兩項獨立判定</strong>：（a）本案開發 SPV Taman Sri Bunga Sdn Bhd 與 2017 丹絨武雅山崩事故項目（Granito @ Permai）為同一法人；調查委員會已正式究責顧問工程師、豁免開發商與主承包商，本卡判定不對此事故疊加額外量化扣分（錨表 −0.5 已折入 BSG Property 起跳分，不重複計分）；（b）<strong>但本卡另外查得</strong>同一 SPV 曾於本案所在地塊（Jalan Sungai Kelian／Jalan Loh Poh Heng 之間、Hillside，19.08 英畝）提案 914 戶、密度逾丹絨武雅法定上限三倍的爭議方案（居民曾正式陳情），依錨表§5 檳城特有扣分第 3 條「山坡地曝險」獨立套用 −0.3，d5 最終為 6.7；本卡未能查得本案基地精確坡度數據或「特別專案」豁免路徑的確認，此 −0.3 為資料缺口下的保守取值，非確認本案基地本身違規。以上皆為框架内基於現有公開證據的判斷，非法律意見，本卡未能查得本案專屬的獨立邊坡穩定性／地質工程報告，建議買家於簽約前向開發商書面索取確認；（7）外籍融資 LTV／利率為估算，未經檳城個案驗證；（8）MM2H 州級門檻與聯邦級距的互動，PTG 一手文件與 visitpenang.com 說法相反，建議律師確認；（9）PropertyGuru／iProperty 現有掛牌數（58-364 筆）為開發商一手銷售通路展示，非二手流動性訊號，本卡未將其誤用為換手率或掛牌率指標。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+  </div>
+</div>
+
+</div>
+</body>
+</html>

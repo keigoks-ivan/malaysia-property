@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moulmein Rise — 檳城建案評分卡 | Property Check</title>
+<meta name="description" content="Moulmein Rise（Pulau Tikus）獨立評分卡。本國人 6.3 / 外國人 5.7。10 年持有專業投資人視角 · 7 維度框架 · Belleview Group（Hero Leader）· 全站首張擁有近十年真實成交軌跡的案例，實證年化增值率為負，明顯低於島上住宅 strata 基準 +3.0%。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}
+.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{font-family:'Noto Serif TC','Playfair Display',serif;font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+.ruler-note{font-size:10.5px;color:#93a2ba;margin-top:16px;padding-top:12px;border-top:1px solid rgba(212,181,118,.18);line-height:1.7}
+
+.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{font-family:'Noto Serif TC','Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}
+.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{font-family:'Noto Serif TC','Playfair Display',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+.sub-eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--gold-deep);margin:22px 0 10px;text-transform:uppercase}
+.sub-eyebrow:first-of-type{margin-top:4px}
+.scarcity-box{background:var(--navy-soft);border:1px solid #c9d6e8;border-radius:12px;padding:8px 20px}
+.scarcity-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(13,34,68,.08);align-items:flex-start}
+.scarcity-row:last-of-type{border-bottom:none}
+.scarcity-mark{flex:0 0 auto;width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:1px}
+.scarcity-mark.pass{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.scarcity-mark.fail{background:#f1f0ec;color:#8a8577;border:1px solid #ddd8ca}
+.scarcity-layer{flex:0 0 60px;font-weight:700;font-size:13px;color:var(--navy);padding-top:2px}
+.scarcity-txt{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.scarcity-verdict{margin-top:12px;padding:12px 16px;background:linear-gradient(135deg,#fef9ed,#fbf3df);border-left:3px solid var(--gold);border-radius:8px;font-size:12.5px;line-height:1.75;color:var(--navy)}
+.scarcity-verdict strong{color:var(--gold-deep)}
+.quantum-line{background:linear-gradient(135deg,var(--bg-soft),#fbf3df);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px;margin-bottom:14px;font-size:12.5px;line-height:1.8;color:var(--text-soft)}
+.quantum-line strong{color:var(--navy)}
+.pyramid-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.pyramid-table th{text-align:left;padding:9px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.pyramid-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.65}
+.pyramid-table tr:last-child td{border-bottom:none}
+.pyramid-table td.seg{font-weight:600;color:var(--navy);white-space:nowrap}
+.pyramid-v{font-weight:700;text-align:center;font-size:15px}
+.pyramid-v.yes{color:#15803d}
+.pyramid-v.mid{color:#a16207}
+.pyramid-v.no{color:#9a9488}
+.dep-tag{padding:12px 16px;border-radius:10px;font-size:12.5px;line-height:1.75}
+.dep-mid{background:#fef3c7;border:1px solid #fcd34d;color:#713f12}
+.dep-tag strong{font-weight:700}
+.evid-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.evid-card{padding:14px 12px;border:1px solid var(--border-soft);border-radius:12px;background:linear-gradient(180deg,var(--bg-soft),#fff);text-align:center}
+.evid-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);letter-spacing:-.02em;line-height:1.1}
+.evid-lbl{font-size:10.5px;color:var(--muted);font-weight:600;letter-spacing:.03em;margin-top:6px;line-height:1.3}
+.evid-tag{display:inline-block;margin-top:8px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px}
+.evid-tag.hot{background:#dcfce7;color:#15803d}
+.evid-tag.warm{background:#fef3c7;color:#a16207}
+.evid-tag.norm{background:var(--navy-soft);color:var(--navy-mid)}
+.evid-tag.cold{background:#f1f0ec;color:#8a8577}
+.exit-summary{margin-top:18px;padding:16px 20px;background:linear-gradient(135deg,var(--navy-deep),var(--navy));color:#f3ebd6;border-radius:12px;font-size:13px;line-height:1.85}
+.exit-summary strong{color:var(--gold-light)}
+.hardrule-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.hardrule-tag{font-size:10.5px;font-weight:700;padding:5px 10px;border-radius:8px;background:#fdf0ed;border:1px solid #f0c9bd;color:#7a3b28;letter-spacing:.02em}
+.histbox{background:linear-gradient(135deg,#fef2f2 0%,#fef9ed 100%);border:1px solid #f0c9bd;border-left:4px solid #c0503a;border-radius:12px;padding:16px 20px;margin-top:14px;font-size:13px;line-height:1.85;color:var(--text-soft)}
+.histbox strong{color:var(--navy)}
+
+@media (max-width:768px){
+  .evid-strip{grid-template-columns:repeat(2,1fr)}
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">Penang Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/penang-check.html">← 全部評分</a>
+      <a class="lang-link" href="SC_Moulmein-Rise_20260807_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Jalan Moulmein · Pulau Tikus</span>
+    <span class="sep">◆</span>
+    <span>永久地契 · 住宅（裙樓商鋪另計）</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-08-07</span>
+  </div>
+  <h1 class="proj-name">Moulmein Rise</h1>
+  <p class="one-liner">
+    全站首張擁有近十年真實成交軌跡的建案——2016 年完工，2012 年開價約 RM 1,300 psf，2025 年自身 Brickz 成交中位僅 RM 1,136 psf，十三年實證年化約 <strong>−1.0%至−2.0%</strong>，明顯低於框架「島上住宅 strata 基準 +3.0%」的預設，是對整個框架 d4 基準的重要校準訊號。地段仍坐落檳城尺規頂點錨（Pulau Tikus 內陸側 8.0，扣至 7.5），但代表戶現時開價較自身成交錨溢價約 11%，疊加毛收益率僅約 3.9%（估算），使本案在雙 Tier 上皆落入 T4。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">6.3</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis，分眾持有</span>
+      </div>
+      <div class="score-note">地段 7.5（8.0 錨扣 0.5：Pulau Tikus 內陸一般土地層可複製，非 Turf Club 直接威脅）+ 交通 8.3（步行可達 Pulau Tikus 市場與 Burmah Road 商圈）+ 開發商 7.2（Belleview 首次實測）+ 退場 6.4 + 增值 5.7（Pulau Tikus 無 LRT 站）+ 估值僅 5.0（代表戶較自身 Brickz 成交錨溢價約 11%）+ 現金流 3.8（毛收益約 3.9%，估算）</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">5.7</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis，分眾持有</span>
+      </div>
+      <div class="score-note">五個共用維度與本國人同分；現金流本外差距固定 2.0（3.8 → 1.8，未觸 clamp）；退場 4.2（本國人 6.4 − 2.0 ＋MM2H 合規 0.3 −州同意 0.3 −三年禁售 0.2）。quantum 約 RM 225.5 萬已遠超 RM 150-200 萬徵費斷崖區間，落入一般 3% 徵費常態，未觸發甜蜜帶／斷崖任一特殊調整項</div>
+    </div>
+  </div>
+  <div class="ruler-note">※ 本卡採檳城內部尺規校準，與 KL／曼谷等其他市場評分卡分數不可直接比較；跨市場比較請見 markets-summary 國際比較頁。</div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">七維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。稀缺性與地段護城河 20% · 交通與可達性 12% · 資本增值動能 15% · 進場估值紀律 13% · 持有現金流 12% · 退場與接手人群 18% · 開發商與管理移交 10%。5 個維度本外同分、2 個維度本外分開（現金流 + 退場）。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+<svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="七維度雷達圖">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): [7.5, 8.3, 5.7, 5.0, 3.8, 6.4, 7.2] -->
+  <polygon points="140.0,56.0 212.7,82.0 202.2,154.2 164.3,190.5 121.5,178.3 70.1,156.0 77.0,89.7" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="56.0" r="3.5"/>
+    <circle cx="212.7" cy="82.0" r="3.5"/>
+    <circle cx="202.2" cy="154.2" r="3.5"/>
+    <circle cx="164.3" cy="190.5" r="3.5"/>
+    <circle cx="121.5" cy="178.3" r="3.5"/>
+    <circle cx="70.1" cy="156.0" r="3.5"/>
+    <circle cx="77.0" cy="89.7" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [7.5, 8.3, 5.7, 5.0, 1.8, 4.2, 7.2] -->
+  <polygon points="140.0,56.0 212.7,82.0 202.2,154.2 164.3,190.5 131.3,158.2 94.1,150.5 77.0,89.7" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="56.0" r="3.0"/>
+    <circle cx="212.7" cy="82.0" r="3.0"/>
+    <circle cx="202.2" cy="154.2" r="3.0"/>
+    <circle cx="164.3" cy="190.5" r="3.0"/>
+    <circle cx="131.3" cy="158.2" r="3.0"/>
+    <circle cx="94.1" cy="150.5" r="3.0"/>
+    <circle cx="77.0" cy="89.7" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+    <text x="140" y="12" text-anchor="middle">稀缺與地段</text>
+    <text x="239" y="59" text-anchor="start">交通與可達性</text>
+    <text x="263" y="168" text-anchor="start">資本增值動能</text>
+    <text x="195" y="262" text-anchor="start">進場估值紀律</text>
+    <text x="85" y="262" text-anchor="end">持有現金流</text>
+    <text x="17" y="168" text-anchor="end">退場與接手</text>
+    <text x="41" y="59" text-anchor="end">開發商與交付</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 6.3</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 5.7</span>
+      </div></div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">稀缺性與地段護城河</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">7.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Pulau Tikus／Gurney 內陸側錨定 <strong>8.0</strong>（檳城尺規頂點）起跳。三層稽核：土地層 <strong>✗</strong>——本案深居 Pulau Tikus 核心區（近傳統市場與 Burmah Road 商圈），與同批 Codrington 卡引用的同一份查證一致：2024 年末至 2026 年中 Pulau Tikus 至少 15 筆土地成交、地價四年由 RM 800-900 psf 漲至 RM 1,400 psf、Jalan Kelawai 已有 26 層／50 戶新案在規劃階段——土地供給並非鎖死，而是價格已墊高但持續有成交。產品層 <strong>✗</strong>——本案 1,787-2,228 sqft 的大坪數 freehold 套房，屬同走廊已被證明可複製的產品型態（Setia V Residences 卡已明確引用 Moulmein Rise 本身作為「同一 Gurney 走廊已有類似坪數量級、類似成交 psf 的大戶型高層並存」的例證），不構成獨立於土地層之外的稀缺，且本案自身十年成交走勢疲弱（見區塊 6A），也未提供產品層溢價佐證。法規層 <strong>✗</strong>——本區在 George Town UNESCO 核心／緩衝區之外，本案自身已獲准 27 層高樓，證明區域無實質高度上限；RSNPP 2040 正朝鬆綁方向修訂（R5 常設檢查已執行，見下方數據列）。調整：<strong>可複製性高 −0.5</strong>（同微觀地段存在大量已在市場上待售的土地與規劃中新案，理由與 Codrington 卡一致）。淨值 8.0−0.5=<strong>7.5</strong>。<strong>Turf Club 破口第三次獨立判定</strong>：本案座標約 5.42935°N,100.31234°E（penang-traveltips.com 逐點標定），Penang Turf Club 座標約 5.41364°N,100.29631°E，估算直線距離約 <strong>2.5 公里</strong>——介於 Codrington 卡（對街、直接威脅、扣 0.5）與 Setia V 卡（約 2.9 公里、不扣）之間，但更接近後者：既非「對面」，Turf Club 分區亦為內陸商業用途（Priority Development Zone 1），與本案現有的濱街高層住宅產品不同池。本卡判定 Turf Club <strong>不構成本案的獨立額外扣分依據</strong>——上述 −0.5 完全由 Pulau Tikus 一般性土地活躍市場證據支撐，與 Turf Club 距離無關，避免對同一件事重複計分。</p>
+        <p class="dim-data">本案座標 5.42935, 100.31234（penang-traveltips.com，「Moulmein Rise」逐點標定）· Penang Turf Club 座標 5.41364, 100.29631（同批卡片沿用）；估算直線距離約 2.5km · Pulau Tikus 地價 RM 1,400 psf（The Edge 2026-04／05，2022 年為 RM 800-900 psf）；2024 年末-2026 年中至少 15 筆土地成交；Jalan Kelawai 26 層／50 戶新案規劃中 · Setia V Residences 卡已引用本案作為「產品層可複製」的例證 · 本案本身於 2012-2013 年推案期曾遭 Pulau Tikus 傳統市場周邊居民反對，指其以「商業發展」名義規避較嚴格的住宅規劃審查（Penang Property Talk 社群報導，未查得正式行政或司法裁定結果）· R5 常設檢查：RSNPP 2040 尚未憲報，目標 2026 Q3；本案為平地城區，不受坡限影響</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與可達性</span><span class="dim-weight">12% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">8.3</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">北岸一線（Gurney／Pulau Tikus／Tanjung Tokong）Tier 8 起跳 8.0：本案位於 Jalan Moulmein，緊鄰 Pulau Tikus 傳統市場（Pasar Awam Pulau Tikus）與 Burmah Road 商圈，日常機能步行可達，3km 內多家國際級私院（Adventist、Gleneagles Penang、Loh Guan Lye、Island Hospital），車程約 10-15 分鐘到 Komtar。調整：市場與 Burmah Road 一帶連續商業街區步行可達 +0.3；Jalan Moulmein 連接 Jalan Pasar 與 Jalan Yeoh Guan Seok、並與 Lengkok Moulmein 形成丁字路口，多重聯外動線 +0.2；Pulau Tikus 內陸尖峰時段仍須繞經 Tun Dr Lim Chong Eu 一帶樽頸前往喬治市其餘地區 −0.2。淨值 8.0+0.3+0.2−0.2=8.3（調整合計 +0.3，未超 ±1.0 上限），與同 district 的 Codrington 卡（8.3）持平，符合「同 district 交通 ±1.0」的跨建案校準規則。LRT 依規則不計本維度（Pulau Tikus 全無站，見增值維度）。</p>
+        <p class="dim-data">Jalan Moulmein，off Jalan Pasar，Pulau Tikus，緊鄰傳統市場（penang-traveltips.com） · Adventist Hospital／Gleneagles Penang 約 1.5-2km，Loh Guan Lye／Island Hospital 約 2-2.5km · Komtar 約 10-15 分鐘車程 · 全島無營運中都市軌道；渡輪不載汽車，不可當跨島通勤替代</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值動能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.7</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">島上住宅 strata 基線 <strong>6.0</strong>（NAPIC MHPI 島上 high-rise 2025P +3.1%、Q1 2026 +3.4%）。催化劑：Gurney Bay Phase 1 已於 2024-02 開放，Gurney／Pulau Tikus <strong>+0.3</strong>（本案距 Gurney Drive 海濱約 800m-1km，非直接面海，僅按 district 級距計分，未如 Setia V 卡般享有site-specific 加碼）。LRT Mutiara Line <strong>0 分</strong>——Pulau Tikus 沿線無站。Bayan Lepas E&amp;E、機場擴建、Batu Kawan、Silicon Island、MM2H 聚居段皆非本案區段，不計分。減分：Timur Laut 為島上供給最重的 district（完工未售 973 套、在建未售 1,618 套）→ 島上大量 condo 供給段 <strong>−0.3</strong>；同地段前瞻供給（20 個月 15 筆土地成交、Jalan Kelawai 已有具名 26 層／50 戶提案，尚未推案）<strong>−0.3</strong>（與 Codrington 卡一致的書面理由與幅度）。淨值 6.0+0.3−0.3−0.3=<strong>5.7</strong>，與 Codrington 卡（同 district、同結構性因子）完全一致。<strong>本卡新增的定性強證據</strong>：本案自身近十年 Brickz 成交走勢（見區塊 6A）顯示，即使地價持續上漲，既有 strata 存量的實際轉手價格並未隨之等比例增值，甚至出現名目下滑——這比 Codrington 卡「地價漲但二手 condo 僅小漲」的既有定性觀察更進一步，提供了同走廊內第二筆、且時間跨度更長（近十年 vs 兩年）的獨立實證，共同指向同一個結論：地價重估尚未穩定傳導至島上既有 strata 存量的轉手價格。本框架仍依錨表級距評分，不因此下修 d4 數值，但這是對整個框架「島上住宅 strata 基準 +3.0%」假設的重要校準訊號（詳見區塊 6A 獨立揭露段）。</p>
+        <p class="dim-data">NAPIC MHPI 島上 high-rise 指數 228.5，2025P +3.1%，Q1 2026 +3.4% · LRT Mutiara Line 全線進度 8.99%（2026-06），Pulau Tikus 無站 · Timur Laut：完工未售 973 套／在建未售 1,618 套（NAPIC） · Gurney Bay Phase 1 2024-02 開放（district 級距計分，非本案直接前線）· 本案自身 Brickz 十年實證見區塊 6A，與 Codrington 卡「地價四年 +60%、二手 condo 兩年僅 +5%」屬同方向、獨立第二筆證據</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">進場估值紀律</span><span class="dim-weight">13% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>錨點優先序第一階：同建案 Brickz 成交</strong>——本案自身 Brickz 記錄 4 筆（2025-04-15~2025-11-05），中位 PSF <strong>RM 1,136</strong>，成交總價範圍 RM 1,850,000-2,770,900。⚠️ <strong>與 ANCHORS 錨表衝突須人工裁決</strong>：站上鎖定錨表列本案為同走廊可比之一並標示 <strong>RM 1,242 psf</strong>，本卡依協議「優先用同建案 Brickz 成交」重新查證，實測中位為 RM 1,136 psf，兩者相差約 <strong>8.5%</strong>——以本卡查證結果為準，建議錨表下次版本更新時校準。代表戶（Type C，3+1 房，1,787 sqft，現時掛牌 RM 2,255,000）implied PSF ≈<strong>RM 1,262</strong>，較自身 Brickz 成交中位<strong>溢價約 11.1%</strong>，落「+10%~+20% 偏高，需 catalyst 撐」帶，基線 <strong>5.0</strong>。交叉核對同走廊其他驗證錨點（Setia V 1,258、Gurney Paragon 1,188、Cantonment 1,191、Straits 1,288，中位約 1,215）：代表戶較此中位溢價僅約 4.5%，落「+0%~+10%」帶——兩種錨點方向不一致，本卡依協議優先順序採用同建案自身 Brickz 錨（信心度中低：樣本僅 4 筆，但資料新鮮，2025-11 為最近一筆），並如實揭露此分歧：本案現時掛牌價格似乎仍錨定在較高的走廊行情，但本案自身近十年的實際成交走勢已經走弱（見區塊 6A），兩者之間的落差本身就是一項值得留意的訊號。同業侵略性不調整——本案為 2016 年完工逾九年的二手市場產品，非同期新 launch 定價競爭，無同期在售新案可直接比較侵略性。</p>
+        <p class="dim-data">自身 Brickz 中位 RM 1,136 psf（4 筆，2025-04-15~2025-11-05，總價範圍 RM 1,850,000-2,770,900） · 目前掛牌 PSF 區間約 RM 962-1,539（iProperty／PropertyGuru 聚合，2026-08） · 代表戶：Type C，3+1 房，1,787 sqft ＠ RM 2,255,000 ≈RM 1,262 psf（propertysummarist.com，3 戶可售） · 同走廊比較錨：Setia V 1,258／Gurney Paragon 1,188／Cantonment 1,191／Straits 1,288（中位約 1,215） · 2012 年開價：RM 1,300 psf（headline），Suite A-D「起價」implied RM 1,460-1,480 psf（Penang Property Talk，2012-01） · 信心度：中低（同建案真實 Brickz 成交，樣本僅 4 筆，低於框架 5 筆的深度可信門檻，惟時間新鮮）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">12% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">3.8</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">1.8</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">毛租金收益率估算約 <strong>3.9%</strong>（代表戶 Type C，1,787 sqft ＠ RM 2,255,000，估算月租 RM 7,300）。租金估算依據：Belleview 官方 2021 年行銷資料列 Type B（1,851 sqft）月租 RM 7,500、Type A（2,228 sqft）月租 RM 8,500；本案代表戶 Type C（1,787 sqft，全案最小戶型）依坪數比例估算約 RM 7,240-7,300，另有現時掛牌區間 RM 4,500-8,500（依戶型與裝修狀況差異甚大）作為交叉參考。年化毛收益 RM 87,600 ÷ RM 2,255,000 ≈3.89%，落「3.5-4.0%」級距 → 基線 <strong>3.8</strong>。調整項：<strong>R4 觸發</strong>——島上住宅地契，MBPP 禁止短租，不計任何短租收入、不給 Airbnb 加分；非 E&amp;E 企業租約區、非 USM 分租區、非 Batu Ferringhi、非商業地契（住宅套房本身），其餘加減項皆不適用。管理費 RM 0.35 psf（含沉沒基金，Belleview 官方 2021 年資料，2026 年實際數字可能因物價調整已上修，僅供揭露不計分），低於本框架暫用的 KL RM 0.6 psf 基準。淨值 3.8，clamp [2.5, 8.0] 內。外國人 ＝ 本國人 −2.0 ＝ <strong>1.8</strong>，clamp [1.5, 8.0] 內，未觸發 clamp 碰撞例外，本外差距固定為 2.0。</p>
+        <p class="dim-data">毛收益率約 3.89%（<strong>估算</strong>，入口網站與開發商行銷資料推算，非機構數據——NAPIC／Penang Institute／The Edge／Knight Frank 均不發布檳城租金或收益率） · 租賃對照：Type B（1,851sqft）RM 7,500／月、Type A（2,228sqft）RM 8,500／月（Belleview 官方 2021）；現時掛牌區間 RM 4,500-8,500（多來源聚合） · 管理費 RM 0.35 psf（含沉沒基金，2021 年資料）→ 代表戶約 RM 625／月 · R4：島上住宅地契，MBPP 禁止短租，任何短租收益宣稱不可執行</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場與接手人群</span><span class="dim-weight">18% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">6.4</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">4.2</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>第一步（本國人）：</strong>Freehold 住宅地契 condo baseline 7.0。quantum RM 2,255,000 落 RM 180-280 萬帶（P95-P99）<strong>−0.5</strong>；R2（Timur Laut 在建未售 1,618 套 &gt;1,200）強制 <strong>−0.3</strong>；年換手率：Brickz 4 筆／84 戶（2025-04-15~2025-11-05，約 6.7 個月窗口），annualize 約 7.16 筆／年 ÷84 戶 ≈<strong>8.5%</strong>，落「≥4% 非常活躍」帶 <strong>+0.5</strong>（資料新鮮，最近一筆 2025-11，不套用 Setia V 卡的過時折扣邏輯，但誠實揭露此為小樣本外推，任一筆交易增減都會使年化率大幅波動）；Brickz 深度 4 筆 &lt;5 筆帶 <strong>−0.3</strong>（樣本量本身不足以獨立佐證高流動性，此扣分正是對上述換手率外推風險的框架內建修正，兩者並非互相取代，而是刻意疊加反映同一份薄樣本的雙重性質）；掛牌率因入口網站矛盾不採計（見缺口 #6，本卡固定採 iProperty 口徑，32／84≈38.1%，僅供揭露）；同棟 ≤650 sqft 小戶占比 0%（全案最小戶型 1,787 sqft 起）0；住宅地契無下一手融資摩擦 0。淨值 7.0−0.5−0.3+0.5−0.3=<strong>6.4</strong>，clamp [1.5,8.5] 內。<strong>第二步（外國人）：</strong>起點為 clamp 後的本國人分 6.4，減 2.0，再加總外籍調整：①門檻資格達標（RM 2,255,000 &gt; 島上 strata RM 100 萬門檻）0；②③④門檻邊界／徵費甜蜜帶／徵費斷崖三項互斥，quantum RM 225.5 萬<strong>遠超</strong>三項所定義的 RM 100-200 萬區間，皆不適用，記 0（與 Gurney Paragon 卡高 quantum 案例的處理一致）；⑤<strong>MM2H 合規 +0.3</strong>（RM 225.5 萬同時超過州門檻 RM 50 萬與聯邦白金門檻 RM 200 萬＋10 年持有，資格明確達標，且是本站至今唯一同時清過聯邦白金門檻的案例之一）；⑥外籍轉售活躍段：Pulau Tikus 內陸非屬框架列名走廊（Tanjung Tokong／STP／Tanjung Bungah／Gurney／Batu Ferringhi），且本案無買家籍貫等個案佐證，依規則不給，記 0（與 Codrington 卡一致）；⑬外資銀行 70% LTV 須逐案佐證，本案查無，不給；⑧<strong>州同意摩擦 −0.3</strong>（必套用）；⑨<strong>三年禁售期 −0.2</strong>（必套用）。Σ ＝ +0.3−0.3−0.2=−0.2。淨值 6.4−2.0−0.2=<strong>4.2</strong>。R1（Timur Laut 完工未售 973 套 &gt;800）觸發外籍 cap 6.0，本案 4.2 已低於封頂，cap 不生效但已檢查；R3 不適用（非島上 landed）。不變量：4.2 ≤ 6.4−1.0=5.4 ✓（差距 2.2）。</p>
+        <p class="dim-data">quantum RM 2,255,000 → 家庭月收門檻 ≈RM 24,805（總價 × 1.1%：90% LTV、4.3%、30 年、負擔 40%）→ 介於檳城 P95（RM 19,855）與 P99（RM 30,529）之間，約 P97 · 年換手率 proxy：4 筆／84 戶（2025-04-15~2025-11-05，約 6.7 個月窗口年化 ≈8.5%），資料新鮮但樣本極薄 · Brickz 深度 4 筆／84 戶（&lt;5 筆門檻） · 掛牌率：iProperty 32／84≈38.1%（2026-08 快照，僅供揭露不計分，見缺口 #6） · Timur Laut：完工未售 973 套（R1）／在建未售 1,618 套（R2，已計入）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">7.2</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">本案開發商 <strong>Belleview Group</strong（實際發展主體為集團子公司 <strong>Hero Leader Sdn Bhd</strong>），本框架鎖定的檳城開發商表內起跳 <strong>7.2 ⚠️</strong>——此為 <strong>Belleview 在本框架的首次實測案例</strong>。起跳已完整折入：GEM Residences（Seberang Perai／Prai）由原訂 2022 年底延至 2025-01 完工（−0.3）；集團建過 1st Avenue Mall、Aman Central 等地標商場但<strong>已售出</strong>，現無持有權益→無利益對齊加分。<strong>本卡專屬查證</strong>：Belleview（含前身 Belleview Bina Sdn Bhd）成立於 1984-11-24，集團自述「逾 30 個獲獎住宅開發、逾 10,000 戶交付、逾 50 個已完工項目」，2024 年商業資料庫（EMIS／CTOS）估算數字顯示營收與總資產均有成長，惟此為第三方商業資料庫彙整，非本卡直接審閱之查核財報，僅供參考。<strong>本案自身交付紀錄</strong>：2012 年開盤、2016 年第二季完工，屬正常 4 年工期，未查得延遲爭議報導。<strong>本案自身十年管理紀錄查證（本卡新增）</strong>：查無本案 JMB／MC 層級的糾紛、漏水求償或管理費爭議報導，惟依【認識論註記】——Belleview 與 Runnymede／Airmas／Asas Dunia 同屬「查無糾紛」極可能等於「幾乎查無報導」而非「紀錄乾淨」，馬國交屋遲延與瑕疵求償多走房屋仲裁庭不公開，本案分數維持 <strong>provisional</strong> 標記。<strong>分割式管理風險檢查（本案為住宅塔＋2 層裙樓商鋪的混合開發，結構上與 Gurney Paragon 案有相似之處，依協議須檢查）</strong>：本案為單一 27 層塔樓＋2 層裙樓商鋪的一棟式建築（非如 Gurney Paragon 般擁有獨立品牌命名的商場與獨立業權架構），查無本案設有兩個獨立管理機構（分別管理商業與住宅）的證據，亦查無本案涉入類似 2026-02-03 上訴庭「分割式 strata 管理自始無效」判決的訴訟或後續影響報導。依協議不比照 Gurney Paragon 卡套用扣分，僅列為揭露項——若買家欲深入查證，應向 JMB／MC 索取現行管理框架文件確認是單一帳戶或分割帳戶。<strong>MBI／龐氏交易對手曝險</strong>：查無 Belleview 或 Hero Leader 與 MBI 相關案件的關聯報導（已交叉查證 2025-03 MBI 檳城地產大搜捕相關報導，未見 Belleview／Hero Leader 具名）。山坡地曝險、填海規劃權限風險、George Town 遺產合規、量產型去化、創辦人集中等項目皆不適用（本案為平地城區單一精品塔樓，非填海地，區域在 UNESCO 核心／緩衝區外）。淨值維持 <strong>7.2</strong>，無額外檳城特有扣分項適用，惟 provisional 標記維持。</p>
+        <p class="dim-data">Belleview Group（Belleview Bina Sdn Bhd 及子公司 Hero Leader Sdn Bhd）1984-11-24 成立，總部 3rd Floor Burmah House, 405 Jalan Burmah, Penang · 集團自述逾 30 個獲獎住宅開發、逾 10,000 戶、逾 50 個已完工項目、逾 15 個零售商業開發 · GEM Residences（Prai／Seberang Perai，4 塔 978 戶）原訂 2022 年底完工，延至 2025-01（已折入 7.2 基準） · 1st Avenue Mall、Aman Central 為集團建案但已出售，無持有權益 · 本案 2012 年推案、2016 Q2 完工（部分次要來源標示 2017-2018，口徑不一，已列入資料缺口） · 查無本案 JMB／MC 糾紛或漏水求償報導；查無本案涉入分割式管理訴訟；查無 Belleview／Hero Leader 與 2025 年 MBI 檳城地產大搜捕案的關聯報導（provisional：查無報導≠查無問題）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+
+  <div class="assump-box">
+    <strong>⚠️ 估值與買價透明度說明：</strong>估值維度以「同建案真實成交」為優先錨——本案錨點：<strong>自身 Brickz 成交中位 RM 1,136 psf</strong>（4 筆，2025-04-15~2025-11-05，<strong>信心度：中低</strong>，樣本量低於框架 5 筆的深度可信門檻但資料新鮮）；本案代表 PSF：<strong>約 RM 1,262</strong>（Type C，1,787 sqft ＠ 現時掛牌 RM 2,255,000）；<strong>溢價約 11.1%</strong>。⚠️ 本卡查證的自身 Brickz 中位（RM 1,136）與站上 ANCHORS 錨表原列的「Moulmein Rise 1,242」有約 8.5% 落差，本卡依協議以查證結果為準，建議錨表下次更新時校準。<strong>檳城無 MLS，無官方 days-on-market 或掛牌-成交折讓數據</strong>，實際成交價可能因議價空間而低於掛牌價，買家仍應向代理或開發商書面確認最終實際淨價。<strong>單位坪數口徑差異</strong>：Type C／D 兩戶型在不同來源間有 1,787 sqft 與 1,819 sqft 互換標示的情形，本卡採較多來源交叉印證的版本（Type C=1,787 sqft、Type D=1,819 sqft），差異已列入資料缺口誠實揭露；完工年份亦有 2016／2017／2018 三種說法並存。
+  </div>
+
+  <p class="section-sub">代表戶型：依本框架規則，<strong>島上精華區（Pulau Tikus／Gurney／Tanjung Tokong／STP／George Town）採 3 房、1,000-1,300 sqft</strong>——但本案產品 menu 最小標準戶型為 <strong>Type C，3+1 房，1,787 sqft</strong>（全案僅四種戶型，1,787-2,228 sqft，無 1,300 sqft 以下產品），本卡採用最接近規則區間的最小可查證戶型 Type C 作代表戶，並在此明確揭露偏離規則之處——與 Setia V／Gurney Paragon 兩卡相同情形，Pulau Tikus／Gurney corridor 內多個精品案的產品定位本身即偏向大坪數家庭買家，而非規則預設的中型 3 房精品戶。</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">Belleview Group（Hero Leader Sdn Bhd）<span class="kv-src">私有企業，1984 年成立，北馬區域中大型開發商</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">永久地契（Freehold）· 住宅套房＋2 層裙樓商鋪<span class="kv-src">島上住宅地契套房單元 MBPP 禁止短租（R4）；裙樓商鋪為另一使用類別，不影響住宅單元地契性質</span></td></tr>
+          <tr><td class="kv-label">規模</td><td class="kv-val">84 戶，單塔 27 層，每層 4 戶，2 層裙樓商鋪<span class="kv-src">Belleview 官方／StarProperty／iProperty 一致</span></td></tr>
+          <tr><td class="kv-label">單位坪數</td><td class="kv-val">1,787-2,228 sqft（3+1 至 4+1 房），四種戶型<span class="kv-src">Type C 1,787sqft／Type D 1,819sqft／Type B 1,851sqft／Type A 2,228sqft；C／D 坪數口徑在不同來源間曾互換標示</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">Type C，3+1 房，1,787 sqft ＠ RM 2,255,000<span class="kv-src">≈RM 1,262 psf；propertysummarist.com，3 戶可售，2026-08 快照</span></td></tr>
+          <tr><td class="kv-label">完工時間</td><td class="kv-val">2016 年第二季（多數來源）<span class="kv-src">少數次要來源標示 2017 或 2018 年，口徑不一，已列入資料缺口；2012 年開盤，屬正常約 4 年工期</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與供給</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">微觀位置</td><td class="kv-val">9 Jalan Moulmein，off Jalan Pasar，Lengkok Moulmein，Pulau Tikus<span class="kv-src">緊鄰 Pulau Tikus 傳統市場（Pasar Awam）</span></td></tr>
+          <tr><td class="kv-label">Turf Club 破口判定</td><td class="kv-val">不構成獨立扣分依據（估算距離約 2.5km；產品層級不同池）<span class="kv-src">d1 的 −0.5 完全由 Pulau Tikus 一般性土地活躍市場證據支撐，與 Turf Club 無關，避免重複計分</span></td></tr>
+          <tr><td class="kv-label">十年實證增值率</td><td class="kv-val">估算約 −1.0%至−2.0%／年（名目，2012-2025）<span class="kv-src">見區塊 6A 詳細計算；明顯低於框架 +3.0% 基準，重要校準訊號</span></td></tr>
+          <tr><td class="kv-label">開發歷史爭議</td><td class="kv-val">2012-2013 年推案期曾遭在地社群反對<span class="kv-src">Penang Property Talk 社群報導：指開發商以「商業發展」名義規避較嚴格的住宅規劃審查；未查得正式行政或司法裁定結果，僅列為歷史脈絡揭露</span></td></tr>
+          <tr><td class="kv-label">LRT Mutiara</td><td class="kv-val">無站（全線進度 8.99%，2026-06）<span class="kv-src">Pulau Tikus 全區無站</span></td></tr>
+          <tr><td class="kv-label">管理費</td><td class="kv-val">RM 0.35 psf（含沉沒基金，2021 年資料）<span class="kv-src">代表戶約 RM 625／月；2026 年實際數字未經本卡直接核實，可能已上修</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 外國人</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-4% 階梯制<br><small style="color:var(--muted)">RM 74,000</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 180,000</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">10%（90% LTV）<br><small style="color:var(--muted)">RM 226,000</small></td><td class="num">35%（估 65% LTV）<br><small style="color:var(--muted)">RM 789,000</small></td><td><small>BNM／銀行政策，外籍 LTV 未經檳城個案驗證</small></td></tr>
+      <tr><td>最低購買價門檻</td><td class="num">無</td><td class="num">島 strata RM 100 萬<br><small style="color:var(--muted)">本案 RM 225.5 萬，達標</small></td><td><small>PTG 指引 2024-08-01</small></td></tr>
+      <tr><td>徵費（consent to transfer）</td><td class="num">—</td><td class="num">3%（一般常態段）<br><small style="color:var(--muted)">RM 67,650；quantum 已超 RM 150-200 萬斷崖區間，回到標準 3%</small></td><td><small>州地政局 §5.1</small></td></tr>
+      <tr><td>州同意費</td><td class="num">—</td><td class="num">RM 10,000／地契</td><td><small>州地政局</small></td></tr>
+      <tr><td>三年禁售期</td><td class="num">無</td><td class="num">有（SPA 起算三年）</td><td><small>州地政局 §3.2(c)</small></td></tr>
+      <tr><td>州同意審批</td><td class="num">無</td><td class="num">需要，實務加 2-4 個月</td><td><small>州地政局</small></td></tr>
+      <tr><td>毛租金收益率</td><td class="num">~3.89%（估算）</td><td class="num">~3.89%（同，估算）</td><td><small>開發商行銷資料＋入口網站推算</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">10-24% 累進（估約 15%）</td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>MM2H 合規</td><td class="num">—</td><td class="num">✓（RM 225.5 萬 &gt; 州 RM 50 萬、聯邦白金門檻 RM 200 萬＋10 年持有）</td><td><small>PTG 指引 §2.2；⚠️ visitpenang.com 說法相反，建議律師確認</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 4: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>Type C，3+1 房，1,787 sqft，RM 2,255,000</strong>（≈RM 1,262 psf）為基礎——本國人 vs 外國人 10 年總成本與淨損益對照。</p>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>1,787 sqft ＠ RM 2,255,000</strong> · 10 年持有 · 30 年房貸 · 毛租金收益率 Y1 約 3.89%（<strong>估算</strong>，RM 7,300／月），租金年漲幅 2%，空置率 10% · 房貸利率——本國人 4.3%、外國人 4.8%（估算 +0.5pp 溢價，外籍檳城融資可得性未經個案驗證）· 本國人 LTV 90%、外國人 LTV 65%（估算）· 管理費 RM 0.35／sqft／月（含沉沒基金，2021 年資料，可能已上修） · 門牌稅＋地稅估約 RM 3,000／年 · 租金所得稅按<strong>毛租金</strong>簡化計算：本國人估 15%、外國人 30%（非居民一口價）——實務上利息與費用可抵扣，此為保守示意 · 房價漲幅情境：0%／+3%（島上住宅 strata 基準年增速錨點，框架標準情境）／+5.5%（樂觀情境）· 仲介費 3% · 所有金額四捨五入至千位。<strong>⚠️ 見區塊 6A：本案自身近十年實證年化增值率為負，明顯低於本表 +3% 基準情境所假設的水準——+3% 為框架跨卡一致的標準假設，非本案專屬預測，讀者應對比 6A 的實證數字自行判斷合理性。</strong>
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>226,000</td><td>789,000</td><td>+563,000</td></tr>
+      <tr><td>印花稅（MOT）</td><td>74,000</td><td>180,000</td><td>+106,000</td></tr>
+      <tr><td>律師費＋貸款費＋貸款印花</td><td>36,000</td><td>30,000</td><td>−6,000</td></tr>
+      <tr><td>州同意費＋徵費（3%，一般常態段）</td><td>—</td><td>78,000</td><td>+78,000</td></tr>
+      <tr class="sum"><td>買入小計</td><td>336,000</td><td>1,077,000</td><td>+741,000</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額（本息）</td><td>1,205,000</td><td>923,000</td><td>−282,000</td></tr>
+      <tr><td>管理費＋沉沒基金</td><td>75,000</td><td>75,000</td><td>0</td></tr>
+      <tr><td>門牌稅＋地稅</td><td>30,000</td><td>30,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>1,310,000</td><td>1,028,000</td><td>−282,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，Y1 約 RM 7,300／月，2%／年成長，已計 10% 空置）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>863,000</td><td>863,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>129,000</td><td>259,000</td><td>+130,000</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>734,000</td><td>604,000</td><td>−130,000</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，+3% 情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>退場價（+3%／年）</td><td>3,031,000</td><td>3,031,000</td><td>0</td></tr>
+      <tr><td>仲介費（3%）</td><td>91,000</td><td>91,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>78,000</td><td>+78,000</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>1,614,000</td><td>1,185,000</td><td>−429,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0%／年（下行情境）</td><td>−339,000</td><td>−499,000</td><td>−160,000</td></tr>
+      <tr class="scenario"><td>+3%／年（框架標準情境，非本案實證預測）</td><td>+414,000</td><td>+176,000</td><td>−238,000</td></tr>
+      <tr class="scenario"><td>+5.5%／年（樂觀情境）</td><td>+1,210,000</td><td>+890,000</td><td>−320,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在框架標準情境（+3%／年）下，外國人 10 年淨損益比本國人少約 <strong>RM 238,000（相當於房價的 10.6%）</strong>。<strong>打平全部現金成本</strong>（不含機會成本）所需房價年漲幅：本國人約 <strong>1.5%／年</strong>、外國人約 <strong>2.3%／年</strong>——單看這兩個數字，門檻低於 +3% 基準，帳面上似有安全邊際；但區塊 6A 的十年實證顯示，本案自身近十年名目年化增值率約 <strong>−1.0%至−2.0%</strong>，<strong>已經低於這兩個打平門檻</strong>——換言之，達成打平不是「延續現有趨勢」，而是需要一次真正的趨勢反轉。權益 IRR 估算（base case，+3% 框架情境）：本國人約 <strong>3.8%</strong>、外國人約 <strong>1.1%</strong>；樂觀情境（+5.5%）本國人約 8.8%、外國人約 4.8%；下行情境（0%）兩者 IRR 皆為負（本國人約 −4.5%、外國人約 −4.0%）。<strong>本表最大的限制</strong>：+3% 基準情境是全站跨卡一致的框架標準假設，並非針對本案的獨立預測——本案是全站少見有能力用「自身近十年真實數據」檢驗此假設的案例，而檢驗結果並不支持它，讀者應以區塊 6A 的實證數字作為更保守的參照。
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ 退場現實</span>
+  <h2 class="section-title">退場現實檢驗</h2>
+  <p class="section-sub">三件套：稀缺性稽核（供給側能不能複製）＋接手人群金字塔（10 年後誰接手、買不買得起）＋二手市場硬證據（換手率／掛牌率／折讓）。全部採 2026-08 實查數據。</p>
+
+  <div class="hardrule-strip">
+    <span class="hardrule-tag">R1 觸發：Timur Laut 完工未售 973 套 &gt;800 → 外籍退場 cap 6.0（本案原始值 4.2 未受影響）</span>
+    <span class="hardrule-tag">R2 觸發：Timur Laut 在建未售 1,618 套 &gt;1,200 → 本國人退場 −0.3（已計入）</span>
+    <span class="hardrule-tag">R4 觸發：島上住宅地契，MBPP 禁止短租，不計短租收入</span>
+    <span class="hardrule-tag">R5 常設檢查已執行：RSNPP 2040 未憲報，目標 2026 Q3，本案為平地城區不受坡限</span>
+    <span class="hardrule-tag">quantum 已遠超徵費甜蜜帶／斷崖區間，回到一般 3% 徵費常態，②③④三項互斥調整皆不適用</span>
+  </div>
+
+  <div class="sub-eyebrow">5A · 稀缺性稽核（供給側三層）</div>
+  <div class="scarcity-box">
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">土地層</span>
+      <span class="scarcity-txt">本案深居 Pulau Tikus 核心區，2024 年末至 2026 年中同微觀地段至少 15 筆土地成交、地價四年由 RM 800-900 psf 漲至 RM 1,400 psf、Jalan Kelawai 已有 26 層／50 戶新案在規劃階段——土地供給並未鎖死，僅是價格已墊高但持續有真實成交（與 Codrington 卡引用的同一份查證）。</span>
+    </div>
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">產品層</span>
+      <span class="scarcity-txt">本案 1,787-2,228 sqft 大坪數 freehold 套房，是同走廊已被證明可複製的產品型態——Setia V Residences 卡明確引用本案自身作為「同一 Gurney 走廊已有類似坪數量級、類似成交 psf 的大戶型高層並存」的例證，且本案自身十年成交走勢疲弱（見 6A），未提供任何產品層溢價佐證。</span>
+    </div>
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">法規層</span>
+      <span class="scarcity-txt">本區在 George Town UNESCO 核心／緩衝區之外，本案自身已獲准 27 層高樓，證明無實質高度上限；RSNPP 2040 正朝鬆綁方向修訂（目標 2026 Q3 憲報）。R5 常設檢查已執行（本案為平地城區，不受坡限影響）。</span>
+    </div>
+    <div class="scarcity-verdict"><strong>有效稀缺判定：</strong>三層稽核全數為 ✗，本案的稀缺性論點單純依附於 district 級的地段錨（Pulau Tikus／Gurney 內陸側），而非任何本案自身的不可複製性。更關鍵的是，本案提供了全站首見的十年期實證檢驗機會：即使地段本身持續稀缺（同區地價四年 +60%），本案自身既有存量的實際轉手價格（近十年名目年化約 −1.0%至−2.0%）並未反映這份稀缺——這與 Gurney 那塊開內陸價卻無人接手的 26 英畝填海地（有效稀缺檢驗 R6）指向同一個更深層的教訓：<strong>地段稀缺與資產本身能否把稀缺兌現成價格增值，是兩件不同的事</strong>。<strong>Turf Club 第三次獨立判定：</strong>估算距離約 2.5 公里、分區內陸商業，與本案濱街高層住宅產品不同池，不構成獨立額外扣分依據；本卡的 d1 扣分完全由上述一般性土地活躍市場證據支撐。</div>
+  </div>
+
+  <div class="sub-eyebrow">5B · 接手人群金字塔</div>
+  <div class="quantum-line">
+    <strong>Quantum test：</strong>代表戶 Type C，1,787 sqft ＠ <strong>RM 2,255,000</strong> → 下一手家庭月收門檻約 <strong>RM 24,805</strong>（總價 × 1.1%：90% LTV、4.3%、30 年、負擔 40%）→ 介於檳城家庭月收 <strong>P95</strong>（RM 19,855）與 <strong>P99</strong>（RM 30,529）之間，約 <strong>P97</strong>，即前 3% 家庭。本地承接池明顯窄於同區的 Codrington 卡（quantum RM 142 萬，約 P88），接近 Gurney Paragon 卡（quantum RM 321 萬，遠超 P99）的窄眾程度，但尚未如後者般完全排除頂層 upgrader。
+  </div>
+  <table class="pyramid-table">
+    <thead><tr><th style="width:22%">接手者</th><th style="width:10%">判定</th><th>判定依據</th></tr></thead>
+    <tbody>
+      <tr><td class="seg">本地首購</td><td><span class="pyramid-v no">✗</span></td><td>RM 225.5 萬遠超 RM 60 萬首購帶（P43／58% 家庭可負擔）；月收門檻 RM 24,805 已超過 P95。</td></tr>
+      <tr><td class="seg">本地 upgrader</td><td><span class="pyramid-v no">✗</span></td><td>已超出 RM 60-120 萬 upgrader 主力帶與 RM 120-180 萬上層 upgrader 帶；月收門檻約 P97，僅極少數本地家庭可及。</td></tr>
+      <tr><td class="seg">外州／海外馬來西亞人</td><td><span class="pyramid-v mid">△</span></td><td>Pulau Tikus 是檳城最具知名度的傳統精華地址之一，對吉隆坡／新加坡工作的馬國人與返鄉僑居者理論上具吸引力；但本案無買家籍貫或代理訪談等個案證據，依規則不預設 ✓。</td></tr>
+      <tr><td class="seg">本地投資客</td><td><span class="pyramid-v mid">△</span></td><td>毛收益率約 3.89%（估算），扣管理費與稅後 carry 偏薄；R4 禁短租使收益上限被法規鎖死；且代表戶較自身成交錨溢價約 11%，進場紀律偏弱，吸引力受限。</td></tr>
+      <tr><td class="seg">外籍自住（MM2H）</td><td><span class="pyramid-v mid">△</span></td><td>RM 225.5 萬同時超過州門檻 RM 50 萬與聯邦白金門檻 RM 200 萬＋10 年持有，資格明確達標且餘裕充足；但全國有效 MM2H 簽證僅 5,972 張，本案無外籍成交個案佐證，依規則預設 △。</td></tr>
+      <tr><td class="seg">外籍投資／機構</td><td><span class="pyramid-v no">✗</span></td><td>3.89% 毛收益扣 30% 非居民租金稅、10% 永久 RPGT、3% 徵費、三年禁售期後，carry 明顯為負；84 戶精品單塔亦無機構級規模。</td></tr>
+    </tbody>
+  </table>
+  <div class="dep-tag dep-mid"><strong>外籍依賴度：低至中（估算，無精確數據）。</strong>不觸發 R3（非 landed），故不強制記 ≈0；本案 quantum 逼近 P97，本地池已相當窄，外州／海外馬國人與 MM2H 買家的相對重要性可能高於一般案例，但因缺乏個案佐證，本卡不因此上調評分。政策風險：若 MM2H 聯邦級距再上修或州徵費規則調整，本案外籍摩擦可能進一步增加，退場池可能持續收窄。</div>
+
+  <div class="sub-eyebrow">5C · 二手市場證據</div>
+  <div class="evid-strip">
+    <div class="evid-card"><div class="evid-num">~8.5%</div><div class="evid-lbl">年換手率<br>（proxy，樣本極薄）</div><div class="evid-tag hot">非常活躍帶，+0.5</div></div>
+    <div class="evid-card"><div class="evid-num">38.1%</div><div class="evid-lbl">掛牌率<br>（iProperty 口徑）</div><div class="evid-tag cold">不採計，見缺口#6</div></div>
+    <div class="evid-card"><div class="evid-num">N/A</div><div class="evid-lbl">掛牌-成交折讓</div><div class="evid-tag cold">無公開數據</div></div>
+    <div class="evid-card"><div class="evid-num">4 筆</div><div class="evid-lbl">Brickz 深度<br>（2025-04~2025-11）</div><div class="evid-tag cold">&lt;5 筆帶，−0.3</div></div>
+  </div>
+  <p style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.7">Timur Laut district：完工未售 973 套（R1 觸發，外籍退場 cap 6.0）／在建未售 1,618 套（R2 觸發，本國人退場 −0.3，已計入上方分項）——本案所在 district 是檳城島上供給最重的一區。本案自身 Brickz 4 筆成交集中於 2025-04-15~2025-11-05，資料新鮮（最近一筆距卡片日期僅約 9 個月），但樣本量本身低於框架 5 筆的深度可信門檻，annualize 後的 8.5% 換手率對單筆交易增減高度敏感——本卡誠實揭露這項張力：換手率與 Brickz 深度兩項指標分別給出「非常活躍」與「樣本不足」的相反訊號，框架設計上刻意讓兩者同時計分而非互相取代，淨效果為 +0.2，一定程度上自我修正了小樣本外推的風險。掛牌率因 PropertyGuru（35 戶）與 iProperty（32 戶）互相矛盾（馬國無 MLS，一位屋主常委任 5-15 位代理且入口網站不去重），依已知資料缺口 #6 規則不採計為量化分數，本卡固定採用 iProperty 口徑供揭露參考。</p>
+
+  <div class="exit-summary">10 年後最可能的接手者是<strong>外州／海外馬來西亞人與少數本地頂層 upgrader 的組合，外籍 MM2H 為補充</strong>——quantum 已逼近 P97，本地一般池已被排除。<strong>本案與同批多數卡片最關鍵的差異在於：它是全站唯一能用近十年真實成交數據直接檢驗地段稀缺論點的案例</strong>——結果顯示，即使地段本身持續稀缺（Pulau Tikus 地價四年 +60%），本案存量的實際轉手價格並未同步反映，代表戶現時開價反而較自身成交錨溢價約 11%。這意味著 10 年後的下一手買家，很可能是在一個「賣方仍錨定較高走廊行情、但自身成交史已經走弱」的市場中議價——退場速度與折讓幅度值得比同批多數案子更審慎評估。若本案未來的 Brickz 成交能夠開始收斂至走廊中位（約 RM 1,190-1,215 psf）甚至回升，會是對本案「十年疲弱是暫時性折價而非結構性失能」論點的關鍵驗證。</div>
+</section>
+
+<!-- BLOCK 6A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>Moulmein Rise 位於 Jalan Moulmein，off Jalan Pasar，緊鄰 Pulau Tikus 傳統市場與 Burmah Road 商圈，由檳城私有開發商 Belleview Group（旗下 Hero Leader Sdn Bhd）開發——單塔 27 層、每層 4 戶，共 84 戶，並附 2 層裙樓商鋪，坐落於永久地契土地。2012 年推案時，本案曾因規模與定位遭在地社群反對，指開發商以「商業發展」名義規避較嚴格的住宅規劃審查，最終仍於 2016 年第二季完工，屬正常約 4 年工期，未查得建築本身的延遲爭議。單位坪數從 Type C 的 1,787 sqft（3+1 房，全案最小戶型）到 Type A 的 2,228 sqft（4+1 房），產品定位偏向大坪數家庭買家——這也是本卡代表戶型選擇必須偏離規則預設 3 房 1,000-1,300 sqft 區間的原因，與同批 Setia V、Gurney Paragon 兩卡情形相同。</p>
+
+    <p>稀缺性方面，本案錨定檳城尺規頂點的 Pulau Tikus／Gurney 內陸側（8.0），三層稽核卻全數為 ✗：土地層——同微觀地段 20 個月內至少 15 筆土地成交、地價四年由 RM 800-900 psf 漲至 RM 1,400 psf、Jalan Kelawai 已有 26 層新案規劃中，供給並未鎖死；產品層——本案自身大坪數 freehold 套房已被同批 Setia V 卡明確引用為「同走廊可複製產品」的例證；法規層——本區在 UNESCO 核心／緩衝區之外，本案自身 27 層的存在已證明無實質高度上限。本卡因此扣 0.5，落至 7.5，理由與同 district 的 Codrington 卡一致。至於本案與 Penang Turf Club 的關係，本卡做了第三次獨立座標判定：估算直線距離約 2.5 公里，介於 Codrington 卡（對街、扣分）與 Setia V 卡（2.9 公里、不扣）之間但更接近後者，且 Turf Club 分區為內陸商業用途，與本案濱街高層住宅產品不同池——本卡判定 Turf Club 不構成獨立額外扣分依據，上述 −0.5 完全來自 Pulau Tikus 一般性土地活躍市場的證據，避免對同一件事重複計分。</p>
+
+    <div class="histbox">
+      <strong>⚠️ 十年實證分析（本卡的核心方法論價值）</strong>：站上其餘十二張檳城卡幾乎都是新推案或近年完工案，資本增值維度只能靠新品定價外推島上住宅 strata 基準 +3.0%／年（NAPIC MHPI）。Moulmein Rise 2016 年完工，是全站首張擁有近十年真實成交軌跡的案例，得以直接檢驗這個基準假設。查證結果：2012 年推案開價 headline 為 <strong>RM 1,300 psf</strong>，各戶型「起價」implied psf 約 RM 1,460-1,480（Suite A RM 3.252 百萬／2,228sqft、Suite B RM 2.739 百萬／1,851sqft、Suite C RM 2.644 百萬／1,787sqft、Suite D RM 2.692 百萬／1,819sqft）；2025 年 4 月至 11 月的 4 筆自身 Brickz 真實成交，中位僅 <strong>RM 1,136 psf</strong>。以 2012 年開價 RM 1,300 psf 為基準，13 年名目年化約 <strong>−1.0%／年</strong>；若以「起價」implied 均值約 RM 1,470 為基準，13 年名目年化約 <strong>−2.0%／年</strong>；即使以較保守的完工年份（2016 年）為基準，9 年名目年化仍約 <strong>−1.5%／年</strong>。三種基準口徑得出的結論一致：<strong>Moulmein Rise 過去 9-13 年的實際名目增值率為負，明顯低於框架「島上住宅 strata 基準 +3.0%／年」的預設</strong>——這不是誤差範圍內的偏離，而是方向相反。與同批同齡的 Setia V Residences（2016-2017 完工，自身 Brickz 中位 RM 1,258 psf，6 筆，2023-06~2024-04）相比，Moulmein Rise 明顯落後——這暗示差距可能更多來自本案自身的地段與產品特性（內陸、無鎖定景觀廊道），而非整個「2016 年完工世代」的普遍現象。同時，即使按今日走弱後的 RM 1,136 psf，仍是 Pulau Tikus 全區非 landed 成交中位（RM 357 psf，Codrington 卡查證）的約 3.2 倍——這說明「新精品 vs 舊區存量」的地段溢價本身仍然存在，只是 Moulmein Rise 自身並未隨時間把這份溢價進一步兌現成價格增值，甚至出現名目倒退。本卡的 d4 分數仍嚴格依錨表級距評分（5.7，與 Codrington 卡結構一致，不因單一建案的疲弱而自行下修），但這段實證應被視為對整個框架「島上住宅 strata +3.0%」基準的重要校準訊號：至少對於缺乏獨特景觀鎖定（如 Setia V 的 Gurney Bay 公園）的內陸精品塔樓而言，十年期的真實兌現率可能顯著低於框架的預設中位數，樣本雖僅 n=1，但已是全站目前唯一的完整十年對照組，建議後續卡片持續累積同類實證以校準此基準的可信區間。
+    </div>
+
+    <p>定價層面，本案自身 Brickz 記錄提供了站上少見的「同建案真實成交錨」，惟樣本量（4 筆）低於框架 5 筆的深度可信門檻。中位 RM 1,136 psf 與站上鎖定的 ANCHORS 錨表原列「Moulmein Rise 1,242 psf」有約 8.5% 落差——本卡依協議以本次查證結果為準，並誠實揭露此衝突，建議下次錨表版本更新時校準。本案代表戶（Type C，1,787 sqft，現時掛牌 RM 2,255,000）implied PSF 約 RM 1,262，較自身 Brickz 成交中位溢價約 11.1%，落「偏高，需 catalyst 撐」帶；若改用同走廊其他驗證錨點（Setia V 1,258、Gurney Paragon 1,188、Cantonment 1,191、Straits 1,288，中位約 1,215）為對照，溢價僅約 4.5%，落「合理新品溢價」帶——兩種錨點方向不一致，本卡依協議優先採用同建案自身錨。這個分歧本身即是一項訊號：現時掛牌價格似乎仍錨定在較高的走廊行情，但本案自身近十年的實際成交走勢已經走弱，市場定價尚未完全消化這個落差。</p>
+
+    <p>租金市場延續檳城全州的誠實揭露基調——沒有任何機構發布數據，所有數字皆為開發商行銷資料與入口網站掛牌價推算。Belleview 官方 2021 年資料顯示 Type B（1,851sqft）月租 RM 7,500、Type A（2,228sqft）月租 RM 8,500，本案代表戶 Type C（1,787sqft）依坪數比例估算約 RM 7,300／月，毛收益率約 3.89%，落 3.5-4.0% 級距。作為<strong>島上住宅地契</strong>物業，MBPP 明文禁止短租——任何短租收益宣傳皆不可執行。退場層面，quantum RM 225.5 萬對應的家庭月收門檻約 RM 24,805，介於檳城 P95 與 P99 之間，本地一般承接池已被完全排除；外籍側 quantum 已遠超徵費甜蜜帶與斷崖區間，回到一般 3% 常態，MM2H 資格明確達標且是本站唯一同時清過聯邦白金門檻的案例之一。開發商層面，Belleview 是本框架的<strong>首次實測</strong>，起跳 7.2 已折入 GEM Residences 延遲與 1st Avenue／Aman Central 售出無利益對齊；本卡對本案自身十年管理紀錄的專屬查證未發現 JMB／MC 糾紛或漏水求償報導，亦查無分割式管理訴訟，惟依框架的認識論註記，此仍屬 provisional 標記，非「紀錄乾淨」的確認。</p>
+
+    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+      <strong style="color:var(--navy);font-weight:700">10 年情境基準</strong>：假設 2026-08 進場、2036-08 退場（IRR 為權益 IRR，含頭期款、每年淨流出與退場淨額，估算）：
+      <ul style="margin:8px 0 0 18px;padding:0">
+        <li><strong>合理情境</strong>（base case，框架標準 +3%／年，非本案實證預測）：本國人 10 年累計淨報酬約 <strong>RM 41.4 萬</strong>，權益 IRR 約 <strong>3.8%</strong>；外國人約 <strong>RM 17.6 萬</strong>，權益 IRR 約 <strong>1.1%</strong>。</li>
+        <li><strong>樂觀情境</strong>（bull case，+5.5%／年）：本國人約 RM 121.0 萬，IRR 約 8.8%；外國人約 RM 89.0 萬，IRR 約 4.8%。</li>
+        <li><strong>下行情境</strong>（bear case，房價停滯 0%／年）：本國人 10 年淨損約 RM 33.9 萬、外國人約 RM 49.9 萬，兩者 IRR 皆為負。</li>
+        <li><strong>十年實證外推（非框架情境，獨立揭露）</strong>：若本案未來十年延續自身過去 9-13 年的實際名目走勢（約 −1.0%至−2.0%／年），本國人與外國人皆將顯著虧損，虧損幅度介於上方下行情境與更深之間——這不是框架的官方情境，而是提醒讀者：「合理情境」的 +3.0% 是全站標準假設，本案是唯一有真實數據可以質疑這個假設是否適用於自身的案例。</li>
+      </ul>
+      <div style="margin-top:10px">10 年退場流動性：檳城無 days-on-market 公開數據；本案自身 Brickz 記錄雖有 4 筆真實近期成交，但樣本量本身偏薄，annualize 後的換手率對單筆交易高度敏感。核心風險不在地段品牌本身（Pulau Tikus 地段稀缺性仍有真實成交支撐），而在本案自身的價格兌現能力——十年實證已經顯示地段稀缺與資產增值並非自動劃等號，這是 10 年持有周期中最值得持續追蹤的變數。</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 6B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>檳城尺規頂點地段錨（7.5），緊鄰 Pulau Tikus 傳統市場與 Burmah Road 商圈，交通機能全站頂級（8.3）</li>
+        <li>全站首張擁有近十年真實成交軌跡的建案——2016 年完工，2025 年仍有 4 筆自身 Brickz 真實成交可查證，資料新鮮度優於多數依賴推案定價外推的新案</li>
+        <li>MM2H 資格餘裕充足，quantum RM 225.5 萬同時清過州門檻與聯邦白金門檻，是本站唯一同時清過聯邦最高級距的案例之一</li>
+        <li>Belleview 為北馬區域深耕逾 40 年的私有開發商，本案自身查無 JMB／MC 糾紛或漏水求償報導（惟屬 provisional，非確認清白）</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li>【十年實證疲弱】本案自身近十年名目年化增值率估算約 −1.0%至−2.0%，明顯低於框架 +3.0% 基準——這是對整個框架 d4 基準的重要校準訊號，建議謹慎評估「合理情境」的適用性</li>
+        <li>【估值溢價】代表戶現時開價較自身 Brickz 成交錨溢價約 11%，落「偏高，需 catalyst 撐」帶；與走廊中位比較溢價僅約 4.5%，兩種錨點分歧本身即是訊號</li>
+        <li>【quantum 偏高】家庭月收門檻約 RM 24,805，介於檳城 P95-P99 之間，本地首購與一般 upgrader 承接池已被排除</li>
+        <li>【R1／R2／R4】所在 Timur Laut 是島上供給最重的 district：完工未售 973 套觸發外籍退場封頂、在建未售 1,618 套觸發本國人退場扣分；島上住宅地契 MBPP 禁止短租</li>
+        <li>建議確認：完工年份（2016／2017／2018 三種說法並存）、Type C／D 坪數口徑（1,787 vs 1,819 sqft 互換標示）、2026 年實際管理費水準（本卡採用 2021 年資料）——以上皆應向開發商或代理書面核實</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 6C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（7.5）、交通與可達性（8.3）、開發商與管理移交（7.2）<br>
+      <strong>可妥協</strong>：持有現金流（自住不涉及租金）、進場估值紀律（自住者未必近期出售，短期溢價影響較小）<br>
+      <strong>本案 fit</strong>：本案四種持有目的中 fit 度最高的一類。緊鄰 Pulau Tikus 傳統市場與 Burmah Road 商圈的日常機能密度是全島數一數二的，且已有近十年實際入住與管理歷史可查證，不像多數新推案只能憑行銷資料判斷。需留意的是本案坪數偏大（最小標準戶 1,787 sqft 起），總價門檻本身即排除多數本地首購族，且十年來的實際轉手價格走勢平淡，長期居住者若同時期待資本增值，應調整期望。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（3.8 本／1.8 外）、退場與接手人群（6.4 本／4.2 外）<br>
+      <strong>可妥協</strong>：資本增值動能（若以現金流為主要訴求）<br>
+      <strong>本案 fit</strong>：fit 度中低。毛收益率約 3.89%（估算）扣管理費與稅後 carry 偏薄，且<strong>R4 明文禁止短租</strong>——本案為島上住宅地契，MBPP 禁令下任何短租收益規劃不可執行。代表戶較自身成交錨溢價約 11%，進場紀律偏弱，加上十年實證顯示資本增值未如預期兌現，若以出租＋增值雙重訴求評估，本案的說服力弱於同批多數卡片。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：交通與可達性、稀缺性、開發商與管理移交<br>
+      <strong>可妥協</strong>：持有現金流、資本增值動能<br>
+      <strong>本案 fit</strong>：中高。對 MM2H 持有人而言資格餘裕充足（RM 225.5 萬同時超過州門檻與聯邦白金門檻），Pulau Tikus 的傳統精華地址知名度對第二居所買家具吸引力，且已有近十年管理歷史可供查證（不像新案只能憑承諾判斷）；但須留意三年禁售期與州同意審批（實務加 2-4 個月）大幅降低短期進出彈性，且十年實證顯示資本增值不如框架基準假設，第二居所若同時期待增值，應下修預期。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（20%）、退場與接手人群（下一代脫手）<br>
+      <strong>可妥協</strong>：短期 yield、短期估值波動<br>
+      <strong>本案 fit</strong>：中。永久地契＋檳城尺規頂點地段是長期論點的基礎，且本案已提供近十年實證資料，是本框架內少見「有真實長期數據可供世代傳承決策參考」而非仍停留在推測階段的案例——這本身就是一種價值，即使數據本身不算亮眼。但正因為這份實證顯示過去十年並未兌現地段稀缺為價格增值，20 年期的持有者應把「本案自身近十年 Brickz 成交能否收斂或回升至走廊中位」視為必須持續追蹤的關鍵指標，而非假設地段稀缺會自動轉化為世代間的資本利得。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 7: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    belleview.com.my／moulmein-rise.com.my — Moulmein Rise 官方項目頁（開發商官方：84 戶、27 層×4 戶／層、2 層裙樓商鋪、freehold、facilities、管理費約 RM 0.35 psf，2021 年資料） · penang-traveltips.com — Jalan Moulmein 座標標定（Moulmein Rise 座標 5.42935, 100.31234） · Penang Property Talk（2012-01）— Moulmein Rise 推案報導（開價 RM 1,300 psf headline，Suite A-D「起價」RM 2.644-3.252 百萬，社群對規劃審查路徑的反對意見） · StarProperty.my — Moulmein Rise Property Review（開發商 Hero Leader、84 戶、完工年份 2016 Q2） · brickz.my — Moulmein Rise 非有地住宅成交（4 筆，2025-04-15~2025-11-05，中位 RM 1,136 psf，總價範圍 RM 1,850,000-2,770,900） · propertysummarist.com — Moulmein Rise 現時掛牌（Type A/B/C 各 2-3 戶可售，2026-08 快照） · iProperty Malaysia／PropertyGuru Malaysia — 建案頁面（現時掛牌 32／35 戶，PSF 區間約 RM 962-1,539；掛牌數口徑本卡固定採用 iProperty） · EdgeProp.my — Moulmein Rise 掛售與租賃 listing（7 筆租賃掛牌，租金區間 RM 4,500-8,500） · 本案官方 2021 年行銷資料（moulmein-rise.com.my via 快取）— Type A/B/C/D 租金 RM 7,500-8,500／月、市場開價約 RM 1,200 psf、毛收益估算 3.5-4% · The Edge Malaysia（2026-04／05）— Pulau Tikus 地價 RM 1,400 psf、2022 年 RM 800-900 psf、2024 年末-2026 年中至少 15 筆土地成交、Jalan Kelawai 26 層新案規劃中（與 Codrington 卡共用查證） · Setia V Residences 卡（本站，2026-08-07）— 引用 Moulmein Rise 作為同走廊產品層可複製例證，並提供交叉比較 PSF 1,242（原錨表值） · Codrington Residence 卡（本站）— Pulau Tikus 全區非 landed 成交中位 RM 357 psf（交叉引用） · Penang Turf Club 官網／Waze／Apple Maps — 座標 5.41364, 100.29631（估算本案至 Turf Club 直線距離約 2.5km） · EMIS／CTOS Credit — Belleview Sdn Bhd 公司登記與商業資料庫估算（1984-11-24 成立，2024 年營收與總資產估算成長，非本卡直接審閱之查核財報） · The Edge Malaysia／KLSE Screener（2025）— MBI 檳城地產大搜捕相關報導（未見 Belleview／Hero Leader 具名） · gem-residences.com／Penang Property Talk — GEM Residences（Belleview 集團案，Prai／Seberang Perai，4 塔 978 戶，原訂 2022 年底延至 2025-01 完工） · NAPIC JPPH（Timur Laut 完工未售 973 套、在建未售 1,618 套；MHPI 島上住宅 strata 2025P +3.1%、Q1 2026 +3.4%） · MRT Corp／The Star（LRT Mutiara Line 進度 8.99%，2026-06） · DOSM 家庭收入調查（檳城 P50 RM 7,327／P75 RM 11,142／P90 RM 16,186／P95 RM 19,855／P99 RM 30,529） · PTG（檳城州地政局）外籍購屋門檻與徵費指引 2024-08-01 版 · LHDN Finance Act（印花稅、RPGT、非居民租金稅率） · 本檔所依循之 penang-property-scorecard-v1 skill 鎖定錨表（ANCHORS.md，2026-08-06 版本；本卡對其中「Moulmein Rise 1,242 psf」一項提出查證衝突，建議下次版本校準）。
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-08-07。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限。</strong>本卡分數採檳城內部尺規校準，與其他市場（KL／曼谷等）評分卡分數不可直接比較。<strong>資料缺口誠實揭露</strong>：（1）毛租金收益率為開發商行銷資料與入口網站掛牌價推算，非 NAPIC／Penang Institute／The Edge／Knight Frank 等機構數據，一律估算；（2）檳城無 MLS，無公開 days-on-market 或掛牌-成交折讓數據；（3）掛牌率因入口網站數字互相矛盾（iProperty 32 戶 vs PropertyGuru 35 戶），本卡不採計為量化分數；（4）本案完工年份（2016 Q2 為多數來源，惟部分次要來源標示 2017 或 2018）與 Type C／D 坪數口徑（1,787 vs 1,819 sqft 互換標示）在不同來源間存在落差，讀者應向開發商書面核實；（5）自身 Brickz 成交錨（RM 1,136 psf）樣本僅 4 筆，低於框架 5 筆的深度可信門檻，與站上 ANCHORS 錨表原列「Moulmein Rise 1,242 psf」有約 8.5% 落差，本卡以本次查證結果為準並誠實揭露此衝突；（6）外籍融資 LTV／利率為估算，未經檳城個案驗證；（7）Turf Club 與本案的直線距離（約 2.5km）為根據公開座標的估算值，非實地測量；（8）2012 年推案期社群反對事件僅見於社群論壇報導，未查得正式行政或司法裁定結果，本卡僅列為歷史脈絡揭露，不作為評分依據；（9）本案是否設有分割式管理結構（住宅與商業裙樓分開管理）未經直接查證，僅依合理推論（單一建築、非獨立品牌商場）判斷不比照 Gurney Paragon 卡扣分；（10）Belleview／Hero Leader 財務體質引用自第三方商業資料庫（EMIS／CTOS）估算，非本卡直接審閱之查核財報；（11）十年實證增值率計算基於 2012 年開價與 2025 年僅 4 筆 Brickz 成交，樣本量有限，n=1 建案不足以外推整個市場，但已是全站目前唯一的完整十年對照組；（12）MM2H 州級門檻與聯邦級距的互動，PTG 一手文件與 visitpenang.com 說法相反，建議律師確認。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+  </div>
+</div>
+
+</div>
+</body>
+</html>
