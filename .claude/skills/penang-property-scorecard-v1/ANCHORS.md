@@ -17,6 +17,7 @@
 | **R4** | **島上住宅地契** → d3 **不得計入任何短租收入**，不得給 Airbnb 加分；6A/6B 須揭露 MBPP 禁令；賣方文宣若有短租收益宣稱，卡上標為「不可執行」 |
 | **R5** | 山坡地限制（76m／25°）最多給法規層 **✓**，不給 ✓✓；山坡相鄰 district **不得**給「三層全✓ +0.5」。搜尋協議須常設檢查「RSNPP 2040 是否已憲報、是否保留 76m 規則」 |
 | **R6** | 填海地**不因「島嶼稀缺」自動加分**。須有成交溢價佐證方可加分，否則以假稀缺論；填海前線一律計相鄰 district 的**土地層 ✗** |
+| **R7** | **退場價低於該產品的外籍一般門檻 → 一般外籍買家法定不可購買 → d6_外 依三段式階梯設 cap，外籍依賴度記 ≈0，卡上須明示**（2026-08-07 新增，見 §6.10） |
 
 ---
 
@@ -180,6 +181,15 @@
 
 **已確認在檳城無住宅開發、不入表**：Gamuda Land（僅 LRT 一標與 Silicon Island 填海）、UOA、IOI Properties（僅一間酒店）
 
+**⚠️ Sunway 條目的法人範圍限定（2026-08-07 查證）**：上表「Sunway（檳城）6.3」的三筆扣分事件經逐一溯源，**全部不屬於本島外的 Sunway Bintang Sdn Bhd**（公司編號 199201007071）——Paya Terubong 與 Sungai Ara 聯邦法院案在 **Sunway City (Penang) Sdn Bhd** 名下，Batu Kawan PDC JV 終止在 **Umech Land Sdn Bhd** 名下。**該 6.3 僅適用島上與 Batu Kawan 的 Sunway 案，不得套用於 Sunway Bintang 的本島外案**（Sunway Wellesley 卡採同集團／獨立事業線結論，給 7.0 並標 provisional，因未調 SSM primary filing）。
+
+**⚠️ 表外開發商累計清單（每次遇到請補這裡，一律走通用起跳＋檳城特有扣分並標 provisional）**：
+- **YTL Land & Development**（Shorefront Residences，Bursa 主板）——2026-08-06 發現，暫以 Bursa T1 通用 7.5 外推，**Shorefront 的 d5 至今仍為暫定**
+- **Kerjaya Prospek Property（KPPROP，Bursa）**——2026-08-07 Straits Residences 發現。該卡給 6.8＝通用 7.0 ＋0.3（Tee 家族 2021 取得 E&O 控股，與錨表 §5 E&O 條目的家族關聯一致）−0.3（D/E ~127.9%，顯著高於表列同儕）−0.2（確認約一年交屋延遲）
+- **GL Semesta Corporation／M Summit Group**（Scots Pavilion）——2026-08-07 發現，通用起跳 7.0
+- **Taman Sri Bunga Sdn Bhd**（BSG Waterstone 的開發 SPV）——2026-08-07 查證**與 2017 山崩案 Granito @ Permai 為同一法人實體**，非僅同集團；BSG 母公司條目的 −0.5 已含該事故，個案層級另見該卡
+- **Azuria Condominium 的開發商**——2026-08-07 多方查證仍**完全查無**（StarProperty／iProperty／PropSocial／JMB 登記皆無），該卡採最保守的 6.0 並標「無評價依據」，與「查無糾紛」性質不同
+
 **⚠️ 表列缺口（2026-08-06 首批產卡時發現）**：**YTL Land & Development**（Shorefront Residences 開發商，Bursa 主板）未列入本表——首輪 d5 研究未涵蓋。該案暫以「Bursa T1 通用起跳 7.5」外推並標 provisional。**下次錨表更新時應補做 YTL Land 的檳城交付紀錄與母公司財務查證**，在此之前所有引用 YTL Land 的卡片 d5 分數皆為暫定。此類「表外開發商」一律走 SKILL.md §5 的通用起跳＋檳城特有扣分項，並在卡上標 provisional。
 
 **檳城特有調整（KL 無對應）**：
@@ -322,6 +332,23 @@ MM2H 註（原文）：「hanya untuk kediaman sahaja dan terhad 2 unit sahaja�
   d6_外 ≤ d6_本 − 1.0
 ```
 
+### 6.10 R7：退場價低於外籍門檻的三段式階梯（2026-08-07 新增）
+
+**R3 的實質不是「島上 landed」這個產品規則，而是「一般外籍買家法定不可購買」這個價格事實。**R3 只是該事實在島上 landed（門檻 RM300 萬）的一個特例。一般化如下——**先照 §6.7 逐項算出 d6_外 原始值，再套 cap**：
+
+| 退場價 vs 門檻（門檻見 §6.1） | 實際可購買人群 | d6_外 |
+|:---|:---|:---:|
+| ≥ 一般外籍門檻（島 strata RM100 萬／島 landed RM300 萬／本島外 strata RM50 萬／本島外 landed RM100 萬） | 全部外籍 | 照常規公式，無 cap |
+| < 一般門檻但 **≥ MM2H RM50 萬** | **MM2H ＋ PR** | **cap 4.0** |
+| < MM2H 但 **≥ PR RM25 萬** | **僅 PR** | **cap 3.0** |
+| < PR RM25 萬 | 無 | **cap 1.5**（理論值，檳城實務極罕見） |
+
+**配套要求**：①外籍依賴度記 **≈0**（不得寫「低」或具體百分比）；②**5B 接手人群金字塔第 5 列「外籍自住（MM2H）」須依 MM2H 門檻獨立判定**——退場價 ≥RM50 萬時該列是 **✓ 而非 ✗**（2026-08-07 Scots Pavilion 與 Sunway Wellesley 兩張卡初稿皆誤標，因為把「低於 RM100 萬」當成單一事實，看不到 MM2H 與 PR 各自的門檻把買家池切成三段）；③**§6.7 #5 MM2H 合規 +0.3 在中間段仍應給**（人群確實存在，只是池子小）；④若退場價落在門檻附近，卡上須寫出敏感度（例如掛牌區間上緣跨過門檻則 cap 不適用）。
+
+**已適用案例**：Botanica.CT（島上 landed，RM300 萬門檻搆不到）4.0｜Scots Pavilion（RM78 萬 < 島 strata RM100 萬，≥MM2H）4.0｜Sunway Wellesley（RM72 萬 < 本島外 landed RM100 萬，≥MM2H）4.0｜Azuria（RM30 萬 < MM2H RM50 萬）3.0。
+
+---
+
 **為何是「clamp 後的本國人分」而非 baseline**：所有本國人調整（quantum／換手／掛牌／深度／戶型／融資）描述的是**資產本身的流動性**，外籍賣方同樣面對——而且更嚴峻，因為其買家池是本地池的嚴格子集。用地契 baseline 起算等於把流動性資訊整個丟掉，方向剛好相反，且會產生「重罰後的本國人分低於未罰的外籍分」的荒謬結果。
 
 **d3 套用同一修正**，並記載 clamp 碰撞例外（見 §3）。
@@ -335,7 +362,29 @@ MM2H 註（原文）：「hanya untuk kediaman sahaja dan terhad 2 unit sahaja�
 **Andaman／STP2 已有真實新品階梯（HIGH confidence 新品錨，LOW confidence 二手）**：
 The Lume ~1,280 psf（2024-08 推出）｜Maris ~1,100+（2024-12 推出，2026-06 售出 75%）｜Senna & Fera landed 800–900｜Arica ~845（完售，2027 完工）｜The Meg（1,020 戶，13 個月完售）
 
-**其他已驗證成交錨**：Gurney Paragon 1,188｜Straits 1,288｜Quayside 1,056｜Shorefront 1,319｜Setia V 1,258（2026-08-07 同建案 Brickz 實查，6 筆／2023-06~2024-04；原鎖定值 1,193 已汰換）｜Cantonment 1,191｜Moulmein Rise 1,242｜The Tamarind 850｜Muze 875｜Queens Q2 1,243｜Light Collection II 1,041｜Middleton 1,035
+**其他已驗證成交錨**（⚠️ **district 標籤為 2026-08-07 補上——原表只列數字，導致產卡時把 Moulmein Rise／Cantonment 誤當 George Town buffer 案、Middleton 誤當 George Town 案。引用前先看 district**）：
+
+| 建案 | psf | District | 備註 |
+|:---|---:|:---|:---|
+| Shorefront | 1,319 | George Town 世遺核心 | |
+| Straits Residences | **1,226** | Tanjung Tokong／STP1 | 2026-08-07 同建案 Brickz 48 個月中位實查；**原鎖定值 1,288 已汰換（−4.8%）** |
+| Setia V | **1,258** | Gurney | 2026-08-07 實查 6 筆／2023-06~2024-04；**原鎖定值 1,193 已汰換（+5.4%）** |
+| Queens Q2 | 1,243 | Bayan Lepas | |
+| Moulmein Rise | **1,136** | **Pulau Tikus**（非 George Town） | 2026-08-07 實查 4 筆／2025-04~11；**原鎖定值 1,242 已汰換（−8.5%）** |
+| Cantonment | 1,191 | **Pulau Tikus**（非 George Town） | |
+| Gurney Paragon | 1,188 | Gurney | |
+| Quayside | 1,056 | Tanjung Tokong／STP1 | 2026-08-07 交叉核對同建案 Brickz 1,035（26 筆／2024），一致 |
+| Light Collection II | 1,041 | Gelugor | |
+| Middleton | 1,035 | **Gelugor（Minden Heights）**，非 George Town | |
+| Muze | 1,053 | Bayan Baru | 2026-08-07 實查 51 筆 |
+| The Tamarind | 850 | Tanjung Tokong／STP | |
+| **Scots Pavilion** | **788** | George Town 一般（Jalan Scotland） | 2026-08-07 新增，12 筆／2021-2026 |
+| **Vertu Resort** | **499** | Batu Kawan | 2026-08-07 新增，15 筆／2025-03~2026-02 |
+| **Azuria** | **400** | Tanjung Bungah | 2026-08-07 新增，14 筆／近 12 個月，**全站最深** |
+
+**錨點漂移（2026-08-07 三案實查）**：Setia V +5.4%、Straits −4.8%、Moulmein Rise −8.5% ——**方向不一致，非系統性偏誤**，故不整批重新校準；處理原則是**逐案以同建案實查值取代鎖定值，並在卡上標明落差**。
+
+**⚠️ 十年實證（n=1，供參考，不改 d4 基準）**：Moulmein Rise 2012 年推案開價約 RM1,300 psf、2016 完工，2025 年自身成交中位 RM1,136 psf ＝ **十三年名目年化約 −1.0% 至 −2.0%**（自完工起算約 −1.5%／年），與 §4「島上住宅 strata ≈+3.0%／年」的基準**方向相反**。同期 Setia V 為 1,258，故判斷屬個案（內陸、無鎖定景觀催化劑）而非 2016 年這一代的共通現象。**後續成屋卡應持續累積此類實測，樣本足夠前不得據此調整 §4 基準。**
 **州級**：島上 high-rise 成交 RM723–731 psf、本島外 RM444–447 psf
 
 **⚠️ 土地 psf 三種口徑差 2.5 倍**：Andaman 土地 Affin 基準 **RM391 psf**／KWAP 2017 進場 **~RM530**／Edge 報價 **RM1,000**。**引用檳城土地 psf 一律須註明用哪一種口徑，絕不可單獨引用 RM1,000。**
