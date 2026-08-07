@@ -24,10 +24,11 @@ var MARKETS = [
       { href: '/global/visa', en: 'Residency by Property', zh: '買房換居留' }
     ] },
   { k: 'my', flag: '🇲🇾', en: 'Malaysia', zh: '馬來西亞', home: '/kl-check',
-    prefixes: ['/my/', '/kl/', '/kl-check', '/penang/', '/penang-check'],
+    prefixes: ['/my/', '/kl/', '/kl-check', '/penang/', '/penang-check', '/jb/', '/jb-check'],
     links: [
       { href: '/kl-check',          en: 'KL Scorecards',     zh: 'KL 評分卡',     also: ['/kl/'] },
       { href: '/penang-check',      en: 'Penang Scorecards', zh: '檳城評分卡',    also: ['/penang/'] },
+      { href: '/jb-check',          en: 'JB Scorecards',     zh: '新山評分卡',    also: ['/jb/'] },
       { href: '/my/report',         en: 'Market Report',     zh: '市場報告' },
       { href: '/my/macro',          en: 'Macro',             zh: '總經' },
       { href: '/my/airbnb',         en: 'Airbnb / STRA',     zh: '短租' },

@@ -17,8 +17,10 @@
 
 ## 現行站點結構（2026-07 改版：市場優先，品牌＝Property Check）
 ```
-/                    ← 首頁：市場入口 hub（🇲🇾 馬來西亞 / 🇹🇭 泰國 卡片＋最新）
+/                    ← 首頁：買房換居留 hub（居留制度篩選器＋六市場報告帶）。**不列評分卡**，KL／檳城／新山／泰國的 check 頁一律只從 nav 進入
 /kl-check            ← 馬來西亞：KL 建案評分卡總表
+/penang-check        ← 馬來西亞：檳城建案評分卡總表
+/jb-check            ← 馬來西亞：新山建案評分卡總表（Tier 帶為新山專屬，見下）
 /my/report.html      ← 馬來西亞：市場報告（餘屋/供需，七部）
 /my/macro.html       ← 馬來西亞：總經 × 房產（週期/結構/政治/總合模型）
 /my/airbnb.html      ← 馬來西亞：短租 / STRA
@@ -36,7 +38,9 @@
 /gr/report.html      ← 希臘：雅典住宅市場報告（七部、28 圖）
 /gr/macro.html       ← 希臘：總經 × 房產（四部＋結論篇、15 圖）
 /global/visa.html    ← 跨市場：買房換居留（44 套現行制度／24 個確認無途徑／6 套已關閉；資料 data/visa-property.json 內嵌於頁面）
-/kl/SC_*.html        ← 建案評分卡（en/zh 成對；用 kl-property-scorecard skill 產生）
+/kl/SC_*.html        ← 建案評分卡（en/zh 成對；用 kl-property-scorecard-v1 skill 產生）
+/penang/SC_*.html    ← 檳城評分卡（用 penang-property-scorecard-v1 產生）
+/jb/SC_*.html        ← 新山評分卡（用 jb-property-scorecard-v1 產生）
 /kl/viewing.html     ← 看房檢核工具
 /css/style.css       ← 基底樣式；/css/kl-theme.css ← 主題（navy-gold cream）
 /js/nav.js           ← 全站共用導覽列（唯一來源）
