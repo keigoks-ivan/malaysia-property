@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunny Ville — 檳城建案評分卡 | Property Check</title>
+<meta name="description" content="Sunny Ville（Jalan Batu Uban, Gelugor／Batu Uban）獨立評分卡。本國人 5.9 / 外國人 4.9。10 年持有專業投資人視角 · 7 維度框架 · 站上第一張直接檢定「中價位軌道走廊」假說的卡——距 LRT Batu Uban 站僅約 460 米，但 USM 學生租客結構、R7 外籍門檻與三層稽核全 ✗，讓假說未獲支持。">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ea; --bg-soft:#fbf8f1; --card:#ffffff; --text:#0c1521; --text-soft:#2a3a52; --muted:#6b7a92;
+  --border:#e5dfd0; --border-soft:#efe9da;
+  --navy:#0d2244; --navy-deep:#081832; --navy-mid:#173564; --navy-soft:#e8eef5;
+  --gold:#b8924a; --gold-deep:#8f6d2c; --gold-light:#d4b576; --gold-soft:#f3e5c3; --gold-bg:#fbf3df;
+  --gold-line:linear-gradient(90deg,transparent,#c9a96b 20%,#c9a96b 80%,transparent);
+  --t1:#15803d; --t1-bg:#dcfce7; --t1-bd:#86efac;
+  --t2:#1d4ed8; --t2-bg:#dbeafe; --t2-bd:#93c5fd;
+  --t3:#a16207; --t3-bg:#fef3c7; --t3-bd:#fcd34d;
+  --t4:#b8924a; --t4-bg:#fbf3df; --t4-bd:#d4b576;
+  --t5:#b91c1c; --t5-bg:#fee2e2; --t5-bd:#fca5a5;
+  --local:#0d2244; --foreign:#b8924a;
+  --pos-bg:#ecfdf5; --pos-border:#15803d; --pos-text:#14532d;
+  --warn-bg:#fbf3df; --warn-border:#b8924a; --warn-text:#713f12;
+  --shadow-sm:0 1px 3px rgba(13,34,68,.05),0 1px 2px rgba(13,34,68,.04);
+  --shadow-md:0 8px 24px rgba(13,34,68,.07),0 2px 6px rgba(13,34,68,.04);
+  --shadow-lg:0 20px 50px rgba(13,34,68,.12),0 6px 16px rgba(13,34,68,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:'Inter','Noto Sans TC',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(184,146,74,.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13,34,68,.04), transparent 60%);
+  background-attachment:fixed;
+}
+.serif{font-family:'Noto Serif TC','Playfair Display',serif}
+
+.nav{background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1040px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--gold-light);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2),0 2px 6px rgba(13,34,68,.18);letter-spacing:-.04em}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand{font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--navy)}
+.brand-by{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.back-link{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .15s}
+.back-link:hover{color:var(--gold-deep);background:var(--gold-bg)}
+.lang-link{font-size:11px;font-weight:600;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--text-soft);text-decoration:none;background:var(--bg-soft);letter-spacing:.04em;transition:all .15s}
+.lang-link:hover{color:var(--gold-deep);border-color:var(--gold);background:var(--gold-bg)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 56px}
+
+.hero-card{background:radial-gradient(ellipse 60% 80% at 100% 0%, rgba(184,146,74,.15), transparent 60%),linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, #112a52 100%);color:#f3ebd6;border:1px solid rgba(212,181,118,.25);border-radius:22px;padding:32px 36px 30px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);isolation:isolate}
+.hero-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px),repeating-linear-gradient(-45deg, rgba(212,181,118,.05) 0 1px, transparent 1px 18px);pointer-events:none;z-index:0}
+.hero-card > *{position:relative;z-index:1}
+.hero-ornament{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hero-ornament .line{flex:0 0 40px;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent)}
+.hero-ornament .diamond{width:6px;height:6px;background:var(--gold-light);transform:rotate(45deg);box-shadow:0 0 0 3px rgba(212,181,118,.15)}
+.hero-meta{display:flex;gap:10px;align-items:center;font-size:11px;color:#c9b896;letter-spacing:.16em;font-weight:600;margin-bottom:14px;flex-wrap:wrap}
+.hero-meta .sep{color:rgba(212,181,118,.4)}
+.proj-name{font-family:'Noto Serif TC','Playfair Display',serif;font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:6px;color:#f7eed3}
+.one-liner{font-size:14.5px;color:#c8d2e2;line-height:1.8;margin:16px 0 22px;max-width:740px}
+.dual-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.score-card{padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(212,181,118,.22);position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.score-card.local::before{background:linear-gradient(180deg,#7aa1d8,#3b6cb0)}
+.score-card.foreign::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.score-card.foreign{background:linear-gradient(135deg,rgba(212,181,118,.12),rgba(212,181,118,.04));border-color:rgba(212,181,118,.4)}
+.score-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-size:12px;color:#c9b896;font-weight:600;letter-spacing:.08em}
+.score-flag{font-size:14px;margin-right:4px}
+.score-row{display:flex;align-items:baseline;gap:10px}
+.score-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.local{color:#f7eed3}
+.score-num.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, #e9c98b 50%, var(--gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score-sfx{font-size:14px;color:#a9b6cb;font-weight:500}
+.tier{display:inline-block;font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid;margin-left:auto;letter-spacing:.08em}
+.tier-T1{background:var(--t1-bg);color:var(--t1);border-color:var(--t1-bd)}
+.tier-T2{background:var(--t2-bg);color:var(--t2);border-color:var(--t2-bd)}
+.tier-T3{background:var(--t3-bg);color:var(--t3);border-color:var(--t3-bd)}
+.tier-T4{background:linear-gradient(135deg,#fbf3df,#f3e5c3);color:var(--gold-deep);border-color:var(--gold-light)}
+.tier-T5{background:linear-gradient(135deg,#fee2e2,#fecaca);color:var(--t5);border-color:var(--t5-bd)}
+.score-note{font-size:12px;color:#a9b6cb;margin-top:8px;line-height:1.55}
+.ruler-note{font-size:10.5px;color:#93a2ba;margin-top:16px;padding-top:12px;border-top:1px solid rgba(212,181,118,.18);line-height:1.7}
+
+.section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:20px;box-shadow:var(--shadow-sm);position:relative}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;color:var(--gold-deep);margin-bottom:6px;display:block}
+.section-title{font-family:'Noto Serif TC','Playfair Display',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy);line-height:1.3}
+.section-title::after{content:'';display:block;width:36px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin-top:10px;border-radius:1px}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
+
+.radar-block{display:grid;grid-template-columns:320px 1fr;gap:32px;align-items:start}
+.radar-wrap{display:flex;flex-direction:column;align-items:center;padding:14px;background:linear-gradient(180deg,var(--bg-soft) 0%,#fbf6e8 100%);border:1px solid var(--border-soft);border-radius:16px}
+.radar-svg{width:290px;height:290px}
+.radar-legend{display:flex;gap:18px;margin-top:14px;font-size:12px;font-weight:500;color:var(--text-soft)}
+.lg-item{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:11px;height:11px;border-radius:2px}
+.lg-dot.local{background:var(--local)}
+.lg-dot.foreign{background:var(--foreign)}
+
+.dim-list{display:flex;flex-direction:column;gap:0}
+.dim{padding:14px 4px;border-bottom:1px solid var(--border-soft);position:relative}
+.dim:last-child{border-bottom:none}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.dim-name{font-size:14.5px;font-weight:600;color:var(--navy)}
+.dim-weight{font-size:10px;color:var(--gold-deep);margin-left:8px;font-weight:600;letter-spacing:.04em;padding:2px 7px;background:var(--gold-bg);border-radius:4px;border:1px solid var(--gold-soft)}
+.dim-scores-inline{display:flex;gap:14px;font-size:13px;font-weight:700}
+.dim-score{display:inline-flex;align-items:baseline;gap:4px}
+.dim-score .lbl{font-size:9.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;font-family:'Inter',sans-serif}
+.dim-score .val{font-family:'Playfair Display',serif;font-size:18px;letter-spacing:-.02em}
+.dim-score .val.local{color:var(--local)}
+.dim-score .val.foreign{background:linear-gradient(180deg,var(--gold-light) 0%, var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dim-rsn{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.dim-data{font-size:11px;color:var(--muted);font-style:italic;margin-top:4px}
+
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.kv-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.kv-table th{text-align:left;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.08em;border-bottom:2px solid var(--gold-soft);border-top:1px solid var(--border-soft);border-radius:6px 6px 0 0}
+.kv-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv-table tr:last-child td{border-bottom:none}
+.kv-label{color:var(--muted);width:42%;font-size:12px;font-weight:500}
+.kv-val{font-weight:500;color:var(--text)}
+.kv-src{font-size:10.5px;color:var(--muted);font-style:italic;display:block;margin-top:2px}
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:14px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cmp-table th{text-align:left;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.cmp-table th.local{color:var(--local)}
+.cmp-table th.foreign{color:var(--gold-deep)}
+.cmp-table td{padding:10px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:hover td{background:var(--gold-bg)}
+.cmp-table .num{font-variant-numeric:tabular-nums;font-weight:500}
+
+.assump-box{background:linear-gradient(135deg,var(--bg-soft) 0%, #fbf3df 100%);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px 14px 32px;margin-bottom:14px;font-size:12px;color:var(--text-soft);line-height:1.8;position:relative}
+.assump-box::before{content:'※';position:absolute;left:14px;top:14px;color:var(--gold);font-weight:700}
+.assump-box strong{color:var(--navy);font-weight:700}
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden}
+.cost-table th{text-align:right;padding:10px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);font-size:11px;letter-spacing:.06em;color:var(--navy);font-weight:700;border-bottom:2px solid var(--gold-soft)}
+.cost-table th:first-child{text-align:left}
+.cost-table th.local{color:var(--local)}
+.cost-table th.foreign{color:var(--gold-deep)}
+.cost-table td{padding:8px 12px;border-bottom:1px solid var(--border-soft);font-variant-numeric:tabular-nums;text-align:right}
+.cost-table td:first-child{text-align:left}
+.cost-table tr.cat td{background:linear-gradient(90deg,var(--navy) 0%,var(--navy-mid) 100%);font-weight:700;font-size:11px;color:var(--gold-light);letter-spacing:.1em;padding:8px 12px}
+.cost-table tr.cat td:not(:first-child){color:transparent}
+.cost-table tr.sum td{font-weight:700;background:var(--gold-bg);color:var(--navy)}
+.cost-table tr.scenario td:first-child{color:var(--muted);padding-left:24px;font-style:italic}
+.cost-bottom{margin-top:14px;padding:16px 20px;background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);color:var(--text-soft);border-radius:12px;border-left:4px solid var(--gold);font-size:13.5px;line-height:1.85;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.cost-bottom strong{color:var(--navy);font-weight:700}
+
+.summary-text{font-size:14px;line-height:1.95;color:var(--text-soft)}
+.summary-text p{margin-bottom:16px}
+.summary-text p:last-child{margin-bottom:0}
+.summary-text p:first-child::first-letter{font-family:'Noto Serif TC','Playfair Display',serif;font-size:42px;font-weight:700;float:left;line-height:.95;margin:4px 8px 0 0;color:var(--gold)}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc-col{padding:18px 20px;border-radius:14px;position:relative;overflow:hidden}
+.pc-col.pros{background:linear-gradient(135deg,#ecfdf5 0%, #d1fae5 100%);border:1px solid #86efac}
+.pc-col.cons{background:linear-gradient(135deg,#fbf3df 0%, #f3e5c3 100%);border:1px solid var(--gold-light)}
+.pc-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+.pc-col.pros::before{background:linear-gradient(180deg,#16a34a,#0d6b2d)}
+.pc-col.cons::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.pc-title{font-size:15px;font-weight:700;margin-bottom:12px;letter-spacing:.02em;font-family:'Noto Serif TC','Playfair Display',serif}
+.pc-col.pros .pc-title{color:var(--pos-text)}
+.pc-col.cons .pc-title{color:var(--warn-text)}
+.pc-list{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:12.5px;line-height:1.75;color:var(--text-soft)}
+.pc-list li{padding-left:16px;position:relative}
+.pc-list li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%}
+.pc-col.pros .pc-list li::before{background:var(--pos-border);box-shadow:0 0 0 2px rgba(22,163,74,.15)}
+.pc-col.cons .pc-list li::before{background:var(--gold);box-shadow:0 0 0 2px rgba(184,146,74,.18)}
+
+.profile{padding:16px 0;border-bottom:1px solid var(--border-soft)}
+.profile:last-child{border-bottom:none;padding-bottom:0}
+.profile:first-child{padding-top:0}
+.profile-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:'Noto Serif TC','Playfair Display',serif}
+.profile-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold-bg) 0%, var(--gold-soft) 100%);border:1px solid var(--gold-light);font-size:15px}
+.profile-fit{font-size:13px;color:var(--text-soft);line-height:1.8;padding-left:38px}
+
+.footer{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,var(--card) 0%, var(--bg-soft) 100%);border:1px solid var(--border);border-radius:16px;font-size:11.5px;color:var(--muted);line-height:1.85;position:relative;overflow:hidden}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-line)}
+.footer h4{font-size:10.5px;font-weight:700;color:var(--gold-deep);letter-spacing:.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer h4::before{content:'◆';color:var(--gold);font-size:10px}
+.footer-sources{margin-bottom:18px}
+.footer-disclaimer{padding-top:18px;border-top:1px solid var(--border-soft)}
+
+.sub-eyebrow{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--gold-deep);margin:22px 0 10px;text-transform:uppercase}
+.sub-eyebrow:first-of-type{margin-top:4px}
+.scarcity-box{background:var(--navy-soft);border:1px solid #c9d6e8;border-radius:12px;padding:8px 20px}
+.scarcity-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(13,34,68,.08);align-items:flex-start}
+.scarcity-row:last-of-type{border-bottom:none}
+.scarcity-mark{flex:0 0 auto;width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:1px}
+.scarcity-mark.pass{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.scarcity-mark.fail{background:#f1f0ec;color:#8a8577;border:1px solid #ddd8ca}
+.scarcity-layer{flex:0 0 60px;font-weight:700;font-size:13px;color:var(--navy);padding-top:2px}
+.scarcity-txt{font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.scarcity-verdict{margin-top:12px;padding:12px 16px;background:linear-gradient(135deg,#fef9ed,#fbf3df);border-left:3px solid var(--gold);border-radius:8px;font-size:12.5px;line-height:1.75;color:var(--navy)}
+.scarcity-verdict strong{color:var(--gold-deep)}
+.quantum-line{background:linear-gradient(135deg,var(--bg-soft),#fbf3df);border:1px solid var(--gold-soft);border-radius:10px;padding:14px 18px;margin-bottom:14px;font-size:12.5px;line-height:1.8;color:var(--text-soft)}
+.quantum-line strong{color:var(--navy)}
+.pyramid-table{width:100%;border-collapse:collapse;font-size:12.5px;border:1px solid var(--border-soft);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.pyramid-table th{text-align:left;padding:9px 12px;background:linear-gradient(180deg,var(--bg-soft),#fbf6e8);color:var(--navy);font-size:11px;letter-spacing:.06em;border-bottom:2px solid var(--gold-soft);font-weight:700}
+.pyramid-table td{padding:9px 12px;border-bottom:1px solid var(--border-soft);vertical-align:top;line-height:1.65}
+.pyramid-table tr:last-child td{border-bottom:none}
+.pyramid-table td.seg{font-weight:600;color:var(--navy);white-space:nowrap}
+.pyramid-v{font-weight:700;text-align:center;font-size:15px}
+.pyramid-v.yes{color:#15803d}
+.pyramid-v.mid{color:#a16207}
+.pyramid-v.no{color:#9a9488}
+.dep-tag{padding:12px 16px;border-radius:10px;font-size:12.5px;line-height:1.75}
+.dep-mid{background:#fef3c7;border:1px solid #fcd34d;color:#713f12}
+.dep-tag strong{font-weight:700}
+.evid-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.evid-card{padding:14px 12px;border:1px solid var(--border-soft);border-radius:12px;background:linear-gradient(180deg,var(--bg-soft),#fff);text-align:center}
+.evid-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);letter-spacing:-.02em;line-height:1.1}
+.evid-lbl{font-size:10.5px;color:var(--muted);font-weight:600;letter-spacing:.03em;margin-top:6px;line-height:1.3}
+.evid-tag{display:inline-block;margin-top:8px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px}
+.evid-tag.hot{background:#dcfce7;color:#15803d}
+.evid-tag.warm{background:#fef3c7;color:#a16207}
+.evid-tag.norm{background:var(--navy-soft);color:var(--navy-mid)}
+.evid-tag.cold{background:#f1f0ec;color:#8a8577}
+.exit-summary{margin-top:18px;padding:16px 20px;background:linear-gradient(135deg,var(--navy-deep),var(--navy));color:#f3ebd6;border-radius:12px;font-size:13px;line-height:1.85}
+.exit-summary strong{color:var(--gold-light)}
+.hardrule-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.hardrule-tag{font-size:10.5px;font-weight:700;padding:5px 10px;border-radius:8px;background:#fdf0ed;border:1px solid #f0c9bd;color:#7a3b28;letter-spacing:.02em}
+
+@media (max-width:768px){
+  .evid-strip{grid-template-columns:repeat(2,1fr)}
+  .nav-inner{padding:12px 16px}
+  .wrap{padding:20px 14px 36px}
+  .hero-card{padding:22px 20px}
+  .proj-name{font-size:26px}
+  .dual-scores{grid-template-columns:1fr}
+  .section{padding:22px 20px}
+  .section-title{font-size:20px}
+  .radar-block{grid-template-columns:1fr;gap:22px}
+  .radar-svg{width:240px;height:240px}
+  .data-grid{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .cmp-table,.cost-table,.kv-table{font-size:11.5px}
+  .cmp-table th,.cmp-table td,.cost-table th,.cost-table td{padding:8px 8px}
+  .profile-fit{padding-left:0;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand-wrap" href="/">
+      <span class="brand-mark">P</span>
+      <span class="brand-text">
+        <span class="brand">Property Check</span>
+        <span class="brand-by">Penang Scorecards</span>
+      </span>
+    </a>
+    <div class="nav-actions">
+      <a class="back-link" href="/penang-check.html">← 全部評分</a>
+      <a class="lang-link" href="SC_Sunny-Ville_20260807_en.html">EN</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- BLOCK 1: HEADER BAR -->
+<div class="hero-card">
+  <div class="hero-ornament" aria-hidden="true">
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+  <div class="hero-meta">
+    <span>Jalan Batu Uban · Gelugor／Batu Uban（Timur Laut）</span>
+    <span class="sep">◆</span>
+    <span>永久地契 · 住宅 Condominium</span>
+    <span class="sep">◆</span>
+    <span>資料截至 2026-08-07</span>
+  </div>
+  <h1 class="proj-name">Sunny Ville</h1>
+  <p class="one-liner">
+    本卡是站上第一張直接檢定「中價位軌道走廊分數較高」假說的評分卡。Sunny Ville 距未來 LRT Mutiara Line Batu Uban 站僅約 460 米（8.99% 已動工，估算直線距離）、代表戶（2 房 900 sqft）quantum 僅約 RM 38 萬，本國承接池深、退場分達 7.5——理論上完全符合假說預期。但查證結果並不支持假說：稀缺性三層稽核全數 ✗（Jalan Sultan Azlan Shah 同走廊已有 20 層新案送審）、代表戶低於 MM2H 門檻 RM 50 萬觸發 R7 cap 3.0、且本案租客結構經多方查證明確以 USM 學生為主，毛收益率僅約 3.9%——與 Gurney／核心區旗艦卡相近而非更優。本國 T4、外國 T5，總分皆未突破站上既有紀錄。
+  </p>
+  <div class="dual-scores">
+    <div class="score-card local">
+      <div class="score-head">
+        <span><span class="score-flag">🇲🇾</span>本國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num local">5.9</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T4">T4 · Niche thesis，分眾持有</span>
+      </div>
+      <div class="score-note">稀缺地段 5.5（Gelugor 島上 default 6.0，三層稽核全 ✗ −0.5）+ 交通 5.5（島上次級走廊，樽頸 −0.3）+ 增值 6.4（島上 strata 6.0 起跳，LRT ≤800m +0.4）+ 估值 6.0（同建案 Brickz 中位 RM 424 psf，現價大致持平）+ 現金流 3.8（毛收益率約 3.9%，估算）+ 退場 7.5（quantum RM 38 萬，本地深度買盤，Timur Laut R2 −0.3）+ 開發商 6.0（Pernas Group／GLC 遺留，管理移交爭議）</div>
+    </div>
+    <div class="score-card foreign">
+      <div class="score-head">
+        <span><span class="score-flag">🌏</span>外國人</span>
+      </div>
+      <div class="score-row">
+        <span class="score-num foreign">4.9</span>
+        <span class="score-sfx">/ 10</span>
+        <span class="tier tier-T5">T5 · Thesis 偏弱，需深度評估</span>
+      </div>
+      <div class="score-note">五個共用維度與本國人同分；現金流固定差距 2.0（1.8）；退場觸發 <strong>R7</strong>——代表戶 quantum（RM 38 萬）低於 MM2H 門檻 RM 50 萬但 ≥ PR 門檻 RM 25 萬，套 <strong>cap 3.0</strong>，外籍依賴度記 ≈0，一般外籍個人／機構與 MM2H 持有人依法皆不得購買本代表戶，僅永久居民（PR）可合法承接。</div>
+    </div>
+  </div>
+  <div class="ruler-note">※ 本卡採檳城內部尺規校準，與 KL／曼谷等其他市場評分卡分數不可直接比較；跨市場比較請見 markets-summary 國際比較頁。</div>
+</div>
+
+<!-- BLOCK 2: RADAR + DIMENSION SCORES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 評分框架</span>
+  <h2 class="section-title">七維度評分</h2>
+  <p class="section-sub">10 年持有專業投資人視角。稀缺性與地段護城河 20% · 交通與可達性 12% · 資本增值動能 15% · 進場估值紀律 13% · 持有現金流 12% · 退場與接手人群 18% · 開發商與管理移交 10%。5 個維度本外同分、2 個維度本外分開（現金流 + 退場）。</p>
+
+  <div class="radar-block">
+    <div class="radar-wrap">
+<svg class="radar-svg" viewBox="-65 -45 410 410" aria-label="七維度雷達圖">
+  <g stroke="#cbd5e1" stroke-opacity=".5" fill="none" stroke-width="1">
+    <polygon points="140.0,28.0 227.6,70.2 249.2,164.9 188.6,240.9 91.4,240.9 30.8,164.9 52.4,70.2"/>
+    <polygon points="140.0,50.4 210.1,84.1 227.4,159.9 178.9,220.7 101.1,220.7 52.6,159.9 69.9,84.1"/>
+    <polygon points="140.0,72.8 192.5,98.1 205.5,155.0 169.2,200.5 110.8,200.5 74.5,155.0 87.5,98.1"/>
+    <polygon points="140.0,95.2 175.0,112.1 183.7,150.0 159.4,180.4 120.6,180.4 96.3,150.0 105.0,112.1"/>
+    <polygon points="140.0,117.6 157.5,126.0 161.8,145.0 149.7,160.2 130.3,160.2 118.2,145.0 122.5,126.0"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-opacity=".5" stroke-width="1">
+    <line x1="140" y1="140" x2="140.0" y2="28.0"/>
+    <line x1="140" y1="140" x2="227.6" y2="70.2"/>
+    <line x1="140" y1="140" x2="249.2" y2="164.9"/>
+    <line x1="140" y1="140" x2="188.6" y2="240.9"/>
+    <line x1="140" y1="140" x2="91.4" y2="240.9"/>
+    <line x1="140" y1="140" x2="30.8" y2="164.9"/>
+    <line x1="140" y1="140" x2="52.4" y2="70.2"/>
+  </g>
+  <!-- navy (local): [5.5, 5.5, 6.4, 6.0, 3.8, 7.5, 6.0] -->
+  <polygon points="140.0,78.4 188.2,101.6 209.9,156.0 169.2,200.6 121.5,178.4 58.1,158.7 87.5,98.1" fill="#0d2244" fill-opacity=".22" stroke="#0d2244" stroke-width="2"/>
+  <g fill="#0d2244">
+    <circle cx="140.0" cy="78.4" r="3.5"/>
+    <circle cx="188.2" cy="101.6" r="3.5"/>
+    <circle cx="209.9" cy="156.0" r="3.5"/>
+    <circle cx="169.2" cy="200.6" r="3.5"/>
+    <circle cx="121.5" cy="178.4" r="3.5"/>
+    <circle cx="58.1" cy="158.7" r="3.5"/>
+    <circle cx="87.5" cy="98.1" r="3.5"/>
+  </g>
+  <!-- gold (foreign): [5.5, 5.5, 6.4, 6.0, 1.8, 3.0, 6.0] -->
+  <polygon points="140.0,78.4 188.2,101.6 209.9,156.0 169.2,200.6 131.3,158.2 107.2,147.5 87.5,98.1" fill="#b8924a" fill-opacity=".22" stroke="#b8924a" stroke-width="2"/>
+  <g fill="#b8924a">
+    <circle cx="140.0" cy="78.4" r="3.0"/>
+    <circle cx="188.2" cy="101.6" r="3.0"/>
+    <circle cx="209.9" cy="156.0" r="3.0"/>
+    <circle cx="169.2" cy="200.6" r="3.0"/>
+    <circle cx="131.3" cy="158.2" r="3.0"/>
+    <circle cx="107.2" cy="147.5" r="3.0"/>
+    <circle cx="87.5" cy="98.1" r="3.0"/>
+  </g>
+  <g fill="#475569" font-size="10" font-weight="600" font-family="'Noto Sans TC', sans-serif">
+    <text x="140" y="12" text-anchor="middle">稀缺與地段</text>
+    <text x="239" y="59" text-anchor="start">交通與可達性</text>
+    <text x="263" y="168" text-anchor="start">資本增值動能</text>
+    <text x="195" y="262" text-anchor="start">進場估值紀律</text>
+    <text x="85" y="262" text-anchor="end">持有現金流</text>
+    <text x="17" y="168" text-anchor="end">退場與接手</text>
+    <text x="41" y="59" text-anchor="end">開發商與交付</text>
+  </g>
+</svg>
+      <div class="radar-legend">
+        <span class="lg-item"><span class="lg-dot local"></span>本國人 5.9</span>
+        <span class="lg-item"><span class="lg-dot foreign"></span>外國人 4.9</span>
+      </div>
+    </div>
+
+    <div class="dim-list">
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">稀缺性與地段護城河</span><span class="dim-weight">20% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">Gelugor／Minden／Batu Uban 一帶未在錨表單獨列出，比照錨表明文指引（Jelutong／Bandar Sri Pinang 島上 default）取 <strong>6.0</strong> 起跳。<strong>三層稽核</strong>：土地層 <strong>✗</strong>——同走廊 Jalan Sultan Azlan Shah 上已有一宗 2.23 英畝地塊擬議 20 層新公寓案（2025-02 披露，緊鄰 Vilaris Courtyard），證明本地段土地並非稀缺，仍可製造直接競品供給；產品層 <strong>✗</strong>——本案 1994 年低樓層高密度標準塔樓（6 棟 22 層、504 戶）在同走廊可被 E-Park、N-Park、U-Garden、The Uban Residence 等多個同類案直接複製，非唯一產品；法規層 <strong>✗</strong>——平地城區，不受 SAP 高度限制亦不受 RSNPP 山坡限制（R5 不適用），無任何法規鎖。三層皆 ✗，可複製性高 <strong>−0.5</strong>。有效稀缺檢驗：本案 Brickz 建案中位 RM 424 psf 低於 Gelugor 全區中位 RM 500 psf（240 筆／58 案，2025-05~2026-04），代表本案未享有溢價，反而是同走廊裡定價較低的一端——無成交溢價佐證，判定為無稀缺性可言，維持 −0.5。淨值 6.0−0.5=5.5。</p>
+        <p class="dim-data">座標約 5.350388°N,100.307967°E（homesagency2u.com）· Jalan Sultan Azlan Shah 2.23 英畝擬議 20 層新案：Penang Property Talk 2025-02 · Gelugor 全區（58 案）Brickz 中位 RM 500 psf／RM 450,000（2025-05~2026-04）vs 本案建案中位 RM 424 psf／RM 404,000（brickz.my／iproperty.com.my） · R5 常設檢查：平地城區，不受山坡限制；R6：非填海地，不適用 · <strong>行政區界揭露</strong>：Batu Uban 州選區橫跨 Timur Laut／Barat Daya 兩區邊界（Wikipedia「Batu Uban (state constituency)」），本卡依 iproperty／Brickz 慣例將本案標示的「Gelugor」歸入 Timur Laut 口徑，此為揭露性存疑</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">交通與可達性</span><span class="dim-weight">12% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">5.5</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">不符合 Tier 9／8／7 任一條件（非世遺步行核心、非北岸一線、未驗證 ≤10min 到 Bayan Lepas FIZ）。判定落 <strong>Tier 6「島上次級走廊」</strong>5.5-6.0 起跳，取基線 5.8——依賴 Jalan Sultan Azlan Shah 這條唯一南北向主動線進出 Komtar（北）與 Bayan Lepas（南）。調整：本案自身資料明確標示「經 Jalan Sultan Azlan Shah 與 Tun Dr Lim Chong Eu Expressway 兩條主要道路進出」——後者正是錨表明文的樽頸道路，尖峰時段北向 Komtar 或南向 Bayan Lepas 皆須經過或匯入此路網，套用 <strong>尖峰須過 Tun Dr Lim Chong Eu 樽頸 −0.3</strong>。無步行可達 mall 級零售（Queensbay Mall 直線約 1.8km，非步行）；未驗證 ≤3km 內 2 家國際級私院（USM 校內醫療設施非私立國際醫院等級，Island／Loh Guan Lye／Gleneagles 等私院集中於 George Town 核心，距本案較遠）；不加此項。淨值 5.8−0.3=5.5。</p>
+        <p class="dim-data">GPS 約 5.350388,100.307967 · 距 Queensbay Mall（5.3346,100.3066）直線約 1.8km（估算） · 距 Komtar（約 5.4145,100.3288）直線約 7.5km（估算，haversine 近似） · 兩條主要進出道路：Jalan Sultan Azlan Shah、Tun Dr Lim Chong Eu Expressway（homesagency2u.com 建案資訊頁） · LRT Mutiara Line 現況進度 8.99%（2026-06），施工中站點不計入本維度，全歸 d4</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">資本增值動能</span><span class="dim-weight">15% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.4</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">島上住宅 strata 基線 <strong>6.0</strong>（NAPIC MHPI 島上 high-rise 2025P +3.1%、Q1 2026 +3.4%）。<strong>LRT Mutiara Line 進度分級（本卡關鍵發現）</strong>：現況進度 8.99%（已動工 &lt;25% 分級），本案座標距 Batu Uban 站（S12，5.34949,100.30392）直線約 <strong>460 米</strong>（估算：Δlat 0.000898°＋Δlon 0.004047°，haversine 近似，信心度中，非步行路徑）——落 <strong>≤800m 帶</strong>，套用 <strong>+0.4</strong>（未達 ≤400m 門檻，該門檻站上尚無案例達成）。已比對 Sungai Dua 站（約 1.15km）與 USM 站（約 1.21km），Batu Uban 站確認為最近站。未觸及 Bayan Lepas E&amp;E（≤15min 到 FIZ 未經驗證達標，保守不給）、Gurney Bay、Batu Kawan、Silicon Island、MM2H 聚居段等其他催化清單。減分檢查：同走廊已有具體競品（2.23 英畝擬議 20 層新案，尚未動工），未達「5 年內 ≥5 競品」門檻，不觸發 −0.5；此案已在 d1 計列可複製性扣分，不重複扣。淨值 6.0+0.4=6.4。</p>
+        <p class="dim-data">NAPIC MHPI 島上 high-rise 指數 228.5，2025P +3.1%，Q1 2026 +3.4% · LRT Mutiara Line 現況進度 8.99%（2026-06） · Batu Uban 站（S12）GPS 5.34949,100.30392（penang-traveltips.com）；距本案約 460m，落 ≤800m／已動工&lt;25% 分級的 +0.4 帶 · Sungai Dua 站（S11，5.34317,100.30059）約 1.15km、USM 站（S13，5.36084,100.31079）約 1.21km，均較遠 · 同走廊 2.23 英畝擬議 20 層新案（Penang Property Talk 2025-02，尚未動工）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">進場估值紀律</span><span class="dim-weight">13% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>錨點：同建案 Brickz 真實成交</strong>，近 12 個月（資料窗口 2023-10~2024-09，非最新，見缺口揭露）20 筆，中位 RM 424 psf／RM 404,000（HIGH confidence，同建案真實成交）。代表戶：2 房，900 sqft（Block A／B 戶型，本框架非精華區 2BR 代表戶指引下的清潔匹配——Gelugor 不在 Pulau Tikus／Gurney／Tanjung Tokong／STP／George Town 精華區清單內，依規則採 2BR 而非 3BR）。現時掛牌：2BR／900sqft 實際掛牌 RM 380,000（≈RM 422 psf），全建案掛牌區間 RM 370-555 psf（14 筆現售，PropertyGuru）。溢價／折讓：422 vs 424（同建案中位）=<strong>約 −0.5%</strong>，本質上持平，落在「折讓」與「+0%~+10%」兩帶交界，考量差距在測量誤差範圍內，本卡取 <strong>+0%~+10% 合理新品溢價帶下緣</strong>（非折讓帶——避免把統計噪音誤讀為 margin of safety），基線 <strong>6.0</strong>。無同期同地段新launch asking 可比較同業侵略性（本走廊無新盤在售，僅二手轉售與一宗尚未定價的擬議新案），不加減。淨值 6.0。</p>
+        <p class="dim-data">brickz.my／iproperty.com.my 同建案 12 個月 20 筆成交：中位 RM 404,000／RM 424 psf，25-75 百分位 RM 371,500-424,000（資料窗口 2023-10~2024-09） · 現售 2BR／900sqft：RM 380,000（≈RM 422 psf，ziba-property.com 等現售 listing） · 全建案現售掛牌區間 RM 370-555 psf，14 筆（PropertyGuru） · Gelugor 全區（58 案）中位 RM 500 psf 可作次要對照（medium confidence，非同建案）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">持有現金流</span><span class="dim-weight">12% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">3.8</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">1.8</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>⚠️ USM 分租房口徑聲明（本卡關鍵查證項）</strong>：多方查證確認本案（連同緊鄰的 E-Park、N-Park、U-Garden）距 USM Sungai Dua 校門約 0.7-0.8km，「本案住戶多數為 USM 學生」有獨立來源明確佐證。本卡採用之租金數字<strong>一律取自入口網站「整戶／apartment-condominium for rent」分類掛牌</strong>（mudah.my、PropertyGuru），<strong>非分租房個別房間報價</strong>——2BR／900sqft 整戶月租 RM 1,200-1,300（取中值 RM 1,250），3BR／1,000-1,100sqft 整戶月租 RM 1,300-1,500。口徑確認為整戶後，不因學生占比高而額外加分或減分；惟本卡不排除部分成交租金背後仍隱含學生合租均攤的可能，已在此明確揭露，讀者應自行向代理核實。代表戶（2BR／900sqft，RM 380,000）年租金 RM 1,250×12=RM 15,000，毛收益率 <strong>≈3.9%</strong>（15,000/380,000=3.95%，嚴格未達 4.0% 門檻），落「3.5-4.0%」級距 → 基線 <strong>3.8</strong>——與 Gurney／核心區旗艦卡（約 3.1-3.3%）相近而非顯著更優，這本身即是對「中價位走廊現金流更佳」直覺的一次證偽：quantum 雖低，但租金亦同比例偏低。調整項：本案為島上住宅地契 condo，<strong>R4 觸發</strong>——不計短租收入；非 E&amp;E 企業租約集中區、非商業地契，其餘加減項不適用。淨值 3.8，clamp [2.5, 8.0] 內。外國人＝本國人 −2.0＝<strong>1.8</strong>，clamp [1.5, 8.0] 內，差距固定 2.0（無 clamp 碰撞）。</p>
+        <p class="dim-data">毛租金收益率約 3.9%（<strong>估算</strong>，入口網站「整戶」分類掛牌租金推算） · 2BR／900sqft 整戶月租 RM 1,200-1,300；3BR／1,000-1,100sqft 整戶月租 RM 1,300-1,500（mudah.my／PropertyGuru，2026） · <strong>USM 學生租客占比高</strong>：多獨立來源佐證（含地理鄰近性與物業評論），非單一來源臆測 · R4：島上住宅地契，MBPP 禁止短租，任何短租收益宣稱不可執行 · 管理費：JMBMalaysia.org 記錄本案實際維護費 RM 0.12 psf（非通用 KL RM 0.6 psf 估算值，本卡採本案實際數字）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">退場與接手人群</span><span class="dim-weight">18% · 本/外分開</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="lbl">本</span><span class="val local">7.5</span></span>
+            <span class="dim-score"><span class="lbl">外</span><span class="val foreign">3.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn"><strong>第一步（本國人）：</strong>Freehold 住宅地契 condo baseline 7.0。quantum ≈RM 380,000，落 <strong>≤RM 60 萬帶</strong>（P43 以下，本地首購深度可負擔）→<strong>+0.5</strong>。年換手率：brickz.my 12 個月 20 筆／504 戶＝<strong>3.97%</strong>——精確落在「2.5-4%活躍」與「≥4%非常活躍」交界，本卡取保守讀法（3.97%&lt;4.0%）記入 <strong>2.5-4% 帶 → +0.3</strong>（若採寬鬆讀法四捨五入至 4.0% 則應為 +0.5，此為站上目前最高換手率紀錄，已誠實揭露此邊界判定並偏保守取值，避免灌高分）。Brickz 深度：20 筆，精確落「5-20 筆」與「≥20 筆」交界，本卡採保守讀法計入 <strong>5-20 筆帶 → 0</strong>（不採 +0.3，理由同上，避免邊界值雙重受益）。掛牌率：揭露項不計分（見缺口 #6，現售 14 筆／504 戶）。戶型結構（≤650 sqft 小戶占比 &gt;60%）：本案最小戶型 900 sqft，不觸發。下一手融資摩擦（商業地契）：不適用。<strong>R2</strong>（Timur Laut 在建未售 1,618 套 &gt;1,200）：適用，強制 <strong>−0.3</strong>。淨值 7.0+0.5+0.3−0.3=<strong>7.5</strong>，clamp [1.5,8.5] 內。<strong>第二步（外國人）：</strong>起點為 clamp 後的本國人分 7.5，減 2.0=5.5。逐項：#1-#4 不適用（quantum 遠低於一般外籍門檻相關級距）；#5 MM2H 合規——<strong>不給</strong>，因代表戶 quantum（RM 38 萬）低於 MM2H 島上州門檻 RM 50 萬，MM2H 持有人依法亦不得購買本代表戶（見 R7 判定）；#6-#7 不適用；<strong>#8 州同意摩擦 −0.3（必套用）</strong>；<strong>#9 三年禁售期 −0.2（必套用）</strong>；#10-13 皆不適用或查無佐證。Σ＝−0.3−0.2=−0.5。原始值＝5.5−0.5=<strong>5.0</strong>。<strong>套用 R7</strong>：代表戶 quantum（RM 38 萬）&lt; MM2H 門檻 RM 50 萬但 ≥ PR 門檻 RM 25 萬 → <strong>cap 3.0</strong>（比照 Azuria 先例）。min(5.0, 3.0)=<strong>3.0</strong>。外籍依賴度依 R7 強制記 <strong>≈0</strong>（見 5B）。R1（Timur Laut 完工未售 973 套 &gt;800）另觸發 cap 6.0，因 R7 cap 3.0 更低而為 binding cap，R1 不重複生效。不變量：3.0≤7.5−1.0=6.5 ✓（差距 4.5，遠高於下限）。</p>
+        <p class="dim-data">quantum ≈RM 380,000（代表戶 2BR／900sqft，現售）→家庭月收門檻 ≈RM 4,180（總價 × 1.1%）→遠低於檳城 P50（RM 7,327），本地承接池深 · <strong>R7 判定</strong>：代表戶 quantum 低於 MM2H 門檻 RM 50 萬但 ≥ PR 門檻 RM 25 萬（PTG 指引 2024-08-01），一般外籍個人／機構與 MM2H 持有人皆不得購買，僅 PR 可合法購買，套 cap 3.0，比照 Azuria 先例 · 年換手率：20 筆／504 戶＝3.97%（資料窗口 2023-10~2024-09，非最新 12 個月，見缺口揭露），保守計入 2.5-4% 帶 · Timur Laut：完工未售 973 套（R1，外籍 cap 6.0，本案 R7 cap 3.0 更低故 binding）／在建未售 1,618 套（R2，本國人 −0.3，已計入）</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <div><span class="dim-name">開發商與管理移交</span><span class="dim-weight">10% · 本外同分</span></div>
+          <div class="dim-scores-inline">
+            <span class="dim-score"><span class="val local">6.0</span></span>
+          </div>
+        </div>
+        <p class="dim-rsn">開發商 <strong>Pernas Group</strong>（Perbadanan Nasional Berhad 關聯實體）——1969 年成立的政聯企業（GLC），惟目前 Pernas 主體已轉型為特許經營發展機構（financing／training／mentoring for franchise businesses），<strong>不再從事房地產開發，對本案已無任何品牌延續或問責能力</strong>。比照通用分級「私有 5-10 案」6.5-7.0 起跳（Pernas Group 於本走廊至少開發 Sunny Ville、E-Park、N-Park 等多案），取 <strong>6.5</strong>。檳城特有扣分項：MBI／龐氏交易對手曝險不適用；山坡地曝險不適用（平地）；填海規劃權限風險不適用（非填海地）；George Town 遺產合規不適用；量產型去化：504 戶高密度大盤，符合「量產型」定性 <strong>−0.2</strong>。<strong>具體治理負面（JMBMalaysia.org 記錄，來源具體）</strong>：開發商曾長期保留本案停車場所有權，舊任管理委員會（MC）需提起法律程序追回，新任 MC 未接續跟進——此為已完工 30 餘年住宅常見的產權移交遺留爭議 <strong>−0.3</strong>。<strong>⚠️ 另有單一低可信度來源</strong>（StarProperty 評論）聲稱與「Goh Chun Lai」個人相關的沉澱基金侵占指控；惟 Pernas Group 本身為政聯企業而非私人個體開發商，此說法與官方背景資料存在內部矛盾，且僅單一來源、無法查證歸屬對象是否確為本案開發商，<strong>本卡不將此納入計分</strong>，僅作揭露性提示，讀者應自行查證。淨值 6.5−0.2−0.3=<strong>6.0</strong>。</p>
+        <p class="dim-data">Pernas Group（Perbadanan Nasional Berhad 關聯實體），1969 年成立之政聯企業，現轉型為特許經營發展機構，不再開發房地產 · Sunny Ville 完工 1994 年，6 棟 22 層、504 戶 · 停車場產權移交爭議：JMBMalaysia.org「Sunny Ville Condominium JMB」條目 · ⚠️ 單一來源、未證實之沉澱基金指控（StarProperty 評論，作者與可信度未知）——不計分，僅揭露</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 3: KEY DATA TABLES -->
+<section class="section">
+  <span class="section-eyebrow">◆ 關鍵事實</span>
+  <h2 class="section-title">關鍵數據</h2>
+
+  <div class="assump-box">
+    <strong>⚠️ 估值與買價透明度說明：</strong>估值維度以「同建案真實成交」為錨——本案錨點：brickz.my／iproperty.com.my 同建案近 12 個月（資料窗口 2023-10~2024-09，非最新，見缺口揭露）20 筆真實成交，中位 <strong>RM 424 psf</strong>；本案代表 PSF：2BR／900sqft 現售約 <strong>RM 422</strong>；溢價／折讓：約 <strong>−0.5%（本質持平）</strong>（信心度：高）。檳城無 MLS，無官方 days-on-market 或掛牌-成交折讓數據，實際成交價可能因議價空間而低於掛牌價，買家仍應向代理或開發商書面確認最終實際淨價。<strong>⚠️ 關鍵發現（R7）</strong>：本案代表戶（2BR／900sqft，約 RM 380,000）<strong>低於</strong> MM2H 島上購買門檻 RM 50 萬——MM2H 持有人與一般外籍個人／機構皆不得購買本代表戶；僅<strong>永久居民（PR，門檻 RM 25 萬）</strong>可合法購買。下方對照表與區塊 4 成本表為維持站上結構一致性，仍以同一代表戶為基礎呈現「一般外籍買家」欄位的<strong>假設性</strong>對照數字（用於結構比較，實際僅 PR 買家可執行）。
+  </div>
+
+  <p class="section-sub">代表戶型：依本框架規則，<strong>非精華區（Gelugor 不在 Pulau Tikus／Gurney／Tanjung Tokong／STP／George Town 清單內）採 2 房</strong>——本案 Block A／B 戶型為 2 房 900 sqft，本卡採此為代表戶。</p>
+
+  <div class="data-grid">
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">建案基本資訊</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">開發商</td><td class="kv-val">Pernas Group（Perbadanan Nasional Berhad 關聯實體）<span class="kv-src">1969 年成立政聯企業，現已轉型特許經營發展機構，不再開發房地產</span></td></tr>
+          <tr><td class="kv-label">地契</td><td class="kv-val">永久地契（Freehold）· 住宅 Condominium<span class="kv-src">島上住宅地契，MBPP 禁止短租（R4）；平地城區，非填海地</span></td></tr>
+          <tr><td class="kv-label">規模</td><td class="kv-val">504 戶，6 棟 22 層<span class="kv-src">Block A／B：900sqft；D／E／F：1,000-1,100sqft；Block C：1,200sqft</span></td></tr>
+          <tr><td class="kv-label">單位坪數</td><td class="kv-val">900-1,200 sqft，2 房或 3 房<span class="kv-src">代表戶：2 房，Block A／B，900 sqft</span></td></tr>
+          <tr><td class="kv-label">代表戶型價</td><td class="kv-val">約 RM 380,000（≈RM 422 psf）<span class="kv-src">2026 現售 listing（ziba-property.com 等）；同建案 Brickz 中位 RM 424 psf</span></td></tr>
+          <tr><td class="kv-label">完工時間</td><td class="kv-val">1994 年<span class="kv-src">已完工約 32 年，非期房</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="kv-table">
+        <thead><tr><th colspan="2">地段與供給</th></tr></thead>
+        <tbody>
+          <tr><td class="kv-label">微觀位置</td><td class="kv-val">No. 1, Jalan Batu Uban, 11700 Gelugor<span class="kv-src">距 USM Sungai Dua 校門約 0.7-0.8km（多來源一致）</span></td></tr>
+          <tr><td class="kv-label">租客結構</td><td class="kv-val">多方佐證住戶多數為 USM 學生（含交換生）<span class="kv-src">見 d3 口徑聲明；已按整戶掛牌租金計算，不因此加減分</span></td></tr>
+          <tr><td class="kv-label">同走廊競品風險</td><td class="kv-val">2.23 英畝擬議 20 層新案送審中<span class="kv-src">Penang Property Talk 2025-02 披露，緊鄰 Vilaris Courtyard，尚未動工</span></td></tr>
+          <tr><td class="kv-label">LRT Mutiara</td><td class="kv-val">Batu Uban 站（S12）約 460m 內（現況進度 8.99%，2026-06）<span class="kv-src">落 ≤800m／已動工 &lt;25% 分級，+0.4</span></td></tr>
+          <tr><td class="kv-label">管理費</td><td class="kv-val">RM 0.12 psf（本案實際數字）<span class="kv-src">JMBMalaysia.org；代表戶約 RM 108／月</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th class="local">🇲🇾 本國人</th>
+        <th class="foreign">🌏 一般外籍（假設性對照 ⚠️，實際僅 PR 可購買）</th>
+        <th style="width:18%">來源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>印花稅（MOT）</td><td class="num">1-4% 階梯制<br><small style="color:var(--muted)">RM 6,600</small></td><td class="num">8% 一口價<br><small style="color:var(--muted)">RM 30,400</small></td><td><small>LHDN 2026 Finance Act</small></td></tr>
+      <tr><td>頭期款</td><td class="num">10%（90% LTV）<br><small style="color:var(--muted)">RM 38,000</small></td><td class="num">35%（估 65% LTV）<br><small style="color:var(--muted)">RM 133,000</small></td><td><small>BNM／銀行政策，PR 買家實際 LTV 未經個案驗證</small></td></tr>
+      <tr><td>最低購買價門檻</td><td class="num">無</td><td class="num"><strong>一般外籍／MM2H 皆不適用（RM 38 萬 &lt; MM2H 門檻 RM 50 萬）</strong><br><small style="color:var(--muted)">僅 PR（門檻 RM 25 萬）可合法購買</small></td><td><small>PTG 指引 2024-08-01</small></td></tr>
+      <tr><td>徵費（consent to transfer）</td><td class="num">—</td><td class="num">3%（常態段）<br><small style="color:var(--muted)">RM 11,400</small></td><td><small>州地政局 §5.1</small></td></tr>
+      <tr><td>州同意費</td><td class="num">—</td><td class="num">RM 10,000／地契</td><td><small>州地政局</small></td></tr>
+      <tr><td>三年禁售期</td><td class="num">無</td><td class="num">有（SPA 起算三年）</td><td><small>州地政局 §3.2(c)</small></td></tr>
+      <tr><td>州同意審批</td><td class="num">無</td><td class="num">需要，實務加 2-4 個月</td><td><small>州地政局</small></td></tr>
+      <tr><td>毛租金收益率</td><td class="num">~3.9%（估算）</td><td class="num">~3.9%（同，估算）</td><td><small>入口網站「整戶」分類推算</small></td></tr>
+      <tr><td>租金所得稅</td><td class="num">10-24% 累進（估約 15%）</td><td class="num">30% 一口價（非居民）</td><td><small>LHDN</small></td></tr>
+      <tr><td>RPGT（第 6 年起）</td><td class="num">0%</td><td class="num">10% 永久</td><td><small>LHDN</small></td></tr>
+      <tr><td>MM2H 合規</td><td class="num">—</td><td class="num">✗ 未達標（RM 38 萬 &lt; MM2H 門檻 RM 50 萬）</td><td><small>PTG 指引 §2.2；R7 判定</small></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- BLOCK 4: 10-YEAR COST -->
+<section class="section">
+  <span class="section-eyebrow">◆ 經濟性</span>
+  <h2 class="section-title">10 年持有總成本對照</h2>
+  <p class="section-sub">以代表戶型 <strong>2 房 900 sqft，RM 380,000</strong>（≈RM 422 psf）為基礎——本國人 vs 一般外籍 10 年總成本與淨損益對照。⚠️ 外籍欄位為「一般外籍買家」的結構性假設對照：一般外籍個人／機構與 MM2H 持有人皆不具合法購買資格（quantum 低於 MM2H 門檻），僅永久居民（PR）可合法購買本代表戶，其成本結構與本表所示的外籍欄位相同（8% 印花、3% 徵費、三年禁售等規則對 PR 同樣適用）。</p>
+
+  <div class="assump-box">
+    <strong>固定假設：</strong>
+    代表戶型 <strong>900 sqft ＠ RM 380,000</strong> · 10 年持有 · 30 年房貸 · 毛租金收益率 Y1 約 3.9%（<strong>估算</strong>，RM 1,250／月，整戶口徑），租金年漲幅 3%，空置約 1 個月／年（11 個月收租） · 房貸利率——本國人 4.3%、外國人（PR，比照一般外籍結構）4.5%（估算 +0.2pp 溢價，融資可得性未經檳城個案驗證）· 本國人 LTV 90%、外國人 LTV 65%（估算）· 管理費採本案實際 RM 0.12／sqft／月（代表戶約 RM 108／月）· 門牌稅＋地稅估約 RM 500／年（低總價單位，較旗艦卡下修） · 租金所得稅按<strong>毛租金</strong>簡化計算：本國人估 15%、外國人 30%（非居民一口價） · 房價漲幅情境：0%（bear，反映同走廊 20 層新案供給威脅與 Timur Laut 高在建未售）／+3%（base，島上住宅 strata 基準年增速）／+5.5%（bull）· 仲介費 3% · 所有金額四捨五入至千位。
+  </div>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th class="local">🇲🇾 本國人 (RM)</th>
+        <th class="foreign">🌏 外國人 (RM)</th>
+        <th>差額 (RM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="cat"><td>買入成本</td><td></td><td></td><td></td></tr>
+      <tr><td>頭期款</td><td>38,000</td><td>133,000</td><td>+95,000</td></tr>
+      <tr><td>印花稅（MOT）</td><td>6,600</td><td>30,400</td><td>+23,800</td></tr>
+      <tr><td>律師費＋貸款費＋貸款印花</td><td>6,000</td><td>5,500</td><td>−500</td></tr>
+      <tr><td>州同意費＋徵費（3%，常態段）</td><td>—</td><td>21,400</td><td>+21,400</td></tr>
+      <tr class="sum"><td>買入小計</td><td>50,600</td><td>190,300</td><td>+139,700</td></tr>
+
+      <tr class="cat"><td>持有成本（10 年累計）</td><td></td><td></td><td></td></tr>
+      <tr><td>房貸還款總額（本息）</td><td>203,000</td><td>150,000</td><td>−53,000</td></tr>
+      <tr><td>管理費＋沉澱基金</td><td>13,000</td><td>13,000</td><td>0</td></tr>
+      <tr><td>門牌稅＋地稅</td><td>5,000</td><td>5,000</td><td>0</td></tr>
+      <tr class="sum"><td>持有小計</td><td>221,000</td><td>168,000</td><td>−53,000</td></tr>
+
+      <tr class="cat"><td>租金收入（10 年累計，Y1 約 RM 1,250／月，3%／年成長，11 個月／年收租）</td><td></td><td></td><td></td></tr>
+      <tr><td>毛租金收入</td><td>158,000</td><td>158,000</td><td>0</td></tr>
+      <tr><td>租金所得稅</td><td>23,700</td><td>47,400</td><td>+23,700</td></tr>
+      <tr class="sum"><td>淨租金（稅後）</td><td>134,300</td><td>110,600</td><td>−23,700</td></tr>
+
+      <tr class="cat"><td>賣出成本（第 10 年，+3% 情境）</td><td></td><td></td><td></td></tr>
+      <tr><td>退場價（+3%／年）</td><td>511,000</td><td>511,000</td><td>0</td></tr>
+      <tr><td>仲介費（3%）</td><td>15,000</td><td>15,000</td><td>0</td></tr>
+      <tr><td>RPGT</td><td>0</td><td>13,000</td><td>+13,000</td></tr>
+      <tr><td>貸款餘額（10 年後）</td><td>272,000</td><td>198,000</td><td>−74,000</td></tr>
+
+      <tr class="cat"><td>10 年淨損益（依房價漲幅情境）</td><td></td><td></td><td></td></tr>
+      <tr class="scenario"><td>0%／年（下行情境）</td><td>−40,000</td><td>−77,000</td><td>−37,000</td></tr>
+      <tr class="scenario"><td>+3%／年（島上 strata 基準，base case）</td><td>+88,000</td><td>+37,000</td><td>−51,000</td></tr>
+      <tr class="scenario"><td>+5.5%／年（樂觀情境）</td><td>+222,000</td><td>+157,000</td><td>−65,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cost-bottom">
+    在基準情境（+3%／年，島上住宅 strata 基準年增速）下，本國人 10 年淨損益比外籍多約 <strong>RM 51,000（相當於房價的 13.4%）</strong>。差距主因是外籍 65% LTV（估算）相對本國人 90% LTV 大幅推高頭期款現金流出，加上租金稅率倍差（30% vs 約 15%）——這兩項摩擦在低 quantum 案例中占房價的比重反而<strong>更高</strong>，因為固定性質的徵費／同意費（RM 21,400）相對 RM 38 萬總價的占比（5.6%）明顯高於旗艦卡（相對 RM 100-250 萬總價通常僅 1-2%）。<strong>須留意的資格前提</strong>：本表「一般外籍」欄位對一般外籍買家與 MM2H 持有人皆是<strong>假設性數字</strong>（兩者依法皆不得購買）；僅對<strong>永久居民（PR）而言，本表數字即為實際可執行情境</strong>（PR 門檻 RM 25 萬，本案代表戶達標）。打平全部現金成本（不含機會成本）所需房價年漲幅：本國人約 <strong>0.9%／年</strong>、PR 買家約 <strong>2.0%／年</strong>，皆低於島上 strata 基準 3.0%，但 PR 買家的安全邊際明顯薄於本國人——這正是本卡對「低 quantum＝現金流韌性天然更佳」直覺的另一次證偽：固定摩擦成本占比隨總價下降而上升，抵銷了部分低總價帶來的資本效率優勢。
+  </div>
+</section>
+
+<!-- BLOCK 5: EXIT REALITY CHECK -->
+<section class="section">
+  <span class="section-eyebrow">◆ 退場現實</span>
+  <h2 class="section-title">退場現實檢驗</h2>
+  <p class="section-sub">三件套：稀缺性稽核（供給側能不能複製）＋接手人群金字塔（10 年後誰接手、買不買得起）＋二手市場硬證據（換手率／掛牌率／折讓）。全部採 2026-08 實查數據。</p>
+
+  <div class="hardrule-strip">
+    <span class="hardrule-tag">R7 觸發：代表戶 quantum（RM 38 萬）低於 MM2H 門檻 RM 50 萬但 ≥ PR 門檻 RM 25 萬 → 外籍退場 cap 3.0（原始值 5.0 → cap 生效），外籍依賴度記 ≈0</span>
+    <span class="hardrule-tag">R1 檢查：Timur Laut 完工未售 973 套 &gt;800 → cap 6.0；R7 cap 3.0 更低，為 binding cap，R1 不重複生效</span>
+    <span class="hardrule-tag">R2 觸發：Timur Laut 在建未售 1,618 套 &gt;1,200 → 本國人退場 −0.3（已計入）</span>
+    <span class="hardrule-tag">R4 觸發：島上住宅地契，MBPP 禁止短租，不計短租收入</span>
+    <span class="hardrule-tag">MM2H 持有人本案不具購買資格（門檻 RM 50 萬未達標），僅永久居民 PR（門檻 RM 25 萬）可合法購買</span>
+    <span class="hardrule-tag">R5／R6 常設檢查已執行：平地城區，不受坡限；非填海地</span>
+  </div>
+
+  <div class="sub-eyebrow">5A · 稀缺性稽核（供給側三層）</div>
+  <div class="scarcity-box">
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">土地層</span>
+      <span class="scarcity-txt">同走廊 Jalan Sultan Azlan Shah 上已有一宗 2.23 英畝地塊擬議 20 層新公寓案（2025-02 披露，緊鄰 Vilaris Courtyard），代表本地段土地並非稀缺，仍可製造直接競品供給。</span>
+    </div>
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">產品層</span>
+      <span class="scarcity-txt">本案 1994 年低樓層高密度標準塔樓（6 棟 22 層、504 戶）屬同走廊常見產品型態，E-Park、N-Park、U-Garden、The Uban Residence 等多個同類案已直接複製此定位，非受保護的不可複製要素。</span>
+    </div>
+    <div class="scarcity-row">
+      <span class="scarcity-mark fail">✗</span>
+      <span class="scarcity-layer">法規層</span>
+      <span class="scarcity-txt">平地城區，不受 SAP 高度限制，亦不受 RSNPP 山坡限制（本區非山坡地）——框架內無任何法規鎖適用。</span>
+    </div>
+    <div class="scarcity-verdict"><strong>有效稀缺判定：</strong>本案 Brickz 建案中位 RM 424 psf <strong>低於</strong> Gelugor 全區中位 RM 500 psf（58 案，2025-05~2026-04）——本案未享有溢價，反而是同走廊裡定價較低的一端，無成交溢價佐證。三層皆 ✗ 且無溢價證據，判定為<strong>無稀缺性可言</strong>，可複製性高 −0.5。這正呼應本框架的核心提醒：低 quantum 帶來的深買盤是<strong>流動性優勢</strong>，不是稀缺性優勢——兩者不可混為一談。</div>
+  </div>
+
+  <div class="sub-eyebrow">5B · 接手人群金字塔</div>
+  <div class="quantum-line">
+    <strong>Quantum test：</strong>代表戶 2 房 900 sqft ＠ <strong>RM 380,000</strong> → 下一手家庭月收門檻約 <strong>RM 4,180</strong>（總價 × 1.1%：90% LTV、4.3%、30 年、負擔 40%）→ 遠低於檳城家庭月收 P50（RM 7,327），是站上目前本地承接池最深的案例之一。
+  </div>
+  <table class="pyramid-table">
+    <thead><tr><th style="width:22%">接手者</th><th style="width:10%">判定</th><th>判定依據</th></tr></thead>
+    <tbody>
+      <tr><td class="seg">本地首購</td><td><span class="pyramid-v yes">✓</span></td><td>quantum 落 ≤RM 60 萬首購帶核心區間，月收門檻僅 RM 4,180，對多數受薪家庭高度可負擔，是本案最主要的接手人群。</td></tr>
+      <tr><td class="seg">本地 upgrader</td><td><span class="pyramid-v mid">△</span></td><td>quantum 低於 RM 60-120 萬主力帶，對 upgrader 而言吸引力中性偏低（產品定位與屋齡可能不符 upgrader 需求）。</td></tr>
+      <tr><td class="seg">外州／海外馬來西亞人</td><td><span class="pyramid-v mid">△</span></td><td>本案無買家籍貫或代理訪談等個案證據，依規則不預設 ✓；低 quantum 對此群體吸引力中性，非本案主打賣點。</td></tr>
+      <tr><td class="seg">本地投資客</td><td><span class="pyramid-v yes">✓</span></td><td>USM 學生租客池提供穩定出租需求（惟受 R4 禁短租、管理費爭議史拖累），低 quantum 提供高資本效率；毛收益率約 3.9%，屬中性水準。</td></tr>
+      <tr><td class="seg">外籍自住（MM2H）</td><td><span class="pyramid-v no">✗</span></td><td><strong>代表戶 quantum（RM 38 萬）低於 MM2H 島上州門檻 RM 50 萬——MM2H 持有人不具合法購買資格</strong>（R7 判定，本案落較低段，與門檻中段案例不同）。</td></tr>
+      <tr><td class="seg">外籍投資／機構</td><td><span class="pyramid-v no">✗</span></td><td>一般外籍個人／機構門檻 RM 100 萬遠未達標，不具購買資格；僅永久居民（PR，門檻 RM 25 萬）可合法承接。</td></tr>
+    </tbody>
+  </table>
+  <div class="dep-tag dep-mid"><strong>外籍依賴度：強制記 ≈0（R7）。</strong>本案 quantum 同時低於一般外籍門檻與 MM2H 門檻，退場池實質上限縮為僅永久居民（PR）一類，比一般外籍市場窄得多。若 thesis 依賴外籍退場，本案幾乎不具備此條件。</div>
+
+  <div class="sub-eyebrow">5C · 二手市場證據</div>
+  <div class="evid-strip">
+    <div class="evid-card"><div class="evid-num">~4.0%</div><div class="evid-lbl">年換手率<br>（20/504，資料窗口非最新）</div><div class="evid-tag warm">+0.3（保守讀法）</div></div>
+    <div class="evid-card"><div class="evid-num">揭露項</div><div class="evid-lbl">掛牌率<br>（14/504≈2.8%）</div><div class="evid-tag cold">不採計，見缺口#6</div></div>
+    <div class="evid-card"><div class="evid-num">N/A</div><div class="evid-lbl">掛牌-成交折讓</div><div class="evid-tag cold">無公開數據</div></div>
+    <div class="evid-card"><div class="evid-num">20 筆</div><div class="evid-lbl">Brickz 深度<br>（12 個月窗口）</div><div class="evid-tag norm">邊界值，保守記 0</div></div>
+  </div>
+  <p style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.7">Timur Laut district：完工未售 973 套（R1 觸發，外籍退場 cap 6.0，本案 R7 cap 3.0 更低故未觸頂）／在建未售 1,618 套（R2 觸發，本國人退場 −0.3，已計入上方分項）。本案 20 筆／504 戶的年換手率與 Brickz 深度雙雙落在框架既定門檻的邊界值上（3.97%≈4.0%、20 筆≈20 筆門檻），本卡兩項皆採保守讀法，避免邊界值雙重放大分數；即便如此，本案仍是站上目前記錄到的最高換手率案例，值得留意但不應過度解讀為「異常活躍」——更可能反映的是低總價帶來的高頻小額轉手，而非強勁的資本利得預期。</p>
+
+  <div class="exit-summary">10 年後最可能的接手者是<strong>本地首購族，搭配以 USM 學生為主要租客池的本地投資客</strong>——這是站上目前 quantum 最低、本地承接池最深的案例之一，本國人退場分達 7.5，主要來自低 quantum 帶來的深買盤與尚可的換手證據，而非稀缺性溢價（三層稽核全 ✗）。外籍側則因 <strong>R7</strong> 大幅限縮：<strong>一般外籍個人／機構與 MM2H 持有人皆被排除，退場池實質上僅剩永久居民（PR，門檻 RM 25 萬）</strong>——這是一個遠比一般外籍市場窄的池子，外籍退場分套用 cap 3.0，比照 Azuria 先例。</div>
+</section>
+
+<!-- BLOCK 6A: DEEP SUMMARY -->
+<section class="section">
+  <span class="section-eyebrow">◆ 深度敘事</span>
+  <h2 class="section-title">建案深度摘要</h2>
+
+  <div class="summary-text">
+    <p>Sunny Ville 坐落於 No. 1, Jalan Batu Uban, 11700 Gelugor，由政聯企業 Pernas Group（Perbadanan Nasional Berhad 關聯實體）開發，1994 年完工，6 棟 22 層標準塔樓，總戶數 504 戶，單位坪數 900-1,200 sqft（2 房或 3 房），本卡選用 Block A／B 的 2 房 900 sqft 作為代表戶——依本框架規則，Gelugor 不在精華區清單內，代表戶採 2BR 而非 3BR。本案座標約 5.350388°N,100.307967°E，距 USM Sungai Dua 校門約 0.7-0.8km，是本框架第一次直接檢定「中價位軌道走廊分數較高」這個假說的案例：距未來 LRT Mutiara Line Batu Uban 站（S12）僅約 460 米直線距離，是站上目前最接近 LRT 站點的案例之一（僅次於始終未達成的 ≤400m 門檻）。</p>
+
+    <p>三層稽核在本案全數判定為 ✗：土地層——同走廊 Jalan Sultan Azlan Shah 上已有一宗 2.23 英畝地塊擬議 20 層新公寓案（2025-02 披露，緊鄰 Vilaris Courtyard），證明本地段土地並非稀缺；產品層——本案 1994 年低樓層高密度標準塔樓在同走廊可被 E-Park、N-Park、U-Garden、The Uban Residence 等多個同類案直接複製；法規層——平地城區，不受 SAP 或山坡限制。有效稀缺檢驗進一步證實：本案 Brickz 建案中位 RM 424 psf 低於 Gelugor 全區中位 RM 500 psf，本案本身未享有溢價，是同走廊裡定價較低的一端。d1 由 6.0 起跳扣至 5.5。交通面，本案依賴 Jalan Sultan Azlan Shah 這條唯一南北向主動線，且須經過或匯入 Tun Dr Lim Chong Eu Expressway 樽頸，d2 由基線 5.8 扣至 5.5。定價層面，同建案 12 個月 20 筆真實成交中位 RM 424 psf，現售 2BR／900sqft 約 RM 422 psf，兩者本質持平（約 −0.5%），d7 取合理新品溢價帶下緣 6.0。</p>
+
+    <p>資本增值層面是本案支持假說的核心證據：LRT Mutiara Line 現況進度 8.99%（已動工 &lt;25% 分級），本案距 Batu Uban 站約 460 米，落 ≤800m 帶，獲得 +0.4 加分，d4 由島上 strata 基線 6.0 上修至 6.4——這正是「中價位走廊靠近軌道」假說預期的機制。惟這個正面訊號在其他維度被明顯抵銷：現金流層面，本卡完整處理了錨表明文警示的「USM 分租房陷阱」——多方查證確認本案租客多數為 USM 學生，本卡堅持只採用入口網站「整戶」分類掛牌租金（而非分租房間報價）計算，代表戶（2BR／900sqft，RM 380,000）年租 RM 15,000，毛收益率約 3.9%，落 3.5-4.0% 級距，d3 本國人僅 3.8——與 Gurney／核心區旗艦卡（約 3.1-3.3%）相近而非顯著更優，證偽了「低 quantum 必然帶來更佳現金流」的直覺：本案租金同樣低於一線地段，並非只有房價低。作為島上住宅地契物業，R4 強制不計短租收入，外國人現金流固定式＝本國人 −2.0=1.8。</p>
+
+    <p>退場層面呈現本國人與外國人截然不同的圖景。本國人退場分達 7.5（站上目前最高本國人退場分之一）：quantum 僅約 RM 38 萬，家庭月收門檻僅 RM 4,180，遠低於檳城 P50，本地承接池深；年換手率與 Brickz 深度雙雙落在框架門檻邊界值上（3.97%≈4%、20筆≈20筆），本卡採保守讀法而非灌高分。外籍側則因本案代表戶 quantum 同時低於 MM2H 門檻（RM 50 萬）與一般外籍門檻（RM 100 萬）——這觸發框架的 R7 規則：一般外籍個人／機構與 MM2H 持有人皆被排除，退場池實質上僅剩永久居民（PR，門檻 RM 25 萬）可合法承接，外籍退場分套用 <strong>cap 3.0</strong>，比照 Azuria 先例。開發商 Pernas Group 為政聯企業但已退出房地產開發、對本案無品牌延續能力，加上已查證的停車場產權移交爭議史，d5 取 6.0。</p>
+
+    <div style="margin-top:20px;padding:16px 20px;background:var(--navy-soft);border-radius:12px;font-size:13px;line-height:1.85;color:var(--text-soft)">
+      <strong style="color:var(--navy);font-weight:700">10 年情境基準</strong>：假設 2026-08 進場、2036-08 退場（權益 IRR，含頭期款、每月淨流出與退場淨額，估算）：
+      <ul style="margin:8px 0 0 18px;padding:0">
+        <li><strong>合理情境</strong>（base case，房價 +3%／年，島上住宅 strata 基準年增速）：本國人 10 年累計淨報酬約 <strong>RM 8.8 萬</strong>，權益 IRR 約 <strong>5.0%</strong>；PR 買家約 <strong>RM 3.7 萬</strong>，權益 IRR 約 <strong>1.4%</strong>（成本結構對 PR 買家為實際可執行情境，對一般外籍與 MM2H 買家則為假設性對照，見上方揭露）。</li>
+        <li><strong>樂觀情境</strong>（bull case，+5.5%／年）：本國人約 RM 22.2 萬，IRR 約 10.1%；PR 買家約 RM 15.7 萬，IRR 約 5.0%。</li>
+        <li><strong>下行情境</strong>（bear case，房價停滯 0%／年，反映同走廊 20 層新案供給威脅與 Timur Laut 高在建未售）：本國人 10 年淨損約 RM 4.0 萬，IRR 約 −3.4%；PR 買家淨損約 RM 7.7 萬，IRR 約 −3.7%。</li>
+      </ul>
+      <div style="margin-top:10px">10 年退場流動性：檳城無 days-on-market 公開數據；本案自身 Brickz 記錄 20 筆真實成交（12 個月窗口），是站上目前樣本最深的同建案真實成交記錄之一。核心風險不在地段稀缺性（本案本就不主張稀缺性溢價，三層皆 ✗），而在：（1）同走廊 20 層新案若獲批動工後對本案二手議價力的直接稀釋；（2）USM 學生為主的租客結構對長期出租穩定性與物業維護品質的潛在拖累；（3）30 餘年屋齡建物未來大修／翻新資本支出未經本卡量化。</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 6B: HIGHLIGHTS + CAVEATS -->
+<section class="section">
+  <span class="section-eyebrow">◆ 結論</span>
+  <h2 class="section-title">亮點與留意事項</h2>
+  <div class="pros-cons">
+    <div class="pc-col pros">
+      <div class="pc-title">✦ 亮點</div>
+      <ul class="pc-list">
+        <li>距未來 LRT Mutiara Line Batu Uban 站僅約 460 米，是站上目前最接近 LRT 站點的案例之一，d4 獲 ≤800m 帶完整加分</li>
+        <li>quantum 約 RM 38 萬，是站上目前本地承接池最深的案例之一，本國人退場分達 7.5</li>
+        <li>同建案 Brickz 真實成交 20 筆（12 個月窗口），流動性證據站上數一數二深</li>
+        <li>管理費採本案實際數字（RM 0.12 psf），而非通用估算值，資料透明度較高</li>
+      </ul>
+    </div>
+    <div class="pc-col cons">
+      <div class="pc-title">⚠ 留意事項</div>
+      <ul class="pc-list">
+        <li>【R7】代表戶 quantum（約 RM 38 萬）低於 MM2H 門檻 RM 50 萬——MM2H 持有人與一般外籍個人／機構皆不得購買，套用 cap 3.0（比照 Azuria 先例），退場池實質上僅剩永久居民（PR）</li>
+        <li>【土地層 ✗＋同走廊競品】Jalan Sultan Azlan Shah 上已有 2.23 英畝擬議 20 層新案送審中（2025-02，尚未動工），對本案「已建成產品」的稀缺論點構成直接威脅；三層稽核全數 ✗</li>
+        <li>【USM 學生租客結構】多方佐證住戶多數為 USM 學生——本卡已按整戶口徑計算現金流（毛收益率 3.9%），但長期出租穩定性、轉租週期與物業耗損風險應納入考量</li>
+        <li>【開發商已退出房地產、管理爭議史】Pernas Group（政聯企業）已轉型特許經營業務，對本案無品牌問責能力；JMBMalaysia.org 記錄停車場產權移交爭議史；另有單一低可信度來源聲稱沉澱基金爭議，未經證實，僅供留意</li>
+        <li>【屋齡 32 年】1994 年完工，未來大修／立面翻新等資本支出未經本卡量化，買家應向 MC／JMB 索取沉澱基金餘額與維修計畫</li>
+        <li>建議確認：Brickz 20 筆成交資料窗口為 2023-10~2024-09（非最新 12 個月）；掛牌率因入口網站數字互相矛盾不採計；年換手率／Brickz 深度皆落框架門檻邊界值，本卡採保守讀法，讀者宜自行核實最新數據</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 6C: HOLDING PURPOSE MAPPING -->
+<section class="section">
+  <span class="section-eyebrow">◆ 持有目的對照</span>
+  <h2 class="section-title">持有目的對照表</h2>
+  <p class="section-sub">同一份評分，在不同持有目的下意義不同。讀者可依自身定位對照「命脈維度」「可妥協維度」與「本案 fit」。</p>
+
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏠</span>自住主居（main residence）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（5.5）、交通與可達性（5.5）、開發商與管理移交（6.0）<br>
+      <strong>可妥協</strong>：持有現金流（自住不涉及租金）、退場與接手人群（自住者未必近期出售）<br>
+      <strong>本案 fit</strong>：中低。極低 quantum 對首購族極友善，但屋齡 32 年、租客結構偏學生化的社區氛圍、依賴單一動線並須過 Tun Dr Lim Chong Eu 樽頸的交通條件，對重視長期居住品質的自住買家吸引力有限；同走廊擬議新案若動工，施工期間居住環境亦可能受影響。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">📈</span>出租收益（rental investment）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：持有現金流（3.8 本／1.8 外）、退場與接手人群（7.5 本／3.0 外）<br>
+      <strong>可妥協</strong>：稀缺性（地段本身不主張稀缺溢價）<br>
+      <strong>本案 fit</strong>：中。USM 學生租客池提供相對穩定的出租需求基礎，quantum 低使資本效率較高，本國人退場分（7.5）是站上最高之一；惟毛收益率僅約 3.9%（與核心區旗艦卡相近，非顯著優勢），R4 禁短租，且需承擔學生租客週轉快、議價力弱、物業耗損可能較高等隱性成本。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🏖</span>備用居所（part-time use，年使用 &lt; 30%）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：交通與可達性、稀缺性、開發商與管理移交<br>
+      <strong>可妥協</strong>：持有現金流<br>
+      <strong>本案 fit</strong>：低。<strong>MM2H 持有人不具備購買本案代表戶的合法資格</strong>（RM 38 萬低於 MM2H 島上州門檻 RM 50 萬）——僅永久居民（PR）可合法購買；即便對 PR 買家而言，本案交通屬次級走廊、社區以學生租客為主，對重視地段品牌與生活機能的第二居所需求吸引力有限。
+    </div>
+  </div>
+  <div class="profile">
+    <div class="profile-head"><span class="profile-icon">🌳</span>世代傳承（generational 20+ 年）</div>
+    <div class="profile-fit">
+      <strong>命脈維度</strong>：稀缺性與地段護城河（20%）、退場與接手人群（下一代脫手）<br>
+      <strong>可妥協</strong>：短期 yield、短期催化<br>
+      <strong>本案 fit</strong>：低中。永久地契＋極低 quantum 有利於長期持有的資金效率，但稀缺性論點是站上最弱之一（三層皆 ✗，且本案本身未享有 Gelugor 區域溢價）——下一代脫手時的地段護城河遠不如任何一張旗艦卡；20 年期持有者應把同走廊擬議新案的最終審核結果、屋齡累積的資本支出需求，視為驗證本案長期可持有性的關鍵觀察指標。
+    </div>
+  </div>
+</section>
+
+<!-- BLOCK 7: FOOTER -->
+<div class="footer">
+  <div class="footer-sources">
+    <h4>資料來源</h4>
+    brickz.my／iproperty.com.my — Sunny Ville 同建案 12 個月 20 筆真實成交（中位 RM 424 psf／RM 404,000，資料窗口 2023-10~2024-09） · PropertyGuru Malaysia — Sunny Ville 現售掛牌（14 筆，PSF 區間 RM 370-555）、租賃行情 · mudah.my — 租賃 listing（整戶分類）佐證 · ziba-property.com／homesagency2u.com — 現售 2BR／900sqft listing、建案座標 5.350388,100.307967 · JMBMalaysia.org — Sunny Ville Condominium JMB 條目（停車場產權移交爭議記錄、管理費 RM 0.12 psf） · StarProperty.my — Sunny Ville 物業評論（租客結構佐證；⚠️ 沉澱基金爭議指控單一來源、未證實，僅揭露不計分） · Penang Property Talk（2025-02）— Jalan Sultan Azlan Shah 2.23 英畝擬議 20 層新案披露 · penang-traveltips.com — LRT Mutiara Line 全 22 站站名與部分站點 GPS 座標（Batu Uban S12：5.34949,100.30392；Sungai Dua S11：5.34317,100.30059；USM S13：5.36084,100.31079；Gelugor S14：5.36683,100.31059） · Wikipedia — Gelugor（Timur Laut 行政區）、Batu Uban（州選區橫跨 Timur Laut／Barat Daya 邊界）、Pernas／Perbadanan Nasional Berhad 企業沿革 · NAPIC JPPH — Timur Laut 完工未售 973 套、在建未售 1,618 套；MHPI 島上住宅 strata 2025P +3.1%、Q1 2026 +3.4%；Gelugor 全區（58 案）Brickz 中位 RM 500 psf／RM 450,000（2025-05~2026-04） · MRT Corp／The Star — LRT Mutiara Line 進度 8.99%（2026-06） · DOSM 家庭收入調查（檳城 P50 RM 7,327） · PTG（檳城州地政局）外籍購屋門檻與徵費指引 2024-08-01 版 · LHDN Finance Act（印花稅、RPGT、非居民租金稅率） · 本檔所依循之 penang-property-scorecard-v1 skill 鎖定錨表（ANCHORS.md，2026-08-06／08-07 版本）。
+  </div>
+  <div class="footer-disclaimer">
+    <h4>免責聲明</h4>
+    本評分卡為獨立分析參考，不構成投資建議。評分基於公開可查證資料，截至 2026-08-07。<strong>評分人視角：10 年持有為基準的專業房地產投資人，持有目的不限。</strong>本卡分數採檳城內部尺規校準，與其他市場（KL／曼谷等）評分卡分數不可直接比較。<strong>資料缺口誠實揭露</strong>：（1）毛租金收益率為入口網站「整戶」分類掛牌價推算，非機構數據，一律估算；本卡已明確排除分租房個別房間報價，惟不排除部分成交租金背後仍隱含學生合租均攤的可能；（2）檳城無 MLS，無公開 days-on-market 或掛牌-成交折讓數據；（3）掛牌率因入口網站數字互相矛盾，本卡不採計為量化分數；（4）同建案 Brickz 成交資料窗口為 2023-10~2024-09，非最新 12 個月，因搜尋工具無法取得 brickz.my 最新即時資料（該站對本卡自動化查詢回應 403），已誠實揭露此限制；（5）年換手率（3.97%）與 Brickz 深度（20 筆）皆精確落在框架既定門檻的邊界值上，本卡兩項皆採保守讀法計分，避免邊界值雙重放大；（6）<strong>本案租客結構多方佐證以 USM 學生為主，本卡現金流評分已嚴格採用入口網站「整戶」分類租金而非分租房報價，此為對錨表明文「USM 分租房陷阱」警示的直接回應</strong>；（7）<strong>本案代表戶 quantum（約 RM 38 萬）低於 MM2H 門檻 RM 50 萬但 ≥ PR 門檻 RM 25 萬，觸發 R7 三段式階梯 cap 3.0——一般外籍個人／機構與 MM2H 持有人皆不得購買，僅永久居民（PR）可合法購買，區塊 3／4 的外籍欄位標示為「一般外籍」的假設性對照，對 PR 買家而言則是實際可執行情境</strong>；（8）開發商 Pernas Group 關聯於政聯企業 Perbadanan Nasional Berhad，惟其現況（已轉型特許經營業務、不再開發房地產）與單一低可信度來源（StarProperty 評論）提及的個人沉澱基金侵占指控之間存在內部矛盾，本卡不將該指控納入計分，僅列為揭露性提示；已證實的停車場產權移交爭議（JMBMalaysia.org）則已計入 d5 扣分；（9）Jalan Sultan Azlan Shah 同走廊 2.23 英畝擬議 20 層新案為 2025-02 披露之提案，尚未核准或動工，最終是否落實仍存不確定性；（10）本卡所有直線距離（至 LRT 各站、Queensbay Mall、Komtar）皆為根據公開座標的估算值，非官方步行或車行路徑，信心度中；（11）Batu Uban 行政區界（Timur Laut／Barat Daya）存在揭露性存疑，本卡依 portal 慣例採 Timur Laut 口徑；（12）外籍融資 LTV／利率為估算，未經檳城個案驗證；（13）本案 1994 年完工，屋齡 32 年，未來資本性大修支出未經本卡量化。作者為 MM2H Silver 持有者，非持牌房地產經紀人或財務顧問。實際投資決策請諮詢專業顧問並進行實地考察。
+  </div>
+</div>
+
+</div>
+</body>
+</html>
