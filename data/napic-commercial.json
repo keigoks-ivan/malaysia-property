@@ -1,0 +1,453 @@
+{
+ "schema": "napic-commercial/v1",
+ "lastUpdated": "2026-08-12",
+ "purpose": "Vetted transcription of NAPIC official commercial property indicators (PBO, Shopping Complex, Serviced Apartment overhang, SOHO overhang, Shops) for use on myproperty.investmquest.com. Produced 2026-08-12 as v1-draft2 (shops deep-dive: national annual overhang series 2017-2025, by-state overhang 2021-2026, shop transactions, and the Q1 2026 shop/SOHO/SA supply pipeline); promoted to v1 same day after human spot-check of the source XLS files. See VERIFICATION.md section 'Shops deep-dive (v1-draft2)' for the original transcription log.",
+ "discipline": "Every value is transcribed from an official NAPIC file (quarterly Excel tables downloaded from napic.jpph.gov.my, or a printed data table embedded under a chart in an official NAPIC Annual/Half-Year Property Market Report PDF). Nothing is interpolated, estimated, smoothed, or sourced from any second-hand republication. Missing = null. Any derived value (e.g. unit conversion, percentage share) is flagged with a 'basis' field naming the raw figures it was derived from. Reviewed 2026-08-12（人工抽查原始 XLS 通過）：覆核時發現三處來源列號標注偏移，已於下方 source/row 欄位更正並記錄於 notes.reviewCorrections_2026_08_12；所有覆核更正僅涉及來源標注（metadata），未變動任何已轉錄數值。",
+ "rawFilesDownloaded": [
+  {"file": "Jadual Stok Harta Perdagangan Q1 2026.xls", "publication": "Jadual Stok Harta Perdagangan (Commercial Property Stock Table), Q1 2026", "content": "Shop/SOHO/Serviced Apartment supply pipeline (existing stock, completions, incoming supply, starts, planned supply, new planned supply) by state; Shopping Complex supply by state; Purpose-Built Office summary supply by state. NOTE: contains stock/pipeline only, no occupancy and no overhang."},
+  {"file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls", "publication": "CBSA — Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan (Commercial Building Space Occupancy and Availability Table), Q1 2026", "content": "PBO occupancy/availability by state and by sub-district (Table 1, 1.1-1.16); Shopping Complex occupancy/availability by state and sub-district (Table 2, 2.1-2.16); a separate 'Shopping Centre' occupancy table (Table 3, 3.1-3.16) which is NOT the same series as Shopping Complex — see notes.pboScope and notes.shoppingComplexVsCentre."},
+  {"file": "jadual-status-pasaran-harta-tanah-q1-2026-amended-15052026.xls", "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q1 2026, amended 2026-05-15", "content": "Table 8 = Number and Value of Unsold Completed Commercial Units: Shops, SOHO, Serviced Apartment, by state/type/price range. This is the overhang table for the commercial sub-sector."},
+  {"file": "Jadual Status Pasaran Harta Tanah Q4 2025.xls", "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q4 2025 (= FY2025 year-end)", "content": "Same Table 8 structure, Q4 2025 period. Used to nail the FY2025 anchor values exactly."},
+  {"file": "Jadual Status Pasaran Harta Tanah Q3 2025_new.xls", "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q3 2025", "content": "Same Table 8 structure, Q3 2025 period. Downloaded specifically to verify a second-hand Q3 2025 SA overhang figure cited in the task brief."},
+  {"file": "laporan-pasaran-harta-2025-1.pdf", "publication": "Laporan Pasaran Harta Tanah 2025 (Property Market Report 2025), national annual report", "content": "Narrative + chart data tables: PBO supply/occupancy 2021-2025 (Chart 37) and by state 2025 (Chart 38, Private & Government combined); Shopping Complex supply/occupancy 2021-2025 (Chart 34) and by state 2025 (Chart 35); Serviced Apartment overhang 2021-2025 (Chart 31)."},
+  {"file": "LaporanPasaranHarta2021.pdf", "publication": "Laporan Pasaran Harta 2021 (Property Market Report 2021), national annual report", "content": "Narrative + chart data tables: PBO supply/occupancy 2017-2021 (Chart 22); Shopping Complex supply/occupancy 2017-2021 (Chart 20); Serviced Apartment market status (overhang / unsold under construction / unsold not constructed) 2017-2021 (Chart 17) and by state 2021 (Chart 18)."},
+  {"file": "annual2025.txt / annual2021.txt", "publication": "Plain-text renditions of laporan-pasaran-harta-2025-1.pdf and LaporanPasaranHarta2021.pdf (same two files already listed above), used in the draft2 session to grep/read chart data tables and narrative text without re-parsing the PDF binary each time.", "content": "Source of: Shop Transactions Volume/Value 2021-2025 (Chart 24/25 of the 2025 report, national); Shop Unsold Completed Units 2021-2025 (Chart 26, national); Shop Unsold Units [under construction / not constructed] 2021-2025 (Chart 27, national); Shop Construction Activity 2021-2025 (Chart 28, national: Completion/Starts/New Planned Supply); Shop Market Status 2017-2021 (Chart 15 of the 2021 report, national: Overhang/Unsold Under Construction/Unsold Not Constructed); Shop Construction Activity 2020-2021 (Chart 16 of the 2021 report); Central Region chapter shop sub-sector transactions and market-status narrative (2025 report, gives 2024 state-level shop overhang figures in narrative form, used as a cross-check, not as a primary transcription source)."},
+  {"file": "Jadual Status Pasaran Harta Tanah Q4 2024.xls", "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q4 2024 (= FY2024 year-end)", "content": "Same Table 8 structure as the Q3/Q4 2025 and Q1 2026 files already listed above. Downloaded in draft2 to get by-state 2024 shop/SOHO/SA overhang. Retrieved via the live NAPIC archive filter (napic.jpph.gov.my/ms/archives/laporan-status-harta-tanah, Filter[year]=2024, Filter[volume]=S4) using a headless-browser session since the direct AJAX endpoint could not be authenticated by curl alone in this session; actual file path was 'Laporan Jadual Status Harta Tanah/Q4 2024 Full Year 2024/Jadual Status Pasaran Harta Tanah Q4 2024.xls' - note the folder-name irregularity ('Q4 2024 Full Year 2024') versus other years, confirmed only by resolving the real download link through the archive UI, not by URL-guessing."},
+  {"file": "Jadual Status Pasaran Harta Tanah Q4 2023.xls", "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q4 2023 (= FY2023 year-end)", "content": "Same Table 8 structure. Downloaded in draft2 for by-state 2023 shop/SOHO/SA overhang, same archive-filter method as the 2024 file."},
+  {"file": "Jadual Status Pasaran Harta Tanah Q4 2022.xls", "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q4 2022 (= FY2022 year-end)", "content": "Same Table 8 structure. Downloaded in draft2 for by-state 2022 shop/SOHO/SA overhang, same archive-filter method."},
+  {"file": "Jadual Status Pasaran Harta Tanah Q4 2021.xls", "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q4 2021 (= FY2021 year-end)", "content": "Same Table 8 structure. Downloaded in draft2 to confirm 2021 by-state shop/SOHO/SA overhang directly (rather than rely only on the annual report's narrative Johor-share sentence), same archive-filter method. All values cross-checked exactly against the LaporanPasaranHarta2021.pdf narrative (Johor 1,578 units / RM1.57bn; national SA overhang 24,295) - see VERIFICATION.md."}
+ ],
+ "notes": {
+  "pboScope": "IMPORTANT: the quarterly CBSA table (Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan) is explicitly titled '... BANGUNAN PEJABAT BINAAN KHAS (MILIK SWASTA) ...' i.e. PURPOSE-BUILT OFFICE, PRIVATELY-OWNED ONLY. It does NOT include government-owned office buildings. The Annual Property Market Report's PBO chart is explicitly titled 'Private & Government' (combined). These are two different scopes of the same NAPIC PBO series and must not be treated as interchangeable. This resolves what the task brief flagged as a 72% vs 78% conflict in second-hand sources — see VERIFICATION.md.",
+  "shoppingComplexVsCentre": "The CBSA file (and the underlying NAPIC classification) has two distinct retail tables: Table 2 'Kompleks Perniagaan / Shopping Complex' and Table 3 'Pusat Beli-Belah / Shopping Centre'. The task asked for 'Shopping Complex', which is Table 2 (larger national space than Table 3). Table 3 was read but is not reported in this draft since it is a narrower/different category, not a subtotal of Table 2. If 'Shopping Centre' is later found to be a required category, TABLE 3 data was already captured in the session (national MALAYSIA Q1 2026: 13,205.28 '000 s.m. existing, 10,155.06 '000 s.m. occupied, 76.90% occupancy, 499 buildings) and can be added on request.",
+  "unitConversion": "NAPIC reports commercial building space in '000 square metres (s.m.). Where this draft states a sqft-equivalent for cross-checking against a second-hand sqft figure, the conversion constant used is 1 sqm = 10.7639 sqft, and the derived sqft value is explicitly flagged basis='derived_unit_conversion'. All primary transcribed values are stored in the NAPIC native unit (sqm) or units (dwelling count), never pre-converted.",
+  "shopOverhangExists": "The task brief hypothesised NAPIC has no overhang/unsold indicator for shops. This is INCORRECT and is corrected here: Jadual Status Pasaran Harta Tanah Table 8 explicitly covers 'KEDAI' (Shop) alongside SOHO and Serviced Apartment, with an unsold-completed unit count and RM value, by state and price range. Shop overhang IS a published NAPIC indicator; it was simply absent from the specific report cited as the source for that claim in prior research. See VERIFICATION.md.",
+  "reviewCorrections_2026_08_12": "Human review of the source XLS files on 2026-08-12 found three source-citation offsets in the working draft (v1-draft2). In every case the underlying transcribed values were confirmed correct against the raw files — only the row/location metadata was mislabeled. (1) Table 8 state-block rows: the actual layout is TOTAL label row = Unit Launched, +1 row = Unsold Units, +2 rows = Value RM million — e.g. Malaysia's TOTAL block is r42/r43/r44, not 'r41-43' as the draft stated; the same +1 shift applies to every Table 8 row citation carried over from the draft (WP KL r80-82, WP Putrajaya r118-120, Selangor r194-196, Johor r232-234, Pulau Pinang r270-272), and to the by_state_annual row-offset formula (corrected below from start+34/35/36 to start+35/36/37). (2)-(3) shop_overhang_and_stock.existing_stock_q1_2026's source location was corrected: the MALAYSIA total row is TABLE 1 r27 (not r26 as drafted), and the state rows (WP KL etc.) are read from TABLE 2 r20 (not 'TABLE 1, state rows starting r9' as drafted). No numeric value in this file was changed as a result of this review; only source/row annotations were corrected."
+ },
+
+ "pbo_purpose_built_office": {
+  "current_period": {
+   "period": "Q1 2026",
+   "scope": "Privately-owned only (per source title 'MILIK SWASTA')",
+   "source": {"file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls", "sheet": "TABLE 1", "row": "MALAYSIA total row (r7) and state rows (r9-r39)"},
+   "unit": "'000 square metres unless noted",
+   "malaysia": {"total_existing_space_000sm": 18641.49, "space_occupied_000sm": 13486.07, "occupancy_rate_pct": 72.34, "available_space_000sm": 5155.42, "availability_rate_pct": 27.66, "total_buildings": 1287},
+   "wp_kuala_lumpur": {"total_existing_space_000sm": 9633.72, "space_occupied_000sm": 6923.76, "occupancy_rate_pct": 71.87, "available_space_000sm": 2709.96, "availability_rate_pct": 28.13, "total_buildings": 419},
+   "wp_putrajaya": {"total_existing_space_000sm": 410.57, "space_occupied_000sm": 253.79, "occupancy_rate_pct": 61.81, "available_space_000sm": 156.79, "availability_rate_pct": 38.19, "total_buildings": 12},
+   "selangor": {"total_existing_space_000sm": 4396.52, "space_occupied_000sm": 3142.33, "occupancy_rate_pct": 71.47, "available_space_000sm": 1254.19, "availability_rate_pct": 28.53, "total_buildings": 256},
+   "johor": {"total_existing_space_000sm": 977.67, "space_occupied_000sm": 539.21, "occupancy_rate_pct": 55.15, "available_space_000sm": 438.45, "availability_rate_pct": 44.85, "total_buildings": 89},
+   "pulau_pinang": {"total_existing_space_000sm": 759.23, "space_occupied_000sm": 586.95, "occupancy_rate_pct": 77.31, "available_space_000sm": 172.29, "availability_rate_pct": 22.69, "total_buildings": 100}
+  },
+  "national_annual_series_private_and_government": {
+   "note": "Source = Annual Property Market Report chart data tables (printed numbers below the chart, not pixel-estimated). Scope = Private & Government combined (differs from current_period which is private-only). Space in million s.m., rounded to 2dp as printed by NAPIC.",
+   "source_2017_2021": {"file": "LaporanPasaranHarta2021.pdf", "chart": "Chart 22 - Supply and Occupancy of Purpose-Built Office (Private & Government) 2017-2021"},
+   "source_2021_2025": {"file": "laporan-pasaran-harta-2025-1.pdf", "chart": "Chart 37 - Supply and Occupancy of Purpose-Built Office (Private & Government) 2021-2025"},
+   "crossCheck2021": "Both sources report 2021 identically (23.97 / 18.76 / 78.3%) - internal consistency confirmed.",
+   "series": [
+    {"year": 2016, "total_space_million_sm": null, "occupied_space_million_sm": null, "occupancy_rate_pct": null},
+    {"year": 2017, "total_space_million_sm": 21.50, "occupied_space_million_sm": 17.90, "occupancy_rate_pct": 83.3},
+    {"year": 2018, "total_space_million_sm": 21.84, "occupied_space_million_sm": 17.99, "occupancy_rate_pct": 82.4},
+    {"year": 2019, "total_space_million_sm": 22.59, "occupied_space_million_sm": 18.20, "occupancy_rate_pct": 80.6},
+    {"year": 2020, "total_space_million_sm": 23.18, "occupied_space_million_sm": 18.59, "occupancy_rate_pct": 80.2},
+    {"year": 2021, "total_space_million_sm": 23.97, "occupied_space_million_sm": 18.76, "occupancy_rate_pct": 78.3},
+    {"year": 2022, "total_space_million_sm": 24.30, "occupied_space_million_sm": 19.07, "occupancy_rate_pct": 78.5},
+    {"year": 2023, "total_space_million_sm": 24.88, "occupied_space_million_sm": 19.55, "occupancy_rate_pct": 78.5},
+    {"year": 2024, "total_space_million_sm": 25.12, "occupied_space_million_sm": 19.63, "occupancy_rate_pct": 78.1},
+    {"year": 2025, "total_space_million_sm": 24.51, "occupied_space_million_sm": 19.14, "occupancy_rate_pct": 78.1}
+   ],
+   "quarterly_2026": [
+    {"period": "Q1 2026", "scope": "Private-only (not Private&Government - not directly comparable to the annual series above)", "note": "See current_period.malaysia above for the Q1 2026 private-only figure: 18.64M sm total, 13.49M sm occupied, 72.34% occupancy."}
+   ]
+  },
+  "by_state_2025_private_and_government": {
+   "source": {"file": "laporan-pasaran-harta-2025-1.pdf", "chart": "Chart 38 - Supply and Occupancy of Purpose-Built Office (Private & Government) by State 2025"},
+   "unit": "square metres (not thousands)",
+   "wp_kuala_lumpur": {"total_space_sm": 10252030, "occupied_space_sm": 7442789, "occupancy_rate_pct": 72.6},
+   "selangor": {"total_space_sm": 4733414, "occupied_space_sm": 3467892, "occupancy_rate_pct": 73.3},
+   "wp_putrajaya": {"total_space_sm": 2542645, "occupied_space_sm": 2378314, "occupancy_rate_pct": 93.5},
+   "johor": {"total_space_sm": 1406628, "occupied_space_sm": 934581, "occupancy_rate_pct": 66.4}
+  }
+ },
+
+ "sc_shopping_complex": {
+  "current_period": {
+   "period": "Q1 2026",
+   "source": {"file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls", "sheet": "TABLE 2", "row": "MALAYSIA total row (r7) and state rows"},
+   "unit": "'000 square metres unless noted",
+   "malaysia": {"total_existing_space_000sm": 17359.51, "space_occupied_000sm": 13706.02, "occupancy_rate_pct": 78.95, "available_space_000sm": 3653.49, "availability_rate_pct": 21.05, "total_buildings": 993},
+   "wp_kuala_lumpur": {"total_existing_space_000sm": 3386.19, "space_occupied_000sm": 2977.98, "occupancy_rate_pct": 87.95, "available_space_000sm": 408.20, "availability_rate_pct": 12.05, "total_buildings": 115},
+   "wp_putrajaya": {"total_existing_space_000sm": 54.86, "space_occupied_000sm": 49.73, "occupancy_rate_pct": 90.65, "available_space_000sm": 5.13, "availability_rate_pct": 9.35, "total_buildings": 2},
+   "selangor": {"total_existing_space_000sm": 3885.27, "space_occupied_000sm": 3105.67, "occupancy_rate_pct": 79.93, "available_space_000sm": 779.60, "availability_rate_pct": 20.07, "total_buildings": 155},
+   "johor": {"total_existing_space_000sm": 2385.61, "space_occupied_000sm": 1756.93, "occupancy_rate_pct": 73.65, "available_space_000sm": 628.67, "availability_rate_pct": 26.35, "total_buildings": 146},
+   "pulau_pinang": {"total_existing_space_000sm": 1959.56, "space_occupied_000sm": 1382.42, "occupancy_rate_pct": 70.55, "available_space_000sm": 577.14, "availability_rate_pct": 29.45, "total_buildings": 100}
+  },
+  "national_annual_series": {
+   "note": "Source = Annual Property Market Report chart data tables (printed numbers below the chart). Space in million s.m., rounded to 2dp as printed by NAPIC.",
+   "source_2017_2021": {"file": "LaporanPasaranHarta2021.pdf", "chart": "Chart 20 - Supply and Occupancy of Shopping Complex 2017-2021"},
+   "source_2021_2025": {"file": "laporan-pasaran-harta-2025-1.pdf", "chart": "Chart 34 - Supply and Occupancy Rate of Shopping Complex 2021-2025"},
+   "crossCheck2021": "Both sources report 2021 identically (17.28 / 13.19 / 76.3%) - internal consistency confirmed.",
+   "series": [
+    {"year": 2016, "total_space_million_sm": null, "occupied_space_million_sm": null, "occupancy_rate_pct": null},
+    {"year": 2017, "total_space_million_sm": 15.52, "occupied_space_million_sm": 12.61, "occupancy_rate_pct": 81.3},
+    {"year": 2018, "total_space_million_sm": 15.97, "occupied_space_million_sm": 12.66, "occupancy_rate_pct": 79.3},
+    {"year": 2019, "total_space_million_sm": 16.51, "occupied_space_million_sm": 13.09, "occupancy_rate_pct": 79.2},
+    {"year": 2020, "total_space_million_sm": 16.85, "occupied_space_million_sm": 13.06, "occupancy_rate_pct": 77.5},
+    {"year": 2021, "total_space_million_sm": 17.28, "occupied_space_million_sm": 13.19, "occupancy_rate_pct": 76.3},
+    {"year": 2022, "total_space_million_sm": 17.51, "occupied_space_million_sm": 13.20, "occupancy_rate_pct": 75.4},
+    {"year": 2023, "total_space_million_sm": 17.69, "occupied_space_million_sm": 13.69, "occupancy_rate_pct": 77.4},
+    {"year": 2024, "total_space_million_sm": 17.97, "occupied_space_million_sm": 14.16, "occupancy_rate_pct": 78.8},
+    {"year": 2025, "total_space_million_sm": 17.41, "occupied_space_million_sm": 13.73, "occupancy_rate_pct": 78.9}
+   ],
+   "note_2025_buildings": "996 shopping complexes at 2025 year-end per narrative text (laporan-pasaran-harta-2025-1.pdf); 993 in the Q1 2026 CBSA table (current_period.malaysia.total_buildings above) - net change consistent with quarter-to-quarter churn."
+  },
+  "by_state_2025": {
+   "source": {"file": "laporan-pasaran-harta-2025-1.pdf", "chart": "Chart 35 - Supply and Occupancy of Shopping Complex by State 2025"},
+   "unit": "square metres (not thousands)",
+   "wp_kuala_lumpur": {"total_space_sm": 3423200, "occupied_space_sm": 3010571, "occupancy_rate_pct": 87.9},
+   "selangor": {"total_space_sm": 3903029, "occupied_space_sm": 3132390, "occupancy_rate_pct": 80.3},
+   "johor": {"total_space_sm": 2381955, "occupied_space_sm": 1751615, "occupancy_rate_pct": 73.5},
+   "pulau_pinang": {"total_space_sm": 1961003, "occupied_space_sm": 1391270, "occupancy_rate_pct": 70.9},
+   "wp_putrajaya": {"total_space_sm": 54864, "occupied_space_sm": 49733, "occupancy_rate_pct": 90.6}
+  },
+  "shopping_centre_distinct_category_captured_but_not_primary_ask": {
+   "note": "See notes.shoppingComplexVsCentre. Captured for completeness; not part of the task's core ask.",
+   "source": {"file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls", "sheet": "TABLE 3"},
+   "period": "Q1 2026",
+   "malaysia": {"total_existing_space_000sm": 13205.28, "space_occupied_000sm": 10155.06, "occupancy_rate_pct": 76.90, "total_buildings": 499}
+  }
+ },
+
+ "sa_serviced_apartment_overhang": {
+  "definition": "Unsold Completed Units (i.e. overhang), from Jadual Status Pasaran Harta Tanah Table 8. Distinct from Serviced Apartment TOTAL STOCK (see sa_soho_shop_existing_stock below, which is ~25x larger and must not be confused with overhang).",
+  "quarterly_official": [
+   {
+    "period": "Q3 2025",
+    "source": {"file": "Jadual Status Pasaran Harta Tanah Q3 2025_new.xls", "sheet": "TABLE 8", "rows": "MALAYSIA TOTAL block r42-44, WP KL r80-82, Selangor r194-196, Johor r232-234"},
+    "malaysia": {"unsold_units": 17892, "value_rm_million": 14478.187528},
+    "wp_kuala_lumpur": {"unsold_units": 4687, "value_rm_million": 4578.913828},
+    "selangor": {"unsold_units": 2095, "value_rm_million": 1223.135684},
+    "johor": {"unsold_units": 9018, "value_rm_million": 7624.191564},
+    "pulau_pinang": {"unsold_units": null, "value_rm_million": null, "note": "not transcribed for Q3 2025 - Penang not required for this cross-check period"}
+   },
+   {
+    "period": "Q4 2025",
+    "source": {"file": "Jadual Status Pasaran Harta Tanah Q4 2025.xls", "sheet": "TABLE 8", "rows": "MALAYSIA TOTAL block r42-44, WP KL r80-82, WP Putrajaya r118-120, Selangor r194-196, Johor r232-234, Pulau Pinang r270-272"},
+    "malaysia": {"unsold_units": 18752, "value_rm_million": 15424.902558},
+    "wp_kuala_lumpur": {"unsold_units": 3964, "value_rm_million": 4052.018883},
+    "wp_putrajaya": {"unsold_units": 38, "value_rm_million": 14.30206},
+    "selangor": {"unsold_units": 2473, "value_rm_million": 1364.91616},
+    "johor": {"unsold_units": 9477, "value_rm_million": 8353.540311},
+    "pulau_pinang": {"unsold_units": 265, "value_rm_million": 349.74686}
+   },
+   {
+    "period": "Q1 2026",
+    "source": {"file": "jadual-status-pasaran-harta-tanah-q1-2026-amended-15052026.xls", "sheet": "TABLE 8", "rows": "MALAYSIA TOTAL block r42-44, WP KL r80-82, WP Putrajaya r118-120, Selangor r194-196, Johor r232-234, Pulau Pinang r270-272"},
+    "malaysia": {"unsold_units": 19263, "value_rm_million": 16522.491245},
+    "wp_kuala_lumpur": {"unsold_units": 4181, "value_rm_million": 4732.109855},
+    "wp_putrajaya": {"unsold_units": 38, "value_rm_million": 14.30206},
+    "selangor": {"unsold_units": 2407, "value_rm_million": 1345.25256},
+    "johor": {"unsold_units": 9972, "value_rm_million": 8828.242196},
+    "pulau_pinang": {"unsold_units": 237, "value_rm_million": 307.46711}
+   }
+  ],
+  "national_annual_series": {
+   "note": "This is 'Overhang' as charted in the Annual Property Market Report; confirmed to equal 'Unsold Completed Units' from the quarterly Table 8 series above (2021 and 2025 values match exactly across the two data sources).",
+   "source_2017_2021": {"file": "LaporanPasaranHarta2021.pdf", "chart": "Chart 17 - Serviced Apartment Market Status 2017-2021 (row 'Overhang')"},
+   "source_2021_2025": {"file": "laporan-pasaran-harta-2025-1.pdf", "chart": "Chart 31 - Serviced Apartment Unsold Completed Units 2021-2025"},
+   "crossCheck": "2021 value matches exactly across both sources (24,295). 2025 value (18,752) matches exactly against the Q4 2025 quarterly official transcription above.",
+   "series": [
+    {"year": 2016, "unsold_units": null},
+    {"year": 2017, "unsold_units": 6364},
+    {"year": 2018, "unsold_units": 11371},
+    {"year": 2019, "unsold_units": 17142},
+    {"year": 2020, "unsold_units": 23606},
+    {"year": 2021, "unsold_units": 24295},
+    {"year": 2022, "unsold_units": 23978},
+    {"year": 2023, "unsold_units": 20825},
+    {"year": 2024, "unsold_units": 19564},
+    {"year": 2025, "unsold_units": 18752}
+   ],
+   "q1_2026": 19263
+  },
+  "by_state_2021_year_end": {
+   "source": {"file": "LaporanPasaranHarta2021.pdf", "chart": "Chart 18 - Serviced Apartment Market Status in Major States 2021 (row 'Overhang')"},
+   "wp_kuala_lumpur": 4695,
+   "selangor": 2302,
+   "johor": 16476,
+   "pulau_pinang": 285
+  }
+ },
+
+ "soho_overhang": {
+  "definition": "Unsold Completed SOHO units, from Jadual Status Pasaran Harta Tanah Table 8, SOHO column.",
+  "quarterly_official": [
+   {
+    "period": "Q4 2025",
+    "source": {"file": "Jadual Status Pasaran Harta Tanah Q4 2025.xls", "sheet": "TABLE 8"},
+    "malaysia": {"unsold_units": 2843, "value_rm_million": 1467.153456},
+    "wp_kuala_lumpur": {"unsold_units": 1124, "value_rm_million": 631.260802},
+    "wp_putrajaya": {"unsold_units": 0, "value_rm_million": 0.0},
+    "selangor": {"unsold_units": 200, "value_rm_million": 121.34145},
+    "johor": {"unsold_units": 377, "value_rm_million": 247.92706},
+    "pulau_pinang": {"unsold_units": 998, "value_rm_million": 421.8178}
+   },
+   {
+    "period": "Q1 2026",
+    "source": {"file": "jadual-status-pasaran-harta-tanah-q1-2026-amended-15052026.xls", "sheet": "TABLE 8"},
+    "malaysia": {"unsold_units": 2731, "value_rm_million": 1227.939056},
+    "wp_kuala_lumpur": {"unsold_units": 793, "value_rm_million": 325.632402},
+    "wp_putrajaya": {"unsold_units": 0, "value_rm_million": 0.0},
+    "selangor": {"unsold_units": 429, "value_rm_million": 190.22645},
+    "johor": {"unsold_units": 377, "value_rm_million": 247.92706},
+    "pulau_pinang": {"unsold_units": 994, "value_rm_million": 420.1466}
+   }
+  ],
+  "national_annual_series": {"note": "Not obtained. The two annual reports downloaded chart SA overhang alone (Chart 17/31) and SOHO is not broken out as its own multi-year chart nationally in either report examined; a combined 'Serviced Apartment/SOHO' chart exists only at Central Region level (Chart 17 of the Central Region chapter, laporan-pasaran-harta-2025-1.pdf, not national). Historical national SOHO-only overhang series = null across all years.", "series": []}
+ },
+
+ "shop_overhang_and_stock": {
+  "correction_of_task_premise": "See notes.shopOverhangExists above. Shop overhang IS published by NAPIC. Transcribed below.",
+  "unsold_completed_shops_quarterly": [
+   {
+    "period": "Q3 2025",
+    "source": {"file": "Jadual Status Pasaran Harta Tanah Q3 2025_new.xls", "sheet": "TABLE 8", "column": "SHOP Total", "rows": "MALAYSIA TOTAL block r42-44, WP KL r80-82, WP Putrajaya r118-120, Selangor r194-196, Johor r232-234, Pulau Pinang r270-272"},
+    "malaysia": {"unsold_units": 6447, "value_rm_million": 5564.4573289},
+    "wp_kuala_lumpur": {"unsold_units": 10, "value_rm_million": 3.5},
+    "wp_putrajaya": {"unsold_units": 6, "value_rm_million": 22.88847},
+    "selangor": {"unsold_units": 371, "value_rm_million": 575.251695},
+    "johor": {"unsold_units": 1074, "value_rm_million": 1026.721836},
+    "pulau_pinang": {"unsold_units": 193, "value_rm_million": 145.0286809},
+    "note": "Malaysia total exactly matches the pre-verified session anchor (6,447 / RM5,564.46M). This entry fills the gap flagged in draft1's VERIFICATION.md ('Q3 2025 shop state breakdown - not transcribed')."
+   },
+   {
+    "period": "Q4 2025",
+    "source": {"file": "Jadual Status Pasaran Harta Tanah Q4 2025.xls", "sheet": "TABLE 8", "column": "SHOP Total"},
+    "malaysia": {"unsold_units": 6492, "value_rm_million": 5461.810841},
+    "wp_kuala_lumpur": {"unsold_units": 10, "value_rm_million": 3.5},
+    "wp_putrajaya": {"unsold_units": 6, "value_rm_million": 22.88847},
+    "selangor": {"unsold_units": 514, "value_rm_million": 657.037896},
+    "johor": {"unsold_units": 1146, "value_rm_million": 1069.154093},
+    "pulau_pinang": {"unsold_units": 115, "value_rm_million": 96.000034}
+   },
+   {
+    "period": "Q1 2026",
+    "source": {"file": "jadual-status-pasaran-harta-tanah-q1-2026-amended-15052026.xls", "sheet": "TABLE 8", "column": "SHOP Total"},
+    "malaysia": {"unsold_units": 7023, "value_rm_million": 5648.102317},
+    "wp_kuala_lumpur": {"unsold_units": 10, "value_rm_million": 3.5},
+    "wp_putrajaya": {"unsold_units": 6, "value_rm_million": 22.88847},
+    "selangor": {"unsold_units": 363, "value_rm_million": 574.033034},
+    "johor": {"unsold_units": 1269, "value_rm_million": 1104.064593},
+    "pulau_pinang": {"unsold_units": 133, "value_rm_million": 109.271034}
+   }
+  ],
+  "unsold_completed_shops_annual_series": {
+   "note": "National 'Overhang' (= Unsold Completed Units) series, obtained without downloading extra files: read directly from the printed chart-data tables under Chart 15 of LaporanPasaranHarta2021.pdf (years 2017-2021) and Chart 26 of laporan-pasaran-harta-2025-1.pdf (years 2021-2025). The two sources overlap exactly at 2021 (6,612 both) - internal consistency confirmed. Every value 2021-2024 was independently re-confirmed against the by-state Q4 workbooks summing back to the same national total (see by_state_annual below) - full unit-for-unit match on all 4 years, see VERIFICATION.md.",
+   "source_2017_2021": {"file": "LaporanPasaranHarta2021.pdf", "chart": "Chart 15 - Shop Market Status 2017-2021 (row 'Overhang')"},
+   "source_2021_2025": {"file": "laporan-pasaran-harta-2025-1.pdf", "chart": "Chart 26 - Shop Unsold Completed Units 2021-2025"},
+   "series": [
+    {"year": 2016, "unsold_units": null},
+    {"year": 2017, "unsold_units": 4546},
+    {"year": 2018, "unsold_units": 5055},
+    {"year": 2019, "unsold_units": 6024},
+    {"year": 2020, "unsold_units": 6904},
+    {"year": 2021, "unsold_units": 6612},
+    {"year": 2022, "unsold_units": 6720},
+    {"year": 2023, "unsold_units": 6233},
+    {"year": 2024, "unsold_units": 5777},
+    {"year": 2025, "unsold_units": 6492}
+   ],
+   "q1_2026": 7023
+  },
+  "unsold_under_construction_and_not_constructed_annual_series": {
+   "note": "Supplementary pipeline indicators from the same charts as the overhang series above (Chart 15 of the 2021 report; Chart 27 of the 2025 report - 'Shop Unsold Units 2021-2025'). These are NOT overhang (overhang = completed and unsold); they are units still under construction, or not yet started, that are already unsold/unbooked. Not explicitly requested by the task brief but captured at zero extra cost from the same chart reads. 2021 values match exactly across both source charts (3,899 / 401) - internal consistency confirmed.",
+   "source_2017_2021": {"file": "LaporanPasaranHarta2021.pdf", "chart": "Chart 15 - Shop Market Status 2017-2021"},
+   "source_2021_2025": {"file": "laporan-pasaran-harta-2025-1.pdf", "chart": "Chart 27 - Shop Unsold Units 2021-2025"},
+   "series": [
+    {"year": 2017, "unsold_under_construction": 5889, "unsold_not_constructed": 332},
+    {"year": 2018, "unsold_under_construction": 7233, "unsold_not_constructed": 385},
+    {"year": 2019, "unsold_under_construction": 6232, "unsold_not_constructed": 336},
+    {"year": 2020, "unsold_under_construction": 5383, "unsold_not_constructed": 203},
+    {"year": 2021, "unsold_under_construction": 3899, "unsold_not_constructed": 401},
+    {"year": 2022, "unsold_under_construction": 2777, "unsold_not_constructed": 365},
+    {"year": 2023, "unsold_under_construction": 2852, "unsold_not_constructed": 456},
+    {"year": 2024, "unsold_under_construction": 3524, "unsold_not_constructed": 581},
+    {"year": 2025, "unsold_under_construction": 5317, "unsold_not_constructed": 686}
+   ]
+  },
+  "construction_activity_annual_series_national": {
+   "note": "Completion / Starts / New Planned Supply, national, units. From Chart 16 of the 2021 report (2020-2021) and Chart 28 of the 2025 report (2021-2025). 2021 values match exactly across both source charts (3,169 / 2,540 / 2,024) - internal consistency confirmed. Narrative YoY% for 2025 (Completion +73.6%, Starts +4.4%, New Planned Supply -1.5%) recomputes exactly from these figures.",
+   "source_2020_2021": {"file": "LaporanPasaranHarta2021.pdf", "chart": "Chart 16 - Shop Construction Activity (national)"},
+   "source_2021_2025": {"file": "laporan-pasaran-harta-2025-1.pdf", "chart": "Chart 28 - Shop Construction Activity 2021-2025 (national)"},
+   "series": [
+    {"year": 2020, "completion": 5421, "starts": 3294, "new_planned_supply": 4053},
+    {"year": 2021, "completion": 3169, "starts": 2540, "new_planned_supply": 2024},
+    {"year": 2022, "completion": 4000, "starts": 2746, "new_planned_supply": 3285},
+    {"year": 2023, "completion": 3371, "starts": 4165, "new_planned_supply": 4578},
+    {"year": 2024, "completion": 2911, "starts": 4952, "new_planned_supply": 5677},
+    {"year": 2025, "completion": 5054, "starts": 5168, "new_planned_supply": 5591}
+   ]
+  },
+  "by_state_annual": {
+   "note": "Shop overhang (unsold completed units) by state, year-end 2021-2024, transcribed from Table 8 of the four historical 'Jadual Status Pasaran Harta Tanah Q4 20XX.xls' files downloaded specifically for this deep-dive. Row offsets are identical across all years and match the Q3/Q4 2025 and Q1 2026 files already used elsewhere in this file: MALAYSIA start row 7, W.P. KUALA LUMPUR row 45, W.P. PUTRAJAYA row 83, SELANGOR row 159, JOHOR row 197, PULAU PINANG row 235; within each state block, TOTAL row = start+35 (Unit Launched), start+36 (Unsold Units), start+37 (Value RM million) [corrected 2026-08-12 review — originally drafted as start+34/35/36; e.g. Malaysia's TOTAL row is 7+35 = r42, not r41 — see notes.reviewCorrections_2026_08_12]; shop total = column index 11 (0-based). National totals for all 4 years reproduce the annual chart series above exactly (2021: 6,612; 2022: 6,720; 2023: 6,233; 2024: 5,777). The 2021 Johor value (1,578 units / RM1.5711bn) also matches the LaporanPasaranHarta2021.pdf narrative sentence exactly, and the 2024 KL/Selangor/Putrajaya values (11 / 397 / 8 units) match the YoY deltas stated in the 2025 report's Central Region chapter narrative (KL -9.1% to 10 in 2025, Selangor +29.5% to 514 in 2025, Putrajaya -25% to 6 in 2025) exactly. 2025 and Q1 2026 rows are the same figures already given in unsold_completed_shops_quarterly above (Q4 2025 = FY2025 year-end).",
+   "source_files": {
+    "2021": "Jadual Status Pasaran Harta Tanah Q4 2021.xls",
+    "2022": "Jadual Status Pasaran Harta Tanah Q4 2022.xls",
+    "2023": "Jadual Status Pasaran Harta Tanah Q4 2023.xls",
+    "2024": "Jadual Status Pasaran Harta Tanah Q4 2024.xls"
+   },
+   "sheet": "TABLE 8",
+   "series": [
+    {"year": 2021, "wp_kuala_lumpur": {"unsold_units": 66, "value_rm_million": 41.621}, "wp_putrajaya": {"unsold_units": 17, "value_rm_million": 60.650215}, "selangor": {"unsold_units": 566, "value_rm_million": 553.985732}, "johor": {"unsold_units": 1578, "value_rm_million": 1571.098386}, "pulau_pinang": {"unsold_units": 278, "value_rm_million": 166.25446}},
+    {"year": 2022, "wp_kuala_lumpur": {"unsold_units": 82, "value_rm_million": 50.0226}, "wp_putrajaya": {"unsold_units": 17, "value_rm_million": 60.650215}, "selangor": {"unsold_units": 404, "value_rm_million": 476.675972}, "johor": {"unsold_units": 1731, "value_rm_million": 1674.774376}, "pulau_pinang": {"unsold_units": 143, "value_rm_million": 91.5828}},
+    {"year": 2023, "wp_kuala_lumpur": {"unsold_units": 23, "value_rm_million": 8.05}, "wp_putrajaya": {"unsold_units": 9, "value_rm_million": 34.332705}, "selangor": {"unsold_units": 374, "value_rm_million": 439.14455}, "johor": {"unsold_units": 1517, "value_rm_million": 1537.276487}, "pulau_pinang": {"unsold_units": 94, "value_rm_million": 53.8375}},
+    {"year": 2024, "wp_kuala_lumpur": {"unsold_units": 11, "value_rm_million": 3.85}, "wp_putrajaya": {"unsold_units": 8, "value_rm_million": 30.51796}, "selangor": {"unsold_units": 397, "value_rm_million": 454.853438}, "johor": {"unsold_units": 1222, "value_rm_million": 1272.644051}, "pulau_pinang": {"unsold_units": 86, "value_rm_million": 49.1375}}
+   ]
+  },
+  "bonus_soho_sa_by_state_same_files": {
+   "note": "SOHO and Serviced Apartment overhang by state, 2021-2024, captured incidentally while reading Table 8 of the four historical files above for shops (same rows, different columns - SOHO = column index 13, Serviced Apartment = column index 14). Not the core ask but free to transcribe alongside. Malaysia-level SA totals for these years (24,295 / 23,978 / 20,825 / 19,564) exactly match sa_serviced_apartment_overhang.national_annual_series already in this file, and the 2021 by-state SA figures (KL 4,695 / Selangor 2,302 / Johor 16,476 / Penang 285) exactly match sa_serviced_apartment_overhang.by_state_2021_year_end already in this file - full cross-validation of the row-offset method used across both sections.",
+   "series": [
+    {"year": 2021,
+     "soho": {"malaysia": 2274, "wp_kuala_lumpur": 457, "wp_putrajaya": 0, "selangor": 1187, "johor": 426, "pulau_pinang": 60},
+     "serviced_apartment": {"malaysia": 24295, "wp_kuala_lumpur": 4695, "wp_putrajaya": 0, "selangor": 2302, "johor": 16476, "pulau_pinang": 285}
+    },
+    {"year": 2022,
+     "soho": {"malaysia": 2239, "wp_kuala_lumpur": 788, "wp_putrajaya": 0, "selangor": 944, "johor": 331, "pulau_pinang": 38},
+     "serviced_apartment": {"malaysia": 23978, "wp_kuala_lumpur": 6012, "wp_putrajaya": 0, "selangor": 2926, "johor": 14132, "pulau_pinang": 419}
+    },
+    {"year": 2023,
+     "soho": {"malaysia": 1686, "wp_kuala_lumpur": 709, "wp_putrajaya": 0, "selangor": 429, "johor": 347, "pulau_pinang": 35},
+     "serviced_apartment": {"malaysia": 20825, "wp_kuala_lumpur": 4806, "wp_putrajaya": 84, "selangor": 2065, "johor": 11710, "pulau_pinang": 311}
+    },
+    {"year": 2024,
+     "soho": {"malaysia": 1872, "wp_kuala_lumpur": 645, "wp_putrajaya": 0, "selangor": 490, "johor": 383, "pulau_pinang": 210},
+     "serviced_apartment": {"malaysia": 19564, "wp_kuala_lumpur": 4202, "wp_putrajaya": 81, "selangor": 2638, "johor": 10624, "pulau_pinang": 339}
+    }
+   ],
+   "unit": "unsold completed units (overhang), value fields omitted here for brevity - can be re-extracted from the same source files on request"
+  },
+  "existing_stock_q1_2026": {
+   "source": {"file": "Jadual Stok Harta Perdagangan Q1 2026.xls", "sheet": "TABLE 1 (MALAYSIA total row) / TABLE 2 (state rows)", "section": "EXISTING STOCK", "row": "MALAYSIA total row r27 (TABLE 1); state rows (WP KL, WP Putrajaya, Selangor, Johor, Pulau Pinang) r20 (TABLE 2) — corrected 2026-08-12 review; originally drafted as 'TABLE 1, MALAYSIA (r26) and state rows (starting r9)', see notes.reviewCorrections_2026_08_12"},
+   "unit": "units",
+   "note": "This is TOTAL STOCK (cumulative built units), not overhang. Includes all shop storey/type sub-columns summed to 'Total'.",
+   "malaysia": {"shops_total": 560624, "soho": 75329, "serviced_apartment": 484591},
+   "wp_kuala_lumpur": {"shops_total": 30973, "soho": 12266, "serviced_apartment": 153646},
+   "wp_putrajaya": {"shops_total": 538, "soho": 0, "serviced_apartment": 1204},
+   "selangor": {"shops_total": 114036, "soho": 52070, "serviced_apartment": 156513},
+   "johor": {"shops_total": 99298, "soho": 2928, "serviced_apartment": 110088},
+   "pulau_pinang": {"shops_total": 40204, "soho": 5657, "serviced_apartment": 11503}
+  },
+  "supply_pipeline_q1_2026": {
+   "note": "Full pipeline (existing stock through new planned supply) for shops, SOHO and Serviced Apartment, Q1 2026, national + 5 states. Transcribed from Jadual Stok Harta Perdagangan Q1 2026.xls, TABLE 1 (this is the same file already on disk and referenced in existing_stock_q1_2026 above - no new download needed; see existing_stock_q1_2026.source above for the corrected MALAYSIA/state row locations). Section row-blocks are exactly 21 rows apart, in the order EXISTING STOCK / COMPLETIONS / INCOMING SUPPLY / STARTS / PLANNED SUPPLY / NEW PLANNED SUPPLY. Shop total = column 14 (0-based), SOHO = column 16, Serviced Apartment = column 17. Existing-stock row cross-checked exactly against existing_stock_q1_2026 above (identical source cells, re-derived independently via a different script path - matches unit-for-unit). Narrative cross-check: laporan-pasaran-harta-2025-1.pdf states FY2025 year-end 'existing shops exceed 550,000 units, with nearly 21,000 units in the incoming supply and almost 15,000 units in the planned supply' - our Q1 2026 (one quarter later) existing stock 560,624 and incoming supply 21,564 are consistent with 'exceed 550,000' / 'nearly 21,000'; planned supply 13,625 is in the same order of magnitude as 'almost 15,000' but not an exact match, consistent with being a different quarter (Q1 2026 vs Q4 2025) rather than a discrepancy.",
+   "sheet": "TABLE 1",
+   "unit": "units",
+   "existing_stock": {
+    "malaysia": {"shop_total": 560624, "soho": 75329, "sa": 484591},
+    "wp_kuala_lumpur": {"shop_total": 30973, "soho": 12266, "sa": 153646},
+    "wp_putrajaya": {"shop_total": 538, "soho": 0, "sa": 1204},
+    "selangor": {"shop_total": 114036, "soho": 52070, "sa": 156513},
+    "johor": {"shop_total": 99298, "soho": 2928, "sa": 110088},
+    "pulau_pinang": {"shop_total": 40204, "soho": 5657, "sa": 11503}
+   },
+   "completions": {
+    "malaysia": {"shop_total": 783, "soho": 129, "sa": 1888},
+    "wp_kuala_lumpur": {"shop_total": 0, "soho": 0, "sa": 476},
+    "wp_putrajaya": {"shop_total": 0, "soho": 0, "sa": 0},
+    "selangor": {"shop_total": 135, "soho": 129, "sa": 1125},
+    "johor": {"shop_total": 236, "soho": 0, "sa": 0},
+    "pulau_pinang": {"shop_total": 9, "soho": 0, "sa": 0}
+   },
+   "incoming_supply": {
+    "malaysia": {"shop_total": 21564, "soho": 17444, "sa": 198348},
+    "wp_kuala_lumpur": {"shop_total": 605, "soho": 3362, "sa": 50918},
+    "wp_putrajaya": {"shop_total": 0, "soho": 0, "sa": 671},
+    "selangor": {"shop_total": 5443, "soho": 11471, "sa": 65091},
+    "johor": {"shop_total": 5702, "soho": 1114, "sa": 42998},
+    "pulau_pinang": {"shop_total": 1302, "soho": 351, "sa": 12009}
+   },
+   "starts": {
+    "malaysia": {"shop_total": 942, "soho": 0, "sa": 8768},
+    "wp_kuala_lumpur": {"shop_total": 0, "soho": 0, "sa": 5541},
+    "wp_putrajaya": {"shop_total": 0, "soho": 0, "sa": 0},
+    "selangor": {"shop_total": 373, "soho": 0, "sa": 655},
+    "johor": {"shop_total": 179, "soho": 0, "sa": 1132},
+    "pulau_pinang": {"shop_total": 7, "soho": 0, "sa": 709}
+   },
+   "planned_supply": {
+    "malaysia": {"shop_total": 13625, "soho": 12672, "sa": 110695},
+    "wp_kuala_lumpur": {"shop_total": 130, "soho": 3495, "sa": 47622},
+    "wp_putrajaya": {"shop_total": 48, "soho": 0, "sa": 940},
+    "selangor": {"shop_total": 1902, "soho": 4131, "sa": 23263},
+    "johor": {"shop_total": 3336, "soho": 2272, "sa": 18712},
+    "pulau_pinang": {"shop_total": 831, "soho": 640, "sa": 7604}
+   },
+   "new_planned_supply": {
+    "malaysia": {"shop_total": 823, "soho": 0, "sa": 6961},
+    "wp_kuala_lumpur": {"shop_total": 0, "soho": 0, "sa": 5851},
+    "wp_putrajaya": {"shop_total": 0, "soho": 0, "sa": 0},
+    "selangor": {"shop_total": 170, "soho": 0, "sa": 0},
+    "johor": {"shop_total": 285, "soho": 0, "sa": 860},
+    "pulau_pinang": {"shop_total": 0, "soho": 0, "sa": 0}
+   }
+  },
+  "transactions": {
+   "note": "Shop-specific transaction data WAS located in draft2 (correcting draft1's 'not shop-specific' gap) - see shops_national_annual_series and shops_by_state_2025 below. The all-commercial-subsector aggregate from draft1 is retained for context but should not be used as a shop figure.",
+   "all_commercial_subsectors_2025": {
+    "source": {"file": "laporan-pasaran-harta-2025-1.pdf", "section": "2.2 HARTA TANAH KOMERSIAL / 2.2 COMMERCIAL PROPERTY, narrative text"},
+    "volume_transactions": 46649,
+    "value_rm_billion": 58.70,
+    "yoy_volume_change_pct": 1.4,
+    "yoy_value_change_pct": 1.1,
+    "prior_year_2024": {"volume_transactions": 45985, "value_rm_billion": 58.06}
+   },
+   "shops_national_annual_series": {
+    "note": "Shop sub-sector only ('Kedai / Shop (1-6.5 storey and Pre-war Shop)'), national. From Chart 24/25 of laporan-pasaran-harta-2025-1.pdf and confirmed against the same report's narrative text (2025: 19,551 transactions worth RM19.85bn, 2024: 19,771 / RM19.26bn - matches chart exactly). 2021 value (11,574 / RM9.57bn) also matches LaporanPasaranHarta2021.pdf's narrative figure (11,574 transactions worth RM9.6 billion, minor rounding difference RM9.57bn chart vs RM9.6bn narrative prose).",
+    "source": {"file": "laporan-pasaran-harta-2025-1.pdf", "chart": "Chart 24 (Volume) / Chart 25 (Value) - Shop Transactions 2021-2025"},
+    "series": [
+     {"year": 2021, "volume": 11574, "value_rm_billion": 9.57},
+     {"year": 2022, "volume": 16862, "value_rm_billion": 14.19},
+     {"year": 2023, "volume": 18437, "value_rm_billion": 16.10},
+     {"year": 2024, "volume": 19771, "value_rm_billion": 19.26},
+     {"year": 2025, "volume": 19551, "value_rm_billion": 19.85}
+    ]
+   },
+   "shops_by_state_2025": {
+    "note": "Only Johor and Selangor are given as explicit absolute figures in the narrative text (national ranking commentary); other states not broken out to absolutes in the sections read. Storey-type split is also national, not by-state.",
+    "source": {"file": "laporan-pasaran-harta-2025-1.pdf", "section": "2.2.1 Kedai / Shop, narrative text"},
+    "national_total_2025": {"volume": 19551, "value_rm_billion": 19.85},
+    "johor": {"volume": 4219, "value_rm_billion": 4.67, "volume_share_pct": 21.6, "value_share_pct": 23.5},
+    "selangor": {"volume": 3863, "value_rm_billion": 5.89, "volume_share_pct": 19.8, "value_share_pct": 29.7},
+    "storey_type_2025_national": {"note": "Not by-state - national split by shop storey type", "two_to_two_half_storey": {"volume": 10473, "share_pct": ">50"}, "three_to_three_half_storey": {"volume": 5379, "share_pct": 27.5}}
+   },
+   "shops_by_state_2021": {
+    "note": "Same narrative-derived pattern for 2021, from LaporanPasaranHarta2021.pdf, for historical comparison against the 2025 by-state figures above.",
+    "source": {"file": "LaporanPasaranHarta2021.pdf", "section": "2.2.1 Kedai / Shop, narrative text"},
+    "national_total_2021": {"volume": 11574, "value_rm_billion": 9.6},
+    "selangor": {"volume": 2135, "value_rm_billion": 2.8, "volume_share_pct": 18.4, "value_share_pct": 29.3},
+    "johor": {"volume": 1946, "value_rm_billion": 1.4, "volume_share_pct": 16.8, "value_share_pct": 15.1},
+    "storey_type_2021_national": {"two_to_two_half_storey": {"volume": 6023, "share_pct": 52.0}, "three_to_three_half_storey": {"volume": 3324, "share_pct": 28.7}}
+   },
+   "central_region_2025_supplementary": {
+    "note": "The 2025 report's Central Region chapter (Selangor+KL+Putrajaya combined) gives a regional shop transaction subtotal with KL and Putrajaya shares that are not stated as national absolutes elsewhere. Included for completeness; KL/Putrajaya absolute counts below are DERIVED (region total x state share%), not directly printed - flagged accordingly.",
+    "source": {"file": "laporan-pasaran-harta-2025-1.pdf", "section": "Central Region chapter, 'a. Kedai / a. Shop'"},
+    "central_region_total_2025": {"volume": 4715, "value_rm_billion": 8.29},
+    "selangor_share_of_region": {"volume_share_pct": 81.9, "value_share_pct": 71.0},
+    "wp_kuala_lumpur_share_of_region": {"volume_share_pct": 17.0, "value_share_pct": 27.2, "derived_volume_approx": 802, "derived_value_rm_billion_approx": 2.255, "basis": "derived_from_regional_total_and_share_pct"},
+    "wp_putrajaya_share_of_region": {"volume_share_pct": 1.1, "value_share_pct": 1.8, "derived_volume_approx": 52, "derived_value_rm_billion_approx": 0.149, "basis": "derived_from_regional_total_and_share_pct"}
+   }
+  },
+  "price_and_rental_narrative_2025": {
+   "note": "NAPIC's annual report does not carry a shop price INDEX or average-price table; price/rental commentary is qualitative, citing specific schemes as illustrative examples. Captured here as narrative context only, not a structured time series - do not treat any of these as a market-wide average.",
+   "source": {"file": "laporan-pasaran-harta-2025-1.pdf", "section": "2.2.1 Kedai / Shop, 'Harga' (Price) and 'Sewa' (Rental) narrative"},
+   "price_examples": [
+    "WP Kuala Lumpur: double-storey shops in Lucky Garden, Bandar Manjalara, and Taman Shamelin Perkasa recorded price increases of 17%, 12.8%, and 14.7% respectively.",
+    "Selangor, Johor and Pulau Pinang: double- and three-storey shop market prices showed marginal increases across several districts; some other schemes showed a downward trend, mostly less than 10%."
+   ],
+   "rental_examples": [
+    "WP Kuala Lumpur: highest rentals nationally, up to RM30,000/month at Changkat Bukit Bintang; Jalan Tuanku Abdul Rahman RM17,000-RM34,000/month; Bangsar Baru RM15,000-RM19,000/month.",
+    "Selangor: upward rental movement in Petaling and Hulu Langat districts; Bandar Setia Alam highest at RM7,000-RM8,500/month.",
+    "Johor Bahru: Jalan Tun Abdul Razak rental +7.7% to RM3,000-RM4,000/month; Jalan Wong Ah Fook highest in the district at RM7,500-RM9,500/month.",
+    "Pulau Pinang: Jalan Perak (Timur Laut district) rental +8.4% to RM3,500-RM4,700/month; Seberang Perai Tengah/Utara/Selatan rentals up 2.2%-15.2%."
+   ]
+  }
+ }
+}

@@ -30,6 +30,7 @@ var MARKETS = [
       { href: '/penang-check',      en: 'Penang Scorecards', zh: '檳城評分卡',    also: ['/penang/'] },
       { href: '/jb-check',          en: 'JB Scorecards',     zh: '新山評分卡',    also: ['/jb/'] },
       { href: '/my/report',         en: 'Market Report',     zh: '市場報告' },
+      { href: '/my/commercial',     en: 'Commercial',        zh: '商業' },
       { href: '/my/macro',          en: 'Macro',             zh: '總經' },
       { href: '/my/airbnb',         en: 'Airbnb / STRA',     zh: '短租' },
       { href: '/my/reit-vs-direct', en: 'REITs vs Property', zh: 'REIT vs 房產' },
