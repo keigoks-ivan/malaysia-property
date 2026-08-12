@@ -70,6 +70,30 @@
    "sheetsUsed": [
     "TABLE 8 (state block: W.P. KUALA LUMPUR)"
    ]
+  },
+  {
+   "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2025.xls",
+   "publication": "CBSA — Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan (Commercial Building Space Occupancy and Availability Table), Q1 2025",
+   "sheetsUsed": [
+    "TABLE 1.1 (PBO, W.P. Kuala Lumpur)"
+   ],
+   "note": "Downloaded 2026-08-12 specifically to build a 4-quarter City Centre vs Outside City Centre occupancy history (see historical_cbsa_office_occupancy_kl below); PBO sheet only, retail sheets not needed for this purpose and not transcribed from this file."
+  },
+  {
+   "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q3 2025.xls",
+   "publication": "CBSA — Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan (Commercial Building Space Occupancy and Availability Table), Q3 2025",
+   "sheetsUsed": [
+    "TABLE 1.1 (PBO, W.P. Kuala Lumpur)"
+   ],
+   "note": "Downloaded 2026-08-12, same purpose as the Q1 2025 file above. Q2 2025 was not published/located within the research window and is not part of the history series."
+  },
+  {
+   "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q4 2025.xls",
+   "publication": "CBSA — Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan (Commercial Building Space Occupancy and Availability Table), Q4 2025",
+   "sheetsUsed": [
+    "TABLE 1.1 (PBO, W.P. Kuala Lumpur)"
+   ],
+   "note": "Downloaded 2026-08-12, same purpose as the Q1 2025 file above."
   }
  ],
  "notes": {
@@ -79,7 +103,8 @@
   "ndPrecincts": "5 precincts (Stadium Area, Taman Tun Dr Ismail, Jalan Klang Lama, Jalan Pahang, Jalan Sentul) show zero existing space in both Shopping Complex and Shopping Centre tables for Q1 2026, with occupancy_rate_pct/availability_rate_pct recorded by NAPIC as 'ND'/'NA' respectively (transcribed here as null) — i.e. these precincts currently have no shopping complex/centre stock recorded, not a data-quality gap.",
   "pboPrecinctGranularity": "Unlike the retail tables' 24-precinct breakdown, the PBO (Purpose-Built Office) sub-district table for W.P. Kuala Lumpur (Table 1.1) only splits into 2 precincts: 'City Centre (Seksyen 1-100, Bandar KL)' and 'Outside City Centre (Luar Seksyen 1-100, Bandar KL)'. This is the full granularity NAPIC publishes for KL office space — not a truncation on this file's part.",
   "stockPipelineSubAreas": "The Jadual Stok Harta Perdagangan TABLE 2 sub-area names (Bandar Kuala Lumpur, Bandar Petaling Jaya, Mukim Ampang, Mukim Batu, Mukim Cheras, Mukim Hulu Kelang, Mukim Kuala Lumpur, Mukim Petaling, Mukim Setapak) are NAPIC's own mukim/administrative-area classification for tracking supply pipeline, and are NOT the same set of names as the CBSA occupancy tables' 24 commercial precincts (e.g. 'Bangsar', 'Bukit Bintang'). The two classification schemes should not be merged or cross-mapped without further verification; they are kept as separate datasets in this file (subdistricts vs pipeline.subdistricts).",
-  "anchorVerification_2026_08_12": "All anchors given in the task brief were checked and matched exactly, to the unit: SOHO overhang 2021=457, 2022=788, 2024=645, Q4 2025=1124, Q1 2026=793; Shop overhang 2021=66, 2022=82, 2024=11, Q4 2025=10, Q1 2026=10; SA overhang 2021=4695, Q3 2025=4687, Q4 2025=3964, Q1 2026=4181; supply-pipeline existing stock shop=30973/SOHO=12266/SA=153646. No discrepancies found on any anchor. New values obtained (not pre-verified in the brief): 2023 shop=23/SOHO=709/SA=4806; Q3 2025 shop=10/SOHO=1127; 2022 SA=6012; 2024 SA=4202."
+  "anchorVerification_2026_08_12": "All anchors given in the task brief were checked and matched exactly, to the unit: SOHO overhang 2021=457, 2022=788, 2024=645, Q4 2025=1124, Q1 2026=793; Shop overhang 2021=66, 2022=82, 2024=11, Q4 2025=10, Q1 2026=10; SA overhang 2021=4695, Q3 2025=4687, Q4 2025=3964, Q1 2026=4181; supply-pipeline existing stock shop=30973/SOHO=12266/SA=153646. No discrepancies found on any anchor. New values obtained (not pre-verified in the brief): 2023 shop=23/SOHO=709/SA=4806; Q3 2025 shop=10/SOHO=1127; 2022 SA=6012; 2024 SA=4202.",
+  "historicalOfficeOccupancy_2026_08_12": "Built to test whether the Q1 2026 City Centre vs Outside City Centre occupancy gap (6.8pp) is a new/widening pattern or business-as-usual, time-boxed to a single research pass. Method: located the working NAPIC CBSA download URL pattern from an already-cached page in this session's scratchpad, generalised it to https://napic.jpph.gov.my/storage/app/media//3-penerbitan/Shahrul/Bahagian%20Inventori%20Harta%20Tanah/Laporan%20Jadual%20CBSA/{Quarter%20Year}/Jadual%20Penghunian%20dan%20Ketersediaan%20Ruang%20Bangunan%20Perdagangan%20{Quarter%20Year}.xls, and successfully downloaded Q1 2025, Q3 2025 and Q4 2025 (HTTP 200 on first attempt for all three; Q1 2026 was already on disk from the companion transcription task). Q2 2025 was not located/attempted within the time-box and is not part of this series — the 4 points below are Q1'25/Q3'25/Q4'25/Q1'26 only, not a complete quarterly run. Parsed with xlrd; TABLE 1.1 rows 7/9/11 (0-indexed 6/8/10) confirmed as W.P KUALA LUMPUR total/City Centre/Outside City Centre for every file by title-row text match, same convention as pbo_purpose_built_office above. Q1 2026 values reproduced from this history (73.38356446611137% / 66.62985851403141%) were cross-checked against pbo_purpose_built_office.precincts above and match to full float precision — confirms both extractions read the same source cells."
  },
  "pbo_purpose_built_office": {
   "period": "Q1 2026",
@@ -2320,6 +2345,106 @@
    "file": "annual2025.txt (transcribed from Laporan Pasaran Harta Tanah 2025 PDF)",
    "section": "2.2.4 Pejabat Binaan Khas / Purpose-Built Office — Kadar Penghunian dan Ketersediaan Ruang / Occupancy and Space Availability",
    "linesInTranscript": "2305-2324"
+  }
+ },
+ "historical_cbsa_office_occupancy_kl": {
+  "purpose": "4-quarter City Centre vs Outside City Centre occupancy history, built 2026-08-12 to test whether the Q1 2026 6.8pp gap is a new/widening pattern — see notes.historicalOfficeOccupancy_2026_08_12 for method. Q2 2025 not located within the research window; this is not a complete quarterly run.",
+  "scope": "Privately-owned only, same scope as pbo_purpose_built_office above.",
+  "unit": "'000 square metres unless noted",
+  "periods": [
+   {
+    "period": "Q1 2025",
+    "kl_total": {"total_existing_space_000sm": 9578.66, "space_occupied_000sm": 6794.91, "occupancy_rate_pct": 70.94},
+    "city_centre": {"total_existing_space_000sm": 7462.34, "space_occupied_000sm": 5375.64, "occupancy_rate_pct": 72.04},
+    "outside_city_centre": {"total_existing_space_000sm": 2116.31, "space_occupied_000sm": 1419.27, "occupancy_rate_pct": 67.06},
+    "gap_pp": {"value": 4.97, "basis": "derived: city_centre.occupancy_rate_pct - outside_city_centre.occupancy_rate_pct, full-precision 72.03686938 - 67.06331581 = 4.97355357"},
+    "source": {"file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2025.xls", "sheet": "TABLE 1.1", "rows": "7 (kl_total), 9 (city_centre), 11 (outside_city_centre)"}
+   },
+   {
+    "period": "Q3 2025",
+    "kl_total": {"total_existing_space_000sm": 9634.63, "space_occupied_000sm": 6844.92, "occupancy_rate_pct": 71.04},
+    "city_centre": {"total_existing_space_000sm": 7520.87, "space_occupied_000sm": 5422.97, "occupancy_rate_pct": 72.11},
+    "outside_city_centre": {"total_existing_space_000sm": 2113.76, "space_occupied_000sm": 1421.95, "occupancy_rate_pct": 67.27},
+    "gap_pp": {"value": 4.83, "basis": "derived: 72.10563189 - 67.27118327 = 4.83444862"},
+    "source": {"file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q3 2025.xls", "sheet": "TABLE 1.1", "rows": "7 (kl_total), 9 (city_centre), 11 (outside_city_centre)"}
+   },
+   {
+    "period": "Q4 2025",
+    "kl_total": {"total_existing_space_000sm": 9662.34, "space_occupied_000sm": 6854.75, "occupancy_rate_pct": 70.94},
+    "city_centre": {"total_existing_space_000sm": 7500.26, "space_occupied_000sm": 5417.57, "occupancy_rate_pct": 72.23},
+    "outside_city_centre": {"total_existing_space_000sm": 2162.09, "space_occupied_000sm": 1437.18, "occupancy_rate_pct": 66.47},
+    "gap_pp": {"value": 5.76, "basis": "derived: 72.23178782 - 66.47190097 = 5.75988685"},
+    "source": {"file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q4 2025.xls", "sheet": "TABLE 1.1", "rows": "7 (kl_total), 9 (city_centre), 11 (outside_city_centre)"}
+   },
+   {
+    "period": "Q1 2026",
+    "kl_total": {"total_existing_space_000sm": 9633.72, "space_occupied_000sm": 6923.76, "occupancy_rate_pct": 71.87},
+    "city_centre": {"total_existing_space_000sm": 7474.78, "space_occupied_000sm": 5485.26, "occupancy_rate_pct": 73.38},
+    "outside_city_centre": {"total_existing_space_000sm": 2158.94, "space_occupied_000sm": 1438.5, "occupancy_rate_pct": 66.63},
+    "gap_pp": {"value": 6.75, "basis": "derived: 73.38356447 - 66.62985851 = 6.75370595 (rounds to the 6.8pp cited elsewhere in this file/on the page)"},
+    "note": "Identical source cells as pbo_purpose_built_office.precincts above (this is a duplicate read of the same Q1 2026 file, kept here for a self-contained time series); values cross-checked and match to full float precision.",
+    "source": {"file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls", "sheet": "TABLE 1.1", "rows": "7 (kl_total), 9 (city_centre), 11 (outside_city_centre)"}
+   }
+  ],
+  "trajectoryNote": "Gap narrowed slightly Q1'25 to Q3'25 (4.97pp to 4.83pp), then widened in each of the two subsequent readings (5.76pp, then 6.75pp). That is two consecutive quarters of widening as of Q1 2026, not three — read as 'worth watching', not yet as a confirmed accelerating trend."
+ },
+ "annual_report_2025_kl_office_price_narrative": {
+  "period": "2025 annual (as reported in Laporan Pasaran Harta Tanah 2025)",
+  "note": "Qualitative price narrative for named WP Kuala Lumpur office buildings, not a structured price index — NAPIC does not publish one for offices at this granularity. Figures are price-per-square-metre transaction ranges as stated in the source text.",
+  "wp_kuala_lumpur_named_transactions": [
+   {"property": "Pavilion Damansara Heights", "location": "Damansara Heights", "price_range_rm_per_sm": [15300, 16400]},
+   {"property": "Suasana Bukit Ceylon", "location": "Bukit Ceylon (city centre)", "price_range_rm_per_sm": [15300, 21500]},
+   {"property": "KL Eco City", "location": "Bangsar corridor / KL Eco City", "price_range_rm_per_sm": [13300, 19000]}
+  ],
+  "narrativeVerbatim_en": "Office unit prices across major states exhibited mixed trends during the review period. Transaction activity remained concentrated in major states, particularly in WP Kuala Lumpur and Selangor, with WP Kuala Lumpur commanding the highest prices. Several notable transaction prices included Pavilion Damansara Heights transacted between RM15,300 p.s.m. and RM16,400 p.s.m., Suasana Bukit Ceylon (RM15,300 to RM21,500 p.s.m.), and KL Eco City at (RM13,300 p.s.m. to RM19,000 p.s.m.).",
+  "source": {
+   "file": "annual2025.txt (transcribed from Laporan Pasaran Harta Tanah 2025 PDF)",
+   "section": "2.2.4 Pejabat Binaan Khas / Purpose-Built Office — Harga / Price",
+   "linesInTranscript": "2511-2531"
+  }
+ },
+ "annual_report_2025_kl_office_rental_narrative": {
+  "period": "2025 annual (as reported in Laporan Pasaran Harta Tanah 2025)",
+  "note": "Qualitative rental narrative for named WP Kuala Lumpur office buildings with >8% rental increases in the review period, not a structured rental index. The same source paragraph explicitly states other, unnamed buildings saw rental declines in the same period — the increases below are not evidence of a uniform market-wide rise.",
+  "wp_kuala_lumpur_buildings_gt8pct_rental_increase": [
+   {"property": "Petronas Twin Tower", "location": "KLCC"},
+   {"property": "UOA Centre", "location": "Golden Triangle"},
+   {"property": "Menara JKG", "location": "Jalan Raja Laut / Chow Kit (old city centre); street address 282 Jalan Raja Laut — corrected 2026-08-12 from an earlier mistaken 'Jalan Semarak' label (location labels here are editorial additions, not NAPIC data)"},
+   {"property": "Pertama Complex", "location": "Jalan TAR / Chow Kit (old city centre); building dates from the 1970s"}
+  ],
+  "narrativeVerbatim_en": "The office rental market continued to show stable conditions, underpinned by selective demand, and strategically located spaces. In the Klang Valley, rental movements were generally moderate across the submarket. Several prominent buildings in WP Kuala Lumpur, including Petronas Twin Tower, UOA Centre, Menara JKG, and Pertama Complex, recorded rental increases of over 8%. However, some other buildings experienced rental declines during the review period.",
+  "source": {
+   "file": "annual2025.txt (transcribed from Laporan Pasaran Harta Tanah 2025 PDF)",
+   "section": "2.2.4 Pejabat Binaan Khas / Purpose-Built Office — Sewa / Rental",
+   "linesInTranscript": "2532-2543"
+  }
+ },
+ "annual_report_2025_office_completions_table5": {
+  "period": "Calendar year 2025 completions, as reported in NAPIC Laporan Pasaran Harta Tanah 2025, Table 5 'Summary of Completions 2025'",
+  "note": "Nationwide table (12 buildings); WP Kuala Lumpur rows 1-3 transcribed in full, other states' rows included for the verified national total only. Sum of nett_lettable_area_sm across all 12 rows verified by manual addition to equal the source's own printed total of 312,815 sm exactly.",
+  "wp_kuala_lumpur_completions": [
+   {"rank_in_table": 1, "property": "TNB Gold", "location": "Jalan Pantai Baharu", "category": "Private Building", "nett_lettable_area_sm": 48330},
+   {"rank_in_table": 2, "property": "Oxley Towers", "location": "Jalan Ampang", "category": "Private Building", "nett_lettable_area_sm": 33000},
+   {"rank_in_table": 3, "property": "The Exchange TRX Campus Office", "location": "Persiaran TRX Timur, Tun Razak Exchange", "category": "Private Building", "nett_lettable_area_sm": 25529}
+  ],
+  "other_states_completions": [
+   {"rank_in_table": 4, "state": "Selangor", "property": "Sunway Square Corporate Tower 2", "nett_lettable_area_sm": 50074},
+   {"rank_in_table": 5, "state": "Selangor", "property": "Sunway Square Corporate Tower 1", "nett_lettable_area_sm": 40180},
+   {"rank_in_table": 6, "state": "Selangor", "property": "Menara Sunsuria @ Sunsuria Forum", "nett_lettable_area_sm": 32906},
+   {"rank_in_table": 7, "state": "Johor", "property": "Mid Valley Southkey Office Tower (South Tower)", "nett_lettable_area_sm": 28200},
+   {"rank_in_table": 8, "state": "Johor", "property": "Majlis Perbandaran Kluang", "category": "Government Building", "nett_lettable_area_sm": 10309},
+   {"rank_in_table": 9, "state": "Perak", "property": "Oxpoint Office Tower @ Piccadilly Greentown", "nett_lettable_area_sm": 4838},
+   {"rank_in_table": 10, "state": "Pulau Pinang", "property": "Ideal MSC Tower", "nett_lettable_area_sm": 30915},
+   {"rank_in_table": 11, "state": "Pulau Pinang", "property": "Bangunan Kementerian Sumber Manusia Pulau Pinang", "category": "Government Building", "nett_lettable_area_sm": 1545},
+   {"rank_in_table": 12, "state": "Sarawak", "property": "Unifor Complex", "category": "Government Building", "nett_lettable_area_sm": 6989}
+  ],
+  "total_buildings": 12,
+  "total_nett_lettable_area_sm": 312815,
+  "wp_kuala_lumpur_share_of_national_completions_pct": {"value": 34.2, "basis": "derived: (48330+33000+25529) / 312815 = 106859 / 312815 = 0.341604... = 34.2%"},
+  "source": {
+   "file": "annual2025.txt (transcribed from Laporan Pasaran Harta Tanah 2025 PDF)",
+   "section": "2.2.4 Pejabat Binaan Khas / Purpose-Built Office — Table 5 'Summary of Completions 2025'",
+   "linesInTranscript": "2464-2507"
   }
  }
 }
