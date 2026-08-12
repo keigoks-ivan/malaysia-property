@@ -1,0 +1,2292 @@
+{
+ "schema": "napic-kl-commercial/v1",
+ "lastUpdated": "2026-08-12",
+ "purpose": "Vetted transcription of NAPIC official commercial property indicators SPECIFIC TO KUALA LUMPUR sub-district / precinct level, and KL-only historical overhang and supply-pipeline series, for use on myproperty.investmquest.com. Companion file to data/napic-commercial.json (state-level national comparison, produced by a separate concurrent session) — this file goes one level deeper, into KL's own internal precinct breakdown. Produced 2026-08-12 by transcribing already-downloaded NAPIC quarterly Excel tables; no new downloads were made. Promoted to v1 on 2026-08-12 after human spot-check of sub-district cells and new history values against the source XLS.",
+ "discipline": "Every value is transcribed directly from a cell in one of the official NAPIC quarterly Excel tables listed in rawFilesUsed below (already downloaded to disk for a companion transcription task). Nothing is interpolated, estimated, smoothed, or sourced from any second-hand republication. Missing/not-disclosed by NAPIC ('ND'/'NA' in source cells, meaning the precinct has no stock in that category) = null. Every value carries a source.file/sheet/row citation. No derived values appear in this file except where explicitly flagged with a 'basis' field.",
+ "rawFilesUsed": [
+  {
+   "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+   "publication": "CBSA — Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan (Commercial Building Space Occupancy and Availability Table), Q1 2026",
+   "sheetsUsed": [
+    "TABLE 1.1 (PBO, W.P. Kuala Lumpur)",
+    "TABLE 2.1 (Shopping Complex, W.P. Kuala Lumpur)",
+    "TABLE 3.1 (Shopping Centre, W.P. Kuala Lumpur)"
+   ],
+   "note": "Table 1.x/2.x/3.x are per-state sub-tables; TABLE 1.1/2.1/3.1 confirmed as the W.P. Kuala Lumpur sheet by reading each sheet's title row (title text explicitly states 'DI W.P KUALA LUMPUR' / 'DI W.P. KUALA LUMPUR')."
+  },
+  {
+   "file": "Jadual Stok Harta Perdagangan Q1 2026.xls",
+   "publication": "Jadual Stok Harta Perdagangan (Commercial Property Stock Table), Q1 2026",
+   "sheetsUsed": [
+    "TABLE 2 (Supply of Commercial Units: Shop, SOHO and Serviced Apartment by Type in Wilayah Persekutuan Kuala Lumpur)"
+   ],
+   "note": "This sheet is KL-specific by title (unlike TABLE 1 which is the by-state national summary used in the companion national file) and additionally breaks KL down into 8 sub-areas (Bandar Kuala Lumpur, Bandar Petaling Jaya [inside WP KL admin boundary, historical name], Mukim Ampang, Mukim Batu, Mukim Cheras, Mukim Hulu Kelang, Mukim Kuala Lumpur, Mukim Petaling, Mukim Setapak) for each of the 6 pipeline stages. This sub-area breakdown was captured as a bonus alongside the KL-total pipeline figures the task requested."
+  },
+  {
+   "file": "Jadual Status Pasaran Harta Tanah Q4 2021.xls",
+   "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q4 2021 (FY2021 year-end)",
+   "sheetsUsed": [
+    "TABLE 8 (state block: W.P. KUALA LUMPUR)"
+   ]
+  },
+  {
+   "file": "Jadual Status Pasaran Harta Tanah Q4 2022.xls",
+   "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q4 2022 (FY2022 year-end)",
+   "sheetsUsed": [
+    "TABLE 8 (state block: W.P. KUALA LUMPUR)"
+   ]
+  },
+  {
+   "file": "Jadual Status Pasaran Harta Tanah Q4 2023.xls",
+   "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q4 2023 (FY2023 year-end)",
+   "sheetsUsed": [
+    "TABLE 8 (state block: W.P. KUALA LUMPUR)"
+   ]
+  },
+  {
+   "file": "Jadual Status Pasaran Harta Tanah Q4 2024.xls",
+   "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q4 2024 (FY2024 year-end)",
+   "sheetsUsed": [
+    "TABLE 8 (state block: W.P. KUALA LUMPUR)"
+   ]
+  },
+  {
+   "file": "Jadual Status Pasaran Harta Tanah Q3 2025_new.xls",
+   "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q3 2025",
+   "sheetsUsed": [
+    "TABLE 8 (state block: W.P. KUALA LUMPUR)"
+   ]
+  },
+  {
+   "file": "Jadual Status Pasaran Harta Tanah Q4 2025.xls",
+   "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q4 2025 (FY2025 year-end)",
+   "sheetsUsed": [
+    "TABLE 8 (state block: W.P. KUALA LUMPUR)"
+   ]
+  },
+  {
+   "file": "jadual-status-pasaran-harta-tanah-q1-2026-amended-15052026.xls",
+   "publication": "Jadual Status Pasaran Harta Tanah (Property Market Status Table), Q1 2026, amended 2026-05-15",
+   "sheetsUsed": [
+    "TABLE 8 (state block: W.P. KUALA LUMPUR)"
+   ]
+  }
+ ],
+ "notes": {
+  "tableStructureTable8": "Table 8 lays each state out as: a state-name header row, then one 3-row block per price band (row1=Unit Launched, row2=Unsold Units, row3=Value RM Million), ending in a 'TOTAL' 3-row block (same row1/row2/row3 pattern, with 'TOTAL' printed in the Price Range column of row1). The value this file reports as *_unsold_units / *_unsold_value_rm_million is always the TOTAL block's row2/row3 — i.e. the state's aggregate unsold-completed ('overhang') count and RM value across all price bands, matching the same convention used in the companion data/napic-commercial.json file. Column layout (0-indexed): col11 = SHOP Total, col13 = SOHO, col14 = Serviced Apartment.",
+  "shoppingComplexVsCentre": "Table 2.1 ('Kompleks Perniagaan'/Shopping Complex, 3,386.19 '000 sm existing, 115 buildings) and Table 3.1 ('Pusat Beli-Belah'/Shopping Centre, 2,998.84 '000 sm existing, 83 buildings) are two distinct NAPIC series for W.P. Kuala Lumpur, not one a subset relabelling of the other — see data/napic-commercial.json notes.shoppingComplexVsCentre for the same distinction at national level. Both are reported here in full since they share the same 24 precinct names, letting the two be compared precinct-by-precinct if useful; Shopping Centre is consistently the narrower of the two (fewer/smaller buildings in several precincts, e.g. Bukit Bintang/Jalan Raja Chulan 570.52 vs 502.81 '000sm, Pudu Area 192.47 vs 139.72 '000sm), consistent with it being a stricter/narrower classification.",
+  "buildingCountCrossCheck": "For every one of the 3 sub-district tables (PBO, Shopping Complex, Shopping Centre), the sum of total_buildings across all listed precincts was verified to equal the state TOTAL row's total_buildings exactly (PBO: 306+113=419; Shopping Complex: sum of 24 precincts=115; Shopping Centre: sum of 24 precincts=83), and the sum of total_existing_space_000sm across precincts matches the state total to within rounding (<=0.01 '000sm on 3,000-9,600 '000sm bases). This confirms the precinct lists are complete (no precinct rows were skipped).",
+  "ndPrecincts": "5 precincts (Stadium Area, Taman Tun Dr Ismail, Jalan Klang Lama, Jalan Pahang, Jalan Sentul) show zero existing space in both Shopping Complex and Shopping Centre tables for Q1 2026, with occupancy_rate_pct/availability_rate_pct recorded by NAPIC as 'ND'/'NA' respectively (transcribed here as null) — i.e. these precincts currently have no shopping complex/centre stock recorded, not a data-quality gap.",
+  "pboPrecinctGranularity": "Unlike the retail tables' 24-precinct breakdown, the PBO (Purpose-Built Office) sub-district table for W.P. Kuala Lumpur (Table 1.1) only splits into 2 precincts: 'City Centre (Seksyen 1-100, Bandar KL)' and 'Outside City Centre (Luar Seksyen 1-100, Bandar KL)'. This is the full granularity NAPIC publishes for KL office space — not a truncation on this file's part.",
+  "stockPipelineSubAreas": "The Jadual Stok Harta Perdagangan TABLE 2 sub-area names (Bandar Kuala Lumpur, Bandar Petaling Jaya, Mukim Ampang, Mukim Batu, Mukim Cheras, Mukim Hulu Kelang, Mukim Kuala Lumpur, Mukim Petaling, Mukim Setapak) are NAPIC's own mukim/administrative-area classification for tracking supply pipeline, and are NOT the same set of names as the CBSA occupancy tables' 24 commercial precincts (e.g. 'Bangsar', 'Bukit Bintang'). The two classification schemes should not be merged or cross-mapped without further verification; they are kept as separate datasets in this file (subdistricts vs pipeline.subdistricts).",
+  "anchorVerification_2026_08_12": "All anchors given in the task brief were checked and matched exactly, to the unit: SOHO overhang 2021=457, 2022=788, 2024=645, Q4 2025=1124, Q1 2026=793; Shop overhang 2021=66, 2022=82, 2024=11, Q4 2025=10, Q1 2026=10; SA overhang 2021=4695, Q3 2025=4687, Q4 2025=3964, Q1 2026=4181; supply-pipeline existing stock shop=30973/SOHO=12266/SA=153646. No discrepancies found on any anchor. New values obtained (not pre-verified in the brief): 2023 shop=23/SOHO=709/SA=4806; Q3 2025 shop=10/SOHO=1127; 2022 SA=6012; 2024 SA=4202."
+ },
+ "pbo_purpose_built_office": {
+  "period": "Q1 2026",
+  "scope": "Privately-owned only (per source title 'MILIK SWASTA'), matching the scope of the companion national file's current_period section.",
+  "unit": "'000 square metres unless noted",
+  "kl_total": {
+   "name": "W.P KUALA LUMPUR",
+   "total_existing_space_000sm": 9633.72,
+   "space_occupied_000sm": 6923.76,
+   "occupancy_rate_pct": 71.87,
+   "available_space_000sm": 2709.96,
+   "availability_rate_pct": 28.13,
+   "total_buildings": 419,
+   "buildings_by_size_classification": {
+    "lt_1000sm": 0,
+    "sm_1001_4000": 41,
+    "sm_4001_10000": 81,
+    "sm_10001_50000": 266,
+    "gt_50000sm": 31
+   },
+   "total_buildings_with_available_space": 297,
+   "buildings_by_availability_rate_band": {
+    "zero_pct_available": 122,
+    "lt_20pct": 116,
+    "pct_20_1_30": 44,
+    "pct_30_1_40": 31,
+    "pct_40_1_50": 20,
+    "gt_50pct": 86
+   },
+   "source": {
+    "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+    "sheet": "TABLE 1.1",
+    "row": 8
+   }
+  },
+  "precincts": [
+   {
+    "name": "City Centre (Seksyen 1-100, Bandar KL)",
+    "total_existing_space_000sm": 7474.78,
+    "space_occupied_000sm": 5485.26,
+    "occupancy_rate_pct": 73.38,
+    "available_space_000sm": 1989.52,
+    "availability_rate_pct": 26.62,
+    "total_buildings": 306,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 27,
+     "sm_4001_10000": 53,
+     "sm_10001_50000": 201,
+     "gt_50000sm": 25
+    },
+    "total_buildings_with_available_space": 228,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 78,
+     "lt_20pct": 94,
+     "pct_20_1_30": 30,
+     "pct_30_1_40": 24,
+     "pct_40_1_50": 15,
+     "gt_50pct": 65
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 1.1",
+     "row": 10
+    }
+   },
+   {
+    "name": "Outside City Centre (Luar Seksyen 1-100, Bandar KL)",
+    "total_existing_space_000sm": 2158.94,
+    "space_occupied_000sm": 1438.5,
+    "occupancy_rate_pct": 66.63,
+    "available_space_000sm": 720.44,
+    "availability_rate_pct": 33.37,
+    "total_buildings": 113,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 14,
+     "sm_4001_10000": 28,
+     "sm_10001_50000": 65,
+     "gt_50000sm": 6
+    },
+    "total_buildings_with_available_space": 69,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 44,
+     "lt_20pct": 22,
+     "pct_20_1_30": 14,
+     "pct_30_1_40": 7,
+     "pct_40_1_50": 5,
+     "gt_50pct": 21
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 1.1",
+     "row": 12
+    }
+   }
+  ]
+ },
+ "shopping_complex": {
+  "period": "Q1 2026",
+  "unit": "'000 square metres unless noted",
+  "kl_total": {
+   "name": "W.P KUALA LUMPUR",
+   "total_existing_space_000sm": 3386.19,
+   "space_occupied_000sm": 2977.98,
+   "occupancy_rate_pct": 87.95,
+   "available_space_000sm": 408.2,
+   "availability_rate_pct": 12.05,
+   "total_buildings": 115,
+   "buildings_by_size_classification": {
+    "lt_1000sm": 0,
+    "sm_1001_4000": 9,
+    "sm_4001_10000": 28,
+    "sm_10001_50000": 59,
+    "gt_50000sm": 19
+   },
+   "total_buildings_with_available_space": 91,
+   "buildings_by_availability_rate_band": {
+    "zero_pct_available": 24,
+    "lt_20pct": 61,
+    "pct_20_1_30": 9,
+    "pct_30_1_40": 5,
+    "pct_40_1_50": 4,
+    "gt_50pct": 12
+   },
+   "source": {
+    "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+    "sheet": "TABLE 2.1",
+    "row": 8
+   }
+  },
+  "precincts": [
+   {
+    "name": "Bangsar",
+    "total_existing_space_000sm": 75.33,
+    "space_occupied_000sm": 73.36,
+    "occupancy_rate_pct": 97.38,
+    "available_space_000sm": 1.97,
+    "availability_rate_pct": 2.62,
+    "total_buildings": 4,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 4,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 3,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 3,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 10
+    }
+   },
+   {
+    "name": "Brickfield",
+    "total_existing_space_000sm": 66.01,
+    "space_occupied_000sm": 61.42,
+    "occupancy_rate_pct": 93.04,
+    "available_space_000sm": 4.59,
+    "availability_rate_pct": 6.96,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 1,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 2,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 1,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 1,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 12
+    }
+   },
+   {
+    "name": "Bukit Bintang/ Jalan Raja Chulan",
+    "total_existing_space_000sm": 570.52,
+    "space_occupied_000sm": 561.95,
+    "occupancy_rate_pct": 98.5,
+    "available_space_000sm": 8.57,
+    "availability_rate_pct": 1.5,
+    "total_buildings": 15,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 1,
+     "sm_4001_10000": 3,
+     "sm_10001_50000": 8,
+     "gt_50000sm": 3
+    },
+    "total_buildings_with_available_space": 15,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 5,
+     "lt_20pct": 10,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 14
+    }
+   },
+   {
+    "name": "Central Commercial Area",
+    "total_existing_space_000sm": 334.38,
+    "space_occupied_000sm": 260.14,
+    "occupancy_rate_pct": 77.8,
+    "available_space_000sm": 74.24,
+    "availability_rate_pct": 22.2,
+    "total_buildings": 23,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 5,
+     "sm_4001_10000": 13,
+     "sm_10001_50000": 3,
+     "gt_50000sm": 2
+    },
+    "total_buildings_with_available_space": 23,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 5,
+     "lt_20pct": 9,
+     "pct_20_1_30": 4,
+     "pct_30_1_40": 1,
+     "pct_40_1_50": 0,
+     "gt_50pct": 4
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 16
+    }
+   },
+   {
+    "name": "Damansara",
+    "total_existing_space_000sm": 66.93,
+    "space_occupied_000sm": 50.96,
+    "occupancy_rate_pct": 76.14,
+    "available_space_000sm": 15.97,
+    "availability_rate_pct": 23.86,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 1,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 2,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 1,
+     "pct_20_1_30": 1,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 18
+    }
+   },
+   {
+    "name": "Pudu Area",
+    "total_existing_space_000sm": 192.47,
+    "space_occupied_000sm": 167.79,
+    "occupancy_rate_pct": 87.18,
+    "available_space_000sm": 24.68,
+    "availability_rate_pct": 12.82,
+    "total_buildings": 7,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 1,
+     "sm_10001_50000": 5,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 7,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 2,
+     "lt_20pct": 4,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 1,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 20
+    }
+   },
+   {
+    "name": "Stadium Area",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 22
+    }
+   },
+   {
+    "name": "Taman Tun Dr Ismail",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 24
+    }
+   },
+   {
+    "name": "Jalan Ampang",
+    "total_existing_space_000sm": 211.06,
+    "space_occupied_000sm": 199.01,
+    "occupancy_rate_pct": 94.29,
+    "available_space_000sm": 12.05,
+    "availability_rate_pct": 5.71,
+    "total_buildings": 6,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 1,
+     "sm_10001_50000": 4,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 5,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 4,
+     "pct_20_1_30": 1,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 26
+    }
+   },
+   {
+    "name": "Jalan Ipoh",
+    "total_existing_space_000sm": 9.38,
+    "space_occupied_000sm": 2.84,
+    "occupancy_rate_pct": 30.25,
+    "available_space_000sm": 6.54,
+    "availability_rate_pct": 69.75,
+    "total_buildings": 1,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 1,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 1,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 1
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 28
+    }
+   },
+   {
+    "name": "Jalan Klang Lama",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 30
+    }
+   },
+   {
+    "name": "Jalan Loke Yew",
+    "total_existing_space_000sm": 72.39,
+    "space_occupied_000sm": 49.39,
+    "occupancy_rate_pct": 68.22,
+    "available_space_000sm": 23.0,
+    "availability_rate_pct": 31.78,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 1,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 2,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 1,
+     "pct_30_1_40": 1,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 32
+    }
+   },
+   {
+    "name": "Jalan Pahang",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 34
+    }
+   },
+   {
+    "name": "Jalan Sentul",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 36
+    }
+   },
+   {
+    "name": "Jalan Sg Besi",
+    "total_existing_space_000sm": 25.73,
+    "space_occupied_000sm": 25.73,
+    "occupancy_rate_pct": 100.0,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": 0.0,
+    "total_buildings": 1,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 1,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 38
+    }
+   },
+   {
+    "name": "Jalan Tun Razak",
+    "total_existing_space_000sm": 137.98,
+    "space_occupied_000sm": 135.92,
+    "occupancy_rate_pct": 98.51,
+    "available_space_000sm": 2.05,
+    "availability_rate_pct": 1.49,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 1,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 2,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 2,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 40
+    }
+   },
+   {
+    "name": "Lebuhraya Persekutuan",
+    "total_existing_space_000sm": 265.28,
+    "space_occupied_000sm": 259.92,
+    "occupancy_rate_pct": 97.98,
+    "available_space_000sm": 5.36,
+    "availability_rate_pct": 2.02,
+    "total_buildings": 4,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 1,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 1,
+     "gt_50000sm": 2
+    },
+    "total_buildings_with_available_space": 3,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 3,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 42
+    }
+   },
+   {
+    "name": "Bangsar South",
+    "total_existing_space_000sm": 48.42,
+    "space_occupied_000sm": 35.85,
+    "occupancy_rate_pct": 74.05,
+    "available_space_000sm": 12.56,
+    "availability_rate_pct": 25.95,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 2,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 1,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 1,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 44
+    }
+   },
+   {
+    "name": "Mukim Ampang/ Ulu Kelang",
+    "total_existing_space_000sm": 42.04,
+    "space_occupied_000sm": 33.7,
+    "occupancy_rate_pct": 80.18,
+    "available_space_000sm": 8.33,
+    "availability_rate_pct": 19.82,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 2,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 2,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 1,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 1,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 46
+    }
+   },
+   {
+    "name": "Mukim Batu",
+    "total_existing_space_000sm": 163.41,
+    "space_occupied_000sm": 139.83,
+    "occupancy_rate_pct": 85.57,
+    "available_space_000sm": 23.59,
+    "availability_rate_pct": 14.43,
+    "total_buildings": 9,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 1,
+     "sm_4001_10000": 1,
+     "sm_10001_50000": 7,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 8,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 6,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 1,
+     "pct_40_1_50": 0,
+     "gt_50pct": 1
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 48
+    }
+   },
+   {
+    "name": "Cheras",
+    "total_existing_space_000sm": 389.73,
+    "space_occupied_000sm": 357.98,
+    "occupancy_rate_pct": 91.86,
+    "available_space_000sm": 31.74,
+    "availability_rate_pct": 8.14,
+    "total_buildings": 9,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 1,
+     "sm_10001_50000": 5,
+     "gt_50000sm": 3
+    },
+    "total_buildings_with_available_space": 6,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 3,
+     "lt_20pct": 5,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 1
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 50
+    }
+   },
+   {
+    "name": "Mukim Kuala Lumpur",
+    "total_existing_space_000sm": 146.79,
+    "space_occupied_000sm": 112.65,
+    "occupancy_rate_pct": 76.75,
+    "available_space_000sm": 34.13,
+    "availability_rate_pct": 23.25,
+    "total_buildings": 5,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 5,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 4,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 2,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 2,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 52
+    }
+   },
+   {
+    "name": "Mukim Petaling",
+    "total_existing_space_000sm": 280.19,
+    "space_occupied_000sm": 215.3,
+    "occupancy_rate_pct": 76.84,
+    "available_space_000sm": 64.89,
+    "availability_rate_pct": 23.16,
+    "total_buildings": 7,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 3,
+     "sm_10001_50000": 2,
+     "gt_50000sm": 2
+    },
+    "total_buildings_with_available_space": 6,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 2,
+     "pct_20_1_30": 1,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 3
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 54
+    }
+   },
+   {
+    "name": "Mukim Setapak",
+    "total_existing_space_000sm": 288.16,
+    "space_occupied_000sm": 234.23,
+    "occupancy_rate_pct": 81.29,
+    "available_space_000sm": 53.92,
+    "availability_rate_pct": 18.71,
+    "total_buildings": 12,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 1,
+     "sm_4001_10000": 3,
+     "sm_10001_50000": 7,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 11,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 8,
+     "pct_20_1_30": 1,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 2
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2.1",
+     "row": 56
+    }
+   }
+  ]
+ },
+ "shopping_centre": {
+  "period": "Q1 2026",
+  "unit": "'000 square metres unless noted",
+  "note": "Narrower/different NAPIC series from shopping_complex above — see notes.shoppingComplexVsCentre. Do not sum or average with shopping_complex figures.",
+  "kl_total": {
+   "name": "W.P KUALA LUMPUR",
+   "total_existing_space_000sm": 2998.84,
+   "space_occupied_000sm": 2639.12,
+   "occupancy_rate_pct": 88.0,
+   "available_space_000sm": 359.72,
+   "availability_rate_pct": 12.0,
+   "total_buildings": 83,
+   "buildings_by_size_classification": {
+    "lt_1000sm": 0,
+    "sm_1001_4000": 1,
+    "sm_4001_10000": 18,
+    "sm_10001_50000": 46,
+    "gt_50000sm": 18
+   },
+   "total_buildings_with_available_space": 70,
+   "buildings_by_availability_rate_band": {
+    "zero_pct_available": 13,
+    "lt_20pct": 46,
+    "pct_20_1_30": 7,
+    "pct_30_1_40": 5,
+    "pct_40_1_50": 4,
+    "gt_50pct": 8
+   },
+   "source": {
+    "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+    "sheet": "TABLE 3.1",
+    "row": 8
+   }
+  },
+  "precincts": [
+   {
+    "name": "Bangsar",
+    "total_existing_space_000sm": 75.33,
+    "space_occupied_000sm": 73.36,
+    "occupancy_rate_pct": 97.38,
+    "available_space_000sm": 1.97,
+    "availability_rate_pct": 2.62,
+    "total_buildings": 4,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 4,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 3,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 3,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 10
+    }
+   },
+   {
+    "name": "Brickfield",
+    "total_existing_space_000sm": 66.01,
+    "space_occupied_000sm": 61.42,
+    "occupancy_rate_pct": 93.04,
+    "available_space_000sm": 4.59,
+    "availability_rate_pct": 6.96,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 1,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 2,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 1,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 1,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 12
+    }
+   },
+   {
+    "name": "Bukit Bintang/ Jalan Raja Chulan",
+    "total_existing_space_000sm": 502.81,
+    "space_occupied_000sm": 497.53,
+    "occupancy_rate_pct": 98.95,
+    "available_space_000sm": 5.28,
+    "availability_rate_pct": 1.05,
+    "total_buildings": 8,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 1,
+     "sm_10001_50000": 4,
+     "gt_50000sm": 3
+    },
+    "total_buildings_with_available_space": 8,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 4,
+     "lt_20pct": 4,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 14
+    }
+   },
+   {
+    "name": "Central Commercial Area",
+    "total_existing_space_000sm": 278.78,
+    "space_occupied_000sm": 215.58,
+    "occupancy_rate_pct": 77.33,
+    "available_space_000sm": 63.2,
+    "availability_rate_pct": 22.67,
+    "total_buildings": 13,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 8,
+     "sm_10001_50000": 3,
+     "gt_50000sm": 2
+    },
+    "total_buildings_with_available_space": 13,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 6,
+     "pct_20_1_30": 3,
+     "pct_30_1_40": 1,
+     "pct_40_1_50": 0,
+     "gt_50pct": 2
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 16
+    }
+   },
+   {
+    "name": "Damansara",
+    "total_existing_space_000sm": 66.93,
+    "space_occupied_000sm": 50.96,
+    "occupancy_rate_pct": 76.14,
+    "available_space_000sm": 15.97,
+    "availability_rate_pct": 23.86,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 1,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 2,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 1,
+     "pct_20_1_30": 1,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 18
+    }
+   },
+   {
+    "name": "Pudu Area",
+    "total_existing_space_000sm": 139.72,
+    "space_occupied_000sm": 121.04,
+    "occupancy_rate_pct": 86.63,
+    "available_space_000sm": 18.68,
+    "availability_rate_pct": 13.37,
+    "total_buildings": 4,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 1,
+     "sm_10001_50000": 2,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 4,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 2,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 1,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 20
+    }
+   },
+   {
+    "name": "Stadium Area",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 22
+    }
+   },
+   {
+    "name": "Taman Tun Dr Ismail",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 24
+    }
+   },
+   {
+    "name": "Jalan Ampang",
+    "total_existing_space_000sm": 211.06,
+    "space_occupied_000sm": 199.01,
+    "occupancy_rate_pct": 94.29,
+    "available_space_000sm": 12.05,
+    "availability_rate_pct": 5.71,
+    "total_buildings": 6,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 1,
+     "sm_10001_50000": 4,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 5,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 4,
+     "pct_20_1_30": 1,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 26
+    }
+   },
+   {
+    "name": "Jalan Ipoh",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 28
+    }
+   },
+   {
+    "name": "Jalan Klang Lama",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 30
+    }
+   },
+   {
+    "name": "Jalan Loke Yew",
+    "total_existing_space_000sm": 72.39,
+    "space_occupied_000sm": 49.39,
+    "occupancy_rate_pct": 68.22,
+    "available_space_000sm": 23.0,
+    "availability_rate_pct": 31.78,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 1,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 2,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 1,
+     "pct_30_1_40": 1,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 32
+    }
+   },
+   {
+    "name": "Jalan Pahang",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 34
+    }
+   },
+   {
+    "name": "Jalan Sentul",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 36
+    }
+   },
+   {
+    "name": "Jalan Sg Besi",
+    "total_existing_space_000sm": 0.0,
+    "space_occupied_000sm": 0.0,
+    "occupancy_rate_pct": null,
+    "available_space_000sm": 0.0,
+    "availability_rate_pct": null,
+    "total_buildings": 0,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 0,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 0,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 38
+    }
+   },
+   {
+    "name": "Jalan Tun Razak",
+    "total_existing_space_000sm": 137.98,
+    "space_occupied_000sm": 135.92,
+    "occupancy_rate_pct": 98.51,
+    "available_space_000sm": 2.05,
+    "availability_rate_pct": 1.49,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 1,
+     "gt_50000sm": 1
+    },
+    "total_buildings_with_available_space": 2,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 2,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 40
+    }
+   },
+   {
+    "name": "Lebuhraya Persekutuan",
+    "total_existing_space_000sm": 261.33,
+    "space_occupied_000sm": 255.97,
+    "occupancy_rate_pct": 97.95,
+    "available_space_000sm": 5.36,
+    "availability_rate_pct": 2.05,
+    "total_buildings": 3,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 1,
+     "gt_50000sm": 2
+    },
+    "total_buildings_with_available_space": 3,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 3,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 42
+    }
+   },
+   {
+    "name": "Bangsar South",
+    "total_existing_space_000sm": 48.42,
+    "space_occupied_000sm": 35.85,
+    "occupancy_rate_pct": 74.05,
+    "available_space_000sm": 12.56,
+    "availability_rate_pct": 25.95,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 2,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 1,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 0,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 1,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 44
+    }
+   },
+   {
+    "name": "Mukim Ampang/ Ulu Kelang",
+    "total_existing_space_000sm": 42.04,
+    "space_occupied_000sm": 33.7,
+    "occupancy_rate_pct": 80.18,
+    "available_space_000sm": 8.33,
+    "availability_rate_pct": 19.82,
+    "total_buildings": 2,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 2,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 2,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 1,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 1,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 46
+    }
+   },
+   {
+    "name": "Mukim Batu",
+    "total_existing_space_000sm": 123.72,
+    "space_occupied_000sm": 107.66,
+    "occupancy_rate_pct": 87.02,
+    "available_space_000sm": 16.05,
+    "availability_rate_pct": 12.98,
+    "total_buildings": 5,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 5,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 5,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 0,
+     "lt_20pct": 4,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 1,
+     "pct_40_1_50": 0,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 48
+    }
+   },
+   {
+    "name": "Cheras",
+    "total_existing_space_000sm": 337.09,
+    "space_occupied_000sm": 305.35,
+    "occupancy_rate_pct": 90.58,
+    "available_space_000sm": 31.74,
+    "availability_rate_pct": 9.42,
+    "total_buildings": 7,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 1,
+     "sm_10001_50000": 3,
+     "gt_50000sm": 3
+    },
+    "total_buildings_with_available_space": 6,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 5,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 1
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 50
+    }
+   },
+   {
+    "name": "Mukim Kuala Lumpur",
+    "total_existing_space_000sm": 146.79,
+    "space_occupied_000sm": 112.65,
+    "occupancy_rate_pct": 76.75,
+    "available_space_000sm": 34.13,
+    "availability_rate_pct": 23.25,
+    "total_buildings": 5,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 0,
+     "sm_10001_50000": 5,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 4,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 2,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 2,
+     "gt_50pct": 0
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 52
+    }
+   },
+   {
+    "name": "Mukim Petaling",
+    "total_existing_space_000sm": 280.19,
+    "space_occupied_000sm": 215.3,
+    "occupancy_rate_pct": 76.84,
+    "available_space_000sm": 64.89,
+    "availability_rate_pct": 23.16,
+    "total_buildings": 7,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 0,
+     "sm_4001_10000": 3,
+     "sm_10001_50000": 2,
+     "gt_50000sm": 2
+    },
+    "total_buildings_with_available_space": 6,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 2,
+     "pct_20_1_30": 1,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 3
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 54
+    }
+   },
+   {
+    "name": "Mukim Setapak",
+    "total_existing_space_000sm": 208.26,
+    "space_occupied_000sm": 168.43,
+    "occupancy_rate_pct": 80.87,
+    "available_space_000sm": 39.84,
+    "availability_rate_pct": 19.13,
+    "total_buildings": 9,
+    "buildings_by_size_classification": {
+     "lt_1000sm": 0,
+     "sm_1001_4000": 1,
+     "sm_4001_10000": 2,
+     "sm_10001_50000": 6,
+     "gt_50000sm": 0
+    },
+    "total_buildings_with_available_space": 8,
+    "buildings_by_availability_rate_band": {
+     "zero_pct_available": 1,
+     "lt_20pct": 6,
+     "pct_20_1_30": 0,
+     "pct_30_1_40": 0,
+     "pct_40_1_50": 0,
+     "gt_50pct": 2
+    },
+    "source": {
+     "file": "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 3.1",
+     "row": 56
+    }
+   }
+  ]
+ },
+ "shop_soho_sa_supply_pipeline_q1_2026": {
+  "period": "Q1 2026",
+  "unit": "units (dwelling/lot count)",
+  "stages": [
+   {
+    "stage": "EXISTING STOCK",
+    "kl_total": {
+     "shop_total_units": 30973,
+     "soho_total_units": 12266,
+     "sa_total_units": 153646
+    },
+    "subdistricts": [
+     {
+      "name": "Bandar Kuala Lumpur",
+      "shop_total_units": 4903,
+      "soho_total_units": 3793,
+      "sa_total_units": 55315,
+      "row": 10
+     },
+     {
+      "name": "Bandar Petaling Jaya",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 96,
+      "row": 11
+     },
+     {
+      "name": "Mukim Ampang",
+      "shop_total_units": 898,
+      "soho_total_units": 2674,
+      "sa_total_units": 2811,
+      "row": 12
+     },
+     {
+      "name": "Mukim Batu",
+      "shop_total_units": 7585,
+      "soho_total_units": 1589,
+      "sa_total_units": 29583,
+      "row": 13
+     },
+     {
+      "name": "Mukim Cheras",
+      "shop_total_units": 459,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 14
+     },
+     {
+      "name": "Mukim Hulu Kelang",
+      "shop_total_units": 54,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 15
+     },
+     {
+      "name": "Mukim Kuala Lumpur",
+      "shop_total_units": 4686,
+      "soho_total_units": 2533,
+      "sa_total_units": 24126,
+      "row": 16
+     },
+     {
+      "name": "Mukim Petaling",
+      "shop_total_units": 7025,
+      "soho_total_units": 1253,
+      "sa_total_units": 25653,
+      "row": 17
+     },
+     {
+      "name": "Mukim Setapak",
+      "shop_total_units": 5363,
+      "soho_total_units": 424,
+      "sa_total_units": 16062,
+      "row": 18
+     }
+    ],
+    "source": {
+     "file": "Jadual Stok Harta Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2",
+     "row": 20
+    }
+   },
+   {
+    "stage": "COMPLETIONS",
+    "kl_total": {
+     "shop_total_units": 0,
+     "soho_total_units": 0,
+     "sa_total_units": 476
+    },
+    "subdistricts": [
+     {
+      "name": "Bandar Kuala Lumpur",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 476,
+      "row": 24
+     },
+     {
+      "name": "Bandar Petaling Jaya",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 25
+     },
+     {
+      "name": "Mukim Ampang",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 26
+     },
+     {
+      "name": "Mukim Batu",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 27
+     },
+     {
+      "name": "Mukim Cheras",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 28
+     },
+     {
+      "name": "Mukim Hulu Kelang",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 29
+     },
+     {
+      "name": "Mukim Kuala Lumpur",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 30
+     },
+     {
+      "name": "Mukim Petaling",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 31
+     },
+     {
+      "name": "Mukim Setapak",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 32
+     }
+    ],
+    "source": {
+     "file": "Jadual Stok Harta Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2",
+     "row": 34
+    }
+   },
+   {
+    "stage": "INCOMING SUPPLY",
+    "kl_total": {
+     "shop_total_units": 605,
+     "soho_total_units": 3362,
+     "sa_total_units": 50918
+    },
+    "subdistricts": [
+     {
+      "name": "Bandar Kuala Lumpur",
+      "shop_total_units": 18,
+      "soho_total_units": 97,
+      "sa_total_units": 12214,
+      "row": 38
+     },
+     {
+      "name": "Bandar Petaling Jaya",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 39
+     },
+     {
+      "name": "Mukim Ampang",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 40
+     },
+     {
+      "name": "Mukim Batu",
+      "shop_total_units": 132,
+      "soho_total_units": 506,
+      "sa_total_units": 10302,
+      "row": 41
+     },
+     {
+      "name": "Mukim Cheras",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 42
+     },
+     {
+      "name": "Mukim Hulu Kelang",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 1001,
+      "row": 43
+     },
+     {
+      "name": "Mukim Kuala Lumpur",
+      "shop_total_units": 202,
+      "soho_total_units": 622,
+      "sa_total_units": 5060,
+      "row": 44
+     },
+     {
+      "name": "Mukim Petaling",
+      "shop_total_units": 175,
+      "soho_total_units": 1476,
+      "sa_total_units": 12286,
+      "row": 45
+     },
+     {
+      "name": "Mukim Setapak",
+      "shop_total_units": 78,
+      "soho_total_units": 661,
+      "sa_total_units": 10055,
+      "row": 46
+     }
+    ],
+    "source": {
+     "file": "Jadual Stok Harta Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2",
+     "row": 48
+    }
+   },
+   {
+    "stage": "STARTS",
+    "kl_total": {
+     "shop_total_units": 0,
+     "soho_total_units": 0,
+     "sa_total_units": 5541
+    },
+    "subdistricts": [
+     {
+      "name": "Bandar Kuala Lumpur",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 1282,
+      "row": 52
+     },
+     {
+      "name": "Bandar Petaling Jaya",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 53
+     },
+     {
+      "name": "Mukim Ampang",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 54
+     },
+     {
+      "name": "Mukim Batu",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 2601,
+      "row": 55
+     },
+     {
+      "name": "Mukim Cheras",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 56
+     },
+     {
+      "name": "Mukim Hulu Kelang",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 57
+     },
+     {
+      "name": "Mukim Kuala Lumpur",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 58
+     },
+     {
+      "name": "Mukim Petaling",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 1558,
+      "row": 59
+     },
+     {
+      "name": "Mukim Setapak",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 100,
+      "row": 60
+     }
+    ],
+    "source": {
+     "file": "Jadual Stok Harta Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2",
+     "row": 62
+    }
+   },
+   {
+    "stage": "PLANNED SUPPLY",
+    "kl_total": {
+     "shop_total_units": 130,
+     "soho_total_units": 3495,
+     "sa_total_units": 47622
+    },
+    "subdistricts": [
+     {
+      "name": "Bandar Kuala Lumpur",
+      "shop_total_units": 21,
+      "soho_total_units": 1166,
+      "sa_total_units": 23831,
+      "row": 66
+     },
+     {
+      "name": "Bandar Petaling Jaya",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 67
+     },
+     {
+      "name": "Mukim Ampang",
+      "shop_total_units": 16,
+      "soho_total_units": 944,
+      "sa_total_units": 553,
+      "row": 68
+     },
+     {
+      "name": "Mukim Batu",
+      "shop_total_units": 31,
+      "soho_total_units": 656,
+      "sa_total_units": 8310,
+      "row": 69
+     },
+     {
+      "name": "Mukim Cheras",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 70
+     },
+     {
+      "name": "Mukim Hulu Kelang",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 71
+     },
+     {
+      "name": "Mukim Kuala Lumpur",
+      "shop_total_units": 45,
+      "soho_total_units": 238,
+      "sa_total_units": 2996,
+      "row": 72
+     },
+     {
+      "name": "Mukim Petaling",
+      "shop_total_units": 17,
+      "soho_total_units": 491,
+      "sa_total_units": 9268,
+      "row": 73
+     },
+     {
+      "name": "Mukim Setapak",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 2664,
+      "row": 74
+     }
+    ],
+    "source": {
+     "file": "Jadual Stok Harta Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2",
+     "row": 76
+    }
+   },
+   {
+    "stage": "NEW PLANNED SUPPLY",
+    "kl_total": {
+     "shop_total_units": 0,
+     "soho_total_units": 0,
+     "sa_total_units": 5851
+    },
+    "subdistricts": [
+     {
+      "name": "Bandar Kuala Lumpur",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 1282,
+      "row": 80
+     },
+     {
+      "name": "Bandar Petaling Jaya",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 81
+     },
+     {
+      "name": "Mukim Ampang",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 82
+     },
+     {
+      "name": "Mukim Batu",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 1178,
+      "row": 83
+     },
+     {
+      "name": "Mukim Cheras",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 84
+     },
+     {
+      "name": "Mukim Hulu Kelang",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 85
+     },
+     {
+      "name": "Mukim Kuala Lumpur",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 86
+     },
+     {
+      "name": "Mukim Petaling",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 3391,
+      "row": 87
+     },
+     {
+      "name": "Mukim Setapak",
+      "shop_total_units": 0,
+      "soho_total_units": 0,
+      "sa_total_units": 0,
+      "row": 88
+     }
+    ],
+    "source": {
+     "file": "Jadual Stok Harta Perdagangan Q1 2026.xls",
+     "sheet": "TABLE 2",
+     "row": 90
+    }
+   }
+  ]
+ },
+ "shop_soho_sa_overhang_history": {
+  "definition": "unsold_units = completed, unsold commercial units (the NAPIC 'overhang' concept) as at each period end, for W.P. Kuala Lumpur only. Value in RM million is the corresponding unsold stock's market value, not the launched/total stock value.",
+  "series": [
+   {
+    "period": "2021 (Q4/FY year-end)",
+    "shop_unsold_units": 66,
+    "shop_unsold_value_rm_million": 41.62,
+    "soho_unsold_units": 457,
+    "soho_unsold_value_rm_million": 492.14,
+    "sa_unsold_units": 4695,
+    "sa_unsold_value_rm_million": 4327.55,
+    "source": {
+     "file": "Jadual Status Pasaran Harta Tanah Q4 2021.xls",
+     "sheet": "TABLE 8",
+     "row_state_header": 46,
+     "row_unit_launched": 80,
+     "row_unsold_units": 81,
+     "row_value_rm_million": 82
+    }
+   },
+   {
+    "period": "2022 (Q4/FY year-end)",
+    "shop_unsold_units": 82,
+    "shop_unsold_value_rm_million": 50.02,
+    "soho_unsold_units": 788,
+    "soho_unsold_value_rm_million": 781.06,
+    "sa_unsold_units": 6012,
+    "sa_unsold_value_rm_million": 5495.97,
+    "source": {
+     "file": "Jadual Status Pasaran Harta Tanah Q4 2022.xls",
+     "sheet": "TABLE 8",
+     "row_state_header": 46,
+     "row_unit_launched": 80,
+     "row_unsold_units": 81,
+     "row_value_rm_million": 82
+    }
+   },
+   {
+    "period": "2023 (Q4/FY year-end)",
+    "shop_unsold_units": 23,
+    "shop_unsold_value_rm_million": 8.05,
+    "soho_unsold_units": 709,
+    "soho_unsold_value_rm_million": 663.76,
+    "sa_unsold_units": 4806,
+    "sa_unsold_value_rm_million": 4587.14,
+    "source": {
+     "file": "Jadual Status Pasaran Harta Tanah Q4 2023.xls",
+     "sheet": "TABLE 8",
+     "row_state_header": 46,
+     "row_unit_launched": 80,
+     "row_unsold_units": 81,
+     "row_value_rm_million": 82
+    }
+   },
+   {
+    "period": "2024 (Q4/FY year-end)",
+    "shop_unsold_units": 11,
+    "shop_unsold_value_rm_million": 3.85,
+    "soho_unsold_units": 645,
+    "soho_unsold_value_rm_million": 570.39,
+    "sa_unsold_units": 4202,
+    "sa_unsold_value_rm_million": 4034.19,
+    "source": {
+     "file": "Jadual Status Pasaran Harta Tanah Q4 2024.xls",
+     "sheet": "TABLE 8",
+     "row_state_header": 46,
+     "row_unit_launched": 80,
+     "row_unsold_units": 81,
+     "row_value_rm_million": 82
+    }
+   },
+   {
+    "period": "Q3 2025",
+    "shop_unsold_units": 10,
+    "shop_unsold_value_rm_million": 3.5,
+    "soho_unsold_units": 1127,
+    "soho_unsold_value_rm_million": 635.89,
+    "sa_unsold_units": 4687,
+    "sa_unsold_value_rm_million": 4578.91,
+    "source": {
+     "file": "Jadual Status Pasaran Harta Tanah Q3 2025_new.xls",
+     "sheet": "TABLE 8",
+     "row_state_header": 46,
+     "row_unit_launched": 80,
+     "row_unsold_units": 81,
+     "row_value_rm_million": 82
+    }
+   },
+   {
+    "period": "Q4 2025 (FY year-end)",
+    "shop_unsold_units": 10,
+    "shop_unsold_value_rm_million": 3.5,
+    "soho_unsold_units": 1124,
+    "soho_unsold_value_rm_million": 631.26,
+    "sa_unsold_units": 3964,
+    "sa_unsold_value_rm_million": 4052.02,
+    "source": {
+     "file": "Jadual Status Pasaran Harta Tanah Q4 2025.xls",
+     "sheet": "TABLE 8",
+     "row_state_header": 46,
+     "row_unit_launched": 80,
+     "row_unsold_units": 81,
+     "row_value_rm_million": 82
+    }
+   },
+   {
+    "period": "Q1 2026 (amended 2026-05-15)",
+    "shop_unsold_units": 10,
+    "shop_unsold_value_rm_million": 3.5,
+    "soho_unsold_units": 793,
+    "soho_unsold_value_rm_million": 325.63,
+    "sa_unsold_units": 4181,
+    "sa_unsold_value_rm_million": 4732.11,
+    "source": {
+     "file": "jadual-status-pasaran-harta-tanah-q1-2026-amended-15052026.xls",
+     "sheet": "TABLE 8",
+     "row_state_header": 46,
+     "row_unit_launched": 80,
+     "row_unsold_units": 81,
+     "row_value_rm_million": 82
+    }
+   }
+  ]
+ }
+}
