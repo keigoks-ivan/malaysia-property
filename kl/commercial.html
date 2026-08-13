@@ -108,6 +108,83 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
 .corridor p.angle b{color:var(--gold-deep)}
 @media(max-width:760px){.corridor-grid{grid-template-columns:1fr}}
 
+/* ── masthead + TOC ── */
+.masthead{border:1px solid var(--gold-soft);border-radius:14px;padding:16px 20px;margin-bottom:18px;background:var(--bg-section)}
+.masthead .mh-row{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:11.5px;color:var(--text-soft)}
+.masthead .mh-row b{color:var(--navy);font-weight:600}
+.masthead .mh-disc{margin-top:8px;font-size:10.5px;color:var(--muted);border-top:1px dashed var(--border);padding-top:8px}
+.toc{border:1px solid var(--border);border-radius:14px;padding:14px 20px;margin-bottom:26px;background:var(--card);box-shadow:var(--shadow-sm)}
+.toc h4{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 10px}
+.toc ol{margin:0;padding:0 0 0 18px;columns:2;column-gap:24px;font-size:12px}
+.toc li{margin-bottom:6px;line-height:1.5}
+.toc a{color:var(--navy);font-weight:500;text-decoration:none;border-bottom:1px dotted var(--gold-soft)}
+.toc a:hover{color:var(--gold-deep)}
+@media(max-width:600px){.toc ol{columns:1}}
+
+/* ── stat strip (CBRE-style key stats) ── */
+.stat-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.sscard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 14px 12px;box-shadow:var(--shadow-sm);min-width:0}
+.sscard .ssn{font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--navy);line-height:1.15;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.sscard .ssl{font-size:10px;font-weight:600;letter-spacing:.03em;color:var(--gold-deep);text-transform:uppercase;line-height:1.5;margin-top:5px}
+body.zh .sscard .ssl{text-transform:none;letter-spacing:0}
+.sscard .ssd{font-size:10.5px;color:var(--muted);margin-top:5px;line-height:1.6}
+.arr{font-size:14px;font-weight:700}
+.arr.up{color:var(--negative)}.arr.down{color:var(--positive)}.arr.flat{color:var(--neutral)}
+/* office/SA rising overhang or gap = unfavourable(negative token); SOHO overhang falling = favourable(positive) — colour is per-metric semantics, direction glyph itself is neutral */
+.sscard[data-sense="bad-up"] .arr{color:var(--negative)}
+.sscard[data-sense="good-down"] .arr{color:var(--positive)}
+.sscard[data-sense="bad-down"] .arr{color:var(--positive)}
+.sscard[data-sense="good-up"] .arr{color:var(--negative)}
+.sscard[data-sense="flat"] .arr{color:var(--neutral)}
+@media(max-width:760px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:440px){.stat-strip{grid-template-columns:1fr}}
+
+/* ── dashboard table + formal tables (CBRE-style) ── */
+.tblwrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;margin:2px 0 22px;box-shadow:var(--shadow-sm)}
+table.dash{width:100%;border-collapse:collapse;font-size:11.5px;min-width:560px}
+table.dash th{background:var(--bg-section);color:var(--gold-deep);font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:9px 12px;border-bottom:1px solid var(--gold-soft);white-space:nowrap}
+body.zh table.dash th{text-transform:none;letter-spacing:0}
+table.dash td{padding:9px 12px;border-bottom:1px solid var(--border-soft);color:var(--text-soft);vertical-align:top}
+table.dash tr:last-child td{border-bottom:none}
+table.dash td.num{font-family:'IBM Plex Mono',monospace;color:var(--navy);font-weight:600;white-space:nowrap}
+table.dash td.dir{text-align:center;font-weight:700;white-space:nowrap}
+table.formal{width:100%;border-collapse:collapse;font-size:11.5px;min-width:520px}
+table.formal th{background:var(--navy);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:9px 12px;white-space:nowrap}
+body.zh table.formal th{text-transform:none;letter-spacing:0}
+table.formal td{padding:8px 12px;border-bottom:1px solid var(--border-soft);color:var(--text-soft)}
+table.formal tr:nth-child(even) td{background:var(--bg-soft)}
+table.formal tr:last-child td{border-bottom:none}
+table.formal td.num{font-family:'IBM Plex Mono',monospace;color:var(--navy);font-weight:600;white-space:nowrap;text-align:right}
+table.formal caption{caption-side:top;text-align:left;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);padding:10px 12px 0;background:var(--card)}
+body.zh table.formal caption{text-transform:none;letter-spacing:0}
+
+/* ── Market View callout (per-chapter CBRE-style "so what") ── */
+.mview{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 18px;margin:6px 0 30px}
+.mview .mvk{display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:6px}
+body.zh .mview .mvk{text-transform:none;letter-spacing:0}
+.mview p{font-size:12.5px;line-height:1.85;color:var(--text-soft);margin:0}
+.mview p b{color:var(--navy);font-weight:600}
+
+/* ── Outlook & risk list ── */
+.trig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:2px 0 20px}
+.trig{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 14px;box-shadow:var(--shadow-sm)}
+.trig .tk{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep);background:var(--gold-bg);border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px;margin-bottom:7px}
+body.zh .trig .tk{text-transform:none;letter-spacing:0}
+.trig p{font-size:11.5px;line-height:1.75;color:var(--text-soft);margin:0}
+.trig p b{color:var(--navy);font-weight:600}
+.risklist{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.risklist li{font-size:12.5px;color:var(--text-soft);padding-left:16px;position:relative;line-height:1.85}
+.risklist li::before{content:'▸';position:absolute;left:0;top:0;color:#b91c1c;font-size:11px;line-height:1.85}
+.risklist li b{color:var(--navy);font-weight:600}
+@media(max-width:760px){.trig-grid{grid-template-columns:1fr}}
+
+/* ── methodology appendix ── */
+.gloss{margin:0;padding:0;display:grid;gap:10px}
+.gloss dt{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.gloss dd{font-size:11.5px;line-height:1.75;color:var(--text-soft);margin:0 0 4px}
+.limits{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px;padding:14px 18px;margin:6px 0 20px;font-size:12px;line-height:1.85;color:var(--text-soft)}
+.limits b{color:var(--navy)}
+
 @media(max-width:760px){.snap,.mrow{grid-template-columns:repeat(2,1fr)}.play4{grid-template-columns:1fr 1fr}.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}}
 @media(max-width:440px){.snap,.mrow,.play4{grid-template-columns:1fr}}
 </style>
@@ -132,6 +209,70 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     </div>
   </div>
 
+  <!-- ── Masthead: coverage / cutoff / publish / disclaimer ── -->
+  <div class="masthead">
+    <div class="mh-row">
+      <span><b><span class="lang-en">Coverage:</span><span class="lang-zh" style="display:none">涵蓋範圍：</span></b> <span class="lang-en">Q1 2026 quarterly (CBSA occupancy/availability) · FY2025 annual (transactions, completions, price/rental narrative) · 1Q2026 industry (Knight Frank corridor data)</span><span class="lang-zh" style="display:none">2026Q1季度（CBSA入駐率／可用率）・FY2025年度（成交、完工、價格／租金敘事）・2026Q1業界（Knight Frank走廊數據）</span></span>
+      <span><b><span class="lang-en">Data cutoff:</span><span class="lang-zh" style="display:none">資料截止：</span></b> <span class="lang-en">13 Aug 2026</span><span class="lang-zh" style="display:none">2026年8月13日</span></span>
+      <span><b><span class="lang-en">Published:</span><span class="lang-zh" style="display:none">發布日：</span></b> <span class="lang-en">13 Aug 2026</span><span class="lang-zh" style="display:none">2026年8月13日</span></span>
+    </div>
+    <div class="mh-disc"><span class="lang-en">Prepared from official NAPIC transcriptions and cited industry sources for myproperty.investmquest.com. For informational purposes only — this is not investment advice and does not constitute a recommendation to buy, sell or hold any asset.</span><span class="lang-zh" style="display:none">依據NAPIC官方轉錄數據與具名業界來源，為myproperty.investmquest.com製作。僅供參考，不構成投資建議，亦不構成對任何資產買入、賣出或持有的建議。</span></div>
+  </div>
+
+  <!-- ── Table of contents ── -->
+  <div class="toc">
+    <h4><span class="lang-en">Contents</span><span class="lang-zh" style="display:none">目錄</span></h4>
+    <ol>
+      <li><a href="#exec-summary"><span class="lang-en">Executive Summary</span><span class="lang-zh" style="display:none">摘要</span></a></li>
+      <li><a href="#sec-1"><span class="lang-en">I · KL in the National Picture</span><span class="lang-zh" style="display:none">第一部・KL在全國版圖中的位置</span></a></li>
+      <li><a href="#sec-2"><span class="lang-en">II · Offices</span><span class="lang-zh" style="display:none">第二部・辦公室</span></a></li>
+      <li><a href="#sec-3"><span class="lang-en">III · Capital Markets</span><span class="lang-zh" style="display:none">第三部・資本市場</span></a></li>
+      <li><a href="#sec-4"><span class="lang-en">IV · Retail</span><span class="lang-zh" style="display:none">第四部・零售</span></a></li>
+      <li><a href="#sec-5"><span class="lang-en">V · Shophouses</span><span class="lang-zh" style="display:none">第五部・店屋</span></a></li>
+      <li><a href="#sec-6"><span class="lang-en">VI · SOHO &amp; Serviced Apartments</span><span class="lang-zh" style="display:none">第六部・SOHO與服務式公寓</span></a></li>
+      <li><a href="#sec-7"><span class="lang-en">VII · What's Investable in KL</span><span class="lang-zh" style="display:none">第七部・能不能碰</span></a></li>
+      <li><a href="#sec-8"><span class="lang-en">VIII · Outlook &amp; Risks</span><span class="lang-zh" style="display:none">第八部・展望與風險</span></a></li>
+      <li><a href="#sec-9"><span class="lang-en">IX · Methodology &amp; Definitions</span><span class="lang-zh" style="display:none">第九部・方法論與名詞定義</span></a></li>
+    </ol>
+  </div>
+
+  <!-- ════════ Executive Summary ════════ -->
+  <div class="sec-rule" id="exec-summary"><h2><span class="lang-en">Executive Summary</span><span class="lang-zh" style="display:none">摘要</span></h2></div>
+
+  <!-- ── Stat strip ── -->
+  <div class="stat-strip">
+    <div class="sscard" data-sense="bad-up">
+      <div class="ssn">6.75pp <span class="arr up">▲</span></div>
+      <div class="ssl"><span class="lang-en">Office CC–OCC gap</span><span class="lang-zh" style="display:none">辦公室市中心－城外缺口</span></div>
+      <div class="ssd"><span class="lang-en">Q1 2026, vs 5.76pp Q4 2025 (q-o-q)</span><span class="lang-zh" style="display:none">2026Q1，較2025Q4的5.76個百分點（q-o-q）</span></div>
+    </div>
+    <div class="sscard" data-sense="flat">
+      <div class="ssn">87.95%</div>
+      <div class="ssl"><span class="lang-en">KL mall (SC) occupancy</span><span class="lang-zh" style="display:none">KL商場（SC）入駐率</span></div>
+      <div class="ssd"><span class="lang-en">Q1 2026 · national high · no prior-period reading sourced</span><span class="lang-zh" style="display:none">2026Q1・全國最高・未取得前期讀數</span></div>
+    </div>
+    <div class="sscard" data-sense="flat">
+      <div class="ssn">10 <span class="arr flat">—</span></div>
+      <div class="ssl"><span class="lang-en">Shop overhang</span><span class="lang-zh" style="display:none">店屋餘屋</span></div>
+      <div class="ssd"><span class="lang-en">Q1 2026, unchanged vs Q4 2025 (q-o-q)</span><span class="lang-zh" style="display:none">2026Q1，較2025Q4持平（q-o-q）</span></div>
+    </div>
+    <div class="sscard" data-sense="good-down">
+      <div class="ssn">793 <span class="arr down">▼</span></div>
+      <div class="ssl"><span class="lang-en">SOHO overhang</span><span class="lang-zh" style="display:none">SOHO餘屋</span></div>
+      <div class="ssd"><span class="lang-en">Q1 2026, vs 1,124 Q4 2025 (q-o-q)</span><span class="lang-zh" style="display:none">2026Q1，較2025Q4的1,124戶（q-o-q）</span></div>
+    </div>
+    <div class="sscard" data-sense="flat">
+      <div class="ssn">3,362</div>
+      <div class="ssl"><span class="lang-en">SOHO incoming supply</span><span class="lang-zh" style="display:none">SOHO即將供給</span></div>
+      <div class="ssd"><span class="lang-en">Q1 2026 · 4.2x current overhang · single-period reading</span><span class="lang-zh" style="display:none">2026Q1・目前餘屋的4.2倍・單期讀數</span></div>
+    </div>
+    <div class="sscard" data-sense="bad-up">
+      <div class="ssn">4,181 <span class="arr up">▲</span></div>
+      <div class="ssl"><span class="lang-en">SA overhang</span><span class="lang-zh" style="display:none">服務式公寓餘屋</span></div>
+      <div class="ssd"><span class="lang-en">Q1 2026, vs 3,964 Q4 2025 trough (q-o-q)</span><span class="lang-zh" style="display:none">2026Q1，較2025Q4低點3,964戶（q-o-q）</span></div>
+    </div>
+  </div>
+
   <!-- ── Snapshot ── -->
   <div class="snap">
     <div class="stat"><div class="stat-lbl"><span class="lang-en">KL share of nat'l office space</span><span class="lang-zh" style="display:none">KL 佔全國辦公空間</span></div><div class="stat-num">51.7%</div><div class="stat-tag t-blue"><span class="lang-en">9.63M of 18.64M sm</span><span class="lang-zh" style="display:none">9.63M／18.64M 平方米</span></div></div>
@@ -147,14 +288,59 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     <span class="lang-zh" style="display:none">吉隆坡是馬來西亞商業房產無可爭議的主場——單是私人辦公室存量就佔全國 <b>51.7%</b>，商場（SC）入駐率 <b>87.95%</b> 更是全國最高。但這個頭條數字底下，是一座與自己分裂的城市，而且供給線還沒交完。辦公室的故事，走在市中心走廊仍守住 73% 以上入駐率、與外圍低了六個百分點之間，而 NAPIC 的分區口徑太粗，無法把真正的外圍贏家與沒人要的老樓分開來看——本篇新增的資料顯示，這些老樓正以數千萬令吉的量級整棟易手，跟一層分層辦公室的價格完全不在同一個世界。零售的分裂更劇烈：Bukit Bintang 走廊沿線的分區幾乎滿租——多個超過 98%——但只有一棟建物的 Jalan Ipoh 分區入駐率僅 30.3%，另有五個分區完全沒有商場存量。店屋則走了完全相反的方向：KL 的餘屋已縮到僅 <b>10 戶</b>，是全國最乾淨的小市場，原因是這座城市幾乎沒有土地能再蓋新的店屋。SOHO 則是「乾淨」這個說法一細看就站不住腳的一項：2025 年一波完工潮曾一度把未售存量推過 1,100 戶，隨後兩季內去化拉回至 793 戶——但即將供給已達 <b>3,362 戶</b>，是目前餘屋的 <b>4.2 倍</b>，代表下一波更大的浪已經排隊等著。服務式公寓的完整論證已見於本站他處，作為被動投資，結論仍是主動迴避。</span>
   </div>
 
+  <!-- ── Key takeaways ── -->
+  <div class="blk">
+    <h2><span class="lang-en">Eight numbers that carry this report</span><span class="lang-zh" style="display:none">撐起本篇的八個數字</span></h2>
+    <ul class="pt">
+      <li><span class="lang-en">KL holds <b>51.7%</b> of national private office stock and the country's highest shopping-complex occupancy at <b>87.95%</b> — the main-stage numbers (Section I).</span><span class="lang-zh" style="display:none">KL 持有全國私人辦公存量的 <b>51.7%</b>，商場入駐率 <b>87.95%</b> 為全國最高——主場數字（第一部）。</span></li>
+      <li><span class="lang-en">Office occupancy splits <b>73.38%</b> City Centre vs <b>66.63%</b> Outside City Centre — a gap that has widened for two consecutive quarters, from 4.83pp (Q3 2025) to 6.75pp (Q1 2026) (Section II).</span><span class="lang-zh" style="display:none">辦公室入駐率分裂為市中心 <b>73.38%</b> 對城外 <b>66.63%</b>——缺口已連續兩季擴大，自2025Q3的4.83個百分點升至2026Q1的6.75個百分點（第二部）。</span></li>
+      <li><span class="lang-en">Q4 2025→Q1 2026 net absorption was <b>+69.01k sm</b> citywide, but <b>98%</b> of it (+67.69k sm) landed in City Centre alone, while total existing office stock actually contracted <b>-28.62k sm</b> the same quarter (Section II).</span><span class="lang-zh" style="display:none">2025Q4至2026Q1全市淨去化為<b>+69.01千平方米</b>，但其中<b>98%</b>（+67.69千平方米）集中在市中心，同一季總既有存量卻縮減<b>-28.62千平方米</b>（第二部）。</span></li>
+      <li><span class="lang-en">National office transactions in 2025 exceeded <b>RM2.08 billion</b>; the 20 named deals in NAPIC's Table 4 sum to RM1.42 billion (68% of that total), with KL's own top sale — Menara CIMB — at <b>RM680 million</b> (Section III).</span><span class="lang-zh" style="display:none">2025年全國辦公室成交總額逾<b>RM20.8億</b>；NAPIC Table 4具名的20筆成交合計RM14.2億（佔總額68%），KL自己最大一筆——Menara CIMB——為<b>RM6.8億</b>（第三部）。</span></li>
+      <li><span class="lang-en">KL recorded <b>zero</b> 2025-dated shopping-complex mega-sales; its only entry in NAPIC's national retail transactions table (Plaza 63, RM34.0 million) is dated 2024, while every named 2025 deal sat in Selangor, Johor, Perak, Pahang or Sabah (Section III).</span><span class="lang-zh" style="display:none">KL在2025年具名商場大宗成交紀錄為<b>零</b>；它在NAPIC全國零售成交表裡唯一的一筆（Plaza 63，RM3,400萬）交易年份是2024年，所有具名2025年成交都落在雪蘭莪、柔佛、霹靂、彭亨或沙巴（第三部）。</span></li>
+      <li><span class="lang-en">KL's shop overhang has held flat at <b>10 units</b> for three straight quarters, with pipeline at just <b>2.0%</b> of stock — the cleanest, most land-constrained sub-market in this report (Section V).</span><span class="lang-zh" style="display:none">KL店屋餘屋已連三季持平於<b>10戶</b>，供給線僅佔存量<b>2.0%</b>——是本篇裡最乾淨、也最受制於土地的次市場（第五部）。</span></li>
+      <li><span class="lang-en">SOHO overhang fell from a 1,127-unit peak (Q3 2025) to <b>793</b> (Q1 2026), but incoming supply of <b>3,362 units</b> is already 4.2x that overhang (Section VI).</span><span class="lang-zh" style="display:none">SOHO餘屋自2025Q3的1,127戶峰值降至2026Q1的<b>793戶</b>，但即將供給<b>3,362戶</b>已是目前餘屋的4.2倍（第六部）。</span></li>
+      <li><span class="lang-en">Serviced-apartment overhang rose to <b>4,181 units</b> (from a 3,964 trough in Q4 2025) at an average unsold price of <b>RM1.13 million</b> — the most expensive unsold pile in the city, and this report's one outright avoid (Section VI).</span><span class="lang-zh" style="display:none">服務式公寓餘屋回升至<b>4,181戶</b>（自2025Q4低點3,964戶），未售均價<b>RM113萬</b>——全城單價最高的未售堆積，也是本篇唯一明確建議迴避的類別（第六部）。</span></li>
+    </ul>
+  </div>
+
+  <!-- ── Dashboard table ── -->
+  <div class="blk">
+    <h2><span class="lang-en">KPI dashboard</span><span class="lang-zh" style="display:none">關鍵指標儀表板</span></h2>
+    <p class="sub"><span class="lang-en">Each row states its own comparison basis and period — figures without a real prior-period reading are marked accordingly, not given a fabricated comparison.</span><span class="lang-zh" style="display:none">每一列自行標明比較基準與期別——沒有真實前期讀數的數字，如實標註，不硬造比較。</span></p>
+    <div class="tblwrap">
+      <table class="dash">
+        <thead><tr>
+          <th><span class="lang-en">Category</span><span class="lang-zh" style="display:none">類別</span></th>
+          <th><span class="lang-en">Metric</span><span class="lang-zh" style="display:none">指標</span></th>
+          <th><span class="lang-en">Value</span><span class="lang-zh" style="display:none">數值</span></th>
+          <th><span class="lang-en">Prior period</span><span class="lang-zh" style="display:none">前期</span></th>
+          <th><span class="lang-en">Direction</span><span class="lang-zh" style="display:none">方向</span></th>
+          <th><span class="lang-en">Period</span><span class="lang-zh" style="display:none">期別</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="lang-en">Office</span><span class="lang-zh" style="display:none">辦公室</span></td><td><span class="lang-en">KL total existing stock</span><span class="lang-zh" style="display:none">KL總既有存量</span></td><td class="num">9,633.72k sm</td><td class="num">9,662.34k sm</td><td class="dir">▼</td><td><span class="lang-en">Q1 2026 vs Q4 2025 (q-o-q)</span><span class="lang-zh" style="display:none">2026Q1 對 2025Q4（q-o-q）</span></td></tr>
+          <tr><td><span class="lang-en">Office</span><span class="lang-zh" style="display:none">辦公室</span></td><td><span class="lang-en">CC–OCC occupancy gap</span><span class="lang-zh" style="display:none">市中心－城外入駐率缺口</span></td><td class="num">6.75pp</td><td class="num">5.76pp</td><td class="dir">▲</td><td><span class="lang-en">Q1 2026 vs Q4 2025 (q-o-q); widening 2 consecutive qtrs</span><span class="lang-zh" style="display:none">2026Q1 對 2025Q4（q-o-q）；已連續2季擴大</span></td></tr>
+          <tr><td><span class="lang-en">Office</span><span class="lang-zh" style="display:none">辦公室</span></td><td><span class="lang-en">National office transaction total</span><span class="lang-zh" style="display:none">全國辦公室成交總額</span></td><td class="num">&gt;RM2.08bn</td><td>—</td><td class="dir">—</td><td><span class="lang-en">FY2025 annual, single period</span><span class="lang-zh" style="display:none">FY2025年度，單期</span></td></tr>
+          <tr><td><span class="lang-en">Retail</span><span class="lang-zh" style="display:none">零售</span></td><td><span class="lang-en">KL SC occupancy</span><span class="lang-zh" style="display:none">KL商場（SC）入駐率</span></td><td class="num">87.95%</td><td>—</td><td class="dir">—</td><td><span class="lang-en">Q1 2026, single period</span><span class="lang-zh" style="display:none">2026Q1，單期</span></td></tr>
+          <tr><td><span class="lang-en">Shop</span><span class="lang-zh" style="display:none">店屋</span></td><td><span class="lang-en">Overhang</span><span class="lang-zh" style="display:none">餘屋</span></td><td class="num">10 units</td><td class="num">10 units</td><td class="dir">—</td><td><span class="lang-en">Q1 2026 vs Q4 2025 (q-o-q), unchanged</span><span class="lang-zh" style="display:none">2026Q1 對 2025Q4（q-o-q），持平</span></td></tr>
+          <tr><td><span class="lang-en">Shop</span><span class="lang-zh" style="display:none">店屋</span></td><td><span class="lang-en">Pipeline / stock</span><span class="lang-zh" style="display:none">供給線／存量</span></td><td class="num">2.0%</td><td>—</td><td class="dir">—</td><td><span class="lang-en">Q1 2026, derived, single period</span><span class="lang-zh" style="display:none">2026Q1，derived，單期</span></td></tr>
+          <tr><td><span class="lang-en">SOHO</span><span class="lang-zh" style="display:none">SOHO</span></td><td><span class="lang-en">Overhang</span><span class="lang-zh" style="display:none">餘屋</span></td><td class="num">793 units</td><td class="num">1,124 units</td><td class="dir">▼</td><td><span class="lang-en">Q1 2026 vs Q4 2025 (q-o-q)</span><span class="lang-zh" style="display:none">2026Q1 對 2025Q4（q-o-q）</span></td></tr>
+          <tr><td><span class="lang-en">SOHO</span><span class="lang-zh" style="display:none">SOHO</span></td><td><span class="lang-en">Incoming supply</span><span class="lang-zh" style="display:none">即將供給</span></td><td class="num">3,362 units</td><td>—</td><td class="dir">—</td><td><span class="lang-en">Q1 2026, single period</span><span class="lang-zh" style="display:none">2026Q1，單期</span></td></tr>
+          <tr><td><span class="lang-en">SA</span><span class="lang-zh" style="display:none">服務式公寓</span></td><td><span class="lang-en">Overhang</span><span class="lang-zh" style="display:none">餘屋</span></td><td class="num">4,181 units</td><td class="num">3,964 units</td><td class="dir">▲</td><td><span class="lang-en">Q1 2026 vs Q4 2025 trough (q-o-q)</span><span class="lang-zh" style="display:none">2026Q1 對 2025Q4低點（q-o-q）</span></td></tr>
+          <tr><td><span class="lang-en">SA</span><span class="lang-zh" style="display:none">服務式公寓</span></td><td><span class="lang-en">Avg unsold price</span><span class="lang-zh" style="display:none">未售均價</span></td><td class="num">RM1.13m</td><td>—</td><td class="dir">—</td><td><span class="lang-en">Q1 2026, single period</span><span class="lang-zh" style="display:none">2026Q1，單期</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <!-- ════════ I ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">I · KL in the National Picture</span><span class="lang-zh" style="display:none">第一部 · KL 在全國版圖中的位置</span></h2></div>
+  <div class="sec-rule" id="sec-1"><h2><span class="lang-en">I · KL in the National Picture</span><span class="lang-zh" style="display:none">第一部 · KL 在全國版圖中的位置</span></h2></div>
 
   <div class="blk">
-    <h2><span class="lang-en">Office-heavy, shop-light — the mirror of Johor</span><span class="lang-zh" style="display:none">辦公室重、店屋輕——與新山鏡像</span></h2>
-    <p class="sub"><span class="lang-en">KL vs Johor, % share of national commercial stock by category · Q1 2026 · NAPIC (derived)</span><span class="lang-zh" style="display:none">KL 對新山，佔全國商業存量比重 % · 2026Q1 · NAPIC（derived）</span></p>
+    <h2><span class="lang-en">Office-heavy, shop-light — the mirror of Johor</span><span class="lang-zh" style="display:none">辦公室重、店屋輕——與柔佛鏡像</span></h2>
+    <p class="sub"><span class="lang-en">KL vs Johor, % share of national commercial stock by category · Q1 2026 · NAPIC (derived)</span><span class="lang-zh" style="display:none">KL 對柔佛，佔全國商業存量比重 % · 2026Q1 · NAPIC（derived）</span></p>
     <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 1 · Two-state comparison</span><span class="lang-zh" style="display:none">圖 1 · 雙州對照</span></div><div id="cKLShare" style="height:190px"></div></div>
-    <p class="narr-p"><span class="lang-en">KL's commercial world is built around offices and malls, not shophouses, and Johor's is close to the opposite. KL holds <b>51.7%</b> of the nation's private office space (9.63 of 18.64 million sm, derived) against Johor's <b>5.2%</b>; KL holds <b>19.5%</b> of national shopping-complex space (3.39 of 17.36 million sm, derived) against Johor's <b>13.7%</b>. Flip to shophouses and the ranking reverses: KL's 30,973-unit stock is just <b>5.5%</b> of the national 560,624 total, while Johor's 99,298 units make up <b>17.7%</b> — the largest shop base of any state. Office space is where large employers, government tenants and MNC headquarters concentrate; shophouses are what a city builds when it still has raw land at the edge of town. KL, largely built out, has almost none left; Johor, still expanding along the Causeway corridor, has plenty.</span><span class="lang-zh" style="display:none">KL 的商業世界，是圍繞辦公室與商場建立的，不是店屋；新山則幾乎是相反的組成。KL 佔全國私人辦公空間 <b>51.7%</b>（9.63／18.64 百萬平方米，derived），新山僅 <b>5.2%</b>；KL 佔全國購物中心空間 <b>19.5%</b>（3.39／17.36 百萬平方米，derived），新山為 <b>13.7%</b>。但換成店屋，排名整個反轉：KL 的 30,973 戶存量，僅佔全國 560,624 戶的 <b>5.5%</b>，新山的 99,298 戶卻佔了 <b>17.7%</b>——是全國店屋基數最大的一州。辦公空間，是大型雇主、政府租戶與跨國企業總部聚集之處；店屋，則是一座城市邊緣還有生地時才會大量興建的產品。已大致開發殆盡的 KL，幾乎沒有生地可用；仍沿新柔長堤走廊擴張的新山，則供給充足。</span></p>
+    <p class="narr-p"><span class="lang-en">KL's commercial world is built around offices and malls, not shophouses, and Johor's is close to the opposite. KL holds <b>51.7%</b> of the nation's private office space (9.63 of 18.64 million sm, derived) against Johor's <b>5.2%</b>; KL holds <b>19.5%</b> of national shopping-complex space (3.39 of 17.36 million sm, derived) against Johor's <b>13.7%</b>. Flip to shophouses and the ranking reverses: KL's 30,973-unit stock is just <b>5.5%</b> of the national 560,624 total, while Johor's 99,298 units make up <b>17.7%</b> — the largest shop base of any state. Office space is where large employers, government tenants and MNC headquarters concentrate; shophouses are what a city builds when it still has raw land at the edge of town. KL, largely built out, has almost none left; Johor, still expanding along the Causeway corridor, has plenty.</span><span class="lang-zh" style="display:none">KL 的商業世界，是圍繞辦公室與商場建立的，不是店屋；柔佛則幾乎是相反的組成。KL 佔全國私人辦公空間 <b>51.7%</b>（9.63／18.64 百萬平方米，derived），柔佛僅 <b>5.2%</b>；KL 佔全國購物中心空間 <b>19.5%</b>（3.39／17.36 百萬平方米，derived），柔佛為 <b>13.7%</b>。但換成店屋，排名整個反轉：KL 的 30,973 戶存量，僅佔全國 560,624 戶的 <b>5.5%</b>，柔佛的 99,298 戶卻佔了 <b>17.7%</b>——是全國店屋基數最大的一州。辦公空間，是大型雇主、政府租戶與跨國企業總部聚集之處；店屋，則是一座城市邊緣還有生地時才會大量興建的產品。已大致開發殆盡的 KL，幾乎沒有生地可用；仍沿新柔長堤走廊擴張的柔佛，則供給充足。</span></p>
     <p class="sub"><span class="lang-en">Incoming supply as % of existing stock, by category, KL vs national · Q1 2026 · NAPIC (derived)</span><span class="lang-zh" style="display:none">即將供給佔既有存量比重 %，依類別，KL 對全國 · 2026Q1 · NAPIC（derived）</span></p>
     <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 2 · Pipeline vs stock</span><span class="lang-zh" style="display:none">圖 2 · 供給線對存量</span></div><div id="cPipelineRatio" style="height:190px"></div></div>
     <p class="narr-p"><span class="lang-en">The pipeline tells the same story from a different angle. Weigh each category's incoming supply against its own existing stock and KL splits into a closed market and two that are still building: shop pipeline is just 605 units against 30,973 standing — <b>2.0%</b> (derived: 605 ÷ 30,973) — while SOHO's 3,362 incoming units run <b>27.4%</b> of its 12,266-unit stock (derived: 3,362 ÷ 12,266), and serviced apartments' 50,918 incoming run <b>33.1%</b> of 153,646 (derived: 50,918 ÷ 153,646). Shophouses are a closed, resale-only market; SOHO and serviced apartments are supply machines still running near full output. Nationally the same three ratios read 3.8%, 23.2% and 40.9% — KL's shop pipeline runs at roughly half the national ratio (less land, less left to add), its SOHO pipeline runs slightly ahead of the national pace, and only serviced apartments run meaningfully cooler than the national pipeline.</span><span class="lang-zh" style="display:none">供給線從另一個角度講的是同一個故事。把每個類別的即將供給拿去對比自己的既有存量，KL 分裂成一個封閉市場、與兩個仍在全速生產的市場：店屋供給僅 605 戶，對照存量 30,973 戶——僅 <b>2.0%</b>（derived：605 ÷ 30,973）——SOHO 即將供給 3,362 戶，佔存量 12,266 戶的 <b>27.4%</b>（derived：3,362 ÷ 12,266），服務式公寓即將供給 50,918 戶，佔存量 153,646 戶的 <b>33.1%</b>（derived：50,918 ÷ 153,646）。店屋是一個封閉、只靠轉手撐著的市場；SOHO 與服務式公寓，則是仍以接近全速運轉的供給機器。全國同樣三個比率分別是 3.8%、23.2%、40.9%——KL 的店屋供給比率大約是全國的一半（地少，能加的也少），SOHO 供給比率略高於全國步調，唯獨服務式公寓的供給明顯比全國步調更冷。</span></p>
@@ -166,7 +352,7 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
   </div>
 
   <!-- ════════ II ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">II · Offices</span><span class="lang-zh" style="display:none">第二部 · 辦公室</span></h2></div>
+  <div class="sec-rule" id="sec-2"><h2><span class="lang-en">II · Offices</span><span class="lang-zh" style="display:none">第二部 · 辦公室</span></h2></div>
 
   <p class="pull"><span class="lang-en">City Centre sits six points above the periphery — but "Outside City Centre" is a NAPIC catch-all wide enough to bury the city's real fringe winners inside its weakest towers.</span><span class="lang-zh" style="display:none">市中心比外圍高出六個百分點——但「城外」是 NAPIC 的一個大雜燴分類，寬到足以把真正的外圍贏家，跟這座城市最弱的舊樓埋在同一個數字裡。</span></p>
 
@@ -187,6 +373,15 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
       <li class="warn"><span class="lang-en">Market context, 1Q2026: KL overall office vacancy <b>15.2%</b> (JLL); KL prime-grade vacancy <b>22.1%</b> (Knight Frank); a further <b>4.61 million sq ft</b> of new Klang Valley supply due 2026–27 (Knight Frank). Demand is concentrating into TRX, while 2000s-vintage towers are increasingly bypassed for lacking current ESG and green-building certification — the same completion-outruns-demand mechanism seen residentially, replaying one tier up.</span><span class="lang-zh" style="display:none">市場背景（2026Q1）：KL 整體辦公室空置率 <b>15.2%</b>（JLL），KL 頂級辦公室空置率達 <b>22.1%</b>（Knight Frank），2026 至 2027 年間巴生谷還有 <b>461 萬平方呎</b>新供給待入市（Knight Frank）。需求正向 TRX 集中，2000 年代落成的舊樓因不符現行 ESG 與綠建認證而漸被邊緣化——與住宅市場同一套「完工超越需求」機制，換到辦公室這一層再演一次。</span></li>
     </ul>
     <p class="narr-p"><span class="lang-en">One more anchor, from a different NAPIC publication: the 2025 annual report puts KL's FY2025 average private-office occupancy at <b>70.9%</b>, against a national private-only average of 71.9% (1,284 buildings, 18.58 million sm) — a different period from this section's Q1 2026 quarterly reading (71.87%, private-only) but the same scope, and the two sit within a point of each other. Read together, KL office occupancy has been parked in the 70-72% band across two different measurement points rather than moving sharply in either direction.</span><span class="lang-zh" style="display:none">再補一個錨點，來自另一份 NAPIC 出版品：2025 年報將 KL 全年（FY2025）私人辦公室平均入駐率定為 <b>70.9%</b>，對照全國僅私人口徑平均 71.9%（1,284 棟、1,858 萬平方米）——與本節 2026Q1 季度讀數（71.87%，僅私人）不同期，但口徑相同，兩者相差不到一個百分點。兩相對照，KL 辦公室入駐率在兩個不同的量測時點上，都停在 70% 至 72% 這個帶狀區間，並沒有往任一方向劇烈移動。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Net absorption: real demand, or a shrinking stock base?</span><span class="lang-zh" style="display:none">淨去化：真實需求，還是存量縮水？</span></h2>
+    <p class="narr-p"><span class="lang-en">Occupancy rate alone cannot answer whether Q1 2026's improvement is demand-driven. A rate is a ratio — it rises whenever the numerator (occupied space) grows faster than the denominator (total existing space), and it can also rise when the denominator simply shrinks. This report computes net absorption — the quarter-on-quarter change in occupied space — directly from the same four-quarter NAPIC series behind Exhibit 4, split by City Centre and Outside City Centre, to separate the two effects (derived: see office_net_absorption_derived_2026_08_13 in the vetted dataset for the full working).</span><span class="lang-zh" style="display:none">單看入駐率，無法回答2026Q1的改善是否由需求驅動。入駐率是一個比率——只要分子（已佔用空間）成長快於分母（總既有空間），就會上升，而分母單純縮水，同樣會讓它上升。本篇直接從圖4背後同一組四季NAPIC序列，計算逐季淨去化——已佔用空間的季度變化——並依市中心與城外拆分，藉此把兩種效應分開來看（derived：完整運算過程見已審核資料集office_net_absorption_derived_2026_08_13）。</span></p>
+    <p class="sub"><span class="lang-en">Net absorption by segment, '000 sm · quarterly change, Q1 2025–Q1 2026 (Q1→Q3 2025 spans two quarters, Q2 not sampled) · NAPIC (derived)</span><span class="lang-zh" style="display:none">依分區淨去化，'000平方米 · 季度變化，2025Q1–2026Q1（2025Q1→Q3橫跨兩季，未取樣Q2） · NAPIC（derived）</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 6 · Quarterly net absorption</span><span class="lang-zh" style="display:none">圖 6 · 季度淨去化</span></div><div id="cNetAbsorption" style="height:240px"></div></div>
+    <p class="narr-p"><span class="lang-en">The most recent quarter settles the question, but not simply. Between Q4 2025 and Q1 2026, KL's total existing office stock actually <b>contracted by 28.62k sm</b> (9,662.34→9,633.72k sm, derived) even as occupied space <b>rose by 69.01k sm</b> (6,854.75→6,923.76k sm, derived) — the occupancy-rate rise from 70.94% to 71.87% is therefore driven by both genuine positive net absorption <b>and</b> a shrinking denominator, not demand alone. NAPIC's CBSA table does not carry a completions line for offices the way it does for shop/SOHO/SA, so this report cannot confirm what caused the stock contraction — redevelopment, demolition or a scope revision are all plausible, and this is flagged here as inference, not a NAPIC-stated cause.</span><span class="lang-zh" style="display:none">最近一季給出了答案，但答案不單純。2025Q4至2026Q1之間，KL總既有辦公存量實際<b>縮減28.62千平方米</b>（9,662.34→9,633.72千平方米，derived），即使已佔用空間<b>成長69.01千平方米</b>（6,854.75→6,923.76千平方米，derived）——入駐率從70.94%升至71.87%，因此是真實的正向淨去化<b>與</b>分母縮水兩者共同驅動，不是單純需求所致。NAPIC的CBSA表格並未像店屋／SOHO／服務式公寓那樣附上辦公室的完工欄，本篇因此無法確認存量縮減的成因——重建、拆除或分類口徑調整都有可能，這裡明確標註為推論，不是NAPIC自陳的成因。</span></p>
+    <p class="narr-p"><span class="lang-en">Split by precinct, that same quarter's absorption is almost entirely a City Centre story: of the citywide +69.01k sm, <b>+67.69k sm (98%) landed in City Centre</b> alone, while Outside City Centre absorbed just +1.32k sm (derived: 67.69 ÷ 69.01) — reinforcing this section's flight-to-quality read from a demand-side angle rather than an occupancy-rate angle. But that concentration is a reversal, not yet a trend: the prior quarter (Q3→Q4 2025) ran the other way — City Centre's occupied space actually <b>fell 5.40k sm</b> while Outside City Centre gained both stock (+48.33k sm) and the larger share of net absorption (+15.23k sm) that quarter. Two data points pointing in opposite directions is not yet a confirmed pattern; it is one more reason this report's own monitor (Section VIII) treats the CC/OCC gap as a trend to watch, not one to call.</span><span class="lang-zh" style="display:none">依分區拆分，同一季的淨去化幾乎全是市中心的故事：全市+69.01千平方米中，<b>+67.69千平方米（98%）獨自落在市中心</b>，城外僅吸收+1.32千平方米（derived：67.69÷69.01）——從需求端而非入駐率角度，再次印證本節的品質出走判讀。但這個集中現象是一次反轉，還不是趨勢：前一季（2025Q3→Q4）走向恰恰相反——市中心已佔用空間實際<b>下滑5.40千平方米</b>，城外則同時取得存量成長（+48.33千平方米）與較大的淨去化份額（+15.23千平方米）。兩個方向相反的數據點，還構不成一個確認的型態；這也是本篇監測項（第八部）把市中心／城外缺口列為「值得盯」而非「可以下結論」的原因之一。</span></p>
   </div>
 
   <div class="blk">
@@ -242,17 +437,121 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
         <p class="angle"><b><span class="lang-en">Individual angle:</span><span class="lang-zh" style="display:none">個人角度：</span></b><span class="lang-en"> this is the ageing-tower pole this report keeps warning about — Pertama Complex's rent gain shows a specific old building can still win, but the base rate here is weak, so treat any unit in this belt as guilty until a verified rent roll proves otherwise.</span><span class="lang-zh" style="display:none">這正是本篇一直在警告的那個老樓一端——Pertama Complex的租金漲幅證明特定老樓仍能贏，但這裡的基礎率偏弱，任何落在這一帶的單位都該先當成有問題，直到核實過的租金流證明並非如此。</span></p>
       </div>
     </div>
-    <p class="narr-p"><span class="lang-en">Six corridors, three usable strata comparables (KL Eco City, Damansara Heights, and — at the boutique-building tier — Mid Valley City), and one corridor (TRX) with none at all. That split is the map the next two sections work from: what a KL office floor actually costs by tier, and which of these corridors an individual investor can responsibly enter directly rather than through a REIT.</span><span class="lang-zh" style="display:none">六條走廊、三個能拿來對照的分層價格案例（KL Eco City、Damansara Heights，以及整棟精品層的Mid Valley City），還有一條（TRX）完全沒有。這個落差，正是接下來兩節要展開的地圖：KL辦公室依層級實際要多少錢，以及這幾條走廊裡，哪些是個人投資人能負責任地直接進場、哪些只能透過REIT。</span></p>
+    <p class="narr-p"><span class="lang-en">Six corridors, three usable strata comparables (KL Eco City, Damansara Heights, and — at the boutique-building tier — Mid Valley City), and one corridor (TRX) with none at all. That split is the map the next section works from: what a KL office floor actually costs by tier, and which of these corridors an individual investor can responsibly enter directly rather than through a REIT.</span><span class="lang-zh" style="display:none">六條走廊、三個能拿來對照的分層價格案例（KL Eco City、Damansara Heights，以及整棟精品層的Mid Valley City），還有一條（TRX）完全沒有。這個落差，正是下一章要展開的地圖：KL辦公室依層級實際要多少錢，以及這幾條走廊裡，哪些是個人投資人能負責任地直接進場、哪些只能透過REIT。</span></p>
+  </div>
+
+  <div class="mview">
+    <span class="mvk"><span class="lang-en">Market View — Offices</span><span class="lang-zh" style="display:none">Market View——辦公室</span></span>
+    <p><span class="lang-en">The 6.75pp City Centre–Outside City Centre occupancy gap has widened for two straight quarters, and this quarter's absorption confirms it from the demand side: 98% of net new occupied space landed in City Centre alone, even as total office stock contracted. "Outside City Centre" still hides genuine fringe winners inside a weaker average — the availability-band data shows Outside City Centre is bifurcated, not uniformly soft. One more quarter of widening would complete three straight and support calling this trend rather than noise.</span><span class="lang-zh" style="display:none">市中心－城外6.75個百分點的入駐率缺口已連續兩季擴大，本季的淨去化數據從需求端證實了這一點：98%的淨新增已佔用空間獨自落在市中心，即使總辦公存量同期在縮減。「城外」這個分類，仍把真正的外圍贏家埋在一個較弱的平均值裡——可用率帶的資料顯示，城外是兩極分化，不是普遍偏軟。再一季擴大，就會湊滿連續三季，足以稱為趨勢而非雜訊。</span></p>
+  </div>
+
+  <!-- ════════ III ════════ -->
+  <div class="sec-rule" id="sec-3"><h2><span class="lang-en">III · Capital Markets</span><span class="lang-zh" style="display:none">第三部 · 資本市場</span></h2></div>
+
+  <p class="pull"><span class="lang-en">A national narrative of RM2.08 billion in 2025 office sales, and an even bigger retail number nationally — but not one KL shopping-complex mega-deal carries a 2025 date.</span><span class="lang-zh" style="display:none">全國2025年辦公室成交敘事逾RM20.8億，零售全國數字更大——但沒有一筆KL商場大宗成交掛著2025年的日期。</span></p>
+
+  <div class="blk">
+    <h2><span class="lang-en">The national anchor: over RM2.08 billion in 2025 office sales</span><span class="lang-zh" style="display:none">全國錨點：2025年辦公室成交逾RM20.8億</span></h2>
+    <p class="narr-p"><span class="lang-en">NAPIC's 2025 annual report states market activity recorded office-building transactions with an accumulated value <b>exceeding RM2.08 billion</b> nationally that year. The report's own Table 4 — the same table this section draws its named comparables from — lists twenty transactions across all states; summed directly, those twenty rows total <b>RM1.42 billion</b> (derived: RM1,419,417,233), about <b>68%</b> of the RM2.08 billion narrative figure (derived: 1,419,417,233 ÷ 2,080,000,000). Table 4 is therefore best read as illustrative of the year's largest named deals, not an exhaustive reconciliation to the sector total — the gap is NAPIC's own unnamed transaction volume, not a data error in this report's transcription.</span><span class="lang-zh" style="display:none">NAPIC 2025年報指出，全國當年辦公大樓成交活動累計金額<b>超過RM20.8億</b>。年報自己的Table 4——本節具名比較案例的出處——列出橫跨全國各州的二十筆成交；直接加總，這二十列合計<b>RM14.2億</b>（derived：RM1,419,417,233），約為RM20.8億敘事數字的<b>68%</b>（derived：1,419,417,233 ÷ 2,080,000,000）。因此Table 4較適合讀作當年最大具名成交的示意樣本，不是對整個行業總額的完整核對——落差來自NAPIC自己未具名的成交量，不是本篇轉錄的誤差。</span></p>
+    <p class="narr-p"><span class="lang-en">KL's own contribution to Table 4 is nine of the twenty nationwide rows, topped by <b>Menara CIMB</b> at Kuala Lumpur Sentral for <b>RM680 million</b> — the single largest transaction in the entire table, national or KL — and <b>Wisma Technip</b> on Jalan Tun Razak for <b>RM135 million</b>. The eleven non-KL rows are led by Selangor's Basis Bay (RM55.6 million) and Menara Apex (RM55.0 million); no other state comes close to KL's concentration of large deals. The full nine-row KL transcription is tabulated below.</span><span class="lang-zh" style="display:none">KL自己在Table 4的貢獻，是全國二十列中的九列，居首的是KL Sentral的<b>Menara CIMB</b>，<b>RM6.8億</b>——是整張表格裡金額最大的一筆，不論全國或KL——以及Jalan Tun Razak的<b>Wisma Technip</b>，<b>RM1.35億</b>。非KL的十一列，以雪蘭莪的Basis Bay（RM5,560萬）與Menara Apex（RM5,500萬）居首；沒有其他州能接近KL這種大額成交的密度。完整九列KL轉錄列於下表。</span></p>
+    <div class="tblwrap">
+      <table class="formal">
+        <caption><span class="lang-en">Exhibit 7 · Major KL office transactions, 2025 annual report Table 4</span><span class="lang-zh" style="display:none">圖 7 · KL主要辦公室成交，2025年報Table 4</span></caption>
+        <thead><tr>
+          <th><span class="lang-en">Property</span><span class="lang-zh" style="display:none">物業</span></th>
+          <th><span class="lang-en">Location</span><span class="lang-zh" style="display:none">位置</span></th>
+          <th><span class="lang-en">Year</span><span class="lang-zh" style="display:none">年份</span></th>
+          <th><span class="lang-en">Amount (RM)</span><span class="lang-zh" style="display:none">金額（RM）</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Menara CIMB</td><td>Jalan Stesen Sentral 2, Kuala Lumpur Sentral</td><td>2025</td><td class="num">680,000,000</td></tr>
+          <tr><td>Wisma Technip</td><td>Jalan Tun Razak</td><td>2025</td><td class="num">135,000,000</td></tr>
+          <tr><td>Menara Southern Bank</td><td>Jalan Medan Setia 1, Plaza Damansara</td><td>2025</td><td class="num">91,344,233</td></tr>
+          <tr><td>Menara Affin</td><td>Jalan Raja Chulan, Kuala Lumpur</td><td>2024</td><td class="num">100,000,000</td></tr>
+          <tr><td>Widad Business Group</td><td>Jalan Semantan, Bukit Damansara</td><td>2025</td><td class="num">41,500,000</td></tr>
+          <tr><td>KSK Building</td><td>Jalan Yap Ah Shak, Kuala Lumpur</td><td>2025</td><td class="num">33,000,000</td></tr>
+          <tr><td>Southbank Boutique Office Block 6</td><td>Jalan Klang Lama</td><td>2025</td><td class="num">29,500,000</td></tr>
+          <tr><td>SB-10 Boulevard Signature Offices, Mid Valley City</td><td>Jalan Lingkaran Syed Putra</td><td>2024</td><td class="num">36,764,516</td></tr>
+          <tr><td>SB-09 Boulevard Signature Offices, Mid Valley City</td><td>Jalan Lingkaran Syed Putra</td><td>2024</td><td class="num">23,235,484</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="narr-p"><span class="lang-en">Rental performance across these buildings and corridors is not a blanket story either. NAPIC's annual report notes that <b>Petronas Twin Tower, UOA Centre, Menara JKG and Pertama Complex</b> all recorded rental increases of over 8% in 2025 (detailed by corridor in Section II) — while conceding, in the same paragraph, that other buildings saw rents decline over the same period. That the increases-list mixes a Petronas-branded trophy tower with a 1970s-vintage complex at Jalan TAR is itself the finding: selective demand does not mean "every new building wins, every old building loses" — it means location and positioning, not vintage alone, decide which side of the flight-to-quality line a specific building sits on.</span><span class="lang-zh" style="display:none">這些大樓與走廊的租金表現，也不是一個統一的故事。NAPIC年報指出，<b>雙子塔、UOA Centre、Menara JKG與Pertama Complex</b>在2025年租金皆漲逾8%（依走廊細分見第二部）——但同一段話也承認，同期有其他大樓租金下跌。這份漲租名單裡，一棟以石油雙峰塔品牌背書的地標大樓，跟一棟1970年代落成、位於Jalan TAR的老樓並列，這件事本身就是發現：選擇性需求不代表『新樓全贏、老樓全輸』——真正決定一棟大樓落在品質出走哪一側的，是地段與定位，不只是樓齡。</span></p>
   </div>
 
   <div class="blk">
     <h2><span class="lang-en">This market's three-tier price ladder</span><span class="lang-zh" style="display:none">這個市場的三層價格標籤</span></h2>
-    <p class="narr-p"><span class="lang-en">The 2025 annual report's Table 4 of major office sales makes the scale of this market concrete. Nine of its twenty nationwide listed transactions are in WP Kuala Lumpur, topped by <b>Menara CIMB</b> at Kuala Lumpur Sentral for <b>RM680 million</b> and <b>Wisma Technip</b> on Jalan Tun Razak for <b>RM135 million</b>; even a smaller boutique block — Southbank Boutique Office Block 6 on Jalan Klang Lama — sold for RM29.5 million, and the two Boulevard Signature Offices towers at Mid Valley City each fetched over RM23 million. <b>Menara Affin</b> on Jalan Raja Chulan — the same precinct this report's retail exhibit below shows running above 98% mall occupancy — sold whole for <b>RM100 million</b>. These are whole-building, institutional-scale transactions, tens of millions to hundreds of millions of ringgit, and they sit at the far end of a price ladder from the strata-unit market described below.</span><span class="lang-zh" style="display:none">2025 年報 Table 4 的主要辦公室成交表，把這個市場的量級具體攤開來看。全國二十筆列名成交中，九筆落在 WP Kuala Lumpur，居首的是 KL Sentral 的 <b>Menara CIMB</b>，成交價 <b>RM6.8 億</b>，以及 Jalan Tun Razak 的 <b>Wisma Technip</b>，<b>RM1.35 億</b>；即使是規模較小的精品辦公樓——Jalan Klang Lama 的 Southbank Boutique Office Block 6——也以 RM2,950 萬成交，Mid Valley City 的兩棟 Boulevard Signature Offices，每棟都超過 RM2,300 萬。Jalan Raja Chulan 的 <b>Menara Affin</b>——與本篇下方零售圖表顯示商場入駐率超過 98% 的那個分區同一條街——整棟以 <b>RM1 億</b>成交。這些都是整棟、機構級規模的成交，數千萬到數億令吉，落在下方分層單位市場價格標籤的最遠端。</span></p>
+    <p class="narr-p"><span class="lang-en">Even a smaller boutique block — Southbank Boutique Office Block 6 on Jalan Klang Lama — sold for RM29.5 million, and the two Boulevard Signature Offices towers at Mid Valley City each fetched over RM23 million. <b>Menara Affin</b> on Jalan Raja Chulan — the same precinct this report's retail exhibit below shows running above 98% mall occupancy — sold whole for <b>RM100 million</b>. These are whole-building, institutional-scale transactions, tens of millions to hundreds of millions of ringgit, and they sit at the far end of a price ladder from the strata-unit market described below.</span><span class="lang-zh" style="display:none">即使是規模較小的精品辦公樓——Jalan Klang Lama 的 Southbank Boutique Office Block 6——也以 RM2,950 萬成交，Mid Valley City 的兩棟 Boulevard Signature Offices，每棟都超過 RM2,300 萬。Jalan Raja Chulan 的 <b>Menara Affin</b>——與本篇下方零售圖表顯示商場入駐率超過 98% 的那個分區同一條街——整棟以 <b>RM1 億</b>成交。這些都是整棟、機構級規模的成交，數千萬到數億令吉，落在下方分層單位市場價格標籤的最遠端。</span></p>
     <p class="sub"><span class="lang-en">Illustrative entry price by ownership tier, RM, log scale · derived / named comparables, 2025 · NAPIC annual report</span><span class="lang-zh" style="display:none">依持有層級的示意入場價，RM，對數座標 · derived／具名比較案例，2025 · NAPIC年報</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 6 · Three tiers, three orders of magnitude</span><span class="lang-zh" style="display:none">圖 6 · 三層，三個數量級</span></div><div id="cPriceLadder" style="height:200px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 8 · Three tiers, three orders of magnitude</span><span class="lang-zh" style="display:none">圖 8 · 三層，三個數量級</span></div><div id="cPriceLadder" style="height:200px"></div></div>
     <p class="narr-p"><span class="lang-en">KL office is not one price, it is three, separated by roughly two orders of magnitude each. At the strata-unit level, the annual report names three transactions — Pavilion Damansara Heights at RM15,300–16,400 p.s.m., Suasana Bukit Ceylon at RM15,300–21,500 p.s.m., and KL Eco City at RM13,300–19,000 p.s.m. Apply that range to a typical 100–150 s.m. office unit and the entry price for an individually-owned floor works out to roughly <b>RM1.33 million</b> (100 s.m. × RM13,300, derived) to <b>RM3.225 million</b> (150 s.m. × RM21,500, derived) — a wide but bounded band, and the one tier where the price is something an individual buyer can actually verify against a named comparable.</span><span class="lang-zh" style="display:none">KL 辦公室不是一個價格，而是三個，彼此大約相差兩個數量級。分層單位這一層，年報點名三個具體成交——Pavilion Damansara Heights RM15,300至16,400／平方米、Suasana Bukit Ceylon RM15,300至21,500／平方米、KL Eco City RM13,300至19,000／平方米。把這個價格帶套進典型100至150平方米的辦公單位，一層個人持有樓層的入場價大約落在<b>RM133萬</b>（100平方米×RM13,300，derived）到<b>RM322.5萬</b>（150平方米×RM21,500，derived）——區間雖寬但有邊界，也是唯一一層個人買家真能拿具名成交去核對的價格。</span></p>
     <p class="narr-p"><span class="lang-en">One level up, the whole-building boutique tier trades in eight figures before the deal even starts: the smallest of Table 4's nine WP Kuala Lumpur transactions — SB-09 at Mid Valley City — went for RM23.2 million, and the next seven above it run up to RM135 million (Wisma Technip). This is not a market an individual buyer enters with a mortgage; it is where boutique funds, family offices and developers' own investment arms transact. A further level up sits Menara CIMB at KL Sentral, which changed hands for RM680 million in 2025 — roughly thirty times the boutique floor and roughly five hundred times the low end of the strata-unit entry band derived above (RM1.33 million). That gap is not a rounding difference; it is the difference between a product an individual can own outright and a product only an institution, a REIT, or a sovereign-scale buyer can absorb.</span><span class="lang-zh" style="display:none">再上一層，整棟精品樓成交還沒開始議價就已經是八位數：Table 4的九筆WP Kuala Lumpur成交中最小的一筆——Mid Valley City的SB-09——成交RM2,320萬，往上七筆最高到RM1.35億（Wisma Technip）。這不是個人買家用房貸就能進場的市場；這是精品基金、家族辦公室、發展商自有投資部門在交易的層級。再往上一層，是KL Sentral的Menara CIMB，2025年以RM6.8億易手——大約是精品樓底部的三十倍，大約是上面推導出的分層單位入場價下限（RM133萬）的五百倍。這不是四捨五入的差距；這是「個人能整戶持有」跟「只有機構、REIT或主權級買家能吃得下」之間的差距。</span></p>
-    <p class="narr-p"><span class="lang-en">Rental performance across these tiers and corridors is not a blanket story either. NAPIC's annual report notes that <b>Petronas Twin Tower, UOA Centre, Menara JKG and Pertama Complex</b> all recorded rental increases of over 8% in 2025 (detailed by corridor above) — while conceding, in the same paragraph, that other buildings saw rents decline over the same period. That the increases-list mixes a Petronas-branded trophy tower with a 1970s-vintage complex at Jalan TAR is itself the finding: selective demand does not mean "every new building wins, every old building loses" — it means location and positioning, not vintage alone, decide which side of the flight-to-quality line a specific building sits on, and only building-specific due diligence (see the checklist below) can tell you which side a given asset is on before you buy.</span><span class="lang-zh" style="display:none">這幾層與幾條走廊的租金表現，也不是一個統一的故事。NAPIC年報指出，<b>雙子塔、UOA Centre、Menara JKG與Pertama Complex</b>在2025年租金皆漲逾8%（上方依走廊細分）——但同一段話也承認，同期有其他大樓租金下跌。這份漲租名單裡，一棟以石油雙峰塔品牌背書的地標大樓，跟一棟1970年代落成、位於Jalan TAR的老樓並列，這件事本身就是發現：選擇性需求不代表『新樓全贏、老樓全輸』——真正決定一棟大樓落在品質出走哪一側的，是地段與定位，不只是樓齡；而要判斷手上這一戶落在哪一側，只有針對該棟大樓的實查（見下方盡調清單）才能回答。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Retail's national table: zero 2025-dated KL deals</span><span class="lang-zh" style="display:none">零售全國成交表：零筆2025年KL成交</span></h2>
+    <p class="narr-p"><span class="lang-en">NAPIC's Table 2 lists the year's major shopping-complex sales nationally, with an accumulated narrative value of <b>RM3.48 billion</b> — summed directly, the seventeen listed rows total <b>RM3.43 billion</b> (derived: RM3,426,275,999), about <b>98.5%</b> of the narrative figure, a much tighter reconciliation than the office table's 68% (derived: 3,426,275,999 ÷ 3,480,000,000). Table 2 is close to an exhaustive list of the year's major shopping-complex deals; Table 4 above is more clearly illustrative. The two tables should not be assumed equally complete.</span><span class="lang-zh" style="display:none">NAPIC的Table 2列出全國年度主要商場成交，敘事累計金額<b>RM34.8億</b>——直接加總，列出的十七列合計<b>RM34.3億</b>（derived：RM3,426,275,999），約為敘事數字的<b>98.5%</b>，比上方辦公室表的68%核對得緊密許多（derived：3,426,275,999÷3,480,000,000）。Table 2幾乎是當年主要商場成交的完整清單；上方Table 4則明顯較屬示意樣本。兩張表不應被當成同等完整。</span></p>
+    <p class="narr-p"><span class="lang-en">The finding this section exists to surface: exactly one of the seventeen nationally-named 2025 shopping-complex transactions involves WP Kuala Lumpur — <b>Plaza 63</b> on Jalan 3/108C, Taman Sungai Besi — and even that one is dated <b>2024</b>, not 2025. Every 2025-dated transaction in the table sits in Selangor, Johor, Perak, Pahang or Sabah; the single largest, Johor's Paradigm Mall Johor Bahru at <b>RM1.157 billion</b>, is 34 times the KL entry's value. On this named-transaction evidence, KL recorded <b>zero</b> major shopping-complex sales in calendar year 2025, while Selangor (eight named deals) and Johor (two, including the year's largest) carried the visible capital-markets activity.</span><span class="lang-zh" style="display:none">本節要呈現的發現是：全國十七筆具名2025年商場成交裡，恰好只有一筆涉及WP Kuala Lumpur——<b>Plaza 63</b>，位於Jalan 3/108C, Taman Sungai Besi——而且這一筆的交易年份是<b>2024</b>年，不是2025年。表中每一筆掛2025年日期的成交，都落在雪蘭莪、柔佛、霹靂、彭亨或沙巴；其中最大一筆——柔佛的Paradigm Mall Johor Bahru，<b>RM11.57億</b>——是KL那一筆的34倍。就這份具名成交證據而言，KL在2025年度的商場大宗成交紀錄為<b>零</b>，雪蘭莪（八筆具名成交）與柔佛（兩筆，含當年最大一筆）才是看得見的資本市場活動所在。</span></p>
+    <div class="tblwrap">
+      <table class="formal">
+        <caption><span class="lang-en">Exhibit 9 · Major shopping-complex transactions 2025 (national), NAPIC Table 2</span><span class="lang-zh" style="display:none">圖 9 · 2025年主要商場成交（全國），NAPIC Table 2</span></caption>
+        <thead><tr>
+          <th><span class="lang-en">Property</span><span class="lang-zh" style="display:none">物業</span></th>
+          <th><span class="lang-en">Location / State</span><span class="lang-zh" style="display:none">位置／州</span></th>
+          <th><span class="lang-en">Year</span><span class="lang-zh" style="display:none">年份</span></th>
+          <th><span class="lang-en">Amount (RM)</span><span class="lang-zh" style="display:none">金額（RM）</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><b>Plaza 63</b> <span class="lang-en">(WP Kuala Lumpur)</span><span class="lang-zh" style="display:none">（WP Kuala Lumpur）</span></td><td>Jalan 3/108C, Taman Sungai Besi</td><td>2024</td><td class="num">33,999,999</td></tr>
+          <tr><td>AEON Mall Bukit Tinggi</td><td>Bandar Bukit Tinggi, Klang, Selangor</td><td>2025</td><td class="num">680,000,000</td></tr>
+          <tr><td>Paradigm Mall</td><td>Taman Bukit Mewah, Johor Bahru, Johor</td><td>2025</td><td class="num">1,157,000,000</td></tr>
+          <tr><td>Paradigm Mall</td><td>SS7, Petaling Jaya, Selangor</td><td>2025</td><td class="num">600,000,000</td></tr>
+          <tr><td>Kompleks PKNS</td><td>Seksyen 14, Shah Alam, Selangor</td><td>2025</td><td class="num">185,000,000</td></tr>
+          <tr><td>AEON Mall Taiping</td><td>Jalan Kamunting, Taiping, Perak</td><td>2025</td><td class="num">147,000,000</td></tr>
+          <tr><td>AEON Seri Manjung</td><td>Jalan Manjung Point 3, Seri Manjung, Perak</td><td>2025</td><td class="num">138,000,000</td></tr>
+          <tr><td>SACC Mall</td><td>Seksyen 14, Shah Alam, Selangor</td><td>2025</td><td class="num">133,000,000</td></tr>
+          <tr><td>Jaya Shopping Centre</td><td>Seksyen 14, Petaling Jaya, Selangor</td><td>2025</td><td class="num">100,000,000</td></tr>
+          <tr><td>Kipmall Desa Coalfields</td><td>Sungai Buloh, Selangor</td><td>2025</td><td class="num">62,000,000</td></tr>
+          <tr><td>Perling Mall</td><td>Taman Perling, Johor Bahru, Johor</td><td>2025</td><td class="num">54,184,000</td></tr>
+          <tr><td>Pasaraya TF Value Mart</td><td>Manjung Point Seksyen 1, Seri Manjung, Perak</td><td>2025</td><td class="num">35,392,000</td></tr>
+          <tr><td>Lotus's Indera Mahkota</td><td>Bandar Indera Mahkota, Pahang</td><td>2025</td><td class="num">39,000,000</td></tr>
+          <tr><td>Econsave Jengka</td><td>Bandar Tun Razak, Pahang</td><td>2025</td><td class="num">16,000,000</td></tr>
+          <tr><td>Pasaraya TF</td><td>Sentral Triang, Pahang</td><td>2025</td><td class="num">13,750,000</td></tr>
+          <tr><td>Plaza Pelangi Astana</td><td>PJU 6, Petaling Jaya, Selangor</td><td>2025</td><td class="num">25,850,000</td></tr>
+          <tr><td>Bataras Hypermarket Tamparuli</td><td>Tamparuli, Sabah</td><td>2025</td><td class="num">6,100,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">The supply pipeline behind the numbers</span><span class="lang-zh" style="display:none">數字背後的供給線</span></h2>
+    <p class="narr-p"><span class="lang-en">The six-stage NAPIC pipeline behind Sections IV–VI's shop, SOHO and SA figures is tabulated together here for the first time — the same underlying data, presented as a capital-markets planning table rather than split across three separate sections.</span><span class="lang-zh" style="display:none">支撐第四至六部店屋、SOHO與服務式公寓數字的六階段NAPIC供給線，首次整合列於此表——同一套底層數據，改以資本市場規劃表的形式呈現，而不是拆在三個獨立章節裡各看一段。</span></p>
+    <div class="tblwrap">
+      <table class="formal">
+        <caption><span class="lang-en">Exhibit 10 · KL supply pipeline, shop / SOHO / SA, units, Q1 2026</span><span class="lang-zh" style="display:none">圖 10 · KL供給線，店屋／SOHO／服務式公寓，戶，2026Q1</span></caption>
+        <thead><tr>
+          <th><span class="lang-en">Stage</span><span class="lang-zh" style="display:none">階段</span></th>
+          <th><span class="lang-en">Shop</span><span class="lang-zh" style="display:none">店屋</span></th>
+          <th><span class="lang-en">SOHO</span><span class="lang-zh" style="display:none">SOHO</span></th>
+          <th><span class="lang-en">Serviced Apt</span><span class="lang-zh" style="display:none">服務式公寓</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="lang-en">Existing stock</span><span class="lang-zh" style="display:none">既有存量</span></td><td class="num">30,973</td><td class="num">12,266</td><td class="num">153,646</td></tr>
+          <tr><td><span class="lang-en">Completions</span><span class="lang-zh" style="display:none">完工</span></td><td class="num">0</td><td class="num">0</td><td class="num">476</td></tr>
+          <tr><td><span class="lang-en">Incoming supply</span><span class="lang-zh" style="display:none">即將供給</span></td><td class="num">605</td><td class="num">3,362</td><td class="num">50,918</td></tr>
+          <tr><td><span class="lang-en">Starts</span><span class="lang-zh" style="display:none">動工</span></td><td class="num">0</td><td class="num">0</td><td class="num">5,541</td></tr>
+          <tr><td><span class="lang-en">Planned supply</span><span class="lang-zh" style="display:none">規劃中供給</span></td><td class="num">130</td><td class="num">3,495</td><td class="num">47,622</td></tr>
+          <tr><td><span class="lang-en">New planned supply</span><span class="lang-zh" style="display:none">新規劃供給</span></td><td class="num">0</td><td class="num">0</td><td class="num">5,851</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="narr-p"><span class="lang-en">Read left to right, the three categories occupy three different points on a build cycle: shop is essentially closed (zero completions, zero starts, a token 605-unit incoming line); SOHO has just delivered one wave and has a larger one (3,362 incoming, 3,495 planned) queued immediately behind it; SA is running every stage of the pipeline simultaneously and at the largest scale of the three, with starts alone (5,541) already exceeding shop's entire incoming-plus-planned total.</span><span class="lang-zh" style="display:none">由左至右讀，這三個類別分別停在建案週期的三個不同位置：店屋基本上已封閉（完工零、動工零，即將供給僅象徵性的605戶）；SOHO剛交完一波，緊接著就排著更大的一波（即將供給3,362戶、規劃中供給3,495戶）；服務式公寓則同時在跑供給線的每一個階段，而且三者裡規模最大——光是動工中的5,541戶，就已超過店屋即將供給加規劃中供給的總和。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">A verifiable KL office yield: not available from this research pass</span><span class="lang-zh" style="display:none">可核實的KL辦公室收益率：本輪研究查無來源</span></h2>
+    <p class="narr-p"><span class="lang-en">A capital-markets chapter should ideally close with a cap rate — the single number that converts a rental stream into a price. NAPIC does not publish one for any Malaysian commercial category. This report attempted to source a verifiable KL prime-office investment yield or cap rate from Knight Frank's Investment Yield Guide, Savills and CBRE's Asia Pacific Cap Rate Survey; none of the accessible material within this research pass surfaced a checkable Malaysia/KL figure (see office_yield_caprate_search_2026_08_13 in the vetted dataset for the full list of searches attempted). Rather than approximate one from an unrelated market or an unsourced rule of thumb, this report states plainly: <b>NAPIC 不發布，本報告不引用未經核實的估值參數</b> — NAPIC does not publish this, and this report declines to cite an unverified valuation parameter.</span><span class="lang-zh" style="display:none">一份資本市場章節，理想上應以資本化率（cap rate）收尾——那是把租金流換算成價格的單一數字。NAPIC對任何馬來西亞商業類別都不發布這個數字。本篇曾嘗試從Knight Frank的Investment Yield Guide、Savills與CBRE的Asia Pacific Cap Rate Survey查找可核實的KL頂級辦公室投資收益率或資本化率；本輪研究可取得的資料，均未查到可核對的馬來西亞／KL具體數字（完整搜尋清單見已審核資料集office_yield_caprate_search_2026_08_13）。與其從不相關的市場或無來源的經驗法則估算一個數字，本報告明白表態：<b>NAPIC 不發布，本報告不引用未經核實的估值參數。</b></span></p>
   </div>
 
   <div class="blk">
@@ -260,8 +559,8 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     <p class="narr-p"><span class="lang-en">So: can an individual actually buy into KL office? Yes — but only in one specific, narrow way, and the honest answer has three parts, not one.</span><span class="lang-zh" style="display:none">所以：個人投資者到底能不能買進KL辦公室？可以——但只有一種特定、條件嚴苛的方式，而誠實的答案有三個部分，不是一個。</span></p>
     <div class="concept">
       <h4><span class="lang-en">Three paths, in order of who can actually take them</span><span class="lang-zh" style="display:none">三條路徑，依實際能走的人排序</span></h4>
-      <p><b><span class="lang-en">Path 1 — buy a strata office unit directly: possible, conditional.</span><span class="lang-zh" style="display:none">路徑一——直接買一戶分層辦公室：可行，但有條件。</span></b><span class="lang-en"> The annual report's own named transactions (Pavilion Damansara Heights, Suasana Bukit Ceylon, KL Eco City) prove this market exists and trades at a checkable price. But "exists" is not "safe": which side of the flight-to-quality line a given floor sits on depends on building age and green-certification status far more than on price alone — this section's own availability-rate data shows fully-let towers and half-empty towers standing in the same precinct, sometimes the same street. Before treating a specific strata unit as buyable, run through: <b>(1)</b> building age and green/ESG certification — the line this whole section has been drawing; <b>(2)</b> the precinct's own availability-rate band from Exhibit 5 above — is this building's precinct one where full and half-empty towers coexist; <b>(3)</b> verified, current tenant covenant and the unit's ability to absorb a vacancy period, not just a listed asking rent; <b>(4)</b> resale-pool depth on the same floor plate or building — strata offices trade in a shallow secondary market and a slow exit is the default, not the exception; <b>(5)</b> financing terms, which run less favourably than residential mortgages on a commercial title (no specific rate quoted here — verify with a lender directly). Pass all five and a direct strata purchase in Damansara Heights or KL Eco City is a defensible position, not a guess.</span><span class="lang-zh" style="display:none">年報自己點名的成交案（Pavilion Damansara Heights、Suasana Bukit Ceylon、KL Eco City）證明這個市場確實存在，也有價格可查。但『存在』不等於『安全』：一戶樓層落在品質出走哪一側，取決於樓齡與綠建認證的程度，遠多於價格本身——本節自己的可用率資料顯示，同一個分區、有時甚至同一條街上，滿租樓與半空樓並存。在把某一戶分層單位當成可買之前，先過這五關：<b>（一）</b>樓齡與綠建／ESG認證——這正是本節一路在畫的那條線；<b>（二）</b>上方圖5的分區可用率帶——這棟樓所在的分區，是不是滿租樓與半空樓並存的那種；<b>（三）</b>核實過、當下有效的租戶履約能力，以及這戶單位能不能撐過一段空置期，而不只是看掛牌租金；<b>（四）</b>同一樓層／同棟大樓的二手轉手池深度——分層辦公室的二手交易池淺，出場慢是常態，不是例外；<b>（五）</b>融資條件，商業產權的貸款條件通常不如住宅房貸優惠（這裡不列具體利率，需直接向貸方核實）。五關都過，在Damansara Heights或KL Eco City直接買一戶分層辦公室，就是站得住腳的判斷，不是賭一把。</span></p>
-      <p><b><span class="lang-en">Path 2 — buy a whole building: a paper option for almost everyone.</span><span class="lang-zh" style="display:none">路徑二——整棟買下：對絕大多數人只是紙上選項。</span></b><span class="lang-en"> The named entry price starts at RM23.2 million (SB-09, Mid Valley City) and this section's own Table 4 evidence runs to RM680 million. For the overwhelming majority of individual investors, this tier does not require diligence — it requires capital this report is not written for.</span><span class="lang-zh" style="display:none">具名入場價從RM2,320萬（SB-09，Mid Valley City）起跳，本節自己引用的Table 4證據一路到RM6.8億。對絕大多數個人投資人而言，這一層根本用不到盡調——用得到的是本篇沒有在寫給的那種資本規模。</span></p>
+      <p><b><span class="lang-en">Path 1 — buy a strata office unit directly: possible, conditional.</span><span class="lang-zh" style="display:none">路徑一——直接買一戶分層辦公室：可行，但有條件。</span></b><span class="lang-en"> The annual report's own named transactions (Pavilion Damansara Heights, Suasana Bukit Ceylon, KL Eco City) prove this market exists and trades at a checkable price. But "exists" is not "safe": which side of the flight-to-quality line a given floor sits on depends on building age and green-certification status far more than on price alone — Section II's own availability-rate data shows fully-let towers and half-empty towers standing in the same precinct, sometimes the same street. Before treating a specific strata unit as buyable, run through: <b>(1)</b> building age and green/ESG certification — the line Section II has been drawing throughout; <b>(2)</b> the precinct's own availability-rate band from Exhibit 5 — is this building's precinct one where full and half-empty towers coexist; <b>(3)</b> verified, current tenant covenant and the unit's ability to absorb a vacancy period, not just a listed asking rent; <b>(4)</b> resale-pool depth on the same floor plate or building — strata offices trade in a shallow secondary market and a slow exit is the default, not the exception; <b>(5)</b> financing terms, which run less favourably than residential mortgages on a commercial title (no specific rate quoted here — verify with a lender directly). Pass all five and a direct strata purchase in Damansara Heights or KL Eco City is a defensible position, not a guess.</span><span class="lang-zh" style="display:none">年報自己點名的成交案（Pavilion Damansara Heights、Suasana Bukit Ceylon、KL Eco City）證明這個市場確實存在，也有價格可查。但『存在』不等於『安全』：一戶樓層落在品質出走哪一側，取決於樓齡與綠建認證的程度，遠多於價格本身——第二部自己的可用率資料顯示，同一個分區、有時甚至同一條街上，滿租樓與半空樓並存。在把某一戶分層單位當成可買之前，先過這五關：<b>（一）</b>樓齡與綠建／ESG認證——這正是第二部一路在畫的那條線；<b>（二）</b>圖5的分區可用率帶——這棟樓所在的分區，是不是滿租樓與半空樓並存的那種；<b>（三）</b>核實過、當下有效的租戶履約能力，以及這戶單位能不能撐過一段空置期，而不只是看掛牌租金；<b>（四）</b>同一樓層／同棟大樓的二手轉手池深度——分層辦公室的二手交易池淺，出場慢是常態，不是例外；<b>（五）</b>融資條件，商業產權的貸款條件通常不如住宅房貸優惠（這裡不列具體利率，需直接向貸方核實）。五關都過，在Damansara Heights或KL Eco City直接買一戶分層辦公室，就是站得住腳的判斷，不是賭一把。</span></p>
+      <p><b><span class="lang-en">Path 2 — buy a whole building: a paper option for almost everyone.</span><span class="lang-zh" style="display:none">路徑二——整棟買下：對絕大多數人只是紙上選項。</span></b><span class="lang-en"> The named entry price starts at RM23.2 million (SB-09, Mid Valley City) and Exhibit 7's evidence runs to RM680 million. For the overwhelming majority of individual investors, this tier does not require diligence — it requires capital this report is not written for.</span><span class="lang-zh" style="display:none">具名入場價從RM2,320萬（SB-09，Mid Valley City）起跳，圖7的證據一路到RM6.8億。對絕大多數個人投資人而言，這一層根本用不到盡調——用得到的是本篇沒有在寫給的那種資本規模。</span></p>
       <p><b><span class="lang-en">Path 3 — office REITs: not just KLCC REIT.</span><span class="lang-zh" style="display:none">路徑三——辦公REIT：不只KLCC REIT。</span></b><span class="lang-en"> Five Bursa-listed vehicles currently carry meaningful KL office exposure (public Bursa information, verified separately from NAPIC — not part of the vetted dataset above):</span><span class="lang-zh" style="display:none">目前有五檔在Bursa掛牌的載體，持有實質的KL辦公室曝險（Bursa公開資訊，另行核實，不屬於上方NAPIC已審核資料集）：</span></p>
       <ul class="pt">
         <li><span class="lang-en"><b>KLCC REIT</b> (KLCCP Stapled Group) — Petronas Twin Towers, Menara 3 Petronas and the KLCC precinct's trophy core; Malaysia's only stapled security.</span><span class="lang-zh" style="display:none"><b>KLCC REIT</b>（KLCCP組合式集團）——雙子塔、Menara 3 Petronas與KLCC精華核心；馬來西亞唯一的組合式證券。</span></li>
@@ -275,17 +574,22 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     <p class="narr-p"><span class="lang-en">Put the three paths together and the honest framing is not "REIT only." It is: REIT is the higher-odds, more liquid default for anyone who has not done building-specific diligence, or does not want to; a directly-owned strata floor is a defensible exception in a small number of corridors — Damansara Heights and KL Eco City chief among them — for buyers willing to run the five-point checklist above; and whole-building ownership is not a retail question at all. That is a narrower door than "buy KLCC REIT and stop thinking about it," but it is a real door, not a closed one.</span><span class="lang-zh" style="display:none">把三條路徑放在一起看，誠實的講法不是『只能靠REIT』。而是：對沒有做過（或不想做）逐棟盡調的人，REIT是勝率較高、流動性較好的預設路徑；直接持有一戶分層樓層，在少數幾條走廊——Damansara Heights與KL Eco City是其中最主要的——對願意跑完上方五項盡調的買家而言，是站得住腳的例外；整棟持有，則根本不是散戶該問的問題。這比『買KLCC REIT然後不用再想』窄了一些，但這扇門是真實存在的，不是關死的。</span></p>
   </div>
 
-  <!-- ════════ III ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">III · Retail</span><span class="lang-zh" style="display:none">第三部 · 零售</span></h2></div>
+  <div class="mview">
+    <span class="mvk"><span class="lang-en">Market View — Capital Markets</span><span class="lang-zh" style="display:none">Market View——資本市場</span></span>
+    <p><span class="lang-en">Office transaction activity is real and concentrated in KL — nine of twenty named national deals, topped by the RM680 million Menara CIMB sale — but the retail table tells the opposite story: KL's only entry is a 2024-dated RM34 million deal while Selangor and Johor carry every named 2025 mega-sale. Read together, KL's capital-markets story this year is an office story, not a retail one. No verifiable cap rate exists to convert either into a valuation multiple — that gap stays explicitly open rather than papered over.</span><span class="lang-zh" style="display:none">辦公室成交活動確實存在且集中在KL——全國二十筆具名成交裡九筆在此，居首的是RM6.8億的Menara CIMB——但零售表講的是相反的故事：KL唯一的一筆是2024年掛牌的RM3,400萬成交，雪蘭莪與柔佛才扛下所有具名2025年大宗成交。兩者合看，KL今年的資本市場故事是辦公室的故事，不是零售的。也沒有可核實的資本化率能把兩者換算成估值倍數——這個缺口明白留著，不硬性填補。</span></p>
+  </div>
+
+  <!-- ════════ IV ════════ -->
+  <div class="sec-rule" id="sec-4"><h2><span class="lang-en">IV · Retail</span><span class="lang-zh" style="display:none">第四部 · 零售</span></h2></div>
 
   <div class="blk">
     <h2><span class="lang-en">A strong average built from one corridor</span><span class="lang-zh" style="display:none">一條走廊撐起的強勢平均值</span></h2>
     <p class="sub"><span class="lang-en">Shopping complex occupancy by precinct, % · 6 strongest &amp; 6 weakest of 19 stocked precincts · Q1 2026 · NAPIC</span><span class="lang-zh" style="display:none">購物中心入駐率，依分區，% · 19個有存量分區中的6強／6弱 · 2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 7 · KL precincts</span><span class="lang-zh" style="display:none">圖 7 · KL 分區</span></div><div id="cRetailPrecinct" style="height:340px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 11 · KL precincts</span><span class="lang-zh" style="display:none">圖 11 · KL 分區</span></div><div id="cRetailPrecinct" style="height:340px"></div></div>
     <p class="narr-p"><span class="lang-en">KL's national-best <b>87.95%</b> shopping-complex occupancy (115 malls, 3.39 million sm) is not an evenly-spread number; it is a band. Precincts along and near the Bukit Bintang corridor sit essentially full — <b>Jalan Sg Besi 100%</b>, <b>Jalan Tun Razak 98.51%</b>, <b>Bukit Bintang / Jalan Raja Chulan 98.5%</b>, <b>Lebuhraya Persekutuan 97.98%</b>, <b>Bangsar 97.38%</b> — while <b>Jalan Ipoh</b>, a single-building, 9,380 sm precinct, runs at just <b>30.25%</b>, and <b>Jalan Loke Yew</b> sits at <b>68.22%</b>. Twelve of the nineteen stocked precincts are shown above; the seven omitted (Central Commercial Area, Mukim Ampang/Ulu Kelang, Mukim Setapak, Mukim Batu, Pudu Area, Cheras, Brickfield) sit in the 78–93% band between them. Five further precincts — Stadium Area, Taman Tun Dr Ismail, Jalan Klang Lama, Jalan Pahang and Jalan Sentul — carry no shopping-complex stock at all; in those areas, retail demand is served by street shops and neighbourhood strip malls outside NAPIC's shopping-complex classification entirely, not absent demand.</span><span class="lang-zh" style="display:none">KL 全國最高的 <b>87.95%</b> 商場入駐率（115間商場、339萬平方米），不是平均分布的數字，而是一條帶狀。Bukit Bintang 走廊沿線及鄰近分區幾乎滿租——<b>Jalan Sg Besi 100%</b>、<b>Jalan Tun Razak 98.51%</b>、<b>Bukit Bintang／Jalan Raja Chulan 98.5%</b>、<b>Lebuhraya Persekutuan 97.98%</b>、<b>Bangsar 97.38%</b>——但只有一棟建物、存量僅 9,380 平方米的 <b>Jalan Ipoh</b> 分區，入駐率僅 <b>30.25%</b>，<b>Jalan Loke Yew</b> 也只有 <b>68.22%</b>。上圖顯示 19 個有存量分區中的十二個；省略的七個（Central Commercial Area、Mukim Ampang／Ulu Kelang、Mukim Setapak、Mukim Batu、Pudu Area、Cheras、Brickfield）落在兩端之間的 78% 至 93% 帶。另有五個分區——Stadium Area、Taman Tun Dr Ismail、Jalan Klang Lama、Jalan Pahang、Jalan Sentul——完全沒有商場存量；在這些區域，零售需求由 NAPIC 商場分類以外的街鋪與鄰里型商場承接，不是需求不存在。</span></p>
     <p class="narr-p"><span class="lang-en">The mechanism is footfall stacking, not chance. Tourist flow, transit interchange and dense office-worker traffic overlap along the Bukit Bintang axis, giving those precincts three independent demand sources feeding the same shoppers; a precinct like Jalan Ipoh has none of the three in comparable depth. KL's malls also run larger than the national norm — an average <b>29,400 sm</b> per building against the national <b>17,480 sm</b> (derived: 3,386.19 ÷ 115 vs 17,359.51 ÷ 993) — consistent with a market where scale itself is a moat once a location has already won the footfall competition. A separate, narrower NAPIC series — <b>Shopping Centre</b> (Table 3, 2.998 million sm existing, 88.0% occupancy, 83 buildings) — tracks the same 24 precinct names but with a stricter classification and consistently smaller footprint per precinct; it is not summed with the Shopping Complex figures used throughout this section.</span><span class="lang-zh" style="display:none">背後的機制是人流疊加，不是隨機分布。遊客流、轉運節點與密集的上班族人流，在 Bukit Bintang 軸線上重疊，讓這些分區同時擁有三個獨立的需求來源餵養同一批人潮；Jalan Ipoh 這樣的分區，三者皆無可比的深度。KL 的商場規模也高於全國常態——每棟平均 <b>29,400 平方米</b>，對照全國的 <b>17,480 平方米</b>（derived：3,386.19 ÷ 115 對 17,359.51 ÷ 993）——符合「地點一旦贏得人流競賽，規模本身就成為護城河」的邏輯。另有一條較窄的 NAPIC 序列——<b>Shopping Centre</b>（Table 3，存量 299.8 萬平方米、入駐率 88.0%、83 棟）——追蹤同一組 24 個分區名稱，但分類口徑更嚴、單一分區的規模也一致偏小；本節全篇使用的 Shopping Complex 數字，不與其加總混用。</span></p>
     <p class="sub"><span class="lang-en">Existing space vs occupancy, all 19 stocked precincts (bubble = building count) · Q1 2026 · NAPIC</span><span class="lang-zh" style="display:none">既有空間 對 入駐率，19個有存量分區（氣泡大小＝棟數） · 2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 8 · Space vs occupancy</span><span class="lang-zh" style="display:none">圖 8 · 空間對入駐率</span></div><div id="cRetailScatter" style="height:300px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 12 · Space vs occupancy</span><span class="lang-zh" style="display:none">圖 12 · 空間對入駐率</span></div><div id="cRetailScatter" style="height:300px"></div></div>
     <p class="narr-p"><span class="lang-en">Plot every stocked precinct by space against occupancy and the averaging mechanism becomes visible directly: the precincts doing the averaging up are also the biggest ones. The six precincts running at 94% or higher — Jalan Sg Besi, Jalan Tun Razak, Bukit Bintang/Jalan Raja Chulan, Lebuhraya Persekutuan, Bangsar and Jalan Ampang — together hold 1,285,900 sm, or <b>38.0%</b> of KL's entire shopping-complex space (derived: (25.73+137.98+570.52+265.28+75.33+211.06) ÷ 3,386.19). Jalan Ipoh, at just 9,380 sm, is too small to drag the citywide average down the way a precinct occupying real space would, even if its 30.25% never improved. The 87.95% headline is not an average of nineteen equal markets — it is a weighted average where a handful of large, near-full precincts carry almost all the weight, and the weak precincts are mostly small enough not to matter to the total.</span><span class="lang-zh" style="display:none">把每個有存量的分區依空間對入駐率畫成散點圖，平均值背後的機制就直接現形：把平均值拉高的那些分區，剛好也是最大的那些。六個入駐率在 94% 以上的分區——Jalan Sg Besi、Jalan Tun Razak、Bukit Bintang／Jalan Raja Chulan、Lebuhraya Persekutuan、Bangsar、Jalan Ampang——合計持有 1,285,900 平方米，佔 KL 全部商場空間的 <b>38.0%</b>（derived：(25.73+137.98+570.52+265.28+75.33+211.06) ÷ 3,386.19）。Jalan Ipoh 僅 9,380 平方米，就算入駐率的 30.25% 永遠不改善，這個分區也小到拖不動全市平均值。87.95% 這個頭條數字，不是十九個等重分區的平均，而是一個加權平均——少數幾個又大又幾乎滿租的分區，扛下了幾乎全部的權重，弱勢分區則大多小到影響不了總數。</span></p>
     <ul class="pt">
       <li><span class="lang-en">Pavilion Kuala Lumpur, the anchor asset of <b>Pavilion REIT</b>, sits on Jalan Bukit Bintang — inside the single strongest precinct on this chart. That is not a coincidence an individual owner of a single retail lot elsewhere in the city can replicate; it is the reason whole-mall REITs on this corridor command the pricing power they do.</span><span class="lang-zh" style="display:none">Pavilion REIT 的核心資產 Pavilion Kuala Lumpur，坐落於 Jalan Bukit Bintang——正是本圖中最強的那個分區之內。這不是一個城市其他地方的單一鋪位業主能複製的巧合；這正是這條走廊上的整棟商場 REIT，能握有如此訂價能力的原因。</span></li>
@@ -293,19 +597,24 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     <p class="narr-p"><span class="lang-en">As with offices, the individual-investor conclusion is a REIT, not a lot inside a mall. <b>Pavilion REIT</b>, <b>IGB REIT</b> and <b>Sunway REIT</b> — all substantially anchored by KL assets — hold the tenant-mix and footfall-management capability an owner of one unit inside one mall cannot replicate, and they hold it precisely in the corridor this section has shown to be doing most of the work.</span><span class="lang-zh" style="display:none">與辦公室相同，個人投資人的結論是 REIT，不是商場裡的一個單位。<b>Pavilion REIT</b>、<b>IGB REIT</b>、<b>Sunway REIT</b>——皆以 KL 資產為主要基礎——具備租戶組合與人流管理能力，是持有商場內單一鋪位的業主複製不來的，而且它們持有的，正是本節證明真正在撐起這個市場的那條走廊。</span></p>
   </div>
 
-  <!-- ════════ IV ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">IV · Shophouses</span><span class="lang-zh" style="display:none">第四部 · 店屋</span></h2></div>
+  <div class="mview">
+    <span class="mvk"><span class="lang-en">Market View — Retail</span><span class="lang-zh" style="display:none">Market View——零售</span></span>
+    <p><span class="lang-en">KL's 87.95% headline is a weighted average, not an evenly-spread number — six precincts holding 38% of citywide space run at 94%+ occupancy and carry almost the entire average, while Jalan Ipoh sits at 30.25% and five precincts have no shopping-complex stock at all. The individual-investor path here mirrors offices: a mall-anchored REIT, not a single retail lot, is what actually captures the footfall advantage this section has shown to be concentrated in one corridor.</span><span class="lang-zh" style="display:none">KL 87.95%的頭條數字是加權平均，不是平均分布——六個持有全市38%空間的分區，入駐率在94%以上，扛下幾乎全部平均值，而Jalan Ipoh僅30.25%，另有五個分區完全沒有商場存量。這裡的個人投資路徑跟辦公室一樣：真正能抓住本節證明集中在單一走廊的人流優勢的，是商場型REIT，不是商場裡的單一鋪位。</span></p>
+  </div>
+
+  <!-- ════════ V ════════ -->
+  <div class="sec-rule" id="sec-5"><h2><span class="lang-en">V · Shophouses</span><span class="lang-zh" style="display:none">第五部 · 店屋</span></h2></div>
 
   <p class="pull"><span class="lang-en">KL's shop overhang has shrunk to ten units — not because the market is tight, but because there is almost no shophouse market left to be tight or loose about.</span><span class="lang-zh" style="display:none">KL 的店屋餘屋已縮到只剩十戶——不是因為市場緊俏，而是因為根本沒剩下多少店屋市場可以緊俏或寬鬆。</span></p>
 
   <div class="blk">
-    <h2><span class="lang-en">The mirror of Johor, five years in one chart</span><span class="lang-zh" style="display:none">與新山的鏡像，五年一次看完</span></h2>
-    <p class="sub"><span class="lang-en">Shop overhang, KL (bars, left axis) vs Johor (line, right axis), units · 2021–1Q2026 · NAPIC</span><span class="lang-zh" style="display:none">店屋餘屋，KL（柱，左軸）對 新山（線，右軸），戶 · 2021–2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 9 · State comparison · 5-year history</span><span class="lang-zh" style="display:none">圖 9 · 州別對照 · 5年歷史</span></div><div id="cShopKLJohor" style="height:260px"></div></div>
-    <p class="narr-p"><span class="lang-en">The series only moves one way: <b>66 → 82 → 23 → 11 → 10 → 10 → 10</b>, from 2021 through the first quarter of 2026. Johor's shop overhang over the identical seven periods — <b>1,578 → 1,731 → 1,517 → 1,222 → 1,074 → 1,146 → 1,269</b> — is two orders of magnitude larger and still moving both ways quarter to quarter. KL cleared its 2022 peak of 82 units down to 23 by 2023 and has sat at 10 or 11 units in every reading since 2024; there is simply nothing left to build up an overhang from. This is the shophouse-market version of the office/retail split above, playing out as scarcity rather than bifurcation: KL's shophouse story is not about clearing supply, it is about there being almost no supply to clear.</span><span class="lang-zh" style="display:none">這條序列只往一個方向走：<b>66 → 82 → 23 → 11 → 10 → 10 → 10</b>，從 2021 年一路到 2026 年第一季。同期新山的店屋餘屋——<b>1,578 → 1,731 → 1,517 → 1,222 → 1,074 → 1,146 → 1,269</b>——大了兩個量級，且至今仍逐季雙向擺動。KL 在 2022 年觸頂 82 戶後，2023 年降至 23 戶，2024 年起每一期讀數都停在 10 或 11 戶，單純是因為已經沒有存量可以再堆出餘屋了。這是上方辦公室／零售分裂的店屋版本，只是表現形式從兩極分化變成稀缺：KL 的店屋故事，不是去化供給的故事，而是根本沒有多少供給可去化。</span></p>
+    <h2><span class="lang-en">The mirror of Johor, five years in one chart</span><span class="lang-zh" style="display:none">與柔佛的鏡像，五年一次看完</span></h2>
+    <p class="sub"><span class="lang-en">Shop overhang, KL (bars, left axis) vs Johor (line, right axis), units · 2021–1Q2026 · NAPIC</span><span class="lang-zh" style="display:none">店屋餘屋，KL（柱，左軸）對 柔佛（線，右軸），戶 · 2021–2026Q1 · NAPIC</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 13 · State comparison · 5-year history</span><span class="lang-zh" style="display:none">圖 13 · 州別對照 · 5年歷史</span></div><div id="cShopKLJohor" style="height:260px"></div></div>
+    <p class="narr-p"><span class="lang-en">The series only moves one way: <b>66 → 82 → 23 → 11 → 10 → 10 → 10</b>, from 2021 through the first quarter of 2026. Johor's shop overhang over the identical seven periods — <b>1,578 → 1,731 → 1,517 → 1,222 → 1,074 → 1,146 → 1,269</b> — is two orders of magnitude larger and still moving both ways quarter to quarter. KL cleared its 2022 peak of 82 units down to 23 by 2023 and has sat at 10 or 11 units in every reading since 2024; there is simply nothing left to build up an overhang from. This is the shophouse-market version of the office/retail split above, playing out as scarcity rather than bifurcation: KL's shophouse story is not about clearing supply, it is about there being almost no supply to clear.</span><span class="lang-zh" style="display:none">這條序列只往一個方向走：<b>66 → 82 → 23 → 11 → 10 → 10 → 10</b>，從 2021 年一路到 2026 年第一季。同期柔佛的店屋餘屋——<b>1,578 → 1,731 → 1,517 → 1,222 → 1,074 → 1,146 → 1,269</b>——大了兩個量級，且至今仍逐季雙向擺動。KL 在 2022 年觸頂 82 戶後，2023 年降至 23 戶，2024 年起每一期讀數都停在 10 或 11 戶，單純是因為已經沒有存量可以再堆出餘屋了。這是上方辦公室／零售分裂的店屋版本，只是表現形式從兩極分化變成稀缺：KL 的店屋故事，不是去化供給的故事，而是根本沒有多少供給可去化。</span></p>
     <p class="narr-p"><span class="lang-en">The supply pipeline confirms the scarcity is structural, not cyclical. Against KL's existing stock of <b>30,973</b> shop units, incoming supply is just <b>605 units — under 2%</b> (derived: 605 ÷ 30,973), with zero completions and zero starts recorded for the first quarter of 2026. Nationally the same ratio runs closer to 4%; KL's is roughly half that. There is essentially no new land in the city for shophouse development — what stands today is close to what will stand for years to come, and the market functions entirely on resale of established stock.</span><span class="lang-zh" style="display:none">供給線也證實了這種稀缺是結構性的，不是週期性的。對照 KL 既有的 <b>30,973</b> 戶店屋存量，即將供給僅 <b>605 戶——不到 2%</b>（derived：605 ÷ 30,973），2026 年第一季完工與動工紀錄皆為零。全國同一比率接近 4%；KL 大約是其一半。這座城市幾乎沒有新的店屋開發用地——今天站著的存量，大致就是未來多年會繼續站著的存量，市場完全靠既有存量的轉手運作。</span></p>
     <p class="sub"><span class="lang-en">Existing shop stock by sub-area (mukim), units · Q1 2026 · NAPIC</span><span class="lang-zh" style="display:none">既有店屋存量依子區域（mukim），戶 · 2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 10 · Stock by mukim</span><span class="lang-zh" style="display:none">圖 10 · 依 mukim 存量</span></div><div id="cShopMukim" style="height:230px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 14 · Stock by mukim</span><span class="lang-zh" style="display:none">圖 14 · 依 mukim 存量</span></div><div id="cShopMukim" style="height:230px"></div></div>
     <p class="narr-p"><span class="lang-en">The scarcity is not spread evenly across the city either. Existing shop stock concentrates in <b>Mukim Batu (7,585 units)</b> and <b>Mukim Petaling (7,025)</b>, with <b>Mukim Setapak (5,363)</b>, <b>Bandar Kuala Lumpur (4,903)</b> and <b>Mukim Kuala Lumpur (4,686)</b> forming a second tier; <b>Mukim Ampang (898)</b>, <b>Mukim Cheras (459)</b> and <b>Mukim Hulu Kelang (54)</b> barely register. This is the geography a "choose the street, not the scheme" strategy has to work with — the corridors where shophouse stock actually exists are concentrated in a handful of mukims, and the near-empty ones simply are not where the search should start.</span><span class="lang-zh" style="display:none">這份稀缺，在城市裡的分布也不是平均的。既有店屋存量集中在 <b>Mukim Batu（7,585 戶）</b>與 <b>Mukim Petaling（7,025 戶）</b>，<b>Mukim Setapak（5,363）</b>、<b>Bandar Kuala Lumpur（4,903）</b>與 <b>Mukim Kuala Lumpur（4,686）</b>構成第二層；<b>Mukim Ampang（898）</b>、<b>Mukim Cheras（459）</b>、<b>Mukim Hulu Kelang（54）</b>則幾乎沒有存量。這就是「選街不選案」策略必須面對的地理現實——店屋存量真正存在的走廊，集中在少數幾個 mukim，幾乎沒有存量的那些，本來就不該是搜尋的起點。</span></p>
   </div>
 
@@ -318,19 +627,24 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     <p class="narr-p"><span class="lang-en">KL shophouses are the one CRE sub-sector where "choose the street, not the scheme" is close to the entire strategy. With so few units changing hands and no price index to lean on, comparable transactions on the same street, verified tenant covenant, and corridor continuity carry all of the underwriting weight that an index would otherwise carry elsewhere. The scarcity that makes the overhang read as "clean" is also what makes each individual unit genuinely hard to find — this is a sourcing problem, not a diligence-on-a-crowded-shelf problem.</span><span class="lang-zh" style="display:none">KL 的店屋，是唯一一個「選街不選案」幾乎等於整套策略的商業次板塊。成交件數極少、又沒有價格指數可倚靠，同一條街的可比成交、租客履約能力的核實、街廓連續性，就得扛起在其他市場裡本應由指數扛起的全部盡調重量。讓餘屋讀起來「乾淨」的那份稀缺，同時也讓每一戶單獨的物件真正難找——這是一個找貨源的問題，不是在擁擠貨架上做盡調的問題。</span></p>
   </div>
 
-  <!-- ════════ V ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">V · SOHO &amp; the Serviced-Apartment Cross-Reference</span><span class="lang-zh" style="display:none">第五部 · SOHO 與服務式公寓口徑對照</span></h2></div>
+  <div class="mview">
+    <span class="mvk"><span class="lang-en">Market View — Shophouses</span><span class="lang-zh" style="display:none">Market View——店屋</span></span>
+    <p><span class="lang-en">KL's shop overhang has held at 10 units for three straight quarters, with pipeline at just 2.0% of stock — this is scarcity, not a market clearing itself, and it means the underwriting question is street-level, not scheme-level. With no price index and almost nothing left to trade, comparable transactions and verified rent rolls carry all the weight an index would carry elsewhere.</span><span class="lang-zh" style="display:none">KL店屋餘屋已連三季持平於10戶，供給線僅佔存量2.0%——這是稀缺，不是市場正在去化，代表盡調問題落在街道層級，不是建案層級。沒有價格指數，幾乎沒有存量可交易，可比成交與核實過的租金流，就得扛起在其他市場裡本應由指數扛起的全部重量。</span></p>
+  </div>
+
+  <!-- ════════ VI ════════ -->
+  <div class="sec-rule" id="sec-6"><h2><span class="lang-en">VI · SOHO &amp; the Serviced-Apartment Cross-Reference</span><span class="lang-zh" style="display:none">第六部 · SOHO 與服務式公寓口徑對照</span></h2></div>
 
   <div class="blk">
     <h2><span class="lang-en">SOHO: one wave cleared — a bigger one already queued</span><span class="lang-zh" style="display:none">SOHO：一波去化完畢——更大的一波已在排隊</span></h2>
     <p class="sub"><span class="lang-en">SOHO overhang, KL, units · 2021–1Q2026 · NAPIC</span><span class="lang-zh" style="display:none">SOHO 餘屋，KL，戶 · 2021–2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 11 · KL · 5-year history</span><span class="lang-zh" style="display:none">圖 11 · KL · 5年歷史</span></div><div id="cSohoKL" style="height:250px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 15 · KL · 5-year history</span><span class="lang-zh" style="display:none">圖 15 · KL · 5年歷史</span></div><div id="cSohoKL" style="height:250px"></div></div>
     <p class="narr-p"><span class="lang-en">KL's SOHO overhang moved <b>457 → 788 → 709 → 645</b> from 2021 through 2024 — a 2022 jump followed by a slow two-year drift down — then broke sharply: <b>1,127 units by the third quarter of 2025</b>, near double the 2024 level — a batch of new completions arriving in a single window. It then held nearly flat at <b>1,124</b> for a quarter before a single quarter of fast absorption pulled it to <b>793</b> by the first quarter of 2026. Against KL's total SOHO stock of 12,266 units, the current overhang is <b>6.5%</b> (derived: 793 ÷ 12,266). That absorption is real — but it is not the end of the story. Incoming supply already stands at <b>3,362 units</b>, <b>4.2 times</b> the current overhang (derived: 3,362 ÷ 793), concentrated in Mukim Petaling (1,476), Mukim Setapak (661), Mukim Kuala Lumpur (622) and Mukim Batu (506), with Bandar Kuala Lumpur itself carrying just 97. The 2025 wave that just cleared was one completion event; the pipeline behind it, by NAPIC's own count, is due to land at more than four times that scale.</span><span class="lang-zh" style="display:none">KL 的 SOHO 餘屋，從 2021 到 2024 年走勢是 <b>457 → 788 → 709 → 645</b>——2022 年跳升後緩步回落——隨後急轉：<b>2025 年第三季升至 1,127 戶</b>，接近 2024 年水準的兩倍——一批新完工在單一窗口集中入市。接著一季幾乎持平在 <b>1,124</b>，再於單季內快速去化、降至 <b>2026 年第一季的 793</b>。對照 KL SOHO 總存量 12,266 戶，目前餘屋佔比 <b>6.5%</b>（derived：793 ÷ 12,266）。這波去化是真的——但故事還沒完。即將供給已達 <b>3,362 戶</b>，是目前餘屋的 <b>4.2 倍</b>（derived：3,362 ÷ 793），集中在 Mukim Petaling（1,476）、Mukim Setapak（661）、Mukim Kuala Lumpur（622）與 Mukim Batu（506），Bandar Kuala Lumpur 自己僅 97 戶。剛去化完的 2025 年那一波，是單一完工事件；按 NAPIC 自己的供給線口徑，後面排隊的這一波，規模是這波的四倍以上。</span></p>
     <p class="sub"><span class="lang-en">Unsold SOHO units by price band, all 11 bands, KL, units · Q1 2026 · NAPIC</span><span class="lang-zh" style="display:none">未售 SOHO 依價位帶分布，全 11 帶，KL，戶 · 2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 12 · Price-band distribution</span><span class="lang-zh" style="display:none">圖 12 · 價位帶分布</span></div><div id="cSohoPriceBand" style="height:230px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 16 · Price-band distribution</span><span class="lang-zh" style="display:none">圖 16 · 價位帶分布</span></div><div id="cSohoPriceBand" style="height:230px"></div></div>
     <p class="narr-p"><span class="lang-en">Price-band detail sharpens the picture, and it is a two-peak shape, not a smooth curve: of the 793 unsold units, <b>518 (65.3%) sit in the RM100,001–200,000 band</b> — the cheapest tier NAPIC tracks for KL SOHO — the RM300,001–500,000 range holds another 140 units, and a second, smaller cluster of <b>135 units (17.0%) sits above RM900,000</b>, including 75 above RM1 million. The RM200,001–300,000 and RM500,001–900,000 bands are completely empty. The average unsold price is <b>RM410,634</b>, but that average describes almost nobody: this is two separate products — a cheap lower-mid-market bulk and a small upper cluster — clearing (or not) on different terms. Underwriting a KL SOHO unit means identifying which side of that gap a specific unit sits on; the cheap band is clearing fast, the empty middle band is untested by definition, and the upper cluster has its own, much thinner, absorption record.</span><span class="lang-zh" style="display:none">價位帶細節讓圖像更清晰，而且是雙峰形狀，不是平滑曲線：793 戶未售中，<b>518 戶（65.3%）落在 RM10–20 萬帶</b>——KL SOHO 追蹤到的最低價位帶——RM30–50 萬區間還有 140 戶，另有一個較小的第二群聚，<b>135 戶（17.0%）落在 RM90 萬以上</b>，其中 75 戶超過 RM100 萬。RM20–30 萬與 RM50–90 萬兩個帶完全是空的。未售均價為 <b>RM410,634</b>，但這個平均值幾乎誰都不代表：這其實是兩個不同的產品——便宜的中低價大宗，與一個小規模的高價群聚——各自用不同的條件在去化（或還沒去化）。要盡調一戶 KL SOHO，得先確認它落在這個斷層的哪一側；便宜帶去化快，空掉的中段帶按定義就是還沒驗證過，高價群聚則有自己一套薄得多的去化紀錄。</span></p>
     <p class="sub"><span class="lang-en">Current overhang (793, KL-wide) vs incoming supply by mukim, units · Q1 2026 · NAPIC</span><span class="lang-zh" style="display:none">目前餘屋（793，KL 全市）對 即將供給依 mukim，戶 · 2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 13 · Where the next wave lands</span><span class="lang-zh" style="display:none">圖 13 · 下一波落在哪裡</span></div><div id="cSohoMukim" style="height:250px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 17 · Where the next wave lands</span><span class="lang-zh" style="display:none">圖 17 · 下一波落在哪裡</span></div><div id="cSohoMukim" style="height:250px"></div></div>
     <p class="narr-p"><span class="lang-en">The current 793-unit overhang has no published mukim breakdown — NAPIC reports it only at the KL-wide level — but the incoming 3,362 units do, and the dashed reference line above shows what that means at a glance: Mukim Petaling's incoming supply alone (1,476 units) is nearly double the entire city's current overhang, and the top three mukims together (1,476 + 661 + 622 = 2,759, derived) carry three and a half times it. Planned supply — the stage after incoming, not yet under construction — adds a further 3,495 units, with Bandar Kuala Lumpur alone accounting for 1,166 of them; the pipeline does not stop at the incoming-supply stage. Whatever pace cleared the 2025 wave, it will be tested again, at greater scale and in different mukims than the wave that just passed.</span><span class="lang-zh" style="display:none">目前 793 戶的餘屋，NAPIC 沒有公布 mukim 層級的拆解——只在 KL 全市層級公布——但即將供給的 3,362 戶有，上圖的虛線參考線讓這一點一目了然：光是 Mukim Petaling 一地的即將供給（1,476 戶），就接近全市目前餘屋的兩倍，前三大 mukim 合計（1,476＋661＋622＝2,759，derived）更是它的三倍半。規劃中供給——即將供給之後、尚未動工的下一階段——再加碼 3,495 戶，其中 Bandar Kuala Lumpur 一地就佔 1,166 戶；供給線並不是到即將供給這一階段就結束。無論去化 2025 年那一波用的是什麼速度，它都會被再測試一次——規模更大，落點也換了幾個不同的 mukim。</span></p>
   </div>
 
@@ -339,8 +653,13 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     <p><span class="lang-en">KL's serviced-apartment overhang stood at <b>4,181 units, worth RM4.73 billion</b>, in the first quarter of 2026 — the single most expensive unsold pile of any commercial category in the city. <b>43.1%</b> of it sits above RM1 million, and the average unsold price is <b>RM1.13 million</b> — far above the national average of RM858,000, and second among states only to Penang's much smaller 237-unit pile. The pipeline behind it has not slowed either: incoming SA supply of <b>50,918 units is 33.1%</b> of the 153,646-unit stock (derived: 50,918 ÷ 153,646) — the supply machine described in Section I is still running near full output. The full argument — overhang history, price bands, financing exclusions, clearance timelines — is developed at length in the residential <a href="/my/report">Market Report</a> and the national <a href="/my/commercial">Commercial Property Report</a>; it is not repeated here. As a passive investment, the conclusion for KL is the same as it is nationally: avoid.</span><span class="lang-zh" style="display:none">KL 的服務式公寓餘屋，2026 年第一季為 <b>4,181 戶，市值 RM47.3 億</b>——是這座城市所有商業類別中，單價最高的未售堆積。其中 <b>43.1%</b> 落在 RM100 萬以上，未售均價 <b>RM113 萬</b>——遠高於全國平均 RM85.8 萬，各州之中僅次於檳城那批規模小得多的 237 戶。後面的供給線也沒有放慢：即將供給 <b>50,918 戶，佔存量 153,646 戶的 33.1%</b>（derived：50,918 ÷ 153,646）——第一部提到的那台供給機器，仍以接近全速在運轉。完整論證——餘屋歷史、價位帶、融資排除、去化週期——已在住宅《市場報告》與全國《商業不動產報告》詳細展開，此處不再重複。作為被動投資，KL 的結論與全國一致：迴避。</span></p>
   </div>
 
-  <!-- ════════ VI ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">VI · What's Investable in KL</span><span class="lang-zh" style="display:none">第六部 · KL 商業房產，能不能碰</span></h2></div>
+  <div class="mview">
+    <span class="mvk"><span class="lang-en">Market View — SOHO &amp; Serviced Apartments</span><span class="lang-zh" style="display:none">Market View——SOHO與服務式公寓</span></span>
+    <p><span class="lang-en">SOHO's 2025 completion wave has cleared — overhang fell from 1,127 to 793 — but incoming supply of 3,362 units, 4.2x that overhang, means the diligence this section runs has to be repeated on the next wave, not treated as done. Serviced apartments show no equivalent clearing signal: overhang has risen for one quarter off a Q4 2025 trough, at the highest average unsold price of any category in this report, and remain this report's one outright avoid.</span><span class="lang-zh" style="display:none">SOHO 2025年完工潮已去化完畢——餘屋自1,127戶降至793戶——但即將供給3,362戶，是目前餘屋的4.2倍，代表本節這套盡調得對下一波再做一次，不能當成已經完成。服務式公寓沒有對應的去化訊號：餘屋已自2025Q4低點回升一季，未售均價是本篇所有類別中最高的，仍是本篇唯一明確建議迴避的類別。</span></p>
+  </div>
+
+  <!-- ════════ VII ════════ -->
+  <div class="sec-rule" id="sec-7"><h2><span class="lang-en">VII · What's Investable in KL</span><span class="lang-zh" style="display:none">第七部 · KL 商業房產，能不能碰</span></h2></div>
 
   <div class="blk">
     <h2><span class="lang-en">Four tiers of accessibility</span><span class="lang-zh" style="display:none">四層可及性</span></h2>
@@ -364,15 +683,90 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
     </div>
   </div>
 
-  <div class="watch">
-    <h3><span class="lang-en">KL quarterly monitor</span><span class="lang-zh" style="display:none">KL 季度監測</span></h3>
-    <ul>
-      <li><span class="lang-en"><b>Office gap:</b> City Centre vs Outside City Centre occupancy — currently 73.38% vs 66.63% (6.8pp), and now with a four-quarter history behind it (Exhibit 4): the gap narrowed slightly through mid-2025 before widening in each of the two most recent quarters. One more quarter of widening — Q2 2026 — would complete three consecutive and support calling this an accelerating flight-to-quality trend rather than noise; a narrowing back below ~5.8pp would undercut that read.</span><span class="lang-zh" style="display:none"><b>辦公室缺口：</b>市中心 對 城外入駐率——目前73.38%對66.63%（6.8個百分點），現在已有四季歷史可對照（圖4）：缺口在2025年中一度小幅收斂，隨後在最近兩季連續擴大。再一季擴大——2026Q2——就會湊滿連續三季，足以稱為品質出走加速而非雜訊；若回落到約5.8個百分點以下，則會削弱這個判讀。</span></li>
-      <li><span class="lang-en"><b>Retail band gap:</b> Bukit Bintang-corridor precincts (~98%+) vs Jalan Ipoh (30.25%) — currently a ~68pp spread. Watch whether the weak precincts show any recovery or whether the gap simply widens further.</span><span class="lang-zh" style="display:none"><b>零售帶狀缺口：</b>Bukit Bintang走廊分區（約98%以上）對Jalan Ipoh（30.25%）——目前落差約68個百分點。觀察弱勢分區是否出現任何回升，或落差只是持續擴大。</span></li>
-      <li><span class="lang-en"><b>SOHO direction:</b> currently 793, down from the 3Q25 peak of 1,127. Confirm the absorption pace holds rather than stalling partway through the cycle.</span><span class="lang-zh" style="display:none"><b>SOHO方向：</b>目前793戶，自25Q3高點1,127戶回落。須確認去化速度持續，而非在週期中途停滯。</span></li>
-      <li><span class="lang-en"><b>SOHO next-wave signal:</b> watch the COMPLETIONS row of the KL pipeline table — currently 0 SOHO units. A move from 0 to positive is the trigger that the 3,362-unit incoming wave has started landing; overhang should be expected to rise again in the following 1-2 quarters once it does.</span><span class="lang-zh" style="display:none"><b>SOHO下一波訊號：</b>觀察KL供給線表中的「COMPLETIONS」欄——目前SOHO為0。從0轉正，就是3,362戶即將供給開始落地的觸發訊號；一旦轉正，接下來1至2季應預期餘屋會再度上升。</span></li>
-      <li><span class="lang-en"><b>SA direction (one-line watch):</b> currently 4,181, up one quarter from the 4Q25 trough of 3,964 (4,687→3,964→4,181). Watch whether a second consecutive rise confirms the turn — the national series has already turned, and with 50,918 units incoming (33.1% of stock), supply will keep feeding the pile if demand softens.</span><span class="lang-zh" style="display:none"><b>服務式公寓方向（一行監測）：</b>目前4,181戶，自25Q4低點3,964戶回升一季（4,687→3,964→4,181）。觀察下一季是否形成連兩季回升、坐實方向已轉——全國序列已經先轉了；而即將供給50,918戶（存量的33.1%），代表一旦需求轉弱，供給端仍會持續把堆積往上餵。</span></li>
+  <div class="mview">
+    <span class="mvk"><span class="lang-en">Market View — What's Investable</span><span class="lang-zh" style="display:none">Market View——能不能碰</span></span>
+    <p><span class="lang-en">Only one category on this grid is a direct-buy: shophouses, and there are ten of them left. Everything institutional-scale — offices, malls — routes through a REIT; SOHO is a conditional, price-band-specific call that has to be re-run on each new supply wave; serviced apartments have no green box on this grid at all.</span><span class="lang-zh" style="display:none">這張表裡只有一個類別是能直接買的：店屋，而且只剩十戶。所有機構級規模的——辦公室、商場——都得透過REIT；SOHO是一個有條件、看價位帶而定的判斷，每一波新供給落地都得重跑一次；服務式公寓在這張表上沒有任何一格是綠燈。</span></p>
+  </div>
+
+  <!-- ════════ VIII ════════ -->
+  <div class="sec-rule" id="sec-8"><h2><span class="lang-en">VIII · Outlook &amp; Risks</span><span class="lang-zh" style="display:none">第八部 · 展望與風險</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Baseline: current trends, extrapolated — not a forecast</span><span class="lang-zh" style="display:none">基準情境：現有趨勢外推——不是預測</span></h2>
+    <p class="narr-p"><span class="lang-en">This is a judgment call, not a modelled forecast, and it is labelled as such: if the trends this report has documented continue unchanged, City Centre keeps pulling ahead of Outside City Centre on both occupancy and net absorption, KL's shop market stays a closed resale-only pool near 10 units, SOHO's cleared overhang gets partially rebuilt as the 3,362-unit incoming wave lands over the next several quarters, and serviced-apartment overhang keeps drifting up off its Q4 2025 trough as the 50,918-unit pipeline continues to run near full output. None of these are numbers this report is predicting — they are the direction each series was already moving in as of the Q1 2026 data cutoff, stated plainly so a reader can judge for themselves when a future quarter breaks from it.</span><span class="lang-zh" style="display:none">這是一個判斷，不是模型化的預測，這裡明確標註如此：如果本篇記錄的趨勢延續不變，市中心會持續在入駐率與淨去化兩方面領先城外，KL店屋市場會維持在10戶上下、封閉、只靠轉手撐著的池子，SOHO已去化的餘屋會隨著3,362戶即將供給在接下來幾季陸續落地而部分重建，服務式公寓餘屋則會隨著50,918戶的供給線持續接近全速運轉，繼續從2025Q4低點緩步回升。這些都不是本篇在預測的數字——只是每條序列截至2026Q1資料截止時原本就在走的方向，明白寫出來，讓讀者自己判斷未來某一季何時偏離了這個方向。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Three falsifiable triggers</span><span class="lang-zh" style="display:none">三個可證偽的觸發點</span></h2>
+    <p class="narr-p"><span class="lang-en">Upgraded from this report's earlier quarterly-monitor notes into explicit, checkable conditions — each names the exact reading that would confirm or undercut the read, not just a direction to watch.</span><span class="lang-zh" style="display:none">從本篇先前的季度監測項升級為明確、可核對的條件——每一項都點名會坐實或推翻該判讀的確切讀數，不只是一個籠統的觀察方向。</span></p>
+    <div class="trig-grid">
+      <div class="trig">
+        <span class="tk"><span class="lang-en">Trigger 1 · Office</span><span class="lang-zh" style="display:none">觸發點1・辦公室</span></span>
+        <p><span class="lang-en">The CC–OCC occupancy gap has widened for two straight quarters (4.83pp Q3 2025 → 5.76pp Q4 2025 → 6.75pp Q1 2026). A Q2 2026 reading above ~6.75pp would complete three straight and support calling this an accelerating trend; a reading back below ~5.76pp would undercut it.</span><span class="lang-zh" style="display:none">市中心－城外入駐率缺口已連續兩季擴大（2025Q3的4.83個百分點→2025Q4的5.76個百分點→2026Q1的6.75個百分點）。2026Q2讀數若高於約6.75個百分點，就湊滿連續三季，足以稱為加速趨勢；若回落到約5.76個百分點以下，則會推翻這個判讀。</span></p>
+      </div>
+      <div class="trig">
+        <span class="tk"><span class="lang-en">Trigger 2 · SOHO</span><span class="lang-zh" style="display:none">觸發點2・SOHO</span></span>
+        <p><span class="lang-en">The COMPLETIONS row of the KL pipeline table (Exhibit 10) currently reads 0 for SOHO. A move from 0 to positive is the trigger that the 3,362-unit incoming wave has started landing; overhang should be expected to rise again within 1-2 quarters once it does.</span><span class="lang-zh" style="display:none">KL供給線表（圖10）的「完工」欄，SOHO目前讀數為0。從0轉正，就是3,362戶即將供給開始落地的觸發訊號；一旦轉正，接下來1至2季應預期餘屋會再度上升。</span></p>
+      </div>
+      <div class="trig">
+        <span class="tk"><span class="lang-en">Trigger 3 · Serviced apartments</span><span class="lang-zh" style="display:none">觸發點3・服務式公寓</span></span>
+        <p><span class="lang-en">SA overhang has risen one quarter off its Q4 2025 trough (4,687 → 3,964 → 4,181). A second consecutive rise in Q2 2026 would confirm the turn — the national series has already turned, and 50,918 units incoming (33.1% of stock) will keep feeding the pile if demand softens.</span><span class="lang-zh" style="display:none">服務式公寓餘屋已自2025Q4低點回升一季（4,687→3,964→4,181）。2026Q2若連續第二季回升，就坐實方向已轉——全國序列已經先轉了，即將供給50,918戶（存量的33.1%）代表一旦需求轉弱，供給端仍會持續把堆積往上餵。</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Risks not yet in the falsifiable set</span><span class="lang-zh" style="display:none">尚未列入可證偽清單的風險</span></h2>
+    <ul class="risklist">
+      <li><span class="lang-en"><b>Supply overhang, Klang Valley office:</b> a further 4.61 million sq ft of new supply is due 2026-27 (Knight Frank) — enough to pressure occupancy across the whole city, not just the Outside City Centre bucket this report has flagged as weaker.</span><span class="lang-zh" style="display:none"><b>巴生谷辦公室供給過剩：</b>2026至2027年間還有461萬平方呎新供給待入市（Knight Frank）——規模足以對全城入駐率造成壓力，不只是本篇點名較弱的城外分區。</span></li>
+      <li><span class="lang-en"><b>ESG / ageing-tower obsolescence:</b> this report's own corridor evidence shows 2000s-vintage towers losing tenants to green-certified fringe buildings; that mechanism widens, not narrows, as certification requirements tighten and tenants increasingly screen for it.</span><span class="lang-zh" style="display:none"><b>ESG／老樓過時風險：</b>本篇自己的走廊證據顯示，2000年代落成的老樓正把租客輸給有綠建認證的外圍新樓；隨著認證門檻趨嚴、租戶篩選標準日漸看重這一點，這個機制只會擴大，不會縮小。</span></li>
+      <li><span class="lang-en"><b>Rate environment:</b> OPR sits at 2.75%; commercial financing terms run less favourably than residential mortgages on a commercial title regardless of the base rate, and a rate move in either direction changes underwriting math across every category in this report, particularly the whole-building and boutique tiers priced in Section III.</span><span class="lang-zh" style="display:none"><b>利率環境：</b>OPR目前為2.75%；不論基準利率如何，商業產權的融資條件本來就不如住宅房貸優惠，而利率不論往哪個方向變動，都會改變本篇每一個類別的盡調算式，尤其是第三部裡定價的整棟與精品樓層級。</span></li>
     </ul>
+  </div>
+
+  <!-- ════════ IX ════════ -->
+  <div class="sec-rule" id="sec-9"><h2><span class="lang-en">IX · Methodology &amp; Definitions</span><span class="lang-zh" style="display:none">第九部 · 方法論與名詞定義</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Data sources</span><span class="lang-zh" style="display:none">資料來源</span></h2>
+    <div class="tblwrap">
+      <table class="formal">
+        <thead><tr>
+          <th><span class="lang-en">Source</span><span class="lang-zh" style="display:none">來源</span></th>
+          <th><span class="lang-en">Coverage</span><span class="lang-zh" style="display:none">涵蓋範圍</span></th>
+          <th><span class="lang-en">Period</span><span class="lang-zh" style="display:none">期別</span></th>
+          <th><span class="lang-en">Scope</span><span class="lang-zh" style="display:none">口徑</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="lang-en">NAPIC CBSA (Jadual Penghunian dan Ketersediaan)</span><span class="lang-zh" style="display:none">NAPIC CBSA（入駐與可用表）</span></td><td><span class="lang-en">PBO, Shopping Complex &amp; Shopping Centre occupancy, KL sub-district</span><span class="lang-zh" style="display:none">PBO、商場與購物中心入駐率，KL分區</span></td><td><span class="lang-en">Q1 2025, Q3 2025, Q4 2025, Q1 2026 (quarterly)</span><span class="lang-zh" style="display:none">2025Q1、2025Q3、2025Q4、2026Q1（季度）</span></td><td><span class="lang-en">Private-only</span><span class="lang-zh" style="display:none">僅私人</span></td></tr>
+          <tr><td><span class="lang-en">NAPIC Jadual Stok Harta Perdagangan</span><span class="lang-zh" style="display:none">NAPIC 商業房產存量表</span></td><td><span class="lang-en">Shop/SOHO/SA supply pipeline, KL sub-area, 6 stages</span><span class="lang-zh" style="display:none">店屋／SOHO／服務式公寓供給線，KL子區域，6階段</span></td><td><span class="lang-en">Q1 2026 (quarterly)</span><span class="lang-zh" style="display:none">2026Q1（季度）</span></td><td><span class="lang-en">Private-only</span><span class="lang-zh" style="display:none">僅私人</span></td></tr>
+          <tr><td><span class="lang-en">NAPIC Jadual Status Pasaran Harta Tanah (Table 8)</span><span class="lang-zh" style="display:none">NAPIC 物業市場狀態表（Table 8）</span></td><td><span class="lang-en">Shop/SOHO/SA overhang, KL sub-block</span><span class="lang-zh" style="display:none">店屋／SOHO／服務式公寓餘屋，KL子區塊</span></td><td><span class="lang-en">Q4 2021 – Q1 2026 (quarterly/annual mix)</span><span class="lang-zh" style="display:none">2021Q4–2026Q1（季度／年度混合）</span></td><td><span class="lang-en">Private-only</span><span class="lang-zh" style="display:none">僅私人</span></td></tr>
+          <tr><td><span class="lang-en">NAPIC Laporan Pasaran Harta Tanah 2025</span><span class="lang-zh" style="display:none">NAPIC《房產市場報告》2025</span></td><td><span class="lang-en">Price/rental narrative, office Table 4, retail Table 2, completions Table 5, FY2025 occupancy</span><span class="lang-zh" style="display:none">價格／租金敘事、辦公室Table 4、零售Table 2、完工Table 5、FY2025入駐率</span></td><td><span class="lang-en">FY2025 (annual)</span><span class="lang-zh" style="display:none">FY2025（年度）</span></td><td><span class="lang-en">Private-only unless stated (some occupancy rows carry private+government scope, labelled in-text)</span><span class="lang-zh" style="display:none">除另有標註外皆僅私人（部分入駐率列為私人＋政府口徑，內文另行標註）</span></td></tr>
+          <tr><td><span class="lang-en">Knight Frank Kuala Lumpur &amp; Selangor Office Monitor</span><span class="lang-zh" style="display:none">Knight Frank 吉隆坡與雪蘭莪辦公室監測</span></td><td><span class="lang-en">Corridor-level occupancy/rental (Section II corridor cards)</span><span class="lang-zh" style="display:none">走廊級入駐率／租金（第二部走廊卡）</span></td><td><span class="lang-en">Q4 2025, Q1 2026 (quarterly)</span><span class="lang-zh" style="display:none">2025Q4、2026Q1（季度）</span></td><td><span class="lang-en">Industry, non-NAPIC — own submarket classification</span><span class="lang-zh" style="display:none">業界，非NAPIC——自有分區分類</span></td></tr>
+          <tr><td><span class="lang-en">EdgeProp / The Edge Malaysia</span><span class="lang-zh" style="display:none">EdgeProp／The Edge Malaysia</span></td><td><span class="lang-en">TRX-specific occupancy and Exchange 106 leasing figures</span><span class="lang-zh" style="display:none">TRX專屬入駐率與Exchange 106租賃數字</span></td><td><span class="lang-en">Oct–Dec 2025</span><span class="lang-zh" style="display:none">2025年10至12月</span></td><td><span class="lang-en">Industry, non-NAPIC</span><span class="lang-zh" style="display:none">業界，非NAPIC</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Glossary</span><span class="lang-zh" style="display:none">名詞定義</span></h2>
+    <dl class="gloss">
+      <div><dt><span class="lang-en">PBO</span><span class="lang-zh" style="display:none">PBO</span></dt><dd><span class="lang-en">Purpose-Built Office — NAPIC's category for standalone office buildings, as distinct from shop-office or mixed-use stock.</span><span class="lang-zh" style="display:none">Purpose-Built Office，專用辦公樓——NAPIC對獨立辦公大樓的分類，有別於店屋辦公室或混合用途存量。</span></dd></div>
+      <div><dt><span class="lang-en">City Centre</span><span class="lang-zh" style="display:none">市中心</span></dt><dd><span class="lang-en">NAPIC's own boundary for this bucket is Seksyen 1-100, Bandar Kuala Lumpur — not a colloquial "downtown" definition.</span><span class="lang-zh" style="display:none">NAPIC對這個分類的邊界定義是Seksyen 1-100，Bandar Kuala Lumpur——不是口語上的「市中心」定義。</span></dd></div>
+      <div><dt><span class="lang-en">Occupancy vs availability</span><span class="lang-zh" style="display:none">入駐率 對 可用率</span></dt><dd><span class="lang-en">Occupancy rate = occupied space ÷ total existing space. NAPIC's availability-band tables (Exhibit 5) group buildings by the inverse measure — the share of a building's own space still available, banded from 0% (fully let) to &gt;50% empty.</span><span class="lang-zh" style="display:none">入駐率＝已佔用空間÷總既有空間。NAPIC的可用率帶表（圖5）則以反向指標——一棟大樓自身仍可用空間的佔比——分帶，從0%（滿租）到超過50%空置。</span></dd></div>
+      <div><dt><span class="lang-en">Overhang</span><span class="lang-zh" style="display:none">餘屋</span></dt><dd><span class="lang-en">NAPIC's term for completed, unsold-for-9-months-or-more residential/strata-commercial units, tracked by unit count and RM value.</span><span class="lang-zh" style="display:none">NAPIC對已完工、掛售滿9個月以上仍未售出之住宅／分層商業單位的用詞，依戶數與RM市值追蹤。</span></dd></div>
+      <div><dt><span class="lang-en">SOHO / SA</span><span class="lang-zh" style="display:none">SOHO／服務式公寓</span></dt><dd><span class="lang-en">SOHO = Small Office/Home Office, a mixed live-work strata product. SA = Serviced Apartment, a residential-titled but commercially-managed product; both tracked separately from PBO offices and from conventional residential condominiums.</span><span class="lang-zh" style="display:none">SOHO＝Small Office/Home Office，住辦混合的分層產品。SA＝Serviced Apartment服務式公寓，住宅產權但商業化管理的產品；兩者皆與PBO辦公室及一般住宅公寓分開追蹤。</span></dd></div>
+      <div><dt><span class="lang-en">Private-only vs private+government</span><span class="lang-zh" style="display:none">僅私人 對 私人＋政府</span></dt><dd><span class="lang-en">Most figures in this report are private-only (excludes government-occupied space). Where a private+government figure is cited (e.g. the FY2025 72.6% KL office reading in Section II), it is labelled explicitly in the same sentence.</span><span class="lang-zh" style="display:none">本篇多數數字為僅私人口徑（排除政府自用空間）。若引用私人＋政府口徑（例如第二部FY2025的KL辦公室72.6%讀數），會在同一句話中明確標註。</span></dd></div>
+      <div><dt><span class="lang-en">Net absorption (this report's own derivation)</span><span class="lang-zh" style="display:none">淨去化（本篇自有推導方法）</span></dt><dd><span class="lang-en">Quarter-on-quarter change in occupied space, computed directly from the historical_cbsa_office_occupancy_kl series (Exhibit 4's underlying data), not a NAPIC-published figure. The Q1→Q3 2025 interval in this series spans two quarters because Q2 2025 was not sampled — flagged wherever it appears rather than presented as a single-quarter change.</span><span class="lang-zh" style="display:none">已佔用空間的季度變化，直接從historical_cbsa_office_occupancy_kl序列（圖4背後的底層數據）計算，不是NAPIC發布的數字。此序列中2025Q1→Q3的區間橫跨兩季，因為未取樣2025Q2——凡出現皆明確標註，不當成單季變化呈現。</span></dd></div>
+    </dl>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Limitations of this report</span><span class="lang-zh" style="display:none">本篇的侷限</span></h2>
+    <div class="limits">
+      <span class="lang-en">In the interest of being read the same way it asks its own sources to be read: this report carries no rental index for offices, shops or SOHO — NAPIC does not publish one, and every rental figure cited is a named-building illustrative comparable, not a market series. It carries no verified cap rate or investment yield for any KL commercial category (Section III). Corridor-level office occupancy (Section II's six corridors) is Knight Frank's own submarket classification, not a NAPIC boundary, and should not be read as more precise than NAPIC's own two-bucket City Centre/Outside City Centre split. Its net-absorption analysis (Section II) is a self-derived calculation with a known Q2 2025 data gap, not a NAPIC-published series. And its Capital Markets tables (Section III) transcribe NAPIC's own named-transaction tables, which this report's own reconciliation shows are illustrative samples of the year's largest deals (68% and 98.5% of stated sector totals respectively) rather than exhaustive transaction censuses.</span><span class="lang-zh" style="display:none">為求本篇被閱讀的方式，跟它要求讀者看待自身來源的方式一致：本篇對辦公室、店屋、SOHO都沒有租金指數——NAPIC不發布這個，本篇引用的每一個租金數字，都是具名大樓的示意比較案例，不是市場整體序列。本篇對任何KL商業類別都沒有經核實的資本化率或投資收益率（第三部）。走廊級辦公室入駐率（第二部六條走廊）是Knight Frank自有的分區分類，不是NAPIC的邊界，不應被誤讀為比NAPIC自己的市中心／城外兩分區口徑更精確。淨去化分析（第二部）是本篇自行推導的計算，已知存在2025Q2資料缺口，不是NAPIC發布的序列。第三部的資本市場表格，轉錄自NAPIC自己具名的成交表，本篇自己的核對顯示，這些表格分別只是當年最大成交的示意樣本（各佔官方口徑總額的68%與98.5%），不是完整的成交普查。</span>
+    </div>
   </div>
 
   <div class="prop-take">
@@ -381,8 +775,8 @@ body.zh .stat-lbl{text-transform:none;letter-spacing:0}
   </div>
 
   <div class="src">
-    <span class="lang-en"><b>Sources:</b> NAPIC Jadual Status Pasaran Harta Tanah (Table 8, commercial overhang by state, KL sub-block) Q4 2021–Q1 2026 · NAPIC Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan (PBO, Shopping Complex &amp; Shopping Centre occupancy, KL sub-district/precinct tables) Q1 2025, Q3 2025, Q4 2025 &amp; Q1 2026 · NAPIC Jadual Stok Harta Perdagangan (KL sub-area supply pipeline) Q1 2026 · NAPIC Laporan Pasaran Harta Tanah 2025 (price/rental narrative, major office transactions Table 4, completions Table 5, and FY2025 private-office occupancy) · Bank Negara Malaysia (OPR) · Knight Frank Kuala Lumpur &amp; Selangor Office Monitor (1Q2026, 4Q2025 — corridor-level occupancy/rental, cited by quarter in Section II's corridor cards) · EdgeProp/The Edge Malaysia (TRX-specific occupancy and Exchange 106 leasing figures, Oct–Dec 2025, cited in-text). Full transcription and review log in the companion vetted datasets, data/napic-kl-commercial.json (KL sub-district) and data/napic-commercial.json (state-level) — NAPIC data only; Knight Frank and EdgeProp figures are cited in-text with source and period, not stored in the vetted JSON. For informational purposes only — not investment advice.</span>
-    <span class="lang-zh" style="display:none"><b>資料來源：</b>NAPIC 物業市場狀態表（Table 8，商業餘屋，依州別，KL 子區塊）Q4 2021–Q1 2026 · NAPIC 商業建築空間入駐與可用表（PBO、購物中心與商場，KL 分區表）2025Q1、2025Q3、2025Q4 與 2026Q1 · NAPIC 商業房產存量表（KL 子區域供給線）Q1 2026 · NAPIC《房產市場報告》2025（價格／租金敘事、主要辦公室成交表 Table 4、完工表 Table 5、FY2025 私人辦公室入駐率）· 馬來西亞國家銀行（OPR）· Knight Frank 吉隆坡與雪蘭莪辦公室監測（2026Q1、2025Q4——走廊級入駐率／租金，依季標注於第二部走廊卡）· EdgeProp／The Edge Malaysia（TRX專屬入駐率與Exchange 106租賃數字，2025年10至12月，內文標注）。完整轉錄與覆核紀錄見已審核資料集 data/napic-kl-commercial.json（KL 分區）與 data/napic-commercial.json（州級）——僅NAPIC數字；Knight Frank與EdgeProp數字於內文標注來源與期間，不存於已審核JSON。僅供參考，不構成投資建議。</span>
+    <span class="lang-en"><b>Sources:</b> NAPIC Jadual Status Pasaran Harta Tanah (Table 8, commercial overhang by state, KL sub-block) Q4 2021–Q1 2026 · NAPIC Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan (PBO, Shopping Complex &amp; Shopping Centre occupancy, KL sub-district/precinct tables) Q1 2025, Q3 2025, Q4 2025 &amp; Q1 2026 · NAPIC Jadual Stok Harta Perdagangan (KL sub-area supply pipeline) Q1 2026 · NAPIC Laporan Pasaran Harta Tanah 2025 (price/rental narrative, major office transactions Table 4, shopping-complex major sales Table 2, completions Table 5, and FY2025 private-office occupancy) · Bank Negara Malaysia (OPR) · Knight Frank Kuala Lumpur &amp; Selangor Office Monitor (1Q2026, 4Q2025 — corridor-level occupancy/rental, cited by quarter in Section II's corridor cards) · EdgeProp/The Edge Malaysia (TRX-specific occupancy and Exchange 106 leasing figures, Oct–Dec 2025, cited in-text). This report's own net-absorption series (Exhibit 6, Section II) is a derived calculation from the CBSA occupancy series, not a NAPIC-published figure — see Section IX for method and the Q2 2025 data-gap caveat. Full transcription and review log — including the full Table 2 retail-transaction transcription and the Table 4 sum-reconciliation — in the companion vetted datasets, data/napic-kl-commercial.json (KL sub-district) and data/napic-commercial.json (state-level) — NAPIC data only; Knight Frank and EdgeProp figures are cited in-text with source and period, not stored in the vetted JSON. For informational purposes only — not investment advice.</span>
+    <span class="lang-zh" style="display:none"><b>資料來源：</b>NAPIC 物業市場狀態表（Table 8，商業餘屋，依州別，KL 子區塊）Q4 2021–Q1 2026 · NAPIC 商業建築空間入駐與可用表（PBO、購物中心與商場，KL 分區表）2025Q1、2025Q3、2025Q4 與 2026Q1 · NAPIC 商業房產存量表（KL 子區域供給線）Q1 2026 · NAPIC《房產市場報告》2025（價格／租金敘事、主要辦公室成交表 Table 4、購物商場大宗成交表 Table 2、完工表 Table 5、FY2025 私人辦公室入駐率）· 馬來西亞國家銀行（OPR）· Knight Frank 吉隆坡與雪蘭莪辦公室監測（2026Q1、2025Q4——走廊級入駐率／租金，依季標注於第二部走廊卡）· EdgeProp／The Edge Malaysia（TRX專屬入駐率與Exchange 106租賃數字，2025年10至12月，內文標注）。本篇自有的淨去化序列（圖6，第二部）是從CBSA入駐率序列推導計算的結果，不是NAPIC發布的數字——方法與2025Q2資料缺口的說明見第九部。完整轉錄與覆核紀錄——包含Table 2零售成交完整轉錄與Table 4加總核對——見已審核資料集 data/napic-kl-commercial.json（KL 分區）與 data/napic-commercial.json（州級）——僅NAPIC數字；Knight Frank與EdgeProp數字於內文標注來源與期間，不存於已審核JSON。僅供參考，不構成投資建議。</span>
   </div>
 
 </main>
@@ -430,13 +824,13 @@ function initAllCharts(lang){
     var jb=[5.2,13.7,17.7];
     c.setOption({
       tooltip:Object.assign({},baseTip,{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+'%';}}),
-      legend:Object.assign({},baseLegend,{data:[L('KL','KL'),L('Johor','新山')]}),
+      legend:Object.assign({},baseLegend,{data:[L('KL','KL'),L('Johor','柔佛')]}),
       grid:{left:8,right:20,top:30,bottom:6,containLabel:true},
       xAxis:valAxis({max:60,axisLabel:ax({formatter:'{value}%'})}),
       yAxis:catAxis(cats,{axisLabel:ax({fontSize:10.5})}),
       series:[
         {name:L('KL','KL'),type:'bar',data:kl,itemStyle:{color:lg(C.navyMid,C.navy),borderRadius:[0,4,4,0]},barMaxWidth:16},
-        {name:L('Johor','新山'),type:'bar',data:jb,itemStyle:{color:lg(C.goldHi,C.gold),borderRadius:[0,4,4,0]},barMaxWidth:16}
+        {name:L('Johor','柔佛'),type:'bar',data:jb,itemStyle:{color:lg(C.goldHi,C.gold),borderRadius:[0,4,4,0]},barMaxWidth:16}
       ]
     });
   })();
@@ -475,7 +869,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 4 (NEW) · Office City Centre vs Outside City Centre, quarterly occupancy history */
+  /* Exhibit 4 · Office City Centre vs Outside City Centre, quarterly occupancy history */
   (function(){ var c=mk('cOfficeHistory'); if(!c) return;
     var qtr=["Q1'25","Q3'25","Q4'25","Q1'26"];
     var cc=[72.04,72.11,72.23,73.38];
@@ -493,7 +887,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 5 (was 4) · Office availability-rate band distribution, City Centre vs Outside, % of precinct total */
+  /* Exhibit 5 · Office availability-rate band distribution, City Centre vs Outside, % of precinct total */
   (function(){ var c=mk('cOfficeAvailBand'); if(!c) return;
     var cats=[L('0% (full)','0%(滿租)'),L('<20%','<20%'),L('20-30%','20-30%'),L('30-40%','30-40%'),L('40-50%','40-50%'),L('>50%','>50%')];
     var cc=[25.5,30.7,9.8,7.8,4.9,21.2];
@@ -511,11 +905,31 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 6 (NEW) · Three-tier office price ladder, log scale */
+  /* Exhibit 6 · Quarterly net absorption, City Centre vs Outside City Centre, derived from CBSA occupancy series */
+  (function(){ var c=mk('cNetAbsorption'); if(!c) return;
+    var qtr=[L("Q1'25→Q3'25 (2 qtrs)","2025Q1→Q3(跨2季)"),L("Q3'25→Q4'25","2025Q3→Q4"),L("Q4'25→Q1'26","2025Q4→2026Q1")];
+    var cc=[47.33,-5.40,67.69];
+    var oc=[2.68,15.23,1.32];
+    var total=[50.01,9.83,69.01];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v+'k sqm';}}),
+      legend:Object.assign({},baseLegend,{data:[L('City Centre','市中心'),L('Outside City Centre','城外'),L('KL total','KL總計')]}),
+      grid:{left:8,right:16,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(qtr,{axisLabel:ax({fontSize:9.5})}),
+      yAxis:valAxis({name:L('000 sq m','千平方米'),nameTextStyle:ax({fontSize:9.5})}),
+      series:[
+        {name:L('City Centre','市中心'),type:'bar',data:cc,itemStyle:navyBar,barMaxWidth:26},
+        {name:L('Outside City Centre','城外'),type:'bar',data:oc,itemStyle:goldBar,barMaxWidth:26},
+        {name:L('KL total','KL總計'),type:'line',data:total,symbol:'circle',symbolSize:7,lineStyle:{color:C.red,width:2,type:'dashed'},itemStyle:{color:C.red}}
+      ]
+    });
+  })();
+
+  /* Exhibit 8 · Three-tier office price ladder, log scale */
   (function(){ var c=mk('cPriceLadder'); if(!c) return;
     var cats=[L('Strata unit','分層單位'),L('Whole boutique building','整棟精品樓'),L('Institutional whole building','機構整棟')];
     var vals=[1330000,23235484,680000000];
-    var labels=[L('RM1.33m–3.23m (derived)','RM133萬–322.5萬（derived）'),L('RM23.2m–135m (named, 2025)','RM2,320萬–1.35億（具名，2025）'),L('RM680m (Menara CIMB, 2025)','RM6.8億（Menara CIMB，2025）')];
+    var labels=[L('RM1.33m–3.23m (derived)','RM133萬–322.5萬（derived）'),L('RM23.2m–135m (named, 2025 report)','RM2,320萬–1.35億（具名，2025年報）'),L('RM680m (Menara CIMB, 2025)','RM6.8億（Menara CIMB，2025）')];
     c.setOption({
       tooltip:{trigger:'item',backgroundColor:'#fff',borderColor:C.track,borderWidth:1,padding:[8,11],
         textStyle:{color:C.navy,fontSize:11,fontFamily:FONT},extraCssText:'box-shadow:0 8px 24px rgba(13,34,68,.10);border-radius:8px',
@@ -529,7 +943,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 7 (was 5) · Retail precinct occupancy, 12 shown (6 strongest + 6 weakest) */
+  /* Exhibit 11 · Retail precinct occupancy, 12 shown (6 strongest + 6 weakest) */
   (function(){ var c=mk('cRetailPrecinct'); if(!c) return;
     var names=[
       [L('Jalan Ipoh','Jalan Ipoh'),30.25],
@@ -561,7 +975,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 8 (was 6) · Retail: existing space vs occupancy, all 19 stocked precincts (bubble=buildings) */
+  /* Exhibit 12 · Retail: existing space vs occupancy, all 19 stocked precincts (bubble=buildings) */
   (function(){ var c=mk('cRetailScatter'); if(!c) return;
     var d=[
       [L('Bangsar','Bangsar'),75.33,97.38,4],
@@ -598,25 +1012,25 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 9 (was 7) · Shop overhang KL (bars) vs Johor (line, dual axis) */
+  /* Exhibit 13 · Shop overhang KL (bars) vs Johor (line, dual axis) */
   (function(){ var c=mk('cShopKLJohor'); if(!c) return;
     var yr=['2021','2022','2023','2024',"3Q'25","4Q'25","1Q'26"];
     var kl=[66,82,23,11,10,10,10];
     var jb=[1578,1731,1517,1222,1074,1146,1269];
     c.setOption({
       tooltip:baseTip,
-      legend:Object.assign({},baseLegend,{data:[L('KL (left)','KL(左軸)'),L('Johor (right)','新山(右軸)')]}),
+      legend:Object.assign({},baseLegend,{data:[L('KL (left)','KL(左軸)'),L('Johor (right)','柔佛(右軸)')]}),
       grid:{left:8,right:14,top:30,bottom:6,containLabel:true},
       xAxis:catAxis(yr),
       yAxis:[valAxis({max:100}),valAxis({position:'right',max:2000,splitLine:{show:false}})],
       series:[
         {name:L('KL (left)','KL(左軸)'),type:'bar',data:kl,itemStyle:navyBar,barMaxWidth:26},
-        {name:L('Johor (right)','新山(右軸)'),type:'line',yAxisIndex:1,data:jb,smooth:true,symbol:'circle',symbolSize:6,lineStyle:{color:C.red,width:2.5,type:'dashed'},itemStyle:{color:C.red}}
+        {name:L('Johor (right)','柔佛(右軸)'),type:'line',yAxisIndex:1,data:jb,smooth:true,symbol:'circle',symbolSize:6,lineStyle:{color:C.red,width:2.5,type:'dashed'},itemStyle:{color:C.red}}
       ]
     });
   })();
 
-  /* Exhibit 10 (was 8) · Shop existing stock by mukim/sub-area */
+  /* Exhibit 14 · Shop existing stock by mukim/sub-area */
   (function(){ var c=mk('cShopMukim'); if(!c) return;
     var names=[
       [L('Mukim Batu','Mukim Batu'),7585],
@@ -639,7 +1053,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 11 (was 9) · SOHO overhang KL */
+  /* Exhibit 15 · SOHO overhang KL */
   (function(){ var c=mk('cSohoKL'); if(!c) return;
     var yr=['2021','2022','2023','2024',"3Q'25","4Q'25","1Q'26"];
     var soho=[457,788,709,645,1127,1124,793];
@@ -655,7 +1069,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 12 (was 10) · SOHO unsold units by price band, all 11 bands */
+  /* Exhibit 16 · SOHO unsold units by price band, all 11 bands */
   (function(){ var c=mk('cSohoPriceBand'); if(!c) return;
     var cats=[L('0–100','0–10'),L('100–200','10–20'),L('200–300','20–30'),L('300–400','30–40'),L('400–500','40–50'),L('500–600','50–60'),L('600–700','60–70'),L('700–800','70–80'),L('800–900','80–90'),L('900–1,000','90–100'),L('>1,000','>100')];
     var vals=[0,518,0,98,42,0,0,0,0,60,75];
@@ -669,7 +1083,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 13 (was 11) · SOHO current overhang (KL-wide reference line) vs incoming supply by mukim */
+  /* Exhibit 17 · SOHO current overhang (KL-wide reference line) vs incoming supply by mukim */
   (function(){ var c=mk('cSohoMukim'); if(!c) return;
     var names=[
       [L('Bandar Kuala Lumpur','Bandar Kuala Lumpur'),97],

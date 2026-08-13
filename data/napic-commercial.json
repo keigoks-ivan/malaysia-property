@@ -2563,5 +2563,537 @@
    "result": "ALL PASS. Every one of the 15 geography x category unit totals (5 geographies x shop/soho/sa) matches its locked anchor exactly: national shop 7,023 / SOHO 2,731 / SA 19,263; KL 10 / 793 / 4,181; Selangor 363 / 429 / 2,407; Johor 1,269 / 377 / 9,972; Penang 133 / 994 / 237. Value totals match to rounding: national shop RM5,648.102317M / SOHO RM1,227.939056M / SA RM16,522.491245M (locked anchors were RM5,648.10M / RM1,227.94M / RM16,522.49M, 2dp-rounded citations of the same source cells). Storey-type breakdown of the national shop TOTAL (c2-c10) sums to 7,023, matching the shop TOTAL exactly and matching the task brief's pre-verified per-column figures (c2=246, c3=2964, c4=1696, c5=73, c6=6, c7=0, c8=21, c9=5, c10=2012) exactly.",
    "no_discrepancies": true
   }
+ },
+ "v3_extension_2026_08_13": {
+  "note": "Extension appended 2026-08-13 for the /my/commercial.html CRE-research-report upgrade. Adds three top-level sections: pbo_net_absorption_q1_2025_to_q1_2026 (national + 4-state net absorption derived from 4 quarterly CBSA TABLE 1 reads), capital_markets_2025 (Table 2 retail / Table 4 office named-transaction data from the 2025 annual report, non-KL rows only - KL rows already live in data/napic-kl-commercial.json), and yield_research_2026_08 (log of an unsuccessful search for a citable Malaysia office/retail yield figure - none is cited in the published report as a result). No existing key or value in this file was modified; this key and the three below it are pure additions.",
+  "new_top_level_keys_added": [
+   "pbo_net_absorption_q1_2025_to_q1_2026",
+   "capital_markets_2025",
+   "yield_research_2026_08"
+  ]
+ },
+ "pbo_net_absorption_q1_2025_to_q1_2026": {
+  "definition": "Net absorption = period-over-period change in occupied PBO space (space_occupied_000sm), derived from four quarterly readings of the private-only CBSA TABLE 1 (Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan). Q2 2025 was not downloaded in this session; the Q1-to-Q3 2025 row is therefore a TWO-QUARTER COMBINED absorption figure, not a single quarter, and must be labelled as such wherever displayed.",
+  "source": {
+   "files": [
+    "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2025.xls",
+    "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q3 2025.xls",
+    "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q4 2025.xls",
+    "Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan Q1 2026.xls"
+   ],
+   "sheet": "TABLE 1",
+   "row": "MALAYSIA total row (r7); WP Kuala Lumpur r9; Selangor r15; Johor r17; Pulau Pinang r19",
+   "crossCheck": "Q1 2026 MALAYSIA row (18641.49 / 13486.07 / 72.34%) reproduces pbo_purpose_built_office.current_period.malaysia exactly - same source cell, independently re-extracted via a fresh script in this session."
+  },
+  "national": {
+   "quarterly": [
+    {
+     "period": "Q1 2025",
+     "total_existing_000sm": 18347.51,
+     "occupied_000sm": 13215.38,
+     "occupancy_rate_pct": 72.03,
+     "available_000sm": 5132.13
+    },
+    {
+     "period": "Q3 2025",
+     "total_existing_000sm": 18483.58,
+     "occupied_000sm": 13284.9,
+     "occupancy_rate_pct": 71.87,
+     "available_000sm": 5198.68
+    },
+    {
+     "period": "Q4 2025",
+     "total_existing_000sm": 18580.13,
+     "occupied_000sm": 13359.22,
+     "occupancy_rate_pct": 71.9,
+     "available_000sm": 5220.91
+    },
+    {
+     "period": "Q1 2026",
+     "total_existing_000sm": 18641.49,
+     "occupied_000sm": 13486.07,
+     "occupancy_rate_pct": 72.34,
+     "available_000sm": 5155.42
+    }
+   ],
+   "net_absorption_000sm": [
+    {
+     "interval": "Q1->Q3 2025",
+     "span": "two_quarters_combined_Q2_2025_not_sampled",
+     "net_absorption_000sm": 69.52,
+     "new_supply_000sm": 136.07,
+     "occupancy_change_pp": -0.15,
+     "basis": "derived: occupied(t)-occupied(t-1); new_supply=total_existing(t)-total_existing(t-1)"
+    },
+    {
+     "interval": "Q3->Q4 2025",
+     "span": "one_quarter",
+     "net_absorption_000sm": 74.32,
+     "new_supply_000sm": 96.55,
+     "occupancy_change_pp": 0.03,
+     "basis": "derived, same method"
+    },
+    {
+     "interval": "Q4 2025->Q1 2026",
+     "span": "one_quarter",
+     "net_absorption_000sm": 126.85,
+     "new_supply_000sm": 61.36,
+     "occupancy_change_pp": 0.44,
+     "basis": "derived, same method"
+    }
+   ],
+   "interpretation_note": "In the two intervals ending Q3 and Q4 2025, new supply added exceeded net absorption (136.07 > 69.52; 96.55 > 74.32), so the national occupancy rate was flat-to-declining even though absorption itself was positive. In the Q4 2025 -> Q1 2026 interval, net absorption (126.85) exceeded new supply (61.36) for the first time in this series, and available space fell in absolute terms (5220.91 -> 5155.42 '000 sm) - the +0.44pp occupancy gain in that quarter is attributable to demand outpacing supply, not to a shrinking denominator alone. This is a derived read of four data points, not a trend call; a fifth quarter (Q2 2026) would be needed to confirm continuation."
+  },
+  "by_state": {
+   "wp_kuala_lumpur": {
+    "quarterly": [
+     {
+      "period": "Q1 2025",
+      "total_existing_000sm": 9578.66,
+      "occupied_000sm": 6794.91,
+      "occupancy_rate_pct": 70.94
+     },
+     {
+      "period": "Q3 2025",
+      "total_existing_000sm": 9634.63,
+      "occupied_000sm": 6844.92,
+      "occupancy_rate_pct": 71.04
+     },
+     {
+      "period": "Q4 2025",
+      "total_existing_000sm": 9662.34,
+      "occupied_000sm": 6854.75,
+      "occupancy_rate_pct": 70.94
+     },
+     {
+      "period": "Q1 2026",
+      "total_existing_000sm": 9633.72,
+      "occupied_000sm": 6923.76,
+      "occupancy_rate_pct": 71.87
+     }
+    ],
+    "note": "Q4 2025 -> Q1 2026: total existing space FELL 9662.34 -> 9633.72 ('000 sm, -28.62) while occupied space rose (+69.01) - the +0.93pp occupancy gain this quarter reflects both real absorption and a stock reduction (building reclassification, demolition, or data revision - not distinguished by this source), not absorption alone."
+   },
+   "selangor": {
+    "quarterly": [
+     {
+      "period": "Q1 2025",
+      "total_existing_000sm": 4290.62,
+      "occupied_000sm": 3068.95,
+      "occupancy_rate_pct": 71.53
+     },
+     {
+      "period": "Q3 2025",
+      "total_existing_000sm": 4379.98,
+      "occupied_000sm": 3135.3,
+      "occupancy_rate_pct": 71.58
+     },
+     {
+      "period": "Q4 2025",
+      "total_existing_000sm": 4414.83,
+      "occupied_000sm": 3169.5,
+      "occupancy_rate_pct": 71.79
+     },
+     {
+      "period": "Q1 2026",
+      "total_existing_000sm": 4396.52,
+      "occupied_000sm": 3142.33,
+      "occupancy_rate_pct": 71.47
+     }
+    ],
+    "note": "Q4 2025 -> Q1 2026: occupied space FELL (3169.50 -> 3142.33, -27.17 '000 sm) even as total stock also fell (-18.31) - occupancy dropped 71.79% -> 71.47%, the only one of the four states/national tracked here where the most recent quarter shows genuine net negative absorption, not just a supply effect."
+   },
+   "johor": {
+    "quarterly": [
+     {
+      "period": "Q1 2025",
+      "total_existing_000sm": 949.71,
+      "occupied_000sm": 557.78,
+      "occupancy_rate_pct": 58.73
+     },
+     {
+      "period": "Q3 2025",
+      "total_existing_000sm": 980.58,
+      "occupied_000sm": 531.03,
+      "occupancy_rate_pct": 54.15
+     },
+     {
+      "period": "Q4 2025",
+      "total_existing_000sm": 977.8,
+      "occupied_000sm": 538.85,
+      "occupancy_rate_pct": 55.11
+     },
+     {
+      "period": "Q1 2026",
+      "total_existing_000sm": 977.67,
+      "occupied_000sm": 539.21,
+      "occupancy_rate_pct": 55.15
+     }
+    ],
+    "note": "Occupied space FELL Q1->Q3 2025 (557.78 -> 531.03, two quarters combined) even as stock grew - a genuine demand-side deterioration, not a supply dilution effect. Occupancy has since stabilised around 55% for three straight readings (54.15% / 55.11% / 55.15%), consistent with the by_state_2025_private_and_government figure already in this file (66.4%, a different Private+Government scope, see notes.pboScope) sitting well above this private-only reading."
+   },
+   "pulau_pinang": {
+    "quarterly": [
+     {
+      "period": "Q1 2025",
+      "total_existing_000sm": 734.54,
+      "occupied_000sm": 579.02,
+      "occupancy_rate_pct": 78.83
+     },
+     {
+      "period": "Q3 2025",
+      "total_existing_000sm": 725.16,
+      "occupied_000sm": 582.85,
+      "occupancy_rate_pct": 80.38
+     },
+     {
+      "period": "Q4 2025",
+      "total_existing_000sm": 758.88,
+      "occupied_000sm": 578.42,
+      "occupancy_rate_pct": 76.22
+     },
+     {
+      "period": "Q1 2026",
+      "total_existing_000sm": 759.23,
+      "occupied_000sm": 586.95,
+      "occupancy_rate_pct": 77.31
+     }
+    ],
+    "note": "Q3 2025 -> Q4 2025: total stock jumped +33.72 '000 sm (roughly 4.6% of the Q3 base, a single quarter) while occupied space fell slightly (-4.43) - occupancy dropped sharply, 80.38% -> 76.22% (-4.16pp), a clean case of a supply-driven dilution event rather than a demand shock. Partial recovery followed, +1.09pp to 77.31% by Q1 2026."
+   }
+  }
+ },
+ "capital_markets_2025": {
+  "definition": "Named-transaction sales data from Laporan Pasaran Harta Tanah 2025 (Annual Property Market Report), Overview chapter, Table 2 (Shopping Complex) and Table 4 (Purpose-Built Office). These are 'Summary of Major Sales' tables - a curated list of the largest/most notable deals NAPIC's overview chapter chose to name, not an exhaustive transaction register (see reconciliation notes below).",
+  "office_table4_purpose_built_office": {
+   "source": {
+    "file": "annual2025.txt (rendition of laporan-pasaran-harta-2025-1.pdf)",
+    "table": "Table 4 - Summary of Major Sales 2025",
+    "linesInTranscript": "approx 2244-2296"
+   },
+   "narrative_total": {
+    "text_en": "In 2025, market activity recorded several office building transactions with an accumulated value exceeded RM2.08 billion.",
+    "value_rm_billion_exceeded": 2.08
+   },
+   "table_row_count": 20,
+   "table_sum_rm": 1419417233,
+   "kl_rows_count": 9,
+   "kl_rows_sum_rm": 1170344233,
+   "non_kl_rows_count": 11,
+   "non_kl_rows_sum_rm": 249073000,
+   "reconciliation_note": "The 20 rows printed in Table 4 sum to RM1,419,417,233 (~RM1.42bn) - well short of the narrative's 'exceeded RM2.08 billion'. Table 4 is therefore explicitly a partial/illustrative listing, not the full basis for the RM2.08bn figure; the gap (~RM660m) is in deals NAPIC did not itemise by name. Do not present Table 4's row-sum as if it equals or explains the RM2.08bn headline - the two are separate, both-official numbers with a stated gap.",
+   "kl_rows_reference": "The 9 WP Kuala Lumpur rows (Menara CIMB RM680.0m 2025; Wisma Technip RM135.0m 2025; Menara Southern Bank RM91.3m 2025; Widad Business Group RM41.5m 2025; KSK Building RM33.0m 2025; Southbank Boutique Office - Block 6 RM29.5m 2025; Menara Affin RM100.0m 2024; SB-10 The Bouleverd Signature Offices Mid Valley City RM36.76m 2024; SB-09 The Bouleverd Signature Offices Mid Valley City RM23.24m 2024) are transcribed in data/napic-kl-commercial.json, not duplicated here - see that file for the KL-specific presentation.",
+   "non_kl_rows": [
+    {
+     "no": 10,
+     "state": "Selangor",
+     "property": "Basis Bay",
+     "location": "Jalan Cyber Point 5, Cyberjaya",
+     "transaction_year": 2024,
+     "consideration_rm": 55613000
+    },
+    {
+     "no": 11,
+     "state": "Selangor",
+     "property": "Menara Apex",
+     "location": "Jalan Semenyih, Bandar Kajang",
+     "transaction_year": 2023,
+     "consideration_rm": 55000000
+    },
+    {
+     "no": 12,
+     "state": "Johor",
+     "property": "Showroom & Office",
+     "location": "Jalan Tun Razak, Johor Bahru",
+     "transaction_year": 2025,
+     "consideration_rm": 26000000
+    },
+    {
+     "no": 13,
+     "state": "Johor",
+     "property": "Wisma AIA",
+     "location": "Jalan Bukit Timbalan, Johor Bahru",
+     "transaction_year": 2025,
+     "consideration_rm": 13800000
+    },
+    {
+     "no": 14,
+     "state": "Johor",
+     "property": "Bangunan Pelangi",
+     "location": "Jalan Biru, Taman Pelangi, Johor Bahru",
+     "transaction_year": 2024,
+     "consideration_rm": 21500000
+    },
+    {
+     "no": 15,
+     "state": "Pulau Pinang",
+     "property": "Wisma UMNO",
+     "location": "Jalan Bagan Luar 2, Butterworth",
+     "transaction_year": 2024,
+     "consideration_rm": 8500000
+    },
+    {
+     "no": 16,
+     "state": "Melaka",
+     "property": "Menara Pertam / Wisma Amanah",
+     "location": "Wisma Amanah, Jalan Batu Berendam",
+     "transaction_year": 2024,
+     "consideration_rm": 27260000
+    },
+    {
+     "no": 17,
+     "state": "Terengganu",
+     "property": "Wisma Q",
+     "location": "Jalan Engku SAR",
+     "transaction_year": 2025,
+     "consideration_rm": 8400000
+    },
+    {
+     "no": 18,
+     "state": "Sabah",
+     "property": "Uni-Asia Building",
+     "location": "Jalan Sagunting, Kota Kinabalu",
+     "transaction_year": 2025,
+     "consideration_rm": 18000000
+    },
+    {
+     "no": 19,
+     "state": "Sabah",
+     "property": "Reflexologi",
+     "location": "Jalan Pusat Pembangunan",
+     "transaction_year": 2025,
+     "consideration_rm": 12000000
+    },
+    {
+     "no": 20,
+     "state": "Sabah",
+     "property": "Wisma Ting Hui",
+     "location": "Jalan Lama Tamparuli, Pekan Tamparuli",
+     "transaction_year": 2025,
+     "consideration_rm": 3000000
+    }
+   ],
+   "by_state_non_kl_summary": {
+    "selangor": {
+     "count": 2,
+     "sum_rm": 110613000
+    },
+    "johor": {
+     "count": 3,
+     "sum_rm": 61300000
+    },
+    "pulau_pinang": {
+     "count": 1,
+     "sum_rm": 8500000
+    },
+    "melaka": {
+     "count": 1,
+     "sum_rm": 27260000
+    },
+    "terengganu": {
+     "count": 1,
+     "sum_rm": 8400000
+    },
+    "sabah": {
+     "count": 3,
+     "sum_rm": 33000000
+    }
+   },
+   "state_size_gap_note": "Every one of the 11 non-KL office rows is below RM56 million; the largest, Basis Bay in Cyberjaya (RM55.6m) and Menara Apex in Kajang (RM55.0m), are both Selangor deals and both still smaller than 6 of the 9 KL rows. The single largest KL row alone (Menara CIMB, RM680.0m) exceeds the combined sum of all 11 non-KL rows (RM249.07m). This is a magnitude gap consistent with - not proof of, given Table 4 is a curated 'major sales' list, not a census - the scale difference between KL's institutional office market and every other state's."
+  },
+  "retail_table2_shopping_complex": {
+   "source": {
+    "file": "annual2025.txt (rendition of laporan-pasaran-harta-2025-1.pdf)",
+    "table": "Table 2 - Summary of Major Sales 2025",
+    "linesInTranscript": "approx 1978-2017"
+   },
+   "narrative_total": {
+    "text_en": "The reviewed year recorded several shopping complex transactions with an accumulative worth of RM3.48 billion; mostly of the transactions were in Selangor, WP Kuala Lumpur, Johor, Pahang, Perak and only one in Sabah.",
+    "value_rm_billion": 3.48
+   },
+   "table_row_count": 17,
+   "table_sum_rm": 3426275999,
+   "reconciliation_note": "The 17 rows sum to RM3,426,275,999 (~RM3.43bn), within 1.5% of the narrative's RM3.48bn - a much tighter reconciliation than the office Table 4 above, consistent with Table 2 capturing nearly all of the year's shopping-complex deal value rather than a curated subset.",
+   "rows": [
+    {
+     "no": 1,
+     "state": "WP Kuala Lumpur",
+     "property": "Plaza 63",
+     "location": "Jalan 3/108C, Taman Sungai Besi",
+     "transaction_year": 2024,
+     "consideration_rm": 33999999
+    },
+    {
+     "no": 2,
+     "state": "Selangor",
+     "property": "AEON Mall Bukit Tinggi",
+     "location": "Persiaran Batu Nilam, Bandar Bukit Tinggi, Klang",
+     "transaction_year": 2025,
+     "consideration_rm": 680000000
+    },
+    {
+     "no": 3,
+     "state": "Selangor",
+     "property": "Paradigm Mall (Petaling Jaya)",
+     "location": "Jalan SS 7/26a, SS7, Petaling Jaya",
+     "transaction_year": 2025,
+     "consideration_rm": 600000000
+    },
+    {
+     "no": 4,
+     "state": "Selangor",
+     "property": "Kompleks PKNS",
+     "location": "Persiaran Tasik, Seksyen 14, Shah Alam",
+     "transaction_year": 2025,
+     "consideration_rm": 185000000
+    },
+    {
+     "no": 5,
+     "state": "Selangor",
+     "property": "SACC Mall",
+     "location": "Jalan Perbandaran, Seksyen 14, Shah Alam",
+     "transaction_year": 2025,
+     "consideration_rm": 133000000
+    },
+    {
+     "no": 6,
+     "state": "Selangor",
+     "property": "Jaya Shopping Centre",
+     "location": "Jalan 14/17, Seksyen 14, Petaling Jaya",
+     "transaction_year": 2025,
+     "consideration_rm": 100000000
+    },
+    {
+     "no": 7,
+     "state": "Selangor",
+     "property": "Kipmall Desa Coalfields",
+     "location": "Jalan DC 4/5, Desa Coalfields, Sungai Buloh",
+     "transaction_year": 2025,
+     "consideration_rm": 62000000
+    },
+    {
+     "no": 8,
+     "state": "Selangor",
+     "property": "Plaza Pelangi Astana",
+     "location": "PJU 6, Persiaran Surian, Petaling Jaya",
+     "transaction_year": 2025,
+     "consideration_rm": 25850000
+    },
+    {
+     "no": 9,
+     "state": "Johor",
+     "property": "Paradigm Mall (Johor Bahru)",
+     "location": "Taman Bukit Mewah, Johor Bahru",
+     "transaction_year": 2025,
+     "consideration_rm": 1157000000
+    },
+    {
+     "no": 10,
+     "state": "Johor",
+     "property": "Perling Mall",
+     "location": "Jalan Persisiran Perling, Taman Perling, Johor Bahru",
+     "transaction_year": 2025,
+     "consideration_rm": 54184000
+    },
+    {
+     "no": 11,
+     "state": "Perak",
+     "property": "AEON Mall Taiping",
+     "location": "Jalan Kamunting, Taiping",
+     "transaction_year": 2025,
+     "consideration_rm": 147000000
+    },
+    {
+     "no": 12,
+     "state": "Perak",
+     "property": "AEON Seri Manjung",
+     "location": "Jalan Manjung Point 3, Seri Manjung",
+     "transaction_year": 2025,
+     "consideration_rm": 138000000
+    },
+    {
+     "no": 13,
+     "state": "Perak",
+     "property": "Pasaraya TF Value Mart",
+     "location": "Pusat Perniagaan, Manjung Point Seksyen 1, Seri Manjung",
+     "transaction_year": 2025,
+     "consideration_rm": 35392000
+    },
+    {
+     "no": 14,
+     "state": "Pahang",
+     "property": "Lotus's Indera Mahkota",
+     "location": "Lorong IM 8/3, Bandar Indera Mahkota",
+     "transaction_year": 2025,
+     "consideration_rm": 39000000
+    },
+    {
+     "no": 15,
+     "state": "Pahang",
+     "property": "Pasaraya TF",
+     "location": "Jalan Sentral Triang 8, Sentral Triang",
+     "transaction_year": 2025,
+     "consideration_rm": 13750000
+    },
+    {
+     "no": 16,
+     "state": "Pahang",
+     "property": "Econsave Jengka",
+     "location": "Jalan BDJS2, Bandar Tun Razak",
+     "transaction_year": 2025,
+     "consideration_rm": 16000000
+    },
+    {
+     "no": 17,
+     "state": "Sabah",
+     "property": "Bataras Hypermarket",
+     "location": "Tamparuli",
+     "transaction_year": 2025,
+     "consideration_rm": 6100000
+    }
+   ],
+   "by_state_summary": {
+    "wp_kuala_lumpur": {
+     "count": 1,
+     "sum_rm": 33999999
+    },
+    "selangor": {
+     "count": 7,
+     "sum_rm": 1785850000
+    },
+    "johor": {
+     "count": 2,
+     "sum_rm": 1211184000
+    },
+    "perak": {
+     "count": 3,
+     "sum_rm": 320392000
+    },
+    "pahang": {
+     "count": 3,
+     "sum_rm": 68750000
+    },
+    "sabah": {
+     "count": 1,
+     "sum_rm": 6100000
+    }
+   },
+   "kl_gap_note": "KL contributes only 1 of 17 rows and RM34.0m of RM3.43bn (<1% of table value), and that single row (Plaza 63) is dated 2024, not 2025 - meaning KL recorded zero named shopping-complex sales in the 2025 calendar year in this table. The largest single deal nationally, Paradigm Mall Johor Bahru at RM1,157,000,000, is more than 34 times the size of KL's only listed entry, and Selangor alone (7 rows, RM1.79bn) outweighs every other state including Johor. Retail capital is flowing to Selangor and Johor while KL's mall stock - the most institutionally consolidated in the country - traded hands only once in this table, and not even in the year under review."
+  }
+ },
+ "yield_research_2026_08": {
+  "task": "Search for a citable Malaysia office/retail investment yield figure (Knight Frank / Savills / CBRE / JLL) for the capital markets section.",
+  "searches_performed": [
+   "Knight Frank Malaysia office prime yield 2026 investment yield %",
+   "Savills Malaysia retail shopping centre yield 2025 2026 Klang Valley",
+   "\"Kuala Lumpur\" office prime yield percent Knight Frank Investment Yield Guide 2025",
+   "CBRE Malaysia cap rate office retail 2025 Kuala Lumpur"
+  ],
+  "fetches_attempted": [
+   "retalkasia.com summary of CBRE Q1 2025 Asia Pacific Cap Rate Survey",
+   "cbre.com Q3 2025 Asia Pacific Cap Rate Survey landing page"
+  ],
+  "result": "No specific, independently-verifiable Kuala Lumpur/Malaysia office or retail yield percentage was located in this session. Knight Frank publishes a periodic 'Investment Yield Guide' / 'Prime Yield Guide' (editions found: Mar/May/Jun/Aug/Oct/Dec 2025, Mar 2026) and CBRE publishes a quarterly 'Asia Pacific Cap Rate Survey', but both are gated PDF/landing pages that did not surface an extractable Malaysia-specific number through search snippets or WebFetch in this session.",
+  "disposition": "Per task instruction, no yield/cap-rate figure is cited in the published report. NAPIC does not publish a yield series, and this report does not print an unverified valuation parameter sourced only from a search snippet or an inaccessible PDF."
  }
 }

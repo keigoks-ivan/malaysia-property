@@ -103,6 +103,85 @@ body.zh .reitrow .rc .rt{text-transform:none;letter-spacing:0}
 .src a{color:var(--gold-deep)}
 
 @media(max-width:760px){.snap,.mrow{grid-template-columns:repeat(2,1fr)}.play,.reitrow{grid-template-columns:1fr}.pg-title{font-size:22px}.sec-rule h2{font-size:18px;white-space:normal}}
+
+/* ── report masthead + TOC ── */
+.masthead{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:20px;box-shadow:var(--shadow-sm)}
+.masthead .mh-kicker{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:8px}
+.masthead h1{font-family:'Playfair Display','Noto Serif TC',serif;font-weight:700;color:var(--navy);font-size:25px;letter-spacing:-.01em;margin:0 0 12px;line-height:1.3}
+.rmeta{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--border-soft);padding-top:12px;margin-top:4px}
+.rmeta span b{color:var(--navy);font-weight:600}
+.mh-disclaimer{font-size:11px;color:var(--muted);font-style:italic;margin-top:10px;line-height:1.6}
+.toc{background:var(--bg-section);border:1px solid var(--gold-soft);border-radius:12px;padding:16px 20px;margin-bottom:26px}
+.toc .toc-kick{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:10px}
+.toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:24px}
+body.zh .toc ol{columns:2}
+.toc li{font-size:12.5px;margin-bottom:7px;break-inside:avoid}
+.toc li a{color:var(--text-soft);text-decoration:none;font-weight:600}
+.toc li a:hover{color:var(--gold-deep);text-decoration:underline}
+.toc li span{color:var(--muted);font-weight:400}
+@media(max-width:640px){.toc ol{columns:1}}
+[id^="sec-"]{scroll-margin-top:104px}
+
+/* ── stat strip (masthead-adjacent big-number cards) ── */
+.statstrip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:0 0 22px}
+.statstrip .sc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 12px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:5px;min-width:0}
+.statstrip .sc-lbl{font-size:10px;font-weight:600;letter-spacing:.03em;color:var(--gold-deep);text-transform:uppercase;line-height:1.4}
+body.zh .statstrip .sc-lbl{text-transform:none;letter-spacing:0}
+.statstrip .sc-num{font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:21px;font-weight:700;color:var(--navy);line-height:1.15;display:flex;align-items:baseline;gap:5px}
+.statstrip .sc-arrow{font-size:13px;font-weight:700}
+.statstrip .sc-arrow.up{color:#15803d}.statstrip .sc-arrow.down{color:#b91c1c}.statstrip .sc-arrow.flat{color:var(--muted)}
+.statstrip .sc-prev{font-size:9.5px;color:var(--muted);line-height:1.5}
+@media(max-width:900px){.statstrip{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.statstrip{grid-template-columns:repeat(2,1fr)}}
+
+/* ── KPI dashboard table (executive summary) ── */
+.kpidash-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:6px 0 8px}
+.kpidash{min-width:640px;width:100%;border-collapse:separate;border-spacing:0;font-size:11.5px}
+.kpidash th{font-weight:700;color:var(--gold-deep);text-align:left;padding:7px 10px;border-bottom:2px solid var(--gold-soft);white-space:nowrap}
+.kpidash td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border-soft);color:var(--text-soft);vertical-align:top}
+.kpidash td.num{font-family:'IBM Plex Mono',monospace;color:var(--navy);font-weight:600;white-space:nowrap}
+.kpidash td.dir{white-space:nowrap;font-weight:700}
+.kpidash td.dir.up{color:#15803d}.kpidash td.dir.down{color:#b91c1c}.kpidash td.dir.flat{color:var(--muted)}
+.kpidash tr:last-child td{border-bottom:none}
+
+/* ── Market View callout (per-section takeaway box) ── */
+.mview{background:var(--bg-section);border:1px solid var(--gold-soft);border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:13px 18px;margin:14px 0 6px}
+.mview .mv-kick{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:6px}
+.mview p{font-size:12.5px;color:var(--text-soft);margin:0;line-height:1.75}
+.mview p b{color:var(--navy);font-weight:600}
+
+/* ── formal transaction tables (capital markets) ── */
+.txtable-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:6px 0 14px;border:1px solid var(--border);border-radius:12px}
+.txtable{min-width:620px;width:100%;border-collapse:separate;border-spacing:0;font-size:11.5px}
+.txtable th{background:var(--bg-section);font-weight:700;color:var(--gold-deep);text-align:left;padding:8px 10px;border-bottom:2px solid var(--gold-soft);white-space:nowrap;position:sticky;top:0}
+.txtable td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border-soft);color:var(--text-soft)}
+.txtable td.amt{font-family:'IBM Plex Mono',monospace;color:var(--navy);font-weight:600;text-align:right;white-space:nowrap}
+.txtable td.yr{font-family:'IBM Plex Mono',monospace;color:var(--muted);white-space:nowrap}
+.txtable tr:last-child td{border-bottom:none}
+.txtable tr:nth-child(even){background:var(--bg-soft)}
+
+/* ── outlook / risk cards ── */
+.riskgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 20px}
+.riskgrid .rk{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 15px;box-shadow:var(--shadow-sm)}
+.riskgrid .rk h5{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 6px}
+body.zh .riskgrid .rk h5{text-transform:none;letter-spacing:0}
+.riskgrid .rk p{font-size:12px;line-height:1.7;color:var(--text-soft);margin:0}
+@media(max-width:700px){.riskgrid{grid-template-columns:1fr}}
+.trigger-list{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:8px}
+.trigger-list li{position:relative;padding-left:20px;font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.trigger-list li::before{content:'◆';position:absolute;left:0;top:1px;font-size:9px;color:var(--gold-deep)}
+
+/* ── methodology appendix ── */
+.methotable-wrap{overflow-x:auto;margin:6px 0 18px}
+.methotable{min-width:560px;width:100%;border-collapse:separate;border-spacing:0;font-size:11.5px}
+.methotable th{font-weight:700;color:var(--gold-deep);text-align:left;padding:7px 10px;border-bottom:2px solid var(--gold-soft)}
+.methotable td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border-soft);color:var(--text-soft);vertical-align:top}
+.defterm{margin:0 0 14px}
+.defterm dt{font-weight:700;color:var(--navy);font-size:12.5px;margin-top:10px}
+.defterm dd{margin:2px 0 0;font-size:12px;color:var(--text-soft);line-height:1.75}
+.limits-box{background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:10px;padding:14px 18px;margin:10px 0}
+.limits-box li{font-size:12px;color:var(--text-soft);line-height:1.8}
+@media(max-width:760px){.riskgrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -112,9 +191,10 @@ body.zh .reitrow .rc .rt{text-transform:none;letter-spacing:0}
 
 <main class="wrap">
 
-  <!-- ── Header ── -->
-  <div class="pg-head">
-    <h1 class="pg-title">
+  <!-- ── Masthead ── -->
+  <div class="masthead">
+    <div class="mh-kicker"><span class="lang-en">Institutional Research Report</span><span class="lang-zh" style="display:none">機構級研究報告</span></div>
+    <h1>
       <span class="lang-en">Malaysia — Commercial Property Report</span>
       <span class="lang-zh" style="display:none">馬來西亞 · 商業不動產報告</span>
     </h1>
@@ -123,14 +203,113 @@ body.zh .reitrow .rc .rt{text-transform:none;letter-spacing:0}
       <span class="kpi-badge badge-green"><span class="lang-en">OPR 2.75%</span><span class="lang-zh" style="display:none">OPR 2.75%</span></span>
       <span class="kpi-badge badge-orange"><span class="lang-en">Updated Aug 2026</span><span class="lang-zh" style="display:none">更新至 2026年8月</span></span>
     </div>
+    <div class="rmeta">
+      <span><b><span class="lang-en">Coverage</span><span class="lang-zh" style="display:none">涵蓋期間</span></b>: <span class="lang-en">NAPIC quarterly tables Q1 2025–Q1 2026 · FY2025 &amp; FY2021 Annual Property Market Reports</span><span class="lang-zh" style="display:none">NAPIC 季表 2025Q1–2026Q1 · 2025 與 2021 年度《房產市場報告》</span></span>
+      <span><b><span class="lang-en">Data as of</span><span class="lang-zh" style="display:none">資料截止</span></b>: <span class="lang-en">Q1 2026 (amended 15 May 2026)</span><span class="lang-zh" style="display:none">2026 年第一季（2026/5/15 修訂版）</span></span>
+      <span><b><span class="lang-en">Published</span><span class="lang-zh" style="display:none">出版日</span></b>: 2026-08-13</span>
+      <span><b><span class="lang-en">Non-NAPIC sources</span><span class="lang-zh" style="display:none">非 NAPIC 來源</span></b>: <span class="lang-en">Knight Frank, Retail Group Malaysia — cited in-text</span><span class="lang-zh" style="display:none">Knight Frank、Retail Group Malaysia——皆於內文標注</span></span>
+    </div>
+    <p class="mh-disclaimer"><span class="lang-en">This report is independent analysis for reference only and does not constitute investment advice. All figures are sourced and dated in-text; see the Methodology &amp; Sources appendix for the full data-provenance table.</span><span class="lang-zh" style="display:none">本報告為獨立分析，僅供參考，不構成投資建議。所有數字皆於內文標注來源與期別；完整資料來源表見文末〈方法論與資料來源〉附錄。</span></p>
   </div>
 
-  <!-- ── Snapshot ── -->
-  <div class="snap">
-    <div class="stat"><div class="stat-lbl"><span class="lang-en">Shop overhang</span><span class="lang-zh" style="display:none">店屋餘屋</span></div><div class="stat-num">7,023</div><div class="stat-tag t-red"><span class="lang-en">1Q26 · series high</span><span class="lang-zh" style="display:none">2026Q1 · 序列新高</span></div></div>
-    <div class="stat"><div class="stat-lbl"><span class="lang-en">Office (PBO) occupancy</span><span class="lang-zh" style="display:none">辦公室(PBO)入駐率</span></div><div class="stat-num">72.34%</div><div class="stat-tag t-orange"><span class="lang-en">1Q26 · private-only</span><span class="lang-zh" style="display:none">2026Q1 · 僅私人</span></div></div>
-    <div class="stat"><div class="stat-lbl"><span class="lang-en">Mall (SC) occupancy</span><span class="lang-zh" style="display:none">購物中心(SC)入駐率</span></div><div class="stat-num">78.95%</div><div class="stat-tag t-green"><span class="lang-en">1Q26 · 993 malls</span><span class="lang-zh" style="display:none">2026Q1 · 993間</span></div></div>
-    <div class="stat"><div class="stat-lbl"><span class="lang-en">All-commercial 2025</span><span class="lang-zh" style="display:none">全商業類 2025</span></div><div class="stat-num">RM58.7bn</div><div class="stat-tag t-blue"><span class="lang-en">46,649 deals</span><span class="lang-zh" style="display:none">46,649 件</span></div></div>
+  <!-- ── TOC ── -->
+  <div class="toc">
+    <div class="toc-kick"><span class="lang-en">Contents</span><span class="lang-zh" style="display:none">目錄</span></div>
+    <ol>
+      <li><a href="#sec-exec"><span class="lang-en">Executive Summary</span><span class="lang-zh" style="display:none">摘要</span></a></li>
+      <li><a href="#sec-def"><span class="lang-en">I · Definitions &amp; Scale</span><span class="lang-zh" style="display:none">第一部 · 口徑與規模</span></a></li>
+      <li><a href="#sec-office"><span class="lang-en">II · Offices</span><span class="lang-zh" style="display:none">第二部 · 辦公室</span></a></li>
+      <li><a href="#sec-retail"><span class="lang-en">III · Retail</span><span class="lang-zh" style="display:none">第三部 · 零售</span></a></li>
+      <li><a href="#sec-shops"><span class="lang-en">IV · Shops</span><span class="lang-zh" style="display:none">第四部 · 店屋</span></a></li>
+      <li><a href="#sec-industrial"><span class="lang-en">V · Industrial &amp; Data Centres</span><span class="lang-zh" style="display:none">第五部 · 工業與資料中心</span></a></li>
+      <li><a href="#sec-capital"><span class="lang-en">VI · Capital Markets</span><span class="lang-zh" style="display:none">第六部 · 資本市場</span></a></li>
+      <li><a href="#sec-outlook"><span class="lang-en">VII · Outlook &amp; Risks</span><span class="lang-zh" style="display:none">第七部 · 展望與風險</span></a></li>
+      <li><a href="#sec-conclusion"><span class="lang-en">VIII · Conclusion — Three Tiers</span><span class="lang-zh" style="display:none">第八部 · 結論：可操作性三層</span></a></li>
+      <li><a href="#sec-methodology"><span class="lang-en">IX · Methodology &amp; Sources</span><span class="lang-zh" style="display:none">第九部 · 方法論與資料來源</span></a></li>
+    </ol>
+  </div>
+
+  <!-- ════════ Executive Summary ════════ -->
+  <div class="sec-rule" id="sec-exec"><h2><span class="lang-en">Executive Summary</span><span class="lang-zh" style="display:none">摘要</span></h2></div>
+
+  <div class="statstrip">
+    <div class="sc">
+      <div class="sc-lbl"><span class="lang-en">Shop overhang</span><span class="lang-zh" style="display:none">店屋餘屋</span></div>
+      <div class="sc-num">7,023<span class="sc-arrow up">▲</span></div>
+      <div class="sc-prev"><span class="lang-en">Q1 2026 · vs 6,492 (Q4 2025) · +8.2% q-o-q · series high</span><span class="lang-zh" style="display:none">2026Q1 · 對比 6,492（2025Q4）· 季增 8.2% · 序列新高</span></div>
+    </div>
+    <div class="sc">
+      <div class="sc-lbl"><span class="lang-en">Office (PBO) occupancy</span><span class="lang-zh" style="display:none">辦公室(PBO)入駐率</span></div>
+      <div class="sc-num">72.34%<span class="sc-arrow up">▲</span></div>
+      <div class="sc-prev"><span class="lang-en">Q1 2026 · private-only · vs 71.90% (Q4 2025) · +0.44pp q-o-q</span><span class="lang-zh" style="display:none">2026Q1 · 僅私人 · 對比 71.90%（2025Q4）· 季增0.44pp</span></div>
+    </div>
+    <div class="sc">
+      <div class="sc-lbl"><span class="lang-en">Mall (SC) occupancy</span><span class="lang-zh" style="display:none">購物中心(SC)入駐率</span></div>
+      <div class="sc-num">78.95%<span class="sc-arrow up">▲</span></div>
+      <div class="sc-prev"><span class="lang-en">Q1 2026 · 993 malls · vs 78.9% (FY2025 year-end)</span><span class="lang-zh" style="display:none">2026Q1 · 993間 · 對比 78.9%（2025年底）</span></div>
+    </div>
+    <div class="sc">
+      <div class="sc-lbl"><span class="lang-en">Shop transaction volume</span><span class="lang-zh" style="display:none">店屋成交量</span></div>
+      <div class="sc-num">19,551<span class="sc-arrow down">▼</span></div>
+      <div class="sc-prev"><span class="lang-en">FY2025 · vs 19,771 (FY2024) · −1.1% y-o-y · first decline in series</span><span class="lang-zh" style="display:none">2025年 · 對比 19,771（2024年）· 年減1.1% · 序列首見下滑</span></div>
+    </div>
+    <div class="sc">
+      <div class="sc-lbl"><span class="lang-en">SA overhang</span><span class="lang-zh" style="display:none">服務式公寓餘屋</span></div>
+      <div class="sc-num">19,263<span class="sc-arrow up">▲</span></div>
+      <div class="sc-prev"><span class="lang-en">Q1 2026 · vs 18,752 (Q4 2025) · +2.7% q-o-q · 2nd straight rise</span><span class="lang-zh" style="display:none">2026Q1 · 對比 18,752（2025Q4）· 季增2.7% · 連兩季回升</span></div>
+    </div>
+    <div class="sc">
+      <div class="sc-lbl"><span class="lang-en">All-commercial value</span><span class="lang-zh" style="display:none">全商業類總值</span></div>
+      <div class="sc-num">RM58.7bn<span class="sc-arrow up">▲</span></div>
+      <div class="sc-prev"><span class="lang-en">FY2025 · vs RM58.06bn (FY2024) · +1.1% y-o-y · 46,649 deals</span><span class="lang-zh" style="display:none">2025年 · 對比 RM580.6億（2024年）· 年增1.1% · 46,649件</span></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Key takeaways</span><span class="lang-zh" style="display:none">關鍵摘要</span></h2>
+    <ul class="pt">
+      <li class="warn"><span class="lang-en">Shop overhang hit a series high of <b>7,023 units</b> in Q1 2026, worsening for a second consecutive quarter, in the same year national shop transaction volume declined for the first time since the post-pandemic recovery — the report's central topping signal.</span><span class="lang-zh" style="display:none">店屋餘屋在 2026 年第一季升至 <b>7,023 戶</b>的序列新高，已連兩季惡化，同一年全國店屋成交量更是自疫後回穩以來首度下滑——本報告最核心的見頂訊號。</span></li>
+      <li><span class="lang-en">Office occupancy is scope-dependent, not contradictory: <b>72.34% private-only</b> (Q1 2026) vs <b>78.1% private+government</b> (FY2025) are two different, both-official NAPIC series. The gap is near-zero in KL and Selangor but <b>32 points</b> in Putrajaya, driven almost entirely by near-full government buildings.</span><span class="lang-zh" style="display:none">辦公室入駐率是口徑問題，不是矛盾：<b>72.34% 僅私人</b>（2026Q1）對 <b>78.1% 私人＋政府</b>（2025年）是兩個都官方、但口徑不同的 NAPIC 序列。KL 與雪蘭莪的落差近乎為零，布城卻高達 <b>32 個百分點</b>，幾乎全部來自近乎滿租的政府樓。</span></li>
+      <li class="warn"><span class="lang-en">Johor's private-only office occupancy, <b>55.15%</b>, is the national outlier — well below KL (71.87%), Selangor (71.47%) and Penang (77.31%).</span><span class="lang-zh" style="display:none">柔佛僅私人口徑辦公室入駐率 <b>55.15%</b>，是全國異數——遠低於 KL（71.87%）、雪蘭莪（71.47%）與檳城（77.31%）。</span></li>
+      <li><span class="lang-en">National office net absorption turned genuinely demand-led only in the most recent quarter examined: Q4 2025→Q1 2026 absorption (126,850 sm) outpaced new supply (61,360 sm) for the first time in this four-quarter window; the two prior intervals show supply outpacing absorption instead.</span><span class="lang-zh" style="display:none">全國辦公室淨吸納量，直到最近一季才真正轉為需求驅動：2025Q4 到 2026Q1，淨吸納量（12.69萬平方米）首度超過新增供給（6.14萬平方米）；前兩段區間都是供給跑贏吸納。</span></li>
+      <li><span class="lang-en">The three commercial-title pipelines carry very different supply weight — serviced apartments <b>40.9%</b> of stock incoming, SOHO <b>23.2%</b>, shops just <b>3.8%</b> — yet shops are the one sub-sector setting overhang records, which points the explanation toward demand and financing, not a construction wave.</span><span class="lang-zh" style="display:none">三條商業地契供給線的份量差異極大——服務式公寓即將供給佔存量 <b>40.9%</b>、SOHO <b>23.2%</b>、店屋僅 <b>3.8%</b>——但創下餘屋新高的偏偏是店屋，這把解釋方向指向需求與融資端，不是營建潮。</span></li>
+      <li><span class="lang-en">2025's named capital-markets transactions show retail capital concentrating outside KL — Johor's Paradigm Mall (Johor Bahru) alone sold for <b>RM1.157 billion</b>, while KL's only listed shopping-complex sale is a 2024-vintage deal worth RM34.0 million — while office capital remains KL-heavy (9 of 20 major sales, ~82% of listed value).</span><span class="lang-zh" style="display:none">2025 年具名資本市場交易顯示，零售資金正流向 KL 以外——單是柔佛的 Paradigm Mall（新山）就賣出 <b>RM11.57 億</b>，KL 唯一列入的商場交易卻是一筆 2024 年、僅 RM3,400 萬的舊案——辦公室資金則仍集中在 KL（20 筆大額交易中佔 9 筆，約佔列示總值 82%）。</span></li>
+      <li><span class="lang-en">An individual investor has exactly one directly-investable commercial sub-sector — shops, with title, tenant and rent roll they can personally verify. Everything else (offices, malls, industrial/data-centre space) trades at institutional scale and is better accessed through a REIT.</span><span class="lang-zh" style="display:none">個人投資人只有一個能真正直接投資的商業次板塊——店屋，有地契、有租客、有租金流可親自查核。其餘（辦公室、商場、工業／資料中心用地）皆屬機構級交易規模，更適合透過 REIT 曝險。</span></li>
+      <li><span class="lang-en">NAPIC publishes no shop price index, no yield/cap-rate series for any commercial sub-sector, and no occupancy or overhang metric at all for data-centre or logistics space — three separate, structurally different kinds of missing instrument, set out in full in the Methodology appendix.</span><span class="lang-zh" style="display:none">NAPIC 不發布店屋價格指數、不發布任何商業次板塊的殖利率／資本化率序列，對資料中心或物流用地更是完全沒有入駐率或餘屋指標——這是三種結構上不同的「缺席儀器」，完整說明見方法論附錄。</span></li>
+    </ul>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Dashboard — national key indicators</span><span class="lang-zh" style="display:none">儀表板——全國關鍵指標</span></h2>
+    <div class="kpidash-wrap"><table class="kpidash">
+      <thead><tr>
+        <th><span class="lang-en">Category</span><span class="lang-zh" style="display:none">類別</span></th>
+        <th><span class="lang-en">Metric</span><span class="lang-zh" style="display:none">指標</span></th>
+        <th><span class="lang-en">Value</span><span class="lang-zh" style="display:none">數值</span></th>
+        <th><span class="lang-en">Period</span><span class="lang-zh" style="display:none">期別</span></th>
+        <th><span class="lang-en">Prior</span><span class="lang-zh" style="display:none">前期</span></th>
+        <th><span class="lang-en">Direction</span><span class="lang-zh" style="display:none">方向</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td><span class="lang-en">Office (PBO)</span><span class="lang-zh" style="display:none">辦公室(PBO)</span></td><td><span class="lang-en">National occupancy, private-only</span><span class="lang-zh" style="display:none">全國入駐率，僅私人</span></td><td class="num">72.34%</td><td>Q1 2026</td><td>71.90% (Q4 2025)</td><td class="dir up">▲ +0.44pp</td></tr>
+        <tr><td><span class="lang-en">Office (PBO)</span><span class="lang-zh" style="display:none">辦公室(PBO)</span></td><td><span class="lang-en">Strongest / weakest state</span><span class="lang-zh" style="display:none">最強／最弱州</span></td><td class="num"><span class="lang-en">Penang 77.31% / Johor 55.15%</span><span class="lang-zh" style="display:none">檳城 77.31% ／ 柔佛 55.15%</span></td><td>Q1 2026</td><td>—</td><td class="dir flat">—</td></tr>
+        <tr><td><span class="lang-en">Retail (SC)</span><span class="lang-zh" style="display:none">零售(SC)</span></td><td><span class="lang-en">National occupancy</span><span class="lang-zh" style="display:none">全國入駐率</span></td><td class="num">78.95%</td><td>Q1 2026</td><td>78.9% (FY2025)</td><td class="dir up">▲ +0.05pp</td></tr>
+        <tr><td><span class="lang-en">Retail (SC)</span><span class="lang-zh" style="display:none">零售(SC)</span></td><td><span class="lang-en">Building count</span><span class="lang-zh" style="display:none">棟數</span></td><td class="num">993</td><td>Q1 2026</td><td>996 (FY2025)</td><td class="dir down">▼ −3</td></tr>
+        <tr><td><span class="lang-en">Shop</span><span class="lang-zh" style="display:none">店屋</span></td><td><span class="lang-en">National overhang</span><span class="lang-zh" style="display:none">全國餘屋</span></td><td class="num">7,023</td><td>Q1 2026</td><td>6,492 (Q4 2025)</td><td class="dir down">▲ +8.2%<span style="color:var(--muted);font-weight:400"> (worse)</span></td></tr>
+        <tr><td><span class="lang-en">Shop</span><span class="lang-zh" style="display:none">店屋</span></td><td><span class="lang-en">Transaction volume</span><span class="lang-zh" style="display:none">成交量</span></td><td class="num">19,551</td><td>FY2025</td><td>19,771 (FY2024)</td><td class="dir down">▼ −1.1%</td></tr>
+        <tr><td><span class="lang-en">Shop</span><span class="lang-zh" style="display:none">店屋</span></td><td><span class="lang-en">Transaction value</span><span class="lang-zh" style="display:none">成交值</span></td><td class="num">RM19.85bn</td><td>FY2025</td><td>RM19.26bn (FY2024)</td><td class="dir up">▲ +3.1%</td></tr>
+        <tr><td>SOHO</td><td><span class="lang-en">National overhang</span><span class="lang-zh" style="display:none">全國餘屋</span></td><td class="num">2,731</td><td>Q1 2026</td><td>2,843 (Q4 2025)</td><td class="dir up">▼ −3.9%<span style="color:var(--muted);font-weight:400"> (clearing)</span></td></tr>
+        <tr><td>SOHO</td><td><span class="lang-en">Incoming supply ÷ stock</span><span class="lang-zh" style="display:none">即將供給 ÷ 存量</span></td><td class="num">23.2%</td><td>Q1 2026</td><td>—</td><td class="dir flat">—</td></tr>
+        <tr><td><span class="lang-en">Serviced Apt.</span><span class="lang-zh" style="display:none">服務式公寓</span></td><td><span class="lang-en">National overhang</span><span class="lang-zh" style="display:none">全國餘屋</span></td><td class="num">19,263</td><td>Q1 2026</td><td>18,752 (Q4 2025)</td><td class="dir down">▲ +2.7%<span style="color:var(--muted);font-weight:400"> (worse)</span></td></tr>
+        <tr><td><span class="lang-en">Serviced Apt.</span><span class="lang-zh" style="display:none">服務式公寓</span></td><td><span class="lang-en">Incoming supply ÷ stock</span><span class="lang-zh" style="display:none">即將供給 ÷ 存量</span></td><td class="num">40.9%</td><td>Q1 2026</td><td>—</td><td class="dir flat">—</td></tr>
+      </tbody>
+    </table></div>
+    <p class="sub" style="margin-top:8px"><span class="lang-en">"Direction" reads the arrow literally (▲ = number rose, ▼ = number fell); for overhang metrics a rise is a worsening signal and is annotated accordingly. Rows with a single data point carry no comparison and no arrow.</span><span class="lang-zh" style="display:none">「方向」欄僅照字面讀數（▲＝數字上升，▼＝數字下降）；對餘屋類指標，上升代表惡化，已另行加註。僅有單一期別的列不附比較與箭頭。</span></p>
+  </div>
+
+  <div class="mview">
+    <div class="mv-kick"><span class="lang-en">Market View</span><span class="lang-zh" style="display:none">市場觀點</span></div>
+    <p><span class="lang-en">Every category NAPIC measures either improved marginally or is quietly deteriorating — nothing moved sharply in either direction this quarter. The exception is shops, where two consecutive quarters of rising overhang and 2025's first transaction-volume decline together read as more than noise. That is where this report's underwriting caution concentrates.</span><span class="lang-zh" style="display:none">NAPIC 量測的每個類別，這一季不是小幅改善、就是悄悄惡化——沒有任何一個方向劇烈移動。唯一的例外是店屋：連兩季餘屋走升，加上 2025 年首見的成交量下滑，兩者合看已經不只是雜訊。這正是本報告盡調紀律最集中的地方。</span></p>
   </div>
 
   <!-- ── Bottom line ── -->
@@ -141,7 +320,7 @@ body.zh .reitrow .rc .rt{text-transform:none;letter-spacing:0}
   </div>
 
   <!-- ════════ I ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">I · Definitions &amp; Scale</span><span class="lang-zh" style="display:none">第一部 · 口徑與規模</span></h2></div>
+  <div class="sec-rule" id="sec-def"><h2><span class="lang-en">I · Definitions &amp; Scale</span><span class="lang-zh" style="display:none">第一部 · 口徑與規模</span></h2></div>
 
   <div class="blk">
     <h2><span class="lang-en">What "commercial title" covers</span><span class="lang-zh" style="display:none">「商業地契」涵蓋什麼</span></h2>
@@ -169,8 +348,13 @@ body.zh .reitrow .rc .rt{text-transform:none;letter-spacing:0}
     <p class="narr-p"><span class="lang-en">The three commercial sub-sectors an individual might actually touch carry very different weights of supply still to arrive. Serviced apartments have <b>198,348 units</b> in the incoming-supply pipeline against an existing stock of 484,591 — <b>40.9%</b> more units already committed on top of what stands today (derived: 198,348 ÷ 484,591). SOHO carries 17,444 units against 75,329 existing, <b>23.2%</b>. Shops carry 21,564 against 560,624 — just <b>3.8%</b>. These are not three versions of the same risk. The shop problem, developed at length in Part IV, is clearing an existing pile with almost nothing new joining the queue. The SA problem, covered in the companion <a href="/my/report">Market Report</a>, is the opposite: a wave that has barely started to arrive. The 50,329 SA units already under construction cited there are a slice of this same 198,348-unit pipeline.</span><span class="lang-zh" style="display:none">個人投資人真正可能碰到的三個商業次類別，未來要迎接的供給份量完全不同。服務式公寓的即將供給有 <b>198,348 戶</b>，對照既有存量 484,591 戶——等於在現有基礎上，再加掛 <b>40.9%</b> 的戶數（derived：198,348 ÷ 484,591）。SOHO 的即將供給 17,444 戶，對存量 75,329 戶，佔 <b>23.2%</b>。店屋則是 21,564 戶對 560,624 戶，僅 <b>3.8%</b>。這三個不是同一種風險的三種版本。店屋的問題，第四部會詳細展開，是既有存量去化不動、幾乎沒有新的隊伍加入排隊；服務式公寓的問題，另文《市場報告》已處理，恰恰相反——是一波幾乎還沒真正抵達的浪。另文提到、已在興建中的 50,329 戶服務式公寓，正是這 198,348 戶供給線裡的一部分。</span></p>
   </div>
 
+  <div class="mview">
+    <div class="mv-kick"><span class="lang-en">Market View</span><span class="lang-zh" style="display:none">市場觀點</span></div>
+    <p><span class="lang-en">Five products share a land-title category and nothing else. Scale alone explains why this report weights shops so heavily: they generate 42% of all commercial deals by count, and carry the thinnest incoming-supply pipeline of the three individually-accessible sub-sectors — which is what makes the overhang trend in Part IV worth the attention it gets.</span><span class="lang-zh" style="display:none">五種產品共享的只有地契類別，別無其他。單看規模，就能解釋本報告為何如此側重店屋：它以件數計貢獻了全部商業交易的 42%，而在三個個人可及的次板塊裡，即將供給又是三者中最薄的一條——這正是第四部的餘屋走勢值得如此關注的原因。</span></p>
+  </div>
+
   <!-- ════════ II ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">II · Offices</span><span class="lang-zh" style="display:none">第二部 · 辦公室</span></h2></div>
+  <div class="sec-rule" id="sec-office"><h2><span class="lang-en">II · Offices</span><span class="lang-zh" style="display:none">第二部 · 辦公室</span></h2></div>
 
   <div class="blk">
     <h2><span class="lang-en">One indicator, two scopes — the trap in the headline number</span><span class="lang-zh" style="display:none">一個指標，兩種口徑——頭條數字裡的陷阱</span></h2>
@@ -189,17 +373,34 @@ body.zh .reitrow .rc .rt{text-transform:none;letter-spacing:0}
     <p class="narr-p"><span class="lang-en">The conclusion for an individual is unambiguous. Strata office floors trade in a shallow secondary market, carry commercial financing terms, and are directly exposed to the flight-to-quality dynamic described above — an individually-owned floor in an ageing tower is precisely the asset losing tenants to TRX. Exposure belongs in a REIT with an office book, such as <b>KLCC REIT</b>, not in a strata title.</span><span class="lang-zh" style="display:none">對個人而言，結論很明確。分層辦公樓層的二手交易池淺、融資條件走商業貸款，且直接暴露在上述「品質出走」的動態裡——一層個人持有的舊樓辦公室，正是那個正在把租客輸給 TRX 的資產。要曝險，該透過持有辦公資產的 REIT，例如 <b>KLCC REIT</b>，而不是分層產權本身。</span></p>
   </div>
 
+  <div class="blk">
+    <h2><span class="lang-en">Net absorption: is Q1 2026's occupancy gain demand or denominator?</span><span class="lang-zh" style="display:none">淨吸納量：2026Q1 入駐率的改善，是需求，還是分母效應？</span></h2>
+    <p class="narr-p"><span class="lang-en">Occupancy rate alone cannot answer whether a market is gaining real demand or merely losing supply. Net absorption — the quarter-on-quarter change in occupied space — separates the two. NAPIC's quarterly Commercial Building Space Occupancy table (private-only scope) gives four national readings across the past year: <b>Q1 2025, Q3 2025, Q4 2025 and Q1 2026</b>. No Q2 2025 edition of this table exists in the source set used for this report, so the Q1→Q3 2025 interval below spans two quarters, not one — it is labelled accordingly throughout, and is not treated as equivalent to the two genuine single-quarter intervals that follow it.</span><span class="lang-zh" style="display:none">單看入駐率，無法回答一個市場究竟是真的在增加需求，還是只是供給端縮水。淨吸納量——入駐空間的季對季變動——能把兩者分開來看。NAPIC 的季度商業建築空間入駐與可用表（僅私人口徑）在過去一年給出四個全國讀數：<b>2025Q1、2025Q3、2025Q4、2026Q1</b>。本報告使用的資料來源中，並無 2025Q2 版本的這張表，因此下方 Q1 到 Q3 2025 這段區間實際橫跨兩季，不是一季——全文皆已如此標注，且不與後面兩段真正的單季區間等量齊觀。</span></p>
+    <p class="sub"><span class="lang-en">National PBO net absorption vs new supply, '000 sm · derived from 4 quarterly readings, Q1 2025–Q1 2026 · NAPIC (private-only) · *Q1→Q3 2025 spans two quarters (no Q2 2025 table exists)</span><span class="lang-zh" style="display:none">全國 PBO 淨吸納量對新增供給，千平方米 · 自四個季度讀數推算，2025Q1–2026Q1 · NAPIC（僅私人）· *Q1→Q3 2025 橫跨兩季（無 2025Q2 對應表）</span></p>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 5 · National · Net absorption</span><span class="lang-zh" style="display:none">圖 5 · 全國 · 淨吸納量</span></div><div id="cAbsorb" style="height:250px"></div></div>
+    <p class="narr-p"><span class="lang-en">Across the two-quarter Q1→Q3 2025 span, new supply (136.07 '000 sm) outpaced net absorption (69.52 '000 sm), and the occupancy rate fell slightly (-0.15pp) — space was being added faster than it was being filled. The single-quarter Q3→Q4 2025 interval repeated the same pattern: supply of 96.55 against absorption of 74.32, occupancy essentially flat (+0.03pp). Only in the most recent single-quarter interval, <b>Q4 2025→Q1 2026</b>, did net absorption (126.85 '000 sm) exceed new supply (61.36 '000 sm) — and available (vacant) space fell in absolute terms, from 5,220.91 to 5,155.42 '000 sm. That combination — absorption outpacing supply <i>and</i> the vacant stock shrinking in absolute square metres, not just as a share of a smaller base — is what distinguishes a demand-driven occupancy gain from a denominator effect. It is one data point, not a trend: a fifth quarterly reading (Q2 2026) would be needed before treating this as a turn rather than a single strong quarter.</span><span class="lang-zh" style="display:none">在橫跨兩季的 2025Q1 到 Q3 區間，新增供給（13.607 萬平方米）跑贏淨吸納量（6.952 萬平方米），入駐率小幅下滑（-0.15pp）——空間增加的速度，快過被填滿的速度。單季的 2025Q3 到 Q4 區間重複了同樣的型態：供給 9.655 萬對吸納 7.432 萬，入駐率幾乎持平（+0.03pp）。只有在最近一段單季區間，<b>2025Q4 到 2026Q1</b>，淨吸納量（12.685 萬平方米）才首度超過新增供給（6.136 萬平方米）——而且空置空間的絕對值也在下降，從 5,220.91 降至 5,155.42 千平方米。這個組合——吸納量跑贏供給、<i>且</i>空置存量以絕對平方米（不只是佔較小分母的比例）縮小——正是區分「需求驅動的入駐率改善」與「分母效應」的判準。這只是一個資料點，不是趨勢：要等到第五個季度讀數（2026Q2）出爐，才能把這判定為真正的轉折，而非單一強季。</span></p>
+    <ul class="pt">
+      <li><span class="lang-en">This national read is a private-only scope, consistent throughout the four quarters compared — it does not mix in the private+government annual series discussed above, and should not be read against the FY2025 78.1% figure.</span><span class="lang-zh" style="display:none">此處全國讀數全程皆為僅私人口徑，四季比較內部一致——不與上方討論的私人＋政府年度序列混用，也不應拿來對照 2025 年 78.1% 那個數字。</span></li>
+      <li><span class="lang-en">State-level net absorption is not broken out in this edition of the report; the national read above should be treated as an aggregate signal, not a state-by-state underwriting input.</span><span class="lang-zh" style="display:none">本版報告未拆解州別淨吸納量；上述全國讀數應被視為一個總體訊號，不是可用於逐州盡調的輸入值。</span></li>
+    </ul>
+  </div>
+
+  <div class="mview">
+    <div class="mv-kick"><span class="lang-en">Market View</span><span class="lang-zh" style="display:none">市場觀點</span></div>
+    <p><span class="lang-en">Office occupancy depends entirely on which scope is quoted, and even the correct private-only series only turned genuinely demand-led in its most recent quarter. Johor's 55.15% occupancy is the number that should anchor any office underwriting there. None of this changes the standing conclusion: strata office space belongs in a REIT, not a personal portfolio.</span><span class="lang-zh" style="display:none">辦公室入駐率完全取決於引用的是哪個口徑，即便是正確的僅私人序列，也是到最近一季才真正轉為需求驅動。柔佛 55.15% 的入駐率，才是該地任何辦公室盡調應該錨定的數字。這些都不改變既有結論：分層辦公空間該放進 REIT，不該放進個人組合。</span></p>
+  </div>
+
   <!-- ════════ III ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">III · Retail</span><span class="lang-zh" style="display:none">第三部 · 零售</span></h2></div>
+  <div class="sec-rule" id="sec-retail"><h2><span class="lang-en">III · Retail</span><span class="lang-zh" style="display:none">第三部 · 零售</span></h2></div>
 
   <div class="blk">
     <h2><span class="lang-en">Steady on average, split by geography</span><span class="lang-zh" style="display:none">平均穩定，地理上分裂</span></h2>
     <p class="sub"><span class="lang-en">Shopping complex occupancy, national, % · 2017–1Q2026 · NAPIC</span><span class="lang-zh" style="display:none">購物中心入駐率，全國，% · 2017–2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 5 · National · 9-year history</span><span class="lang-zh" style="display:none">圖 5 · 全國 · 9年歷史</span></div><div id="cScOcc" style="height:220px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 6 · National · 9-year history</span><span class="lang-zh" style="display:none">圖 6 · 全國 · 9年歷史</span></div><div id="cScOcc" style="height:220px"></div></div>
     <p class="narr-p"><span class="lang-en">Shopping complex occupancy has round-tripped: <b>81.3% in 2017</b>, a trough of <b>75.4% in 2022</b> as pandemic footfall collapsed and lagged its way through reopening, and a recovery to <b>78.95%</b> across 993 malls in the first quarter of 2026 — essentially back to where the cycle started, minus about two points.</span><span class="lang-zh" style="display:none">購物中心入駐率走了一個來回：<b>2017 年 81.3%</b>，疫情人流崩跌、且復甦滯後了一年，直到 <b>2022 年 75.4%</b> 才真正見底，2026 年第一季在 993 間商場中回升至 <b>78.95%</b>——大致回到週期起點，只是少了兩個百分點。</span></p>
     <p class="narr-p"><span class="lang-en">The occupancy round-trip hides a dilution story underneath. Between 2017 and 2025, national shopping-complex supply grew from <b>15.52 to 17.41 million sm</b> (+1.89 million), while occupied space grew from <b>12.61 to 13.73 million sm</b> (+1.12 million) — the market absorbed only about <b>six-tenths</b> of the new space added over those eight years (derived: 1.12 ÷ 1.89). The 2025 occupancy reading of 78.9% is not proof that demand caught up with supply; supply itself contracted that year, from <b>17.97 to 17.41 million sm</b> (-3.1%), as weaker malls closed or were repositioned. A shrinking denominator lifting the occupancy rate is a different event from occupancy rising because more shoppers showed up, and the two get reported identically.</span><span class="lang-zh" style="display:none">入駐率的來回走勢，底下藏著一個稀釋的故事。2017 至 2025 年間，全國購物中心供給從 <b>1,552 萬平方米升至 1,741 萬平方米</b>（+189 萬），入駐空間則從 <b>1,261 萬升至 1,373 萬平方米</b>（+112 萬）——這八年新增的供給，市場只吸納了約<b>六成</b>（derived：112 ÷ 189）。2025 年 78.9% 的入駐率讀數，不是需求追上供給的證明；當年供給本身就在收縮，從 <b>1,797 萬降到 1,741 萬平方米</b>（-3.1%），較弱的商場退場或改裝所致。分母縮小推升入駐率，跟入駐率因為人潮變多而上升，是兩件不同的事，卻被同一個數字報導出來。</span></p>
     <p class="sub"><span class="lang-en">Office &amp; retail occupancy by state, % · Q1 2026 · NAPIC</span><span class="lang-zh" style="display:none">辦公室與零售入駐率，州別，% · 2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 6 · By state</span><span class="lang-zh" style="display:none">圖 6 · 州別</span></div><div id="cStateBar" style="height:250px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 7 · By state</span><span class="lang-zh" style="display:none">圖 7 · 州別</span></div><div id="cStateBar" style="height:250px"></div></div>
     <p class="narr-p"><span class="lang-en">The national average conceals a sharp geographic split. Kuala Lumpur runs <b>87.95%</b> and Putrajaya <b>90.65%</b>, while Johor sits at <b>73.65%</b> and Penang lower still at <b>70.55%</b>. Prime urban malls with captive footfall are near-full; secondary-market malls in Johor and Penang are carrying real vacancy. The pattern echoes the office chart above almost exactly — the addresses winning are the ones with existing demand density, not the ones with new supply.</span><span class="lang-zh" style="display:none">全國均值掩蓋了明顯的地理分裂。吉隆坡達 <b>87.95%</b>、布城 <b>90.65%</b>，柔佛卻只有 <b>73.65%</b>，檳城更低，僅 <b>70.55%</b>。市中心的核心商場、有穩定人流護城河的，幾乎滿租；柔佛與檳城的次級商場，則背著實打實的空置。這個型態，幾乎和上方的辦公室圖表如出一轍——贏的地址，是已有需求密度的那些，不是新供給多的那些。</span></p>
     <ul class="pt">
       <li class="warn"><span class="lang-en">Occupancy is steady while performance is soft: Retail Group Malaysia's 2025 retail sales index rose just <b>2.4%</b> year-on-year, against continuing double-digit e-commerce growth (Retail Group Malaysia, 2025). A full mall can still be a weakening business — <b>occupancy and sales-per-square-foot are two different things</b>, like a full classroom that is failing its exams.</span><span class="lang-zh" style="display:none">入駐率穩，但表現偏軟：Retail Group Malaysia 統計的 2025 年零售銷售指數僅年增 <b>2.4%</b>，電商卻持續雙位數成長（Retail Group Malaysia，2025）。滿租的商場，生意仍可能正在變差——<b>入駐率與坪效是兩件事</b>，就像一間坐滿學生、卻考試不及格的教室。</span></li>
@@ -208,36 +409,41 @@ body.zh .reitrow .rc .rt{text-transform:none;letter-spacing:0}
     <p class="narr-p"><span class="lang-en">As with offices, the individual-investor conclusion is a REIT, not a strata lot: whole-mall assets such as <b>Pavilion REIT</b>, <b>IGB REIT</b> and <b>Sunway REIT</b> hold the tenant-mix and footfall-management capability that an individual owner of one retail lot inside a mall simply cannot replicate.</span><span class="lang-zh" style="display:none">與辦公室相同，個人投資人的結論是 REIT，不是分層商場單位：<b>Pavilion REIT</b>、<b>IGB REIT</b>、<b>Sunway REIT</b> 這類整棟持有商場的 REIT，具備租戶組合與人流管理的能力，是持有商場內單一鋪位的個人業主完全複製不來的。</span></p>
   </div>
 
+  <div class="mview">
+    <div class="mv-kick"><span class="lang-en">Market View</span><span class="lang-zh" style="display:none">市場觀點</span></div>
+    <p><span class="lang-en">National mall occupancy has round-tripped back to near its 2017 starting point, but roughly 40% of the supply added since then sits empty, and a full mall is not the same claim as a healthy one — Retail Group Malaysia's 2.4% sales-index growth against double-digit e-commerce expansion says the harder question is happening below the occupancy line, in sales per square foot the occupancy figure cannot see.</span><span class="lang-zh" style="display:none">全國商場入駐率已回到接近 2017 年的起點，但這段期間新增的供給裡，約有四成仍空著，而「滿租」不等於「健康」——Retail Group Malaysia 的 2.4% 銷售指數成長，對照電商雙位數擴張，說明真正難的問題發生在入駐率看不到的坪效那一層。</span></p>
+  </div>
+
   <!-- ════════ IV ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">IV · Shops</span><span class="lang-zh" style="display:none">第四部 · 店屋</span></h2></div>
+  <div class="sec-rule" id="sec-shops"><h2><span class="lang-en">IV · Shops</span><span class="lang-zh" style="display:none">第四部 · 店屋</span></h2></div>
 
   <p class="pull"><span class="lang-en">Shops are the one commercial sub-sector an individual can actually own, finance and exit like a normal asset — and the one where NAPIC publishes no price index at all.</span><span class="lang-zh" style="display:none">店屋是個人投資人唯一能像正常資產一樣持有、融資、退場的商業次板塊——也是 NAPIC 完全不發布價格指數的那一個。</span></p>
 
   <div class="blk">
     <h2><span class="lang-en">Overhang: a fresh series high, two quarters running</span><span class="lang-zh" style="display:none">餘屋：連兩季惡化，創序列新高</span></h2>
     <p class="sub"><span class="lang-en">Unsold completed shops, national, units · 2017–1Q2026 · NAPIC</span><span class="lang-zh" style="display:none">已完工未售店屋，全國，戶 · 2017–2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 7 · National · 10-year history</span><span class="lang-zh" style="display:none">圖 7 · 全國 · 10年歷史</span></div><div id="cShopOH" style="height:250px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 8 · National · 10-year history</span><span class="lang-zh" style="display:none">圖 8 · 全國 · 10年歷史</span></div><div id="cShopOH" style="height:250px"></div></div>
     <p class="narr-p"><span class="lang-en">Shop overhang has its own cycle, distinct from the residential one covered in the companion report. It built from <b>4,546 units in 2017</b> to a first peak of <b>6,904 in 2020</b>, eased through a multi-year clearance to a trough of <b>5,777 in 2024</b>, then reversed: <b>6,492 at end-2025</b>, and <b>7,023 in the first quarter of 2026</b> — a new series high, and the second consecutive quarter of deterioration after the Q3-to-Q4 2025 uptick. The 2020 peak had a clean explanation, pandemic footfall collapse freezing retail leasing decisions. The 2026 peak does not have an equivalent one-off cause, which is what makes it worth watching rather than dismissing as noise.</span><span class="lang-zh" style="display:none">店屋餘屋有自己的週期，與另文處理的住宅週期並不相同。它從 <b>2017 年的 4,546 戶</b>累積到 <b>2020 年 6,904 戶</b>的第一個高點，歷經數年去化降至 <b>2024 年 5,777 戶</b>的谷底，隨後反轉：<b>2025 年底 6,492 戶</b>，<b>2026 年第一季 7,023 戶</b>——創序列新高，且是繼 2025 年第三季轉第四季走升後，連續第二季惡化。2020 年那個高點有清楚的解釋：疫情人流崩潰，凍結了零售租賃決策。2026 年這個新高，卻沒有對應的單一事件可解釋，這正是它值得追蹤、而非當雜訊打發的原因。</span></p>
   </div>
 
   <div class="blk">
     <h2><span class="lang-en">The leading indicator hiding behind the headline number</span><span class="lang-zh" style="display:none">頭條數字背後，藏著一個領先指標</span></h2>
     <p class="sub"><span class="lang-en">Unsold units by construction stage, national, units · 2017–2025 · NAPIC</span><span class="lang-zh" style="display:none">各營建階段未售戶數，全國，戶 · 2017–2025 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 8 · National · Leading vs lagging</span><span class="lang-zh" style="display:none">圖 8 · 全國 · 領先對落後</span></div><div id="cShopLeading" style="height:250px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 9 · National · Leading vs lagging</span><span class="lang-zh" style="display:none">圖 9 · 全國 · 領先對落後</span></div><div id="cShopLeading" style="height:250px"></div></div>
     <p class="narr-p"><span class="lang-en">Completed-and-unsold — the overhang tracked above — is a lagging indicator: it only counts a unit once construction has finished. Units still under construction but already unsold are the leading version of the same problem, and they moved first. While overhang was still falling toward its 2024 trough (-7.3% in 2023, -7.3% again in 2024), unsold-under-construction stock was already turning higher: <b>+2.7% in 2023</b> and <b>+23.6% in 2024</b>, a full year before the completed-overhang reversal became visible in the headline number. It then accelerated further, <b>+50.9% in 2025</b> to 5,317 units — the highest reading since 2021, though still below the 2018–2020 range. Unsold-not-constructed units, smaller in absolute terms, moved the same way: from 456 in 2023 to 686 in 2025. Read together, the pipeline stages tell the same story a year or so before the completed-unit count does: what's in the ground now, unsold, is next year's overhang.</span><span class="lang-zh" style="display:none">已完工未售——本節前面追蹤的餘屋——是一個落後指標：只有等建案真正完工，這一戶才會被算進去。仍在興建、卻已經賣不掉的單位，是同一個問題的領先版本，而且它先動。當餘屋還在朝 2024 年谷底下滑時（2023 年 -7.3%、2024 年再 -7.3%），在建未售的存量其實已經轉向走升：<b>2023 年 +2.7%</b>，<b>2024 年 +23.6%</b>——比完工餘屋在頭條數字裡真正反轉，早了整整一年。之後它進一步加速，<b>2025 年 +50.9%</b> 升至 5,317 戶，是 2021 年以來最高讀數，但仍低於 2018 至 2020 年的水準。未動工未售的戶數雖然絕對量較小，走勢一致：從 2023 年的 456 戶升到 2025 年的 686 戶。把各階段放在一起看，供給線比完工戶數的頭條數字，早了大約一年就說出同一個故事：現在還埋在工地裡、賣不掉的，就是明年的餘屋。</span></p>
   </div>
 
   <div class="blk">
     <h2><span class="lang-en">Transactions: volume up 69%, value doubled — until 2025 broke the pattern</span><span class="lang-zh" style="display:none">交易：量增 69%、值翻倍——直到 2025 年打破了型態</span></h2>
     <p class="sub"><span class="lang-en">Shop transactions, national · volume (bars) &amp; value RM bn (line) · 2021–2025 · NAPIC</span><span class="lang-zh" style="display:none">店屋成交，全國 · 成交量（柱）與總值 RM十億（線）· 2021–2025 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 9 · National · 5-year history</span><span class="lang-zh" style="display:none">圖 9 · 全國 · 5年歷史</span></div><div id="cShopTxn" style="height:250px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 10 · National · 5-year history</span><span class="lang-zh" style="display:none">圖 10 · 全國 · 5年歷史</span></div><div id="cShopTxn" style="height:250px"></div></div>
     <p class="narr-p"><span class="lang-en">Shop transactions grew from <b>11,574 deals worth RM9.57 billion in 2021</b> to <b>19,551 deals worth RM19.85 billion in 2025</b> — volume up <b>69%</b>, value roughly doubled over four years of steady expansion. But 2025 itself broke that pattern: volume fell <b>1.1% year-on-year</b>, the first decline in the recovery-era series, while value kept climbing <b>+3.1%</b>. Fewer deals at higher prices, arriving in the same year the overhang resumed climbing, is the textbook shape of a market working through its top rather than continuing to expand.</span><span class="lang-zh" style="display:none">店屋交易從 <b>2021 年 11,574 件、RM95.7 億</b>，成長到 <b>2025 年 19,551 件、RM198.5 億</b>——四年間量增 <b>69%</b>、值幾乎翻倍，走的是穩定擴張的軌跡。但 2025 年本身打破了這個型態：成交量年減 <b>1.1%</b>，是疫後回穩以來首次下滑，總值卻仍升 <b>3.1%</b>。量縮、價揚，又恰逢餘屋重新走升的同一年——這是市場正在消化頭部、而非繼續擴張的教科書型態。</span></p>
   </div>
 
   <div class="blk">
     <h2><span class="lang-en">The state overhang cycle, five years in one view</span><span class="lang-zh" style="display:none">州別餘屋週期，五年一次看完</span></h2>
     <p class="sub"><span class="lang-en">Shop overhang by state, units · 2021–1Q2026 · NAPIC</span><span class="lang-zh" style="display:none">店屋餘屋，依州別，戶 · 2021–2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 10 · By state · 5-year history</span><span class="lang-zh" style="display:none">圖 10 · 州別 · 5年歷史</span></div><div id="cShopStateAnnual" style="height:250px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 11 · By state · 5-year history</span><span class="lang-zh" style="display:none">圖 11 · 州別 · 5年歷史</span></div><div id="cShopStateAnnual" style="height:250px"></div></div>
     <p class="narr-p"><span class="lang-en">Johor and Selangor tell opposite stories on the same chart. Johor's overhang peaked at <b>1,731 units in 2022</b>, then cleared for two straight years to <b>1,222 by 2024</b>, eased further to 1,146 at end-2025, and then reversed to <b>1,269 in the first quarter of 2026</b> — up 10.7% in a single quarter. Selangor moved the other way in 2025: a <b>29.5% jump to 514 units</b> at year-end from 397 in 2024, then an equally sharp <b>-29.4% retreat to 363</b> by Q1 2026 — a state whose overhang doesn't so much trend as lurch, consistent with a market where a handful of large unsold schemes can swing the state total by a third in one quarter. Kuala Lumpur, by contrast, has simply shrunk: 66 units in 2021 to 10 by Q1 2026. That is not evidence of a tight shop market — KL's total shop stock is only 30,973 units, barely 27% the size of Selangor's 114,036 — so a near-zero count on a small base says less about demand strength than it says about how little KL shop stock there is left to go unsold.</span><span class="lang-zh" style="display:none">同一張圖上，柔佛與雪蘭莪講的是相反的故事。柔佛的餘屋於 <b>2022 年觸頂 1,731 戶</b>，其後連兩年去化至 <b>2024 年的 1,222 戶</b>，2025 年底再降至 1,146 戶，隨後在 <b>2026 年第一季反轉至 1,269 戶</b>——單季升 10.7%。雪蘭莪 2025 年走的是相反方向：年底 <b>跳升 29.5% 至 514 戶</b>（2024 年為 397 戶），隨後又同樣劇烈地 <b>回落 29.4% 至 363 戶</b>（2026Q1）——這個州的餘屋與其說是趨勢，不如說是驟變，符合一個「幾個大型未售建案就能讓全州總數單季擺動三分之一」的市場特徵。吉隆坡則單純地縮小了：2021 年 66 戶，到 2026 年第一季只剩 10 戶。這不是店屋市場緊俏的證據——KL 的店屋總存量僅 30,973 戶，只有雪蘭莪 114,036 戶的約 27%——基數小的近零讀數，說的不是需求有多強，而是 KL 剩下能滯銷的店屋，本來就所剩無幾。</span></p>
   </div>
 
@@ -246,7 +452,7 @@ body.zh .reitrow .rc .rt{text-transform:none;letter-spacing:0}
   <div class="blk">
     <h2><span class="lang-en">Where the unsold units actually sit — the price-band diagnosis</span><span class="lang-zh" style="display:none">未售店屋究竟卡在哪裡——價格帶診斷</span></h2>
     <p class="sub"><span class="lang-en">Unsold completed units by price band, % share within category · Shop vs SA, national · Q1 2026 · NAPIC</span><span class="lang-zh" style="display:none">已完工未售單位，依價位帶，佔各類別自身總量 % · 店屋 對 服務式公寓，全國 · 2026Q1 · NAPIC</span></p>
-    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 11 · National · Price band</span><span class="lang-zh" style="display:none">圖 11 · 全國 · 價位帶</span></div><div id="cShopBand" style="height:260px"></div></div>
+    <div class="chartbox"><div class="kick"><span class="lang-en">Exhibit 12 · National · Price band</span><span class="lang-zh" style="display:none">圖 12 · 全國 · 價位帶</span></div><div id="cShopBand" style="height:260px"></div></div>
     <p class="narr-p"><span class="lang-en">NAPIC's Table 8 breaks the national 7,023-unit shop overhang into eleven price bands for the first time in this report, and the shape is not a smooth taper. The single largest band nationally is <b>above RM1 million — 1,634 units, 23.3% of all unsold shops</b>, more than any other band by a wide margin. A second, smaller cluster sits around RM400,000–500,000 (1,010 units). Above RM500,000 in total accounts for <b>67.7%</b> of unsold units, and the average unsold shop price is <b>RM804,000</b> (derived: RM5,648.10 million ÷ 7,023 units) — notably below the RM1.015 million average shop transaction price in 2025 (derived: RM19.85 billion ÷ 19,551 deals). That gap — a lower average price among what won't sell than among what does — is the opposite of what a simple "prices are too high" story would predict, and it points to something more specific than valuation.</span><span class="lang-zh" style="display:none">NAPIC 的 Table 8 首次把全國 7,023 戶的餘屋拆進十一個價位帶，形狀並非平滑遞減。全國最大的單一價位帶，是 <b>RM100 萬以上——1,634 戶，佔全部未售店屋的 23.3%</b>，遠多於其他任何一帶。第二個較小的聚集，落在 RM40–50 萬之間（1,010 戶）。RM50 萬以上合計佔未售戶數 <b>67.7%</b>，未售店屋均價為 <b>RM80.4 萬</b>（derived：RM5,648.10 百萬 ÷ 7,023 戶）——明顯低於 2025 年店屋成交均價 RM101.5 萬（derived：RM198.5 億 ÷ 19,551 件）。這個落差——賣不掉的那批，均價反而比賣得掉的那批低——與「價格太高」這種簡單敘事所預期的方向恰好相反，指向的是比估值更具體的東西。</span></p>
     <p class="narr-p"><span class="lang-en">The state split explains the gap. Selangor's unsold shops are <b>68.3% above RM1 million</b> (average unsold price RM1.58 million) — high-end stock, largely stalled. Johor's unsold pile is the largest in absolute terms but more evenly spread across bands, with a notable concentration at RM700,000–800,000 (346 units). Kuala Lumpur's ten remaining unsold shops all sit in the RM300,000–400,000 band — too small a sample to generalise from, but consistent with a market that has cleared almost everything except a residual pocket. Read against the higher average transaction price, this is not evidence that shop prices have moved beyond what the market will pay. It reads more precisely as a location mismatch: transactions concentrate in established corridors with proven footfall, while unsold stock concentrates in newer township schemes carrying township-level pricing that has not yet found its buyer. The price band is standing in for something the data doesn't directly measure — location quality — and it is doing that job imperfectly, exactly the caution this report keeps returning to.</span><span class="lang-zh" style="display:none">州別拆解解釋了這個落差。雪蘭莪的未售店屋有 <b>68.3% 落在 RM100 萬以上</b>（未售均價 RM158 萬）——高端產品，大多滯銷。柔佛的未售堆積絕對量最大，但分布較平均，其中 RM70–80 萬帶較集中（346 戶）。吉隆坡僅剩的十戶未售，全數落在 RM30–40 萬帶——樣本太小，不宜過度推論，但符合一個「幾乎全數去化、只剩零星殘量」的市場圖像。對照較高的成交均價，這不能證明店屋價格已經漲過市場願意付的水準。更精確的讀法，是一個地段錯配：成交集中在人流已獲驗證的成熟街廓，未售存量則集中在較新的 township 建案，帶著尚未找到買家的 township 級定價。價位帶在替代一個數據沒有直接量測到的東西——地段品質——但這個替代並不完美，這正是本報告反覆提醒的那種節制。</span></p>
   </div>
@@ -297,8 +503,13 @@ body.zh .reitrow .rc .rt{text-transform:none;letter-spacing:0}
     <p class="narr-p"><span class="lang-en">Put the pieces of this part together and the paradox resolves into three separate mechanisms, not one. On the demand side, e-commerce keeps eroding the case for street-level retail space, and small-business credit — the segment most likely to lease or buy a shop lot — remains tight; a shop's value depends on someone wanting to run a business out of it, and that pool has been shrinking gradually for years. On the product side, the price-band and geography findings above point the same direction: new supply concentrates in township-scale schemes pricing above RM1 million, exactly the band buyers are avoiding, while the corridors buyers actually want — established, footfall-proven streets — have little new stock to sell because they were built out long ago. On the financing side, commercial-title lending runs shorter tenures, lower loan-to-value and higher rates than residential, shops carry no first-home scheme support of any kind, and the foreign buyer's stamp duty of 8% (effective January 2026) removes one of the few pools of capital that might have cleared the top of the price-band distribution. None of these three is dramatic on its own. Together, they are enough to keep pushing overhang to a new high every quarter, on a pipeline too small to blame.</span><span class="lang-zh" style="display:none">把本部的線索放在一起，這個悖論會拆解成三個各自獨立的機制，不是一個。需求端，電商持續侵蝕臨街零售空間的存在理由，而最可能承租或購買一間店屋的小型企業信貸，依然偏緊——店屋的價值終究取決於有沒有人想在裡面做生意，而這群人已經緩慢萎縮了好幾年。產品端，前面的價格帶與地理發現指向同一個方向：新供給集中在定價 RM100 萬以上的 township 級建案，正是買家在迴避的那一帶，而買家真正想要的走廊——人流已獲驗證的成熟街道——反而幾乎沒有新貨可賣，因為早就蓋滿了。融資端，商業地契的貸款年期更短、成數更低、利率更高，店屋完全沒有任何首購方案支持，而 2026 年 1 月生效的 8% 外籍買家印花稅，又拿掉了少數本可能吃掉價位帶頂端的資金池之一。這三個機制，單獨看都不算戲劇性。加在一起，卻足以讓餘屋每一季都創新高——即便供給線小到怪不到它頭上。</span></p>
   </div>
 
+  <div class="mview">
+    <div class="mv-kick"><span class="lang-en">Market View</span><span class="lang-zh" style="display:none">市場觀點</span></div>
+    <p><span class="lang-en">Shop overhang is this report's central topping signal: a series high, two straight quarters of deterioration, and 2025's first transaction-volume decline all landing together, on a supply pipeline too thin to explain any of it. The cause sits on the demand and financing side, not the construction side — which means waiting for supply to slow will not fix it.</span><span class="lang-zh" style="display:none">店屋餘屋是本報告最核心的見頂訊號：序列新高、連兩季惡化、2025 年首見的成交量下滑，三者同時到齊，而供給線薄到解釋不了任何一項。原因在需求與融資端，不在營建端——代表等供給放緩，並不會解決問題。</span></p>
+  </div>
+
   <!-- ════════ V ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">V · Industrial &amp; Data Centres</span><span class="lang-zh" style="display:none">第五部 · 工業與資料中心</span></h2></div>
+  <div class="sec-rule" id="sec-industrial"><h2><span class="lang-en">V · Industrial &amp; Data Centres</span><span class="lang-zh" style="display:none">第五部 · 工業與資料中心</span></h2></div>
 
   <div class="blk">
     <h2><span class="lang-en">No retail-grade metric — because there is no retail-grade product</span><span class="lang-zh" style="display:none">沒有散戶級指標——因為根本沒有散戶級產品</span></h2>
@@ -311,8 +522,142 @@ body.zh .reitrow .rc .rt{text-transform:none;letter-spacing:0}
     <p class="narr-p"><span class="lang-en">Every entry point into this segment — land assembly, power allocation, hyperscaler tenant relationships, the capital scale of a Grade-A warehouse or a data-centre shell — sits at institutional scale. This is a track an individual investor cannot get a ticket for; the only way to watch from inside the stadium is through a REIT with industrial and logistics exposure, such as <b>Axis REIT</b>.</span><span class="lang-zh" style="display:none">這個板塊的每一個入口——地塊整合、電力配額、與超大規模業者的租戶關係、A 級倉儲或資料中心廠殼所需的資本規模——全部落在機構等級。這是一條個人投資人連入場券都買不到的賽道；唯一能從場內觀戰的方式，是透過持有工業與物流資產的 REIT，例如 <b>Axis REIT</b>。</span></p>
   </div>
 
+  <div class="mview">
+    <div class="mv-kick"><span class="lang-en">Market View</span><span class="lang-zh" style="display:none">市場觀點</span></div>
+    <p><span class="lang-en">Industrial and data-centre space is not a smaller version of the other four sub-sectors — it is structurally un-ownable by an individual, with no NAPIC metric because there is no unit-level transaction to measure. 2026's three cooling signals (approval limits, Johor's 18-month water-cooled pause, mandatory green power) are worth tracking, but only through the lens of a REIT holding, such as Axis REIT.</span><span class="lang-zh" style="display:none">工業與資料中心用地不是另外四個次板塊的縮小版——它結構上就不是個人能持有的東西，之所以沒有 NAPIC 指標，是因為根本沒有單位層級的交易可量測。2026 年的三個降溫訊號（審批限制、柔佛 18 個月水冷暫緩、強制綠電）值得追蹤，但只該透過持有 REIT（例如 Axis REIT）的視角去看。</span></p>
+  </div>
+
   <!-- ════════ VI ════════ -->
-  <div class="sec-rule"><h2><span class="lang-en">VI · Conclusion — Three Tiers of Actionability</span><span class="lang-zh" style="display:none">第六部 · 結論：可操作性三層</span></h2></div>
+  <div class="sec-rule" id="sec-capital"><h2><span class="lang-en">VI · Capital Markets</span><span class="lang-zh" style="display:none">第六部 · 資本市場</span></h2></div>
+
+  <p class="pull"><span class="lang-en">Named 2025 transactions show retail capital moving to Selangor and Johor while office capital stays concentrated in KL — a geography the occupancy tables above only hint at.</span><span class="lang-zh" style="display:none">2025 年具名交易顯示，零售資金正流向雪蘭莪與柔佛，辦公室資金卻仍集中在 KL——這個地理型態，上方的入駐率表只點到為止。</span></p>
+
+  <div class="blk">
+    <h2><span class="lang-en">Office: 20 major 2025 sales, a partial list against a bigger headline</span><span class="lang-zh" style="display:none">辦公室：2025 年 20 筆大額交易，一份對不上頭條的部分清單</span></h2>
+    <p class="narr-p"><span class="lang-en">NAPIC's Annual Property Market Report 2025 states that office building transactions that year had "an accumulated value exceeded <b>RM2.08 billion</b>." Table 4 of the same report lists 20 named major sales, summing to <b>RM1,419,417,233 (~RM1.42bn)</b> — well short of the narrative figure. This report treats the two as separate, both-official numbers with a stated gap of roughly RM660 million, rather than silently reconciling them: Table 4 is explicitly a curated "major sales" listing, not a census of every deal that fed the RM2.08bn total, and the missing ~RM660m sits in transactions NAPIC did not itemise by name.</span><span class="lang-zh" style="display:none">NAPIC《2025 年房產市場報告》指出，當年辦公樓交易「累積值超過 <b>RM20.8 億</b>」。同一份報告的 Table 4 列出 20 筆具名大額交易，加總為 <b>RM14.194 億</b>——明顯低於敘事數字。本報告將兩者視為兩個各自獨立、卻都官方的數字，中間有約 RM6.6 億的落差，並不予以靜默調和：Table 4 明確是一份精選的「大額交易」清單，不是撐起 RM20.8 億總數的完整普查，缺口的約 RM6.6 億落在 NAPIC 未具名列示的交易裡。</span></p>
+    <p class="narr-p"><span class="lang-en">Of the 20 rows, <b>9 are in WP Kuala Lumpur</b>, summing to <b>RM1,170,344,233</b> — already transcribed in the companion <a href="/kl/commercial">KL Commercial Property Report</a>'s dataset and not repeated here. The remaining <b>11 non-KL rows</b>, transcribed in full below, sum to just <b>RM249,073,000</b> — barely a fifth of the KL total, from more than half the row count. Every non-KL row is under RM56 million; the single largest KL row alone (Menara CIMB, RM680.0m) exceeds the combined sum of all 11 non-KL rows. Given Table 4 is a curated list rather than a census, this is a magnitude gap consistent with — not standalone proof of — the scale difference between KL's institutional office market and every other state's.</span><span class="lang-zh" style="display:none">20 筆交易中，<b>9 筆在吉隆坡</b>，加總 <b>RM11.703 億</b>——已在另文《KL 商業房產報告》的資料集裡轉錄，此處不再重複。其餘 <b>11 筆非 KL 交易</b>，完整轉錄如下，合計僅 <b>RM2.491 億</b>——筆數過半，總值卻只有 KL 的約五分之一。每一筆非 KL 交易都低於 RM5,600 萬；單是 KL 最大的一筆（Menara CIMB，RM6.80 億），就超過全部 11 筆非 KL 交易的加總。考量 Table 4 是精選清單、不是普查，這是一個與「KL 機構級辦公室市場規模遠大於其他各州」相符的量級落差——但不能單憑此表當作獨立證明。</span></p>
+    <div class="txtable-wrap"><table class="txtable">
+      <thead><tr>
+        <th><span class="lang-en">Property</span><span class="lang-zh" style="display:none">物業</span></th>
+        <th><span class="lang-en">State</span><span class="lang-zh" style="display:none">州</span></th>
+        <th><span class="lang-en">Location</span><span class="lang-zh" style="display:none">地點</span></th>
+        <th class="yr"><span class="lang-en">Year</span><span class="lang-zh" style="display:none">年份</span></th>
+        <th class="amt"><span class="lang-en">Amount (RM)</span><span class="lang-zh" style="display:none">金額（RM）</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Basis Bay</td><td><span class="lang-en">Selangor</span><span class="lang-zh" style="display:none">雪蘭莪</span></td><td>Jalan Cyber Point 5, Cyberjaya</td><td class="yr">2024</td><td class="amt">55,613,000</td></tr>
+        <tr><td>Menara Apex</td><td><span class="lang-en">Selangor</span><span class="lang-zh" style="display:none">雪蘭莪</span></td><td>Jalan Semenyih, Bandar Kajang</td><td class="yr">2023</td><td class="amt">55,000,000</td></tr>
+        <tr><td>Showroom &amp; Office</td><td><span class="lang-en">Johor</span><span class="lang-zh" style="display:none">柔佛</span></td><td>Jalan Tun Razak, Johor Bahru</td><td class="yr">2025</td><td class="amt">26,000,000</td></tr>
+        <tr><td>Wisma AIA</td><td><span class="lang-en">Johor</span><span class="lang-zh" style="display:none">柔佛</span></td><td>Jalan Bukit Timbalan, Johor Bahru</td><td class="yr">2025</td><td class="amt">13,800,000</td></tr>
+        <tr><td>Bangunan Pelangi</td><td><span class="lang-en">Johor</span><span class="lang-zh" style="display:none">柔佛</span></td><td>Jalan Biru, Taman Pelangi, Johor Bahru</td><td class="yr">2024</td><td class="amt">21,500,000</td></tr>
+        <tr><td>Wisma UMNO</td><td><span class="lang-en">Penang</span><span class="lang-zh" style="display:none">檳城</span></td><td>Jalan Bagan Luar 2, Butterworth</td><td class="yr">2024</td><td class="amt">8,500,000</td></tr>
+        <tr><td>Menara Pertam / Wisma Amanah</td><td><span class="lang-en">Melaka</span><span class="lang-zh" style="display:none">馬六甲</span></td><td>Wisma Amanah, Jalan Batu Berendam</td><td class="yr">2024</td><td class="amt">27,260,000</td></tr>
+        <tr><td>Wisma Q</td><td><span class="lang-en">Terengganu</span><span class="lang-zh" style="display:none">登嘉樓</span></td><td>Jalan Engku SAR</td><td class="yr">2025</td><td class="amt">8,400,000</td></tr>
+        <tr><td>Uni-Asia Building</td><td><span class="lang-en">Sabah</span><span class="lang-zh" style="display:none">沙巴</span></td><td>Jalan Sagunting, Kota Kinabalu</td><td class="yr">2025</td><td class="amt">18,000,000</td></tr>
+        <tr><td>Reflexologi</td><td><span class="lang-en">Sabah</span><span class="lang-zh" style="display:none">沙巴</span></td><td>Jalan Pusat Pembangunan</td><td class="yr">2025</td><td class="amt">12,000,000</td></tr>
+        <tr><td>Wisma Ting Hui</td><td><span class="lang-en">Sabah</span><span class="lang-zh" style="display:none">沙巴</span></td><td>Jalan Lama Tamparuli, Pekan Tamparuli</td><td class="yr">2025</td><td class="amt">3,000,000</td></tr>
+        <tr style="font-weight:700;background:var(--bg-soft)"><td colspan="4"><span class="lang-en">Non-KL total (11 rows)</span><span class="lang-zh" style="display:none">非 KL 合計（11 筆）</span></td><td class="amt">249,073,000</td></tr>
+      </tbody>
+    </table></div>
+    <p class="sub" style="margin-top:6px"><span class="lang-en">Source: NAPIC Laporan Pasaran Harta Tanah 2025, Table 4 — Summary of Major Sales 2025 (office). KL rows transcribed separately in data/napic-kl-commercial.json.</span><span class="lang-zh" style="display:none">資料來源：NAPIC《2025 年房產市場報告》Table 4——2025 年大額交易彙總（辦公室）。KL 各筆已另於 data/napic-kl-commercial.json 轉錄。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Retail: RM3.48 billion narrative, RM3.43 billion transcribed — a tight match</span><span class="lang-zh" style="display:none">零售：敘事 RM34.8 億，轉錄加總 RM34.3 億——高度吻合</span></h2>
+    <p class="narr-p"><span class="lang-en">The same annual report states shopping-complex transactions in the reviewed year had "an accumulative worth of <b>RM3.48 billion</b>; mostly of the transactions were in Selangor, WP Kuala Lumpur, Johor, Pahang, Perak and only one in Sabah." Table 2 lists all <b>17</b> named deals, summing to <b>RM3,426,275,999 (~RM3.43bn)</b> — within 1.5% of the narrative figure, a far tighter reconciliation than the office table above, consistent with Table 2 capturing nearly all of the year's shopping-complex deal value rather than a curated subset.</span><span class="lang-zh" style="display:none">同一份年度報告指出，該年度購物中心交易「累積值 <b>RM34.8 億</b>；多數交易分布在雪蘭莪、吉隆坡、柔佛、彭亨、霹靂，沙巴僅一筆」。Table 2 列出全部 <b>17</b> 筆具名交易，加總為 <b>RM34.263 億（約 RM34.3 億）</b>——與敘事數字相差不到 1.5%，遠比上方辦公室表吻合，符合 Table 2 幾乎完整捕捉了該年度購物中心交易值、而非精選子集的推論。</span></p>
+    <p class="narr-p"><span class="lang-en">The state split is the story. <b>Selangor</b> alone contributes 7 of 17 rows worth <b>RM1.786 billion</b> — more than half the table's total. <b>Johor</b> contributes just 2 rows but they include the table's single largest deal, <b>Paradigm Mall (Johor Bahru) at RM1,157,000,000</b>. <b>Kuala Lumpur contributes exactly one row — Plaza 63, RM34.0 million — and it is dated 2024, not 2025</b>: on this table, KL recorded zero named shopping-complex sales in the calendar year under review. A capital city with the country's most institutionally consolidated mall stock changing hands only once, in the prior year, while Selangor and Johor account for RM3.00 billion combined, is retail capital voting with its allocation on where the growth story now sits.</span><span class="lang-zh" style="display:none">州別拆解才是重點。<b>雪蘭莪</b>單一州就貢獻 17 筆中的 7 筆，值 <b>RM17.86 億</b>——超過全表總值的一半。<b>柔佛</b>雖只有 2 筆，卻包含全表最大單筆交易，<b>Paradigm Mall（新山）RM11.57 億</b>。<b>吉隆坡僅有一筆——Plaza 63，RM3,400 萬——而且是 2024 年的交易，不是 2025 年</b>：在這張表上，KL 在檢視年度內具名的購物中心交易掛零。一個擁有全國最機構化商場存量的首都，唯一一筆易手還是上一年的舊案，而雪蘭莪與柔佛合計貢獻 RM30.0 億，說明零售資金已經用配置對成長故事現在落在哪裡投了票。</span></p>
+    <div class="txtable-wrap"><table class="txtable">
+      <thead><tr>
+        <th><span class="lang-en">Property</span><span class="lang-zh" style="display:none">物業</span></th>
+        <th><span class="lang-en">State</span><span class="lang-zh" style="display:none">州</span></th>
+        <th><span class="lang-en">Location</span><span class="lang-zh" style="display:none">地點</span></th>
+        <th class="yr"><span class="lang-en">Year</span><span class="lang-zh" style="display:none">年份</span></th>
+        <th class="amt"><span class="lang-en">Amount (RM)</span><span class="lang-zh" style="display:none">金額（RM）</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Plaza 63</td><td><span class="lang-en">WP Kuala Lumpur</span><span class="lang-zh" style="display:none">吉隆坡聯邦直轄區</span></td><td>Jalan 3/108C, Taman Sungai Besi</td><td class="yr">2024</td><td class="amt">33,999,999</td></tr>
+        <tr><td>AEON Mall Bukit Tinggi</td><td><span class="lang-en">Selangor</span><span class="lang-zh" style="display:none">雪蘭莪</span></td><td>Persiaran Batu Nilam, Bandar Bukit Tinggi, Klang</td><td class="yr">2025</td><td class="amt">680,000,000</td></tr>
+        <tr><td>Paradigm Mall (Petaling Jaya)</td><td><span class="lang-en">Selangor</span><span class="lang-zh" style="display:none">雪蘭莪</span></td><td>Jalan SS 7/26a, SS7, Petaling Jaya</td><td class="yr">2025</td><td class="amt">600,000,000</td></tr>
+        <tr><td>Kompleks PKNS</td><td><span class="lang-en">Selangor</span><span class="lang-zh" style="display:none">雪蘭莪</span></td><td>Persiaran Tasik, Seksyen 14, Shah Alam</td><td class="yr">2025</td><td class="amt">185,000,000</td></tr>
+        <tr><td>SACC Mall</td><td><span class="lang-en">Selangor</span><span class="lang-zh" style="display:none">雪蘭莪</span></td><td>Jalan Perbandaran, Seksyen 14, Shah Alam</td><td class="yr">2025</td><td class="amt">133,000,000</td></tr>
+        <tr><td>Jaya Shopping Centre</td><td><span class="lang-en">Selangor</span><span class="lang-zh" style="display:none">雪蘭莪</span></td><td>Jalan 14/17, Seksyen 14, Petaling Jaya</td><td class="yr">2025</td><td class="amt">100,000,000</td></tr>
+        <tr><td>Kipmall Desa Coalfields</td><td><span class="lang-en">Selangor</span><span class="lang-zh" style="display:none">雪蘭莪</span></td><td>Jalan DC 4/5, Desa Coalfields, Sungai Buloh</td><td class="yr">2025</td><td class="amt">62,000,000</td></tr>
+        <tr><td>Plaza Pelangi Astana</td><td><span class="lang-en">Selangor</span><span class="lang-zh" style="display:none">雪蘭莪</span></td><td>PJU 6, Persiaran Surian, Petaling Jaya</td><td class="yr">2025</td><td class="amt">25,850,000</td></tr>
+        <tr><td>Paradigm Mall (Johor Bahru)</td><td><span class="lang-en">Johor</span><span class="lang-zh" style="display:none">柔佛</span></td><td>Taman Bukit Mewah, Johor Bahru</td><td class="yr">2025</td><td class="amt">1,157,000,000</td></tr>
+        <tr><td>Perling Mall</td><td><span class="lang-en">Johor</span><span class="lang-zh" style="display:none">柔佛</span></td><td>Jalan Persisiran Perling, Taman Perling, Johor Bahru</td><td class="yr">2025</td><td class="amt">54,184,000</td></tr>
+        <tr><td>AEON Mall Taiping</td><td><span class="lang-en">Perak</span><span class="lang-zh" style="display:none">霹靂</span></td><td>Jalan Kamunting, Taiping</td><td class="yr">2025</td><td class="amt">147,000,000</td></tr>
+        <tr><td>AEON Seri Manjung</td><td><span class="lang-en">Perak</span><span class="lang-zh" style="display:none">霹靂</span></td><td>Jalan Manjung Point 3, Seri Manjung</td><td class="yr">2025</td><td class="amt">138,000,000</td></tr>
+        <tr><td>Pasaraya TF Value Mart</td><td><span class="lang-en">Perak</span><span class="lang-zh" style="display:none">霹靂</span></td><td>Pusat Perniagaan, Manjung Point Seksyen 1, Seri Manjung</td><td class="yr">2025</td><td class="amt">35,392,000</td></tr>
+        <tr><td>Lotus's Indera Mahkota</td><td><span class="lang-en">Pahang</span><span class="lang-zh" style="display:none">彭亨</span></td><td>Lorong IM 8/3, Bandar Indera Mahkota</td><td class="yr">2025</td><td class="amt">39,000,000</td></tr>
+        <tr><td>Pasaraya TF</td><td><span class="lang-en">Pahang</span><span class="lang-zh" style="display:none">彭亨</span></td><td>Jalan Sentral Triang 8, Sentral Triang</td><td class="yr">2025</td><td class="amt">13,750,000</td></tr>
+        <tr><td>Econsave Jengka</td><td><span class="lang-en">Pahang</span><span class="lang-zh" style="display:none">彭亨</span></td><td>Jalan BDJS2, Bandar Tun Razak</td><td class="yr">2025</td><td class="amt">16,000,000</td></tr>
+        <tr><td>Bataras Hypermarket</td><td><span class="lang-en">Sabah</span><span class="lang-zh" style="display:none">沙巴</span></td><td>Tamparuli</td><td class="yr">2025</td><td class="amt">6,100,000</td></tr>
+        <tr style="font-weight:700;background:var(--bg-soft)"><td colspan="4"><span class="lang-en">Table total (17 rows)</span><span class="lang-zh" style="display:none">全表合計（17 筆）</span></td><td class="amt">3,426,275,999</td></tr>
+      </tbody>
+    </table></div>
+    <p class="sub" style="margin-top:6px"><span class="lang-en">Source: NAPIC Laporan Pasaran Harta Tanah 2025, Table 2 — Summary of Major Sales 2025 (shopping complex).</span><span class="lang-zh" style="display:none">資料來源：NAPIC《2025 年房產市場報告》Table 2——2025 年大額交易彙總（購物中心）。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Yield: NAPIC does not publish one, and this report will not cite an unverified figure</span><span class="lang-zh" style="display:none">殖利率：NAPIC 不發布，本報告不引用未經核實的數字</span></h2>
+    <p class="narr-p"><span class="lang-en">A capital-markets chapter modelled on institutional CRE research would normally quote a prime office or retail investment yield. This report searched for one: four queries covering Knight Frank's Investment Yield Guide, Savills, and CBRE's Asia Pacific Cap Rate Survey, plus direct attempts to fetch specific CBRE and industry pages. Knight Frank and CBRE do publish periodic yield/cap-rate series for Malaysia, but the relevant editions sit behind gated PDFs or landing pages that did not surface an extractable, independently-verifiable Kuala Lumpur or Malaysia-specific percentage in this session. <b>NAPIC itself publishes no yield or cap-rate series for any commercial sub-sector.</b> Consistent with this report's sourcing discipline, no yield figure is printed here; a number glimpsed only in a search snippet or an inaccessible PDF is not a verified figure.</span><span class="lang-zh" style="display:none">依機構級 CRE 研究報告的慣例，資本市場章節通常會引用一個辦公室或零售的優質殖利率。本報告確實嘗試查證：四次搜尋涵蓋 Knight Frank 的 Investment Yield Guide、Savills、以及 CBRE 的 Asia Pacific Cap Rate Survey，並直接嘗試擷取特定的 CBRE 與產業頁面。Knight Frank 與 CBRE 確實會定期發布馬來西亞的殖利率／資本化率序列，但相關期刊落在需登入的 PDF 或著陸頁後面，本次作業並未能擷取出可獨立核實、且針對吉隆坡或馬來西亞的具體百分比。<b>NAPIC 本身則完全不發布任何商業次板塊的殖利率或資本化率序列。</b>依本報告的資料紀律，此處不印出任何殖利率數字——只在搜尋摘要或無法擷取的 PDF 裡瞥見的數字，不算已核實的數字。</span></p>
+  </div>
+
+  <div class="mview">
+    <div class="mv-kick"><span class="lang-en">Market View</span><span class="lang-zh" style="display:none">市場觀點</span></div>
+    <p><span class="lang-en">Named 2025 transactions confirm the geography the occupancy tables imply but cannot prove: office capital stays overwhelmingly KL-weighted, while retail capital is actively flowing to Selangor and Johor, bypassing KL's mall stock almost entirely for the year. The office headline figure and its underlying table diverge by roughly RM660 million and are reported as two separate, both-official numbers rather than reconciled into one.</span><span class="lang-zh" style="display:none">2025 年具名交易，證實了入駐率表暗示、卻無法自證的地理型態：辦公室資金仍壓倒性集中在 KL，零售資金卻正積極流向雪蘭莪與柔佛，該年度幾乎完全繞過 KL 的商場存量。辦公室的頭條數字與底層表格之間有約 RM6.6 億的落差，本報告將其視為兩個各自獨立、卻都官方的數字並列呈現，而非強行調和。</span></p>
+  </div>
+
+  <!-- ════════ VII ════════ -->
+  <div class="sec-rule" id="sec-outlook"><h2><span class="lang-en">VII · Outlook &amp; Risks</span><span class="lang-zh" style="display:none">第七部 · 展望與風險</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Base case — a judgment, not a forecast</span><span class="lang-zh" style="display:none">基本情境——這是判斷，不是預測</span></h2>
+    <p class="narr-p"><span class="lang-en">NAPIC does not publish forward projections, and this report does not manufacture numeric forecasts to fill that gap. What follows is a directional judgment built from the evidence assembled in Parts I–VI, explicitly labelled as judgment rather than data. <b>Shops</b>: the base case is continued near-term deterioration — overhang has now worsened for two consecutive quarters against a transaction backdrop (volume down, value up) that reads as topping, not recovering, and none of the three mechanisms identified in Part IV (demand, product mismatch, financing) look likely to reverse within a quarter or two. <b>Offices</b>: base case is a slow, uneven stabilisation — national private-only occupancy has ticked up for two straight quarters and Q4 2025→Q1 2026 showed genuine demand-led absorption for the first time in this window, but Johor's 55.15% and the KL prime-vacancy overhang (22.1%, Knight Frank) mean any recovery will be sharply uneven by state and by building vintage. <b>Retail</b>: base case is flat-to-slightly-improving occupancy riding on a shrinking denominator as much as on demand, with the KL-vs-Johor/Penang split persisting. <b>Serviced apartments</b>: base case is renewed overhang growth, now two quarters into a reversal from the 2025 trough, with a large incoming pipeline (40.9% of stock) still mostly ahead rather than behind.</span><span class="lang-zh" style="display:none">NAPIC 不發布前瞻預測，本報告也不會為了填補這個空缺而編造數字。以下是根據第一至第六部證據建立的方向性判斷，明確標注為判斷，不是數據。<b>店屋</b>：基本情境是短期持續惡化——餘屋已連兩季惡化，交易背景（量縮值升）讀起來像是見頂而非復甦，第四部指出的三個機制（需求、產品錯配、融資）沒有一個看起來會在一兩季內反轉。<b>辦公室</b>：基本情境是緩慢、不均勻的止穩——全國僅私人口徑入駐率已連兩季走升，2025Q4 到 2026Q1 首度出現真正需求驅動的吸納，但柔佛 55.15% 與 KL 頂級空置率（22.1%，Knight Frank）意味著任何復甦都會因州別與樓齡而極不均勻。<b>零售</b>：基本情境是入駐率持平至微幅改善，部分靠分母縮小、不完全靠需求，KL 對柔佛／檳城的分裂會持續。<b>服務式公寓</b>：基本情境是餘屋重新走升，已從 2025 年谷底反轉兩季，龐大的即將供給（佔存量 40.9%）多數還在前方、不在後方。</span></p>
+    <p class="pull"><span class="lang-en">These are judgments, built from the data above, not predictions with a stated probability — treat them as a lens for reading the next quarterly release, not as numbers to underwrite against.</span><span class="lang-zh" style="display:none">這些是根據上述資料建立的判斷，不是附機率的預測——應把它們當成讀下一次季度數據的透鏡，而不是可以拿來盡調的數字。</span></p>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Falsifiable triggers to watch</span><span class="lang-zh" style="display:none">值得追蹤的可證偽觸發點</span></h2>
+    <ul class="trigger-list">
+      <li><span class="lang-en"><b>Shop overhang rises a third consecutive quarter</b> (past 6,492→7,023) — would confirm the topping signal is a trend, not a two-quarter blip.</span><span class="lang-zh" style="display:none"><b>店屋餘屋連三季上升</b>（在 6,492→7,023 之後再升）——將證實見頂訊號是趨勢，不是兩季的偶發波動。</span></li>
+      <li><span class="lang-en"><b>Shop transaction volume falls a second consecutive year</b> in the 2026 annual release — would confirm 2025's -1.1% was the start of a decline, not a one-off dip.</span><span class="lang-zh" style="display:none"><b>店屋成交量在 2026 年度數據中連兩年下滑</b>——將證實 2025 年 -1.1% 是下滑的開端，不是單一年份的偶發。</span></li>
+      <li><span class="lang-en"><b>Johor PBO occupancy breaks below 55%</b> (private-only) — would confirm the state's office weakness is deepening rather than stabilising near its current outlier level.</span><span class="lang-zh" style="display:none"><b>柔佛 PBO 入駐率（僅私人）跌破 55%</b>——將證實該州辦公室疲弱正在加深，而非在目前的異數水準止穩。</span></li>
+      <li><span class="lang-en"><b>National net absorption exceeds new supply for a second consecutive quarter</b> (Q1 2026→Q2 2026) — would confirm the Q4 2025→Q1 2026 result was a genuine turn, not a single strong quarter.</span><span class="lang-zh" style="display:none"><b>全國淨吸納量連兩季超過新增供給</b>（2026Q1→Q2）——將證實 2025Q4 到 2026Q1 的結果是真正的轉折，不是單一強季。</span></li>
+      <li><span class="lang-en"><b>SA and SOHO pipeline-landing pace</b> — if incoming supply (40.9% and 23.2% of stock respectively) begins completing faster than it is absorbed, SA's two-quarter overhang rise should accelerate and SOHO's current clearing (−3.9% q-o-q) should reverse.</span><span class="lang-zh" style="display:none"><b>服務式公寓與 SOHO 的供給線落地速度</b>——若即將供給（分別佔存量 40.9% 與 23.2%）完工速度快過去化，服務式公寓連兩季的餘屋升勢應會加速，SOHO 目前的去化（季減 3.9%）也應轉向回升。</span></li>
+      <li><span class="lang-en"><b>SC national occupancy and stock move in the same direction</b> for two consecutive quarters — would distinguish a genuine demand recovery from the denominator effect described in Part III.</span><span class="lang-zh" style="display:none"><b>SC 全國入駐率與存量連兩季同向變動</b>——將能區分真正的需求復甦，還是第三部所述的分母效應。</span></li>
+    </ul>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Risk factors</span><span class="lang-zh" style="display:none">風險因子</span></h2>
+    <div class="riskgrid">
+      <div class="rk">
+        <h5><span class="lang-en">Supply asymmetry across sub-sectors</span><span class="lang-zh" style="display:none">次板塊間的供給不對稱</span></h5>
+        <p><span class="lang-en">SA (40.9%) and SOHO (23.2%) carry pipelines large enough to overwhelm current absorption rates; shops (3.8%) face almost none, which is precisely why their overhang cannot be blamed on over-construction.</span><span class="lang-zh" style="display:none">服務式公寓（40.9%）與 SOHO（23.2%）的供給線大到足以壓過目前的吸納速度；店屋（3.8%）幾乎沒有新供給，這正是為什麼它的餘屋不能怪罪於過度營建。</span></p>
+      </div>
+      <div class="rk">
+        <h5><span class="lang-en">Rate environment — OPR 2.75%</span><span class="lang-zh" style="display:none">利率環境——OPR 2.75%</span></h5>
+        <p><span class="lang-en">Commercial-title lending already runs shorter tenures and lower LTV than residential; any OPR increase would compress an already-thin buyer pool for shops and strata offices further before it affects REIT-held whole-building assets, which finance on different, typically longer-dated terms.</span><span class="lang-zh" style="display:none">商業地契貸款的年期本就比住宅更短、成數更低；OPR 若上升，會先壓縮店屋與分層辦公室原本就淺的買家池，才輪到 REIT 持有的整棟資產——後者的融資條件不同，通常年期更長。</span></p>
+      </div>
+      <div class="rk">
+        <h5><span class="lang-en">State-level divergence</span><span class="lang-zh" style="display:none">州別分歧</span></h5>
+        <p><span class="lang-en">Johor's office occupancy (55.15%) and shop-overhang volatility, alongside Penang's retail occupancy (70.55%) and highest-in-country SA overhang pricing, mean a national-average read can miss the state where an individual's actual property sits.</span><span class="lang-zh" style="display:none">柔佛的辦公室入駐率（55.15%）與店屋餘屋的劇烈波動，加上檳城的零售入駐率（70.55%）與全國最高的服務式公寓餘屋定價，代表看全國均值，可能漏掉個人實際持有物業所在的那個州。</span></p>
+      </div>
+      <div class="rk">
+        <h5><span class="lang-en">Data-centre policy tightening</span><span class="lang-zh" style="display:none">資料中心政策收緊</span></h5>
+        <p><span class="lang-en">2026's approval limits, Johor's 18-month water-cooled pause and mandatory green-power sourcing are cooling signals in a segment individuals cannot access directly except through REITs such as Axis REIT — the risk is indirect but real for that exposure.</span><span class="lang-zh" style="display:none">2026 年的審批限制、柔佛 18 個月水冷暫緩、強制綠電採購，都是這個板塊的降溫訊號，個人無法直接接觸，只能透過 Axis REIT 這類 REIT 曝險——風險是間接的，但對這份曝險而言真實存在。</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mview">
+    <div class="mv-kick"><span class="lang-en">Market View</span><span class="lang-zh" style="display:none">市場觀點</span></div>
+    <p><span class="lang-en">None of the base-case judgments above are forecasts with a stated probability — they are directional reads built from Parts I–VI, meant to be checked against the falsifiable triggers each quarter. Shop overhang crossing a third consecutive quarter of increase is the single trigger most likely to matter first.</span><span class="lang-zh" style="display:none">以上基本情境判斷都不是附機率的預測——它們是根據第一至第六部建立的方向性判讀，用來每季對照可證偽觸發點檢核。店屋餘屋連三季上升，是最可能第一個觸發、也最重要的一個訊號。</span></p>
+  </div>
+
+  <!-- ════════ VIII ════════ -->
+  <div class="sec-rule" id="sec-conclusion"><h2><span class="lang-en">VIII · Conclusion — Three Tiers of Actionability</span><span class="lang-zh" style="display:none">第八部 · 結論：可操作性三層</span></h2></div>
 
   <div class="blk">
     <p class="narr-p"><span class="lang-en">Everything above collapses into one filter: can an individual investor actually underwrite this product directly, or does it only make sense wrapped in a fund? Sorted that way, Malaysia's commercial property market splits cleanly into three tiers.</span><span class="lang-zh" style="display:none">以上所有內容，都收斂成同一道篩子：個人投資人真的能親自盡調這項產品，還是只有包成基金才說得通？照這個標準排列，馬來西亞的商業房產市場乾淨地分成三層。</span></p>
@@ -370,6 +715,55 @@ body.zh .reitrow .rc .rt{text-transform:none;letter-spacing:0}
   <div class="prop-take">
     <span class="pk"><span class="lang-en">The closing frame</span><span class="lang-zh" style="display:none">總結框架</span></span>
     <p><span class="lang-en">Malaysia's commercial property market rewards asking the accessibility question before the yield question. Shops are the one sub-sector where an individual's own diligence is the whole game, and that game has just gotten harder: overhang at a series high, transaction volume down for the first time in the recovery era, value still rising underneath it. Everything institutional — office, mall, industrial — is better owned through the REIT structures built to manage it, priced daily, taxed under the YA2026 regime, and never mistaken for something a strata title could replicate.</span><span class="lang-zh" style="display:none">馬來西亞的商業房產市場，獎勵的是先問「碰不碰得到」，再問殖利率。店屋是唯一一個「個人自己的盡調就是全部戰局」的次板塊，而這場戰局眼下正變得更難：餘屋創序列新高，成交量自疫後回穩以來首度下滑，總值卻仍在其下續漲。所有機構級的部分——辦公室、商場、工業——都更適合透過為此而生的 REIT 結構持有：天天有報價、依 YA2026 新制課稅，而且永遠不會被誤認為分層產權能複製得來的東西。</span></p>
+  </div>
+
+  <!-- ════════ IX ════════ -->
+  <div class="sec-rule" id="sec-methodology"><h2><span class="lang-en">IX · Methodology &amp; Definitions</span><span class="lang-zh" style="display:none">第九部 · 方法論與定義</span></h2></div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Source table</span><span class="lang-zh" style="display:none">資料來源表</span></h2>
+    <div class="methotable-wrap"><table class="methotable">
+      <thead><tr>
+        <th><span class="lang-en">Publication</span><span class="lang-zh" style="display:none">出版品</span></th>
+        <th><span class="lang-en">Coverage / scope</span><span class="lang-zh" style="display:none">涵蓋範圍／口徑</span></th>
+        <th><span class="lang-en">Used for</span><span class="lang-zh" style="display:none">用於</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td><span class="lang-en">NAPIC — Jadual Penghunian dan Ketersediaan Ruang Bangunan Perdagangan (quarterly)</span><span class="lang-zh" style="display:none">NAPIC——商業建築空間入駐與可用表（季度）</span></td><td><span class="lang-en">PBO &amp; Shopping Complex occupancy, private-only</span><span class="lang-zh" style="display:none">PBO 與購物中心入駐率，僅私人</span></td><td><span class="lang-en">National &amp; state occupancy, Q1 2026 dashboard, net absorption (4 quarters)</span><span class="lang-zh" style="display:none">全國與州別入駐率、2026Q1 儀表板、淨吸納量（4 季）</span></td></tr>
+        <tr><td><span class="lang-en">NAPIC — Jadual Status Pasaran Harta Tanah, Table 8 (quarterly)</span><span class="lang-zh" style="display:none">NAPIC——物業市場狀態表，Table 8（季度）</span></td><td><span class="lang-en">Shop, SOHO, SA overhang &amp; price bands, all-scope</span><span class="lang-zh" style="display:none">店屋、SOHO、服務式公寓餘屋與價位帶，全口徑</span></td><td><span class="lang-en">Overhang series, price-band diagnosis, storey-type breakdown</span><span class="lang-zh" style="display:none">餘屋序列、價位帶診斷、樓層型態拆解</span></td></tr>
+        <tr><td><span class="lang-en">NAPIC — Jadual Stok Harta Perdagangan (quarterly)</span><span class="lang-zh" style="display:none">NAPIC——商業房產存量表（季度）</span></td><td><span class="lang-en">Stock, completions, incoming/planned supply, all commercial titles</span><span class="lang-zh" style="display:none">存量、完工、即將／規劃供給，全商業地契</span></td><td><span class="lang-en">Supply pipeline table, pipeline-asymmetry exhibit</span><span class="lang-zh" style="display:none">供給線表、供給不對稱圖</span></td></tr>
+        <tr><td><span class="lang-en">NAPIC — Laporan Pasaran Harta Tanah, annual (2025 &amp; 2021 editions)</span><span class="lang-zh" style="display:none">NAPIC——房產市場報告，年度（2025 與 2021 版）</span></td><td><span class="lang-en">Private+Government PBO/SC occupancy; named major-sale tables (Table 2 retail, Table 4 office); qualitative shop narrative</span><span class="lang-zh" style="display:none">私人＋政府 PBO／SC 入駐率；具名大額交易表（Table 2 零售、Table 4 辦公室）；店屋定性敘事</span></td><td><span class="lang-en">9-year occupancy history, all-commercial transaction totals, Capital Markets chapter</span><span class="lang-zh" style="display:none">9 年入駐率歷史、全商業交易總量、資本市場章節</span></td></tr>
+        <tr><td>Bank Negara Malaysia</td><td><span class="lang-en">Overnight Policy Rate</span><span class="lang-zh" style="display:none">隔夜政策利率</span></td><td><span class="lang-en">OPR 2.75% badge, financing-cost context</span><span class="lang-zh" style="display:none">OPR 2.75% 徽章、融資成本脈絡</span></td></tr>
+        <tr><td><span class="lang-en">Knight Frank — market commentary (1Q2026 office, 2Q2025 industrial)</span><span class="lang-zh" style="display:none">Knight Frank——市場評論（2026Q1 辦公室、2025Q2 工業）</span></td><td><span class="lang-en">Industry research, not NAPIC — vacancy, ESG/green-building demand, warehouse vacancy</span><span class="lang-zh" style="display:none">產業研究，非 NAPIC——空置率、ESG／綠建需求、倉儲空置率</span></td><td><span class="lang-en">Office bifurcation narrative, industrial tightness context; cited in-text, kept separate from NAPIC figures</span><span class="lang-zh" style="display:none">辦公室分裂敘事、工業緊俏脈絡；內文標注來源，與 NAPIC 數字明確分開</span></td></tr>
+        <tr><td>Retail Group Malaysia (2025)</td><td><span class="lang-en">Retail sales index — industry research, not NAPIC</span><span class="lang-zh" style="display:none">零售銷售指數——產業研究，非 NAPIC</span></td><td><span class="lang-en">Occupancy-vs-performance distinction in Part III</span><span class="lang-zh" style="display:none">第三部「入駐率 vs 表現」的區分</span></td></tr>
+        <tr><td><span class="lang-en">Industry &amp; media reporting (2026)</span><span class="lang-zh" style="display:none">產業與媒體報導（2026）</span></td><td><span class="lang-en">Johor data-centre capacity share &amp; 2026 policy signals — not an official NAPIC series</span><span class="lang-zh" style="display:none">柔佛資料中心容量佔比與 2026 政策訊號——非官方 NAPIC 序列</span></td><td><span class="lang-en">Part V industrial/DC narrative</span><span class="lang-zh" style="display:none">第五部工業／資料中心敘事</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Glossary</span><span class="lang-zh" style="display:none">詞彙表</span></h2>
+    <dl class="defterm">
+      <dt><span class="lang-en">PBO (Purpose-Built Office)</span><span class="lang-zh" style="display:none">PBO（純辦公樓）</span></dt>
+      <dd><span class="lang-en">A building constructed specifically as office space, tracked by NAPIC in two scopes: private-only (quarterly) and private+government (annual). The two are not interchangeable — see Part II.</span><span class="lang-zh" style="display:none">專為辦公用途興建的建築，NAPIC 以兩種口徑追蹤：僅私人（季度）與私人＋政府（年度）。兩者不可互換——見第二部。</span></dd>
+      <dt><span class="lang-en">SC (Shopping Complex) vs "Shopping Centre"</span><span class="lang-zh" style="display:none">SC（購物中心）對「Shopping Centre」</span></dt>
+      <dd><span class="lang-en">NAPIC's Table 2/occupancy series (SC, Shopping Complex) and Table 3 (a differently-scoped "Shopping Centre" series) are separate NAPIC products with separate figures. This report uses only the SC/Table-2 series throughout and does not sum or blend it with Table 3.</span><span class="lang-zh" style="display:none">NAPIC 的 Table 2／入駐率序列（SC，購物中心）與 Table 3（口徑不同的「Shopping Centre」序列）是兩個獨立的 NAPIC 產品，各有各的數字。本報告全文只使用 SC／Table 2 序列，不與 Table 3 加總或混用。</span></dd>
+      <dt><span class="lang-en">Occupancy vs availability</span><span class="lang-zh" style="display:none">入駐率 vs 可用空間</span></dt>
+      <dd><span class="lang-en">Occupancy rate = occupied space ÷ total existing stock. Available (vacant) space = total existing stock − occupied space. A rising occupancy rate can come from more space being filled (demand) or from total stock shrinking (denominator effect) — see the net absorption methodology below.</span><span class="lang-zh" style="display:none">入駐率＝入駐空間 ÷ 總既有存量。可用（空置）空間＝總既有存量－入駐空間。入駐率上升，可能來自更多空間被填滿（需求），也可能來自總存量縮小（分母效應）——見下方淨吸納量方法論。</span></dd>
+      <dt><span class="lang-en">Overhang</span><span class="lang-zh" style="display:none">餘屋</span></dt>
+      <dd><span class="lang-en">Completed units that remain unsold, as tracked in NAPIC's Table 8. A lagging indicator — a unit only enters this count once construction is finished; see Part IV for the leading (unsold-under-construction) version of the same metric.</span><span class="lang-zh" style="display:none">已完工卻尚未售出的單位，由 NAPIC 的 Table 8 追蹤。這是一個落後指標——單位要等建案完工才會被計入；同一指標的領先版本（在建未售）見第四部。</span></dd>
+      <dt><span class="lang-en">Private-only vs Private+Government</span><span class="lang-zh" style="display:none">僅私人 vs 私人＋政府</span></dt>
+      <dd><span class="lang-en">Two distinct NAPIC PBO/SC scopes. Private-only excludes government-occupied buildings entirely; private+government includes them. The gap between the two scopes is largest where government occupancy share is largest (e.g. Putrajaya) and near-zero where it is small (e.g. KL, Selangor). Never cite one scope's figure as if it were the other's.</span><span class="lang-zh" style="display:none">兩個不同的 NAPIC PBO／SC 口徑。僅私人完全排除政府自用建物；私人＋政府則包含在內。兩口徑落差在政府佔比最高處最大（如布城），在佔比小處近乎為零（如 KL、雪蘭莪）。切勿把一個口徑的數字當成另一個口徑引用。</span></dd>
+      <dt><span class="lang-en">Net absorption (derivation method used in this report)</span><span class="lang-zh" style="display:none">淨吸納量（本報告使用的推算方法）</span></dt>
+      <dd><span class="lang-en">net_absorption(t) = occupied_space(t) − occupied_space(t−1); new_supply(t) = total_existing_stock(t) − total_existing_stock(t−1), both from the quarterly private-only PBO table. Q2 2025 has no corresponding table in the source set used for this report, so the Q1→Q3 2025 interval is a two-quarter-combined figure, explicitly labelled as such wherever it appears, and not compared on equal footing with the genuine single-quarter Q3→Q4 2025 and Q4 2025→Q1 2026 intervals.</span><span class="lang-zh" style="display:none">淨吸納量(t) ＝ 入駐空間(t) － 入駐空間(t−1)；新增供給(t) ＝ 總既有存量(t) － 總既有存量(t−1)，皆取自季度僅私人口徑 PBO 表。本報告使用的資料來源中，2025Q2 沒有對應的表，因此 Q1 到 Q3 2025 這段區間是橫跨兩季的合併數字，全文出現處皆明確標註，且不與真正單季的 2025Q3 到 Q4、2025Q4 到 2026Q1 兩段區間等量齊觀比較。</span></dd>
+    </dl>
+  </div>
+
+  <div class="blk">
+    <h2><span class="lang-en">Limitations of this report</span><span class="lang-zh" style="display:none">本報告的限制</span></h2>
+    <div class="limits-box">
+      <p><span class="lang-en">This report does not have, and does not claim to have: a shop price or rental index (NAPIC publishes none); a yield or capitalisation-rate series for any commercial sub-sector (NAPIC publishes none, and this report declined to cite an unverified industry figure — see Part VI); a completed Q2 2025 quarter in the net absorption series (no corresponding table exists in the source set used, so the Q1→Q3 2025 interval is a two-quarter-combined figure, not a true single-quarter read); state-level net absorption (only the national aggregate is derived in this edition); or any occupancy, overhang or price metric for data-centre or logistics space (NAPIC publishes none, because that product is rarely sold as individually-titled units — see Part V). Every figure in this report is dated and sourced in-text; where a number is derived rather than directly published, it is marked "derived" with the calculation shown.</span><span class="lang-zh" style="display:none">本報告沒有、也不宣稱擁有：店屋價格或租金指數（NAPIC 不發布）；任何商業次板塊的殖利率或資本化率序列（NAPIC 不發布，本報告也拒絕引用未經核實的產業數字——見第六部）；完整的 2025Q2 淨吸納量讀數（本報告使用的資料來源中無對應表格，因此 Q1 到 Q3 2025 這段區間是橫跨兩季的合併數字，不是真正的單季讀數）；州別淨吸納量（本版僅推算全國總計）；以及任何資料中心或物流用地的入駐率、餘屋或價格指標（NAPIC 不發布，因為這類產品極少以個別發地契的單位出售——見第五部）。本報告的每個數字皆於內文標注期別與來源；凡屬推算而非直接公布的數字，皆標注「derived」並附計算式。</span></p>
+    </div>
   </div>
 
   <div class="src">
@@ -482,7 +876,26 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 5 · SC occupancy annual */
+  /* Exhibit 5 · National PBO net absorption vs new supply (derived, 4 quarterly readings) */
+  (function(){ var c=mk('cAbsorb'); if(!c) return;
+    var iv=['Q1→Q3 2025*','Q3→Q4 2025','Q4 2025→Q1 2026'];
+    var ivZh=['2025Q1→Q3*','2025Q3→Q4','2025Q4→2026Q1'];
+    var absorb=[69.52,74.32,126.85];
+    var supply=[136.07,96.55,61.36];
+    c.setOption({
+      tooltip:Object.assign({},baseTip,{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+'k sm';}}),
+      legend:Object.assign({},baseLegend,{data:[L('Net absorption','淨吸納量'),L('New supply','新增供給')]}),
+      grid:{left:8,right:12,top:30,bottom:26,containLabel:true},
+      xAxis:catAxis(zh?ivZh:iv,{axisLabel:ax({fontSize:9.5})}),
+      yAxis:valAxis({axisLabel:ax({formatter:'{value}k'})}),
+      series:[
+        {name:L('Net absorption','淨吸納量'),type:'bar',data:absorb,itemStyle:goldBar,barMaxWidth:30},
+        {name:L('New supply','新增供給'),type:'bar',data:supply,itemStyle:navyBar,barMaxWidth:30}
+      ]
+    });
+  })();
+
+  /* Exhibit 6 · SC occupancy annual */
   (function(){ var c=mk('cScOcc'); if(!c) return;
     var yr=['2017','2018','2019','2020','2021','2022','2023','2024','2025','1Q26'];
     var occ=[81.3,79.3,79.2,77.5,76.3,75.4,77.4,78.8,78.9,78.95];
@@ -497,7 +910,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 6 · PBO/SC state bar (horizontal) */
+  /* Exhibit 7 · PBO/SC state bar (horizontal) */
   (function(){ var c=mk('cStateBar'); if(!c) return;
     var states=['Johor','Putrajaya','Selangor','KL','Penang'];
     var statesZh=['柔佛','布城','雪蘭莪','吉隆坡','檳城'];
@@ -516,7 +929,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 7 · Shop overhang annual */
+  /* Exhibit 8 · Shop overhang annual */
   (function(){ var c=mk('cShopOH'); if(!c) return;
     var yr=['2017','2018','2019','2020','2021','2022','2023','2024','2025','1Q26'];
     var oh=[4546,5055,6024,6904,6612,6720,6233,5777,6492,7023];
@@ -532,7 +945,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 8 · Leading (unsold under construction) vs lagging (overhang) */
+  /* Exhibit 9 · Leading (unsold under construction) vs lagging (overhang) */
   (function(){ var c=mk('cShopLeading'); if(!c) return;
     var yr=['2017','2018','2019','2020','2021','2022','2023','2024','2025'];
     var uc=[5889,7233,6232,5383,3899,2777,2852,3524,5317];
@@ -549,7 +962,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 9 · Shop transactions vol/value */
+  /* Exhibit 10 · Shop transactions vol/value */
   (function(){ var c=mk('cShopTxn'); if(!c) return;
     var yr=['2021','2022','2023','2024','2025'];
     var vol=[11574,16862,18437,19771,19551];
@@ -566,7 +979,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 10 · State overhang, 5-year (Johor vs Selangor) */
+  /* Exhibit 11 · State overhang, 5-year (Johor vs Selangor) */
   (function(){ var c=mk('cShopStateAnnual'); if(!c) return;
     var yr=['2021','2022','2023','2024','2025','1Q26'];
     var johor=[1578,1731,1517,1222,1146,1269];
@@ -583,7 +996,7 @@ function initAllCharts(lang){
     });
   })();
 
-  /* Exhibit 11 · National price-band distribution, Shop vs SA (% share within category) */
+  /* Exhibit 12 · National price-band distribution, Shop vs SA (% share within category) */
   (function(){ var c=mk('cShopBand'); if(!c) return;
     var bands=['<100k','100-200k','200-300k','300-400k','400-500k','500-600k','600-700k','700-800k','800-900k','900k-1M','>1M'];
     var bandsZh=['<10萬','10-20萬','20-30萬','30-40萬','40-50萬','50-60萬','60-70萬','70-80萬','80-90萬','90-100萬','>100萬'];
