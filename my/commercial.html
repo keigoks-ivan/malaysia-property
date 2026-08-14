@@ -818,7 +818,7 @@ function initAllCharts(lang){
       tooltip:baseTip,
       legend:Object.assign({},baseLegend,{data:[L('Annual (pre-2019)','年度（2019前）'),L('Quarterly (Q4 2019–Q1 2026)','季度（2019Q4–2026Q1）')]}),
       grid:{left:8,right:12,top:30,bottom:6,containLabel:true},
-      xAxis:catAxis(cat,{axisLabel:ax({fontSize:9,formatter:function(v){return v.indexOf('Q')!==0||v.indexOf('Q1')===0?v:'';}})}),
+      xAxis:catAxis(cat,{axisLabel:ax({fontSize:9,interval:0,formatter:function(v){return v.indexOf('Q')!==0||v.indexOf('Q1')===0?v:'';}})}),
       yAxis:valAxis({axisLabel:ax({formatter:function(v){return (v/1000)+'k';}})}),
       series:[
         {name:L('Annual (pre-2019)','年度（2019前）'),type:'bar',data:annual,itemStyle:{color:C.muted,borderRadius:[5,5,0,0]},barMaxWidth:20},
@@ -854,8 +854,8 @@ function initAllCharts(lang){
     c.setOption({
       tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v==null?'':v+'%';}}),
       legend:Object.assign({},baseLegend,{data:[L('Private + Gov (annual, year-end)','私人＋政府（年度，年終讀數）'),L('Private-only (quarterly)','僅私人（季度）')]}),
-      grid:{left:8,right:12,top:30,bottom:6,containLabel:true},
-      xAxis:catAxis(cat,{boundaryGap:false,axisLabel:ax({fontSize:9,formatter:function(v){return v.indexOf('Q')!==0||v.indexOf('Q1')===0?v:'';}})}), yAxis:valAxis({min:50,max:90,axisLabel:ax({formatter:'{value}%'})}),
+      grid:{left:8,right:30,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(cat,{boundaryGap:false,axisLabel:ax({fontSize:9,interval:0,formatter:function(v){return v.indexOf('Q')!==0||v.indexOf('Q1')===0?v:'';}})}), yAxis:valAxis({min:50,max:90,axisLabel:ax({formatter:'{value}%'})}),
       series:[
         {name:L('Private + Gov (annual, year-end)','私人＋政府（年度，年終讀數）'),type:'line',data:pg,symbol:'circle',symbolSize:5,lineStyle:{color:C.muted,width:2.5,type:'dotted'},itemStyle:{color:C.muted},connectNulls:true},
         {name:L('Private-only (quarterly)','僅私人（季度）'),type:'line',data:pv,symbol:'circle',symbolSize:4,lineStyle:{color:C.navy,width:2.5},itemStyle:{color:C.navy},areaStyle:{color:lg('rgba(13,34,68,.12)','rgba(13,34,68,0)')},connectNulls:false}
@@ -892,7 +892,7 @@ function initAllCharts(lang){
       tooltip:Object.assign({},baseTip,{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+'k sm';}}),
       legend:Object.assign({},baseLegend,{data:[L('Net absorption','淨吸納量'),L('New supply','新增供給')]}),
       grid:{left:8,right:12,top:30,bottom:26,containLabel:true},
-      xAxis:catAxis(zh?ivZh:iv,{axisLabel:ax({fontSize:9,formatter:function(v){return v.indexOf('Q1')===0||v.indexOf('*')>-1?v:'';}})}),
+      xAxis:catAxis(zh?ivZh:iv,{axisLabel:ax({fontSize:9,interval:0,formatter:function(v){if(v.indexOf('→')>-1)return '*';return v.indexOf('Q1')===0||/Q1$/.test(v)?v:'';}})}),
       yAxis:valAxis({axisLabel:ax({formatter:'{value}k'})}),
       series:[
         {name:L('Net absorption','淨吸納量'),type:'bar',data:absorb,itemStyle:goldBar,barMaxWidth:14},
@@ -909,8 +909,8 @@ function initAllCharts(lang){
     c.setOption({
       tooltip:baseTip,
       legend:Object.assign({},baseLegend,{data:[L('Annual (pre-2020)','年度（2020前）'),L('Quarterly (Q1 2020–Q1 2026)','季度（2020Q1–2026Q1）')]}),
-      grid:{left:8,right:12,top:30,bottom:6,containLabel:true},
-      xAxis:catAxis(cat,{boundaryGap:false,axisLabel:ax({fontSize:9,formatter:function(v){return v.indexOf('Q')!==0||v.indexOf('Q1')===0?v:'';}})}),
+      grid:{left:8,right:30,top:30,bottom:6,containLabel:true},
+      xAxis:catAxis(cat,{boundaryGap:false,axisLabel:ax({fontSize:9,interval:0,formatter:function(v){return v.indexOf('Q')!==0||v.indexOf('Q1')===0?v:'';}})}),
       yAxis:valAxis({min:70,max:85,axisLabel:ax({formatter:'{value}%'})}),
       series:[
         {name:L('Annual (pre-2020)','年度（2020前）'),type:'line',data:annual,symbol:'circle',symbolSize:5,lineStyle:{color:C.muted,width:2,type:'dashed'},itemStyle:{color:C.muted},connectNulls:false},
@@ -951,7 +951,7 @@ function initAllCharts(lang){
       tooltip:baseTip,
       legend:Object.assign({},baseLegend,{data:[L('Annual (pre-2019)','年度（2019前）'),L('Quarterly (Q4 2019–Q1 2026)','季度（2019Q4–2026Q1）')]}),
       grid:{left:8,right:12,top:30,bottom:6,containLabel:true},
-      xAxis:catAxis(cat,{axisLabel:ax({fontSize:9,formatter:function(v){return v.indexOf('Q')!==0||v.indexOf('Q1')===0?v:'';}})}),
+      xAxis:catAxis(cat,{axisLabel:ax({fontSize:9,interval:0,formatter:function(v){return v.indexOf('Q')!==0||v.indexOf('Q1')===0?v:'';}})}),
       yAxis:valAxis({axisLabel:ax({formatter:function(v){return (v/1000).toFixed(1)+'k';}})}),
       series:[
         {name:L('Annual (pre-2019)','年度（2019前）'),type:'bar',data:annual,itemStyle:{color:C.muted,borderRadius:[5,5,0,0]},barMaxWidth:20},

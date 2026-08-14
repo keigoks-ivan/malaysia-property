@@ -885,7 +885,7 @@ function initAllCharts(lang){
       tooltip:Object.assign({},baseTip,{trigger:'axis',valueFormatter:function(v){return v+'%';}}),
       legend:Object.assign({},baseLegend,{data:[L('City Centre','市中心'),L('Outside City Centre','城外')]}),
       grid:{left:8,right:16,top:30,bottom:6,containLabel:true},
-      xAxis:catAxis(qtr,{axisLabel:ax({fontSize:9,formatter:function(v){return v.indexOf('Q1')===0?v:'';}})}),
+      xAxis:catAxis(qtr,{axisLabel:ax({fontSize:9,interval:0,formatter:function(v){return v.indexOf('Q1')===0?v:'';}})}),
       yAxis:valAxis({min:60,max:80,axisLabel:ax({formatter:'{value}%'})}),
       series:[
         {name:L('City Centre','市中心'),type:'line',data:cc,connectNulls:false,symbol:'circle',symbolSize:4,lineStyle:{color:C.navy,width:2.5},itemStyle:{color:C.navy}},
@@ -923,7 +923,7 @@ function initAllCharts(lang){
       tooltip:Object.assign({},baseTip,{trigger:'axis',valueFormatter:function(v){return v+'k sqm';}}),
       legend:Object.assign({},baseLegend,{data:[L('City Centre','市中心'),L('Outside City Centre','城外'),L('KL total','KL總計')]}),
       grid:{left:8,right:16,top:30,bottom:6,containLabel:true},
-      xAxis:catAxis(zh?qtrZh:qtr,{axisLabel:ax({fontSize:8.5,formatter:function(v){return v.indexOf('Q1')===0||v.indexOf('*')>-1?v:'';}})}),
+      xAxis:catAxis(zh?qtrZh:qtr,{axisLabel:ax({fontSize:8.5,interval:0,formatter:function(v){if(v.indexOf('→')>-1)return '*';return v.indexOf('Q1')===0||/Q1$/.test(v)?v:'';}})}),
       yAxis:valAxis({name:L('000 sq m','千平方米'),nameTextStyle:ax({fontSize:9.5})}),
       series:[
         {name:L('City Centre','市中心'),type:'bar',data:cc,itemStyle:navyBar,barMaxWidth:14},
@@ -1026,13 +1026,13 @@ function initAllCharts(lang){
     var occ=[82.59,82.38,82.36,81.96,81.95,81.61,82.03,79.77,80.95,81.59,81.83,82.67,82.9,82.78,83.14,83.81,84.65,84.94,86.17,86.8,87.18,null,86.54,87.95,87.95];
     c.setOption({
       tooltip:Object.assign({},baseTip,{valueFormatter:function(v){return v+'%';}}),
-      grid:{left:8,right:12,top:16,bottom:6,containLabel:true},
-      xAxis:catAxis(qtr,{boundaryGap:false,axisLabel:ax({fontSize:8.5,formatter:function(v){return v.indexOf('Q1')===0?v:'';}})}),
+      grid:{left:8,right:30,top:16,bottom:6,containLabel:true},
+      xAxis:catAxis(qtr,{boundaryGap:false,axisLabel:ax({fontSize:8.5,interval:0,formatter:function(v){return v.indexOf('Q1')===0?v:'';}})}),
       yAxis:valAxis({min:75,max:90,axisLabel:ax({formatter:'{value}%'})}),
       series:[{name:L('SC occupancy','商場入駐率'),type:'line',data:occ,connectNulls:false,smooth:true,symbol:'circle',symbolSize:4,lineStyle:{color:C.gold,width:3},itemStyle:{color:C.gold},areaStyle:{color:lg('rgba(184,146,74,.20)','rgba(184,146,74,0)')},
         markLine:{symbol:'none',silent:true,lineStyle:{color:C.muted,type:'dashed',width:1},
           label:{color:C.muted,fontFamily:FONT,fontSize:9,formatter:function(p){return p.data.txt;}},
-          data:[{xAxis:'Q4 2021',txt:L('79.77% · low','79.77% · 低點')},{xAxis:'Q1 2026',txt:L('87.95% · series peak','87.95% · 序列高點')}]}}]
+          data:[{xAxis:'Q4 2021',txt:L('79.77% · low','79.77% · 低點')},{xAxis:'Q1 2026',txt:L('87.95% · series peak','87.95% · 序列高點'),label:{align:'right'}}]}}]
     });
   })();
 
@@ -1045,7 +1045,7 @@ function initAllCharts(lang){
       tooltip:Object.assign({},baseTip,{trigger:'axis'}),
       legend:Object.assign({},baseLegend,{data:[L('KL (left)','KL(左軸)'),L('Johor (right)','柔佛(右軸)')]}),
       grid:{left:8,right:14,top:30,bottom:6,containLabel:true},
-      xAxis:catAxis(qtr,{axisLabel:ax({fontSize:8.5,formatter:function(v){return v.indexOf('Q1')===0?v:'';}})}),
+      xAxis:catAxis(qtr,{axisLabel:ax({fontSize:8.5,interval:0,formatter:function(v){return v.indexOf('Q1')===0?v:'';}})}),
       yAxis:[valAxis({max:220}),valAxis({position:'right',max:2000,splitLine:{show:false}})],
       series:[
         {name:L('KL (left)','KL(左軸)'),type:'bar',data:kl,itemStyle:navyBar,barMaxWidth:10},
@@ -1085,11 +1085,11 @@ function initAllCharts(lang){
     c.setOption({
       tooltip:baseTip,
       grid:{left:8,right:12,top:30,bottom:6,containLabel:true},
-      xAxis:catAxis(qtr,{axisLabel:ax({fontSize:8.5,formatter:function(v){return v.indexOf('Q1')===0?v:'';}})}), yAxis:valAxis(),
+      xAxis:catAxis(qtr,{axisLabel:ax({fontSize:8.5,interval:0,formatter:function(v){return v.indexOf('Q1')===0?v:'';}})}), yAxis:valAxis(),
       series:[{name:L('SOHO overhang','SOHO餘屋'),type:'bar',data:bars,barMaxWidth:10,
         markLine:{symbol:'none',silent:true,lineStyle:{color:C.muted,type:'dashed',width:1},
           label:{color:C.muted,fontFamily:FONT,fontSize:9,formatter:function(p){return p.data.txt;}},
-          data:[{xAxis:'Q3 2025',txt:L('Q3 2025 series peak 1,127','2025Q3 序列高點1,127')},{xAxis:'Q1 2026',txt:L('back to 793 in 2 qtrs','兩季內回到793')}]}}]
+          data:[{xAxis:'Q3 2025',txt:L('Q3 2025 series peak 1,127 · back to 793 in 2 qtrs','2025Q3 序列高點1,127・兩季內回到793'),label:{align:'right'}}]}}]
     });
   })();
 
