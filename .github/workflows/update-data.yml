@@ -33,6 +33,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/
+          if git diff --staged --quiet; then
+            echo "Sources fetched but data/ is byte-identical — nothing to commit."
+            exit 0
+          fi
           MONTH=$(date -u +"%Y-%m")
           git commit -m "data: update ${MONTH} — ${{ steps.scraper.outputs.summary }}"
           git push
